@@ -13,7 +13,7 @@ DerivedData/
 xcuserdata/
 *.xccheckout
 *.xcscmblueprint
-
+*.agents/*
 # Xcode Patch
 *.xcodeproj/*
 !*.xcodeproj/project.pbxproj

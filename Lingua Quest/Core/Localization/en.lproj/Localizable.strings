@@ -1,0 +1,17 @@
+/* 
+  Localizable.strings
+  Lingua Quest
+
+  Created by siam on 14/07/2026.
+  
+*/
+"network.error.invalid_url" = "The request URL is invalid";
+"network.error.no_connection" = "No internet connection";
+"network.error.decoding_failed" = "Failed to parse the response";
+"network.error.server_error" = "Server error (%d)";
+"network.error.unauthorized" = "You are not authorized, please sign in again";
+"network.error.unknown" = "An unexpected error occurred";
+
+"common.retry" = "Retry";
+"common.cancel" = "Cancel";
+"common.ok" = "OK";

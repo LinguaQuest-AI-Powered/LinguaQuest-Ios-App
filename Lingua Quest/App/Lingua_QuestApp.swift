@@ -6,16 +6,16 @@
 //
 
 import SwiftUI
-import SwiftData
 
 @main
-struct Lingua_QuestApp: App {
-   
+struct MyApp: App {
+    init() {
+        _ = Resolver.shared
+    }
 
     var body: some Scene {
         WindowGroup {
-        
+            RootView()
         }
-
     }
 }
