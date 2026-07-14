@@ -1,0 +1,21 @@
+//
+//  Config.xcconfig.template
+//  Lingua Quest
+//
+//  Created by siam on 14/07/2026.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project
+
+// =====================================================================
+// Config.xcconfig.template
+// =====================================================================
+// This is the file committed to Git (it contains no real values).
+//
+// When you clone the project for the first time:
+//   1) Copy this file and rename it to "Config.xcconfig" (in this exact same folder).
+//   2) Fill in the actual values below.
+//   3) Do NOT commit the new file — it is already added to .gitignore.
+// =====================================================================
+API_BASE_URL =

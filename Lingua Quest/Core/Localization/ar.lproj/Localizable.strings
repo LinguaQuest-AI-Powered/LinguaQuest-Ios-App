@@ -1,0 +1,24 @@
+/* 
+  Localizable.strings
+  Lingua Quest
+
+  Created by siam on 14/07/2026.
+  
+*/
+
+"network.error.invalid_url" = "رابط الطلب غير صحيح";
+"network.error.no_connection" = "لا يوجد اتصال بالإنترنت";
+"network.error.decoding_failed" = "فشل في تحويل البيانات";
+"network.error.server_error" = "خطأ من السيرفر (%d)";
+"network.error.unauthorized" = "غير مصرح لك، سجل الدخول مرة أخرى";
+"network.error.unknown" = "حدث خطأ غير متوقع";
+
+"common.retry" = "إعادة المحاولة";
+"common.cancel" = "إلغاء";
+"common.ok" = "حسنًا";
+
+"auth.email_placeholder" = "البريد الإلكتروني";
+"auth.password_placeholder" = "كلمة المرور";
+"auth.continue_google" = "المتابعة باستخدام جوجل";
+"auth.continue_apple" = "المتابعة باستخدام أبل";
+"components.app_name" = "لينجوا كويست!";
