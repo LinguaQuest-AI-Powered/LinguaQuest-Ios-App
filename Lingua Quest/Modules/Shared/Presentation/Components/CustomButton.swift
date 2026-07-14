@@ -36,9 +36,9 @@ struct CustomButton: View {
         if status == .enable {
             switch type {
             case .primary:
-                return .orange        //TODO: Add it to hema files FF9F29
+                return Color("PrimaryColor")
             case .secendry:
-                return .teal        //TODO: Add it to hema files  F0DFD3
+                return Color("SecondaryColor")
             case .custom(_, let buttonColor):
                 return buttonColor
             }
@@ -51,9 +51,9 @@ struct CustomButton: View {
         if status == .enable {
             switch type {
             case .primary:
-                return .white        //TODO: Add it to hema files
+                return Color("PrimaryButtonText")
             case .secendry:
-                return .black        //TODO: Add it to hema files
+                return Color("SecondaryButtonText")
             case .custom(let textColor, _):
                 return textColor
             }

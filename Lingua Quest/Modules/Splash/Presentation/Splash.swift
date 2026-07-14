@@ -22,7 +22,7 @@ struct SplashView: View {
             )
             .ignoresSafeArea()
             
-            Image("linguaQuest")
+            Image(asset: .linquaQuest)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 338, height: 338)
@@ -39,7 +39,7 @@ struct SplashView: View {
                     .shadow(color: Color.black, radius: 10, x: 0, y: 20)
 
                 
-                Image("bird")
+                Image(asset: .bird)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 300, height: 300)
@@ -48,7 +48,7 @@ struct SplashView: View {
             }.position(x:200, y: 330)
             
             
-            Image("star")
+            Image(asset: .star)
                 .position(x: 45, y: 200)
             
             Image("star")
