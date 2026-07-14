@@ -55,3 +55,4 @@ fastlane/test_output
 *.xcconfig
 !Config.xcconfig.template
 !Secrets.xcconfig.template
+Lingua Quest/agents/
