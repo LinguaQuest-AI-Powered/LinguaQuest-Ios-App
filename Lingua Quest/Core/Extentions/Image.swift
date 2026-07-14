@@ -11,14 +11,30 @@ extension Image {
     
   
     enum Icon: String {
-        case home = "ic_home"
-        case profile = "ic_profile"
-        case settings = "ic_settings"
-        case back = "ic_back"
+        case google = "googleIcon"
+        case apple = "appleIcon"
+    }
+    
+    enum SystemIcon: String {
+        case eyeFill = "eye.fill"
+        case eyeSlashFill = "eye.slash.fill"
+        case lockFill = "lock.fill"
+        case envelopeFill = "envelope.fill"
     }
     
     enum Asset: String {
-        case placeholder = "img_placeholder"
-        case logo = "img_logo" 
+        case dialogMascot = "image"
+    }
+    
+    init(icon: Icon) {
+        self.init(icon.rawValue)
+    }
+    
+    init(asset: Asset) {
+        self.init(asset.rawValue)
+    }
+    
+    init(systemIcon: SystemIcon) {
+        self.init(systemName: systemIcon.rawValue)
     }
 }

@@ -8,34 +8,33 @@
 import SwiftUI
 
 struct CustomTextField: View {
-    var icon: String
+    var icon: Image.SystemIcon
     var placeholder: String
     @Binding var text: String
     
     var body: some View {
         HStack(spacing: 12) {
-            Image(systemName: icon)
-                .foregroundColor(Color(hex: "#887361"))
+            Image(systemIcon: icon)
+                .foregroundColor(.iconBrown)
                 .frame(width: 20)
             
             TextField(
                 "",
                 text: $text,
                 prompt: Text(placeholder)
-                    .foregroundColor(Color(hex: "#554434").opacity(0.5))
+                    .foregroundColor(Color.textBrown.opacity(0.5))
             )
-            .foregroundColor(Color(hex: "#554434"))
-            .font(.system(size: 16))
+            .appTextStyle(.body, color: .textBrown)
             .autocapitalization(.none)
             .disableAutocorrection(true)
         }
         .padding(.horizontal, 24)
         .frame(height: 52)
-        .background(Color(hex: "#F3FAFF"))
+        .background(Color.backgroundLightBlue)
         .clipShape(Capsule())
         .overlay(
             Capsule()
-                .stroke(Color(hex: "#DBC2AD"), lineWidth: 2)
+                .stroke(Color.borderBrown, lineWidth: 2)
         )
     }
 }
@@ -46,8 +45,8 @@ struct CustomTextField: View {
         Color.white.ignoresSafeArea()
         
         CustomTextField(
-            icon: "envelope.fill",
-            placeholder: "Email address",
+            icon: .envelopeFill,
+            placeholder: L10n.Auth.emailPlaceholder,
             text: .constant("")
         )
         .padding()

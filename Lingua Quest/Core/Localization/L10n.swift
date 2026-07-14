@@ -26,6 +26,17 @@ enum L10n {
         static var ok: String { localized("common.ok") }
     }
 
+    enum Auth {
+        static var emailPlaceholder: String { localized("auth.email_placeholder") }
+        static var passwordPlaceholder: String { localized("auth.password_placeholder") }
+        static var continueWithGoogle: String { localized("auth.continue_google") }
+        static var continueWithApple: String { localized("auth.continue_apple") }
+    }
+    
+    enum Components {
+        static var appName: String { localized("components.app_name") }
+    }
+
     private static func localized(_ key: String) -> String {
         return String(localized: String.LocalizationValue(key))
         }

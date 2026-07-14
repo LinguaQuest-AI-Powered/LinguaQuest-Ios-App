@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct CustomSecureField: View {
-    var icon: String
+    var icon: Image.SystemIcon
     var placeholder: String
     @Binding var text: String
     @Binding var isVisible: Bool
     
     var body: some View {
         HStack(spacing: 12) {
-            Image(systemName: icon)
-                .foregroundColor(Color(hex: "#887361"))
+            Image(systemIcon: icon)
+                .foregroundColor(.iconBrown)
                 .frame(width: 20)
             
             Group {
@@ -25,37 +25,36 @@ struct CustomSecureField: View {
                         "",
                         text: $text,
                         prompt: Text(placeholder)
-                            .foregroundColor(Color(hex: "#554434").opacity(0.5))
+                            .foregroundColor(Color.textBrown.opacity(0.5))
                     )
                 } else {
                     SecureField(
                         "",
                         text: $text,
                         prompt: Text(placeholder)
-                            .foregroundColor(Color(hex: "#554434").opacity(0.5))
+                            .foregroundColor(Color.textBrown.opacity(0.5))
                     )
                 }
             }
-            .foregroundColor(Color(hex: "#554434"))
-            .font(.system(size: 16))
+            .appTextStyle(.body, color: .textBrown)
             .autocapitalization(.none)
             .disableAutocorrection(true)
             
             Button(action: {
                 isVisible.toggle()
             }) {
-                Image(systemName: isVisible ? "eye.slash.fill" : "eye.fill")
-                    .foregroundColor(Color(hex: "#554434"))
+                Image(systemIcon: isVisible ? .eyeSlashFill : .eyeFill)
+                    .foregroundColor(.textBrown)
             }
         }
         .padding(.leading, 24)
         .padding(.trailing, 16)
         .frame(height: 52)
-        .background(Color(hex: "#F3FAFF"))
+        .background(Color.backgroundLightBlue)
         .clipShape(Capsule())
         .overlay(
             Capsule()
-                .stroke(Color(hex: "#DBC2AD"), lineWidth: 2)
+                .stroke(Color.borderBrown, lineWidth: 2)
         )
     }
 }
@@ -67,15 +66,15 @@ struct CustomSecureField: View {
         
         VStack(spacing: 20) {
             CustomSecureField(
-                icon: "lock.fill",
-                placeholder: "Password",
+                icon: .lockFill,
+                placeholder: L10n.Auth.passwordPlaceholder,
                 text: .constant(""),
                 isVisible: .constant(false)
             )
             
             CustomSecureField(
-                icon: "lock.fill",
-                placeholder: "Password",
+                icon: .lockFill,
+                placeholder: L10n.Auth.passwordPlaceholder,
                 text: .constant("MySecretPass123!"),
                 isVisible: .constant(true)
             )

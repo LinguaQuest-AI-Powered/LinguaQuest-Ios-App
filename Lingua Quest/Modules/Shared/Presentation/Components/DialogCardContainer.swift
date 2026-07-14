@@ -26,11 +26,11 @@ struct DialogCardContainer<Content: View>: View {
 
     // MARK: - Properties
 
-    private let mascotImage: String
+    private let mascotImage: Image.Asset
     private let content: Content
 
     init(
-        mascotImage: String = "image",
+        mascotImage: Image.Asset = .dialogMascot,
         @ViewBuilder content: () -> Content
     ) {
         self.mascotImage = mascotImage
@@ -65,7 +65,7 @@ struct DialogCardContainer<Content: View>: View {
 
 private extension DialogCardContainer {
     var mascotView: some View {
-        Image(mascotImage)
+        Image(asset: mascotImage)
             .resizable()
             .scaledToFit()
             .frame(width: mascotSize,
@@ -87,7 +87,7 @@ private extension DialogCardContainer {
     var cardBorder: some View {
         RoundedRectangle(cornerRadius: cornerRadius)
             .stroke(
-                Color(hex: "#CFE6F2"),
+                Color.borderLightBlue,
                 lineWidth: borderWidth
             )
     }
@@ -95,7 +95,7 @@ private extension DialogCardContainer {
     var decorativeBackground: some View {
         ZStack {
             Circle()
-                .fill(Color(hex: "#68FADD").opacity(0.2))
+                .fill(Color.glowTeal.opacity(0.2))
                 .frame(width: glowSize,
                        height: glowSize)
                 .blur(radius: glowBlur)
@@ -110,7 +110,7 @@ private extension DialogCardContainer {
                 )
 
             Circle()
-                .fill(Color(hex: "#D0AE00").opacity(0.2))
+                .fill(Color.glowYellow.opacity(0.2))
                 .frame(width: glowSize,
                        height: glowSize)
                 .blur(radius: glowBlur)
@@ -153,15 +153,15 @@ private extension View {
 
 #Preview("Dialog Card Container") {
     ZStack {
-        Color(hex: "#F3FAFF")
+        Color.backgroundLightBlue
             .ignoresSafeArea()
 
         DialogCardContainer {
             
             VStack(spacing: 20) {
 
-                Text("Lingua Quest!")
-                    .font(.largeTitle.bold())
+                Text(L10n.Components.appName)
+                    .appTextStyle(.largeTitle, color: .appTextDarkBlue)
 
                 Rectangle()
                     .fill(.gray.opacity(0.2))

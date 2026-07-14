@@ -16,3 +16,9 @@
 "common.retry" = "إعادة المحاولة";
 "common.cancel" = "إلغاء";
 "common.ok" = "حسنًا";
+
+"auth.email_placeholder" = "البريد الإلكتروني";
+"auth.password_placeholder" = "كلمة المرور";
+"auth.continue_google" = "المتابعة باستخدام جوجل";
+"auth.continue_apple" = "المتابعة باستخدام أبل";
+"components.app_name" = "لينجوا كويست!";

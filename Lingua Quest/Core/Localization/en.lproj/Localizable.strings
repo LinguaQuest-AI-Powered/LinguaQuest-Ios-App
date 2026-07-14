@@ -15,3 +15,9 @@
 "common.retry" = "Retry";
 "common.cancel" = "Cancel";
 "common.ok" = "OK";
+
+"auth.email_placeholder" = "Email address";
+"auth.password_placeholder" = "Password";
+"auth.continue_google" = "Continue with Google";
+"auth.continue_apple" = "Continue with Apple";
+"components.app_name" = "Lingua Quest!";
