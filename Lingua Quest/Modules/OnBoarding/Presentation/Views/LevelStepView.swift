@@ -32,7 +32,13 @@ struct LevelStepView: View {
                 .padding()
                 .background(
                     RoundedRectangle(cornerRadius: 16)
-                        .fill(Color("AppSecondaryColor").opacity(0.18))
+                        .fill(Color.white)
+                ).overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(
+                            Color("AppSecondaryColor") ,
+                            lineWidth: 1
+                        )
                 )
             
             VStack(spacing: 14) {
@@ -56,7 +62,7 @@ struct LevelStepView: View {
             )
         }
         .padding(24)
-        .background(Color(.systemBackground))
+        .background(Color("AppSecondaryColor").opacity(0.18))
     }
 }
 

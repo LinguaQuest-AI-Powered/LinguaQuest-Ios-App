@@ -11,6 +11,11 @@ import Foundation
 @MainActor
 final class OnboardingViewModel {
     private(set) var state = OnboardingUiState()
+    private var userPreferences: UserPreferencesProtocol
+
+    init(userPreferences: UserPreferencesProtocol? = nil) {
+        self.userPreferences = userPreferences ?? Resolver.shared.resolve(UserPreferencesProtocol.self)
+    }
 
     func onGetStartedTapped() {
         state.currentStep = .language
@@ -35,7 +40,10 @@ final class OnboardingViewModel {
 
     func onFinishTapped() {
         guard state.canContinueFromLevel else { return }
-        // Save onboarding completion / navigate to app
+        userPreferences.spokenLanguageCode = state.selectedSpokenLanguage?.code
+        userPreferences.learningLanguageCode = state.selectedLearningLanguage?.code
+        userPreferences.userLevel = state.selectedLevel?.rawValue
+        userPreferences.isOnboardingCompleted = true
     }
 
     func onLoginTapped() {

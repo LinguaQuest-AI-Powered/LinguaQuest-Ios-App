@@ -60,7 +60,7 @@ struct LanguageSelectorButton: View {
     LanguageSelectorButton(
         title: "I SPEAK...",
         placeholder: "Select language",
-        selectedLanguage: Language(name: "English", flag: .english),
+        selectedLanguage: Language(code: "en", name: "English", flag: .english),
         borderColor: Color.gray.opacity(0.15),
         action: {}
     )

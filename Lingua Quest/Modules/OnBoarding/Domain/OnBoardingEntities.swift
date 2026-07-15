@@ -16,6 +16,7 @@ enum OnboardingStep {
 
 struct Language: Identifiable, Equatable {
     let id = UUID()
+    let code: String
     let name: String
     let flag: ImageResource
 }

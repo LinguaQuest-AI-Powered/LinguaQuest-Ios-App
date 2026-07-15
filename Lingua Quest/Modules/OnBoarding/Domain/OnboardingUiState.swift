@@ -14,11 +14,11 @@ struct OnboardingUiState {
     var selectedLearningLanguage: Language?
     
     var availableLanguages: [Language] = [
-        Language(name: L10n.Onboarding.languageEnglish, flag: .english),
-        Language(name: L10n.Onboarding.languageSpanish, flag: .spanish),
-        Language(name: L10n.Onboarding.languageFrench, flag: .french),
-        Language(name: L10n.Onboarding.languageGerman, flag: .german),
-        Language(name: L10n.Onboarding.languageJapanese, flag: .japanese)
+        Language(code: "en", name: L10n.Onboarding.languageEnglish, flag: .english),
+        Language(code: "es", name: L10n.Onboarding.languageSpanish, flag: .spanish),
+        Language(code: "fr", name: L10n.Onboarding.languageFrench, flag: .french),
+        Language(code: "de", name: L10n.Onboarding.languageGerman, flag: .german),
+        Language(code: "ja", name: L10n.Onboarding.languageJapanese, flag: .japanese)
     ]
     
     var canContinueFromLanguage: Bool {
