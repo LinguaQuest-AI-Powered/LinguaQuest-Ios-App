@@ -9,7 +9,6 @@ import SwiftUI
 
 enum AppRoute: Hashable {
     case home
-    case splash
     case profile(userId: String)
     case settings
     case productDetails(id: String)
