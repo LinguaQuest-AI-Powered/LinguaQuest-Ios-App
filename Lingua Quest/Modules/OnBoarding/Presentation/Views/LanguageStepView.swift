@@ -47,7 +47,7 @@ struct LanguageStepView: View {
                 title: "I WANT TO LEARN...",
                 placeholder: "Select language",
                 selectedLanguage: state.selectedLearningLanguage,
-                borderColor: Color("PrimaryColor"),
+                borderColor: Color("AppPrimaryColor"),
                 action: {
                     showLearningLanguageSheet = true
                 }

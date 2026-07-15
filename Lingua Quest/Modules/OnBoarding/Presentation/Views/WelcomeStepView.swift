@@ -40,7 +40,7 @@ struct WelcomeStepView: View {
                 Text("""
                 Learn languages by
                 exploring the \(Text("real world!")
-                    .foregroundStyle(Color("PrimaryColor")))
+                    .foregroundStyle(Color("AppPrimaryColor")))
                 """)
                 .font(.system(size: 30, weight: .bold))
                 .multilineTextAlignment(.center)

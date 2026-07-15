@@ -36,9 +36,9 @@ struct CustomButton: View {
         if status == .enable {
             switch type {
             case .primary:
-                return Color("PrimaryColor")
+                return Color("AppPrimaryColor")
             case .secendry:
-                return Color("SecondaryColor")
+                return Color("AppSecondaryColor")
             case .custom(_, let buttonColor):
                 return buttonColor
             }

@@ -17,7 +17,7 @@ struct LevelCard: View {
             HStack(spacing: 16) {
                 ZStack {
                     Circle()
-                        .fill(isSelected ? Color("activeLevel").opacity(0.22) : Color("SecondaryColor").opacity(0.35))
+                        .fill(isSelected ? Color("activeLevel").opacity(0.22) : Color("AppSecondaryColor").opacity(0.35))
                         .frame(width: 64, height: 64)
                     
                     Image(iconName)
@@ -42,7 +42,7 @@ struct LevelCard: View {
             .overlay(
                 RoundedRectangle(cornerRadius: 18)
                     .stroke(
-                        isSelected ? Color("PrimaryColor") : Color("SecondaryColor").opacity(0.45),
+                        isSelected ? Color("AppPrimaryColor") : Color("AppSecondaryColor").opacity(0.45),
                         lineWidth: isSelected ? 2.5 : 1
                     )
             )

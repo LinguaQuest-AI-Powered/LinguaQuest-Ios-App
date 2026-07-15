@@ -29,12 +29,12 @@ struct LanguageRow: View {
             .padding()
             .background(
                 RoundedRectangle(cornerRadius: 16)
-                    .fill(isSelected ? Color("SecondaryColor").opacity(0.35) : Color.white)
+                    .fill(isSelected ? Color("AppSecondaryColor").opacity(0.35) : Color.white)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
                     .stroke(
-                        isSelected ? Color("PrimaryColor") : Color.gray.opacity(0.15),
+                        isSelected ? Color("AppPrimaryColor") : Color.gray.opacity(0.15),
                         lineWidth: isSelected ? 2 : 1
                     )
             )
