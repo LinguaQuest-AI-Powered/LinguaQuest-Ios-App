@@ -37,11 +37,9 @@ struct WelcomeStepView: View {
 
                 Spacer().frame(height: 28)
 
-                Text("""
-                Learn languages by
-                exploring the \(Text("real world!")
+                (Text(L10n.Onboarding.welcomeTitlePart1) +
+                Text(L10n.Onboarding.welcomeTitlePart2)
                     .foregroundStyle(Color("AppPrimaryColor")))
-                """)
                 .font(.system(size: 30, weight: .bold))
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 24)
@@ -52,13 +50,13 @@ struct WelcomeStepView: View {
                 VStack(spacing: 12) {
                     CustomButton(
                         type: .primary,
-                        text: "Get Started",
+                        text: L10n.Onboarding.welcomeGetStarted,
                         action: onGetStarted
                     )
 
                     CustomButton(
                         type: .secendry,
-                        text: "I already have an account",
+                        text: L10n.Onboarding.welcomeAlreadyHaveAccount,
                         action: onLogin
                     )
                 }

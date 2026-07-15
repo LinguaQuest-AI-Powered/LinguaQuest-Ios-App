@@ -21,10 +21,10 @@ struct LevelStepView: View {
                 .scaledToFit()
                 .frame(height: 200)
             
-            Text("What's your level?")
+            Text(L10n.Onboarding.levelStepTitle)
                 .font(.system(size: 28, weight: .bold))
             
-            Text("Choose where your journey begins,\nadventurer! I'll guide you through\nthe path that fits you best.")
+            Text(L10n.Onboarding.levelStepSubtitle)
                 .font(.system(size: 18))
                 .foregroundColor(Color("SecondaryButtonText"))
                 .multilineTextAlignment(.center)
@@ -49,7 +49,7 @@ struct LevelStepView: View {
             
             CustomButton(
                 type: .primary,
-                text: "Continue",
+                text: L10n.Onboarding.commonContinue,
                 action: onContinue,
                 status: state.canContinueFromLevel ? .enable : .disable,
                 trailing: Image(systemName: "arrow.right")

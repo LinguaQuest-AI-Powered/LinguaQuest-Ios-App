@@ -24,18 +24,18 @@ struct LanguageStepView: View {
                 .frame(height: 200)
                 .frame(maxWidth: .infinity)
 
-            Text("Choose your languages")
+            Text(L10n.Onboarding.languageStepTitle)
                 .font(.system(size: 28, weight: .bold))
                 .frame(maxWidth: .infinity, alignment: .center)
 
-            Text("Let's set up your learning journey!")
+            Text(L10n.Onboarding.languageStepSubtitle)
                 .font(.system(size: 18))
                 .foregroundColor(Color("SecondaryButtonText"))
                 .frame(maxWidth: .infinity, alignment: .center)
 
             LanguageSelectorButton(
-                title: "I SPEAK...",
-                placeholder: "Select language",
+                title: L10n.Onboarding.languageSelectorISpeak,
+                placeholder: L10n.Onboarding.languageSelectorPlaceholder,
                 selectedLanguage: state.selectedSpokenLanguage,
                 borderColor: Color.gray.opacity(0.15),
                 action: {
@@ -44,8 +44,8 @@ struct LanguageStepView: View {
             )
 
             LanguageSelectorButton(
-                title: "I WANT TO LEARN...",
-                placeholder: "Select language",
+                title: L10n.Onboarding.languageStepIWantToLearn,
+                placeholder: L10n.Onboarding.languageSelectorPlaceholder,
                 selectedLanguage: state.selectedLearningLanguage,
                 borderColor: Color("AppPrimaryColor"),
                 action: {
@@ -58,7 +58,7 @@ struct LanguageStepView: View {
 
             CustomButton(
                 type: .primary,
-                text: "Continue",
+                text: L10n.Onboarding.commonContinue,
                 action: onContinue,
                 status: state.canContinueFromLanguage ? .enable : .disable,
                 trailing: Image(systemName: "arrow.right")

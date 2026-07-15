@@ -30,7 +30,7 @@ struct LanguagePickerSheet: View {
                     }
                 }
             }
-            .navigationTitle("Choose language")
+            .navigationTitle(L10n.Onboarding.languagePickerTitle)
             .navigationBarTitleDisplayMode(.inline)
         }
     }

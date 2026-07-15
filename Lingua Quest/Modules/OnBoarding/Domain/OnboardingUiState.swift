@@ -7,7 +7,6 @@
 
 import Foundation
 
-//TODO: change hard coded texts
 struct OnboardingUiState {
     var currentStep: OnboardingStep = .welcome
     var selectedLevel: UserLevel?
@@ -15,11 +14,11 @@ struct OnboardingUiState {
     var selectedLearningLanguage: Language?
     
     var availableLanguages: [Language] = [
-        Language(name: "English", flag: .english),
-        Language(name: "Spanish", flag: .spanish),
-        Language(name: "French", flag: .french),
-        Language(name: "German", flag: .german),
-        Language(name: "Japanese", flag: .japanese)
+        Language(name: L10n.Onboarding.languageEnglish, flag: .english),
+        Language(name: L10n.Onboarding.languageSpanish, flag: .spanish),
+        Language(name: L10n.Onboarding.languageFrench, flag: .french),
+        Language(name: L10n.Onboarding.languageGerman, flag: .german),
+        Language(name: L10n.Onboarding.languageJapanese, flag: .japanese)
     ]
     
     var canContinueFromLanguage: Bool {

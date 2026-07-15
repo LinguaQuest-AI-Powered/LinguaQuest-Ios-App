@@ -27,20 +27,19 @@ enum UserLevel: String, CaseIterable, Identifiable {
 
     var id: String { rawValue }
 
-    //TODO: change hard coded texts 
     var title: String {
         switch self {
-        case .beginner: return "Beginner"
-        case .intermediate: return "Intermediate"
-        case .advanced: return "Advanced"
+        case .beginner: return L10n.Onboarding.beginnerTitle
+        case .intermediate: return L10n.Onboarding.intermediateTitle
+        case .advanced: return L10n.Onboarding.advancedTitle
         }
     }
 
     var subtitle: String {
         switch self {
-        case .beginner: return "I'm just starting my adventure"
-        case .intermediate: return "I can navigate basic paths"
-        case .advanced: return "Ready for grand challenges"
+        case .beginner: return L10n.Onboarding.beginnerDescription
+        case .intermediate: return L10n.Onboarding.intermediateDescription
+        case .advanced: return L10n.Onboarding.advancedDescription
         }
     }
 }
