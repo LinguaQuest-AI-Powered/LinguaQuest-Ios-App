@@ -1,0 +1,45 @@
+//
+//  OnboardingContainerView.swift
+//  Lingua Quest
+//
+//  Created by TaqieAllah on 15/07/2026.
+//
+
+import SwiftUI
+
+struct OnboardingContainerView: View {
+    @State private var viewModel = OnboardingViewModel()
+
+    var body: some View {
+        Group {
+            switch viewModel.state.currentStep {
+            case .welcome:
+                WelcomeStepView(
+                    onGetStarted: viewModel.onGetStartedTapped,
+                    onLogin: viewModel.onLoginTapped
+                )
+
+            case .language:
+                LanguageStepView(
+                    state: viewModel.state,
+                    onSelectSpokenLanguage: viewModel.onSpokenLanguageSelected,
+                    onSelectLearningLanguage: viewModel.onLearningLanguageSelected,
+                    onContinue: viewModel.onLanguageContinueTapped
+                )
+
+            case .level:
+                LevelStepView(
+                    state: viewModel.state,
+                    onSelectLevel: viewModel.onLevelSelected,
+                    onContinue: viewModel.onFinishTapped
+                )
+            }
+        }
+        .animation(.easeInOut, value: viewModel.state.currentStep)
+    }
+}
+
+
+#Preview {
+    OnboardingContainerView()
+}

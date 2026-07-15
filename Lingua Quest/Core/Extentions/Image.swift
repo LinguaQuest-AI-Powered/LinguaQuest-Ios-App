@@ -24,6 +24,22 @@ extension Image {
     
     enum Asset: String {
         case dialogMascot = "image"
+        case linquaQuest = "linguaQuest"
+        case bird = "bird"
+        case bird2 = "bird2"
+        case bird3 = "bird3"
+        case star = "star"
+        case star2 = "star2"
+        case ball = "ball"
+        case onboardingbackground = "onboarding"
+        case english = "English"
+        case french = "French"
+        case spanish = "Spanish"
+        case german = "German"
+        case japanease = "Japanese"
+        case advanced = "advanced"
+        case intermediate = "intermediate"
+        case beginner = "beginner"
     }
     
     init(icon: Icon) {

@@ -31,6 +31,7 @@ final class Router: ObservableObject, RouterProtocol {
     @ViewBuilder
     func view(for route: AppRoute) -> some View {
         switch route {
+        case .splash: SplashView()
         case .home: Text("**")
         case .profile(let userId): Text("** \(userId)")
         case .settings: Text("**")

@@ -36,8 +36,34 @@ enum L10n {
     enum Components {
         static var appName: String { localized("components.app_name") }
     }
+    enum Onboarding {
+        static var beginnerTitle: String { localized("onboarding.level.beginner.title") }
+        static var intermediateTitle: String { localized("onboarding.level.intermediate.title") }
+        static var advancedTitle: String { localized("onboarding.level.advanced.title") }
+        static var beginnerDescription: String { localized("onboarding.level.beginner.description") }
+        static var intermediateDescription: String { localized("onboarding.level.intermediate.description") }
+        static var advancedDescription: String { localized("onboarding.level.advanced.description") }
+        static var languageEnglish: String { localized("onboarding.language.english") }
+        static var languageSpanish: String { localized("onboarding.language.spanish") }
+        static var languageFrench: String { localized("onboarding.language.french") }
+        static var languageGerman: String { localized("onboarding.language.german") }
+        static var languageJapanese: String { localized("onboarding.language.japanese") }
+        static var languagePickerTitle: String { localized("onboarding.language_picker.title") }
+        static var languageSelectorISpeak: String { localized("onboarding.language_selector.i_speak") }
+        static var languageSelectorPlaceholder: String { localized("onboarding.language_selector.placeholder") }
+        static var languageStepTitle: String { localized("onboarding.language_step.title") }
+        static var languageStepSubtitle: String { localized("onboarding.language_step.subtitle") }
+        static var languageStepIWantToLearn: String { localized("onboarding.language_step.i_want_to_learn") }
+        static var commonContinue: String { localized("onboarding.common.continue") }
+        static var levelStepTitle: String { localized("onboarding.level_step.title") }
+        static var levelStepSubtitle: String { localized("onboarding.level_step.subtitle") }
+        static var welcomeTitlePart1: String { localized("onboarding.welcome.title_part1") }
+        static var welcomeTitlePart2: String { localized("onboarding.welcome.title_part2") }
+        static var welcomeGetStarted: String { localized("onboarding.welcome.get_started") }
+        static var welcomeAlreadyHaveAccount: String { localized("onboarding.welcome.already_have_account") }
+    }
 
     private static func localized(_ key: String) -> String {
         return String(localized: String.LocalizationValue(key))
-        }
+    }
 }

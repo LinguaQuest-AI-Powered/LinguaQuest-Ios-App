@@ -33,33 +33,9 @@
 		1529B37F3006410600CCD74A /* Lingua QuestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Lingua QuestUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		339F531C300665E200883556 /* Exceptions for "Lingua Quest" folder in "Lingua Quest" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				App/Config.xcconfig,
-			);
-			target = 1529B3653006410300CCD74A /* Lingua Quest */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-		339F531D300665E200883556 /* Exceptions for "Lingua Quest" folder in "Compile Sources" phase from "Lingua Quest" target */ = {
-			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
-			buildPhase = 1529B3623006410300CCD74A /* Sources */;
-			membershipExceptions = (
-				App/Config.xcconfig,
-			);
-		};
-/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		1529B3683006410300CCD74A /* Lingua Quest */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				339F531C300665E200883556 /* Exceptions for "Lingua Quest" folder in "Lingua Quest" target */,
-				339F531D300665E200883556 /* Exceptions for "Lingua Quest" folder in "Compile Sources" phase from "Lingua Quest" target */,
-			);
 			path = "Lingua Quest";
 			sourceTree = "<group>";
 		};
