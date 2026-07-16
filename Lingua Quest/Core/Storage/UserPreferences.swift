@@ -19,22 +19,22 @@ final class UserPreferences: UserPreferencesProtocol {
     private let defaults = UserDefaults.standard
     
     var isOnboardingCompleted: Bool {
-        get { defaults.bool(forKey: "isOnboardingCompleted") }
-        set { defaults.set(newValue, forKey: "isOnboardingCompleted") }
+        get { defaults.bool(forKey: AppConstants.UserDefaultsKeys.isOnboardingCompleted) }
+        set { defaults.set(newValue, forKey: AppConstants.UserDefaultsKeys.isOnboardingCompleted) }
     }
     
     var spokenLanguageCode: String? {
-        get { defaults.string(forKey: "spokenLanguageCode") }
-        set { defaults.set(newValue, forKey: "spokenLanguageCode") }
+        get { defaults.string(forKey: AppConstants.UserDefaultsKeys.spokenLanguageCode) }
+        set { defaults.set(newValue, forKey: AppConstants.UserDefaultsKeys.spokenLanguageCode) }
     }
     
     var learningLanguageCode: String? {
-        get { defaults.string(forKey: "learningLanguageCode") }
-        set { defaults.set(newValue, forKey: "learningLanguageCode") }
+        get { defaults.string(forKey: AppConstants.UserDefaultsKeys.learningLanguageCode) }
+        set { defaults.set(newValue, forKey: AppConstants.UserDefaultsKeys.learningLanguageCode) }
     }
     
     var userLevel: String? {
-        get { defaults.string(forKey: "userLevel") }
-        set { defaults.set(newValue, forKey: "userLevel") }
+        get { defaults.string(forKey: AppConstants.UserDefaultsKeys.userLevel) }
+        set { defaults.set(newValue, forKey: AppConstants.UserDefaultsKeys.userLevel) }
     }
 }

@@ -9,8 +9,8 @@ import SwiftUI
 
 struct RootView: View {
     @State private var router = Resolver.shared.resolve(Router.self)
-    @AppStorage("isOnboardingCompleted") private var isOnboardingCompleted = false
-    @AppStorage("isLoggedIn") private var isLoggedIn = false
+    @AppStorage(AppConstants.UserDefaultsKeys.isOnboardingCompleted) private var isOnboardingCompleted = false
+    @AppStorage(AppConstants.UserDefaultsKeys.isLoggedIn) private var isLoggedIn = false
     
     var body: some View {
         Group {
