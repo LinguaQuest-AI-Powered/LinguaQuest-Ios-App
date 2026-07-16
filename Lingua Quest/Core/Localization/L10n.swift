@@ -81,6 +81,7 @@ enum L10n {
         static var languageStepTitle: String { localized("onboarding.language_step.title") }
         static var languageStepSubtitle: String { localized("onboarding.language_step.subtitle") }
         static var languageStepIWantToLearn: String { localized("onboarding.language_step.i_want_to_learn") }
+        static var searchLanguage: String { localized("onboarding.search_language") }
         static var commonContinue: String { localized("onboarding.common.continue") }
         static var levelStepTitle: String { localized("onboarding.level_step.title") }
         static var levelStepSubtitle: String { localized("onboarding.level_step.subtitle") }

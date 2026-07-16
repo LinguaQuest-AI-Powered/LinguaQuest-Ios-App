@@ -63,6 +63,7 @@
 "onboarding.language_step.title" = "Choose your languages";
 "onboarding.language_step.subtitle" = "Let's set up your learning journey!";
 "onboarding.language_step.i_want_to_learn" = "I WANT TO LEARN...";
+"onboarding.search_language" = "Search for a language...";
 "onboarding.common.continue" = "Continue";
 "onboarding.level_step.title" = "What's your level?";
 "onboarding.level_step.subtitle" = "Choose where your journey begins,\nadventurer! I'll guide you through\nthe path that fits you best.";

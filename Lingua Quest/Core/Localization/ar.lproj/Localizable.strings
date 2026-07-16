@@ -64,6 +64,7 @@
 "onboarding.language_step.title" = "اختر لغاتك";
 "onboarding.language_step.subtitle" = "دعنا نعد رحلة تعلمك!";
 "onboarding.language_step.i_want_to_learn" = "أريد أن أتعلم...";
+"onboarding.search_language" = "ابحث عن لغة...";
 "onboarding.common.continue" = "متابعة";
 "onboarding.level_step.title" = "ما هو مستواك؟";
 "onboarding.level_step.subtitle" = "اختر من أين تبدأ رحلتك،\nأيها المغامر! سأرشدك خلال\nالمسار الأنسب لك.";
