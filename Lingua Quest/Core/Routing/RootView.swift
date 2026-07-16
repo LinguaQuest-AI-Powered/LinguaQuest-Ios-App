@@ -34,7 +34,7 @@ struct RootView: View {
                     case .editProfile: Text("**")
                     }
                 }
-                .environmentObject(router)
+                .environment(router)
             }
         }
         .task {
