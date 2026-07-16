@@ -43,7 +43,7 @@ final class VerifyEmailViewModel {
     }
     
     func verifyCode() {
-        print("Verify code tapped: \(otpCode)")
+        router.push(.resetPassword)
     }
     
     func resendCode() {

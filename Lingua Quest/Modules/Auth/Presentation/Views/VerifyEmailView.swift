@@ -74,17 +74,6 @@ struct VerifyEmailView: View {
                                 action: { viewModel.verifyCode() },
                                 trailing:  Image(systemIcon: .checkmarkCircleFill)
                             )
-                            
-                            Button(action: {
-                                viewModel.navigateToLogin()
-                            }) {
-                                HStack(spacing: 8) {
-                                    Image(systemIcon: .arrowLeft)
-                                    Text(L10n.Auth.backToLogin)
-                                }
-                                .appTextStyle(.buttonBold, color: .darkGreen)
-                            }
-                            .padding(.bottom, 8)
                         }
                     }
                     .padding(.horizontal, 24)

@@ -63,6 +63,9 @@ final class Router: RouterProtocol {
         case .verifyEmail:
             let viewModel = Resolver.shared.resolve(VerifyEmailViewModel.self)
             VerifyEmailView(viewModel: viewModel)
+        case .resetPassword:
+            let viewModel = Resolver.shared.resolve(ResetPasswordViewModel.self)
+            ResetPasswordView(viewModel: viewModel)
         }
     }
 }

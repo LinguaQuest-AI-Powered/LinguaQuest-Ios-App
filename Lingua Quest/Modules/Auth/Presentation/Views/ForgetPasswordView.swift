@@ -46,16 +46,6 @@ struct ForgetPasswordView: View {
                                 trailing: Image(systemIcon: .arrowRight)
                             )
                             
-                            Button(action: {
-                                viewModel.navigateToLogin()
-                            }) {
-                                HStack(spacing: 8) {
-                                    Image(systemIcon: .arrowLeft)
-                                    Text(L10n.Auth.backToLogin)
-                                }
-                                .appTextStyle(.body, color: .appPrimary)
-                            }
-                            .padding(.bottom, 8)
                         }
                     }
                     .padding(.horizontal, 24)

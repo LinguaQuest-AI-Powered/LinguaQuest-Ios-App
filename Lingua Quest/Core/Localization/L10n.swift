@@ -52,6 +52,15 @@ enum L10n {
         static var sendResetLink: String { localized("auth.send_reset_link") }
         static var backToLogin: String { localized("auth.back_to_login") }
         
+        static var newPasswordTitle: String { localized("auth.new_password_title") }
+        static var newPasswordDesc: String { localized("auth.new_password_desc") }
+        static var newPasswordLabel: String { localized("auth.new_password_label") }
+        static var newPasswordPlaceholder: String { localized("auth.new_password_placeholder") }
+        static var passwordStrength: String { localized("auth.password_strength") }
+        static var confirmNewPasswordLabel: String { localized("auth.confirm_new_password_label") }
+        static var confirmNewPasswordPlaceholder: String { localized("auth.confirm_new_password_placeholder") }
+        static var resetPassword: String { localized("auth.reset_password") }
+        
         static var verifyYourEmail: String { localized("auth.verify_your_email") }
         static var verifyEmailDesc: String { localized("auth.verify_email_desc") }
         static var resendCode: String { localized("auth.resend_code") }
