@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Swinject
-internal import Combine
+import Combine
 
 protocol RouterProtocol: AnyObject {
     func push(_ route: AppRoute)

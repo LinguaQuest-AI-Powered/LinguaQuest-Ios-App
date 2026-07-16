@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    @State var viewModel: LoginViewModel
+    @StateObject var viewModel: LoginViewModel
     
     var body: some View {
         ZStack {

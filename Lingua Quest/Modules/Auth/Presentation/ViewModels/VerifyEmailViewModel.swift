@@ -2,16 +2,14 @@
 //  VerifyEmailViewModel.swift
 //  Lingua Quest
 //
-//  Created by Al3dwy on 15/07/2026.
 //
-import Observation
 import Foundation
+import Combine
 
 
-@Observable
 @MainActor
-final class VerifyEmailViewModel {
-     var otpCode = "" {
+final class VerifyEmailViewModel: ObservableObject {
+     @Published var otpCode = "" {
         didSet {
             if otpCode.count > 4 {
                 otpCode = String(otpCode.prefix(4))
@@ -19,7 +17,7 @@ final class VerifyEmailViewModel {
         }
     }
     
-     var timeRemaining = 59
+     @Published var timeRemaining = 59
     
     private let router: RouterProtocol
     private var timer: Timer?

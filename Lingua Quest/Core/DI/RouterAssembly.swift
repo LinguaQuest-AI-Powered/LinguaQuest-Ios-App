@@ -8,7 +8,7 @@
 
 import SwiftUI
 import Swinject
-internal import Combine
+import Combine
 
 final class RouterAssembly: Assembly {
     func assemble(container: Container) {

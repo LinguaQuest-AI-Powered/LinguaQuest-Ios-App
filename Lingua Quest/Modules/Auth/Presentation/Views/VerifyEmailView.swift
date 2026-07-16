@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct VerifyEmailView: View {
-    @State var viewModel: VerifyEmailViewModel
+    @StateObject var viewModel: VerifyEmailViewModel
     @FocusState private var isKeyboardShowing: Bool
     
     var body: some View {
