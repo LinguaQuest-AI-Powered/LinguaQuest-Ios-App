@@ -11,6 +11,8 @@ internal import Combine
 
 protocol RouterProtocol: AnyObject {
     func push(_ route: AppRoute)
+    func pushAndReplace(_ route: AppRoute)
+    func pushAndRemoveAll(_ route: AppRoute)
     func pop()
     func popToRoot()
     func present(_ sheet: AppSheet)
@@ -23,6 +25,19 @@ final class Router: ObservableObject, RouterProtocol {
     @Published var presentedSheet: AppSheet?
 
     func push(_ route: AppRoute) { path.append(route) }
+    
+    func pushAndReplace(_ route: AppRoute) {
+        if !path.isEmpty {
+            path.removeLast()
+        }
+        path.append(route)
+    }
+    
+    func pushAndRemoveAll(_ route: AppRoute) {
+        path.removeLast(path.count)
+        path.append(route)
+    }
+    
     func pop() { guard !path.isEmpty else { return }; path.removeLast() }
     func popToRoot() { path.removeLast(path.count) }
     func present(_ sheet: AppSheet) { presentedSheet = sheet }
