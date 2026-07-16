@@ -13,20 +13,12 @@ struct VerifyEmailView: View {
     
     var body: some View {
         ZStack {
-            Color.white.ignoresSafeArea()
+            Color.appViewBackground.ignoresSafeArea()
             
             VStack(spacing: 0) {
                 
                 ScrollView(showsIndicators: false) {
-                    VStack(spacing: 0) {
-                        
-                        Image(asset: .bird)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 150)
-                            .padding(.top, 16)
-                            .zIndex(1)
-                        
+                    DialogCardContainer(mascotImage: .bird) {
                         VStack(spacing: 24) {
                             
                             VStack(spacing: 16) {
@@ -40,7 +32,6 @@ struct VerifyEmailView: View {
                                     .multilineTextAlignment(.center)
                                     .padding(.horizontal, 8)
                             }
-                            .padding(.top, 32)
                             ZStack {
                                 HStack(spacing: 16) {
                                     ForEach(0..<4, id: \.self) { index in
@@ -84,8 +75,6 @@ struct VerifyEmailView: View {
                                 trailing:  Image(systemIcon: .checkmarkCircleFill)
                             )
                             
-                            Spacer(minLength: 40)
-                            
                             Button(action: {
                                 viewModel.navigateToLogin()
                             }) {
@@ -95,24 +84,10 @@ struct VerifyEmailView: View {
                                 }
                                 .appTextStyle(.buttonBold, color: .darkGreen)
                             }
-                            .padding(.bottom, 32)
+                            .padding(.bottom, 8)
                         }
-                        .padding(.horizontal, 24)
-                        .background(
-                            RoundedRectangle(cornerRadius: 32)
-                                .fill(LinearGradient(
-                                    colors: [Color.backgroundLightBlue.opacity(0.8), Color.white, Color.glowYellow.opacity(0.2)],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                ))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 32)
-                                        .stroke(Color.borderLightBlue.opacity(0.5), lineWidth: 1)
-                                )
-                        )
-                        .offset(y: -40)
                     }
-                    .padding(.horizontal, 16)
+                    .padding(.horizontal, 24)
                 }
             }
         }

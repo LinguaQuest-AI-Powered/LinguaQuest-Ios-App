@@ -68,7 +68,7 @@ struct LevelStepView: View {
             .padding(.horizontal, 24)
             .padding(.bottom, 24)
         }
-        .background(Color.appSecondary.opacity(0.18))
+        .background(Color.appViewBackground.ignoresSafeArea())
         .alert(L10n.Onboarding.alertErrorTitle, isPresented: $showAlert) {
             Button(L10n.Common.ok, role: .cancel) { }
         } message: {

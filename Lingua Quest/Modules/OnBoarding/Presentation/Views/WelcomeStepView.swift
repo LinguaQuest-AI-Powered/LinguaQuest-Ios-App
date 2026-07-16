@@ -14,8 +14,7 @@ struct WelcomeStepView: View {
     var body: some View {
         ZStack {
 
-            Image(asset: .onboardingbackground)
-                .resizable()
+            Color.appViewBackground
                 .ignoresSafeArea()
 
             Image(asset: .star2)

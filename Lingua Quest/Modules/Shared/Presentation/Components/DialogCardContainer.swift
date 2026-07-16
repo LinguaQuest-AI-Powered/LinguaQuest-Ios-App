@@ -13,9 +13,9 @@ struct DialogCardContainer<Content: View>: View {
 
     private var mascotSize: CGFloat { 192 }
     private var mascotOffset: CGFloat {
-        mascotSize * 0.78
+        mascotSize * 0.5
     }
-    private var mascotTopSpacing: CGFloat { 30 }
+    private var mascotTopSpacing: CGFloat { 120 }
     private var horizontalPadding: CGFloat { 20 }
     private var bottomPadding: CGFloat { 30 }
     private var cornerRadius: CGFloat { 48 }
@@ -57,7 +57,7 @@ struct DialogCardContainer<Content: View>: View {
         }
         .compositingGroup()
         .dialogCardShadow()
-        .padding(.top, 20)
+        .padding(.top, mascotOffset + 10)
     }
 }
 
@@ -156,7 +156,7 @@ private extension View {
         Color.backgroundLightBlue
             .ignoresSafeArea()
 
-        DialogCardContainer {
+        DialogCardContainer(mascotImage: .bird)  {
             
             VStack(spacing: 20) {
 

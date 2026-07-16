@@ -13,22 +13,11 @@ struct LoginView: View {
     var body: some View {
         ZStack {
             
-            Color.white.ignoresSafeArea()
+            Color.appViewBackground.ignoresSafeArea()
             
             ScrollView(showsIndicators: false) {
-                VStack(spacing: 0) {
-                    
-                    
-                    Image(.loginBird)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 150)
-                        .padding(.top, 40)
-                        .zIndex(1)
-                    
-                    
+                DialogCardContainer(mascotImage: .loginBird) {
                     VStack(spacing: 24) {
-                        
                         
                         VStack(spacing: 8) {
                             Text(L10n.Auth.welcomeBack)
@@ -38,8 +27,6 @@ struct LoginView: View {
                                 .appTextStyle(.body, color: .textBrown)
                                 .opacity(0.8)
                         }
-                        .padding(.top, 32)
-                        
                         
                         VStack(spacing: 16) {
                             CustomTextField(
@@ -56,7 +43,6 @@ struct LoginView: View {
                             )
                         }
                         
-                        
                         HStack {
                             Button(action: {
                                 viewModel.forgotPassword()
@@ -67,7 +53,6 @@ struct LoginView: View {
                             Spacer()
                         }
                         
-                        
                         CustomButton(
                             type: .primary,
                             text: L10n.Auth.logIn,
@@ -75,7 +60,6 @@ struct LoginView: View {
                             trailing: Image(systemIcon: .arrowRight)
                         )
                         .padding(.top, 8)
-                        
                         
                         HStack(spacing: 8) {
                             Rectangle()
@@ -94,7 +78,6 @@ struct LoginView: View {
                         }
                         .padding(.vertical, 8)
                         
-                        
                         VStack(spacing: 16) {
                             SocialLoginButton(
                                 icon: .google,
@@ -109,9 +92,6 @@ struct LoginView: View {
                             )
                         }
                         
-                        Spacer(minLength: 32)
-                        
-                        
                         HStack(spacing: 4) {
                             Text(L10n.Auth.newHere)
                                 .appTextStyle(.body, color: .textBrown)
@@ -123,24 +103,10 @@ struct LoginView: View {
                                     .appTextStyle(.buttonBold, color: .textBrown)
                             }
                         }
-                        .padding(.bottom, 24)
+                        .padding(.bottom, 8)
                     }
-                    .padding(.horizontal, 24)
-                    .background(
-                        RoundedRectangle(cornerRadius: 32)
-                            .fill(LinearGradient(
-                                colors: [Color.backgroundLightBlue.opacity(0.8), Color.white, Color.glowYellow.opacity(0.2)],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            ))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 32)
-                                    .stroke(Color.borderLightBlue.opacity(0.5), lineWidth: 1)
-                            )
-                    )
-                    .offset(y: -40)
                 }
-                .padding(.horizontal, 16)
+                .padding(.horizontal, 24)
             }
         }
     }

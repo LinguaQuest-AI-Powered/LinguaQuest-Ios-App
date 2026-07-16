@@ -67,7 +67,7 @@ struct LanguageStepView: View {
             )
         }
         .padding(24)
-        .background(Color(.systemBackground))
+        .background(Color.appViewBackground.ignoresSafeArea())
         .alert(L10n.Onboarding.alertErrorTitle, isPresented: $showAlert) {
             Button(L10n.Common.ok, role: .cancel) { }
         } message: {
