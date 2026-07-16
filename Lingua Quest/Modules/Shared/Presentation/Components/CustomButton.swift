@@ -36,9 +36,9 @@ struct CustomButton: View {
         if status == .enable {
             switch type {
             case .primary:
-                return Color("AppPrimaryColor")
+                return Color.appPrimary
             case .secendry:
-                return Color("AppSecondaryColor")
+                return Color.appSecondary
             case .custom(_, let buttonColor):
                 return buttonColor
             }
@@ -51,9 +51,9 @@ struct CustomButton: View {
         if status == .enable {
             switch type {
             case .primary:
-                return Color("PrimaryButtonText")
+                return Color.primaryButtonText
             case .secendry:
-                return Color("SecondaryButtonText")
+                return Color.secondaryButtonText
             case .custom(let textColor, _):
                 return textColor
             }
@@ -69,16 +69,15 @@ struct CustomButton: View {
             HStack(spacing: 8) {
                 if let leading {
                     leading
-                        .font(.system(size: 14))
+                        .font(AppTextStyle.captionMedium.font)
                 }
                 
                 Text(text)
-                    .font(.system(size: 16))
-                    .fontWeight(.medium)
+                    .font(AppTextStyle.buttonMedium.font)
                 
                 if let trailing {
                     trailing
-                        .font(.system(size: 14))
+                        .font(AppTextStyle.captionMedium.font)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: 32)

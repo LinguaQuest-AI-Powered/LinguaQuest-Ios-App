@@ -22,11 +22,10 @@ struct LevelStepView: View {
                 .frame(height: 200)
             
             Text(L10n.Onboarding.levelStepTitle)
-                .font(.system(size: 28, weight: .bold))
+                .appTextStyle(.headline)
             
             Text(L10n.Onboarding.levelStepSubtitle)
-                .font(.system(size: 18))
-                .foregroundColor(Color("SecondaryButtonText"))
+                .appTextStyle(.subtitle, color: .secondaryButtonText)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding()
@@ -36,7 +35,7 @@ struct LevelStepView: View {
                 ).overlay(
                     RoundedRectangle(cornerRadius: 16)
                         .stroke(
-                            Color("AppSecondaryColor") ,
+                            Color.appSecondary ,
                             lineWidth: 1
                         )
                 )
@@ -62,7 +61,7 @@ struct LevelStepView: View {
             )
         }
         .padding(24)
-        .background(Color("AppSecondaryColor").opacity(0.18))
+        .background(Color.appSecondary.opacity(0.18))
     }
 }
 

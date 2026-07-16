@@ -25,12 +25,11 @@ struct LanguageStepView: View {
                 .frame(maxWidth: .infinity)
 
             Text(L10n.Onboarding.languageStepTitle)
-                .font(.system(size: 28, weight: .bold))
+                .appTextStyle(.headline)
                 .frame(maxWidth: .infinity, alignment: .center)
 
             Text(L10n.Onboarding.languageStepSubtitle)
-                .font(.system(size: 18))
-                .foregroundColor(Color("SecondaryButtonText"))
+                .appTextStyle(.subtitle, color: .secondaryButtonText)
                 .frame(maxWidth: .infinity, alignment: .center)
 
             LanguageSelectorButton(
@@ -47,7 +46,7 @@ struct LanguageStepView: View {
                 title: L10n.Onboarding.languageStepIWantToLearn,
                 placeholder: L10n.Onboarding.languageSelectorPlaceholder,
                 selectedLanguage: state.selectedLearningLanguage,
-                borderColor: Color("AppPrimaryColor"),
+                borderColor: Color.appPrimary,
                 action: {
                     showLearningLanguageSheet = true
                 }

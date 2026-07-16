@@ -17,21 +17,19 @@ struct LevelCard: View {
             HStack(spacing: 16) {
                 ZStack {
                     Circle()
-                        .fill(isSelected ? Color("activeLevel").opacity(0.22) : Color("AppSecondaryColor").opacity(0.35))
+                        .fill(isSelected ? Color.activeLevel.opacity(0.22) : Color.appSecondary.opacity(0.35))
                         .frame(width: 64, height: 64)
                     
                     Image(iconName)
-                        .foregroundColor(isSelected ? Color("activeLevel") : .brown)
+                        .foregroundColor(isSelected ? Color.activeLevel : .brown)
                 }
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(level.title)
-                        .font(.system(size: 22, weight: .semibold))
-                        .foregroundColor(.black)
+                        .appTextStyle(.cardTitle, color: .black)
                     
                     Text(level.subtitle)
-                        .font(.system(size: 14))
-                        .foregroundColor(Color("SecondaryButtonText"))
+                        .appTextStyle(.caption, color: .secondaryButtonText)
                         .multilineTextAlignment(.leading)
                 }
                 
@@ -42,7 +40,7 @@ struct LevelCard: View {
             .overlay(
                 RoundedRectangle(cornerRadius: 18)
                     .stroke(
-                        isSelected ? Color("AppPrimaryColor") : Color("AppSecondaryColor").opacity(0.45),
+                        isSelected ? Color.appPrimary : Color.appSecondary.opacity(0.45),
                         lineWidth: isSelected ? 2.5 : 1
                     )
             )

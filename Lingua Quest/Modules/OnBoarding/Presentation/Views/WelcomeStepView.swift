@@ -39,8 +39,8 @@ struct WelcomeStepView: View {
 
                 (Text(L10n.Onboarding.welcomeTitlePart1) +
                 Text(L10n.Onboarding.welcomeTitlePart2)
-                    .foregroundStyle(Color("AppPrimaryColor")))
-                .font(.system(size: 30, weight: .bold))
+                    .foregroundStyle(Color.appPrimary))
+                .appTextStyle(.title)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 24)
 

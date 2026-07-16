@@ -19,6 +19,17 @@ extension Color {
 //    static let appSuccess = Color("SuccessColor")
     
     
+    // Brand Colors
+    static let appPrimary = Color("AppPrimaryColor")
+    static let appSecondary = Color("AppSecondaryColor")
+    
+    // Button Text Colors
+    static let primaryButtonText = Color("PrimaryButtonText")
+    static let secondaryButtonText = Color("SecondaryButtonText")
+    
+    // Level Colors
+    static let activeLevel = Color("activeLevel")
+    
     // UI Components Colors
     static let appBackgroundLightBlue = Color("BackgroundLightBlue")
     static let appBorderBrown = Color("BorderBrown")
