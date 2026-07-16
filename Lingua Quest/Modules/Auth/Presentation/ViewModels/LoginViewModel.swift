@@ -39,6 +39,6 @@ final class LoginViewModel {
     }
     
     func navigateToSignUp() {
-        router.pushAndReplace(.signUp)
+        router.push(.signUp)
     }
 }

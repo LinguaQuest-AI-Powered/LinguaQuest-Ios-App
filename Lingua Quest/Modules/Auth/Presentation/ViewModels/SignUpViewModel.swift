@@ -36,6 +36,6 @@ final class SignUpViewModel {
     }
     
     func navigateToLogin() {
-        router.pushAndReplace(.login)
+        router.popToRoot()
     }
 }
