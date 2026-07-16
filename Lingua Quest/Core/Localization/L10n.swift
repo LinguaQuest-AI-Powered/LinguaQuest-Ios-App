@@ -51,6 +51,11 @@ enum L10n {
         static var enterEmail: String { localized("auth.enter_email") }
         static var sendResetLink: String { localized("auth.send_reset_link") }
         static var backToLogin: String { localized("auth.back_to_login") }
+        
+        static var verifyYourEmail: String { localized("auth.verify_your_email") }
+        static var verifyEmailDesc: String { localized("auth.verify_email_desc") }
+        static var resendCode: String { localized("auth.resend_code") }
+        static var verify: String { localized("auth.verify") }
     }
     
     enum Components {

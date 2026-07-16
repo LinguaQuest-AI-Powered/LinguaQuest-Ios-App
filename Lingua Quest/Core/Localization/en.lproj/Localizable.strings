@@ -38,6 +38,10 @@
 "auth.enter_email" = "Enter your email";
 "auth.send_reset_link" = "Send reset link";
 "auth.back_to_login" = "Back to Login";
+"auth.verify_your_email" = "Verify your email";
+"auth.verify_email_desc" = "We sent a code to your inbox.\nPlease enter it below.";
+"auth.resend_code" = "Resend code";
+"auth.verify" = "VERIFY";
 "components.app_name" = "Lingua Quest!";
 
 "onboarding.level.beginner.title" = "Beginner";

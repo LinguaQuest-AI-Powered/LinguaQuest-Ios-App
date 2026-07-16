@@ -20,6 +20,7 @@ final class ForgetPasswordViewModel {
     
     func sendResetLink() {
         print("Send reset link tapped for \(email)")
+        router.push(.verifyEmail)
     }
     
     func navigateToLogin() {

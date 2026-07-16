@@ -39,6 +39,10 @@
 "auth.enter_email" = "أدخل بريدك الإلكتروني";
 "auth.send_reset_link" = "إرسال رابط إعادة التعيين";
 "auth.back_to_login" = "العودة إلى تسجيل الدخول";
+"auth.verify_your_email" = "تأكيد بريدك الإلكتروني";
+"auth.verify_email_desc" = "أرسلنا رمزاً إلى بريدك الوارد.\nيرجى إدخاله أدناه.";
+"auth.resend_code" = "إعادة إرسال الرمز";
+"auth.verify" = "تأكيد";
 "components.app_name" = "لينجوا كويست!";
 
 "onboarding.level.beginner.title" = "مبتدئ";

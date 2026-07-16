@@ -24,6 +24,8 @@ extension Image {
         case arrowLeft = "arrow.left"
         case personFill = "person.fill"
         case chevronLeft = "chevron.left"
+        case checkmarkCircleFill = "checkmark.circle.fill"
+        case timer = "timer"
     }
     
     enum Asset: String {
@@ -35,6 +37,7 @@ extension Image {
         case loginBird = "login_bird"
         case registerationBird = "registeration_bird"
         case forgetPasswordBird = "forget_pass_bird"
+        case verifyEmailBird = "verify_email_bird"
         case star = "star"
         case star2 = "star2"
         case ball = "ball"
