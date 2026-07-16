@@ -10,6 +10,7 @@ import SwiftUI
 struct RootView: View {
     @StateObject private var router = Resolver.shared.resolve(Router.self)
     @AppStorage("isOnboardingCompleted") private var isOnboardingCompleted = false
+    @AppStorage("isLoggedIn") private var isLoggedIn = false
     
     var body: some View {
         Group {
@@ -17,14 +18,19 @@ struct RootView: View {
                 OnboardingContainerView()
             } else {
                 NavigationStack(path: $router.path) {
-                    router.view(for: .home)
-                        .navigationDestination(for: AppRoute.self) { route in
-                            router.view(for: route)
+                    Group {
+                        if isLoggedIn {
+                            router.view(for: .home)
+                        } else {
+                            router.view(for: .login)
                         }
+                    }
+                    .navigationDestination(for: AppRoute.self) { route in
+                        router.view(for: route)
+                    }
                 }
                 .sheet(item: $router.presentedSheet) { sheet in
                     switch sheet {
-                    case .login: Text("**")
                     case .editProfile: Text("**")
                     }
                 }

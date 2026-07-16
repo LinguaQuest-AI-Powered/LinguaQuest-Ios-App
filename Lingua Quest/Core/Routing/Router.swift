@@ -35,6 +35,18 @@ final class Router: ObservableObject, RouterProtocol {
         case .profile(let userId): Text("** \(userId)")
         case .settings: Text("**")
         case .productDetails(let id): Text("** \(id)")
+        case .login: 
+            let viewModel = Resolver.shared.resolve(LoginViewModel.self)
+            LoginView(viewModel: viewModel)
+        case .signUp:
+            let viewModel = Resolver.shared.resolve(SignUpViewModel.self)
+            SignUpView(viewModel: viewModel)
+        case .forgetPassword:
+            let viewModel = Resolver.shared.resolve(ForgetPasswordViewModel.self)
+            ForgetPasswordView(viewModel: viewModel)
+        case .verifyEmail:
+            let viewModel = Resolver.shared.resolve(VerifyEmailViewModel.self)
+            VerifyEmailView(viewModel: viewModel)
         }
     }
 }
