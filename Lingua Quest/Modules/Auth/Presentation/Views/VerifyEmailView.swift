@@ -16,23 +16,6 @@ struct VerifyEmailView: View {
             Color.white.ignoresSafeArea()
             
             VStack(spacing: 0) {
-                HStack {
-                    Button(action: {
-                        viewModel.navigateToLogin()
-                    }) {
-                        Circle()
-                            .fill(Color.borderLightBlue.opacity(0.3))
-                            .frame(width: 44, height: 44)
-                            .overlay(
-                                Image(systemIcon: .chevronLeft)
-                                    .foregroundColor(Color.textBrown)
-                            )
-                    }
-                    Spacer()
-                }
-                .padding(.horizontal, 24)
-                .padding(.top, 16)
-                .zIndex(2)
                 
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 0) {
@@ -134,6 +117,11 @@ struct VerifyEmailView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                CustomBackButton(action: { viewModel.navigateToLogin() })
+            }
+        }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 isKeyboardShowing = true
