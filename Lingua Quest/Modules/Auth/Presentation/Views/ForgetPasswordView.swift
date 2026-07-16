@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ForgetPasswordView: View {
-    @StateObject var viewModel: ForgetPasswordViewModel
+    @State var viewModel: ForgetPasswordViewModel
     
     var body: some View {
         ZStack {

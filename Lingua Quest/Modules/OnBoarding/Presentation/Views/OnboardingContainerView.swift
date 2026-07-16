@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OnboardingContainerView: View {
-    @StateObject private var viewModel = Resolver.shared.resolve(OnboardingViewModel.self)
+    @State private var viewModel = Resolver.shared.resolve(OnboardingViewModel.self)
     var body: some View {
         NavigationStack {
             Group {

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RootView: View {
-    @StateObject private var router = Resolver.shared.resolve(Router.self)
+    @State private var router = Resolver.shared.resolve(Router.self)
     @AppStorage("isOnboardingCompleted") private var isOnboardingCompleted = false
     @AppStorage("isLoggedIn") private var isLoggedIn = false
     

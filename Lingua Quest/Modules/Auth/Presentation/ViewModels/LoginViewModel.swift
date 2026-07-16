@@ -5,14 +5,15 @@
 //  Created by Al3dwy on 14/07/2026.
 //
 import Foundation
-import Combine
+import Observation
+@Observable
 @MainActor
-final class LoginViewModel: ObservableObject {
+final class LoginViewModel {
    
     
-    @Published var email = ""
-    @Published var password = ""
-    @Published var isPasswordVisible = false
+    var email = ""
+    var password = ""
+    var isPasswordVisible = false
     
     private let router: RouterProtocol
     

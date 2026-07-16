@@ -5,10 +5,11 @@
 //  Created by Al3dwy on 15/07/2026.
 //
 import Foundation
-import Combine
+import Observation
+@Observable
 @MainActor
-final class ForgetPasswordViewModel: ObservableObject {
-     @Published var email = ""
+final class ForgetPasswordViewModel {
+     var email = ""
     
     private let router: RouterProtocol
     

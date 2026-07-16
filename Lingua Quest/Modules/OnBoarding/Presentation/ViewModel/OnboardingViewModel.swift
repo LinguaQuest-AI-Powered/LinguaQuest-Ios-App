@@ -6,11 +6,12 @@
 //
 
 import Foundation
-import Combine
+import Observation
 
+@Observable
 @MainActor
-final class OnboardingViewModel: ObservableObject {
-    @Published private(set) var state = OnboardingUiState()
+final class OnboardingViewModel {
+    private(set) var state = OnboardingUiState()
     private var userPreferences: UserPreferencesProtocol
     private let router: RouterProtocol
 

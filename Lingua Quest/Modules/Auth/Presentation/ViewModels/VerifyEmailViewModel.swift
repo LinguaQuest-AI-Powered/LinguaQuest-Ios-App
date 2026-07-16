@@ -4,12 +4,12 @@
 //
 //
 import Foundation
-import Combine
+import Observation
 
-
+@Observable
 @MainActor
-final class VerifyEmailViewModel: ObservableObject {
-     @Published var otpCode = "" {
+final class VerifyEmailViewModel {
+     var otpCode = "" {
         didSet {
             if otpCode.count > 4 {
                 otpCode = String(otpCode.prefix(4))
@@ -17,7 +17,7 @@ final class VerifyEmailViewModel: ObservableObject {
         }
     }
     
-     @Published var timeRemaining = 59
+     var timeRemaining = 59
     
     private let router: RouterProtocol
     private var timer: Timer?

@@ -7,7 +7,7 @@
 
 import SwiftUI
 import Swinject
-import Combine
+import Observation
 
 protocol RouterProtocol: AnyObject {
     func push(_ route: AppRoute)
@@ -19,10 +19,11 @@ protocol RouterProtocol: AnyObject {
     func dismissSheet()
 }
 
+@Observable
 @MainActor
-final class Router: ObservableObject, RouterProtocol {
-    @Published var path = NavigationPath()
-    @Published var presentedSheet: AppSheet?
+final class Router: RouterProtocol {
+    var path = NavigationPath()
+    var presentedSheet: AppSheet?
 
     func push(_ route: AppRoute) { path.append(route) }
     
