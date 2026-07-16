@@ -20,6 +20,8 @@ extension Image {
         case eyeSlashFill = "eye.slash.fill"
         case lockFill = "lock.fill"
         case envelopeFill = "envelope.fill"
+        case arrowRight = "arrow.right"
+        case personFill = "person.fill"
     }
     
     enum Asset: String {
@@ -28,6 +30,8 @@ extension Image {
         case bird = "bird"
         case bird2 = "bird2"
         case bird3 = "bird3"
+        case loginBird = "login_bird"
+        case registerationBird = "registeration_bird"
         case star = "star"
         case star2 = "star2"
         case ball = "ball"
@@ -40,6 +44,7 @@ extension Image {
         case advanced = "advanced"
         case intermediate = "intermediate"
         case beginner = "beginner"
+        
     }
     
     init(icon: Icon) {

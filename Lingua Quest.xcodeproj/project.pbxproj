@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1529B3B930065F2300CCD74A /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 1529B3B830065F2300CCD74A /* Swinject */; };
+		6D3CA5B03008808A00736812 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3CA5AF3008808A00736812 /* Swinject */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1529B3B930065F2300CCD74A /* Swinject in Frameworks */,
+				6D3CA5B03008808A00736812 /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,7 +117,7 @@
 			);
 			name = "Lingua Quest";
 			packageProductDependencies = (
-				1529B3B830065F2300CCD74A /* Swinject */,
+				6D3CA5AF3008808A00736812 /* Swinject */,
 			);
 			productName = "Lingua Quest";
 			productReference = 1529B3663006410300CCD74A /* Lingua Quest.app */;
@@ -203,7 +203,7 @@
 			mainGroup = 1529B35D3006410300CCD74A;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				1529B3B730065F2300CCD74A /* XCRemoteSwiftPackageReference "Swinject" */,
+				6D3CA5AE3008808A00736812 /* XCRemoteSwiftPackageReference "Swinject" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1529B3673006410300CCD74A /* Products */;
@@ -592,7 +592,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		1529B3B730065F2300CCD74A /* XCRemoteSwiftPackageReference "Swinject" */ = {
+		6D3CA5AE3008808A00736812 /* XCRemoteSwiftPackageReference "Swinject" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Swinject/Swinject.git";
 			requirement = {
@@ -603,9 +603,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		1529B3B830065F2300CCD74A /* Swinject */ = {
+		6D3CA5AF3008808A00736812 /* Swinject */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1529B3B730065F2300CCD74A /* XCRemoteSwiftPackageReference "Swinject" */;
+			package = 6D3CA5AE3008808A00736812 /* XCRemoteSwiftPackageReference "Swinject" */;
 			productName = Swinject;
 		};
 /* End XCSwiftPackageProductDependency section */

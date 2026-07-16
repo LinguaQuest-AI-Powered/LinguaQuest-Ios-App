@@ -31,6 +31,20 @@ enum L10n {
         static var passwordPlaceholder: String { localized("auth.password_placeholder") }
         static var continueWithGoogle: String { localized("auth.continue_google") }
         static var continueWithApple: String { localized("auth.continue_apple") }
+        static var welcomeBack: String { localized("auth.welcome_back") }
+        static var readyToContinue: String { localized("auth.ready_to_continue") }
+        static var forgotPassword: String { localized("auth.forgot_password") }
+        static var logIn: String { localized("auth.log_in") }
+        static var orContinueWith: String { localized("auth.or_continue_with") }
+        static var newHere: String { localized("auth.new_here") }
+        static var signUp: String { localized("auth.sign_up") }
+        
+        static var createYourAccount: String { localized("auth.create_your_account") }
+        static var createAccountDescription: String { localized("auth.create_account_description") }
+        static var usernamePlaceholder: String { localized("auth.username_placeholder") }
+        static var confirmPasswordPlaceholder: String { localized("auth.confirm_password_placeholder") }
+        static var createAccount: String { localized("auth.create_account") }
+        static var alreadyHaveAccount: String { localized("auth.already_have_account") }
     }
     
     enum Components {

@@ -12,10 +12,11 @@ enum AppRoute: Hashable {
     case profile(userId: String)
     case settings
     case productDetails(id: String)
+    case login
+    case signUp
 }
 
 enum AppSheet: String, Identifiable {
-    case login
     case editProfile
     var id: String { rawValue }
 }

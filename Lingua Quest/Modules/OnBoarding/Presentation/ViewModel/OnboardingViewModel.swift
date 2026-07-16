@@ -12,8 +12,10 @@ import Foundation
 final class OnboardingViewModel {
     private(set) var state = OnboardingUiState()
     private var userPreferences: UserPreferencesProtocol
+    private let router: RouterProtocol
 
-    init(userPreferences: UserPreferencesProtocol? = nil) {
+    init(router: RouterProtocol? = nil, userPreferences: UserPreferencesProtocol? = nil) {
+        self.router = router ?? Resolver.shared.resolve(RouterProtocol.self)
         self.userPreferences = userPreferences ?? Resolver.shared.resolve(UserPreferencesProtocol.self)
     }
 
@@ -47,6 +49,6 @@ final class OnboardingViewModel {
     }
 
     func onLoginTapped() {
-        // Navigate to sign in
+        userPreferences.isOnboardingCompleted = true
     }
 }
