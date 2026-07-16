@@ -1,47 +1,40 @@
 //
-//  LoginView.swift
+//  SignUpView.swift
 //  Lingua Quest
 //
-//  Created by Al3dwy on 14/07/2026.
+//  Created by Al3dwy on 15/07/2026.
 //
 
 import SwiftUI
 
-struct LoginView: View {
-    @State var viewModel: LoginViewModel
+struct SignUpView: View {
+    @StateObject var viewModel: SignUpViewModel
     
     var body: some View {
         ZStack {
-            
-            Color.white.ignoresSafeArea()
+            Color.appViewBackground.ignoresSafeArea()
             
             ScrollView(showsIndicators: false) {
-                VStack(spacing: 0) {
-                    
-                    
-                    Image(.loginBird)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 150)
-                        .padding(.top, 40)
-                        .zIndex(1)
-                    
-                    
+                DialogCardContainer(mascotImage: .registerationBird) {
                     VStack(spacing: 24) {
                         
-                        
                         VStack(spacing: 8) {
-                            Text(L10n.Auth.welcomeBack)
+                            Text(L10n.Auth.createYourAccount)
                                 .appTextStyle(.largeTitle, color: .textBrown)
                             
-                            Text(L10n.Auth.readyToContinue)
+                            Text(L10n.Auth.createAccountDescription)
                                 .appTextStyle(.body, color: .textBrown)
                                 .opacity(0.8)
+                                .multilineTextAlignment(.center)
                         }
-                        .padding(.top, 32)
-                        
                         
                         VStack(spacing: 16) {
+                            CustomTextField(
+                                icon: .personFill,
+                                placeholder: L10n.Auth.usernamePlaceholder,
+                                text: $viewModel.username
+                            )
+                            
                             CustomTextField(
                                 icon: .envelopeFill,
                                 placeholder: L10n.Auth.emailPlaceholder,
@@ -54,25 +47,21 @@ struct LoginView: View {
                                 text: $viewModel.password,
                                 isVisible: $viewModel.isPasswordVisible
                             )
+                            
+                            CustomSecureField(
+                                icon: .lockFill,
+                                placeholder: L10n.Auth.confirmPasswordPlaceholder,
+                                text: $viewModel.confirmPassword,
+                                isVisible: $viewModel.isConfirmPasswordVisible
+                            )
                         }
-                        
-                        
-                        HStack {
-                            Button(action: {
-                                viewModel.forgotPassword()
-                            }) {
-                                Text(L10n.Auth.forgotPassword)
-                                    .appTextStyle(.buttonBold, color: .darkGreen)
-                            }
-                            Spacer()
-                        }
-                        
                         
                         CustomButton(
                             type: .primary,
-                            text: L10n.Auth.logIn,
-                            action: { viewModel.login() },
+                            text: L10n.Auth.createAccount,
+                            action: { viewModel.createAccount() },
                             trailing: Image(systemIcon: .arrowRight)
+                                
                         )
                         .padding(.top, 8)
                         
@@ -94,58 +83,46 @@ struct LoginView: View {
                         }
                         .padding(.vertical, 8)
                         
-                        
                         VStack(spacing: 16) {
                             SocialLoginButton(
                                 icon: .google,
-                                title: "Google",
+                                title: L10n.Auth.googleLabel,
                                 action: { viewModel.continueWithGoogle() }
                             )
                             
                             SocialLoginButton(
                                 icon: .apple,
-                                title: "Apple",
+                                title: L10n.Auth.appleLabel,
                                 action: { viewModel.continueWithApple() }
                             )
                         }
                         
-                        Spacer(minLength: 32)
-                        
-                        
                         HStack(spacing: 4) {
-                            Text(L10n.Auth.newHere)
+                            Text(L10n.Auth.alreadyHaveAccount)
                                 .appTextStyle(.body, color: .textBrown)
                             
                             Button(action: {
-                                viewModel.navigateToSignUp()
+                                viewModel.navigateToLogin()
                             }) {
-                                Text(L10n.Auth.signUp)
+                                Text(L10n.Auth.logIn)
                                     .appTextStyle(.buttonBold, color: .textBrown)
                             }
                         }
-                        .padding(.bottom, 24)
+                        .padding(.bottom, 8)
                     }
-                    .padding(.horizontal, 24)
-                    .background(
-                        RoundedRectangle(cornerRadius: 32)
-                            .fill(LinearGradient(
-                                colors: [Color.backgroundLightBlue.opacity(0.8), Color.white, Color.glowYellow.opacity(0.2)],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            ))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 32)
-                                    .stroke(Color.borderLightBlue.opacity(0.5), lineWidth: 1)
-                            )
-                    )
-                    .offset(y: -40)
                 }
-                .padding(.horizontal, 16)
+                .padding(.horizontal, 24)
+            }
+        }
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                CustomBackButton(action: { viewModel.navigateToLogin() })
             }
         }
     }
 }
 
 #Preview {
-    LoginView(viewModel: LoginViewModel(router: Router()))
+    SignUpView(viewModel: SignUpViewModel(router: Router()))
 }

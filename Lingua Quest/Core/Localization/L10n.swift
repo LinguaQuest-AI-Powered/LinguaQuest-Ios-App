@@ -56,6 +56,8 @@ enum L10n {
         static var verifyEmailDesc: String { localized("auth.verify_email_desc") }
         static var resendCode: String { localized("auth.resend_code") }
         static var verify: String { localized("auth.verify") }
+        static var googleLabel: String { localized("auth.google_label") }
+        static var appleLabel: String { localized("auth.apple_label") }
     }
     
     enum Components {
@@ -79,6 +81,7 @@ enum L10n {
         static var languageStepTitle: String { localized("onboarding.language_step.title") }
         static var languageStepSubtitle: String { localized("onboarding.language_step.subtitle") }
         static var languageStepIWantToLearn: String { localized("onboarding.language_step.i_want_to_learn") }
+        static var searchLanguage: String { localized("onboarding.search_language") }
         static var commonContinue: String { localized("onboarding.common.continue") }
         static var levelStepTitle: String { localized("onboarding.level_step.title") }
         static var levelStepSubtitle: String { localized("onboarding.level_step.subtitle") }
@@ -86,6 +89,9 @@ enum L10n {
         static var welcomeTitlePart2: String { localized("onboarding.welcome.title_part2") }
         static var welcomeGetStarted: String { localized("onboarding.welcome.get_started") }
         static var welcomeAlreadyHaveAccount: String { localized("onboarding.welcome.already_have_account") }
+        static var alertErrorTitle: String { localized("onboarding.alert.error_title") }
+        static var alertLanguageMessage: String { localized("onboarding.alert.language_message") }
+        static var alertLevelMessage: String { localized("onboarding.alert.level_message") }
     }
 
     private static func localized(_ key: String) -> String {

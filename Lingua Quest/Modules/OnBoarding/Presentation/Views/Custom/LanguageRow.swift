@@ -15,26 +15,24 @@ struct LanguageRow: View {
     var body: some View {
         Button(action: action) {
             HStack(spacing: 12) {
-                Image(language.flag)
-                    .resizable()
-                    .scaledToFit()
+                Text(language.flag)
+                    .font(.system(size: 22))
                     .frame(width: 22, height: 22)
                 
                 Text(language.name)
-                    .font(.system(size: 18, weight: .medium))
-                    .foregroundColor(.black)
+                    .appTextStyle(.subtitleMedium, color: .black)
                 
                 Spacer()
             }
             .padding()
             .background(
                 RoundedRectangle(cornerRadius: 16)
-                    .fill(isSelected ? Color("AppSecondaryColor").opacity(0.35) : Color.white)
+                    .fill(isSelected ? Color.appSecondary.opacity(0.35) : Color.white)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
                     .stroke(
-                        isSelected ? Color("AppPrimaryColor") : Color.gray.opacity(0.15),
+                        isSelected ? Color.appPrimary : Color.gray.opacity(0.15),
                         lineWidth: isSelected ? 2 : 1
                     )
             )

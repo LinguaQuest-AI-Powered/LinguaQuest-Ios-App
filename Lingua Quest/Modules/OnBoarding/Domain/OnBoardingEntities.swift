@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftUI
 
 enum OnboardingStep {
     case welcome
@@ -18,7 +17,41 @@ struct Language: Identifiable, Equatable {
     let id = UUID()
     let code: String
     let name: String
-    let flag: ImageResource
+    let flag: String
+}
+
+extension Language {
+    static var allGlobalLanguages: [Language] {
+        var uniqueLanguages = [String: Language]()
+        let locale = Locale.current
+        
+        for identifier in Locale.availableIdentifiers {
+            let identifierLocale = Locale(identifier: identifier)
+            guard let languageCode = identifierLocale.languageCode,
+                  let regionCode = identifierLocale.regionCode,
+                  let languageName = locale.localizedString(forLanguageCode: languageCode) else {
+                continue
+            }
+            
+            // Only add the first region encountered for each language
+            if uniqueLanguages[languageCode] == nil {
+                let flag = flagEmoji(for: regionCode)
+                uniqueLanguages[languageCode] = Language(code: languageCode, name: languageName.capitalized, flag: flag)
+            }
+        }
+        
+        return uniqueLanguages.values.sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
+    }
+    
+    private static func flagEmoji(for regionCode: String) -> String {
+        let base: UInt32 = 127397
+        var flagString = ""
+        for scalar in regionCode.uppercased().unicodeScalars {
+            guard let scalarValue = UnicodeScalar(base + scalar.value) else { continue }
+            flagString.unicodeScalars.append(scalarValue)
+        }
+        return flagString
+    }
 }
 
 enum UserLevel: String, CaseIterable, Identifiable {

@@ -6,21 +6,32 @@
 //
 
 import Foundation
+import Combine
 
-@Observable
 @MainActor
-final class OnboardingViewModel {
-    private(set) var state = OnboardingUiState()
+final class OnboardingViewModel: ObservableObject {
+    @Published private(set) var state = OnboardingUiState()
     private var userPreferences: UserPreferencesProtocol
     private let router: RouterProtocol
 
-    init(router: RouterProtocol? = nil, userPreferences: UserPreferencesProtocol? = nil) {
-        self.router = router ?? Resolver.shared.resolve(RouterProtocol.self)
-        self.userPreferences = userPreferences ?? Resolver.shared.resolve(UserPreferencesProtocol.self)
+    init(router: RouterProtocol, userPreferences: UserPreferencesProtocol) {
+        self.router = router
+        self.userPreferences = userPreferences
     }
 
     func onGetStartedTapped() {
         state.currentStep = .language
+    }
+
+    func onBackTapped() {
+        switch state.currentStep {
+        case .welcome:
+            router.pop()
+        case .language:
+            state.currentStep = .welcome
+        case .level:
+            state.currentStep = .language
+        }
     }
 
     func onSpokenLanguageSelected(_ language: Language) {

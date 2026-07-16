@@ -12,9 +12,11 @@ struct LanguageStepView: View {
     let onSelectSpokenLanguage: (Language) -> Void
     let onSelectLearningLanguage: (Language) -> Void
     let onContinue: () -> Void
+    var onBack: (() -> Void)? = nil
 
     @State private var showSpokenLanguageSheet = false
     @State private var showLearningLanguageSheet = false
+    @State private var showAlert = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -25,12 +27,11 @@ struct LanguageStepView: View {
                 .frame(maxWidth: .infinity)
 
             Text(L10n.Onboarding.languageStepTitle)
-                .font(.system(size: 28, weight: .bold))
+                .appTextStyle(.headline,color: .black)
                 .frame(maxWidth: .infinity, alignment: .center)
 
             Text(L10n.Onboarding.languageStepSubtitle)
-                .font(.system(size: 18))
-                .foregroundColor(Color("SecondaryButtonText"))
+                .appTextStyle(.subtitle, color: .secondaryButtonText)
                 .frame(maxWidth: .infinity, alignment: .center)
 
             LanguageSelectorButton(
@@ -47,7 +48,7 @@ struct LanguageStepView: View {
                 title: L10n.Onboarding.languageStepIWantToLearn,
                 placeholder: L10n.Onboarding.languageSelectorPlaceholder,
                 selectedLanguage: state.selectedLearningLanguage,
-                borderColor: Color("AppPrimaryColor"),
+                borderColor: Color.appPrimary,
                 action: {
                     showLearningLanguageSheet = true
                 }
@@ -61,11 +62,17 @@ struct LanguageStepView: View {
                 text: L10n.Onboarding.commonContinue,
                 action: onContinue,
                 status: state.canContinueFromLanguage ? .enable : .disable,
-                trailing: Image(systemName: "arrow.right")
+                trailing: Image(systemIcon: .arrowRight),
+                disabledAction: { showAlert = true }
             )
         }
         .padding(24)
-        .background(Color(.systemBackground))
+        .background(Color.appViewBackground.ignoresSafeArea())
+        .alert(L10n.Onboarding.alertErrorTitle, isPresented: $showAlert) {
+            Button(L10n.Common.ok, role: .cancel) { }
+        } message: {
+            Text(L10n.Onboarding.alertLanguageMessage)
+        }
         .sheet(isPresented: $showSpokenLanguageSheet) {
             LanguagePickerSheet(
                 languages: state.availableLanguages,
@@ -77,6 +84,14 @@ struct LanguageStepView: View {
                 languages: state.availableLanguages,
                 onSelect: onSelectLearningLanguage
             )
+        }
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                if let onBack {
+                    CustomBackButton(action: onBack)
+                }
+            }
         }
     }
 }

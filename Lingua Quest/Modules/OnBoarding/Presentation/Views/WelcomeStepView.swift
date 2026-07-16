@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct WelcomeStepView: View {
     let onGetStarted: () -> Void
     let onLogin: () -> Void
@@ -16,8 +14,7 @@ struct WelcomeStepView: View {
     var body: some View {
         ZStack {
 
-            Image(asset: .onboardingbackground)
-                .resizable()
+            Color.appViewBackground
                 .ignoresSafeArea()
 
             Image(asset: .star2)
@@ -37,10 +34,11 @@ struct WelcomeStepView: View {
 
                 Spacer().frame(height: 28)
 
-                (Text(L10n.Onboarding.welcomeTitlePart1) +
+                (Text(L10n.Onboarding.welcomeTitlePart1)
+                    .foregroundColor(.black) +
                 Text(L10n.Onboarding.welcomeTitlePart2)
-                    .foregroundStyle(Color("AppPrimaryColor")))
-                .font(.system(size: 30, weight: .bold))
+                    .foregroundColor(.appPrimary))
+                .font(AppTextStyle.title.font)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 24)
 

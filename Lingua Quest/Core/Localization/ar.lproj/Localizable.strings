@@ -43,6 +43,8 @@
 "auth.verify_email_desc" = "أرسلنا رمزاً إلى بريدك الوارد.\nيرجى إدخاله أدناه.";
 "auth.resend_code" = "إعادة إرسال الرمز";
 "auth.verify" = "تأكيد";
+"auth.google_label" = "جوجل";
+"auth.apple_label" = "أبل";
 "components.app_name" = "لينجوا كويست!";
 
 "onboarding.level.beginner.title" = "مبتدئ";
@@ -62,6 +64,7 @@
 "onboarding.language_step.title" = "اختر لغاتك";
 "onboarding.language_step.subtitle" = "دعنا نعد رحلة تعلمك!";
 "onboarding.language_step.i_want_to_learn" = "أريد أن أتعلم...";
+"onboarding.search_language" = "ابحث عن لغة...";
 "onboarding.common.continue" = "متابعة";
 "onboarding.level_step.title" = "ما هو مستواك؟";
 "onboarding.level_step.subtitle" = "اختر من أين تبدأ رحلتك،\nأيها المغامر! سأرشدك خلال\nالمسار الأنسب لك.";
@@ -69,3 +72,6 @@
 "onboarding.welcome.title_part2" = "العالم الحقيقي!";
 "onboarding.welcome.get_started" = "ابدأ الآن";
 "onboarding.welcome.already_have_account" = "لدي حساب بالفعل";
+"onboarding.alert.error_title" = "تنبيه";
+"onboarding.alert.language_message" = "يرجى اختيار لغتك الأم واللغة التي ترغب بتعلمها.";
+"onboarding.alert.level_message" = "يرجى تحديد مستوى كفائتك.";

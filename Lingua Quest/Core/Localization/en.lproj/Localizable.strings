@@ -42,6 +42,8 @@
 "auth.verify_email_desc" = "We sent a code to your inbox.\nPlease enter it below.";
 "auth.resend_code" = "Resend code";
 "auth.verify" = "VERIFY";
+"auth.google_label" = "Google";
+"auth.apple_label" = "Apple";
 "components.app_name" = "Lingua Quest!";
 
 "onboarding.level.beginner.title" = "Beginner";
@@ -61,6 +63,7 @@
 "onboarding.language_step.title" = "Choose your languages";
 "onboarding.language_step.subtitle" = "Let's set up your learning journey!";
 "onboarding.language_step.i_want_to_learn" = "I WANT TO LEARN...";
+"onboarding.search_language" = "Search for a language...";
 "onboarding.common.continue" = "Continue";
 "onboarding.level_step.title" = "What's your level?";
 "onboarding.level_step.subtitle" = "Choose where your journey begins,\nadventurer! I'll guide you through\nthe path that fits you best.";
@@ -68,3 +71,6 @@
 "onboarding.welcome.title_part2" = "real world!";
 "onboarding.welcome.get_started" = "Get Started";
 "onboarding.welcome.already_have_account" = "I already have an account";
+"onboarding.alert.error_title" = "Attention";
+"onboarding.alert.language_message" = "Please select both a language you speak and a language you want to learn.";
+"onboarding.alert.level_message" = "Please select your proficiency level.";

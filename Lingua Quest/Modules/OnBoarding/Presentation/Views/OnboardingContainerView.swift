@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct OnboardingContainerView: View {
-    @State private var viewModel = OnboardingViewModel()
-
+    @StateObject private var viewModel = Resolver.shared.resolve(OnboardingViewModel.self)
     var body: some View {
-        Group {
+        NavigationStack {
+            Group {
             switch viewModel.state.currentStep {
             case .welcome:
                 WelcomeStepView(
@@ -24,18 +24,21 @@ struct OnboardingContainerView: View {
                     state: viewModel.state,
                     onSelectSpokenLanguage: viewModel.onSpokenLanguageSelected,
                     onSelectLearningLanguage: viewModel.onLearningLanguageSelected,
-                    onContinue: viewModel.onLanguageContinueTapped
+                    onContinue: viewModel.onLanguageContinueTapped,
+                    onBack: viewModel.onBackTapped
                 )
 
             case .level:
                 LevelStepView(
                     state: viewModel.state,
                     onSelectLevel: viewModel.onLevelSelected,
-                    onContinue: viewModel.onFinishTapped
+                    onContinue: viewModel.onFinishTapped,
+                    onBack: viewModel.onBackTapped
                 )
             }
+            }
+            .animation(.easeInOut, value: viewModel.state.currentStep)
         }
-        .animation(.easeInOut, value: viewModel.state.currentStep)
     }
 }
 
