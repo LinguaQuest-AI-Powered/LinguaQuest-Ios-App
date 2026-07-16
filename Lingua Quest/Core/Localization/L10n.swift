@@ -89,6 +89,9 @@ enum L10n {
         static var welcomeTitlePart2: String { localized("onboarding.welcome.title_part2") }
         static var welcomeGetStarted: String { localized("onboarding.welcome.get_started") }
         static var welcomeAlreadyHaveAccount: String { localized("onboarding.welcome.already_have_account") }
+        static var alertErrorTitle: String { localized("onboarding.alert.error_title") }
+        static var alertLanguageMessage: String { localized("onboarding.alert.language_message") }
+        static var alertLevelMessage: String { localized("onboarding.alert.level_message") }
     }
 
     private static func localized(_ key: String) -> String {

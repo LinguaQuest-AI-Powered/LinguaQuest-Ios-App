@@ -31,6 +31,7 @@ struct CustomButton: View {
     // Optional
     var leading: Image?
     var trailing: Image?
+    var disabledAction: (() -> Void)? = nil
     
     var backgroundColor: Color {
         if status == .enable {
@@ -64,7 +65,11 @@ struct CustomButton: View {
     
     var body: some View {
         Button {
-            action()
+            if status == .enable {
+                action()
+            } else {
+                disabledAction?()
+            }
         } label: {
             HStack(spacing: 8) {
                 if let leading {
@@ -88,7 +93,7 @@ struct CustomButton: View {
         .background(backgroundColor)
         .cornerRadius(100)
         .shadow(color: .black.opacity(0.25), radius: 6, x: 0, y: 3)
-        .disabled(status == .disable)
+        .disabled(status == .disable && disabledAction == nil)
     }
 }
 

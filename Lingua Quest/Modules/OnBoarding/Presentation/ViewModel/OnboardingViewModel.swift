@@ -23,6 +23,17 @@ final class OnboardingViewModel {
         state.currentStep = .language
     }
 
+    func onBackTapped() {
+        switch state.currentStep {
+        case .welcome:
+            router.pop()
+        case .language:
+            state.currentStep = .welcome
+        case .level:
+            state.currentStep = .language
+        }
+    }
+
     func onSpokenLanguageSelected(_ language: Language) {
         state.selectedSpokenLanguage = language
     }

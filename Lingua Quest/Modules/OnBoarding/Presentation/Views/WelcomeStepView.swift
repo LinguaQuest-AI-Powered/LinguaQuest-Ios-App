@@ -35,10 +35,11 @@ struct WelcomeStepView: View {
 
                 Spacer().frame(height: 28)
 
-                (Text(L10n.Onboarding.welcomeTitlePart1) +
+                (Text(L10n.Onboarding.welcomeTitlePart1)
+                    .foregroundColor(.black) +
                 Text(L10n.Onboarding.welcomeTitlePart2)
-                    .foregroundStyle(Color.appPrimary))
-                .appTextStyle(.title)
+                    .foregroundColor(.appPrimary))
+                .font(AppTextStyle.title.font)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 24)
 

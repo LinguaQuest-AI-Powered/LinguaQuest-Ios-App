@@ -71,3 +71,6 @@
 "onboarding.welcome.title_part2" = "real world!";
 "onboarding.welcome.get_started" = "Get Started";
 "onboarding.welcome.already_have_account" = "I already have an account";
+"onboarding.alert.error_title" = "Attention";
+"onboarding.alert.language_message" = "Please select both a language you speak and a language you want to learn.";
+"onboarding.alert.level_message" = "Please select your proficiency level.";
