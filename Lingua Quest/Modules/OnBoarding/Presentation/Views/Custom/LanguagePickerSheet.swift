@@ -20,9 +20,8 @@ struct LanguagePickerSheet: View {
                     dismiss()
                 } label: {
                     HStack(spacing: 12) {
-                        Image(language.flag)
-                            .resizable()
-                            .scaledToFit()
+                        Text(language.flag)
+                            .font(.system(size: 24))
                             .frame(width: 24, height: 24)
 
                         Text(language.name)

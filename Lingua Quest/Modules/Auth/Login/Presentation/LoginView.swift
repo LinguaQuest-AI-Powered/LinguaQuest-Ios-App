@@ -98,13 +98,13 @@ struct LoginView: View {
                         VStack(spacing: 16) {
                             SocialLoginButton(
                                 icon: .google,
-                                title: "Google",
+                                title: L10n.Auth.googleLabel,
                                 action: { viewModel.continueWithGoogle() }
                             )
                             
                             SocialLoginButton(
                                 icon: .apple,
-                                title: "Apple",
+                                title: L10n.Auth.appleLabel,
                                 action: { viewModel.continueWithApple() }
                             )
                         }

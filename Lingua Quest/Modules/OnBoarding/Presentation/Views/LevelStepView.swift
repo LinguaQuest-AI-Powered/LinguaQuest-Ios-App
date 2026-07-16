@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct LevelStepView: View {
     let state: OnboardingUiState
     let onSelectLevel: (UserLevel) -> Void
@@ -57,7 +55,7 @@ struct LevelStepView: View {
                 text: L10n.Onboarding.commonContinue,
                 action: onContinue,
                 status: state.canContinueFromLevel ? .enable : .disable,
-                trailing: Image(systemName: "arrow.right")
+                trailing: Image(systemIcon: .arrowRight)
             )
         }
         .padding(24)

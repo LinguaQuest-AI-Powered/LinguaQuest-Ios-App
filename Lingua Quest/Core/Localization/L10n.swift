@@ -56,6 +56,8 @@ enum L10n {
         static var verifyEmailDesc: String { localized("auth.verify_email_desc") }
         static var resendCode: String { localized("auth.resend_code") }
         static var verify: String { localized("auth.verify") }
+        static var googleLabel: String { localized("auth.google_label") }
+        static var appleLabel: String { localized("auth.apple_label") }
     }
     
     enum Components {

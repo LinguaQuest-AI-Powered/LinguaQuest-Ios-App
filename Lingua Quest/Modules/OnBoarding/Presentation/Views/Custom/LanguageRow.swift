@@ -15,9 +15,8 @@ struct LanguageRow: View {
     var body: some View {
         Button(action: action) {
             HStack(spacing: 12) {
-                Image(language.flag)
-                    .resizable()
-                    .scaledToFit()
+                Text(language.flag)
+                    .font(.system(size: 22))
                     .frame(width: 22, height: 22)
                 
                 Text(language.name)

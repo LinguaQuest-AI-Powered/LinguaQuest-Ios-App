@@ -22,9 +22,8 @@ struct LanguageSelectorButton: View {
 
                 HStack(spacing: 10) {
                     if let selectedLanguage {
-                        Image(selectedLanguage.flag)
-                            .resizable()
-                            .scaledToFit()
+                        Text(selectedLanguage.flag)
+                            .font(.system(size: 20))
                             .frame(width: 20, height: 20)
 
                         Text(selectedLanguage.name)
@@ -36,7 +35,7 @@ struct LanguageSelectorButton: View {
 
                     Spacer()
 
-                    Image(systemName: "chevron.down")
+                    Image(systemIcon: .chevronDown)
                         .appTextStyle(.captionMedium, color: .gray)
                 }
             }
@@ -56,7 +55,7 @@ struct LanguageSelectorButton: View {
     LanguageSelectorButton(
         title: "I SPEAK...",
         placeholder: "Select language",
-        selectedLanguage: Language(code: "en", name: "English", flag: .english),
+        selectedLanguage: Language(code: "en", name: "English", flag: "🇬🇧"),
         borderColor: Color.gray.opacity(0.15),
         action: {}
     )

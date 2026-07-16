@@ -60,7 +60,7 @@ struct LanguageStepView: View {
                 text: L10n.Onboarding.commonContinue,
                 action: onContinue,
                 status: state.canContinueFromLanguage ? .enable : .disable,
-                trailing: Image(systemName: "arrow.right")
+                trailing: Image(systemIcon: .arrowRight)
             )
         }
         .padding(24)

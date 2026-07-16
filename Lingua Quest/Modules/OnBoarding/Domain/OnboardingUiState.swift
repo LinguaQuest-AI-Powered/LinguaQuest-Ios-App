@@ -13,13 +13,7 @@ struct OnboardingUiState {
     var selectedSpokenLanguage: Language?
     var selectedLearningLanguage: Language?
     
-    var availableLanguages: [Language] = [
-        Language(code: "en", name: L10n.Onboarding.languageEnglish, flag: .english),
-        Language(code: "es", name: L10n.Onboarding.languageSpanish, flag: .spanish),
-        Language(code: "fr", name: L10n.Onboarding.languageFrench, flag: .french),
-        Language(code: "de", name: L10n.Onboarding.languageGerman, flag: .german),
-        Language(code: "ja", name: L10n.Onboarding.languageJapanese, flag: .japanese)
-    ]
+    var availableLanguages: [Language] = Language.allGlobalLanguages
     
     var canContinueFromLanguage: Bool {
         selectedSpokenLanguage != nil && selectedLearningLanguage != nil

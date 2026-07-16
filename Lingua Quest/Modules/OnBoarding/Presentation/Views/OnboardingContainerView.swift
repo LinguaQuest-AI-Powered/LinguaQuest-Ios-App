@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OnboardingContainerView: View {
-    @State private var viewModel = OnboardingViewModel()
+    @State private var viewModel = Resolver.shared.resolve(OnboardingViewModel.self)
 
     var body: some View {
         Group {

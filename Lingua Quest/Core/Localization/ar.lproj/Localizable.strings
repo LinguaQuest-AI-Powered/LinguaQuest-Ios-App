@@ -43,6 +43,8 @@
 "auth.verify_email_desc" = "أرسلنا رمزاً إلى بريدك الوارد.\nيرجى إدخاله أدناه.";
 "auth.resend_code" = "إعادة إرسال الرمز";
 "auth.verify" = "تأكيد";
+"auth.google_label" = "جوجل";
+"auth.apple_label" = "أبل";
 "components.app_name" = "لينجوا كويست!";
 
 "onboarding.level.beginner.title" = "مبتدئ";

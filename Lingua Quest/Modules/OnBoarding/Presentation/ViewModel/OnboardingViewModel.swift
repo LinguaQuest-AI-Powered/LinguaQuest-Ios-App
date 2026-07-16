@@ -14,9 +14,9 @@ final class OnboardingViewModel {
     private var userPreferences: UserPreferencesProtocol
     private let router: RouterProtocol
 
-    init(router: RouterProtocol? = nil, userPreferences: UserPreferencesProtocol? = nil) {
-        self.router = router ?? Resolver.shared.resolve(RouterProtocol.self)
-        self.userPreferences = userPreferences ?? Resolver.shared.resolve(UserPreferencesProtocol.self)
+    init(router: RouterProtocol, userPreferences: UserPreferencesProtocol) {
+        self.router = router
+        self.userPreferences = userPreferences
     }
 
     func onGetStartedTapped() {

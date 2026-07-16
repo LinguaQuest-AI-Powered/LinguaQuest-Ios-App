@@ -18,7 +18,7 @@ final class Resolver {
 
     private func registerAssemblies() {
         _ = Assembler(
-            [NetworkAssembly(), RouterAssembly(), StorageAssembly(), AuthAssembly()],
+            [NetworkAssembly(), RouterAssembly(), StorageAssembly(), AuthAssembly(), OnboardingAssembly()],
             container: container
         )
     }

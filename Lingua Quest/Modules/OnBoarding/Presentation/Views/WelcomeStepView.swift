@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct WelcomeStepView: View {
     let onGetStarted: () -> Void
     let onLogin: () -> Void
