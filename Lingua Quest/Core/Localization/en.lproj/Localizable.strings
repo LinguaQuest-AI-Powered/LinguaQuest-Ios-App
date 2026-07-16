@@ -33,6 +33,11 @@
 "auth.confirm_password_placeholder" = "Confirm Password";
 "auth.create_account" = "Create Account";
 "auth.already_have_account" = "Already have an account? ";
+"auth.forget_password" = "Forget password?";
+"auth.forget_password_desc" = "Don't worry, Lingo will help you find it! Enter your email to receive a reset link.";
+"auth.enter_email" = "Enter your email";
+"auth.send_reset_link" = "Send reset link";
+"auth.back_to_login" = "Back to Login";
 "components.app_name" = "Lingua Quest!";
 
 "onboarding.level.beginner.title" = "Beginner";

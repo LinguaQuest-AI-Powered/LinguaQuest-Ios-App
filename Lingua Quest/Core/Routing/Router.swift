@@ -41,6 +41,9 @@ final class Router: ObservableObject, RouterProtocol {
         case .signUp:
             let viewModel = Resolver.shared.resolve(SignUpViewModel.self)
             SignUpView(viewModel: viewModel)
+        case .forgetPassword:
+            let viewModel = Resolver.shared.resolve(ForgetPasswordViewModel.self)
+            ForgetPasswordView(viewModel: viewModel)
         }
     }
 }

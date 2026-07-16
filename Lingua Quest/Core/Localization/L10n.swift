@@ -45,6 +45,12 @@ enum L10n {
         static var confirmPasswordPlaceholder: String { localized("auth.confirm_password_placeholder") }
         static var createAccount: String { localized("auth.create_account") }
         static var alreadyHaveAccount: String { localized("auth.already_have_account") }
+        
+        static var forgetPassword: String { localized("auth.forget_password") }
+        static var forgetPasswordDesc: String { localized("auth.forget_password_desc") }
+        static var enterEmail: String { localized("auth.enter_email") }
+        static var sendResetLink: String { localized("auth.send_reset_link") }
+        static var backToLogin: String { localized("auth.back_to_login") }
     }
     
     enum Components {

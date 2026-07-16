@@ -27,7 +27,7 @@ final class LoginViewModel {
     }
     
     func forgotPassword() {
-        print("Forgot password tapped")
+        router.push(.forgetPassword)
     }
     
     func continueWithGoogle() {
