@@ -32,19 +32,36 @@ struct GameLevelsView: View {
                     ScrollView(showsIndicators: false) {
                         ZStack(alignment: .topLeading) {
                             
+                            // Road shadow (soft drop shadow under the road)
+                            WindingRoadShape()
+                                .stroke(Color.black.opacity(0.2), style: StrokeStyle(lineWidth: 52, lineCap: .round, lineJoin: .round))
+                                .blur(radius: 6)
+                                .offset(y: 4)
+                                .frame(width: w, height: totalHeight)
+                            
                             // Winding Road (Outer border)
                             WindingRoadShape()
-                                .stroke(Color(red: 0.5, green: 0.35, blue: 0.15), style: StrokeStyle(lineWidth: 46, lineCap: .round, lineJoin: .round))
+                                .stroke(Color(red: 0.45, green: 0.3, blue: 0.12), style: StrokeStyle(lineWidth: 48, lineCap: .round, lineJoin: .round))
                                 .frame(width: w, height: totalHeight)
                             
                             // Winding Road (Inner fill)
                             WindingRoadShape()
-                                .stroke(Color(red: 0.7, green: 0.5, blue: 0.3), style: StrokeStyle(lineWidth: 36, lineCap: .round, lineJoin: .round))
+                                .stroke(
+                                    LinearGradient(
+                                        colors: [
+                                            Color(red: 0.78, green: 0.58, blue: 0.36),
+                                            Color(red: 0.68, green: 0.48, blue: 0.28)
+                                        ],
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    ),
+                                    style: StrokeStyle(lineWidth: 36, lineCap: .round, lineJoin: .round)
+                                )
                                 .frame(width: w, height: totalHeight)
                             
                             // Winding Road (Dashed center line)
                             WindingRoadShape()
-                                .stroke(Color.white.opacity(0.3), style: StrokeStyle(lineWidth: 2, dash: [10, 15]))
+                                .stroke(Color.white.opacity(0.25), style: StrokeStyle(lineWidth: 2, dash: [12, 18]))
                                 .frame(width: w, height: totalHeight)
                             
                             // Level Nodes
@@ -56,6 +73,13 @@ struct GameLevelsView: View {
                                     .position(x: xPos, y: yPos)
                                     .id(level.id)
                             }
+                            
+                            // Floating sparkle particles for a magical feel
+                            FloatingParticlesView(
+                                width: w,
+                                height: totalHeight,
+                                particleCount: 25
+                            )
                         }
                         .frame(width: w, height: totalHeight)
                         // Apply the tiled grass as a background that bleeds massively out of the ZStack's bounds!
@@ -121,43 +145,48 @@ struct GameLevelsView: View {
                 Button(action: { dismiss() }) {
                     Image(systemIcon: .chevronLeft)
                         .font(.system(size: 16, weight: .bold))
-                        .foregroundColor(.appPrimary)
-                        .frame(width: 38, height: 38)
-                        .background(Circle().fill(Color.appCardBackground))
-                        .shadow(color: .black.opacity(0.12), radius: 6, x: 0, y: 3)
+                        .foregroundColor(.white)
+                        .frame(width: 40, height: 40)
+                        .background(
+                            Circle()
+                                .fill(.ultraThinMaterial)
+                                .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
+                        )
                 }
+                .scaleEffect(titleOpacity)
                 
                 Spacer()
                 
                 Text(L10n.Game.parkWorld)
-                    .appTextStyle(.title, color: .white)
-                    .shadow(color: .black.opacity(0.4), radius: 4, x: 0, y: 2)
+                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                    .foregroundColor(.white)
+                    .shadow(color: .black.opacity(0.5), radius: 4, x: 0, y: 2)
                     .opacity(titleOpacity)
+                    .scaleEffect(titleOpacity == 0 ? 0.8 : 1.0)
                 
                 Spacer()
                 
-                Color.clear.frame(width: 38, height: 38)
+                Color.clear.frame(width: 40, height: 40)
             }
             .padding(.horizontal, 24)
-            .padding(.top, 8) // Adds just enough padding below the safe area
-            .padding(.bottom, 16)
+            .padding(.top, 8)
+            .padding(.bottom, 20)
             .background(
                 LinearGradient(
-                    colors: [
-                        Color.black.opacity(0.45),
-                        Color.black.opacity(0.2),
-                        Color.clear
+                    stops: [
+                        .init(color: Color.black.opacity(0.5), location: 0.0),
+                        .init(color: Color.black.opacity(0.25), location: 0.6),
+                        .init(color: Color.clear, location: 1.0)
                     ],
                     startPoint: .top,
                     endPoint: .bottom
                 )
-                // Stretch the gradient up strictly without altering safe area boundaries
                 .padding(.top, -100)
             )
         }
         .navigationBarHidden(true)
         .onAppear {
-            withAnimation(.easeIn(duration: 0.5).delay(0.2)) {
+            withAnimation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.15)) {
                 titleOpacity = 1
             }
         }

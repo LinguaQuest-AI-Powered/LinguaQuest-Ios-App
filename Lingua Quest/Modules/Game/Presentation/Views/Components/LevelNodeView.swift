@@ -12,6 +12,8 @@ struct LevelNodeView: View {
     @Environment(\.colorScheme) var colorScheme
     @State private var appeared = false
     @State private var pulseScale: CGFloat = 1.0
+    @State private var glowOpacity: Double = 0.5
+    @State private var bounceOffset: CGFloat = 0
     
     var body: some View {
         ZStack {
@@ -28,10 +30,11 @@ struct LevelNodeView: View {
         }
         .scaleEffect(appeared ? 1 : 0)
         .opacity(appeared ? 1 : 0)
+        .offset(y: appeared ? 0 : 30)
         .onAppear {
             withAnimation(
-                .spring(response: 0.5, dampingFraction: 0.7)
-                .delay(Double(level.id) * 0.12)
+                .spring(response: 0.6, dampingFraction: 0.6, blendDuration: 0.4)
+                .delay(Double(level.id) * 0.08)
             ) {
                 appeared = true
             }
@@ -41,24 +44,67 @@ struct LevelNodeView: View {
     // MARK: - Completed Level
     
     private func completedNode(stars: Int) -> some View {
-        VStack(spacing: -6) {
-            Circle()
-                .fill(Color.darkGreen)
-                .frame(width: 60, height: 60)
-                .overlay(
-                    Text("\(level.id)")
-                        .font(.system(size: 24, weight: .bold))
-                        .foregroundColor(.white)
-                )
-                .overlay(
-                    Circle()
-                        .stroke(Color.darkGreen.opacity(0.8), lineWidth: 2)
-                        .scaleEffect(1.1)
-                )
-                .shadow(color: Color.darkGreen.opacity(0.3), radius: 6, x: 0, y: 3)
+        VStack(spacing: -4) {
+            ZStack {
+                // Outer glow ring
+                Circle()
+                    .fill(
+                        RadialGradient(
+                            colors: [Color.darkGreen.opacity(0.3), .clear],
+                            center: .center,
+                            startRadius: 25,
+                            endRadius: 50
+                        )
+                    )
+                    .frame(width: 80, height: 80)
+                
+                // Main circle with gradient
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                Color.darkGreen.opacity(0.8),
+                                Color.darkGreen
+                            ],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
+                    .frame(width: 58, height: 58)
+                    .overlay(
+                        // Shine highlight (top-left gloss)
+                        Circle()
+                            .fill(
+                                LinearGradient(
+                                    colors: [Color.white.opacity(0.35), .clear],
+                                    startPoint: .topLeading,
+                                    endPoint: .center
+                                )
+                            )
+                            .frame(width: 58, height: 58)
+                    )
+                    .overlay(
+                        Text("\(level.id)")
+                            .font(.system(size: 24, weight: .black, design: .rounded))
+                            .foregroundColor(.white)
+                            .shadow(color: .black.opacity(0.3), radius: 1, x: 0, y: 1)
+                    )
+                    .overlay(
+                        Circle()
+                            .stroke(
+                                LinearGradient(
+                                    colors: [Color.white.opacity(0.5), Color.darkGreen.opacity(0.4)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ),
+                                lineWidth: 3
+                            )
+                    )
+                    .shadow(color: Color.darkGreen.opacity(0.4), radius: 8, x: 0, y: 4)
+            }
             
             StarsRatingView(stars: stars)
-                .offset(y: -4)
+                .offset(y: -2)
         }
     }
     
@@ -66,66 +112,144 @@ struct LevelNodeView: View {
     
     private var unlockedNode: some View {
         ZStack {
-            // Pulse ring animation
+            // Outer pulsing glow ring
             Circle()
-                .stroke(Color.appPrimary.opacity(0.3), lineWidth: 2)
-                .frame(width: 80, height: 80)
+                .fill(Color.appPrimary.opacity(0.15))
+                .frame(width: 90, height: 90)
                 .scaleEffect(pulseScale)
-                .opacity(2 - pulseScale)
-                .onAppear {
-                    withAnimation(
-                        .easeInOut(duration: 1.5)
-                        .repeatForever(autoreverses: false)
-                    ) {
-                        pulseScale = 2.0
-                    }
-                }
+                .opacity(2.0 - pulseScale)
             
-            // Main circle
+            // Second pulse ring (staggered)
             Circle()
-                .fill(Color.appPrimary)
+                .stroke(Color.appPrimary.opacity(0.2), lineWidth: 2)
+                .frame(width: 80, height: 80)
+                .scaleEffect(pulseScale * 0.85)
+                .opacity(2.0 - pulseScale)
+            
+            // Glow behind main circle
+            Circle()
+                .fill(
+                    RadialGradient(
+                        colors: [Color.appPrimary.opacity(glowOpacity), .clear],
+                        center: .center,
+                        startRadius: 20,
+                        endRadius: 55
+                    )
+                )
+                .frame(width: 100, height: 100)
+            
+            // Main circle with premium gradient
+            Circle()
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            Color.appPrimary.opacity(0.85),
+                            Color.appPrimary
+                        ],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
                 .frame(width: 65, height: 65)
                 .overlay(
+                    // Gloss highlight
+                    Circle()
+                        .fill(
+                            LinearGradient(
+                                colors: [Color.white.opacity(0.4), .clear],
+                                startPoint: .topLeading,
+                                endPoint: .center
+                            )
+                        )
+                        .frame(width: 65, height: 65)
+                )
+                .overlay(
                     Text("\(level.id)")
-                        .font(.system(size: 28, weight: .bold))
+                        .font(.system(size: 28, weight: .black, design: .rounded))
                         .foregroundColor(.white)
+                        .shadow(color: .black.opacity(0.3), radius: 1, x: 0, y: 1)
                 )
                 .overlay(
                     Circle()
-                        .stroke(Color.white, lineWidth: 3)
+                        .stroke(
+                            LinearGradient(
+                                colors: [Color.white.opacity(0.7), Color.white.opacity(0.2)],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ),
+                            lineWidth: 3.5
+                        )
                 )
-                .shadow(color: Color.appPrimary.opacity(0.5), radius: 10, x: 0, y: 4)
+                .shadow(color: Color.appPrimary.opacity(0.5), radius: 12, x: 0, y: 5)
+                .offset(y: bounceOffset)
             
             // Bird + Speech bubble positioned to the right
             MascotSpeechBubble()
                 .offset(x: 60, y: -100)
+        }
+        .onAppear {
+            // Pulse ring animation
+            withAnimation(
+                .easeInOut(duration: 1.8)
+                .repeatForever(autoreverses: false)
+            ) {
+                pulseScale = 2.0
+            }
+            // Glow breathing
+            withAnimation(
+                .easeInOut(duration: 1.2)
+                .repeatForever(autoreverses: true)
+            ) {
+                glowOpacity = 0.8
+            }
+            // Gentle float/bounce
+            withAnimation(
+                .easeInOut(duration: 1.5)
+                .repeatForever(autoreverses: true)
+            ) {
+                bounceOffset = -4
+            }
         }
     }
     
     // MARK: - Locked Level
     
     private var lockedNode: some View {
-        Circle()
-            .fill(Color.white.opacity(colorScheme == .dark ? 0.15 : 0.4))
-            .frame(width: 50, height: 50)
-            .overlay(
-                Image(systemIcon: .lockFill)
-                    .foregroundColor(.white.opacity(0.8))
-                    .font(.system(size: 18))
-            )
-            .overlay(
-                Circle()
-                    .stroke(Color.white.opacity(0.5), lineWidth: 1)
-            )
+        ZStack {
+            Circle()
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            Color.white.opacity(colorScheme == .dark ? 0.2 : 0.5),
+                            Color.white.opacity(colorScheme == .dark ? 0.08 : 0.25)
+                        ],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+                .frame(width: 50, height: 50)
+                .overlay(
+                    // Gloss
+                    Circle()
+                        .fill(
+                            LinearGradient(
+                                colors: [Color.white.opacity(0.2), .clear],
+                                startPoint: .topLeading,
+                                endPoint: .center
+                            )
+                        )
+                        .frame(width: 50, height: 50)
+                )
+                .overlay(
+                    Image(systemIcon: .lockFill)
+                        .foregroundColor(.white.opacity(0.7))
+                        .font(.system(size: 18, weight: .semibold))
+                )
+                .overlay(
+                    Circle()
+                        .stroke(Color.white.opacity(0.3), lineWidth: 1.5)
+                )
+                .shadow(color: .black.opacity(0.15), radius: 4, x: 0, y: 2)
+        }
     }
 }
-
-//#Preview {
-//    VStack(spacing: 40) {
-//        LevelNodeView(level: GameLevel(id: 1, status: .completed(stars: 3), proportionalPosition: .zero))
-//        LevelNodeView(level: GameLevel(id: 3, status: .unlocked, proportionalPosition: .zero))
-//        LevelNodeView(level: GameLevel(id: 4, status: .locked, proportionalPosition: .zero))
-//    }
-//    .padding(60)
-//    .background(Color.appViewBackground)
-//}
