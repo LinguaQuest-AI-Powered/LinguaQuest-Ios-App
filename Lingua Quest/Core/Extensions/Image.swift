@@ -49,6 +49,7 @@ extension Image {
         case star2 = "star2"
         case ball = "ball"
         case onboardingbackground = "onboarding"
+        case homeBackground = "LinguaQuestHome"
         case english = "English"
         case french = "French"
         case spanish = "Spanish"
@@ -57,6 +58,10 @@ extension Image {
         case advanced = "advanced"
         case intermediate = "intermediate"
         case beginner = "beginner"
+        case kitchen = "kitchen_world"
+        case city = "city_world"
+        case apple = "appleImage"
+        case appBarBird = "appBarBird"
         
     }
     

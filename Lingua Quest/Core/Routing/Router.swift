@@ -47,7 +47,7 @@ final class Router: RouterProtocol {
     @ViewBuilder
     func view(for route: AppRoute) -> some View {
         switch route {
-        case .home: Text("**")
+        case .home: HomeView()
         case .profile(let userId): Text("** \(userId)")
         case .settings: Text("**")
         case .productDetails(let id): Text("** \(id)")
