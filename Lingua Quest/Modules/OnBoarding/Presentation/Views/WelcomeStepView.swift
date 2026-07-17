@@ -10,6 +10,7 @@ import SwiftUI
 struct WelcomeStepView: View {
     let onGetStarted: () -> Void
     let onLogin: () -> Void
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
         ZStack {
@@ -23,6 +24,7 @@ struct WelcomeStepView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(maxWidth: .infinity)
+                    .colorMultiply(colorScheme == .dark ? Color.appCardBackground : .white)
             }
             .ignoresSafeArea(edges: .bottom)
             
@@ -32,10 +34,12 @@ struct WelcomeStepView: View {
                 Image(asset: .onBoardingFirstBird)
                     .resizable()
                     .scaledToFit()
-                    .frame(maxWidth: .infinity)
+                    .frame(width: UIScreen.main.bounds.width)
+                    .scaleEffect(1.35)
+                    .padding(.bottom, -20)
 
                 (Text(L10n.Onboarding.welcomeTitlePart1)
-                    .foregroundColor(.black) +
+                    .foregroundColor(.appTextDarkBlue) +
                 Text(L10n.Onboarding.welcomeTitlePart2)
                     .foregroundColor(.appPrimary))
                 .font(AppTextStyle.title.font)
@@ -60,6 +64,7 @@ struct WelcomeStepView: View {
                 .padding(.horizontal, 24)
                 .padding(.bottom, 80)
             }
+            .ignoresSafeArea(edges: .top)
         }
     }
 }

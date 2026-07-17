@@ -75,7 +75,7 @@ private extension DialogCardContainer {
 
     var cardBackground: some View {
         RoundedRectangle(cornerRadius: cornerRadius)
-            .fill(.white)
+            .fill(Color.appCardBackground)
             .overlay {
                 decorativeBackground
             }

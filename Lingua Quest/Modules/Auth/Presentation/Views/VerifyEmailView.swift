@@ -102,7 +102,7 @@ struct VerifyEmailView: View {
         Circle()
             .stroke(isFocused ? Color.darkGreen : (isFilled ? Color.darkGreen.opacity(0.5) : Color.borderBrown.opacity(0.3)), lineWidth: isFocused ? 2 : 1)
             .frame(width: 60, height: 60)
-            .background(Circle().fill(Color.white))
+            .background(Circle().fill(Color.appCardBackground))
             .overlay(
                 Text(char)
                     .appTextStyle(.largeTitle, color: .textBrown)
