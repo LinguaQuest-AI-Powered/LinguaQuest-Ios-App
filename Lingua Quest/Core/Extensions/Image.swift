@@ -30,6 +30,7 @@ extension Image {
         case timer = "timer"
         case chevronDown = "chevron.down"
         case flame = "flame.fill"
+        case play = "play.fill"
     }
     
     enum Asset: String {

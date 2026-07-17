@@ -14,43 +14,45 @@ struct HomeView: View {
     ]
     
     var body: some View {
-        
         VStack(spacing: 0) {
-            TopBarView() //TODO: delete it
+            TopBarView()
                 .background(Color.white.ignoresSafeArea(edges: .top))
                 .zIndex(1)
-            
+
             ZStack(alignment: .bottomTrailing) {
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 20) {
-                        
+
                         LearningCardView()
-                        
+                            .padding(.horizontal, 20)
+
                         SectionHeaderView(
                             title: "Explore Worlds",
                             actionTitle: "See more"
                         )
-                        
+                        .padding(.horizontal, 20)
+
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 16) {
                                 ForEach(worlds) { item in
                                     WorldCardView(item: item)
                                 }
                             }
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 4)
                         }
-                        
+
                         ContinueLessonCardView()
-                        
+                            .padding(.horizontal, 20)
+
                         Color.clear.frame(height: 100)
                     }
-                    .padding(.horizontal, 20)
                     .padding(.top, 12)
                 }
-                
-                // Floating Action Button
+
                 Button(action: {}) {
                     Image(asset: .world)
-                        .font(.system(size: 24, weight: .semibold))
+                        .font(AppTextStyle.cardTitle.font)
                         .foregroundColor(.white)
                         .frame(width: 60, height: 60)
                         .background(Color.appDarkGreen)
@@ -60,9 +62,10 @@ struct HomeView: View {
                 .padding(.trailing, 20)
                 .padding(.bottom, 20)
             }
-        }.background(
+        }
+        .background(
             HomeBackgroundView()
-                        .ignoresSafeArea()
+                .ignoresSafeArea()
         )
     }
 }
@@ -76,20 +79,20 @@ struct TopBarView: View {
                 .scaledToFit()
                 .frame(width: 40, height: 40)
                 .clipShape(Circle())
-                .overlay(Circle().stroke(Color.brown.opacity(0.3), lineWidth: 1))
+                .overlay(Circle().stroke(Color.appBorderBrown, lineWidth: 1))
 
             Text("LinguaQuest")
-                .font(.system(size: 14, weight: .bold, design: .rounded))
-                .foregroundColor(Color(red: 0.58, green: 0.35, blue: 0.1))
+                .font(AppTextStyle.buttonBold.font)
+                .foregroundColor(Color.appTextBrown)
 
             Spacer()
 
             HStack(spacing: 4) {
-                Image("star")
+                Image(asset: .star)
                     .resizable()
                     .frame(width: 14, height: 14)
                 Text("1,250")
-                    .font(.system(size: 13, weight: .bold))
+                    .font(AppTextStyle.captionMedium.font)
             }
             .padding(.horizontal, 10)
             .padding(.vertical, 6)
@@ -98,9 +101,9 @@ struct TopBarView: View {
 
             HStack(spacing: 4) {
                 Image(systemName: "centsign.circle.fill")
-                    .foregroundColor(Color(red: 0.65, green: 0.45, blue: 0.25))
+                    .foregroundColor(Color.appIconBrown)
                 Text("45")
-                    .font(.system(size: 13, weight: .bold))
+                    .font(AppTextStyle.captionMedium.font)
             }
             .padding(.horizontal, 10)
             .padding(.vertical, 6)
@@ -135,46 +138,46 @@ struct LearningCardView: View {
                     .scaledToFill()
                     .frame(width: 46, height: 46)
                     .clipShape(RoundedRectangle(cornerRadius: 14))
-                    .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color.orange.opacity(0.5), lineWidth: 1))
+                    .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color.appBorderBrown, lineWidth: 1))
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text("CURRENTLY LEARNING")
-                        .font(.system(size: 11, weight: .semibold))
-                        .foregroundColor(.brown.opacity(0.7))
+                        .font(AppTextStyle.micro.font)
+                        .foregroundColor(Color.appTextBrown)
                     
                     Text("Spanish")
-                        .font(.system(size: 34, weight: .bold))
+                        .font(AppTextStyle.largeTitle.font)
                 }
                 
                 Spacer()
                 
                 VStack(alignment: .trailing, spacing: 6) {
                     Text("Level 12")
-                        .font(.system(size: 13, weight: .medium))
-                        .foregroundColor(.brown.opacity(0.7))
+                        .font(AppTextStyle.captionMedium.font)
+                        .foregroundColor(Color.appTextBrown)
                     
                     HStack(spacing: 4) {
                         Image(systemIcon: .flame)
-                            .foregroundColor(.red)
+                            .foregroundColor(Color.red)
                         
                         Text("7 Days")
-                            .font(.system(size: 13, weight: .semibold))
+                            .font(AppTextStyle.captionMedium.font)
                     }
                 }
             }
             
             ZStack(alignment: .leading) {
                 Capsule()
-                    .fill(Color(red: 0.95, green: 0.88, blue: 0.85))
+                    .fill(Color.appSecondryProgressBar)
                     .frame(height: 10)
                 
                 Capsule()
-                    .fill(Color.appDarkGreen)
+                    .fill(Color.appProgressBar)
                     .frame(width: 165, height: 10)
             }
         }
         .padding(18)
-        .background(Color(red: 0.98, green: 0.96, blue: 0.95))
+        .background(Color.appCardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 24))
     }
 }
@@ -186,18 +189,18 @@ struct SectionHeaderView: View {
     var body: some View {
         HStack {
             Text(title)
-                .font(.system(size: 26, weight: .bold))
+                .font(AppTextStyle.headline.font)
             
             Spacer()
             
             Button(action: {}) {
                 HStack(spacing: 4) {
                     Text(actionTitle)
-                        .font(.system(size: 16, weight: .bold))
+                        .font(AppTextStyle.buttonBold.font)
                     Image(systemIcon: .chevronDown)
-                        .font(.system(size: 14, weight: .bold))
+                        .font(AppTextStyle.captionMedium.font)
                 }
-                .foregroundColor(Color(red: 0.58, green: 0.35, blue: 0.1))
+                .foregroundColor(Color.appTextBrown)
             }
         }
     }
@@ -218,53 +221,53 @@ struct WorldCardView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                     
                     Text(item.difficulty)
-                        .font(.system(size: 10, weight: .bold))
+                        .font(AppTextStyle.micro.font)
                         .foregroundColor(.white)
                         .padding(.horizontal, 10)
                         .padding(.vertical, 5)
-                        .background(Capsule().fill(Color(red: 0.18, green: 0.44, blue: 0.38)))
+                        .background(Capsule().fill(Color.appDarkGreen))
                         .padding(8)
                 }
                 
                 if item.isCompleted {
                     Image(systemIcon: .checkmark)
-                        .font(.system(size: 12, weight: .bold))
+                        .font(AppTextStyle.micro.font)
                         .foregroundColor(.white)
                         .frame(width: 24, height: 24)
-                        .background(Circle().fill(Color(red: 0.18, green: 0.44, blue: 0.38)))
+                        .background(Circle().fill(Color.appDarkGreen))
                         .overlay(Circle().stroke(Color.white, lineWidth: 2))
                         .offset(x: -10, y: -10)
                 }
             }
             
             Text(item.title)
-                .font(.system(size: 18, weight: .medium))
+                .font(AppTextStyle.subtitleMedium.font)
             
             HStack {
                 Text("Progress")
-                    .font(.system(size: 11, weight: .semibold))
-                    .foregroundColor(Color.black.opacity(0.7))
+                    .font(AppTextStyle.micro.font)
+                    .foregroundColor(Color.appTextBrown)
                 
                 Spacer()
                 
                 Text("\(Int(item.progress * 100))%")
-                    .font(.system(size: 11, weight: .bold))
-                    .foregroundColor(Color(red: 0.18, green: 0.44, blue: 0.38))
+                    .font(AppTextStyle.micro.font)
+                    .foregroundColor(Color.appProgressBar)
             }
             
             ZStack(alignment: .leading) {
                 Capsule()
-                    .fill(Color(red: 0.95, green: 0.88, blue: 0.85))
+                    .fill(Color.appSecondryProgressBar)
                     .frame(height: 10)
                 
                 Capsule()
-                    .fill(Color(red: 0.18, green: 0.44, blue: 0.38))
+                    .fill(Color.appProgressBar)
                     .frame(width: max(CGFloat(item.progress) * 150, 20), height: 10)
             }
         }
         .padding(12)
         .frame(width: 204)
-        .background(Color(red: 0.98, green: 0.96, blue: 0.95))
+        .background(Color.appCardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 24))
     }
 }
@@ -275,28 +278,28 @@ struct ContinueLessonCardView: View {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("CONTINUE LESSON")
-                        .font(.system(size: 11, weight: .bold))
-                        .foregroundColor(Color(red: 0.58, green: 0.35, blue: 0.1))
+                        .font(AppTextStyle.micro.font)
+                        .foregroundColor(Color.appTextBrown)
                         .padding(.horizontal, 10)
                         .padding(.vertical, 5)
                         .background(
-                            Capsule().fill(Color(red: 0.95, green: 0.88, blue: 0.82))
+                            Capsule().fill(Color.appViewBackground)
                         )
                     
                     Text("Apple")
-                        .font(.system(size: 32, weight: .bold))
+                        .font(AppTextStyle.title.font)
                         .foregroundColor(.black)
                     
                     Text("Noun • La Pomme")
-                        .font(.system(size: 16, weight: .medium))
-                        .foregroundColor(.black.opacity(0.6))
+                        .font(AppTextStyle.buttonMedium.font)
+                        .foregroundColor(Color.appTextDarkBlue)
                 }
                 
                 Spacer()
                 
                 ZStack {
                     RoundedRectangle(cornerRadius: 18)
-                        .fill(Color(red: 0.95, green: 0.88, blue: 0.85))
+                        .fill(Color.appViewBackground)
                         .frame(width: 96, height: 96)
                     
                     Image(asset: .apple)
@@ -308,19 +311,19 @@ struct ContinueLessonCardView: View {
             
             Button(action: {}) {
                 HStack(spacing: 8) {
-                    Image(systemName: "play.fill")
+                    Image(systemIcon: .play)
                     Text("Continue")
-                        .font(.system(size: 20, weight: .medium))
+                        .font(AppTextStyle.subtitleMedium.font)
                 }
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
                 .frame(height: 56)
-                .background(Color(red: 0.96, green: 0.64, blue: 0.23))
+                .background(Color.appPrimaryColor)
                 .clipShape(Capsule())
             }
         }
         .padding(18)
-        .background(Color(red: 0.98, green: 0.96, blue: 0.95))
+        .background(Color.appCardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 28))
     }
 }

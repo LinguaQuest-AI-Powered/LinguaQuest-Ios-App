@@ -21,4 +21,8 @@ extension Color {
     static let appViewBackground  = Color("ViewBackground")
     static let appCardBackground = Color("CardBackground")
     static let appDarkGreen = Color("DarkGreen")
+    static let appPrimaryColor = Color("AppPrimaryColor")
+    static let appSecondaryColor = Color("AppSecondaryColor")
+    static let appProgressBar = Color("AppFirstProgressBar")
+    static let appSecondryProgressBar = Color("AppSecondProgressBar")
 }
