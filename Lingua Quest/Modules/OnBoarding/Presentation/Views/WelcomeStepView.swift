@@ -32,7 +32,9 @@ struct WelcomeStepView: View {
                 Image(asset: .onBoardingFirstBird)
                     .resizable()
                     .scaledToFit()
-                    .frame(maxWidth: .infinity)
+                    .frame(width: UIScreen.main.bounds.width)
+                    .scaleEffect(1.35)
+                    .padding(.bottom, -20)
 
                 (Text(L10n.Onboarding.welcomeTitlePart1)
                     .foregroundColor(.black) +
@@ -60,6 +62,7 @@ struct WelcomeStepView: View {
                 .padding(.horizontal, 24)
                 .padding(.bottom, 80)
             }
+            .ignoresSafeArea(edges: .top)
         }
     }
 }
