@@ -11,22 +11,24 @@ struct LevelCard: View {
     let level: UserLevel
     let isSelected: Bool
     let action: () -> Void
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         Button(action: action) {
             HStack(spacing: 16) {
                 ZStack {
                     Circle()
-                        .fill(isSelected ? Color.activeLevel.opacity(0.22) : Color.appSecondary.opacity(0.35))
+                        .fill(isSelected ? Color.activeLevel.opacity(0.22) : (colorScheme == .dark ? Color.white.opacity(0.12) : Color.appSecondary.opacity(0.35)))
                         .frame(width: 64, height: 64)
                     
                     Image(iconName)
-                        .foregroundColor(isSelected ? Color.activeLevel : .brown)
+                        .renderingMode(.template)
+                        .foregroundColor(isSelected ? Color.activeLevel : (colorScheme == .dark ? .appTextBrown : .appIconBrown))
                 }
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(level.title)
-                        .appTextStyle(.cardTitle, color: .black)
+                        .appTextStyle(.cardTitle, color: .appTextDarkBlue)
                     
                     Text(level.subtitle)
                         .appTextStyle(.caption, color: .secondaryButtonText)
@@ -36,11 +38,11 @@ struct LevelCard: View {
                 Spacer()
             }
             .padding()
-            .background(Color.white)
+            .background(Color.appCardBackground)
             .overlay(
                 RoundedRectangle(cornerRadius: 18)
                     .stroke(
-                        isSelected ? Color.appPrimary : Color.appSecondary.opacity(0.45),
+                        isSelected ? Color.appPrimary : (colorScheme == .dark ? Color.white.opacity(0.25) : Color.appSecondary.opacity(0.45)),
                         lineWidth: isSelected ? 2.5 : 1
                     )
             )

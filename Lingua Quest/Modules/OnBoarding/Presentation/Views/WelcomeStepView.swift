@@ -10,6 +10,7 @@ import SwiftUI
 struct WelcomeStepView: View {
     let onGetStarted: () -> Void
     let onLogin: () -> Void
+    @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
         ZStack {
@@ -23,6 +24,7 @@ struct WelcomeStepView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(maxWidth: .infinity)
+                    .colorMultiply(colorScheme == .dark ? Color.appCardBackground : .white)
             }
             .ignoresSafeArea(edges: .bottom)
             
@@ -37,7 +39,7 @@ struct WelcomeStepView: View {
                     .padding(.bottom, -20)
 
                 (Text(L10n.Onboarding.welcomeTitlePart1)
-                    .foregroundColor(.black) +
+                    .foregroundColor(.appTextDarkBlue) +
                 Text(L10n.Onboarding.welcomeTitlePart2)
                     .foregroundColor(.appPrimary))
                 .font(AppTextStyle.title.font)

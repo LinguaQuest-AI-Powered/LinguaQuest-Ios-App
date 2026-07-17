@@ -20,14 +20,14 @@ struct LanguageRow: View {
                     .frame(width: 22, height: 22)
                 
                 Text(language.name)
-                    .appTextStyle(.subtitleMedium, color: .black)
+                    .appTextStyle(.subtitleMedium, color: .appTextDarkBlue)
                 
                 Spacer()
             }
             .padding()
             .background(
                 RoundedRectangle(cornerRadius: 16)
-                    .fill(isSelected ? Color.appSecondary.opacity(0.35) : Color.white)
+                    .fill(isSelected ? Color.appSecondary.opacity(0.35) : Color.appCardBackground)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
