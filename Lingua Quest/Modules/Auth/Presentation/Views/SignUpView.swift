@@ -113,13 +113,16 @@ struct SignUpView: View {
                 }
                 .padding(.horizontal, 24)
             }
-        }
-        .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                CustomBackButton(action: { viewModel.navigateToLogin() })
+            VStack {
+                HStack {
+                    CustomBackButton(action: { viewModel.navigateToLogin() })
+                    Spacer()
+                }
+                .padding(.horizontal, 24)
+                Spacer()
             }
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 

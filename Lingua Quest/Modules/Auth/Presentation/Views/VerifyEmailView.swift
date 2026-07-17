@@ -18,7 +18,7 @@ struct VerifyEmailView: View {
             VStack(spacing: 0) {
                 
                 ScrollView(showsIndicators: false) {
-                    DialogCardContainer(mascotImage: .bird) {
+                    DialogCardContainer(mascotImage: .verifyEmailBird) {
                         VStack(spacing: 24) {
                             
                             VStack(spacing: 16) {
@@ -102,7 +102,7 @@ struct VerifyEmailView: View {
         Circle()
             .stroke(isFocused ? Color.darkGreen : (isFilled ? Color.darkGreen.opacity(0.5) : Color.borderBrown.opacity(0.3)), lineWidth: isFocused ? 2 : 1)
             .frame(width: 60, height: 60)
-            .background(Circle().fill(Color.white))
+            .background(Circle().fill(Color.appCardBackground))
             .overlay(
                 Text(char)
                     .appTextStyle(.largeTitle, color: .textBrown)

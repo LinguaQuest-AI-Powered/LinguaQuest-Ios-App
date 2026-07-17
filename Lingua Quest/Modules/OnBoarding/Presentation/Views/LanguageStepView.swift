@@ -27,7 +27,7 @@ struct LanguageStepView: View {
                 .frame(maxWidth: .infinity)
 
             Text(L10n.Onboarding.languageStepTitle)
-                .appTextStyle(.headline,color: .black)
+                .appTextStyle(.headline,color: .appTextDarkBlue)
                 .frame(maxWidth: .infinity, alignment: .center)
 
             Text(L10n.Onboarding.languageStepSubtitle)

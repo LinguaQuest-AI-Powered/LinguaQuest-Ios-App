@@ -24,7 +24,7 @@ struct LevelStepView: View {
                         .frame(height: 200)
                     
                     Text(L10n.Onboarding.levelStepTitle)
-                        .appTextStyle(.headline,color: .black)
+                        .appTextStyle(.headline,color: .appTextDarkBlue)
                       
                     Text(L10n.Onboarding.levelStepSubtitle)
                         .appTextStyle(.subtitle, color: .secondaryButtonText)
@@ -33,7 +33,7 @@ struct LevelStepView: View {
                         .padding()
                         .background(
                             RoundedRectangle(cornerRadius: 16)
-                                .fill(Color.white)
+                                .fill(Color.appCardBackground)
                         ).overlay(
                             RoundedRectangle(cornerRadius: 16)
                                 .stroke(
