@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TopExplorersSection: View {
     // MARK: - Properties
-    let explorers: [ExplorerDomainModel]
+    let explorers: [ExplorerEntity]
     var onViewAllTapped: () -> Void
     
     // MARK: - Body
@@ -52,7 +52,7 @@ struct TopExplorersSection: View {
 }
 
 // MARK: - UI Mapping Extension
-private extension ExplorerDomainModel {
+private extension ExplorerEntity {
     var uiRank: String {
         "\(rank)"
     }
@@ -70,9 +70,9 @@ private extension ExplorerDomainModel {
 // MARK: - Preview
 #Preview {
     let mockExplorers = [
-        ExplorerDomainModel(id: "1", rank: 1, name: "Marco Polo", xp: 12450, avatarImage: nil),
-        ExplorerDomainModel(id: "2", rank: 2, name: "Amelia Earhart", xp: 11200, avatarImage: nil),
-        ExplorerDomainModel(id: "3", rank: 3, name: "Ibn Battuta", xp: 9850, avatarImage: nil)
+        ExplorerEntity(id: "1", rank: 1, name: "Marco Polo", xp: 12450, avatarImage: nil),
+        ExplorerEntity(id: "2", rank: 2, name: "Amelia Earhart", xp: 11200, avatarImage: nil),
+        ExplorerEntity(id: "3", rank: 3, name: "Ibn Battuta", xp: 9850, avatarImage: nil)
     ]
     
     TopExplorersSection(explorers: mockExplorers) {

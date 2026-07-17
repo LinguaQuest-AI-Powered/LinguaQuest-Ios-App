@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ExplorerDomainModel: Identifiable {
+struct ExplorerEntity: Identifiable {
     let id: String
     let rank: Int
     let name: String
