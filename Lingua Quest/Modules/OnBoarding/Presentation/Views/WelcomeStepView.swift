@@ -17,22 +17,22 @@ struct WelcomeStepView: View {
             Color.appViewBackground
                 .ignoresSafeArea()
 
-            Image(asset: .star2)
-                .position(x: 45, y: 90)
-
-            Image(asset: .ball)
-                .position(x: 320, y: 220)
-
-
-            VStack(spacing: 0) {
-                Spacer().frame(height: 70)
-
-                Image(.bird2)
+            VStack {
+                Spacer()
+                Image(asset: .onBoardingBottomSVG)
                     .resizable()
                     .scaledToFit()
-                    .frame(height: 250)
-
-                Spacer().frame(height: 28)
+                    .frame(maxWidth: .infinity)
+            }
+            .ignoresSafeArea(edges: .bottom)
+            
+            
+            VStack(spacing: 0) {
+                
+                Image(asset: .onBoardingFirstBird)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: .infinity)
 
                 (Text(L10n.Onboarding.welcomeTitlePart1)
                     .foregroundColor(.black) +
@@ -41,7 +41,6 @@ struct WelcomeStepView: View {
                 .font(AppTextStyle.title.font)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 24)
-
 
                 Spacer()
 

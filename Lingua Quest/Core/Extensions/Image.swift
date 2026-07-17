@@ -36,6 +36,8 @@ extension Image {
         case bird = "bird"
         case bird2 = "bird2"
         case bird3 = "bird3"
+        case onBoardingFirstBird = "onBoardingBird"
+        case onBoardingBottomSVG = "onBoardingSVG"
         case loginBird = "login_bird"
         case registerationBird = "registeration_bird"
         case forgetPasswordBird = "forget_pass_bird"
