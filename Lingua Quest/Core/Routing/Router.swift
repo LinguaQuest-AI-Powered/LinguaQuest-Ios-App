@@ -50,7 +50,6 @@ final class Router: RouterProtocol {
         case .home: Text("**")
         case .profile(let userId): Text("** \(userId)")
         case .settings: Text("**")
-        case .productDetails(let id): Text("** \(id)")
         case .login: 
             let viewModel = Resolver.shared.resolve(LoginViewModel.self)
             LoginView(viewModel: viewModel)

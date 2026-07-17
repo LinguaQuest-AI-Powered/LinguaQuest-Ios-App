@@ -16,5 +16,4 @@ enum LevelStatus: Equatable {
 struct GameLevel: Identifiable, Equatable {
     let id: Int
     let status: LevelStatus
-    let proportionalPosition: CGPoint
 }

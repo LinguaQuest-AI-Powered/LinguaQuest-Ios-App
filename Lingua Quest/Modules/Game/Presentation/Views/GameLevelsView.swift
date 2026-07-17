@@ -11,78 +11,156 @@ struct GameLevelsView: View {
     @State var viewModel: GameLevelsViewModel
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) private var dismiss
+    @State private var titleOpacity: Double = 0
     
     var body: some View {
-        GeometryReader { screenGeo in
-            ZStack(alignment: .top) {
-                // The scaled canvas
-                ZStack {
-                    Image(asset: .gameLevelBackground)
-                        .resizable()
-                    
-                    // Darken background slightly in dark mode for better contrast
-                    Color.black.opacity(colorScheme == .dark ? 0.35 : 0)
-                    
-                    // Nodes mapped perfectly on the background
-                    GeometryReader { mapGeo in
-                        ForEach(viewModel.levels) { level in
-                            LevelNodeView(level: level)
-                                .position(
-                                    x: mapGeo.size.width * level.proportionalPosition.x,
-                                    y: mapGeo.size.height * level.proportionalPosition.y
-                                )
-                        }
-                    }
-                }
-                .aspectRatio(390/885, contentMode: .fill)
-                .frame(width: screenGeo.size.width, height: screenGeo.size.height)
-                .clipped()
+        ZStack(alignment: .top) {
+            
+            // LAYER 1: Scrollable Map Area (Underneath everything, filling the screen)
+            GeometryReader { geo in
+                let w = geo.size.width
+                let levelSpacing: CGFloat = 160
+                let totalHeight = CGFloat(viewModel.levels.count) * levelSpacing + 200
                 
-                // Top Navigation Bar
-                VStack {
-                    HStack {
-                        Button(action: {
-                            dismiss()
-                        }) {
-                            Image(systemName: "chevron.left")
-                                .font(.system(size: 16, weight: .bold))
-                                .foregroundColor(.appPrimary)
-                                .frame(width: 38, height: 38)
-                                .background(Circle().fill(Color.appCardBackground))
-                                .shadow(color: Color.black.opacity(0.08), radius: 6, x: 0, y: 3)
+                // We add a massive buffer of extra grass image to the top and bottom.
+                // This means when you scroll past the limits (bounce), you just see more
+                // of the same moving grass, and NEVER a black screen or static background.
+                let overscrollBuffer: CGFloat = 800
+                let paddedHeight = totalHeight + (overscrollBuffer * 2)
+                
+                ScrollViewReader { scrollProxy in
+                    ScrollView(showsIndicators: false) {
+                        ZStack(alignment: .topLeading) {
+                            
+                            // Winding Road (Outer border)
+                            WindingRoadShape()
+                                .stroke(Color(red: 0.5, green: 0.35, blue: 0.15), style: StrokeStyle(lineWidth: 46, lineCap: .round, lineJoin: .round))
+                                .frame(width: w, height: totalHeight)
+                            
+                            // Winding Road (Inner fill)
+                            WindingRoadShape()
+                                .stroke(Color(red: 0.7, green: 0.5, blue: 0.3), style: StrokeStyle(lineWidth: 36, lineCap: .round, lineJoin: .round))
+                                .frame(width: w, height: totalHeight)
+                            
+                            // Winding Road (Dashed center line)
+                            WindingRoadShape()
+                                .stroke(Color.white.opacity(0.3), style: StrokeStyle(lineWidth: 2, dash: [10, 15]))
+                                .frame(width: w, height: totalHeight)
+                            
+                            // Level Nodes
+                            ForEach(Array(viewModel.levels.enumerated()), id: \.element.id) { index, level in
+                                let yPos = totalHeight - 100 - (CGFloat(index) * levelSpacing)
+                                let xPos = RoadMath.xPosition(for: yPos, in: w)
+                                
+                                LevelNodeView(level: level)
+                                    .position(x: xPos, y: yPos)
+                                    .id(level.id)
+                            }
                         }
-                        
-                        Spacer()
-                        
-                        Text(L10n.Game.parkWorld)
-                            .appTextStyle(.title, color: .appTextBrown)
-                        
-                        Spacer()
-                        
-                        // Empty view to balance the HStack
-                        Color.clear
-                            .frame(width: 38, height: 38)
-                    }
-                    .padding(.horizontal, 24)
-                    .padding(.top, screenGeo.safeAreaInsets.top + 16)
-                    .padding(.bottom, 8)
-                    // Soft background gradient for the top bar to make text readable over map
-                    .background(
-                        LinearGradient(
-                            colors: [
-                                Color.appViewBackground.opacity(0.95),
-                                Color.appViewBackground.opacity(0.7),
-                                Color.clear
-                            ],
-                            startPoint: .top,
-                            endPoint: .bottom
+                        .frame(width: w, height: totalHeight)
+                        // Apply the tiled grass as a background that bleeds massively out of the ZStack's bounds!
+                        .background(
+                            ZStack(alignment: .topLeading) {
+                                
+                                // Custom Tiled Background with Crossfade to hide seams
+                                let imageHeight: CGFloat = 1000
+                                let overlap: CGFloat = 0.2 // 20% overlap
+                                let stepHeight = imageHeight * (1.0 - overlap)
+                                let imageCount = Int(paddedHeight / stepHeight) + 2
+                                
+                                ZStack {
+                                    ForEach(0..<imageCount, id: \.self) { i in
+                                        Image(asset: .gameLevelBackground)
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: w, height: imageHeight)
+                                            // Fade the bottom edge of each upper image to softly blend into the solid image below it
+                                            .mask(
+                                                LinearGradient(
+                                                    stops: [
+                                                        .init(color: .black, location: 0.0),
+                                                        .init(color: .black, location: 1.0 - overlap),
+                                                        .init(color: .clear, location: 1.0)
+                                                    ],
+                                                    startPoint: .top,
+                                                    endPoint: .bottom
+                                                )
+                                            )
+                                            .position(
+                                                x: w / 2,
+                                                y: paddedHeight - (CGFloat(i) * stepHeight) - (imageHeight / 2)
+                                            )
+                                            .zIndex(CGFloat(i))
+                                    }
+                                }
+                                .frame(width: w, height: paddedHeight)
+                                .offset(y: -overscrollBuffer)
+                                
+                                // Dark Mode Overlay
+                                if colorScheme == .dark {
+                                    Color.black.opacity(0.35)
+                                        .frame(width: w, height: paddedHeight)
+                                        .offset(y: -overscrollBuffer)
+                                }
+                            }
                         )
-                    )
+                    }
+                    .onAppear {
+                        // Automatically scroll to the absolute bottom (Level 1) when the screen opens
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                            // We scroll to level 1 with a bottom anchor so the scrollview hits the very bottom edge
+                            scrollProxy.scrollTo(viewModel.levels.first?.id ?? 1, anchor: .bottom)
+                        }
+                    }
                 }
             }
             .ignoresSafeArea()
+            
+            // LAYER 2: Top Navigation Bar
+            HStack {
+                Button(action: { dismiss() }) {
+                    Image(systemIcon: .chevronLeft)
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.appPrimary)
+                        .frame(width: 38, height: 38)
+                        .background(Circle().fill(Color.appCardBackground))
+                        .shadow(color: .black.opacity(0.12), radius: 6, x: 0, y: 3)
+                }
+                
+                Spacer()
+                
+                Text(L10n.Game.parkWorld)
+                    .appTextStyle(.title, color: .white)
+                    .shadow(color: .black.opacity(0.4), radius: 4, x: 0, y: 2)
+                    .opacity(titleOpacity)
+                
+                Spacer()
+                
+                Color.clear.frame(width: 38, height: 38)
+            }
+            .padding(.horizontal, 24)
+            .padding(.top, 8) // Adds just enough padding below the safe area
+            .padding(.bottom, 16)
+            .background(
+                LinearGradient(
+                    colors: [
+                        Color.black.opacity(0.45),
+                        Color.black.opacity(0.2),
+                        Color.clear
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                // Stretch the gradient up strictly without altering safe area boundaries
+                .padding(.top, -100)
+            )
         }
         .navigationBarHidden(true)
+        .onAppear {
+            withAnimation(.easeIn(duration: 0.5).delay(0.2)) {
+                titleOpacity = 1
+            }
+        }
     }
 }
 
