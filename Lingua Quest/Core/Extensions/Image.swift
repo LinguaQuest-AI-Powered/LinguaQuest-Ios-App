@@ -38,6 +38,8 @@ extension Image {
         case birdFill = "bird.fill"
         case diamondFill = "diamond.fill"
         case medalFill = "medal.fill"
+        case trophyFill = "trophy.fill"
+        case starFill = "star.fill"
     }
     
     enum Asset: String {
