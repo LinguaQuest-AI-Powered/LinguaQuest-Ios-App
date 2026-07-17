@@ -83,3 +83,8 @@
 "onboarding.alert.error_title" = "تنبيه";
 "onboarding.alert.language_message" = "يرجى اختيار لغتك الأم واللغة التي ترغب بتعلمها.";
 "onboarding.alert.level_message" = "يرجى تحديد مستوى كفائتك.";
+
+"profile.stats.coins" = "العملات";
+"profile.stats.total_xp" = "إجمالي نقاط الخبرة";
+"profile.stats.streak" = "السلسلة";
+"profile.stats.worlds" = "العوالم";

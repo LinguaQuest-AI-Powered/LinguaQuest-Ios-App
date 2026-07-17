@@ -82,3 +82,9 @@
 "onboarding.alert.error_title" = "Attention";
 "onboarding.alert.language_message" = "Please select both a language you speak and a language you want to learn.";
 "onboarding.alert.level_message" = "Please select your proficiency level.";
+
+
+"profile.stats.coins" = "Coins";
+"profile.stats.total_xp" = "Total XP";
+"profile.stats.streak" = "Streak";
+"profile.stats.worlds" = "Worlds";

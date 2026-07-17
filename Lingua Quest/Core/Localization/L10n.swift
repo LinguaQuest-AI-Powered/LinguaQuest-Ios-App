@@ -102,6 +102,14 @@ enum L10n {
         static var alertLanguageMessage: String { localized("onboarding.alert.language_message") }
         static var alertLevelMessage: String { localized("onboarding.alert.level_message") }
     }
+    
+    
+    enum Profile {
+        static var coins: String { localized("profile.stats.coins") }
+        static var totalXP: String { localized("profile.stats.total_xp") }
+        static var streak: String { localized("profile.stats.streak") }
+        static var worlds: String { localized("profile.stats.worlds") }
+    }
 
     private static func localized(_ key: String) -> String {
         return String(localized: String.LocalizationValue(key))

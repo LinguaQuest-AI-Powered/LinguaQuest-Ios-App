@@ -36,5 +36,14 @@ extension Color {
     static let appTextBrown = Color("TextBrown")
     static let appTextDarkBlue = Color("TextDarkBlue")
     static let appViewBackground  = Color("ViewBackground")
-    static let appBadgeBrown = Color("BadgeBrown")
+    
+    /// Profile Screen Colors
+    // LinguaAvatarView Colors
+    static let appBadgeBrown = Color("BadgeBrown")                       // #683D00
+    
+    // Stat Card Colors
+    static let appProfileCardBackground = Color("ProfileCardBackground") // #F9F3EB
+    static let appProfileCardBorder = Color("ProfileCardBorder")         // #DAC2AE
+    static let appProfileTextDark = Color("ProfileTextDark")             // #1D1B17
+    static let appProfileTextMuted = Color("ProfileTextMuted")           // #544434
 }
