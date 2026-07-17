@@ -26,8 +26,10 @@ extension Image {
         case personFill = "person.fill"
         case chevronLeft = "chevron.left"
         case checkmarkCircleFill = "checkmark.circle.fill"
+        case checkmark = "checkmark"
         case timer = "timer"
         case chevronDown = "chevron.down"
+        case flame = "flame.fill"
     }
     
     enum Asset: String {
@@ -62,6 +64,7 @@ extension Image {
         case city = "city_world"
         case apple = "appleImage"
         case appBarBird = "appBarBird"
+        case world = "world_icon"
         
     }
     

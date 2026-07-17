@@ -14,15 +14,15 @@ struct HomeView: View {
     ]
     
     var body: some View {
+        
         VStack(spacing: 0) {
-            TopBarView()
+            TopBarView() //TODO: delete it
+                .background(Color.white.ignoresSafeArea(edges: .top))
+                .zIndex(1)
             
             ZStack(alignment: .bottomTrailing) {
-                HomeBackgroundView()
-                
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 20) {
-                        Color.clear.frame(height: 16)
                         
                         LearningCardView()
                         
@@ -49,40 +49,41 @@ struct HomeView: View {
                 
                 // Floating Action Button
                 Button(action: {}) {
-                    Image(systemName: "globe")
+                    Image(asset: .world)
                         .font(.system(size: 24, weight: .semibold))
                         .foregroundColor(.white)
                         .frame(width: 60, height: 60)
-                        .background(Color(red: 0.18, green: 0.44, blue: 0.38))
+                        .background(Color.appDarkGreen)
                         .clipShape(Circle())
                         .shadow(color: .black.opacity(0.15), radius: 5, x: 0, y: 3)
                 }
                 .padding(.trailing, 20)
                 .padding(.bottom, 20)
             }
-            
-        }
-        .ignoresSafeArea(.all, edges: .bottom)
-        .background(Color(red: 0.98, green: 0.94, blue: 0.91).ignoresSafeArea(edges: .top))
+        }.background(
+            HomeBackgroundView()
+                        .ignoresSafeArea()
+        )
     }
 }
 
+//TODO: Delete it and use the CustomTopBar instead of this one
 struct TopBarView: View {
     var body: some View {
-        HStack {
+        HStack(spacing: 12) {
             Image(asset: .appBarBird)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 40, height: 40)
                 .clipShape(Circle())
                 .overlay(Circle().stroke(Color.brown.opacity(0.3), lineWidth: 1))
-            
+
             Text("LinguaQuest")
-                .font(.system(size: 24, weight: .bold, design: .rounded))
+                .font(.system(size: 14, weight: .bold, design: .rounded))
                 .foregroundColor(Color(red: 0.58, green: 0.35, blue: 0.1))
-            
+
             Spacer()
-            
+
             HStack(spacing: 4) {
                 Image("star")
                     .resizable()
@@ -94,7 +95,7 @@ struct TopBarView: View {
             .padding(.vertical, 6)
             .background(Color.white)
             .clipShape(Capsule())
-            
+
             HStack(spacing: 4) {
                 Image(systemName: "centsign.circle.fill")
                     .foregroundColor(Color(red: 0.65, green: 0.45, blue: 0.25))
@@ -107,42 +108,21 @@ struct TopBarView: View {
             .clipShape(Capsule())
         }
         .padding(.horizontal, 20)
-        .padding(.bottom, 10)
-        .padding(.top, 5)
-        .background(Color(red: 0.98, green: 0.94, blue: 0.91))
+        .padding(.vertical, 12)
+        .background(Color.white)
+        .overlay(alignment: .bottom) {
+            Divider()
+        }
     }
 }
 
-// Helper to round specific corners
-struct CustomRoundedRectangle: Shape {
-    var cornerRadius: CGFloat
-    var corners: UIRectCorner
-    
-    func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
-        return Path(path.cgPath)
-    }
-}
 
 struct HomeBackgroundView: View {
     var body: some View {
-        ZStack {
-            Image(asset: .homeBackground)
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
-            
-            LinearGradient(
-                colors: [
-                    Color.white.opacity(0.10),
-                    Color.clear,
-                    Color.black.opacity(0.08)
-                ],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea()
-        }
+        Image(asset: .homeBackground)
+            .resizable()
+            .scaledToFill()
+            .clipped()
     }
 }
 
@@ -174,7 +154,7 @@ struct LearningCardView: View {
                         .foregroundColor(.brown.opacity(0.7))
                     
                     HStack(spacing: 4) {
-                        Image(systemName: "flame.fill")
+                        Image(systemIcon: .flame)
                             .foregroundColor(.red)
                         
                         Text("7 Days")
@@ -189,7 +169,7 @@ struct LearningCardView: View {
                     .frame(height: 10)
                 
                 Capsule()
-                    .fill(Color(red: 0.18, green: 0.44, blue: 0.38)) 
+                    .fill(Color.appDarkGreen)
                     .frame(width: 165, height: 10)
             }
         }
@@ -214,7 +194,7 @@ struct SectionHeaderView: View {
                 HStack(spacing: 4) {
                     Text(actionTitle)
                         .font(.system(size: 16, weight: .bold))
-                    Image(systemName: "chevron.right")
+                    Image(systemIcon: .chevronDown)
                         .font(.system(size: 14, weight: .bold))
                 }
                 .foregroundColor(Color(red: 0.58, green: 0.35, blue: 0.1))
@@ -247,7 +227,7 @@ struct WorldCardView: View {
                 }
                 
                 if item.isCompleted {
-                    Image(systemName: "checkmark")
+                    Image(systemIcon: .checkmark)
                         .font(.system(size: 12, weight: .bold))
                         .foregroundColor(.white)
                         .frame(width: 24, height: 24)
