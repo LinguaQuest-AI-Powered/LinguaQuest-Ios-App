@@ -24,10 +24,10 @@ struct LinguaProfileTopAppBar: View {
                     .frame(width: 40, height: 40)
                     .background(Color.white)
                     .clipShape(Circle())
-                    .overlay(Circle().strokeBorder(Color.appProfileLogoBrown, lineWidth: 2))
+                    .overlay(Circle().strokeBorder(Color.appBrandBrown, lineWidth: 2))
                 
                 Text(L10n.Profile.title)
-                    .appTextStyle(.appBarTitle, color: .appProfileLogoBrown)
+                    .appTextStyle(.headingLarge, color: .appBrandBrown)
             }
             
             Spacer()
@@ -37,14 +37,14 @@ struct LinguaProfileTopAppBar: View {
                 // Coins Badge
                 BadgeView(
                     icon: .dollarsignCircleFill,
-                    iconColor: .appProfileCoinsGold,
+                    iconColor: .appAccentGold,
                     value: coinsValue
                 )
                 
                 // Gems Badge
                 BadgeView(
                     icon: .diamondFill,
-                    iconColor: .appProfileGemsRed,
+                    iconColor: .appAccentRed,
                     value: gemsValue,
                     iconSize: 10
                 )
@@ -52,11 +52,11 @@ struct LinguaProfileTopAppBar: View {
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 12)
-        .background(Color.appProfileappBarBackground)
+        .background(Color.appSurfaceNavBar)
         .overlay(
             Rectangle()
                 .frame(height: 4)
-                .foregroundColor(.appProfileappBarBorder),
+                .foregroundColor(.appBorderWarm),
             alignment: .bottom
         )
     }
@@ -68,5 +68,5 @@ struct LinguaProfileTopAppBar: View {
         LinguaProfileTopAppBar(coinsValue: "1,250", gemsValue: "45")
         Spacer()
     }
-    .background(Color.appViewBackground)
+    .background(Color.appBackgroundWarm)
 }

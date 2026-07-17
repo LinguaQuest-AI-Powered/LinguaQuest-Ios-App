@@ -22,22 +22,22 @@ struct StatCard: View {
                 .foregroundColor(iconColor)
             
             Text(value)
-                .appTextStyle(.statValue, color: .appProfileTextDark)
+                .appTextStyle(.bodyLargeBold, color: .appTextDark)
             
             Text(title)
-                .appTextStyle(.statLabel, color: .appProfileTextMuted.opacity(0.7))
+                .appTextStyle(.microHeavy, color: .appTextSecondary.opacity(0.7))
                 .textCase(.uppercase)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 20)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(Color.appProfileCardBackground)
-                .shadow(color: .appProfileCardBorder, radius: 0, x: 0, y: 4)
+                .fill(Color.appSurfaceCardWarm)
+                .shadow(color: .appBorderWarm, radius: 0, x: 0, y: 4)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 12)
-                .strokeBorder(Color.appProfileCardBorder, lineWidth: 1)
+                .strokeBorder(Color.appBorderWarm, lineWidth: 1)
         )
     }
 }

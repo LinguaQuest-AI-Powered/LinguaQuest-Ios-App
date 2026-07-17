@@ -36,7 +36,7 @@ struct ProfileContentView: View {
     // MARK: - Body
     var body: some View {
         ZStack {
-            Color.appViewBackground.ignoresSafeArea()
+            Color.appBackgroundWarm.ignoresSafeArea()
             
             VStack(spacing: 0) {
                 LinguaProfileTopAppBar(coinsValue: coinsValue, gemsValue: gemsValue)

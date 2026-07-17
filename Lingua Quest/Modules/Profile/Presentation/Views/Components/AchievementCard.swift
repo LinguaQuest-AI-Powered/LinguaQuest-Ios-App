@@ -20,18 +20,18 @@ struct AchievementCard: View {
             // Icon Badge
             Image(systemIcon: icon)
                 .font(.system(size: 24))
-                .foregroundColor(Color.appProfileLogoBrown)
+                .foregroundColor(Color.appBrandBrown)
                 .frame(width: 56, height: 56)
-                .background(Color.appProfileLogoBrown.opacity(0.1))
+                .background(Color.appBrandBrown.opacity(0.1))
                 .clipShape(Circle())
             
             // Text Content
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
-                    .appTextStyle(.bodyBold, color: .appProfileTextAchievementTitle)
+                    .appTextStyle(.bodyBold, color: .appTextHeading)
                 
                 Text(subtitle)
-                    .appTextStyle(.caption, color: .appProfileTextAchievementDesc)
+                    .appTextStyle(.caption, color: .appTextSecondary)
                     .lineLimit(1)
             }
             
@@ -41,11 +41,11 @@ struct AchievementCard: View {
         .padding(.leading, 16)
         .padding(.trailing, 26)
         .frame(width: 280)
-        .background(Color.appProfileCardBackground)
+        .background(Color.appSurfaceCardWarm)
         .cornerRadius(12)
         .overlay(
             RoundedRectangle(cornerRadius: 12)
-                .stroke(Color.appProfileAchievementBorder, lineWidth: 1)
+                .stroke(Color.appBorderLight, lineWidth: 1)
         )
         .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
     }

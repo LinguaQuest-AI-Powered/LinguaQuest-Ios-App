@@ -38,7 +38,7 @@ struct LinguaAvatarView: View {
             .padding(size * 0.035)
             .background(Color.white)
             .clipShape(Circle())
-            .overlay(Circle().stroke(Color.appPrimaryColor, lineWidth: size * 0.035))
+            .overlay(Circle().stroke(Color.appBrandPrimary, lineWidth: size * 0.035))
             .shadow(color: .black.opacity(0.1), radius: size * 0.08, y: size * 0.08)
             
             // Optional Badge / Edit Icon
@@ -51,9 +51,9 @@ struct LinguaAvatarView: View {
                         .font(.system(size: size * 0.12, weight: .bold))
                         .foregroundColor(.white)
                         .frame(width: size * 0.28, height: size * 0.28)
-                        .background(Color.appBadgeBrown)
+                        .background(Color.appBrandBrownDark)
                         .clipShape(Circle())
-                        .overlay(Circle().stroke(Color.appViewBackground, lineWidth: 2))
+                        .overlay(Circle().stroke(Color.appBackgroundWarm, lineWidth: 2))
                 }
                 .offset(x: 0, y: 0)
             }

@@ -7,69 +7,76 @@
 
 import SwiftUI
 
-
-
 extension Color {
-    static let appPrimaryColor = Color("AppPrimaryColor")
-    // UI Components Colors
-    static let appBackgroundLightBlue = Color("BackgroundLightBlue")
-    static let appBorderBrown = Color("BorderBrown")
-    static let appBorderLightBlue = Color("BorderLightBlue")
-    static let appGlowTeal = Color("GlowTeal")
-    static let appGlowYellow = Color("GlowYellow")
-    static let appIconBrown = Color("IconBrown")
-    static let appTextBrown = Color("TextBrown")
-    static let appTextDarkBlue = Color("TextDarkBlue")
-    static let appViewBackground  = Color("ViewBackground")
-    static let appCardBackground = Color("CardBackground")
+    // MARK: - Canonical Design Tokens
     
-    /// Profile Screen Colors
-    // AppBar Colors
-    static let appProfileappBarBackground = Color("ProfileAppBarBackground")     // #FFF8F5
-    static let appProfileappBarBorder = Color("ProfileAppBarBorder")             // #DAC2AF
-    static let appProfileLogoBrown = Color("ProfileLogoBrown")                // #8A5100
-    static let appProfileCoinsGold = Color("ProfileCoinsGold")                // #F59E0B
-    static let appProfileGemsRed = Color("ProfileGemsRed")                    // #F43F5E
-    static let appProfileTextDarkSlate = Color("ProfileTextDarkSlate")        // #1E293B
+    // Brand Colors
+    static let appBrandPrimary = Color("TokenBrandPrimary")         // #FF9F29
+    static let appBrandBrown = Color("TokenBrandBrown")             // #8A5100
+    static let appBrandBrownDark = Color("TokenBrandBrownDark")     // #683D00
     
-    // LinguaAvatarView Colors
-    static let appBadgeBrown = Color("BadgeBrown")                       // #683D00
+    // Backgrounds & Surfaces
+    static let appBackgroundPrimary = Color("TokenBackgroundPrimary") // #F3FAFF
+    static let appBackgroundWarm = Color("TokenBackgroundWarm")       // #FEF8F0
+    static let appSurfaceCard = Color("TokenSurfaceCard")             // #FFFFFF
+    static let appSurfaceCardWarm = Color("TokenSurfaceCardWarm")     // #F9F3EB
+    static let appSurfaceNavBar = Color("TokenSurfaceNavBar")         // #FFF8F5
+    static let appSurfaceCardMuted = Color("TokenSurfaceCardMuted")   // #E7E2DA
     
-    // Stat Card Colors
-    static let appProfileCardBackground = Color("ProfileCardBackground") // #F9F3EB
-    static let appProfileCardBorder = Color("ProfileCardBorder")         // #DAC2AE
-    static let appProfileTextDark = Color("ProfileTextDark")             // #1D1B17
-    static let appProfileTextMuted = Color("ProfileTextMuted")           // #544434
+    // Borders
+    static let appBorderBrown = Color("TokenBorderBrown")             // #DBC2AD
+    static let appBorderCool = Color("TokenBorderCool")               // #CFE6F2
+    static let appBorderWarm = Color("TokenBorderWarm")               // #DAC2AE
+    static let appBorderLight = Color("TokenBorderLight")             // #F1DFD1
     
-    // Profile Stats Icons Colors
-    static let appProfileCoinsIcon = Color("ProfileCoinsIconColor")     // #895100
-    static let appProfileXPIcon = Color("ProfileXPIconColor")           // #006A62
-    static let appProfileStreakIcon = Color("ProfileStreakIconColor")   // #BF0025
-    static let appProfileWorldsIcon = Color("ProfileWorldsIconColor")   // #877462
+    // Text
+    static let appTextPrimary = Color("TokenTextPrimary")             // #071E27
+    static let appTextDark = Color("TokenTextDark")                   // #1D1B17
+    static let appTextSlate = Color("TokenTextSlate")                 // #1E293B
+    static let appTextHeading = Color("TokenTextHeading")             // #231A11
+    static let appTextSecondary = Color("TokenTextSecondary")         // #554434
     
-    // Progress Card Colors
-    static let appProfileProgressCardBg = Color("ProfileProgressCardBackground") // #E7E2DA
-    static let appProfileBadgeTealBg = Color("ProfileBadgeTealBackground")       // #70F8E8
-    static let appProfileBadgeTealText = Color("ProfileBadgeTealText")           // #007168
-    static let appProfileTextBrownDark = Color("ProfileTextBrownDark")           // #683C00
-    // Profile Header Colors
-    static let appProfileLevelBadgeBrown = Color("ProfileLevelBadgeBrown") // #683D00
+    // Accents & Icons
+    static let appSemanticSuccess = Color("TokenSemanticSuccess")     // #006B5C
+    static let appGlowTeal = Color("TokenGlowTeal")                   // #68FADD
+    static let appGlowGold = Color("TokenGlowGold")                   // #D0AE00
+    static let appIconBrown = Color("TokenIconBrown")                 // #887361
+    static let appTextOnPrimary = Color("TokenTextOnPrimary")         // #FFFFFF
+    static let appAccentGold = Color("TokenAccentGold")               // #F59E0B
+    static let appAccentRed = Color("TokenAccentRed")                 // #F43F5E
+    static let appAccentStreakRed = Color("TokenAccentStreakRed")     // #BF0025
+    static let appAccentTealDark = Color("TokenAccentTealDark")       // #006A62
+    static let appAccentEarth = Color("TokenAccentEarth")             // #877462
+    static let appBadgeTealBg = Color("TokenBadgeTealBg")             // #70F8E8
+    static let appBadgeTealText = Color("TokenBadgeTealText")         // #007168
+    static let appAccentTeal = Color("TokenAccentTeal")               // #006B59
+    static let appAccentOrange = Color("TokenAccentOrange")           // #FF9900
+    static let appAccentActiveLevel = Color("TokenAccentActiveLevel") // #7BF4FF
     
-    // Section Header Colors
-    static let appProfileTextSectionTitle = Color("ProfileTextSectionTitle") // #231A11
-    static let appProfileLinkBrown = Color("ProfileLinkBrown")               // #8A5100
-        
-    // Achievement Colors
-    static let appProfileAchievementTeal = Color("ProfileAchievementTeal")   // #006B59
+    // MARK: - Deprecated Tokens (Do not use in new code)
     
-    // Achievement Card Colors
-    static let appProfileTextAchievementTitle = Color("ProfileTextAchievementTitle") // #231A11
-    static let appProfileTextAchievementDesc = Color("ProfileTextAchievementDesc")   // #554434
-    static let appProfileAchievementBorder = Color("ProfileAchievementBorder")       // #F1DFD1
+    @available(*, deprecated, renamed: "appBrandPrimary")
+    static let appPrimaryColor = appBrandPrimary
     
-    // Leaderboard Colors
-    static let appProfileRankBrown = Color("ProfileRankBrown")           // #8A5100
-    static let appProfileTopBadgeOrange = Color("ProfileTopBadgeOrange") // #FF9900
+    @available(*, deprecated, renamed: "appBackgroundPrimary")
+    static let appBackgroundLightBlue = appBackgroundPrimary
     
+    @available(*, deprecated, renamed: "appBorderCool")
+    static let appBorderLightBlue = appBorderCool
+    
+    @available(*, deprecated, renamed: "appGlowGold")
+    static let appGlowYellow = appGlowGold
+    
+    @available(*, deprecated, renamed: "appTextSecondary")
+    static let appTextBrown = appTextSecondary
+    
+    @available(*, deprecated, renamed: "appTextPrimary")
+    static let appTextDarkBlue = appTextPrimary
+    
+    @available(*, deprecated, renamed: "appBackgroundWarm")
+    static let appViewBackground = appBackgroundWarm
+    
+    @available(*, deprecated, renamed: "appSurfaceCard")
+    static let appCardBackground = appSurfaceCard
     
 }

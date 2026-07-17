@@ -49,14 +49,14 @@ private extension AchievementEntity {
     
     var uiIconColor: Color {
         switch type {
-        case .wildExplorer: return .appProfileLogoBrown
-        case .perfectWeek: return .appProfileAchievementTeal
+        case .wildExplorer: return .appBrandBrown
+        case .perfectWeek: return .appAccentTeal
         }
     }
     
     var uiBgColor: Color {
         switch type {
-        case .wildExplorer: return .appProfileCardBackground
+        case .wildExplorer: return .appSurfaceCardWarm
         case .perfectWeek: return .white
         }
     }
@@ -83,5 +83,5 @@ private extension AchievementEntity {
         print("View All Achievements Tapped!")
     }
     .padding(.vertical)
-    .background(Color.appViewBackground)
+    .background(Color.appBackgroundWarm)
 }

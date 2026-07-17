@@ -12,7 +12,7 @@ struct ForgetPasswordView: View {
     
     var body: some View {
         ZStack {
-            Color.appViewBackground.ignoresSafeArea()
+            Color.appBackgroundWarm.ignoresSafeArea()
             
             VStack(spacing: 0) {
                 
@@ -22,11 +22,11 @@ struct ForgetPasswordView: View {
                             
                             VStack(spacing: 16) {
                                 Text(L10n.Auth.forgetPassword)
-                                    .appTextStyle(.largeTitle, color: .textBrown)
+                                    .appTextStyle(.displayLarge, color: .appTextSecondary)
                                     .multilineTextAlignment(.center)
                                 
                                 Text(L10n.Auth.forgetPasswordDesc)
-                                    .appTextStyle(.body, color: .textBrown)
+                                    .appTextStyle(.body, color: .appTextSecondary)
                                     .opacity(0.8)
                                     .multilineTextAlignment(.center)
                                     .padding(.horizontal, 8)

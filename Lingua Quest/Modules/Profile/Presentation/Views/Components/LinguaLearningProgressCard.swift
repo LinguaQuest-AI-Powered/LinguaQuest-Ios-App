@@ -34,12 +34,12 @@ struct LinguaLearningProgressCard: View {
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color.appProfileProgressCardBg)
-                .shadow(color: .appProfileCardBorder, radius: 0, x: 0, y: 4)
+                .fill(Color.appSurfaceCardMuted)
+                .shadow(color: .appBorderWarm, radius: 0, x: 0, y: 4)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 16)
-                .strokeBorder(Color.appProfileCardBorder, lineWidth: 2)
+                .strokeBorder(Color.appBorderWarm, lineWidth: 2)
         )
     }
 }
@@ -52,34 +52,34 @@ extension LinguaLearningProgressCard {
             // Icon
             Image(systemIcon: .globe)
                 .font(.system(size: 26))
-                .foregroundColor(.appPrimaryColor)
+                .foregroundColor(.appBrandPrimary)
                 .frame(width: 56, height: 56)
                 .background(
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(Color.appViewBackground)
+                        .fill(Color.appBackgroundWarm)
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: 12)
-                        .strokeBorder(Color.appProfileCardBorder, lineWidth: 1)
+                        .strokeBorder(Color.appBorderWarm, lineWidth: 1)
                 )
             
             // Titles
             VStack(alignment: .leading, spacing: 4) {
                 Text(L10n.Profile.learningTitle(languageName))
-                    .appTextStyle(.buttonBold, color: .appTextDarkBlue)
+                    .appTextStyle(.bodyBold, color: .appTextPrimary)
                 
                 Text(journeyTitle)
-                    .appTextStyle(.captionMedium, color: .appTextBrown)
+                    .appTextStyle(.captionMedium, color: .appTextSecondary)
             }
             
             Spacer()
             
             // Level Badge
             Text(levelName)
-                .appTextStyle(.micro, color: .appProfileBadgeTealText)
+                .appTextStyle(.micro, color: .appBadgeTealText)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 6)
-                .background(Color.appProfileBadgeTealBg)
+                .background(Color.appBadgeTealBg)
                 .cornerRadius(8)
         }
     }
@@ -88,23 +88,23 @@ extension LinguaLearningProgressCard {
         VStack(spacing: 12) {
             HStack {
                 Text(L10n.Profile.xpToNextMilestone(current: currentXP, total: targetXP))
-                    .appTextStyle(.captionMedium, color: .appTextBrown)
+                    .appTextStyle(.captionMedium, color: .appTextSecondary)
                 
                 Spacer()
                 
                 // Circular Progress
                 ZStack {
                     Circle()
-                        .strokeBorder(Color.appProfileCardBorder.opacity(0.4), lineWidth: 4)
+                        .strokeBorder(Color.appBorderWarm.opacity(0.4), lineWidth: 4)
                     
                     Circle()
                         .trim(from: 0, to: progressRatio)
-                        .stroke(Color.appPrimaryColor, style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                        .stroke(Color.appBrandPrimary, style: StrokeStyle(lineWidth: 4, lineCap: .round))
                         .rotationEffect(.degrees(-90))
                         .padding(2)
                     
                     Text(percentageString)
-                        .appTextStyle(.micro, color: .appProfileTextBrownDark)
+                        .appTextStyle(.micro, color: .appBrandBrownDark)
                 }
                 .frame(width: 48, height: 48)
             }
@@ -113,16 +113,16 @@ extension LinguaLearningProgressCard {
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
                     Capsule()
-                        .fill(Color.appViewBackground)
+                        .fill(Color.appBackgroundWarm)
                         .frame(height: 12)
                         .overlay(
-                            Capsule().strokeBorder(Color.appProfileCardBorder, lineWidth: 1)
+                            Capsule().strokeBorder(Color.appBorderWarm, lineWidth: 1)
                         )
                     
                     Capsule()
-                        .fill(Color.appPrimaryColor)
+                        .fill(Color.appBrandPrimary)
                         .frame(width: geometry.size.width * progressRatio, height: 12)
-                        .shadow(color: Color.appPrimaryColor.opacity(0.4), radius: 4, x: 0, y: 0)
+                        .shadow(color: Color.appBrandPrimary.opacity(0.4), radius: 4, x: 0, y: 0)
                 }
             }
             .frame(height: 12)

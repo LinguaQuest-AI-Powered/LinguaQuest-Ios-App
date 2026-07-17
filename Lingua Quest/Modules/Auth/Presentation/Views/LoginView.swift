@@ -13,7 +13,7 @@ struct LoginView: View {
     var body: some View {
         ZStack {
             
-            Color.appViewBackground.ignoresSafeArea()
+            Color.appBackgroundWarm.ignoresSafeArea()
             
             ScrollView(showsIndicators: false) {
                 DialogCardContainer(mascotImage: .loginBird) {
@@ -21,10 +21,10 @@ struct LoginView: View {
                         
                         VStack(spacing: 8) {
                             Text(L10n.Auth.welcomeBack)
-                                .appTextStyle(.largeTitle, color: .textBrown)
+                                .appTextStyle(.displayLarge, color: .appTextSecondary)
                             
                             Text(L10n.Auth.readyToContinue)
-                                .appTextStyle(.body, color: .textBrown)
+                                .appTextStyle(.body, color: .appTextSecondary)
                                 .opacity(0.8)
                         }
                         
@@ -48,7 +48,7 @@ struct LoginView: View {
                                 viewModel.forgotPassword()
                             }) {
                                 Text(L10n.Auth.forgotPassword)
-                                    .appTextStyle(.buttonBold, color: .darkGreen)
+                                    .appTextStyle(.bodyBold, color: .appSemanticSuccess)
                             }
                             Spacer()
                         }
@@ -63,17 +63,17 @@ struct LoginView: View {
                         
                         HStack(spacing: 8) {
                             Rectangle()
-                                .fill(Color.borderBrown.opacity(0.5))
+                                .fill(Color.appBorderBrown.opacity(0.5))
                                 .frame(height: 1)
                             
                             Text(L10n.Auth.orContinueWith)
-                                .appTextStyle(.body, color: .textBrown)
+                                .appTextStyle(.body, color: .appTextSecondary)
                                 .opacity(0.6)
                                 .layoutPriority(1)
                                 .fixedSize(horizontal: true, vertical: false)
                             
                             Rectangle()
-                                .fill(Color.borderBrown.opacity(0.5))
+                                .fill(Color.appBorderBrown.opacity(0.5))
                                 .frame(height: 1)
                         }
                         .padding(.vertical, 8)
@@ -94,13 +94,13 @@ struct LoginView: View {
                         
                         HStack(spacing: 4) {
                             Text(L10n.Auth.newHere)
-                                .appTextStyle(.body, color: .textBrown)
+                                .appTextStyle(.body, color: .appTextSecondary)
                             
                             Button(action: {
                                 viewModel.navigateToSignUp()
                             }) {
                                 Text(L10n.Auth.signUp)
-                                    .appTextStyle(.buttonBold, color: .textBrown)
+                                    .appTextStyle(.bodyBold, color: .appTextSecondary)
                             }
                         }
                         .padding(.bottom, 8)

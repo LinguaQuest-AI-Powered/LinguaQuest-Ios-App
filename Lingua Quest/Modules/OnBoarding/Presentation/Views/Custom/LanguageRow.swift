@@ -20,19 +20,19 @@ struct LanguageRow: View {
                     .frame(width: 22, height: 22)
                 
                 Text(language.name)
-                    .appTextStyle(.subtitleMedium, color: .appTextDarkBlue)
+                    .appTextStyle(.bodyLargeMedium, color: .appTextPrimary)
                 
                 Spacer()
             }
             .padding()
             .background(
                 RoundedRectangle(cornerRadius: 16)
-                    .fill(isSelected ? Color.appSecondary.opacity(0.35) : Color.appCardBackground)
+                    .fill(isSelected ? Color.appBorderLight.opacity(0.35) : Color.appSurfaceCard)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
                     .stroke(
-                        isSelected ? Color.appPrimary : Color.gray.opacity(0.15),
+                        isSelected ? Color.appBrandPrimary : Color.gray.opacity(0.15),
                         lineWidth: isSelected ? 2 : 1
                     )
             )

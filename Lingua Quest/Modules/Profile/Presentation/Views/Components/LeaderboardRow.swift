@@ -21,7 +21,7 @@ struct LeaderboardRow: View {
             
             // Rank Number
             Text(rank)
-                .appTextStyle(.bodyBold, color: .appProfileRankBrown)
+                .appTextStyle(.bodyBold, color: .appBrandBrown)
                 .frame(width: 24)
             
             // Avatar
@@ -34,10 +34,10 @@ struct LeaderboardRow: View {
             // User Info
             VStack(alignment: .leading, spacing: 4) {
                 Text(name)
-                    .appTextStyle(.bodyBold, color: .appProfileTextSectionTitle)
+                    .appTextStyle(.bodyBold, color: .appTextHeading)
                 
                 Text(xpAmount)
-                    .appTextStyle(.caption12Semibold, color: .appProfileTextAchievementDesc)
+                    .appTextStyle(.microSemibold, color: .appTextSecondary)
             }
             
             Spacer()
@@ -45,7 +45,7 @@ struct LeaderboardRow: View {
             // Top Explorer Badge
             if isTop {
                 Image(systemIcon: .rosette)
-                    .foregroundColor(.appProfileTopBadgeOrange)
+                    .foregroundColor(.appAccentOrange)
                     .font(.system(size: 20))
             }
         }
@@ -65,7 +65,7 @@ struct LeaderboardRow: View {
             isTop: true
         )
         
-        Divider().background(Color.appProfileAchievementBorder)
+        Divider().background(Color.appBorderLight)
         
         LeaderboardRow(
             rank: "2",

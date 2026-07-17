@@ -26,28 +26,28 @@ struct StatsGrid: View {
                 value: coinsValue,
                 title: L10n.Profile.coins,
                 icon: .dollarsignCircleFill,
-                iconColor: .appProfileCoinsIcon
+                iconColor: .appBrandBrown
             )
             
             StatCard(
                 value: xpValue,
                 title: L10n.Profile.totalXP,
                 icon: .starCircleFill,
-                iconColor: .appProfileXPIcon
+                iconColor: .appAccentTealDark
             )
             
             StatCard(
                 value: streakValue,
                 title: L10n.Profile.streak,
                 icon: .flameFill,
-                iconColor: .appProfileStreakIcon
+                iconColor: .appAccentStreakRed
             )
             
             StatCard(
                 value: worldsValue,
                 title: L10n.Profile.worlds,
                 icon: .globeAmericasFill,
-                iconColor: .appProfileWorldsIcon
+                iconColor: .appAccentEarth
             )
         }
     }
@@ -62,6 +62,6 @@ struct StatsGrid: View {
         worldsValue: "2"
     )
     .padding()
-    .background(Color.appViewBackground)
+    .background(Color.appBackgroundWarm)
 }
 

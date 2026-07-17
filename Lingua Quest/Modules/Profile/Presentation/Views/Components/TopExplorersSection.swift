@@ -36,15 +36,15 @@ struct TopExplorersSection: View {
                     )
                     
                     if index < explorers.count - 1 {
-                        Divider().background(Color.appProfileAchievementBorder)
+                        Divider().background(Color.appBorderLight)
                     }
                 }
             }
-            .background(Color.appProfileCardBackground)
+            .background(Color.appSurfaceCardWarm)
             .cornerRadius(16)
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
-                    .stroke(Color.appProfileAchievementBorder, lineWidth: 1)
+                    .stroke(Color.appBorderLight, lineWidth: 1)
             )
             .shadow(color: .black.opacity(0.05), radius: 8, x: 0, y: 4)
         }
@@ -78,6 +78,6 @@ private extension ExplorerEntity {
     TopExplorersSection(explorers: mockExplorers) {
         print("View All Explorers Tapped!")
     }
-    .padding(.vertical)
-    .background(Color.appViewBackground)
+    .padding()
+    .background(Color.appBackgroundWarm)
 }

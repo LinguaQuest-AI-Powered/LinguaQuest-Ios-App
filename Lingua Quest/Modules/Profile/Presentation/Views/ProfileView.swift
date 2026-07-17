@@ -18,11 +18,11 @@ struct ProfileView: View {
                         .scaleEffect(1.5)
                         .padding()
                     Text("Loading Profile...")
-                        .appTextStyle(.body, color: .appProfileTextMuted)
+                        .appTextStyle(.body, color: .appTextSecondary)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(
-                    Color.appViewBackground.ignoresSafeArea()
+                    Color.appBackgroundWarm.ignoresSafeArea()
                 )
             } else if let error = viewModel.errorMessage {
                 VStack(spacing: 16) {
@@ -35,7 +35,7 @@ struct ProfileView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(
-                    Color.appViewBackground.ignoresSafeArea()
+                    Color.appBackgroundWarm.ignoresSafeArea()
                 )
             } else {
                 ProfileContentView(

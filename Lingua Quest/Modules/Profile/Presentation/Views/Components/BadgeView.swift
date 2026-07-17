@@ -20,7 +20,7 @@ struct BadgeView: View {
                 .font(iconSize != nil ? .system(size: iconSize!) : nil)
             
             Text(value)
-                .appTextStyle(.badgeText, color: .appProfileTextDarkSlate)
+                .appTextStyle(.captionBold, color: .appTextSlate)
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 6)
@@ -35,14 +35,14 @@ struct BadgeView: View {
         // Coins Badge
         BadgeView(
             icon: .dollarsignCircleFill,
-            iconColor: .appProfileCoinsGold,
+            iconColor: .appAccentGold,
             value: "14,250",
         )
         
         // Gems Badge
         BadgeView(
             icon: .diamondFill,
-            iconColor: .appProfileGemsRed,
+            iconColor: .appAccentRed,
             value: "45",
             iconSize: 10
         )

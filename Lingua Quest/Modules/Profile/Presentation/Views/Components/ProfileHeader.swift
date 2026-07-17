@@ -30,7 +30,7 @@ struct ProfileHeader: View {
             // User Info
             VStack(spacing: 8) {
                 Text(userName)
-                    .appTextStyle(.profileName, color: .appProfileTextDark)
+                    .appTextStyle(.headingLarge, color: .appTextDark)
                 
                 // MARK: Level Badge
                 HStack(spacing: 4) {
@@ -38,15 +38,15 @@ struct ProfileHeader: View {
                         .font(.system(size: 12))
                     
                     Text(L10n.Profile.userLevel(userLevel))
-                        .appTextStyle(.badgeText)
+                        .appTextStyle(.microHeavy)
                 }
-                .foregroundColor(.appProfileLevelBadgeBrown)
+                .foregroundColor(.appBrandBrownDark)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 6)
                 .background(
                     Capsule()
-                        .fill(Color.appPrimaryColor)
-                        .shadow(color: .appProfileLevelBadgeBrown, radius: 0, x: 0, y: 4)
+                        .fill(Color.appBrandPrimary)
+                        .shadow(color: .appBrandBrownDark, radius: 0, x: 0, y: 4)
                 )
             }
         }
@@ -63,5 +63,5 @@ struct ProfileHeader: View {
         print("Edit Profile Tapped!")
     }
     .padding()
-    .background(Color.appViewBackground)
+    .background(Color.appBackgroundWarm)
 }

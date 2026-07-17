@@ -17,13 +17,13 @@ struct SectionHeader: View {
     var body: some View {
         HStack {
             Text(title)
-                .appTextStyle(.sectionTitle, color: .appProfileTextSectionTitle)
+                .appTextStyle(.headingMediumBold, color: .appTextHeading)
             
             Spacer()
             
             Button(action: onActionTapped) {
                 Text(actionTitle)
-                    .appTextStyle(.linkText, color: .appProfileLinkBrown)
+                    .appTextStyle(.captionBold, color: .appBrandBrown)
             }
         }
     }

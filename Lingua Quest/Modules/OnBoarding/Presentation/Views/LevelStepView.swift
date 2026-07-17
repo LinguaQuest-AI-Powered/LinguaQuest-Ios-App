@@ -24,20 +24,20 @@ struct LevelStepView: View {
                         .frame(height: 200)
                     
                     Text(L10n.Onboarding.levelStepTitle)
-                        .appTextStyle(.headline,color: .appTextDarkBlue)
+                        .appTextStyle(.displaySmall,color: .appTextPrimary)
                       
                     Text(L10n.Onboarding.levelStepSubtitle)
-                        .appTextStyle(.subtitle, color: .secondaryButtonText)
+                        .appTextStyle(.bodyLarge, color: .appTextSecondary)
                         .multilineTextAlignment(.center)
                         .fixedSize(horizontal: false, vertical: true)
                         .padding()
                         .background(
                             RoundedRectangle(cornerRadius: 16)
-                                .fill(Color.appCardBackground)
+                                .fill(Color.appSurfaceCard)
                         ).overlay(
                             RoundedRectangle(cornerRadius: 16)
                                 .stroke(
-                                    Color.appSecondary ,
+                                    Color.appBorderLight ,
                                     lineWidth: 1
                                 )
                         )
@@ -68,7 +68,7 @@ struct LevelStepView: View {
             .padding(.horizontal, 24)
             .padding(.bottom, 24)
         }
-        .background(Color.appViewBackground.ignoresSafeArea())
+        .background(Color.appBackgroundWarm.ignoresSafeArea())
         .alert(L10n.Onboarding.alertErrorTitle, isPresented: $showAlert) {
             Button(L10n.Common.ok, role: .cancel) { }
         } message: {
