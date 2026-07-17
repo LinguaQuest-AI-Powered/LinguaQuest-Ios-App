@@ -49,14 +49,11 @@ extension Image {
         case star2 = "star2"
         case ball = "ball"
         case onboardingbackground = "onboarding"
-        case english = "English"
-        case french = "French"
-        case spanish = "Spanish"
-        case german = "German"
-        case japanease = "Japanese"
+
         case advanced = "advanced"
         case intermediate = "intermediate"
         case beginner = "beginner"
+        case gameLevelBackground = "GameLevelBackground"
         
     }
     

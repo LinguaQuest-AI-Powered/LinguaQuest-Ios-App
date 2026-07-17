@@ -17,6 +17,7 @@ enum AppRoute: Hashable {
     case forgetPassword
     case verifyEmail
     case resetPassword
+    case GameLevels
 }
 
 enum AppSheet: String, Identifiable {

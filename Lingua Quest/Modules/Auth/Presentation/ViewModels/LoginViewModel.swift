@@ -22,7 +22,7 @@ final class LoginViewModel {
     }
     
     func login() {
-        print("Login tapped")
+        router.push(.GameLevels)
     }
     
     func forgotPassword() {

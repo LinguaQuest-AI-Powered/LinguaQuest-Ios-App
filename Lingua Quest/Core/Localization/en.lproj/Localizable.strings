@@ -82,3 +82,6 @@
 "onboarding.alert.error_title" = "Attention";
 "onboarding.alert.language_message" = "Please select both a language you speak and a language you want to learn.";
 "onboarding.alert.level_message" = "Please select your proficiency level.";
+
+"game.park_world" = "Park World";
+"game.lets_learn" = "Let's Learn!";
