@@ -48,6 +48,7 @@ final class Router: RouterProtocol {
     func view(for route: AppRoute) -> some View {
         switch route {
         case .home: MainTabView()
+        case .onBoarding: OnboardingContainerView()
         case .profile(let userId): Text("** \(userId)")
         case .settings: Text("**")
         case .productDetails(let id): Text("** \(id)")

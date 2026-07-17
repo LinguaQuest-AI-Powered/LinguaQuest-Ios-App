@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
+    @State private var hasClaimedDailyReward: Bool = false
+    @State private var showDailyBonus: Bool = false
+    
     let worlds: [WorldItem] = [
         .init(title: L10n.Home.kitchenWorld, imageName: .kitchen, difficulty: L10n.Home.difficultyEasy, progress: 0.4, isCompleted: true),
         .init(title: L10n.Home.cityWorld, imageName: .city, difficulty: L10n.Home.difficultyMedium, progress: 0.18, isCompleted: false)
@@ -17,10 +20,11 @@ struct HomeView: View {
         VStack(spacing: 0) {
             TopBarView()//TODO: delete it and use the CustomTopBar instead of this one
                 .background(Color.white.ignoresSafeArea(edges: .top))
-                .zIndex(1)
+                .zIndex(2)
 
-            ZStack(alignment: .bottomTrailing) {
-                ScrollView(showsIndicators: false) {
+            ZStack(alignment: .top) {
+                ZStack(alignment: .bottomTrailing) {
+                    ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 20) {
 
                         LearningCardView()
@@ -61,12 +65,37 @@ struct HomeView: View {
                 }
                 .padding(.trailing, 20)
                 .padding(.bottom, 20)
+                }
+                
+                if showDailyBonus && !hasClaimedDailyReward {
+                    DailyBonusCardView {
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            showDailyBonus = false
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            hasClaimedDailyReward = true
+                        }
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.top, 16)
+                    .transition(.move(edge: .top).combined(with: .opacity))
+                    .zIndex(1)
+                }
             }
         }
         .background(
             HomeBackgroundView()
                 .ignoresSafeArea()
         )
+        .onAppear {
+            if !hasClaimedDailyReward {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                    withAnimation(.spring(response: 0.6, dampingFraction: 0.7)) {
+                        showDailyBonus = true
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -129,59 +158,6 @@ struct HomeBackgroundView: View {
     }
 }
 
-struct LearningCardView: View {
-    var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            HStack(alignment: .top, spacing: 12) {
-                Image(asset: .spanish)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 46, height: 46)
-                    .clipShape(RoundedRectangle(cornerRadius: 14))
-                    .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color.appBorderBrown, lineWidth: 1))
-                
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(L10n.Home.currentlyLearning)
-                        .font(AppTextStyle.micro.font)
-                        .foregroundColor(Color.appTextBrown)
-                    
-                    Text(L10n.Onboarding.languageSpanish)
-                        .font(AppTextStyle.cardTitle.font)
-                }
-                
-                Spacer()
-                
-                VStack(alignment: .trailing, spacing: 6) {
-                    Text(L10n.Home.level(12))
-                        .font(AppTextStyle.captionMedium.font)
-                        .foregroundColor(Color.appTextBrown)
-                    
-                    HStack(spacing: 4) {
-                        Image(systemIcon: .flame)
-                            .foregroundColor(Color.red)
-                        
-                        Text(L10n.Home.daysStreak(7))
-                            .font(AppTextStyle.captionMedium.font)
-                    }
-                }
-            }
-            
-            ZStack(alignment: .leading) {
-                Capsule()
-                    .fill(Color.appSecondryProgressBar)
-                    .frame(height: 10)
-                
-                Capsule()
-                    .fill(Color.appProgressBar)
-                    .frame(width: 165, height: 10)
-            }
-        }
-        .padding(18)
-        .background(Color.appCardBackground)
-        .clipShape(RoundedRectangle(cornerRadius: 24))
-    }
-}
-
 struct SectionHeaderView: View {
     let title: String
     let actionTitle: String
@@ -206,124 +182,3 @@ struct SectionHeaderView: View {
     }
 }
 
-
-struct WorldCardView: View {
-    let item: WorldItem
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            ZStack(alignment: .bottomTrailing) {
-                ZStack(alignment: .topLeading) {
-                    Image(asset: item.imageName)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 180, height: 128)
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
-                    
-                    Text(item.difficulty)
-                        .font(AppTextStyle.micro.font)
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 5)
-                        .background(Capsule().fill(Color.appDarkGreen))
-                        .padding(8)
-                }
-                
-                if item.isCompleted {
-                    Image(systemIcon: .checkmark)
-                        .font(AppTextStyle.micro.font)
-                        .foregroundColor(.white)
-                        .frame(width: 24, height: 24)
-                        .background(Circle().fill(Color.appDarkGreen))
-                        .overlay(Circle().stroke(Color.white, lineWidth: 2))
-                        .offset(x: -10, y: -10)
-                }
-            }
-            
-            Text(item.title)
-                .font(AppTextStyle.subtitleMedium.font)
-            
-            HStack {
-                Text(L10n.Home.progress)
-                    .font(AppTextStyle.micro.font)
-                    .foregroundColor(Color.textBrown)
-                
-                Spacer()
-                
-                Text("\(Int(item.progress * 100))%")
-                    .font(AppTextStyle.micro.font)
-                    .foregroundColor(Color.appProgressBar)
-            }
-            
-            ZStack(alignment: .leading) {
-                Capsule()
-                    .fill(Color.appViewBackground)
-                    .frame(height: 10)
-                
-                Capsule()
-                    .fill(Color.appDarkGreen)
-                    .frame(width: max(CGFloat(item.progress) * 150, 20), height: 10)
-            }
-        }
-        .padding(12)
-        .frame(width: 204)
-        .background(Color.appCardBackground)
-        .clipShape(RoundedRectangle(cornerRadius: 24))
-    }
-}
-
-struct ContinueLessonCardView: View {
-    var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            HStack(alignment: .top) {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(L10n.Home.continueLessonTitle)
-                        .font(AppTextStyle.micro.font)
-                        .foregroundColor(Color.appTextBrown)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 5)
-                        .background(
-                            Capsule().fill(Color.appViewBackground)
-                        )
-                    
-                    Text(L10n.Home.lessonApple)
-                        .font(AppTextStyle.title.font)
-                        .foregroundColor(.black)
-                    
-                    Text(L10n.Home.lessonAppleDesc)
-                        .font(AppTextStyle.buttonMedium.font)
-                        .foregroundColor(Color.appTextDarkBlue)
-                }
-                
-                Spacer()
-                
-                ZStack {
-                    RoundedRectangle(cornerRadius: 18)
-                        .fill(Color.appViewBackground)
-                        .frame(width: 96, height: 96)
-                    
-                    Image(asset: .apple)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 60, height: 60)
-                }
-            }
-            
-            Button(action: {}) {
-                HStack(spacing: 8) {
-                    Image(systemIcon: .play)
-                    Text(L10n.Home.continueButton)
-                        .font(AppTextStyle.subtitleMedium.font)
-                }
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-                .frame(height: 56)
-                .background(Color.appPrimaryColor)
-                .clipShape(Capsule())
-            }
-        }
-        .padding(18)
-        .background(Color.appCardBackground)
-        .clipShape(RoundedRectangle(cornerRadius: 28))
-    }
-}

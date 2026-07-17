@@ -118,6 +118,8 @@ enum L10n {
         static var cityWorld: String { localized("home.city_world") }
         static var difficultyEasy: String { localized("home.difficulty.easy") }
         static var difficultyMedium: String { localized("home.difficulty.medium") }
+        static var dailyStreakBonus: String { localized("home.daily_streak_bonus") }
+        static var claimDailyReward: String { localized("home.claim_daily_reward") }
     }
 
     private static func localized(_ key: String) -> String {

@@ -15,8 +15,7 @@ struct RootView: View {
     var body: some View {
         Group {
             if !isOnboardingCompleted {
-               // OnboardingContainerView()
-                router.view(for: .home)
+                router.view(for: .onBoarding)
             } else {
                 NavigationStack(path: $router.path) {
                     Group {

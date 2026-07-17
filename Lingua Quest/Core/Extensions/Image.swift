@@ -31,6 +31,9 @@ extension Image {
         case chevronDown = "chevron.down"
         case flame = "flame.fill"
         case play = "play.fill"
+        case sparkles = "sparkles"
+        case rightChevron = "chevron.right"
+        case gift = "gift"
     }
     
     enum Asset: String {
