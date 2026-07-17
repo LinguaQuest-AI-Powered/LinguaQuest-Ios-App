@@ -35,6 +35,8 @@ extension Image {
         case flameFill = "flame.fill"
         case globeAmericasFill = "globe.americas.fill"
         case globe = "globe"
+        case birdFill = "bird.fill"
+        case diamondFill = "diamond.fill"
     }
     
     enum Asset: String {

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LinguaStatCard: View {
+struct StatCard: View {
     // MARK: - Properties
     let value: String
     let title: String
@@ -45,14 +45,14 @@ struct LinguaStatCard: View {
 // MARK: - Preview
 #Preview {
     HStack(spacing: 16) {
-        LinguaStatCard(
+        StatCard(
             value: "1,250",
             title: L10n.Profile.coins,
             icon: .checkmarkCircleFill,
             iconColor: .appIconBrown
         )
         
-        LinguaStatCard(
+        StatCard(
             value: "7 Days",
             title: L10n.Profile.streak,
             icon: .flameFill,

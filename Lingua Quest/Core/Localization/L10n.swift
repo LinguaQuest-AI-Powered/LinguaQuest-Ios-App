@@ -105,6 +105,7 @@ enum L10n {
     
     
     enum Profile {
+        static var title: String { localized("profile.title") }
         static var coins: String { localized("profile.stats.coins") }
         static var totalXP: String { localized("profile.stats.total_xp") }
         static var streak: String { localized("profile.stats.streak") }

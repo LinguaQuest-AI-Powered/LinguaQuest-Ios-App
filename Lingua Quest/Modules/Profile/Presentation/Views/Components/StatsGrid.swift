@@ -22,28 +22,28 @@ struct StatsGrid: View {
     // MARK: - Body
     var body: some View {
         LazyVGrid(columns: columns, spacing: 16) {
-            LinguaStatCard(
+            StatCard(
                 value: coinsValue,
                 title: L10n.Profile.coins,
                 icon: .dollarsignCircleFill,
                 iconColor: .appProfileCoinsIcon
             )
             
-            LinguaStatCard(
+            StatCard(
                 value: xpValue,
                 title: L10n.Profile.totalXP,
                 icon: .starCircleFill,
                 iconColor: .appProfileXPIcon
             )
             
-            LinguaStatCard(
+            StatCard(
                 value: streakValue,
                 title: L10n.Profile.streak,
                 icon: .flameFill,
                 iconColor: .appProfileStreakIcon
             )
             
-            LinguaStatCard(
+            StatCard(
                 value: worldsValue,
                 title: L10n.Profile.worlds,
                 icon: .globeAmericasFill,

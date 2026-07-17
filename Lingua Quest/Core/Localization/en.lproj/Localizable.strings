@@ -84,6 +84,7 @@
 "onboarding.alert.level_message" = "Please select your proficiency level.";
 
 
+"profile.title" = "LinguaQuest";
 "profile.stats.coins" = "Coins";
 "profile.stats.total_xp" = "Total XP";
 "profile.stats.streak" = "Streak";

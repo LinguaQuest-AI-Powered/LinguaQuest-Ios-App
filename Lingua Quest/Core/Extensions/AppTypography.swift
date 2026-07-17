@@ -24,6 +24,8 @@ enum AppTextStyle {
     case statLabel       // 12, heavy/800
     case bodySemibold    // 16, semibold
     case caption12Bold   // 12, bold
+    case appBarTitle     // 24, bold
+    case badgeText       // 14, bold
     
     var font: Font {
         switch self {
@@ -43,6 +45,8 @@ enum AppTextStyle {
         case .statLabel:      return .system(size: 12, weight: .heavy)
         case .bodySemibold:   return .system(size: 16, weight: .semibold)
         case .caption12Bold:  return .system(size: 12, weight: .bold)
+        case .appBarTitle:    return .system(size: 24, weight: .bold)
+        case .badgeText:      return .system(size: 14, weight: .bold)
         }
     }
 }

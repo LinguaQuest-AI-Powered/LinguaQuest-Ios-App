@@ -38,6 +38,14 @@ extension Color {
     static let appViewBackground  = Color("ViewBackground")
     
     /// Profile Screen Colors
+    // AppBar Colors
+    static let appProfileappBarBackground = Color("ProfileAppBarBackground")     // #FFF8F5
+    static let appProfileappBarBorder = Color("ProfileAppBarBorder")             // #DAC2AF
+    static let appProfileLogoBrown = Color("ProfileLogoBrown")                // #8A5100
+    static let appProfileCoinsGold = Color("ProfileCoinsGold")                // #F59E0B
+    static let appProfileGemsRed = Color("ProfileGemsRed")                    // #F43F5E
+    static let appProfileTextDarkSlate = Color("ProfileTextDarkSlate")        // #1E293B
+    
     // LinguaAvatarView Colors
     static let appBadgeBrown = Color("BadgeBrown")                       // #683D00
     
@@ -58,4 +66,6 @@ extension Color {
     static let appProfileBadgeTealBg = Color("ProfileBadgeTealBackground")       // #70F8E8
     static let appProfileBadgeTealText = Color("ProfileBadgeTealText")           // #007168
     static let appProfileTextBrownDark = Color("ProfileTextBrownDark")           // #683C00
+    
+    
 }
