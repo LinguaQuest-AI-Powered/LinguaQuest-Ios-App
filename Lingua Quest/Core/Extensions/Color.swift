@@ -52,4 +52,10 @@ extension Color {
     static let appProfileXPIcon = Color("ProfileXPIconColor")           // #006A62
     static let appProfileStreakIcon = Color("ProfileStreakIconColor")   // #BF0025
     static let appProfileWorldsIcon = Color("ProfileWorldsIconColor")   // #877462
+    
+    // Progress Card Colors
+    static let appProfileProgressCardBg = Color("ProfileProgressCardBackground") // #E7E2DA
+    static let appProfileBadgeTealBg = Color("ProfileBadgeTealBackground")       // #70F8E8
+    static let appProfileBadgeTealText = Color("ProfileBadgeTealText")           // #007168
+    static let appProfileTextBrownDark = Color("ProfileTextBrownDark")           // #683C00
 }

@@ -109,6 +109,14 @@ enum L10n {
         static var totalXP: String { localized("profile.stats.total_xp") }
         static var streak: String { localized("profile.stats.streak") }
         static var worlds: String { localized("profile.stats.worlds") }
+        
+        static func learningTitle(_ language: String) -> String {
+            String(format: localized("profile.learning.title"), language)
+        }
+            
+        static func xpToNextMilestone(current: Int, total: Int) -> String {
+            String(format: localized("profile.learning.xp_progress"), current, total)
+        }
     }
 
     private static func localized(_ key: String) -> String {

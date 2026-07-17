@@ -88,3 +88,5 @@
 "profile.stats.total_xp" = "إجمالي نقاط الخبرة";
 "profile.stats.streak" = "السلسلة";
 "profile.stats.worlds" = "العوالم";
+"profile.learning.title" = "التعلّم: %@";
+"profile.learning.xp_progress" = "%d / %d نقطة خبرة للوصول إلى المرحلة التالية";

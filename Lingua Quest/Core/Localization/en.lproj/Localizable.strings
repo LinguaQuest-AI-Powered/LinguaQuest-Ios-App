@@ -88,3 +88,5 @@
 "profile.stats.total_xp" = "Total XP";
 "profile.stats.streak" = "Streak";
 "profile.stats.worlds" = "Worlds";
+"profile.learning.title" = "Learning: %@";
+"profile.learning.xp_progress" = "%d / %d XP TO NEXT MILESTONE";
