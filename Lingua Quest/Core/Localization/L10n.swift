@@ -110,6 +110,9 @@ enum L10n {
         static var totalXP: String { localized("profile.stats.total_xp") }
         static var streak: String { localized("profile.stats.streak") }
         static var worlds: String { localized("profile.stats.worlds") }
+        static var viewAll: String { localized("profile.view_all") }
+
+        static var achievementsTitle: String { localized("profile.achievements.title") }
         
         static func userLevel(_ level: Int) -> String {
             String(format: localized("profile.user_level"), level)

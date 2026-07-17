@@ -12,8 +12,6 @@ struct AchievementCard: View {
     let title: String
     let subtitle: String
     let icon: Image.SystemIcon
-    let iconColor: Color
-    let bgColor: Color
     
     // MARK: - Body
     var body: some View {
@@ -22,9 +20,9 @@ struct AchievementCard: View {
             // Icon Badge
             Image(systemIcon: icon)
                 .font(.system(size: 24))
-                .foregroundColor(iconColor)
+                .foregroundColor(Color.appProfileLogoBrown)
                 .frame(width: 56, height: 56)
-                .background(iconColor.opacity(0.1))
+                .background(Color.appProfileLogoBrown.opacity(0.1))
                 .clipShape(Circle())
             
             // Text Content
@@ -43,7 +41,7 @@ struct AchievementCard: View {
         .padding(.leading, 16)
         .padding(.trailing, 26)
         .frame(width: 280)
-        .background(bgColor)
+        .background(Color.appProfileCardBackground)
         .cornerRadius(12)
         .overlay(
             RoundedRectangle(cornerRadius: 12)
@@ -58,16 +56,12 @@ struct AchievementCard: View {
     AchievementCard(
         title: "Wild Explorer",
         subtitle: "Complete 10 lessons in...",
-        icon: .trophyFill,
-        iconColor: Color.appProfileLogoBrown,
-        bgColor: Color.appProfileCardBackground
+        icon: .trophyFill
     )
     
     AchievementCard(
         title: "Perfect Week",
         subtitle: "7 days streak without...",
-        icon: .starFill,
-        iconColor: Color(hex: "006B59"),
-        bgColor: Color.white
+        icon: .starFill
     )
 }

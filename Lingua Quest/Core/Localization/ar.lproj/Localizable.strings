@@ -92,3 +92,5 @@
 "profile.stats.worlds" = "العوالم";
 "profile.learning.title" = "التعلّم: %@";
 "profile.learning.xp_progress" = "%d / %d نقطة خبرة للوصول إلى المرحلة التالية";
+"profile.view_all" = "عرض الكل";
+"profile.achievements.title" = "الإنجازات";

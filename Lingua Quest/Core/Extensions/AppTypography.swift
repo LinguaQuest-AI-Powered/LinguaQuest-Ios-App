@@ -30,6 +30,8 @@ enum AppTextStyle {
     case profileName       // 24, bold
     case levelBadgeText    // 12, heavy
     case bodyBold          // 16, bold
+    case sectionTitle      // 22, bold
+    case linkText          // 14, bold
     
     var font: Font {
         switch self {
@@ -56,6 +58,8 @@ enum AppTextStyle {
         case .profileName:      return .system(size: 24, weight: .bold)
         case .levelBadgeText:   return .system(size: 12, weight: .heavy)
         case .bodyBold:       return .system(size: 16, weight: .bold)
+        case .sectionTitle:    return .system(size: 22, weight: .bold)
+        case .linkText:        return .system(size: 14, weight: .bold)
         }
     }
 }

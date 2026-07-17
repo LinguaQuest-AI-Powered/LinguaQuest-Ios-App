@@ -69,6 +69,13 @@ extension Color {
     // Profile Header Colors
     static let appProfileLevelBadgeBrown = Color("ProfileLevelBadgeBrown") // #683D00
     
+    // Section Header Colors
+    static let appProfileTextSectionTitle = Color("ProfileTextSectionTitle") // #231A11
+    static let appProfileLinkBrown = Color("ProfileLinkBrown")               // #8A5100
+        
+    // Achievement Colors
+    static let appProfileAchievementTeal = Color("ProfileAchievementTeal")   // #006B59
+    
     // Achievement Card Colors
     static let appProfileTextAchievementTitle = Color("ProfileTextAchievementTitle") // #231A11
     static let appProfileTextAchievementDesc = Color("ProfileTextAchievementDesc")   // #554434
