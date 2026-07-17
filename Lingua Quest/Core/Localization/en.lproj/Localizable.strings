@@ -38,6 +38,14 @@
 "auth.enter_email" = "Enter your email";
 "auth.send_reset_link" = "Send reset link";
 "auth.back_to_login" = "Back to Login";
+"auth.new_password_title" = "New password";
+"auth.new_password_desc" = "Let's get you back to learning! Choose a strong password.";
+"auth.new_password_label" = "New Password";
+"auth.new_password_placeholder" = "Enter new password";
+"auth.password_strength" = "Password Strength";
+"auth.confirm_new_password_label" = "Confirm New Password";
+"auth.confirm_new_password_placeholder" = "Confirm new password";
+"auth.reset_password" = "Reset Password";
 "auth.verify_your_email" = "Verify your email";
 "auth.verify_email_desc" = "We sent a code to your inbox.\nPlease enter it below.";
 "auth.resend_code" = "Resend code";

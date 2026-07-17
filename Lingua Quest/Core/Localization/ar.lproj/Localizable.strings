@@ -39,6 +39,14 @@
 "auth.enter_email" = "أدخل بريدك الإلكتروني";
 "auth.send_reset_link" = "إرسال رابط إعادة التعيين";
 "auth.back_to_login" = "العودة إلى تسجيل الدخول";
+"auth.new_password_title" = "كلمة مرور جديدة";
+"auth.new_password_desc" = "دعنا نعود إلى التعلم! اختر كلمة مرور قوية.";
+"auth.new_password_label" = "كلمة المرور الجديدة";
+"auth.new_password_placeholder" = "أدخل كلمة المرور الجديدة";
+"auth.password_strength" = "قوة كلمة المرور";
+"auth.confirm_new_password_label" = "تأكيد كلمة المرور الجديدة";
+"auth.confirm_new_password_placeholder" = "تأكيد كلمة المرور الجديدة";
+"auth.reset_password" = "إعادة تعيين كلمة المرور";
 "auth.verify_your_email" = "تأكيد بريدك الإلكتروني";
 "auth.verify_email_desc" = "أرسلنا رمزاً إلى بريدك الوارد.\nيرجى إدخاله أدناه.";
 "auth.resend_code" = "إعادة إرسال الرمز";

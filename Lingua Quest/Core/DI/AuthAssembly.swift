@@ -28,5 +28,10 @@ final class AuthAssembly: Assembly {
             let router = resolver.resolve(RouterProtocol.self)!
             return VerifyEmailViewModel(router: router)
         }
+        
+        container.register(ResetPasswordViewModel.self) { resolver in
+            let router = resolver.resolve(RouterProtocol.self)!
+            return ResetPasswordViewModel(router: router)
+        }
     }
 }
