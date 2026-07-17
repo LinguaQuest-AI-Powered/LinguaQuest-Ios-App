@@ -82,3 +82,18 @@
 "onboarding.alert.error_title" = "Attention";
 "onboarding.alert.language_message" = "Please select both a language you speak and a language you want to learn.";
 "onboarding.alert.level_message" = "Please select your proficiency level.";
+
+"home.explore_worlds" = "Explore Worlds";
+"home.see_more" = "See more";
+"home.currently_learning" = "CURRENTLY LEARNING";
+"home.level" = "Level %d";
+"home.days_streak" = "%d Days";
+"home.progress" = "Progress";
+"home.continue_lesson" = "CONTINUE LESSON";
+"home.continue" = "Continue";
+"home.noun_la_pomme" = "Noun • La Pomme";
+"home.kitchen_world" = "Kitchen World";
+"home.city_world" = "City World";
+"home.difficulty.easy" = "EASY";
+"home.difficulty.medium" = "MEDIUM";
+"home.lesson.apple" = "Apple";

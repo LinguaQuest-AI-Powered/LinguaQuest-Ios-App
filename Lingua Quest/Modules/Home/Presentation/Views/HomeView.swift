@@ -9,44 +9,40 @@ import SwiftUI
 
 struct HomeView: View {
     let worlds: [WorldItem] = [
-        .init(title: "Kitchen World", imageName: .kitchen, difficulty: "EASY", progress: 0.4, isCompleted: true),
-        .init(title: "City World", imageName: .city, difficulty: "MEDIUM", progress: 0.18, isCompleted: false)
+        .init(title: L10n.Home.kitchenWorld, imageName: .kitchen, difficulty: L10n.Home.difficultyEasy, progress: 0.4, isCompleted: true),
+        .init(title: L10n.Home.cityWorld, imageName: .city, difficulty: L10n.Home.difficultyMedium, progress: 0.18, isCompleted: false)
     ]
     
     var body: some View {
         VStack(spacing: 0) {
-            TopBarView()
+            TopBarView() //TODO: delete it
                 .background(Color.white.ignoresSafeArea(edges: .top))
                 .zIndex(1)
 
             ZStack(alignment: .bottomTrailing) {
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 20) {
-
+                        
                         LearningCardView()
-                            .padding(.horizontal, 20)
-
+                        
                         SectionHeaderView(
-                            title: "Explore Worlds",
-                            actionTitle: "See more"
+                            title: L10n.Home.exploreWorlds,
+                            actionTitle: L10n.Home.seeMore
                         )
-                        .padding(.horizontal, 20)
-
+                        
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 16) {
                                 ForEach(worlds) { item in
                                     WorldCardView(item: item)
                                 }
                             }
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 4)
                         }
-
+                        
                         ContinueLessonCardView()
-                            .padding(.horizontal, 20)
-
+                        
                         Color.clear.frame(height: 100)
                     }
+                    .padding(.horizontal, 20)
                     .padding(.top, 12)
                 }
 
@@ -81,7 +77,7 @@ struct TopBarView: View {
                 .clipShape(Circle())
                 .overlay(Circle().stroke(Color.appBorderBrown, lineWidth: 1))
 
-            Text("LinguaQuest")
+            Text(L10n.Components.appName)
                 .font(AppTextStyle.buttonBold.font)
                 .foregroundColor(Color.appTextBrown)
 
@@ -100,7 +96,7 @@ struct TopBarView: View {
             .clipShape(Capsule())
 
             HStack(spacing: 4) {
-                Image(systemName: "centsign.circle.fill")
+                Image(systemName: "centsign.circle.fill") // Kept as systemName since no coin asset was found
                     .foregroundColor(Color.appIconBrown)
                 Text("45")
                     .font(AppTextStyle.captionMedium.font)
@@ -141,26 +137,26 @@ struct LearningCardView: View {
                     .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color.appBorderBrown, lineWidth: 1))
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("CURRENTLY LEARNING")
+                    Text(L10n.Home.currentlyLearning)
                         .font(AppTextStyle.micro.font)
                         .foregroundColor(Color.appTextBrown)
                     
-                    Text("Spanish")
+                    Text(L10n.Onboarding.languageSpanish)
                         .font(AppTextStyle.largeTitle.font)
                 }
                 
                 Spacer()
                 
                 VStack(alignment: .trailing, spacing: 6) {
-                    Text("Level 12")
+                    Text(L10n.Home.level(12))
                         .font(AppTextStyle.captionMedium.font)
                         .foregroundColor(Color.appTextBrown)
                     
                     HStack(spacing: 4) {
                         Image(systemIcon: .flame)
-                            .foregroundColor(Color.red)
+                            .foregroundColor(Color.appGlowYellow)
                         
-                        Text("7 Days")
+                        Text(L10n.Home.daysStreak(7))
                             .font(AppTextStyle.captionMedium.font)
                     }
                 }
@@ -244,9 +240,9 @@ struct WorldCardView: View {
                 .font(AppTextStyle.subtitleMedium.font)
             
             HStack {
-                Text("Progress")
+                Text(L10n.Home.progress)
                     .font(AppTextStyle.micro.font)
-                    .foregroundColor(Color.appTextBrown)
+                    .foregroundColor(Color.appSecondryProgressBar)
                 
                 Spacer()
                 
@@ -257,11 +253,11 @@ struct WorldCardView: View {
             
             ZStack(alignment: .leading) {
                 Capsule()
-                    .fill(Color.appSecondryProgressBar)
+                    .fill(Color.appViewBackground)
                     .frame(height: 10)
                 
                 Capsule()
-                    .fill(Color.appProgressBar)
+                    .fill(Color.appDarkGreen)
                     .frame(width: max(CGFloat(item.progress) * 150, 20), height: 10)
             }
         }
@@ -277,7 +273,7 @@ struct ContinueLessonCardView: View {
         VStack(alignment: .leading, spacing: 14) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("CONTINUE LESSON")
+                    Text(L10n.Home.continueLessonTitle)
                         .font(AppTextStyle.micro.font)
                         .foregroundColor(Color.appTextBrown)
                         .padding(.horizontal, 10)
@@ -286,11 +282,11 @@ struct ContinueLessonCardView: View {
                             Capsule().fill(Color.appViewBackground)
                         )
                     
-                    Text("Apple")
+                    Text(L10n.Home.lessonApple)
                         .font(AppTextStyle.title.font)
                         .foregroundColor(.black)
                     
-                    Text("Noun • La Pomme")
+                    Text(L10n.Home.lessonAppleDesc)
                         .font(AppTextStyle.buttonMedium.font)
                         .foregroundColor(Color.appTextDarkBlue)
                 }
@@ -312,7 +308,7 @@ struct ContinueLessonCardView: View {
             Button(action: {}) {
                 HStack(spacing: 8) {
                     Image(systemIcon: .play)
-                    Text("Continue")
+                    Text(L10n.Home.continueButton)
                         .font(AppTextStyle.subtitleMedium.font)
                 }
                 .foregroundColor(.white)
