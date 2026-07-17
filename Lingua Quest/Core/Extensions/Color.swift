@@ -46,4 +46,10 @@ extension Color {
     static let appProfileCardBorder = Color("ProfileCardBorder")         // #DAC2AE
     static let appProfileTextDark = Color("ProfileTextDark")             // #1D1B17
     static let appProfileTextMuted = Color("ProfileTextMuted")           // #544434
+    
+    // Profile Stats Icons Colors
+    static let appProfileCoinsIcon = Color("ProfileCoinsIconColor")     // #895100
+    static let appProfileXPIcon = Color("ProfileXPIconColor")           // #006A62
+    static let appProfileStreakIcon = Color("ProfileStreakIconColor")   // #BF0025
+    static let appProfileWorldsIcon = Color("ProfileWorldsIconColor")   // #877462
 }
