@@ -15,34 +15,38 @@ struct HomeView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            TopBarView() //TODO: delete it
+            TopBarView()//TODO: delete it and use the CustomTopBar instead of this one
                 .background(Color.white.ignoresSafeArea(edges: .top))
                 .zIndex(1)
 
             ZStack(alignment: .bottomTrailing) {
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 20) {
-                        
+
                         LearningCardView()
-                        
+                            .padding(.horizontal, 20)
+
                         SectionHeaderView(
                             title: L10n.Home.exploreWorlds,
                             actionTitle: L10n.Home.seeMore
                         )
-                        
+                        .padding(.horizontal, 20)
+
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 16) {
                                 ForEach(worlds) { item in
                                     WorldCardView(item: item)
                                 }
                             }
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 4)
                         }
-                        
+
                         ContinueLessonCardView()
-                        
+                            .padding(.horizontal, 20)
+
                         Color.clear.frame(height: 100)
                     }
-                    .padding(.horizontal, 20)
                     .padding(.top, 12)
                 }
 
@@ -96,7 +100,7 @@ struct TopBarView: View {
             .clipShape(Capsule())
 
             HStack(spacing: 4) {
-                Image(systemName: "centsign.circle.fill") // Kept as systemName since no coin asset was found
+                Image(systemName: "centsign.circle.fill")
                     .foregroundColor(Color.appIconBrown)
                 Text("45")
                     .font(AppTextStyle.captionMedium.font)
@@ -142,7 +146,7 @@ struct LearningCardView: View {
                         .foregroundColor(Color.appTextBrown)
                     
                     Text(L10n.Onboarding.languageSpanish)
-                        .font(AppTextStyle.largeTitle.font)
+                        .font(AppTextStyle.cardTitle.font)
                 }
                 
                 Spacer()
@@ -154,7 +158,7 @@ struct LearningCardView: View {
                     
                     HStack(spacing: 4) {
                         Image(systemIcon: .flame)
-                            .foregroundColor(Color.appGlowYellow)
+                            .foregroundColor(Color.red)
                         
                         Text(L10n.Home.daysStreak(7))
                             .font(AppTextStyle.captionMedium.font)
@@ -242,7 +246,7 @@ struct WorldCardView: View {
             HStack {
                 Text(L10n.Home.progress)
                     .font(AppTextStyle.micro.font)
-                    .foregroundColor(Color.appSecondryProgressBar)
+                    .foregroundColor(Color.textBrown)
                 
                 Spacer()
                 
