@@ -17,7 +17,7 @@ struct ForgetPasswordView: View {
             VStack(spacing: 0) {
                 
                 ScrollView(showsIndicators: false) {
-                    DialogCardContainer(mascotImage: .bird2) {
+                    DialogCardContainer(mascotImage: .forgetPasswordBird) {
                         VStack(spacing: 24) {
                             
                             VStack(spacing: 16) {
