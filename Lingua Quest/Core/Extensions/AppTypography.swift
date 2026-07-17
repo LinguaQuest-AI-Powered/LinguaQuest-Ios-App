@@ -20,12 +20,15 @@ enum AppTextStyle {
     case caption         // 14, regular
     case captionMedium   // 14, medium
     case micro           // 10, bold
+    // Profile
     case statValue       // 18, bold
     case statLabel       // 12, heavy/800
     case bodySemibold    // 16, semibold
     case caption12Bold   // 12, bold
     case appBarTitle     // 24, bold
     case badgeText       // 14, bold
+    case profileName       // 24, bold
+    case levelBadgeText    // 12, heavy
     
     var font: Font {
         switch self {
@@ -41,12 +44,16 @@ enum AppTextStyle {
         case .caption:        return .system(size: 14, weight: .regular)
         case .captionMedium:  return .system(size: 14, weight: .medium)
         case .micro:          return .system(size: 10, weight: .bold)
+        
+        // Profile
         case .statValue:      return .system(size: 18, weight: .bold)
         case .statLabel:      return .system(size: 12, weight: .heavy)
         case .bodySemibold:   return .system(size: 16, weight: .semibold)
         case .caption12Bold:  return .system(size: 12, weight: .bold)
         case .appBarTitle:    return .system(size: 24, weight: .bold)
         case .badgeText:      return .system(size: 14, weight: .bold)
+        case .profileName:      return .system(size: 24, weight: .bold)
+        case .levelBadgeText:   return .system(size: 12, weight: .heavy)
         }
     }
 }

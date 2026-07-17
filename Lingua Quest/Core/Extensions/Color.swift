@@ -66,6 +66,8 @@ extension Color {
     static let appProfileBadgeTealBg = Color("ProfileBadgeTealBackground")       // #70F8E8
     static let appProfileBadgeTealText = Color("ProfileBadgeTealText")           // #007168
     static let appProfileTextBrownDark = Color("ProfileTextBrownDark")           // #683C00
+    // Profile Header Colors
+    static let appProfileLevelBadgeBrown = Color("ProfileLevelBadgeBrown") // #683D00
     
     
 }

@@ -85,6 +85,7 @@
 "onboarding.alert.level_message" = "يرجى تحديد مستوى كفائتك.";
 
 "profile.title" = "لينجوا كويست";
+"profile.user_level" = "المستوى %d";
 "profile.stats.coins" = "العملات";
 "profile.stats.total_xp" = "إجمالي نقاط الخبرة";
 "profile.stats.streak" = "السلسلة";

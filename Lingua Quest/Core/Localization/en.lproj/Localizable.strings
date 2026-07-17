@@ -85,6 +85,7 @@
 
 
 "profile.title" = "LinguaQuest";
+"profile.user_level" = "LEVEL %d";
 "profile.stats.coins" = "Coins";
 "profile.stats.total_xp" = "Total XP";
 "profile.stats.streak" = "Streak";
