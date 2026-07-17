@@ -28,6 +28,8 @@ extension Image {
         case checkmarkCircleFill = "checkmark.circle.fill"
         case timer = "timer"
         case chevronDown = "chevron.down"
+        case pencil = "pencil"
+        case personCropCircleFill = "person.crop.circle.fill"
     }
     
     enum Asset: String {

@@ -10,8 +10,8 @@ import SwiftUI
 
 
 extension Color {
-//    static let appPrimary = Color("PrimaryColor")
-//    static let appSecondary = Color("SecondaryColor")
+    static let appPrimaryColor = Color("AppPrimaryColor")
+//    static let appSecondaryColor = Color("AppSecondaryColor")
 //    static let appBackground = Color("BackgroundColor")
 //    static let appTextPrimary = Color("TextPrimaryColor")
 //    static let appTextSecondary = Color("TextSecondaryColor")
@@ -36,4 +36,5 @@ extension Color {
     static let appTextBrown = Color("TextBrown")
     static let appTextDarkBlue = Color("TextDarkBlue")
     static let appViewBackground  = Color("ViewBackground")
+    static let appBadgeBrown = Color("BadgeBrown")
 }
