@@ -48,6 +48,8 @@ extension Image {
         case star = "star"
         case star2 = "star2"
         case ball = "ball"
+        case xpIcon = "xp_icon"
+        case coinsIcon = "coins_icon"
         case onboardingbackground = "onboarding"
         case english = "English"
         case french = "French"
