@@ -83,3 +83,20 @@
 "onboarding.alert.error_title" = "تنبيه";
 "onboarding.alert.language_message" = "يرجى اختيار لغتك الأم واللغة التي ترغب بتعلمها.";
 "onboarding.alert.level_message" = "يرجى تحديد مستوى كفائتك.";
+
+"home.explore_worlds" = "استكشف العوالم";
+"home.see_more" = "عرض المزيد";
+"home.currently_learning" = "تتعلم حالياً";
+"home.level" = "المستوى %d";
+"home.days_streak" = "%d أيام";
+"home.progress" = "التقدم";
+"home.continue_lesson" = "متابعة الدرس";
+"home.continue" = "متابعة";
+"home.noun_la_pomme" = "اسم • La Pomme";
+"home.kitchen_world" = "عالم المطبخ";
+"home.city_world" = "عالم المدينة";
+"home.difficulty.easy" = "سهل";
+"home.difficulty.medium" = "متوسط";
+"home.lesson.apple" = "تفاحة";
+"home.daily_streak_bonus" = "مكافأة سلسلة الأيام!";
+"home.claim_daily_reward" = "طالب بمكافأتك اليومية!";
