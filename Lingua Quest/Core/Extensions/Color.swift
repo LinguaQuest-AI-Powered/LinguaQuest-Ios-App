@@ -81,5 +81,9 @@ extension Color {
     static let appProfileTextAchievementDesc = Color("ProfileTextAchievementDesc")   // #554434
     static let appProfileAchievementBorder = Color("ProfileAchievementBorder")       // #F1DFD1
     
+    // Leaderboard Colors
+    static let appProfileRankBrown = Color("ProfileRankBrown")           // #8A5100
+    static let appProfileTopBadgeOrange = Color("ProfileTopBadgeOrange") // #FF9900
+    
     
 }

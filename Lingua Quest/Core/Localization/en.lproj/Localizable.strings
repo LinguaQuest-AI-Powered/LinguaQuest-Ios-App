@@ -94,3 +94,4 @@
 "profile.learning.xp_progress" = "%d / %d XP TO NEXT MILESTONE";
 "profile.view_all" = "VIEW ALL";
 "profile.achievements.title" = "Achievements";
+"profile.leaderboard.xp" = "%@ XP";

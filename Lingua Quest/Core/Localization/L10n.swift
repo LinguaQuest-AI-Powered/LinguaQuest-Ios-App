@@ -125,6 +125,10 @@ enum L10n {
         static func xpToNextMilestone(current: Int, total: Int) -> String {
             String(format: localized("profile.learning.xp_progress"), current, total)
         }
+        
+        static func explorerXP(_ amount: String) -> String {
+            String(format: localized("profile.leaderboard.xp"), amount)
+        }
     }
 
     private static func localized(_ key: String) -> String {

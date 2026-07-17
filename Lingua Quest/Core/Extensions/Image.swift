@@ -40,6 +40,7 @@ extension Image {
         case medalFill = "medal.fill"
         case trophyFill = "trophy.fill"
         case starFill = "star.fill"
+        case rosette = "rosette"
     }
     
     enum Asset: String {
