@@ -12,8 +12,7 @@ struct MainTabView: View {
                 }
                 .tag(0)
             
-            Text("Gallery View")
-                .font(.largeTitle)
+            GalleryView()
                 .tabItem {
                     Image(systemName: "photo.on.rectangle")
                     Text("Gallery")

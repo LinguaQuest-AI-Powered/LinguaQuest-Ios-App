@@ -25,4 +25,5 @@ extension Color {
     static let appSecondaryColor = Color("AppSecondaryColor")
     static let appProgressBar = Color("AppFirstProgressBar")
     static let appSecondryProgressBar = Color("AppSecondProgressBar")
+
 }

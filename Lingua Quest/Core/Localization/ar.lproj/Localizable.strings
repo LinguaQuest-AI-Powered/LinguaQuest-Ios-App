@@ -84,6 +84,17 @@
 "onboarding.alert.language_message" = "يرجى اختيار لغتك الأم واللغة التي ترغب بتعلمها.";
 "onboarding.alert.level_message" = "يرجى تحديد مستوى كفائتك.";
 
+"gallery.my_captures" = "التقاطاتي";
+"gallery.objects_collected" = "تم جمع %d أشياء";
+"gallery.captures_so_far" = "0 التقاطات حتى الآن";
+"gallery.add_new" = "إضافة جديد";
+"gallery.no_captures_yet" = "لا توجد التقاطات بعد";
+"gallery.no_captures_subtitle" = "لم تلتقط أي كلمات بعد.\nاضغط على الزر أعلاه لإضافة أول التقاط لك.";
+"gallery.categories.all_items" = "كل العناصر";
+"gallery.categories.kitchen" = "المطبخ";
+"gallery.categories.park" = "الحديقة";
+"gallery.categories.street" = "الشارع";
+
 "home.explore_worlds" = "استكشف العوالم";
 "home.see_more" = "عرض المزيد";
 "home.currently_learning" = "تتعلم حالياً";

@@ -38,7 +38,7 @@ struct ContinueLessonCardView: View {
                         .fill(Color.appViewBackground)
                         .frame(width: 96, height: 96)
                     
-                    Image(asset: .apple)
+                    Image(asset: .appleImage)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 60, height: 60)

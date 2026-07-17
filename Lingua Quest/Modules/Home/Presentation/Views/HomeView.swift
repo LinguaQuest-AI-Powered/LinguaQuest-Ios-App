@@ -18,9 +18,7 @@ struct HomeView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            TopBarView()//TODO: delete it and use the CustomTopBar instead of this one
-                .background(Color.white.ignoresSafeArea(edges: .top))
-                .zIndex(2)
+            AppHeaderView(starCount: 15000000, coinCount: 20000)
 
             ZStack(alignment: .top) {
                 ZStack(alignment: .bottomTrailing) {
