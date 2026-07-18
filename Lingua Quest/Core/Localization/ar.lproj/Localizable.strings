@@ -138,6 +138,8 @@
 "profile.achievements.title" = "الإنجازات";
 "profile.leaderboard.xp" = "%@ نقطة خبرة";
 "profile.top_explorers.title" = "أفضل المستكشفين";
+"profile.settingsCardTitle" = "الإعدادات والرحلة";
+"profile.settingsCardSubtitle" = "تحكم في أهدافك اليومية وتجربة التطبيق";
 
 "settings.title" = "الإعدادات";
 "settings.subtitle" = "خصص رحلتك التعليمية";

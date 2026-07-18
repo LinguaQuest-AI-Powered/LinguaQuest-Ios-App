@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-struct LinguaSettingsView: View {
+struct SettingsView: View {
     // MARK: - Properties
-    @State private var viewModel = SettingsViewModel()
+    @State var viewModel: SettingsViewModel
     
     // MARK: - Body
     var body: some View {
         SettingsContentView(
             viewModel: viewModel,
             onBackTapped: {
-                // Navigate back
+                viewModel.onBackTapped()
             },
             onEditProfileTapped: {
                 // Navigate to Edit Profile
@@ -52,5 +52,5 @@ struct LinguaSettingsView: View {
 
 // MARK: - Preview
 #Preview {
-    LinguaSettingsView()
+    SettingsView(viewModel: SettingsViewModel(router: Router()))
 }

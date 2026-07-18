@@ -70,7 +70,7 @@ struct SettingsContentView: View {
 // MARK: - Preview
 #Preview {
     SettingsContentView(
-        viewModel: SettingsViewModel(),
+        viewModel: SettingsViewModel(router: Router()),
         onBackTapped: {},
         onEditProfileTapped: {},
         onLearningLanguageTapped: {},
