@@ -72,8 +72,8 @@ extension Color {
     
     // Restored from HEAD
     static let appOutLineButton = Color("OutlineButton")
-    static let appDarkGreen = Color("DarkGreen")
-    static let appSecondaryColor = Color("AppSecondaryColor")
+    static let appDarkGreen = appSemanticSuccess
+    static let appSecondaryColor = appBackgroundWarm
     
     // MARK: - Deprecated Tokens (Do not use in new code)
     

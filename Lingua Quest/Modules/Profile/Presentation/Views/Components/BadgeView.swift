@@ -30,21 +30,3 @@ struct BadgeView: View {
     }
 }
 
-#Preview {
-    HStack(spacing: 8) {
-        // Coins Badge
-        BadgeView(
-            icon: .dollarsignCircleFill,
-            iconColor: .appAccentGold,
-            value: "14,250",
-        )
-        
-        // Gems Badge
-        BadgeView(
-            icon: .diamondFill,
-            iconColor: .appAccentRed,
-            value: "45",
-            iconSize: 10
-        )
-    }
-}

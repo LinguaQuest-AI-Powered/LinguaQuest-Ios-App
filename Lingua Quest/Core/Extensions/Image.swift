@@ -42,7 +42,6 @@ extension Image {
         case gift = "gift"
         case pencil = "pencil"
         case personCropCircleFill = "person.crop.circle.fill"
-        case dollarsignCircleFill = "dollarsign.circle.fill"
         case starCircleFill = "star.circle.fill"
         case flameFill = "flame.fill"
         case globeAmericasFill = "globe.americas.fill"

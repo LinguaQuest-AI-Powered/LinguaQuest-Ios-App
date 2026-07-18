@@ -50,7 +50,7 @@ struct LevelNodeView: View {
                 Circle()
                     .fill(
                         RadialGradient(
-                            colors: [Color.darkGreen.opacity(0.3), .clear],
+                            colors: [Color.appDarkGreen.opacity(0.3), .clear],
                             center: .center,
                             startRadius: 25,
                             endRadius: 50
@@ -63,8 +63,8 @@ struct LevelNodeView: View {
                     .fill(
                         LinearGradient(
                             colors: [
-                                Color.darkGreen.opacity(0.8),
-                                Color.darkGreen
+                                Color.appDarkGreen.opacity(0.8),
+                                Color.appDarkGreen
                             ],
                             startPoint: .top,
                             endPoint: .bottom
@@ -93,14 +93,14 @@ struct LevelNodeView: View {
                         Circle()
                             .stroke(
                                 LinearGradient(
-                                    colors: [Color.white.opacity(0.5), Color.darkGreen.opacity(0.4)],
+                                    colors: [Color.white.opacity(0.5), Color.appDarkGreen.opacity(0.4)],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 ),
                                 lineWidth: 3
                             )
                     )
-                    .shadow(color: Color.darkGreen.opacity(0.4), radius: 8, x: 0, y: 4)
+                    .shadow(color: Color.appDarkGreen.opacity(0.4), radius: 8, x: 0, y: 4)
             }
             
             StarsRatingView(stars: stars)
@@ -114,14 +114,14 @@ struct LevelNodeView: View {
         ZStack {
             // Outer pulsing glow ring
             Circle()
-                .fill(Color.appPrimary.opacity(0.15))
+                .fill(Color.appBrandPrimary.opacity(0.15))
                 .frame(width: 90, height: 90)
                 .scaleEffect(pulseScale)
                 .opacity(2.0 - pulseScale)
             
             // Second pulse ring (staggered)
             Circle()
-                .stroke(Color.appPrimary.opacity(0.2), lineWidth: 2)
+                .stroke(Color.appBrandPrimary.opacity(0.2), lineWidth: 2)
                 .frame(width: 80, height: 80)
                 .scaleEffect(pulseScale * 0.85)
                 .opacity(2.0 - pulseScale)
@@ -130,7 +130,7 @@ struct LevelNodeView: View {
             Circle()
                 .fill(
                     RadialGradient(
-                        colors: [Color.appPrimary.opacity(glowOpacity), .clear],
+                        colors: [Color.appBrandPrimary.opacity(glowOpacity), .clear],
                         center: .center,
                         startRadius: 20,
                         endRadius: 55
@@ -143,8 +143,8 @@ struct LevelNodeView: View {
                 .fill(
                     LinearGradient(
                         colors: [
-                            Color.appPrimary.opacity(0.85),
-                            Color.appPrimary
+                            Color.appBrandPrimary.opacity(0.85),
+                            Color.appBrandPrimary
                         ],
                         startPoint: .top,
                         endPoint: .bottom
@@ -180,7 +180,7 @@ struct LevelNodeView: View {
                             lineWidth: 3.5
                         )
                 )
-                .shadow(color: Color.appPrimary.opacity(0.5), radius: 12, x: 0, y: 5)
+                .shadow(color: Color.appBrandPrimary.opacity(0.5), radius: 12, x: 0, y: 5)
                 .offset(y: bounceOffset)
             
             // Bird + Speech bubble positioned to the right
