@@ -22,7 +22,7 @@ struct EmptyGalleryView: View {
                     .foregroundColor(.white)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 10)
-                    .background(Color.appCategorySelectedOrange)
+                    .background(Color.appAccentOrange)
                     .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                 }
                 Spacer()

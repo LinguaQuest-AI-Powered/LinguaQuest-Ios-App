@@ -11,7 +11,8 @@ final class AuthAssembly: Assembly {
     func assemble(container: Container) {
         container.register(LoginViewModel.self) { resolver in
             let router = resolver.resolve(RouterProtocol.self)!
-            return LoginViewModel(router: router)
+            let userPreferences = resolver.resolve(UserPreferencesProtocol.self)!
+            return LoginViewModel(router: router, userPreferences: userPreferences)
         }
         
         container.register(SignUpViewModel.self) { resolver in

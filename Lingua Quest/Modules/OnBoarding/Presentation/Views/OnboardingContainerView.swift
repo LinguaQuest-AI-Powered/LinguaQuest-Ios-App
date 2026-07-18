@@ -10,8 +10,7 @@ import SwiftUI
 struct OnboardingContainerView: View {
     @State private var viewModel = Resolver.shared.resolve(OnboardingViewModel.self)
     var body: some View {
-        NavigationStack {
-            Group {
+        Group {
             switch viewModel.state.currentStep {
             case .welcome:
                 WelcomeStepView(
@@ -36,9 +35,8 @@ struct OnboardingContainerView: View {
                     onBack: viewModel.onBackTapped
                 )
             }
-            }
-            .animation(.easeInOut, value: viewModel.state.currentStep)
         }
+        .animation(.easeInOut, value: viewModel.state.currentStep)
     }
 }
 

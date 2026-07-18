@@ -33,7 +33,7 @@ struct StatsGrid: View {
                 value: xpValue,
                 title: L10n.Profile.totalXP,
                 icon: .starCircleFill,
-                iconColor: .appAccentTealDark
+                iconColor: .appAccentTeal
             )
             
             StatCard(
@@ -47,7 +47,7 @@ struct StatsGrid: View {
                 value: worldsValue,
                 title: L10n.Profile.worlds,
                 icon: .globeAmericasFill,
-                iconColor: .appAccentEarth
+                iconColor: .appIconBrown
             )
         }
     }
