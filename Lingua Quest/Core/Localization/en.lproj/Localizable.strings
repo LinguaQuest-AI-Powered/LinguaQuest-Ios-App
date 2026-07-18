@@ -138,6 +138,8 @@
 "profile.achievements.title" = "Achievements";
 "profile.leaderboard.xp" = "%@ XP";
 "profile.top_explorers.title" = "Top Explorers";
+"profile.settingsCardTitle" = "Settings & Journey";
+"profile.settingsCardSubtitle" = "Manage your daily goals and app experience";
 
 "settings.title" = "Settings";
 "settings.subtitle" = "Customize your learning journey";

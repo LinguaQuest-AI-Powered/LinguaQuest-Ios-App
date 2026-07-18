@@ -165,6 +165,12 @@ enum L10n {
         static var viewAll: String { localized("profile.view_all") }
         static var achievementsTitle: String { localized("profile.achievements.title") }
         static var topExplorersTitle: String { localized("profile.top_explorers.title") }
+        static var settingsCardTitle: String {
+            localized("profile.settingsCardTitle")
+        }
+        static var settingsCardSubtitle: String {
+            localized("profile.settingsCardSubtitle")
+        }
         
         
         static func userLevel(_ level: Int) -> String {

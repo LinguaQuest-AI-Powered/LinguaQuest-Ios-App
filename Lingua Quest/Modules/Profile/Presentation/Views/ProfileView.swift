@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @State private var viewModel = ProfileViewModel()
+    @State var viewModel: ProfileViewModel
     
     var body: some View {
         Group {
@@ -61,6 +61,9 @@ struct ProfileView: View {
                     },
                     onViewAllExplorers: {
                         // Navigate to Leaderboard
+                    },
+                    onSettingsTapped: {
+                        viewModel.navigateToSettings()
                     }
                 )
             }

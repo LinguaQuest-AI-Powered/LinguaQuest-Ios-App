@@ -9,6 +9,14 @@ import Observation
 
 @Observable
 final class SettingsViewModel {
+    
+    // MARK: - Dependencies
+    private let router: RouterProtocol
+
+    init(router: RouterProtocol) {
+        self.router = router
+    }
+    
     // MARK: - User Data
     var userName: String = "Explorer Alex"
     
@@ -29,5 +37,9 @@ final class SettingsViewModel {
     
     func logOut() {
         // Clear session & navigate to auth flow
+    }
+    
+    func onBackTapped() {
+        router.pop()
     }
 }

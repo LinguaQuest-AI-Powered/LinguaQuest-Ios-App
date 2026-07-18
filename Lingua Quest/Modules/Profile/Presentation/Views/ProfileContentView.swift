@@ -32,6 +32,7 @@ struct ProfileContentView: View {
     var onEditProfile: () -> Void
     var onViewAllAchievements: () -> Void
     var onViewAllExplorers: () -> Void
+    var onSettingsTapped: () -> Void
     
     // MARK: - Body
     var body: some View {
@@ -67,6 +68,9 @@ struct ProfileContentView: View {
                             targetXP: targetXP
                         )
                         .padding(.horizontal, 20)
+                        
+                        LinguaSettingsPromptCard(action: onSettingsTapped)
+                            .padding(.horizontal, 20)
                         
                         AchievementsSection(
                             achievements: achievements,
@@ -123,7 +127,8 @@ struct ProfileContentView: View {
         ],
         onEditProfile: {},
         onViewAllAchievements: {},
-        onViewAllExplorers: {}
+        onViewAllExplorers: {},
+        onSettingsTapped: {}
     )
     .preferredColorScheme(.dark)
 }
