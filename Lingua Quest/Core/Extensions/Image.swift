@@ -53,7 +53,7 @@ extension Image {
         case trophyFill = "trophy.fill"
         case starFill = "star.fill"
         case rosette = "rosette"
-        case birdIdea = "BirdIdea"
+       
     }
     
     enum Asset: String {
@@ -80,13 +80,10 @@ extension Image {
         case xpIcon = "xp_icon"
         case coinsIcon = "coins_icon"
         case onboardingbackground = "onboarding"
-
-
         case advanced = "advanced"
         case intermediate = "intermediate"
         case beginner = "beginner"
         case gameLevelBackground = "GameLevelBackground"
-
         case homeBackground = "LinguaQuestHome"
         case english = "English"
         case french = "French"
@@ -104,7 +101,7 @@ extension Image {
         case appleImage = "appleImage"
         case appBarBird = "appBarBird"
         case world = "world_icon"
-
+        case birdIdea = "BirdIdea"
         
     }
     

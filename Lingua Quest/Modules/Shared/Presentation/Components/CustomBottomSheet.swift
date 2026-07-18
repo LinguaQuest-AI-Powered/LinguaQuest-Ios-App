@@ -9,14 +9,16 @@ import SwiftUI
 
 // MARK: - Sheet Detent
 
-enum SheetDetent: CaseIterable {
+enum SheetDetent: Equatable {
     case medium
     case large
+    case custom(ratio: CGFloat)
 
     func height(in screenHeight: CGFloat) -> CGFloat {
         switch self {
         case .medium: return screenHeight * 0.55
         case .large:  return screenHeight * 0.9
+        case .custom(let ratio): return screenHeight * ratio
         }
     }
 }
@@ -43,12 +45,13 @@ struct CustomBottomSheet<Content: View>: View {
 
     // MARK: - State
 
-    @State private var currentDetent: SheetDetent = .medium
+    @State private var currentDetent: SheetDetent
     @State private var dragOffset: CGFloat = 0
     @State private var appeared = false
 
-    init(isPresented: Binding<Bool>, @ViewBuilder content: () -> Content) {
+    init(isPresented: Binding<Bool>, initialDetent: SheetDetent = .medium, @ViewBuilder content: () -> Content) {
         self._isPresented = isPresented
+        self._currentDetent = State(initialValue: initialDetent)
         self.content = content()
     }
 
@@ -246,10 +249,12 @@ private extension CustomBottomSheet {
 
 struct CustomBottomSheetModifier<SheetContent: View>: ViewModifier {
     @Binding var isPresented: Bool
+    let initialDetent: SheetDetent
     let sheetContent: SheetContent
 
-    init(isPresented: Binding<Bool>, @ViewBuilder content: () -> SheetContent) {
+    init(isPresented: Binding<Bool>, initialDetent: SheetDetent = .medium, @ViewBuilder content: () -> SheetContent) {
         self._isPresented = isPresented
+        self.initialDetent = initialDetent
         self.sheetContent = content()
     }
 
@@ -257,7 +262,7 @@ struct CustomBottomSheetModifier<SheetContent: View>: ViewModifier {
         content
             .overlay {
                 if isPresented {
-                    CustomBottomSheet(isPresented: $isPresented) {
+                    CustomBottomSheet(isPresented: $isPresented, initialDetent: initialDetent) {
                         sheetContent
                     }
                 }
@@ -268,9 +273,10 @@ struct CustomBottomSheetModifier<SheetContent: View>: ViewModifier {
 extension View {
     func customBottomSheet<Content: View>(
         isPresented: Binding<Bool>,
+        initialDetent: SheetDetent = .medium,
         @ViewBuilder content: @escaping () -> Content
     ) -> some View {
-        modifier(CustomBottomSheetModifier(isPresented: isPresented, content: content))
+        modifier(CustomBottomSheetModifier(isPresented: isPresented, initialDetent: initialDetent, content: content))
     }
 }
 

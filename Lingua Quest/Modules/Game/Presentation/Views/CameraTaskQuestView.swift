@@ -9,7 +9,9 @@ import SwiftUI
 
 struct CameraTaskQuestView: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var showHint: Bool = false
+    @State private var showHintSheet: Bool = false
+    @State private var showHintBubble: Bool = false
+    @State private var appliedHint: String? = nil
     
     @State var viewModel: CameraTaskQuestViewModel
     
@@ -31,19 +33,16 @@ struct CameraTaskQuestView: View {
                     Spacer()
                     
                     Text(L10n.Game.levelTitle(viewModel.levelId))
-                        .font(.system(size: 22, weight: .bold, design: .rounded))
-                        .foregroundColor(.appTextBrown)
+                        .appTextStyle(.headingMediumBold, color: .appTextBrown)
                     
                     Spacer()
                     
                     // Coin Counter
                     HStack(spacing: 4) {
-                        // Assuming you have a coin icon or using SF Symbol for now
                         Image(systemIcon: .dollarsignCircleFill)
                             .foregroundColor(.orange)
                         Text("\(viewModel.coins)")
-                            .font(.system(size: 14, weight: .bold))
-                            .foregroundColor(.appTextBrown)
+                            .appTextStyle(.captionBold, color: .appTextBrown)
                     }
                     .padding(.horizontal, 10)
                     .padding(.vertical, 6)
@@ -59,19 +58,24 @@ struct CameraTaskQuestView: View {
                 // Card Container
                 DialogCardContainer(
                     mascotImage: .loginBird,
-                    speechBubbleText: showHint ? L10n.Game.tapForHelp : nil,
-                    onMascotTap: {
-                        withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
-                            showHint.toggle()
+                    speechBubbleText: {
+                        if let hint = appliedHint {
+                            return hint
+                        } else if showHintBubble {
+                            return L10n.Game.tapForHelp
+                        } else {
+                            return nil
                         }
+                    }(),
+                    onMascotTap: {
+                        showHintSheet = true
                     }
                 ) {
                     VStack(spacing: 24) {
                         // Target Word & Audio Button
                         HStack(spacing: 16) {
                             Text(viewModel.targetWord)
-                                .font(.system(size: 40, weight: .black, design: .rounded))
-                                .foregroundColor(.appTextBrown)
+                                .appTextStyle(.displayLarge, color: .appTextBrown)
                                 .frame(maxWidth: .infinity, maxHeight: 80)
                                 .background(Color.appCardBackground)
                                 .clipShape(RoundedRectangle(cornerRadius: 16))
@@ -85,8 +89,7 @@ struct CameraTaskQuestView: View {
                                 // Play audio action
                             }) {
                                 Image(systemIcon: .speakerWave2Fill)
-                                    .font(.system(size: 20, weight: .bold))
-                                    .foregroundColor(.appTextBrown)
+                                    .appTextStyle(.headingMediumBold, color: .appTextBrown)
                                     .frame(width: 56, height: 56)
                                     .background(Color.appCardBackground)
                                     .clipShape(Circle())
@@ -96,8 +99,7 @@ struct CameraTaskQuestView: View {
                         
                         // Instructions
                         Text(L10n.Game.scanInstruction(viewModel.targetWord.lowercased()))
-                            .font(.system(size: 16, weight: .medium, design: .rounded))
-                            .foregroundColor(.gray)
+                            .appTextStyle(.bodyMedium, color: .gray)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal, 8)
                         
@@ -126,14 +128,24 @@ struct CameraTaskQuestView: View {
         }
         .navigationBarHidden(true)
         .onAppear {
-            // Automatically show the hint after 2 seconds if the user hasn't tapped yet
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                if !showHint {
+            // Automatically show the tap for help bubble after 0.2 seconds
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                if !showHintBubble && appliedHint == nil {
                     withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
-                        showHint = true
+                        showHintBubble = true
                     }
                 }
             }
+        }
+        .customBottomSheet(isPresented: $showHintSheet, initialDetent: .custom(ratio: 0.7)) {
+            GameHintSheet(
+                coins: viewModel.coins,
+                onClose: { showHintSheet = false },
+                onSelectHint: { hintText in
+                    appliedHint = hintText
+                    showHintSheet = false
+                }
+            )
         }
     }
 }

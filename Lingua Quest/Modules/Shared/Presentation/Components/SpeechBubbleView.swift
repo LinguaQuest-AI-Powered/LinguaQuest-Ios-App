@@ -57,8 +57,11 @@ struct SpeechBubbleView: View {
                 SpeechBubbleShape(cornerRadius: 16, tailSize: 8)
                     .stroke(Color.appBorderBrown, lineWidth: 1.5)
             )
-            .task {
-                guard isAnimated else { return }
+            .task(id: text) {
+                guard isAnimated else {
+                    displayedText = text
+                    return
+                }
                 displayedText = ""
                 if animationDelay > 0 {
                     try? await Task.sleep(nanoseconds: UInt64(animationDelay * 1_000_000_000))
