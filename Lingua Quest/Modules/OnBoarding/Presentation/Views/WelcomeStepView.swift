@@ -15,7 +15,7 @@ struct WelcomeStepView: View {
     var body: some View {
         ZStack {
 
-            Color.appViewBackground
+            Color.appBackgroundWarm
                 .ignoresSafeArea()
 
             VStack {
@@ -24,7 +24,7 @@ struct WelcomeStepView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(maxWidth: .infinity)
-                    .colorMultiply(colorScheme == .dark ? Color.appCardBackground : .white)
+                    .colorMultiply(colorScheme == .dark ? Color.appSurfaceCard : .white)
             }
             .ignoresSafeArea(edges: .bottom)
             
@@ -39,10 +39,10 @@ struct WelcomeStepView: View {
                     .padding(.bottom, -20)
 
                 (Text(L10n.Onboarding.welcomeTitlePart1)
-                    .foregroundColor(.appTextDarkBlue) +
+                    .foregroundColor(.appTextPrimary) +
                 Text(L10n.Onboarding.welcomeTitlePart2)
-                    .foregroundColor(.appPrimary))
-                .font(AppTextStyle.title.font)
+                    .foregroundColor(.appBrandPrimary))
+                .font(AppTextStyle.displayMedium.font)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 24)
 

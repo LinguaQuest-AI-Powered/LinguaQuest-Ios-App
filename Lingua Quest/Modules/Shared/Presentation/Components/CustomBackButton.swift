@@ -13,7 +13,7 @@ struct CustomBackButton: View {
         Button(action: action) {
             Image(systemName: "chevron.left")
                 .font(.system(size: 16, weight: .bold))
-                .foregroundColor(.appPrimary)
+                .foregroundColor(.appBrandPrimary)
                 .frame(width: 38, height: 38)
               
                 .shadow(color: Color.black.opacity(0.08), radius: 6, x: 0, y: 3)

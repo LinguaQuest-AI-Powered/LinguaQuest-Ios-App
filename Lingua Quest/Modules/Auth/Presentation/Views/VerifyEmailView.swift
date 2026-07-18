@@ -13,7 +13,7 @@ struct VerifyEmailView: View {
     
     var body: some View {
         ZStack {
-            Color.appViewBackground.ignoresSafeArea()
+            Color.appBackgroundWarm.ignoresSafeArea()
             
             VStack(spacing: 0) {
                 
@@ -23,11 +23,11 @@ struct VerifyEmailView: View {
                             
                             VStack(spacing: 16) {
                                 Text(L10n.Auth.verifyYourEmail)
-                                    .appTextStyle(.largeTitle, color: .textBrown)
+                                    .appTextStyle(.displayLarge, color: .appTextSecondary)
                                     .multilineTextAlignment(.center)
                                 
                                 Text(L10n.Auth.verifyEmailDesc)
-                                    .appTextStyle(.body, color: .textBrown)
+                                    .appTextStyle(.body, color: .appTextSecondary)
                                     .opacity(0.8)
                                     .multilineTextAlignment(.center)
                                     .padding(.horizontal, 8)
@@ -50,9 +50,9 @@ struct VerifyEmailView: View {
                             VStack(spacing: 8) {
                                 HStack(spacing: 4) {
                                     Image(systemIcon: .timer)
-                                        .foregroundColor(.textBrown)
+                                        .foregroundColor(.appTextSecondary)
                                     Text(String(format: "00:%02d", viewModel.timeRemaining))
-                                        .appTextStyle(.body, color: .textBrown)
+                                        .appTextStyle(.body, color: .appTextSecondary)
                                 }
                                 
                                 Button(action: {
@@ -62,7 +62,7 @@ struct VerifyEmailView: View {
                                     }
                                 }) {
                                     Text(L10n.Auth.resendCode)
-                                        .appTextStyle(.buttonBold, color: .darkGreen)
+                                        .appTextStyle(.bodyBold, color: .appSemanticSuccess)
                                         .opacity(viewModel.timeRemaining == 0 ? 1.0 : 0.5)
                                 }
                                 .disabled(viewModel.timeRemaining > 0)
@@ -100,12 +100,12 @@ struct VerifyEmailView: View {
         let isFilled = viewModel.otpCode.count > index
         
         Circle()
-            .stroke(isFocused ? Color.darkGreen : (isFilled ? Color.darkGreen.opacity(0.5) : Color.borderBrown.opacity(0.3)), lineWidth: isFocused ? 2 : 1)
+            .stroke(isFocused ? Color.appSemanticSuccess : (isFilled ? Color.appSemanticSuccess.opacity(0.5) : Color.appBorderBrown.opacity(0.3)), lineWidth: isFocused ? 2 : 1)
             .frame(width: 60, height: 60)
-            .background(Circle().fill(Color.appCardBackground))
+            .background(Circle().fill(Color.appSurfaceCard))
             .overlay(
                 Text(char)
-                    .appTextStyle(.largeTitle, color: .textBrown)
+                    .appTextStyle(.displayLarge, color: .appTextSecondary)
             )
             .onTapGesture {
                 isKeyboardShowing = true

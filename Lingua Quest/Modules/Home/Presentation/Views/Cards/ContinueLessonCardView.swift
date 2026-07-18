@@ -15,27 +15,27 @@ struct ContinueLessonCardView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Text(L10n.Home.continueLessonTitle)
                         .font(AppTextStyle.micro.font)
-                        .foregroundColor(Color.appTextBrown)
+                        .foregroundColor(Color.appTextSecondary)
                         .padding(.horizontal, 10)
                         .padding(.vertical, 5)
                         .background(
-                            Capsule().fill(Color.appViewBackground)
+                            Capsule().fill(Color.appBackgroundWarm)
                         )
                     
                     Text(L10n.Home.lessonApple)
-                        .font(AppTextStyle.title.font)
+                        .font(AppTextStyle.displayMedium.font)
                         .foregroundColor(.black)
                     
                     Text(L10n.Home.lessonAppleDesc)
-                        .font(AppTextStyle.buttonMedium.font)
-                        .foregroundColor(Color.appTextDarkBlue)
+                        .font(AppTextStyle.bodyMedium.font)
+                        .foregroundColor(Color.appTextPrimary)
                 }
                 
                 Spacer()
                 
                 ZStack {
                     RoundedRectangle(cornerRadius: 18)
-                        .fill(Color.appViewBackground)
+                        .fill(Color.appBackgroundWarm)
                         .frame(width: 96, height: 96)
                     
                     Image(asset: .appleImage)
@@ -49,17 +49,17 @@ struct ContinueLessonCardView: View {
                 HStack(spacing: 8) {
                     Image(systemIcon: .play)
                     Text(L10n.Home.continueButton)
-                        .font(AppTextStyle.subtitleMedium.font)
+                        .font(AppTextStyle.bodyLargeMedium.font)
                 }
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
                 .frame(height: 56)
-                .background(Color.appPrimaryColor)
+                .background(Color.appBrandPrimary)
                 .clipShape(Capsule())
             }
         }
         .padding(18)
-        .background(Color.appCardBackground)
+        .background(Color.appSurfaceCard)
         .clipShape(RoundedRectangle(cornerRadius: 28))
     }
 }

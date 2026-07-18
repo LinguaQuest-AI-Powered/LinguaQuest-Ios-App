@@ -28,7 +28,7 @@ struct DailyBonusCardView: View {
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(L10n.Home.dailyStreakBonus)
-                        .font(AppTextStyle.subtitleMedium.font)
+                        .font(AppTextStyle.bodyLargeMedium.font)
                         .foregroundColor(.white)
                     Text(L10n.Home.claimDailyReward)
                         .font(AppTextStyle.captionMedium.font)
@@ -48,7 +48,7 @@ struct DailyBonusCardView: View {
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
-            .background(Color.appPrimaryColor)
+            .background(Color.appBrandPrimary)
             .clipShape(RoundedRectangle(cornerRadius: 32))
             .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)
         }

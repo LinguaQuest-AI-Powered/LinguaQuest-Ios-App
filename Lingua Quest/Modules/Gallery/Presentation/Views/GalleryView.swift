@@ -33,7 +33,7 @@ struct GalleryView: View {
         .background(
             Group {
                 if items.isEmpty {
-                    Color.appViewBackground
+                    Color.appBackgroundWarm
                         .ignoresSafeArea()
                 } else {
                     Image(asset: .appBackground)

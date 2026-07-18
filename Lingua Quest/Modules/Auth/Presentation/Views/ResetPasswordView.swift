@@ -12,7 +12,7 @@ struct ResetPasswordView: View {
     
     var body: some View {
         ZStack {
-            Color.appViewBackground.ignoresSafeArea()
+            Color.appBackgroundWarm.ignoresSafeArea()
             
             VStack(spacing: 0) {
                 
@@ -22,11 +22,11 @@ struct ResetPasswordView: View {
                             
                             VStack(spacing: 8) {
                                 Text(L10n.Auth.newPasswordTitle)
-                                    .appTextStyle(.largeTitle, color: .textBrown)
+                                    .appTextStyle(.displayLarge, color: .appTextSecondary)
                                     .multilineTextAlignment(.center)
                                 
                                 Text(L10n.Auth.newPasswordDesc)
-                                    .appTextStyle(.body, color: .textBrown)
+                                    .appTextStyle(.body, color: .appTextSecondary)
                                     .opacity(0.8)
                                     .multilineTextAlignment(.center)
                                     .padding(.horizontal, 8)
@@ -34,7 +34,7 @@ struct ResetPasswordView: View {
                             
                             VStack(alignment: .leading, spacing: 8) {
                                 Text(L10n.Auth.newPasswordLabel)
-                                    .appTextStyle(.buttonBold, color: .textDarkBlue)
+                                    .appTextStyle(.bodyBold, color: .appTextPrimary)
                                 
                                 CustomSecureField(
                                     icon: .keyFill,
@@ -44,13 +44,13 @@ struct ResetPasswordView: View {
                                 )
                                 
                                 Text(L10n.Auth.passwordStrength)
-                                    .appTextStyle(.caption, color: .textBrown)
+                                    .appTextStyle(.caption, color: .appTextSecondary)
                                     .padding(.top, 4)
                                 
                                 GeometryReader { geometry in
                                     ZStack(alignment: .leading) {
                                         Capsule()
-                                            .fill(Color.backgroundLightBlue)
+                                            .fill(Color.appBackgroundPrimary)
                                             .frame(height: 8)
                                         
                                         Capsule()
@@ -64,7 +64,7 @@ struct ResetPasswordView: View {
                             
                             VStack(alignment: .leading, spacing: 8) {
                                 Text(L10n.Auth.confirmNewPasswordLabel)
-                                    .appTextStyle(.buttonBold, color: .textDarkBlue)
+                                    .appTextStyle(.bodyBold, color: .appTextPrimary)
                                 
                                 CustomSecureField(
                                     icon: .lockFill,

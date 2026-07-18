@@ -12,7 +12,7 @@ struct SignUpView: View {
     
     var body: some View {
         ZStack {
-            Color.appViewBackground.ignoresSafeArea()
+            Color.appBackgroundWarm.ignoresSafeArea()
             
             ScrollView(showsIndicators: false) {
                 DialogCardContainer(mascotImage: .registerationBird) {
@@ -20,10 +20,10 @@ struct SignUpView: View {
                         
                         VStack(spacing: 8) {
                             Text(L10n.Auth.createYourAccount)
-                                .appTextStyle(.largeTitle, color: .textBrown)
+                                .appTextStyle(.displayLarge, color: .appTextSecondary)
                             
                             Text(L10n.Auth.createAccountDescription)
-                                .appTextStyle(.body, color: .textBrown)
+                                .appTextStyle(.body, color: .appTextSecondary)
                                 .opacity(0.8)
                                 .multilineTextAlignment(.center)
                         }
@@ -68,17 +68,17 @@ struct SignUpView: View {
                         
                         HStack(spacing: 8) {
                             Rectangle()
-                                .fill(Color.borderBrown.opacity(0.5))
+                                .fill(Color.appBorderBrown.opacity(0.5))
                                 .frame(height: 1)
                             
                             Text(L10n.Auth.orContinueWith)
-                                .appTextStyle(.body, color: .textBrown)
+                                .appTextStyle(.body, color: .appTextSecondary)
                                 .opacity(0.6)
                                 .layoutPriority(1)
                                 .fixedSize(horizontal: true, vertical: false)
                             
                             Rectangle()
-                                .fill(Color.borderBrown.opacity(0.5))
+                                .fill(Color.appBorderBrown.opacity(0.5))
                                 .frame(height: 1)
                         }
                         .padding(.vertical, 8)
@@ -99,13 +99,13 @@ struct SignUpView: View {
                         
                         HStack(spacing: 4) {
                             Text(L10n.Auth.alreadyHaveAccount)
-                                .appTextStyle(.body, color: .textBrown)
+                                .appTextStyle(.body, color: .appTextSecondary)
                             
                             Button(action: {
                                 viewModel.navigateToLogin()
                             }) {
                                 Text(L10n.Auth.logIn)
-                                    .appTextStyle(.buttonBold, color: .textBrown)
+                                    .appTextStyle(.bodyBold, color: .appTextSecondary)
                             }
                         }
                         .padding(.bottom, 8)

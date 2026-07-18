@@ -149,6 +149,34 @@ enum L10n {
         static var dailyStreakBonus: String { localized("home.daily_streak_bonus") }
         static var claimDailyReward: String { localized("home.claim_daily_reward") }
     }
+    
+    enum Profile {
+        static var title: String { localized("profile.title") }
+        static var coins: String { localized("profile.stats.coins") }
+        static var totalXP: String { localized("profile.stats.total_xp") }
+        static var streak: String { localized("profile.stats.streak") }
+        static var worlds: String { localized("profile.stats.worlds") }
+        static var viewAll: String { localized("profile.view_all") }
+        static var achievementsTitle: String { localized("profile.achievements.title") }
+        static var topExplorersTitle: String { localized("profile.top_explorers.title") }
+        
+        
+        static func userLevel(_ level: Int) -> String {
+            String(format: localized("profile.user_level"), level)
+        }
+        
+        static func learningTitle(_ language: String) -> String {
+            String(format: localized("profile.learning.title"), language)
+        }
+            
+        static func xpToNextMilestone(current: Int, total: Int) -> String {
+            String(format: localized("profile.learning.xp_progress"), current, total)
+        }
+        
+        static func explorerXP(_ amount: String) -> String {
+            String(format: localized("profile.leaderboard.xp"), amount)
+        }
+    }
 
     private static func localized(_ key: String) -> String {
         return String(localized: String.LocalizationValue(key))

@@ -18,31 +18,31 @@ struct LevelCard: View {
             HStack(spacing: 16) {
                 ZStack {
                     Circle()
-                        .fill(isSelected ? Color.activeLevel.opacity(0.22) : (colorScheme == .dark ? Color.white.opacity(0.12) : Color.appSecondary.opacity(0.35)))
+                        .fill(isSelected ? Color.appAccentActiveLevel.opacity(0.22) : (colorScheme == .dark ? Color.white.opacity(0.12) : Color.appBorderLight.opacity(0.35)))
                         .frame(width: 64, height: 64)
                     
                     Image(iconName)
                         .renderingMode(.template)
-                        .foregroundColor(isSelected ? Color.activeLevel : (colorScheme == .dark ? .appTextBrown : .appIconBrown))
+                        .foregroundColor(isSelected ? Color.appAccentActiveLevel : (colorScheme == .dark ? .appTextSecondary : .appIconBrown))
                 }
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(level.title)
-                        .appTextStyle(.cardTitle, color: .appTextDarkBlue)
+                        .appTextStyle(.headingMedium, color: .appTextPrimary)
                     
                     Text(level.subtitle)
-                        .appTextStyle(.caption, color: .secondaryButtonText)
+                        .appTextStyle(.caption, color: .appTextSecondary)
                         .multilineTextAlignment(.leading)
                 }
                 
                 Spacer()
             }
             .padding()
-            .background(Color.appCardBackground)
+            .background(Color.appSurfaceCard)
             .overlay(
                 RoundedRectangle(cornerRadius: 18)
                     .stroke(
-                        isSelected ? Color.appPrimary : (colorScheme == .dark ? Color.white.opacity(0.25) : Color.appSecondary.opacity(0.45)),
+                        isSelected ? Color.appBrandPrimary : (colorScheme == .dark ? Color.white.opacity(0.25) : Color.appBorderLight.opacity(0.45)),
                         lineWidth: isSelected ? 2.5 : 1
                     )
             )

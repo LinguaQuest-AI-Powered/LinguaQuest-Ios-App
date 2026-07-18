@@ -27,11 +27,11 @@ struct LanguageStepView: View {
                 .frame(maxWidth: .infinity)
 
             Text(L10n.Onboarding.languageStepTitle)
-                .appTextStyle(.headline,color: .appTextDarkBlue)
+                .appTextStyle(.displaySmall,color: .appTextPrimary)
                 .frame(maxWidth: .infinity, alignment: .center)
 
             Text(L10n.Onboarding.languageStepSubtitle)
-                .appTextStyle(.subtitle, color: .secondaryButtonText)
+                .appTextStyle(.bodyLarge, color: .appTextSecondary)
                 .frame(maxWidth: .infinity, alignment: .center)
 
             LanguageSelectorButton(
@@ -48,7 +48,7 @@ struct LanguageStepView: View {
                 title: L10n.Onboarding.languageStepIWantToLearn,
                 placeholder: L10n.Onboarding.languageSelectorPlaceholder,
                 selectedLanguage: state.selectedLearningLanguage,
-                borderColor: Color.appPrimary,
+                borderColor: Color.appBrandPrimary,
                 action: {
                     showLearningLanguageSheet = true
                 }
@@ -67,7 +67,7 @@ struct LanguageStepView: View {
             )
         }
         .padding(24)
-        .background(Color.appViewBackground.ignoresSafeArea())
+        .background(Color.appBackgroundWarm.ignoresSafeArea())
         .alert(L10n.Onboarding.alertErrorTitle, isPresented: $showAlert) {
             Button(L10n.Common.ok, role: .cancel) { }
         } message: {

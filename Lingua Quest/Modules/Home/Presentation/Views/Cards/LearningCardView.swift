@@ -22,10 +22,10 @@ struct LearningCardView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(L10n.Home.currentlyLearning)
                         .font(AppTextStyle.micro.font)
-                        .foregroundColor(Color.appTextBrown)
+                        .foregroundColor(Color.appTextSecondary)
                     
                     Text(L10n.Onboarding.languageSpanish)
-                        .font(AppTextStyle.cardTitle.font)
+                        .font(AppTextStyle.headingMedium.font)
                 }
                 
                 Spacer()
@@ -33,10 +33,10 @@ struct LearningCardView: View {
                 VStack(alignment: .trailing, spacing: 6) {
                     Text(L10n.Home.level(12))
                         .font(AppTextStyle.captionMedium.font)
-                        .foregroundColor(Color.appTextBrown)
+                        .foregroundColor(Color.appTextSecondary)
                     
                     HStack(spacing: 4) {
-                        Image(systemIcon: .flame)
+                        Image(systemIcon: .flameFill)
                             .foregroundColor(Color.red)
                         
                         Text(L10n.Home.daysStreak(7))
@@ -47,7 +47,7 @@ struct LearningCardView: View {
             
             ZStack(alignment: .leading) {
                 Capsule()
-                    .fill(Color.appSecondryProgressBar)
+                    .fill(Color.appSecondaryProgressBar)
                     .frame(height: 10)
                 
                 Capsule()
@@ -56,7 +56,7 @@ struct LearningCardView: View {
             }
         }
         .padding(18)
-        .background(Color.appCardBackground)
+        .background(Color.appSurfaceCard)
         .clipShape(RoundedRectangle(cornerRadius: 24))
     }
 }

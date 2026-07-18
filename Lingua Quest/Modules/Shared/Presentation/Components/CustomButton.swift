@@ -37,9 +37,9 @@ struct CustomButton: View {
         if status == .enable {
             switch type {
             case .primary:
-                return Color.appPrimary
+                return Color.appBrandPrimary
             case .secendry:
-                return Color.appSecondary
+                return Color.appBorderLight
             case .custom(_, let buttonColor):
                 return buttonColor
             }
@@ -52,9 +52,9 @@ struct CustomButton: View {
         if status == .enable {
             switch type {
             case .primary:
-                return Color.primaryButtonText
+                return Color.appTextOnPrimary
             case .secendry:
-                return Color.secondaryButtonText
+                return Color.appTextSecondary
             case .custom(let textColor, _):
                 return textColor
             }
@@ -78,7 +78,7 @@ struct CustomButton: View {
                 }
                 
                 Text(text)
-                    .font(AppTextStyle.buttonMedium.font)
+                    .font(AppTextStyle.bodyMedium.font)
                 
                 if let trailing {
                     trailing

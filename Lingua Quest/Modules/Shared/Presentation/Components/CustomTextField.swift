@@ -15,26 +15,26 @@ struct CustomTextField: View {
     var body: some View {
         HStack(spacing: 12) {
             Image(systemIcon: icon)
-                .foregroundColor(.iconBrown)
+                .foregroundColor(.appIconBrown)
                 .frame(width: 20)
             
             TextField(
                 "",
                 text: $text,
                 prompt: Text(placeholder)
-                    .foregroundColor(Color.textBrown.opacity(0.5))
+                    .foregroundColor(Color.appTextSecondary.opacity(0.5))
             )
-            .appTextStyle(.body, color: .textBrown)
+            .appTextStyle(.body, color: .appTextSecondary)
             .autocapitalization(.none)
             .disableAutocorrection(true)
         }
         .padding(.horizontal, 24)
         .frame(height: 52)
-        .background(Color.backgroundLightBlue)
+        .background(Color.appBackgroundPrimary)
         .clipShape(Capsule())
         .overlay(
             Capsule()
-                .stroke(Color.borderBrown, lineWidth: 2)
+                .stroke(Color.appBorderBrown, lineWidth: 2)
         )
     }
 }

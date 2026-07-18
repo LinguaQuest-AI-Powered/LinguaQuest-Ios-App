@@ -50,7 +50,7 @@ struct MyCapturesHeaderView: View {
                 
                 Text(objectsCollected == 0 ? L10n.Gallery.capturesSoFar : L10n.Gallery.objectsCollected(objectsCollected))
                     .font(.system(size: 16, weight: .regular, design: .rounded))
-                    .foregroundColor(.textDarkGray)
+                    .foregroundColor(.appTextDarkGray)
             }
             
             Spacer()
