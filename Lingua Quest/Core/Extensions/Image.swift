@@ -35,6 +35,7 @@ extension Image {
         case photoBadgePlus = "photo.badge.plus"
         case photo = "photo"
         case xmark = "xmark"
+        case magnifyingglass = "magnifyingglass"
 
         case play = "play.fill"
         case sparkles = "sparkles"
@@ -52,6 +53,7 @@ extension Image {
         case trophyFill = "trophy.fill"
         case starFill = "star.fill"
         case rosette = "rosette"
+        case birdIdea = "BirdIdea"
     }
     
     enum Asset: String {
