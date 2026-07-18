@@ -30,14 +30,24 @@ struct SpeechBubbleShape: Shape {
 
 struct SpeechBubbleView: View {
     let text: String
+    var isAnimated: Bool = false
+    var animationDelay: Double = 0.0
+    
+    @State private var displayedText: String = ""
     
     var body: some View {
         Text(text)
             .font(.system(size: 14, weight: .bold, design: .rounded))
-            .foregroundColor(Color.appTextBrown)
-            .multilineTextAlignment(.center)
+            .foregroundColor(.clear)
+            .overlay(
+                Text(isAnimated ? displayedText : text)
+                    .font(.system(size: 14, weight: .bold, design: .rounded))
+                    .foregroundColor(Color.appTextBrown)
+                    .multilineTextAlignment(.center)
+            )
             .padding(.horizontal, 16)
-            .padding(.vertical, 12)
+            .padding(.top, 12)
+            .padding(.bottom, 20) // 12 + 8 (tailSize)
             .background(
                 SpeechBubbleShape(cornerRadius: 16, tailSize: 8)
                     .fill(Color.appCardBackground)
@@ -47,7 +57,22 @@ struct SpeechBubbleView: View {
                 SpeechBubbleShape(cornerRadius: 16, tailSize: 8)
                     .stroke(Color.appBorderBrown, lineWidth: 1.5)
             )
-            .padding(.bottom, 8) // To account for the tail size
+            .task {
+                guard isAnimated else { return }
+                displayedText = ""
+                if animationDelay > 0 {
+                    try? await Task.sleep(nanoseconds: UInt64(animationDelay * 1_000_000_000))
+                }
+                let words = text.components(separatedBy: " ")
+                for (index, word) in words.enumerated() {
+                    if index == 0 {
+                        displayedText = word
+                    } else {
+                        displayedText += " " + word
+                    }
+                    try? await Task.sleep(nanoseconds: 250_000_000) // 0.25 seconds per word
+                }
+            }
     }
 }
 

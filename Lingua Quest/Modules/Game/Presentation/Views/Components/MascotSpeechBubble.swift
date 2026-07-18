@@ -18,7 +18,7 @@ struct MascotSpeechBubble: View {
     var body: some View {
         VStack(spacing: -10) {
             // Speech Bubble above the bird's head/beak
-            SpeechBubbleView(text: L10n.Game.letsLearn)
+            SpeechBubbleView(text: L10n.Game.letsLearn, isAnimated: true, animationDelay: 1.0)
                 .scaleEffect(bubbleScale)
                 .offset(y: bubbleFloat)
             
