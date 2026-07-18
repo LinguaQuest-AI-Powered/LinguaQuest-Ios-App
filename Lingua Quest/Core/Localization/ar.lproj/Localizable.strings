@@ -146,3 +146,10 @@
 "settings.learning_language" = "لغة التعلم";
 "settings.daily_goal" = "الهدف اليومي";
 "settings.learning_streak" = "سلسلة التعلم";
+"settings.app_experience" = "تجربة التطبيق";
+"settings.notifications" = "الإشعارات";
+"settings.dark_mode" = "الوضع المظلم";
+"settings.sound_effects" = "المؤثرات الصوتية";
+"settings.privacy_security" = "الخصوصية والأمان";
+"settings.help_support" = "المساعدة والدعم";
+"settings.about_app" = "عن التطبيق";

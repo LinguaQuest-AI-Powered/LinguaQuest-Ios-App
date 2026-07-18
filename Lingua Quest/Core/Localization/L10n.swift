@@ -192,6 +192,13 @@ enum L10n {
         static var learningLanguage: String { localized("settings.learning_language") }
         static var dailyGoal: String { localized("settings.daily_goal") }
         static var learningStreak: String { localized("settings.learning_streak") }
+        static var appExperience: String { localized("settings.app_experience") }
+        static var notifications: String { localized("settings.notifications") }
+        static var darkMode: String { localized("settings.dark_mode") }
+        static var soundEffects: String { localized("settings.sound_effects") }
+        static var privacySecurity: String { localized("settings.privacy_security") }
+        static var helpSupport: String { localized("settings.help_support") }
+        static var aboutApp: String { localized("settings.about_app") }
     }
 
     private static func localized(_ key: String) -> String {

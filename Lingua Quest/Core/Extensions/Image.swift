@@ -54,6 +54,10 @@ extension Image {
         case starFill = "star.fill"
         case rosette = "rosette"
         case target = "target"
+        case bellFill = "bell.fill"
+        case moonFill = "moon.fill"
+        case questionmarkCircleFill = "questionmark.circle.fill"
+        case infoCircleFill = "info.circle.fill"
        
     }
     
