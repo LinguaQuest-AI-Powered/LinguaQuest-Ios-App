@@ -9,6 +9,7 @@ import SwiftUI
 
 struct GameLevelsView: View {
     @State var viewModel: GameLevelsViewModel
+    var worldName: String
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) private var dismiss
     @Environment(Router.self) var router
@@ -158,7 +159,7 @@ struct GameLevelsView: View {
                 
                 Spacer()
                 
-                Text(L10n.Game.parkWorld)
+                Text(worldName)
                     .font(.system(size: 22, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
                     .shadow(color: .black.opacity(0.5), radius: 4, x: 0, y: 2)
@@ -195,5 +196,5 @@ struct GameLevelsView: View {
 }
 
 #Preview {
-    GameLevelsView(viewModel: GameLevelsViewModel())
+    GameLevelsView(viewModel: GameLevelsViewModel(), worldName: "Park World")
 }

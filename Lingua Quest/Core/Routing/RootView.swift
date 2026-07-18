@@ -13,30 +13,28 @@ struct RootView: View {
     @AppStorage(AppConstants.UserDefaultsKeys.isLoggedIn) private var isLoggedIn = false
     
     var body: some View {
-        Group {
-            if !isOnboardingCompleted {
-                router.view(for: .home)
-            } else {
-                NavigationStack(path: $router.path) {
-                    Group {
-                        if isLoggedIn {
-                            router.view(for: .home)
-                        } else {
-                            router.view(for: .login)
-                        }
-                    }
-                    .navigationDestination(for: AppRoute.self) { route in
-                        router.view(for: route)
+        NavigationStack(path: $router.path) {
+            Group {
+                if !isOnboardingCompleted {
+                    router.view(for: .home) // Currently set to .home for testing
+                } else {
+                    if isLoggedIn {
+                        router.view(for: .home)
+                    } else {
+                        router.view(for: .login)
                     }
                 }
-                .sheet(item: $router.presentedSheet) { sheet in
-                    switch sheet {
-                    case .editProfile: Text("**")
-                    }
-                }
-                .environment(router)
+            }
+            .navigationDestination(for: AppRoute.self) { route in
+                router.view(for: route)
             }
         }
+        .sheet(item: $router.presentedSheet) { sheet in
+            switch sheet {
+            case .editProfile: Text("**")
+            }
+        }
+        .environment(router)
         .task {
             isOnboardingCompleted = false //TODO: this line is for testing onbarding only so after finish remove it
         }
