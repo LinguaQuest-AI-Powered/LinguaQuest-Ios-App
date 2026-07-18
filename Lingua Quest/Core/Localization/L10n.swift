@@ -111,6 +111,8 @@ enum L10n {
         static func scanInstruction(_ word: String) -> String { String(format: localized("game.scan_instruction"), word) }
         static var openCamera: String { localized("game.open_camera") }
         static var skip: String { localized("game.skip") }
+    }
+    
     enum Gallery {
         static var myCaptures: String { localized("gallery.my_captures") }
         static func objectsCollected(_ count: Int) -> String {

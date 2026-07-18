@@ -66,22 +66,19 @@ extension Image {
         case xpIcon = "xp_icon"
         case coinsIcon = "coins_icon"
         case onboardingbackground = "onboarding"
-<<<<<<< HEAD
+
 
         case advanced = "advanced"
         case intermediate = "intermediate"
         case beginner = "beginner"
         case gameLevelBackground = "GameLevelBackground"
-=======
+
         case homeBackground = "LinguaQuestHome"
         case english = "English"
         case french = "French"
         case spanish = "Spanish"
         case german = "German"
         case japanease = "Japanese"
-        case advanced = "advanced"
-        case intermediate = "intermediate"
-        case beginner = "beginner"
         case apple = "apple"
         case table = "table"
         case leaf = "leaf"
@@ -93,7 +90,7 @@ extension Image {
         case appleImage = "appleImage"
         case appBarBird = "appBarBird"
         case world = "world_icon"
->>>>>>> development
+
         
     }
     
