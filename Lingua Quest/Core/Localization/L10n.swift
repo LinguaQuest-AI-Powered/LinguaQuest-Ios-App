@@ -199,6 +199,8 @@ enum L10n {
         static var privacySecurity: String { localized("settings.privacy_security") }
         static var helpSupport: String { localized("settings.help_support") }
         static var aboutApp: String { localized("settings.about_app") }
+        static var saveChanges: String { localized("settings.save_changes") }
+        static var logOut: String { localized("settings.log_out") }
     }
 
     private static func localized(_ key: String) -> String {
