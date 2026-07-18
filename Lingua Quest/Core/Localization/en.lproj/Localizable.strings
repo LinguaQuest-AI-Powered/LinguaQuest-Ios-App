@@ -93,6 +93,7 @@
 "gallery.categories.kitchen" = "Kitchen";
 "gallery.categories.park" = "Park";
 "gallery.categories.street" = "Street";
+
 "home.explore_worlds" = "Explore Worlds";
 "home.see_more" = "See more";
 "home.currently_learning" = "CURRENTLY LEARNING";
@@ -109,3 +110,16 @@
 "home.lesson.apple" = "Apple";
 "home.daily_streak_bonus" = "Daily Streak Bonus!";
 "home.claim_daily_reward" = "Claim your daily reward!";
+
+"profile.title" = "LinguaQuest";
+"profile.user_level" = "LEVEL %d";
+"profile.stats.coins" = "Coins";
+"profile.stats.total_xp" = "Total XP";
+"profile.stats.streak" = "Streak";
+"profile.stats.worlds" = "Worlds";
+"profile.learning.title" = "Learning: %@";
+"profile.learning.xp_progress" = "%d / %d XP TO NEXT MILESTONE";
+"profile.view_all" = "VIEW ALL";
+"profile.achievements.title" = "Achievements";
+"profile.leaderboard.xp" = "%@ XP";
+"profile.top_explorers.title" = "Top Explorers";

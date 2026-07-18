@@ -27,10 +27,10 @@ struct LanguageSelectorButton: View {
                             .frame(width: 20, height: 20)
 
                         Text(selectedLanguage.name)
-                            .appTextStyle(.subtitleMedium, color: .appTextDarkBlue)
+                            .appTextStyle(.bodyLargeMedium, color: .appTextPrimary)
                     } else {
                         Text(placeholder)
-                            .appTextStyle(.subtitleMedium, color: .gray.opacity(0.7))
+                            .appTextStyle(.bodyLargeMedium, color: .gray.opacity(0.7))
                     }
 
                     Spacer()
@@ -40,7 +40,7 @@ struct LanguageSelectorButton: View {
                 }
             }
             .padding()
-            .background(Color.appCardBackground)
+            .background(Color.appSurfaceCard)
             .overlay {
                 RoundedRectangle(cornerRadius: 18)
                     .stroke(borderColor, lineWidth: 1.5)

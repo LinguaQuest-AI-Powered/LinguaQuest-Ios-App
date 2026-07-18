@@ -54,10 +54,10 @@ struct HomeView: View {
 
                 Button(action: {}) {
                     Image(asset: .world)
-                        .font(AppTextStyle.cardTitle.font)
+                        .font(AppTextStyle.headingMedium.font)
                         .foregroundColor(.white)
                         .frame(width: 60, height: 60)
-                        .background(Color.appDarkGreen)
+                        .background(Color.appSemanticSuccess)
                         .clipShape(Circle())
                         .shadow(color: .black.opacity(0.15), radius: 5, x: 0, y: 3)
                 }
@@ -109,8 +109,8 @@ struct TopBarView: View {
                 .overlay(Circle().stroke(Color.appBorderBrown, lineWidth: 1))
 
             Text(L10n.Components.appName)
-                .font(AppTextStyle.buttonBold.font)
-                .foregroundColor(Color.appTextBrown)
+                .font(AppTextStyle.bodyBold.font)
+                .foregroundColor(Color.appTextSecondary)
 
             Spacer()
 
@@ -163,18 +163,18 @@ struct SectionHeaderView: View {
     var body: some View {
         HStack {
             Text(title)
-                .font(AppTextStyle.headline.font)
+                .font(AppTextStyle.displaySmall.font)
             
             Spacer()
             
             Button(action: {}) {
                 HStack(spacing: 4) {
                     Text(actionTitle)
-                        .font(AppTextStyle.buttonBold.font)
+                        .font(AppTextStyle.bodyBold.font)
                     Image(systemIcon: .chevronDown)
                         .font(AppTextStyle.captionMedium.font)
                 }
-                .foregroundColor(Color.appTextBrown)
+                .foregroundColor(Color.appTextSecondary)
             }
         }
     }

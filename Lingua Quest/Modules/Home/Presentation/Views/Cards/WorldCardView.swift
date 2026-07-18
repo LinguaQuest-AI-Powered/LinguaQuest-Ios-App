@@ -26,7 +26,7 @@ struct WorldCardView: View {
                         .foregroundColor(.white)
                         .padding(.horizontal, 10)
                         .padding(.vertical, 5)
-                        .background(Capsule().fill(Color.appDarkGreen))
+                        .background(Capsule().fill(Color.appSemanticSuccess))
                         .padding(8)
                 }
                 
@@ -35,19 +35,19 @@ struct WorldCardView: View {
                         .font(AppTextStyle.micro.font)
                         .foregroundColor(.white)
                         .frame(width: 24, height: 24)
-                        .background(Circle().fill(Color.appDarkGreen))
+                        .background(Circle().fill(Color.appSemanticSuccess))
                         .overlay(Circle().stroke(Color.white, lineWidth: 2))
                         .offset(x: -10, y: -10)
                 }
             }
             
             Text(item.title)
-                .font(AppTextStyle.subtitleMedium.font)
+                .font(AppTextStyle.bodyLargeMedium.font)
             
             HStack {
                 Text(L10n.Home.progress)
                     .font(AppTextStyle.micro.font)
-                    .foregroundColor(Color.textBrown)
+                    .foregroundColor(Color.appTextSecondary)
                 
                 Spacer()
                 
@@ -58,17 +58,17 @@ struct WorldCardView: View {
             
             ZStack(alignment: .leading) {
                 Capsule()
-                    .fill(Color.appViewBackground)
+                    .fill(Color.appBackgroundWarm)
                     .frame(height: 10)
                 
                 Capsule()
-                    .fill(Color.appDarkGreen)
+                    .fill(Color.appSemanticSuccess)
                     .frame(width: max(CGFloat(item.progress) * 150, 20), height: 10)
             }
         }
         .padding(12)
         .frame(width: 204)
-        .background(Color.appCardBackground)
+        .background(Color.appSurfaceCard)
         .clipShape(RoundedRectangle(cornerRadius: 24))
     }
 }

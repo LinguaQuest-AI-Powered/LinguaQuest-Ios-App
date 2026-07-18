@@ -21,16 +21,16 @@ struct SocialLoginButton: View {
                     .frame(width: 20, height: 20)
                 
                 Text(title)
-                    .appTextStyle(.buttonBold, color: .textDarkBlue)
+                    .appTextStyle(.bodyBold, color: .appTextPrimary)
                     .tracking(0.8)
             }
             .frame(maxWidth: .infinity)
             .frame(height: 48)
-            .background(Color.backgroundLightBlue)
+            .background(Color.appBackgroundPrimary)
             .clipShape(Capsule())
             .overlay(
                 Capsule()
-                    .stroke(Color.borderBrown, lineWidth: 2)
+                    .stroke(Color.appBorderBrown, lineWidth: 2)
             )
         }
     }

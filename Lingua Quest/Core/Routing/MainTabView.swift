@@ -19,14 +19,13 @@ struct MainTabView: View {
                 }
                 .tag(1)
             
-            Text("Profile View")
-                .font(.largeTitle)
+            ProfileView()
                 .tabItem {
                     Image(systemName: "person.crop.circle")
                     Text("Profile")
                 }
                 .tag(2)
         }
-        .tint(Color.appDarkGreen)
+        .tint(Color.appSemanticSuccess)
     }
 }

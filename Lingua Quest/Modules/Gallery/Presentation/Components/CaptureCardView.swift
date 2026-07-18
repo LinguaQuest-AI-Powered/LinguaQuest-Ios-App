@@ -14,7 +14,7 @@ struct CaptureCardView: View {
             ZStack(alignment: .topTrailing) {
                 
                 Rectangle()
-                    .fill(Color.cardImageBackground)
+                    .fill(Color.appCardImageBackground)
                     .overlay(
                         Image(asset: Image.Asset(rawValue: item.image) ?? .apple)
                             .resizable()
@@ -43,7 +43,7 @@ struct CaptureCardView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(item.englishName)
                         .font(.system(size: 12, weight: .bold, design: .rounded))
-                        .foregroundColor(.textDarkGray)
+                        .foregroundColor(.appTextDarkGray)
                     
                     Text(item.translatedName)
                         .font(.system(size: 16, weight: .heavy, design: .rounded))
@@ -55,7 +55,7 @@ struct CaptureCardView: View {
                 if item.isCollected {
                     ZStack {
                         Circle()
-                            .fill(Color.darkGreen)
+                            .fill(Color.appSemanticSuccess)
                             .frame(width: 26, height: 26)
                             .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
                         

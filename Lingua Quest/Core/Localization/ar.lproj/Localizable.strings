@@ -111,3 +111,17 @@
 "home.lesson.apple" = "تفاحة";
 "home.daily_streak_bonus" = "مكافأة سلسلة الأيام!";
 "home.claim_daily_reward" = "طالب بمكافأتك اليومية!";
+
+
+"profile.title" = "لينجوا كويست";
+"profile.user_level" = "المستوى %d";
+"profile.stats.coins" = "العملات";
+"profile.stats.total_xp" = "إجمالي نقاط الخبرة";
+"profile.stats.streak" = "السلسلة";
+"profile.stats.worlds" = "العوالم";
+"profile.learning.title" = "التعلّم: %@";
+"profile.learning.xp_progress" = "%d / %d نقطة خبرة للوصول إلى المرحلة التالية";
+"profile.view_all" = "عرض الكل";
+"profile.achievements.title" = "الإنجازات";
+"profile.leaderboard.xp" = "%@ نقطة خبرة";
+"profile.top_explorers.title" = "أفضل المستكشفين";

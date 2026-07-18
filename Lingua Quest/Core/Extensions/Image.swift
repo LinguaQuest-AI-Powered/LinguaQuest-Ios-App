@@ -33,11 +33,24 @@ extension Image {
         case photoBadgePlus = "photo.badge.plus"
         case photo = "photo"
         case xmark = "xmark"
-        case flame = "flame.fill"
+
         case play = "play.fill"
         case sparkles = "sparkles"
         case rightChevron = "chevron.right"
         case gift = "gift"
+        case pencil = "pencil"
+        case personCropCircleFill = "person.crop.circle.fill"
+        case dollarsignCircleFill = "dollarsign.circle.fill"
+        case starCircleFill = "star.circle.fill"
+        case flameFill = "flame.fill"
+        case globeAmericasFill = "globe.americas.fill"
+        case globe = "globe"
+        case birdFill = "bird.fill"
+        case diamondFill = "diamond.fill"
+        case medalFill = "medal.fill"
+        case trophyFill = "trophy.fill"
+        case starFill = "star.fill"
+        case rosette = "rosette"
     }
     
     enum Asset: String {

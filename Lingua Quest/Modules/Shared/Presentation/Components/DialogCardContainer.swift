@@ -75,7 +75,7 @@ private extension DialogCardContainer {
 
     var cardBackground: some View {
         RoundedRectangle(cornerRadius: cornerRadius)
-            .fill(Color.appCardBackground)
+            .fill(Color.appSurfaceCard)
             .overlay {
                 decorativeBackground
             }
@@ -87,7 +87,7 @@ private extension DialogCardContainer {
     var cardBorder: some View {
         RoundedRectangle(cornerRadius: cornerRadius)
             .stroke(
-                Color.borderLightBlue,
+                Color.appBorderCool,
                 lineWidth: borderWidth
             )
     }
@@ -95,7 +95,7 @@ private extension DialogCardContainer {
     var decorativeBackground: some View {
         ZStack {
             Circle()
-                .fill(Color.glowTeal.opacity(0.2))
+                .fill(Color.appGlowTeal.opacity(0.2))
                 .frame(width: glowSize,
                        height: glowSize)
                 .blur(radius: glowBlur)
@@ -110,7 +110,7 @@ private extension DialogCardContainer {
                 )
 
             Circle()
-                .fill(Color.glowYellow.opacity(0.2))
+                .fill(Color.appGlowGold.opacity(0.2))
                 .frame(width: glowSize,
                        height: glowSize)
                 .blur(radius: glowBlur)
@@ -153,7 +153,7 @@ private extension View {
 
 #Preview("Dialog Card Container") {
     ZStack {
-        Color.backgroundLightBlue
+        Color.appBackgroundPrimary
             .ignoresSafeArea()
 
         DialogCardContainer(mascotImage: .bird)  {
@@ -161,7 +161,7 @@ private extension View {
             VStack(spacing: 20) {
 
                 Text(L10n.Components.appName)
-                    .appTextStyle(.largeTitle, color: .appTextDarkBlue)
+                    .appTextStyle(.displayLarge, color: .appTextPrimary)
 
                 Rectangle()
                     .fill(.gray.opacity(0.2))
