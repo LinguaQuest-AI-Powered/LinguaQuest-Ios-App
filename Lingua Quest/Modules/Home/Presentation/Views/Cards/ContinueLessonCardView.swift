@@ -23,12 +23,12 @@ struct ContinueLessonCardView: View {
                         )
                     
                     Text(L10n.Home.lessonApple)
-                        .font(AppTextStyle.title.font)
+                        .font(AppTextStyle.displayMedium.font)
                         .foregroundColor(.black)
                     
                     Text(L10n.Home.lessonAppleDesc)
-                        .font(AppTextStyle.buttonMedium.font)
-                        .foregroundColor(Color.appTextDarkBlue)
+                        .font(AppTextStyle.bodyMedium.font)
+                        .foregroundColor(Color.appTextPrimary)
                 }
                 
                 Spacer()
@@ -49,7 +49,7 @@ struct ContinueLessonCardView: View {
                 HStack(spacing: 8) {
                     Image(systemIcon: .play)
                     Text(L10n.Home.continueButton)
-                        .font(AppTextStyle.subtitleMedium.font)
+                        .font(AppTextStyle.bodyLargeMedium.font)
                 }
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity)

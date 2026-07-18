@@ -25,7 +25,7 @@ struct LearningCardView: View {
                         .foregroundColor(Color.appTextSecondary)
                     
                     Text(L10n.Onboarding.languageSpanish)
-                        .font(AppTextStyle.cardTitle.font)
+                        .font(AppTextStyle.headingMedium.font)
                 }
                 
                 Spacer()

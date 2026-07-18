@@ -42,7 +42,7 @@ struct WorldCardView: View {
             }
             
             Text(item.title)
-                .font(AppTextStyle.subtitleMedium.font)
+                .font(AppTextStyle.bodyLargeMedium.font)
             
             HStack {
                 Text(L10n.Home.progress)

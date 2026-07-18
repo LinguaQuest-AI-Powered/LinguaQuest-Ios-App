@@ -19,8 +19,7 @@ struct MainTabView: View {
                 }
                 .tag(1)
             
-            Text("Profile View")
-                .font(.largeTitle)
+            ProfileView()
                 .tabItem {
                     Image(systemName: "person.crop.circle")
                     Text("Profile")
