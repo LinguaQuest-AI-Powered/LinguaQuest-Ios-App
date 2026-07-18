@@ -12,6 +12,7 @@ struct AppHeaderView: View {
     var coinCount: Int
     
     var body: some View {
+        
         HStack(spacing: 8) {
             Image(.bird)
                 .resizable()
@@ -34,8 +35,12 @@ struct AppHeaderView: View {
         }
         .padding(.horizontal, 8)
         .padding(.vertical, 10)
-        .background(Color(red: 0.99, green: 0.95, blue: 0.91))
+        .background(
+            Color(red: 0.99, green: 0.95, blue: 0.91)
+                .ignoresSafeArea(edges: .top)
+        )
     }
+
 }
 
 struct StatBadge: View {
@@ -79,5 +84,3 @@ struct StatBadge: View {
         .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
     }
 }
-
-
