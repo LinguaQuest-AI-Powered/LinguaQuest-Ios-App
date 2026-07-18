@@ -24,7 +24,6 @@ struct ContinueLessonCardView: View {
                     
                     Text(L10n.Home.lessonApple)
                         .font(AppTextStyle.displayMedium.font)
-                        .foregroundColor(.black)
                     
                     Text(L10n.Home.lessonAppleDesc)
                         .font(AppTextStyle.bodyMedium.font)

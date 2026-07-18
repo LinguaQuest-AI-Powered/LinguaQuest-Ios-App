@@ -46,8 +46,11 @@ struct GalleryView: View {
     }
 }
 
-#Preview {
-    
+#Preview("LightTheme") {
     GalleryView()
-    
+}
+
+#Preview("DarkTheme") {
+    GalleryView()
+        .preferredColorScheme(.dark)
 }

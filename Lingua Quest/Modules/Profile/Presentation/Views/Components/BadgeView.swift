@@ -14,19 +14,18 @@ struct BadgeView: View {
     var iconSize: CGFloat? = nil
     
     var body: some View {
-        HStack(spacing: 6) {
+        HStack(spacing: 4) {
             Image(systemIcon: icon)
                 .foregroundColor(iconColor)
                 .font(iconSize != nil ? .system(size: iconSize!) : nil)
             
             Text(value)
-                .appTextStyle(.captionBold, color: .appTextSlate)
+                .appTextStyle(.captionBold, color: .appTextSecondary)
         }
-        .padding(.horizontal, 12)
+        .padding(.horizontal, 10)
         .padding(.vertical, 6)
-        .background(Color.white)
+        .background(Color.appSurfaceCard)
         .clipShape(Capsule())
-        .shadow(color: .black.opacity(0.05), radius: 2, x: 0, y: 1)
+        .shadow(color: .black.opacity(0.1), radius: 3, x: 0, y: 1)
     }
 }
-

@@ -180,7 +180,7 @@ struct SectionHeaderView: View {
                     Image(systemIcon: .chevronDown)
                         .font(AppTextStyle.captionMedium.font)
                 }
-                .foregroundColor(Color.appTextSecondary)
+                .foregroundColor(Color.appTextPrimary)
             }
         }
     }

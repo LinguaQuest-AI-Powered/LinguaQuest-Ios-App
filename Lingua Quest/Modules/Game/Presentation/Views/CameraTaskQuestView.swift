@@ -150,6 +150,11 @@ struct CameraTaskQuestView: View {
     }
 }
 
-#Preview {
+#Preview("LightTheme") {
     CameraTaskQuestView(viewModel: CameraTaskQuestViewModel())
+}
+
+#Preview("DarkTheme") {
+    CameraTaskQuestView(viewModel: CameraTaskQuestViewModel())
+        .preferredColorScheme(.dark)
 }
