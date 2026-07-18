@@ -85,3 +85,10 @@
 
 "game.park_world" = "Park World";
 "game.lets_learn" = "Let's Learn!";
+
+// Camera Task Quest
+"game.level_title" = "Level %@";
+"game.tap_for_help" = "TAP ME IF YOU\nWANT HELP";
+"game.scan_instruction" = "Scan a %@ in your real environment using the camera to complete this quest.";
+"game.open_camera" = "Open Camera";
+"game.skip" = "Skip";

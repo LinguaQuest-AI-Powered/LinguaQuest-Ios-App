@@ -27,13 +27,19 @@ struct DialogCardContainer<Content: View>: View {
     // MARK: - Properties
 
     private let mascotImage: Image.Asset
+    private let speechBubbleText: String?
+    private let onMascotTap: (() -> Void)?
     private let content: Content
 
     init(
         mascotImage: Image.Asset = .dialogMascot,
+        speechBubbleText: String? = nil,
+        onMascotTap: (() -> Void)? = nil,
         @ViewBuilder content: () -> Content
     ) {
         self.mascotImage = mascotImage
+        self.speechBubbleText = speechBubbleText
+        self.onMascotTap = onMascotTap
         self.content = content()
     }
 
@@ -65,12 +71,23 @@ struct DialogCardContainer<Content: View>: View {
 
 private extension DialogCardContainer {
     var mascotView: some View {
-        Image(asset: mascotImage)
-            .resizable()
-            .scaledToFit()
-            .frame(width: mascotSize,
-                   height: mascotSize)
-            .offset(y: -mascotOffset)
+        Button {
+            onMascotTap?()
+        } label: {
+            Image(asset: mascotImage)
+                .resizable()
+                .scaledToFit()
+                .frame(width: mascotSize, height: mascotSize)
+        }
+        .buttonStyle(.plain)
+        .overlay(alignment: .top) {
+            if let text = speechBubbleText {
+                SpeechBubbleView(text: text)
+                    .offset(y: -40)
+                    .transition(.scale.combined(with: .opacity))
+            }
+        }
+        .offset(y: -mascotOffset)
     }
 
     var cardBackground: some View {

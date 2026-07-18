@@ -18,19 +18,7 @@ struct MascotSpeechBubble: View {
     var body: some View {
         VStack(spacing: -10) {
             // Speech Bubble above the bird's head/beak
-            Text(L10n.Game.letsLearn)
-                .appTextStyle(.caption, color: .appTextBrown)
-                .padding(.horizontal, 14)
-                .padding(.vertical, 9)
-                .background(
-                    RoundedRectangle(cornerRadius: 16)
-                        .fill(Color.appCardBackground)
-                        .shadow(color: Color.appBorderBrown.opacity(0.2), radius: 6, x: 0, y: 3)
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: 16)
-                        .stroke(Color.appBorderBrown, lineWidth: 1.5)
-                )
+            SpeechBubbleView(text: L10n.Game.letsLearn)
                 .scaleEffect(bubbleScale)
                 .offset(y: bubbleFloat)
             

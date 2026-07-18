@@ -106,6 +106,11 @@ enum L10n {
     enum Game {
         static var parkWorld: String { localized("game.park_world") }
         static var letsLearn: String { localized("game.lets_learn") }
+        static func levelTitle(_ level: Int) -> String { String(format: localized("game.level_title"), "\(level)") }
+        static var tapForHelp: String { localized("game.tap_for_help") }
+        static func scanInstruction(_ word: String) -> String { String(format: localized("game.scan_instruction"), word) }
+        static var openCamera: String { localized("game.open_camera") }
+        static var skip: String { localized("game.skip") }
     }
 
     private static func localized(_ key: String) -> String {

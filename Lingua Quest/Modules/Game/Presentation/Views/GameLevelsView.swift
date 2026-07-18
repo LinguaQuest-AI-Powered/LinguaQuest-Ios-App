@@ -11,6 +11,7 @@ struct GameLevelsView: View {
     @State var viewModel: GameLevelsViewModel
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) private var dismiss
+    @Environment(Router.self) var router
     @State private var titleOpacity: Double = 0
     
     var body: some View {
@@ -69,9 +70,14 @@ struct GameLevelsView: View {
                                 let yPos = totalHeight - 100 - (CGFloat(index) * levelSpacing)
                                 let xPos = RoadMath.xPosition(for: yPos, in: w)
                                 
-                                LevelNodeView(level: level)
-                                    .position(x: xPos, y: yPos)
-                                    .id(level.id)
+                                Button {
+                                    router.push(.cameraQuestTask)
+                                } label: {
+                                    LevelNodeView(level: level)
+                                }
+                                .buttonStyle(.plain)
+                                .position(x: xPos, y: yPos)
+                                .id(level.id)
                             }
                             
                             // Floating sparkle particles for a magical feel
@@ -142,18 +148,13 @@ struct GameLevelsView: View {
             
             // LAYER 2: Top Navigation Bar
             HStack {
-                Button(action: { dismiss() }) {
-                    Image(systemIcon: .chevronLeft)
-                        .font(.system(size: 16, weight: .bold))
-                        .foregroundColor(.white)
-                        .frame(width: 40, height: 40)
-                        .background(
-                            Circle()
-                                .fill(.ultraThinMaterial)
-                                .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
-                        )
-                }
-                .scaleEffect(titleOpacity)
+                CustomBackButton(action: { dismiss() })
+                    .background(
+                        Circle()
+                            .fill(.ultraThinMaterial)
+                            .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
+                    )
+                    .scaleEffect(titleOpacity)
                 
                 Spacer()
                 

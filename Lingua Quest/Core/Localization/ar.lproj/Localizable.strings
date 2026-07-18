@@ -86,3 +86,8 @@
 
 "game.park_world" = "عالم الحديقة";
 "game.lets_learn" = "هيا نتعلم!";
+"game.level_title" = "مستوى %@";
+"game.tap_for_help" = "اضغط هنا إذا\nأردت المساعدة";
+"game.scan_instruction" = "قم بمسح %@ في بيئتك الحقيقية باستخدام الكاميرا لإكمال هذه المهمة.";
+"game.open_camera" = "افتح الكاميرا";
+"game.skip" = "تخطي";

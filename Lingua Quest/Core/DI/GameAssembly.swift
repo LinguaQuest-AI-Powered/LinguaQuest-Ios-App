@@ -14,5 +14,9 @@ final class GameAssembly: Assembly {
         container.register(GameLevelsViewModel.self) { _ in
             GameLevelsViewModel()
         }
+        
+        container.register(CameraTaskQuestViewModel.self) { _ in
+            CameraTaskQuestViewModel()
+        }
     }
 }
