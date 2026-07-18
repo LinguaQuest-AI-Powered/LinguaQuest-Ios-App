@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @Environment(Router.self) private var router
     @State var viewModel: ProfileViewModel
     
     var body: some View {
@@ -60,7 +61,7 @@ struct ProfileView: View {
                         // Navigate to Achievements List
                     },
                     onViewAllExplorers: {
-                        // Navigate to Leaderboard
+                        router.push(.leaderboard)
                     },
                     onSettingsTapped: {
                         viewModel.navigateToSettings()
