@@ -102,6 +102,24 @@ enum L10n {
         static var alertLanguageMessage: String { localized("onboarding.alert.language_message") }
         static var alertLevelMessage: String { localized("onboarding.alert.level_message") }
     }
+    
+    enum Gallery {
+        static var myCaptures: String { localized("gallery.my_captures") }
+        static func objectsCollected(_ count: Int) -> String {
+            String(format: localized("gallery.objects_collected"), count)
+        }
+        static var capturesSoFar: String { localized("gallery.captures_so_far") }
+        static var addNew: String { localized("gallery.add_new") }
+        static var noCapturesYet: String { localized("gallery.no_captures_yet") }
+        static var noCapturesSubtitle: String { localized("gallery.no_captures_subtitle") }
+        
+        enum Categories {
+            static var allItems: String { localized("gallery.categories.all_items") }
+            static var kitchen: String { localized("gallery.categories.kitchen") }
+            static var park: String { localized("gallery.categories.park") }
+            static var street: String { localized("gallery.categories.street") }
+        }
+    }
 
     private static func localized(_ key: String) -> String {
         return String(localized: String.LocalizationValue(key))

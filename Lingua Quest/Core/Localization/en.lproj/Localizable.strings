@@ -82,3 +82,14 @@
 "onboarding.alert.error_title" = "Attention";
 "onboarding.alert.language_message" = "Please select both a language you speak and a language you want to learn.";
 "onboarding.alert.level_message" = "Please select your proficiency level.";
+
+"gallery.my_captures" = "My Captures";
+"gallery.objects_collected" = "%d objects collected";
+"gallery.captures_so_far" = "0 captures so far";
+"gallery.add_new" = "Add New";
+"gallery.no_captures_yet" = "No Captures Yet";
+"gallery.no_captures_subtitle" = "You haven't captured any words yet.\nTap the button above to add your first capture.";
+"gallery.categories.all_items" = "All Items";
+"gallery.categories.kitchen" = "Kitchen";
+"gallery.categories.park" = "Park";
+"gallery.categories.street" = "Street";

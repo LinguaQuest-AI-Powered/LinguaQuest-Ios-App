@@ -28,9 +28,15 @@ extension Image {
         case checkmarkCircleFill = "checkmark.circle.fill"
         case timer = "timer"
         case chevronDown = "chevron.down"
+        case cameraFill = "camera.fill"
+        case photoBadgePlus = "photo.badge.plus"
+        case photo = "photo"
+        case checkmark = "checkmark"
+        case xmark = "xmark"
     }
     
     enum Asset: String {
+        case appBackground = "app_background"
         case dialogMascot = "image"
         case linquaQuest = "linguaQuest"
         case bird = "bird"
@@ -45,6 +51,8 @@ extension Image {
         case resetPasswordBird = "reset_pass_bird"
         case weakPasswordBird = "weak_pass_bird"
         case strongPasswordBird = "strong_pass_bird"
+        case myCaptureBird = "my_capture_bird"
+        case emptyGalleryBird = "empty_gallery_bird"
         case star = "star"
         case star2 = "star2"
         case ball = "ball"
@@ -59,6 +67,12 @@ extension Image {
         case advanced = "advanced"
         case intermediate = "intermediate"
         case beginner = "beginner"
+        case apple = "apple"
+        case table = "table"
+        case leaf = "leaf"
+        case cup = "cup"
+        case bicycle = "bicycle"
+        case dog = "dog"
         
     }
     
