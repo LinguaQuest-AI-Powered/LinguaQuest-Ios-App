@@ -15,6 +15,7 @@
 "common.retry" = "Retry";
 "common.cancel" = "Cancel";
 "common.ok" = "OK";
+"common.loading" = "Loading...";
 
 "auth.email_placeholder" = "Email address";
 "auth.password_placeholder" = "Password";
@@ -157,3 +158,10 @@
 "settings.about_app" = "About App";
 "settings.save_changes" = "SAVE CHANGES";
 "settings.log_out" = "Log Out";
+
+
+"word_insight.title" = "AI Insight";
+"word_insight.sentence_label" = "Example Sentence";
+"word_insight.translation_label" = "Translation";
+"word_insight.memory_label" = "Memory Tip";
+"word_insight.fun_fact_label" = "Fun Fact";

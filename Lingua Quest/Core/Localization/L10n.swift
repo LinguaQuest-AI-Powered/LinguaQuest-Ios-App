@@ -24,6 +24,7 @@ enum L10n {
         static var retry: String { localized("common.retry") }
         static var cancel: String { localized("common.cancel") }
         static var ok: String { localized("common.ok") }
+        static var loading: String { localized("common.loading") }
     }
 
     enum Auth {
@@ -207,6 +208,14 @@ enum L10n {
         static var aboutApp: String { localized("settings.about_app") }
         static var saveChanges: String { localized("settings.save_changes") }
         static var logOut: String { localized("settings.log_out") }
+    }
+    
+    enum WordInsight {
+        static var title: String { localized("word_insight.title") }
+        static var sentenceLabel: String { localized("word_insight.sentence_label") }
+        static var translationLabel: String { localized("word_insight.translation_label") }
+        static var memoryLabel: String { localized("word_insight.memory_label") }
+        static var funFactLabel: String { localized("word_insight.fun_fact_label") }
     }
 
     private static func localized(_ key: String) -> String {

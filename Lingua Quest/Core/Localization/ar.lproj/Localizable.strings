@@ -16,6 +16,7 @@
 "common.retry" = "إعادة المحاولة";
 "common.cancel" = "إلغاء";
 "common.ok" = "حسنًا";
+"common.loading" = "جاري التحميل...";
 
 "auth.email_placeholder" = "البريد الإلكتروني";
 "auth.password_placeholder" = "كلمة المرور";
@@ -157,3 +158,9 @@
 "settings.about_app" = "عن التطبيق";
 "settings.save_changes" = "حفظ التغييرات";
 "settings.log_out" = "تسجيل الخروج";
+
+"word_insight.title" = "إضاءة الذكاء الاصطناعي";
+"word_insight.sentence_label" = "مثال في جملة";
+"word_insight.translation_label" = "الترجمة";
+"word_insight.memory_label" = "نصيحة للحفظ";
+"word_insight.fun_fact_label" = "معلومة ممتعة";
