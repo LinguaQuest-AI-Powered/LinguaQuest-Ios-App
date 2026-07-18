@@ -61,6 +61,12 @@ struct ForgetPasswordView: View {
     }
 }
 
-#Preview {
+#Preview("LightTheme") {
     ForgetPasswordView(viewModel: ForgetPasswordViewModel(router: Router()))
 }
+
+#Preview("DarkTheme") {
+    ForgetPasswordView(viewModel: ForgetPasswordViewModel(router: Router()))
+        .preferredColorScheme(.dark)
+}
+

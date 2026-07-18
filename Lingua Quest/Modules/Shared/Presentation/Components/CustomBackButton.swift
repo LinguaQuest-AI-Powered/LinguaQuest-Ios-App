@@ -11,7 +11,7 @@ struct CustomBackButton: View {
     
     var body: some View {
         Button(action: action) {
-            Image(systemName: "chevron.left")
+            Image(systemIcon: .chevronLeft)
                 .font(.system(size: 16, weight: .bold))
                 .foregroundColor(.appBrandPrimary)
                 .frame(width: 38, height: 38)

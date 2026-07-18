@@ -11,13 +11,14 @@ enum AppRoute: Hashable {
     case home
     case profile(userId: String)
     case settings
-    case productDetails(id: String)
     case login
     case onBoarding
     case signUp
     case forgetPassword
     case verifyEmail
     case resetPassword
+    case gameLevels(worldName: String)
+    case cameraQuestTask
 }
 
 enum AppSheet: String, Identifiable {

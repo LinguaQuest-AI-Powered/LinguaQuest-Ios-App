@@ -51,7 +51,6 @@ final class Router: RouterProtocol {
         case .onBoarding: OnboardingContainerView()
         case .profile(let userId): Text("** \(userId)")
         case .settings: Text("**")
-        case .productDetails(let id): Text("** \(id)")
         case .login: 
             let viewModel = Resolver.shared.resolve(LoginViewModel.self)
             LoginView(viewModel: viewModel)
@@ -67,6 +66,12 @@ final class Router: RouterProtocol {
         case .resetPassword:
             let viewModel = Resolver.shared.resolve(ResetPasswordViewModel.self)
             ResetPasswordView(viewModel: viewModel)
+        case .gameLevels(let worldName):
+            let viewModel = Resolver.shared.resolve(GameLevelsViewModel.self)
+            GameLevelsView(viewModel: viewModel, worldName: worldName)
+        case .cameraQuestTask:
+            let viewModel = Resolver.shared.resolve(CameraTaskQuestViewModel.self)
+            CameraTaskQuestView(viewModel: viewModel)
         }
     }
 }

@@ -112,6 +112,11 @@ struct LoginView: View {
     }
 }
 
-#Preview {
+#Preview("LightTheme") {
     LoginView(viewModel: LoginViewModel(router: Router()))
+}
+
+#Preview("DarkTheme") {
+    LoginView(viewModel: LoginViewModel(router: Router()))
+        .preferredColorScheme(.dark)
 }

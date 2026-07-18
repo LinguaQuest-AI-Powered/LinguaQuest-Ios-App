@@ -103,6 +103,22 @@ enum L10n {
         static var alertLevelMessage: String { localized("onboarding.alert.level_message") }
     }
     
+    enum Game {
+        static var parkWorld: String { localized("game.park_world") }
+        static var letsLearn: String { localized("game.lets_learn") }
+        static func levelTitle(_ level: Int) -> String { String(format: localized("game.level_title"), "\(level)") }
+        static var tapForHelp: String { localized("game.tap_for_help") }
+        static func scanInstruction(_ word: String) -> String { String(format: localized("game.scan_instruction"), word) }
+        static var openCamera: String { localized("game.open_camera") }
+        static var skip: String { localized("game.skip") }
+        static var needHintTitle: String { localized("game.need_hint_title") }
+        static var hintRevealFirstLetter: String { localized("game.hint.reveal_first_letter") }
+        static var hintShowCategoryClue: String { localized("game.hint.show_category_clue") }
+        static var useHint: String { localized("game.hint.use") }
+        static var hintRevealFirstLetterMock: String { localized("game.hint.reveal_first_letter_mock") }
+        static var hintShowCategoryClueMock: String { localized("game.hint.show_category_clue_mock") }
+    }
+    
     enum Gallery {
         static var myCaptures: String { localized("gallery.my_captures") }
         static func objectsCollected(_ count: Int) -> String {

@@ -83,6 +83,21 @@
 "onboarding.alert.language_message" = "Please select both a language you speak and a language you want to learn.";
 "onboarding.alert.level_message" = "Please select your proficiency level.";
 
+"game.park_world" = "Park World";
+"game.lets_learn" = "Let's Learn!";
+
+// Camera Task Quest
+"game.level_title" = "Level %@";
+"game.tap_for_help" = "TAP ME IF YOU\nWANT HELP";
+"game.scan_instruction" = "Scan a %@ in your real environment using the camera to complete this quest.";
+"game.open_camera" = "Open Camera";
+"game.skip" = "Skip";
+"game.need_hint_title" = "Need a hint?";
+"game.hint.reveal_first_letter" = "Reveal first letter";
+"game.hint.show_category_clue" = "Show category clue";
+"game.hint.use" = "Use Hint";
+"game.hint.reveal_first_letter_mock" = "Starts with 'A'";
+"game.hint.show_category_clue_mock" = "It's a type of fruit";
 "gallery.my_captures" = "My Captures";
 "gallery.objects_collected" = "%d objects collected";
 "gallery.captures_so_far" = "0 captures so far";

@@ -39,7 +39,7 @@ struct CategoryFilterView: View {
     }
 }
 
-#Preview {
+#Preview("LightTheme") {
     ZStack {
         Color.cyan.opacity(0.3).ignoresSafeArea()
         CategoryFilterView(
@@ -48,4 +48,16 @@ struct CategoryFilterView: View {
             selectedCategory: .constant("All Items")
         )
     }
+}
+
+#Preview("DarkTheme") {
+    ZStack {
+        Color.cyan.opacity(0.3).ignoresSafeArea()
+        CategoryFilterView(
+            categories: ["All Items", "KITCHEN", "PARK", "STREET"],
+            localizedTitles: ["All Items": "All Items", "KITCHEN": "Kitchen", "PARK": "Park", "STREET": "Street"],
+            selectedCategory: .constant("All Items")
+        )
+    }
+    .preferredColorScheme(.dark)
 }

@@ -30,9 +30,12 @@ extension Image {
         case timer = "timer"
         case chevronDown = "chevron.down"
         case cameraFill = "camera.fill"
+        case dollarsignCircleFill = "dollarsign.circle.fill"
+        case speakerWave2Fill = "speaker.wave.2.fill"
         case photoBadgePlus = "photo.badge.plus"
         case photo = "photo"
         case xmark = "xmark"
+        case magnifyingglass = "magnifyingglass"
 
         case play = "play.fill"
         case sparkles = "sparkles"
@@ -40,7 +43,6 @@ extension Image {
         case gift = "gift"
         case pencil = "pencil"
         case personCropCircleFill = "person.crop.circle.fill"
-        case dollarsignCircleFill = "dollarsign.circle.fill"
         case starCircleFill = "star.circle.fill"
         case flameFill = "flame.fill"
         case globeAmericasFill = "globe.americas.fill"
@@ -51,6 +53,7 @@ extension Image {
         case trophyFill = "trophy.fill"
         case starFill = "star.fill"
         case rosette = "rosette"
+       
     }
     
     enum Asset: String {
@@ -77,15 +80,16 @@ extension Image {
         case xpIcon = "xp_icon"
         case coinsIcon = "coins_icon"
         case onboardingbackground = "onboarding"
+        case advanced = "advanced"
+        case intermediate = "intermediate"
+        case beginner = "beginner"
+        case gameLevelBackground = "GameLevelBackground"
         case homeBackground = "LinguaQuestHome"
         case english = "English"
         case french = "French"
         case spanish = "Spanish"
         case german = "German"
         case japanease = "Japanese"
-        case advanced = "advanced"
-        case intermediate = "intermediate"
-        case beginner = "beginner"
         case apple = "apple"
         case table = "table"
         case leaf = "leaf"
@@ -97,6 +101,7 @@ extension Image {
         case appleImage = "appleImage"
         case appBarBird = "appBarBird"
         case world = "world_icon"
+        case birdIdea = "BirdIdea"
         
     }
     

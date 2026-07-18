@@ -84,6 +84,19 @@
 "onboarding.alert.language_message" = "يرجى اختيار لغتك الأم واللغة التي ترغب بتعلمها.";
 "onboarding.alert.level_message" = "يرجى تحديد مستوى كفائتك.";
 
+"game.park_world" = "عالم الحديقة";
+"game.lets_learn" = "هيا نتعلم!";
+"game.level_title" = "مستوى %@";
+"game.tap_for_help" = "اضغط هنا إذا\nأردت المساعدة";
+"game.scan_instruction" = "قم بمسح %@ في بيئتك الحقيقية باستخدام الكاميرا لإكمال هذه المهمة.";
+"game.open_camera" = "افتح الكاميرا";
+"game.skip" = "تخطي";
+"game.need_hint_title" = "تحتاج مساعدة؟";
+"game.hint.reveal_first_letter" = "إظهار أول حرف";
+"game.hint.show_category_clue" = "عرض تلميح الصنف";
+"game.hint.use" = "استخدام التلميح";
+"game.hint.reveal_first_letter_mock" = "يبدأ بحرف 'A'";
+"game.hint.show_category_clue_mock" = "إنه نوع من الفاكهة";
 "gallery.my_captures" = "التقاطاتي";
 "gallery.objects_collected" = "تم جمع %d أشياء";
 "gallery.captures_so_far" = "0 التقاطات حتى الآن";

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
+    @Environment(Router.self) var router
     @State private var hasClaimedDailyReward: Bool = false
     @State private var showDailyBonus: Bool = false
     
@@ -37,7 +38,12 @@ struct HomeView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 16) {
                                 ForEach(worlds) { item in
-                                    WorldCardView(item: item)
+                                    Button(action: {
+                                        router.push(.gameLevels(worldName: item.title))
+                                    }) {
+                                        WorldCardView(item: item)
+                                    }
+                                    .buttonStyle(.plain)
                                 }
                             }
                             .padding(.horizontal, 20)
@@ -174,7 +180,7 @@ struct SectionHeaderView: View {
                     Image(systemIcon: .chevronDown)
                         .font(AppTextStyle.captionMedium.font)
                 }
-                .foregroundColor(Color.appTextSecondary)
+                .foregroundColor(Color.appTextPrimary)
             }
         }
     }

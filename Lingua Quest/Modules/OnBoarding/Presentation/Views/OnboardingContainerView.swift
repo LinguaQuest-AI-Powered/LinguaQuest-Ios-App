@@ -42,7 +42,11 @@ struct OnboardingContainerView: View {
     }
 }
 
-
-#Preview {
+#Preview("LightTheme") {
     OnboardingContainerView()
+}
+
+#Preview("DarkTheme") {
+    OnboardingContainerView()
+        .preferredColorScheme(.dark)
 }

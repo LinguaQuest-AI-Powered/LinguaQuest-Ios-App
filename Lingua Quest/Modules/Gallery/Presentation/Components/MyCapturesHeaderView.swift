@@ -50,7 +50,7 @@ struct MyCapturesHeaderView: View {
                 
                 Text(objectsCollected == 0 ? L10n.Gallery.capturesSoFar : L10n.Gallery.objectsCollected(objectsCollected))
                     .font(.system(size: 16, weight: .regular, design: .rounded))
-                    .foregroundColor(.appTextDarkGray)
+                    .foregroundColor(.appHeaderTitleDark.opacity(0.7))
             }
             
             Spacer()
@@ -60,9 +60,17 @@ struct MyCapturesHeaderView: View {
     }
 }
 
-#Preview {
+#Preview("LightTheme") {
     ZStack {
         Color.cyan.opacity(0.3).ignoresSafeArea()
         MyCapturesHeaderView(objectsCollected: 24)
     }
+}
+
+#Preview("DarkTheme") {
+    ZStack {
+        Color.cyan.opacity(0.3).ignoresSafeArea()
+        MyCapturesHeaderView(objectsCollected: 24)
+    }
+    .preferredColorScheme(.dark)
 }

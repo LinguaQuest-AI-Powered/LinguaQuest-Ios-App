@@ -73,16 +73,18 @@ struct LanguageStepView: View {
         } message: {
             Text(L10n.Onboarding.alertLanguageMessage)
         }
-        .sheet(isPresented: $showSpokenLanguageSheet) {
+        .customBottomSheet(isPresented: $showSpokenLanguageSheet) {
             LanguagePickerSheet(
                 languages: state.availableLanguages,
-                onSelect: onSelectSpokenLanguage
+                onSelect: onSelectSpokenLanguage,
+                isPresented: $showSpokenLanguageSheet
             )
         }
-        .sheet(isPresented: $showLearningLanguageSheet) {
+        .customBottomSheet(isPresented: $showLearningLanguageSheet) {
             LanguagePickerSheet(
                 languages: state.availableLanguages,
-                onSelect: onSelectLearningLanguage
+                onSelect: onSelectLearningLanguage,
+                isPresented: $showLearningLanguageSheet
             )
         }
         .navigationBarBackButtonHidden(true)
@@ -96,13 +98,21 @@ struct LanguageStepView: View {
     }
 }
 
-
-
-#Preview {
+#Preview("LightTheme") {
     LanguageStepView(
         state: OnboardingUiState(),
         onSelectSpokenLanguage: { _ in },
         onSelectLearningLanguage: { _ in },
         onContinue: { }
     )
+}
+
+#Preview("DarkTheme") {
+    LanguageStepView(
+        state: OnboardingUiState(),
+        onSelectSpokenLanguage: { _ in },
+        onSelectLearningLanguage: { _ in },
+        onContinue: { }
+    )
+    .preferredColorScheme(.dark)
 }
