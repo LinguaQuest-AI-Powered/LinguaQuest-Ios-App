@@ -19,6 +19,7 @@ enum AppRoute: Hashable {
     case resetPassword
     case gameLevels(worldName: String)
     case cameraQuestTask
+    case leaderboard
 }
 
 enum AppSheet: String, Identifiable {

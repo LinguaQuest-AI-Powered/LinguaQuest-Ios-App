@@ -40,7 +40,7 @@ struct ProfileContentView: View {
             Color.appBackgroundWarm.ignoresSafeArea()
             
             VStack(spacing: 0) {
-                LinguaProfileTopAppBar(coinsValue: coinsValue, gemsValue: gemsValue)
+               AppHeaderView(starCount: 15000000, coinCount: 1250)
                 
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 24) {

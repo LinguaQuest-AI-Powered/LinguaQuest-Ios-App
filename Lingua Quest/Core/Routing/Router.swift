@@ -74,6 +74,9 @@ final class Router: RouterProtocol {
         case .cameraQuestTask:
             let viewModel = Resolver.shared.resolve(CameraTaskQuestViewModel.self)
             CameraTaskQuestView(viewModel: viewModel)
+        case .leaderboard:
+            let viewModel = Resolver.shared.resolve(LeaderboardViewModel.self)
+            LeaderboardView(viewModel: viewModel)
         }
     }
 }

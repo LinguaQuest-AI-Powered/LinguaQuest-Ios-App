@@ -209,6 +209,11 @@ enum L10n {
         static var logOut: String { localized("settings.log_out") }
     }
 
+    enum Leaderboard {
+        static var title: String { localized("leaderboard.title") }
+        static var you: String { localized("leaderboard.you") }
+    }
+
     private static func localized(_ key: String) -> String {
         return String(localized: String.LocalizationValue(key))
     }
