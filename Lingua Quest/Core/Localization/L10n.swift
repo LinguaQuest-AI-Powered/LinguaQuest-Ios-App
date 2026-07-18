@@ -170,6 +170,7 @@ enum L10n {
     
     enum Settings {
         static var title: String { localized("settings.title") }
+        static var accountJourney: String { localized("settings.account_journey") }
     }
 
     private static func localized(_ key: String) -> String {
