@@ -70,38 +70,7 @@ extension Color {
     static let appProgressBar = Color("TokenFirstProgressBar")                  // #006B5F
     static let appSecondaryProgressBar = Color("TokenSecondaryProgressBar")     // #FEEADC
     
-    // Restored from HEAD
-    static let appOutLineButton = Color("OutlineButton")
-    static let appDarkGreen = appSemanticSuccess
-    static let appSecondaryColor = appBackgroundWarm
-    
-    // MARK: - Deprecated Tokens (Do not use in new code)
-    
-    @available(*, deprecated, renamed: "appBrandPrimary")
-    static let appPrimaryColor = appBrandPrimary
-    
-    @available(*, deprecated, renamed: "appBackgroundPrimary")
-    static let appBackgroundLightBlue = appBackgroundPrimary
-    
-    @available(*, deprecated, renamed: "appBorderCool")
-    static let appBorderLightBlue = appBorderCool
-    
-    @available(*, deprecated, renamed: "appGlowGold")
-    static let appGlowYellow = appGlowGold
-    
-    @available(*, deprecated, renamed: "appTextSecondary")
-    static let appTextBrown = appTextSecondary
-    
-    @available(*, deprecated, renamed: "appTextPrimary")
-    static let appTextDarkBlue = appTextPrimary
-    
-    @available(*, deprecated, renamed: "appBackgroundWarm")
-    static let appViewBackground = appBackgroundWarm
-    
-    @available(*, deprecated, renamed: "appSurfaceCard")
-    static let appCardBackground = appSurfaceCard
-    
-    @available(*, deprecated, renamed: "appSecondaryProgressBar")
-    static let appSecondryProgressBar = appSecondaryProgressBar
+    // Outline Button
+    static let appOutlineButton = Color("TokenOutlineButton")                   // #2DD4BF
 
 }

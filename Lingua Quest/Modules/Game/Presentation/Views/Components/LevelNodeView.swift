@@ -50,7 +50,7 @@ struct LevelNodeView: View {
                 Circle()
                     .fill(
                         RadialGradient(
-                            colors: [Color.appDarkGreen.opacity(0.3), .clear],
+                            colors: [Color.appSemanticSuccess.opacity(0.3), .clear],
                             center: .center,
                             startRadius: 25,
                             endRadius: 50
@@ -63,8 +63,8 @@ struct LevelNodeView: View {
                     .fill(
                         LinearGradient(
                             colors: [
-                                Color.appDarkGreen.opacity(0.8),
-                                Color.appDarkGreen
+                                Color.appSemanticSuccess.opacity(0.8),
+                                Color.appSemanticSuccess
                             ],
                             startPoint: .top,
                             endPoint: .bottom
@@ -93,14 +93,14 @@ struct LevelNodeView: View {
                         Circle()
                             .stroke(
                                 LinearGradient(
-                                    colors: [Color.white.opacity(0.5), Color.appDarkGreen.opacity(0.4)],
+                                    colors: [Color.white.opacity(0.5), Color.appSemanticSuccess.opacity(0.4)],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 ),
                                 lineWidth: 3
                             )
                     )
-                    .shadow(color: Color.appDarkGreen.opacity(0.4), radius: 8, x: 0, y: 4)
+                    .shadow(color: Color.appSemanticSuccess.opacity(0.4), radius: 8, x: 0, y: 4)
             }
             
             StarsRatingView(stars: stars)

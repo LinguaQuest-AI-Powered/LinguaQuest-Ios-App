@@ -10,7 +10,7 @@ import SwiftUI
 struct OutlineButton: View {
     let text: String
     let action: () -> Void
-    var color: Color = Color.appOutLineButton
+    var color: Color = Color.appOutlineButton
     
     var body: some View {
         Button(action: action) {
@@ -36,5 +36,5 @@ struct OutlineButton: View {
         OutlineButton(text: "Cancel", action: {}, color: .red)
     }
     .padding()
-    .background(Color.appViewBackground)
+    .background(Color.appBackgroundWarm)
 }

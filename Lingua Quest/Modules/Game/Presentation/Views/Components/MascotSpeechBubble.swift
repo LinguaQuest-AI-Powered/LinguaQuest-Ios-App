@@ -63,5 +63,5 @@ struct MascotSpeechBubble: View {
 #Preview {
     MascotSpeechBubble()
         .padding()
-        .background(Color.appViewBackground)
+        .background(Color.appBackgroundWarm)
 }

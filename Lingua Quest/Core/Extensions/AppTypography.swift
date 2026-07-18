@@ -54,33 +54,6 @@ enum AppTextStyle {
         case .micro:             return .system(size: 10, weight: .bold)
         }
     }
-    
-    // MARK: - Deprecated Tokens (Do not use in new code)
-    
-    @available(*, deprecated, renamed: "displayLarge")
-    static let largeTitle = AppTextStyle.displayLarge        // 34, bold
-    
-    @available(*, deprecated, renamed: "displayMedium")
-    static let title = AppTextStyle.displayMedium            // 30, bold
-    
-    @available(*, deprecated, renamed: "displaySmall")
-    static let headline = AppTextStyle.displaySmall          // 28, bold
-    
-    @available(*, deprecated, renamed: "headingMedium")
-    static let cardTitle = AppTextStyle.headingMedium        // 22, semibold
-    
-    @available(*, deprecated, renamed: "bodyLarge")
-    static let subtitle = AppTextStyle.bodyLarge             // 18, regular
-    
-    @available(*, deprecated, renamed: "bodyLargeMedium")
-    static let subtitleMedium = AppTextStyle.bodyLargeMedium // 18, medium
-    
-    @available(*, deprecated, renamed: "bodyBold")
-    static let buttonBold = AppTextStyle.bodyBold            // 16, bold
-    
-    @available(*, deprecated, renamed: "bodyMedium")
-    static let buttonMedium = AppTextStyle.bodyMedium        // 16, medium
-    
 }
 
 extension View {

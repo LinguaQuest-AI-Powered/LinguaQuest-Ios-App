@@ -17,7 +17,7 @@ struct CameraTaskQuestView: View {
     
     var body: some View {
         ZStack(alignment: .top) {
-            Color.appViewBackground
+            Color.appBackgroundWarm
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
@@ -26,14 +26,14 @@ struct CameraTaskQuestView: View {
                     CustomBackButton(action: { dismiss() })
                         .background(
                             Circle()
-                                .fill(Color.appCardBackground)
+                                .fill(Color.appSurfaceCard)
                                 .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
                         )
                     
                     Spacer()
                     
                     Text(L10n.Game.levelTitle(viewModel.levelId))
-                        .appTextStyle(.headingMediumBold, color: .appTextBrown)
+                        .appTextStyle(.headingMediumBold, color: .appTextSecondary)
                     
                     Spacer()
                     
@@ -42,11 +42,11 @@ struct CameraTaskQuestView: View {
                         Image(systemIcon: .dollarsignCircleFill)
                             .foregroundColor(.orange)
                         Text("\(viewModel.coins)")
-                            .appTextStyle(.captionBold, color: .appTextBrown)
+                            .appTextStyle(.captionBold, color: .appTextSecondary)
                     }
                     .padding(.horizontal, 10)
                     .padding(.vertical, 6)
-                    .background(Color.appCardBackground)
+                    .background(Color.appSurfaceCard)
                     .clipShape(Capsule())
                     .shadow(color: .black.opacity(0.1), radius: 3, x: 0, y: 1)
                 }
@@ -75,9 +75,9 @@ struct CameraTaskQuestView: View {
                         // Target Word & Audio Button
                         HStack(spacing: 16) {
                             Text(viewModel.targetWord)
-                                .appTextStyle(.displayLarge, color: .appTextBrown)
+                                .appTextStyle(.displayLarge, color: .appTextSecondary)
                                 .frame(maxWidth: .infinity, maxHeight: 80)
-                                .background(Color.appCardBackground)
+                                .background(Color.appSurfaceCard)
                                 .clipShape(RoundedRectangle(cornerRadius: 16))
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 16)
@@ -89,9 +89,9 @@ struct CameraTaskQuestView: View {
                                 // Play audio action
                             }) {
                                 Image(systemIcon: .speakerWave2Fill)
-                                    .appTextStyle(.headingMediumBold, color: .appTextBrown)
+                                    .appTextStyle(.headingMediumBold, color: .appTextSecondary)
                                     .frame(width: 56, height: 56)
-                                    .background(Color.appCardBackground)
+                                    .background(Color.appSurfaceCard)
                                     .clipShape(Circle())
                                     .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
                             }

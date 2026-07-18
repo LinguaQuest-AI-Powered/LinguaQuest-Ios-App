@@ -42,7 +42,7 @@ struct SpeechBubbleView: View {
             .overlay(
                 Text(isAnimated ? displayedText : text)
                     .font(.system(size: 14, weight: .bold, design: .rounded))
-                    .foregroundColor(Color.appTextBrown)
+                    .foregroundColor(Color.appTextSecondary)
                     .multilineTextAlignment(.center)
             )
             .padding(.horizontal, 16)
@@ -50,7 +50,7 @@ struct SpeechBubbleView: View {
             .padding(.bottom, 20) // 12 + 8 (tailSize)
             .background(
                 SpeechBubbleShape(cornerRadius: 16, tailSize: 8)
-                    .fill(Color.appCardBackground)
+                    .fill(Color.appSurfaceCard)
                     .shadow(color: Color.appBorderBrown.opacity(0.2), radius: 6, x: 0, y: 3)
             )
             .overlay(

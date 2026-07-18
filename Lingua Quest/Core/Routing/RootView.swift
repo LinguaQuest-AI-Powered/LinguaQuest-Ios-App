@@ -16,7 +16,7 @@ struct RootView: View {
         NavigationStack(path: $router.path) {
             Group {
                 if !isOnboardingCompleted {
-                    router.view(for: .home) // Currently set to .home for testing
+                    router.view(for: .home) // change it
                 } else {
                     if isLoggedIn {
                         router.view(for: .home)
