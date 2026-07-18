@@ -85,12 +85,20 @@ struct LevelStepView: View {
     }
 }
 
-
-
-#Preview {
+#Preview("LightTheme") {
     LevelStepView(
         state: OnboardingUiState(),
         onSelectLevel: { _ in },
         onContinue: {}
     )
+
+}
+
+#Preview("DarkTheme") {
+    LevelStepView(
+        state: OnboardingUiState(),
+        onSelectLevel: { _ in },
+        onContinue: {}
+    )
+    .preferredColorScheme(.dark)
 }

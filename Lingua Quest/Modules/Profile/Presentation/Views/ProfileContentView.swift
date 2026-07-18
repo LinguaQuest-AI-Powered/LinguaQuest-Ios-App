@@ -125,4 +125,5 @@ struct ProfileContentView: View {
         onViewAllAchievements: {},
         onViewAllExplorers: {}
     )
+    .preferredColorScheme(.dark)
 }

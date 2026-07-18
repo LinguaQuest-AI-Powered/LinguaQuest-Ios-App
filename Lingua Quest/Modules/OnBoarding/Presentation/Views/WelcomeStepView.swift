@@ -69,9 +69,17 @@ struct WelcomeStepView: View {
     }
 }
 
-#Preview {
+#Preview("LightMode") {
     WelcomeStepView(
         onGetStarted: { print("Get Started tapped") },
         onLogin: { print("Login tapped") }
     )
+}
+
+#Preview("DarkTheme") {
+    WelcomeStepView(
+        onGetStarted: { print("Get Started tapped") },
+        onLogin: { print("Login tapped") }
+    )
+    .preferredColorScheme(.dark)
 }

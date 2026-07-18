@@ -95,7 +95,7 @@ struct GameHintSheet: View {
             }
             .foregroundColor(.appTealGreen)
             .frame(width: 50, height: 50)
-            .background(Color.appViewBackground) // Using view background so it contrasts with the card
+            .background(Color.appBackgroundWarm)
             .clipShape(Circle())
             
             // Text
@@ -124,7 +124,7 @@ struct GameHintSheet: View {
             }
         }
         .padding(16)
-        .background(Color.appCardBackground)
+        .background(Color.appSurfaceCard)
         .clipShape(RoundedRectangle(cornerRadius: 24))
         .overlay(
             RoundedRectangle(cornerRadius: 24)

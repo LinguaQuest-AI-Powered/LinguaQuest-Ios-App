@@ -98,13 +98,21 @@ struct LanguageStepView: View {
     }
 }
 
-
-
-#Preview {
+#Preview("LightTheme") {
     LanguageStepView(
         state: OnboardingUiState(),
         onSelectSpokenLanguage: { _ in },
         onSelectLearningLanguage: { _ in },
         onContinue: { }
     )
+}
+
+#Preview("DarkTheme") {
+    LanguageStepView(
+        state: OnboardingUiState(),
+        onSelectSpokenLanguage: { _ in },
+        onSelectLearningLanguage: { _ in },
+        onContinue: { }
+    )
+    .preferredColorScheme(.dark)
 }

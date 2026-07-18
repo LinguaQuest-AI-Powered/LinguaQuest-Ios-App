@@ -126,6 +126,12 @@ struct SignUpView: View {
     }
 }
 
-#Preview {
+#Preview("LightTheme") {
     SignUpView(viewModel: SignUpViewModel(router: Router()))
 }
+
+#Preview("DarkTheme") {
+    SignUpView(viewModel: SignUpViewModel(router: Router()))
+        .preferredColorScheme(.dark)
+}
+

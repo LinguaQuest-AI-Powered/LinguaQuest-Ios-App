@@ -119,6 +119,11 @@ struct VerifyEmailView: View {
     }
 }
 
-#Preview {
+#Preview("LightTheme") {
     VerifyEmailView(viewModel: VerifyEmailViewModel(router: Router()))
+}
+
+#Preview("DarkTheme") {
+    VerifyEmailView(viewModel: VerifyEmailViewModel(router: Router()))
+        .preferredColorScheme(.dark)
 }

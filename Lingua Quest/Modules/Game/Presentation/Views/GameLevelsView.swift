@@ -195,6 +195,11 @@ struct GameLevelsView: View {
     }
 }
 
-#Preview {
+#Preview("LightTheme") {
     GameLevelsView(viewModel: GameLevelsViewModel(), worldName: "Park World")
+}
+
+#Preview("DarkTheme") {
+    GameLevelsView(viewModel: GameLevelsViewModel(), worldName: "Park World")
+        .preferredColorScheme(.dark)
 }
