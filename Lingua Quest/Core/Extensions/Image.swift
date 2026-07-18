@@ -74,6 +74,7 @@ extension Image {
         case strongPasswordBird = "strong_pass_bird"
         case myCaptureBird = "my_capture_bird"
         case emptyGalleryBird = "empty_gallery_bird"
+        case leaderBoardBird = "leader_board_bird"
         case star = "star"
         case star2 = "star2"
         case ball = "ball"
@@ -102,7 +103,9 @@ extension Image {
         case appBarBird = "appBarBird"
         case world = "world_icon"
         case birdIdea = "BirdIdea"
-        
+        case user1 = "user1"
+        case user2 = "user2"
+        case user3 = "user3"
     }
     
     init(icon: Icon) {
