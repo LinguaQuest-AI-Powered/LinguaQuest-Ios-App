@@ -17,7 +17,11 @@ struct MyCapturesHeaderView: View {
                     .scaledToFit()
                     .frame(width: 60, height: 60)
                     .padding(8)
-                    .background(Circle().fill(Color(red: 0.99, green: 0.78, blue: 0.52)))
+                    .background(
+                        Circle()
+                            .fill(Color.appHeaderBirdCircleBg)
+                             
+                    )
                     .overlay(Circle().stroke(Color.white, lineWidth: 3))
                     .scaleEffect(isBouncing ? 1.05 : 0.95)
                     .onAppear {
@@ -28,7 +32,7 @@ struct MyCapturesHeaderView: View {
                 
                 ZStack {
                     Circle()
-                        .fill(Color(red: 0.2, green: 0.5, blue: 0.45))
+                        .fill(Color.appTealGreen)
                         .frame(width: 24, height: 24)
                         .overlay(Circle().stroke(Color.white, lineWidth: 2))
                     
@@ -42,11 +46,11 @@ struct MyCapturesHeaderView: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(L10n.Gallery.myCaptures)
                     .font(.system(size: 26, weight: .bold, design: .rounded))
-                    .foregroundColor(Color(red: 0.15, green: 0.15, blue: 0.15))
+                    .foregroundColor(.appHeaderTitleDark)
                 
                 Text(objectsCollected == 0 ? L10n.Gallery.capturesSoFar : L10n.Gallery.objectsCollected(objectsCollected))
                     .font(.system(size: 16, weight: .regular, design: .rounded))
-                    .foregroundColor(Color(red: 0.3, green: 0.3, blue: 0.3))
+                    .foregroundColor(.textDarkGray)
             }
             
             Spacer()

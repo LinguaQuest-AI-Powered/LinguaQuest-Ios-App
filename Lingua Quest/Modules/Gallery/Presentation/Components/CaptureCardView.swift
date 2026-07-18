@@ -14,7 +14,7 @@ struct CaptureCardView: View {
             ZStack(alignment: .topTrailing) {
                 
                 Rectangle()
-                    .fill(Color(red: 0.9, green: 0.85, blue: 0.8))
+                    .fill(Color.cardImageBackground)
                     .overlay(
                         Image(asset: Image.Asset(rawValue: item.image) ?? .apple)
                             .resizable()
@@ -31,7 +31,7 @@ struct CaptureCardView: View {
                     .padding(.vertical, 6)
                     .background(
                         Capsule()
-                            .fill(Color(red: 0.2, green: 0.5, blue: 0.45))
+                            .fill(Color.appTealGreen)
                             .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
                     )
                     .padding([.top, .trailing], 10)
@@ -43,7 +43,7 @@ struct CaptureCardView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(item.englishName)
                         .font(.system(size: 12, weight: .bold, design: .rounded))
-                        .foregroundColor(Color(red: 0.3, green: 0.3, blue: 0.3))
+                        .foregroundColor(.textDarkGray)
                     
                     Text(item.translatedName)
                         .font(.system(size: 16, weight: .heavy, design: .rounded))
@@ -55,7 +55,7 @@ struct CaptureCardView: View {
                 if item.isCollected {
                     ZStack {
                         Circle()
-                            .fill(Color(red: 0.2, green: 0.5, blue: 0.45))
+                            .fill(Color.darkGreen)
                             .frame(width: 26, height: 26)
                             .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
                         
@@ -67,7 +67,7 @@ struct CaptureCardView: View {
                 else {
                     ZStack {
                         Circle()
-                            .fill(Color(red: 0.8, green: 0.3, blue: 0.3))
+                            .fill(Color.appRed)
                             .frame(width: 26, height: 26)
                             .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
                         

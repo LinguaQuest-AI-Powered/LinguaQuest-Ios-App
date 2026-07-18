@@ -10,30 +10,30 @@ import SwiftUI
 struct GalleryView: View {
     
     var items: [CapturedItem] = CapturedItem.mocks
-
+    
     var body: some View {
         VStack(spacing: 0) {
             AppHeaderView(starCount: 15000000, coinCount: 20000)
             
-            ScrollView(showsIndicators: false) {
+            if items.isEmpty {
                 VStack(spacing: 0) {
                     MyCapturesHeaderView(objectsCollected: items.count)
-                
-                if items.isEmpty {
-                    GeometryReader { geometry in
-                        EmptyGalleryView()
-                            .frame(minHeight: geometry.size.height - 200)
-                    }
-                } else {
-                    GalleryGridView(items: items)
+                    EmptyGalleryView()
                 }
+                .frame(maxHeight: .infinity, alignment: .top)
+            } else {
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 0) {
+                        MyCapturesHeaderView(objectsCollected: items.count)
+                        GalleryGridView(items: items)
+                    }
                 }
             }
         }
         .background(
             Group {
                 if items.isEmpty {
-                    Color(red: 0.99, green: 0.97, blue: 0.95)
+                    Color.appViewBackground
                         .ignoresSafeArea()
                 } else {
                     Image(asset: .appBackground)
@@ -47,7 +47,7 @@ struct GalleryView: View {
 }
 
 #Preview {
-
+    
     GalleryView()
-
+    
 }

@@ -22,7 +22,7 @@ struct EmptyGalleryView: View {
                     .foregroundColor(.white)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 10)
-                    .background(Color.orange)
+                    .background(Color.appCategorySelectedOrange)
                     .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                 }
                 Spacer()
@@ -34,7 +34,7 @@ struct EmptyGalleryView: View {
             
             ZStack {
                 Circle()
-                    .fill(Color(red: 0.95, green: 0.98, blue: 0.95))
+                    .fill(Color.appEmptyCircleBg)
                     .frame(width: 250, height: 250)
                 Image(asset: .emptyGalleryBird)
                     .resizable()
@@ -51,12 +51,10 @@ struct EmptyGalleryView: View {
             VStack(spacing: 8) {
                 Text(L10n.Gallery.noCapturesYet)
                     .font(.system(size: 24, weight: .bold, design: .rounded))
-                    .foregroundColor(Color(red: 0.35, green: 0.3, blue: 0.25))
-                
+                    .foregroundColor(.appEmptyStateTitle)
                 Text(L10n.Gallery.noCapturesSubtitle)
                     .font(.system(size: 14, weight: .regular, design: .rounded))
-                    .foregroundColor(Color(red: 0.4, green: 0.4, blue: 0.4))
-                    .multilineTextAlignment(.center)
+                    .foregroundColor(.appEmptyStateSubtitle)                    .multilineTextAlignment(.center)
                     .lineSpacing(4)
             }
             .padding(.horizontal, 40)

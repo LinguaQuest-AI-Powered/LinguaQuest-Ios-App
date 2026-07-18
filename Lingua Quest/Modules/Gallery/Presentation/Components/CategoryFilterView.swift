@@ -19,12 +19,12 @@ struct CategoryFilterView: View {
                     }) {
                         Text(localizedTitles[category] ?? category)
                             .font(.system(size: 14, weight: .bold, design: .rounded))
-                            .foregroundColor(selectedCategory == category ? Color(red: 0.4, green: 0.2, blue: 0.05) : Color(red: 0.3, green: 0.25, blue: 0.2)) 
+                            .foregroundColor(selectedCategory == category ? Color.appTextSelectedBrown : Color.appTextUnselectedBrown)
                             .padding(.horizontal, 20)
                             .padding(.vertical, 10)
                             .background(
                                 Capsule()
-                                    .fill(selectedCategory == category ? Color.orange : Color(red: 0.99, green: 0.95, blue: 0.91))
+                                    .fill(selectedCategory == category ? Color.appCategorySelectedOrange : Color.appCategoryUnselectedBg)
                             )
                             .overlay(
                                 Capsule()
