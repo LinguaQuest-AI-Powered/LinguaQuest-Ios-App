@@ -28,17 +28,23 @@ struct DialogCardContainer<Content: View>: View {
 
     private let mascotImage: Image.Asset
     private let speechBubbleText: String?
+    private let speechBubbleAnimated: Bool
+    private let speechBubbleDelay: Double
     private let onMascotTap: (() -> Void)?
     private let content: Content
 
     init(
         mascotImage: Image.Asset = .dialogMascot,
         speechBubbleText: String? = nil,
+        speechBubbleAnimated: Bool = true,
+        speechBubbleDelay: Double = 0.5,
         onMascotTap: (() -> Void)? = nil,
         @ViewBuilder content: () -> Content
     ) {
         self.mascotImage = mascotImage
         self.speechBubbleText = speechBubbleText
+        self.speechBubbleAnimated = speechBubbleAnimated
+        self.speechBubbleDelay = speechBubbleDelay
         self.onMascotTap = onMascotTap
         self.content = content()
     }
@@ -82,7 +88,7 @@ private extension DialogCardContainer {
         .buttonStyle(.plain)
         .overlay(alignment: .top) {
             if let text = speechBubbleText {
-                SpeechBubbleView(text: text)
+                SpeechBubbleView(text: text, isAnimated: speechBubbleAnimated, animationDelay: speechBubbleDelay)
                     .offset(y: -40)
                     .transition(.scale.combined(with: .opacity))
             }
