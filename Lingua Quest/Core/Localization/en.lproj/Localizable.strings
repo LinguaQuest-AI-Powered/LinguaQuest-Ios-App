@@ -142,3 +142,7 @@
 "settings.title" = "Settings";
 "settings.subtitle" = "Customize your learning journey";
 "settings.account_journey" = "ACCOUNT & JOURNEY";
+"settings.edit_profile" = "Edit Profile";
+"settings.learning_language" = "Learning Language";
+"settings.daily_goal" = "Daily Goal";
+"settings.learning_streak" = "Learning Streak";

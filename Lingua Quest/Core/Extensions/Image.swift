@@ -53,6 +53,7 @@ extension Image {
         case trophyFill = "trophy.fill"
         case starFill = "star.fill"
         case rosette = "rosette"
+        case target = "target"
        
     }
     

@@ -188,6 +188,10 @@ enum L10n {
         static var title: String { localized("settings.title") }
         static var subtitle: String { localized("settings.subtitle") }
         static var accountJourney: String { localized("settings.account_journey") }
+        static var editProfile: String { localized("settings.edit_profile") }
+        static var learningLanguage: String { localized("settings.learning_language") }
+        static var dailyGoal: String { localized("settings.daily_goal") }
+        static var learningStreak: String { localized("settings.learning_streak") }
     }
 
     private static func localized(_ key: String) -> String {
