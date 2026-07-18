@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AchievementsSection: View {
-    let achievements: [AchievementEntity]
+    let achievements: [AchievementUIModel]
     var onViewAllTapped: () -> Void
     
     var body: some View {
@@ -38,44 +38,24 @@ struct AchievementsSection: View {
     }
 }
 
-// MARK: - UI Mapping Extension
-private extension AchievementEntity {
-    var uiIcon: Image.SystemIcon {
-        switch type {
-        case .wildExplorer: return .trophyFill
-        case .perfectWeek: return .starFill
-        }
-    }
-    
-    var uiIconColor: Color {
-        switch type {
-        case .wildExplorer: return .appBrandBrown
-        case .perfectWeek: return .appAccentTeal
-        }
-    }
-    
-    var uiBgColor: Color {
-        switch type {
-        case .wildExplorer: return .appSurfaceCardWarm
-        case .perfectWeek: return .white
-        }
-    }
-}
-
 // MARK: - Preview
 #Preview {
     let mockAchievements = [
-        AchievementEntity(
+        AchievementUIModel(
             id: "1",
             title: "Wild Explorer",
             subtitle: "Complete 10 lessons in...",
-            type: .wildExplorer
+            uiIcon: .trophyFill,
+            uiIconColor: .appBrandBrown,
+            uiBgColor: .appSurfaceCardWarm
         ),
-        AchievementEntity(
-            id: "1",
-            title: "Wild Explorer",
+        AchievementUIModel(
+            id: "2",
+            title: "Perfect Week",
             subtitle: "Complete 10 lessons in...",
-            type: .perfectWeek
+            uiIcon: .starFill,
+            uiIconColor: .appAccentTeal,
+            uiBgColor: .white
         )
     ]
     
