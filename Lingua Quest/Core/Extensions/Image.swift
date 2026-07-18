@@ -58,7 +58,7 @@ extension Image {
         case moonFill = "moon.fill"
         case questionmarkCircleFill = "questionmark.circle.fill"
         case infoCircleFill = "info.circle.fill"
-       
+        case speakerSlashFill = "speaker.slash.fill"
     }
     
     enum Asset: String {
