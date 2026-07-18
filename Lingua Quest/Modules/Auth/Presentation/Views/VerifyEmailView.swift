@@ -69,7 +69,7 @@ struct VerifyEmailView: View {
                             }
                             
                             CustomButton(
-                                type: .primary,
+                                type: .custom(textColor: .appTextSelectedBrown, buttonColor: .appAccentOrange, shadowColor: .appBrandBrown),
                                 text: L10n.Auth.verify,
                                 action: { viewModel.verifyCode() },
                                 trailing:  Image(systemIcon: .checkmarkCircleFill)

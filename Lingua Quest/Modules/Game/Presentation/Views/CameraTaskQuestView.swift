@@ -106,7 +106,7 @@ struct CameraTaskQuestView: View {
                         VStack(spacing: 16) {
                             // Primary Camera Button
                             CustomButton(
-                                type: .primary,
+                                type: .custom(textColor: .appTextSelectedBrown, buttonColor: .appAccentOrange, shadowColor: .appBrandBrown),
                                 text: L10n.Game.openCamera,
                                 action: { /* Open camera */ },
                                 leading: Image(systemIcon: .cameraFill)

@@ -52,9 +52,9 @@ struct LoginView: View {
                             }
                             Spacer()
                         }
-                        
+                                                
                         CustomButton(
-                            type: .primary,
+                            type: .custom(textColor: .appTextSelectedBrown, buttonColor: .appAccentOrange, shadowColor: .appBrandBrown),
                             text: L10n.Auth.logIn,
                             action: { viewModel.login() },
                             trailing: Image(systemIcon: .arrowRight)
