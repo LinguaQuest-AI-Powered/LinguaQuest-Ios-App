@@ -26,13 +26,18 @@ extension Image {
         case personFill = "person.fill"
         case chevronLeft = "chevron.left"
         case checkmarkCircleFill = "checkmark.circle.fill"
+        case checkmark = "checkmark"
         case timer = "timer"
         case chevronDown = "chevron.down"
         case cameraFill = "camera.fill"
         case photoBadgePlus = "photo.badge.plus"
         case photo = "photo"
-        case checkmark = "checkmark"
         case xmark = "xmark"
+        case flame = "flame.fill"
+        case play = "play.fill"
+        case sparkles = "sparkles"
+        case rightChevron = "chevron.right"
+        case gift = "gift"
     }
     
     enum Asset: String {
@@ -59,6 +64,7 @@ extension Image {
         case xpIcon = "xp_icon"
         case coinsIcon = "coins_icon"
         case onboardingbackground = "onboarding"
+        case homeBackground = "LinguaQuestHome"
         case english = "English"
         case french = "French"
         case spanish = "Spanish"
@@ -73,6 +79,11 @@ extension Image {
         case cup = "cup"
         case bicycle = "bicycle"
         case dog = "dog"
+        case kitchen = "kitchen_world"
+        case city = "city_world"
+        case appleImage = "appleImage"
+        case appBarBird = "appBarBird"
+        case world = "world_icon"
         
     }
     
