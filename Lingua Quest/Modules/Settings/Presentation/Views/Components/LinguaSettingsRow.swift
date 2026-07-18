@@ -34,7 +34,7 @@ struct LinguaSettingsRow<TrailingView: View>: View {
             
             if showDivider {
                 Divider()
-                    .background(Color.appBorderWarm.opacity(0.5))
+                    .background(Color.appBorderBrown.opacity(0.5))
                     .padding(.leading, 64)
             }
         }

@@ -31,7 +31,7 @@ struct SettingsAppBar: View {
         .overlay(
             Rectangle()
                 .frame(height: 1)
-                .foregroundColor(Color.appBorderWarm),
+                .foregroundColor(Color.appBorderBrown),
             alignment: .bottom
         )
     }

@@ -76,7 +76,7 @@ struct CustomButton: View {
                 return customShadow
             }
         } else {
-            return Color.appBorderWarm
+            return Color.appBorderBrown
         }
     }
     
