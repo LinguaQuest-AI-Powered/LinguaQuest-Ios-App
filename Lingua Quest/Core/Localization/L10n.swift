@@ -184,6 +184,11 @@ enum L10n {
         }
     }
 
+    enum Leaderboard {
+        static var title: String { localized("leaderboard.title") }
+        static var you: String { localized("leaderboard.you") }
+    }
+
     private static func localized(_ key: String) -> String {
         return String(localized: String.LocalizationValue(key))
     }
