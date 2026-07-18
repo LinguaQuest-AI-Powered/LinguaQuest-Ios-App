@@ -57,7 +57,7 @@ struct LevelStepView: View {
             
             VStack {
                 CustomButton(
-                    type: .primary,
+                    type: .custom(textColor: .appTextSelectedBrown, buttonColor: .appAccentOrange, shadowColor: .appBrandBrown),
                     text: L10n.Onboarding.commonContinue,
                     action: onContinue,
                     status: state.canContinueFromLevel ? .enable : .disable,

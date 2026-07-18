@@ -57,7 +57,7 @@ struct SignUpView: View {
                         }
                         
                         CustomButton(
-                            type: .primary,
+                            type: .custom(textColor: .appTextSelectedBrown, buttonColor: .appAccentOrange, shadowColor: .appBrandBrown),
                             text: L10n.Auth.createAccount,
                             action: { viewModel.createAccount() },
                             trailing: Image(systemIcon: .arrowRight)
