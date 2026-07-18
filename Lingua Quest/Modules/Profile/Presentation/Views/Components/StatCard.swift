@@ -22,7 +22,7 @@ struct StatCard: View {
                 .foregroundColor(iconColor)
             
             Text(value)
-                .appTextStyle(.bodyLargeBold, color: .appTextDark)
+                .appTextStyle(.bodyLargeBold, color: .appTextHeading)
             
             Text(title)
                 .appTextStyle(.microHeavy, color: .appTextSecondary.opacity(0.7))
@@ -33,11 +33,11 @@ struct StatCard: View {
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color.appSurfaceCardWarm)
-                .shadow(color: .appBorderWarm, radius: 0, x: 0, y: 4)
+                .shadow(color: .appBorderBrown, radius: 0, x: 0, y: 4)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 12)
-                .strokeBorder(Color.appBorderWarm, lineWidth: 1)
+                .strokeBorder(Color.appBorderBrown, lineWidth: 1)
         )
     }
 }

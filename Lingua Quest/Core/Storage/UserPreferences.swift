@@ -13,6 +13,7 @@ protocol UserPreferencesProtocol {
     var spokenLanguageCode: String? { get set }
     var learningLanguageCode: String? { get set }
     var userLevel: String? { get set }
+    var isLoggedIn: Bool { get set }
 }
 
 final class UserPreferences: UserPreferencesProtocol {
@@ -36,5 +37,10 @@ final class UserPreferences: UserPreferencesProtocol {
     var userLevel: String? {
         get { defaults.string(forKey: AppConstants.UserDefaultsKeys.userLevel) }
         set { defaults.set(newValue, forKey: AppConstants.UserDefaultsKeys.userLevel) }
+    }
+    
+    var isLoggedIn: Bool {
+        get { defaults.bool(forKey: AppConstants.UserDefaultsKeys.isLoggedIn) }
+        set { defaults.set(newValue, forKey: AppConstants.UserDefaultsKeys.isLoggedIn) }
     }
 }

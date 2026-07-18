@@ -24,7 +24,7 @@ struct CategoryFilterView: View {
                             .padding(.vertical, 10)
                             .background(
                                 Capsule()
-                                    .fill(selectedCategory == category ? Color.appCategorySelectedOrange : Color.appCategoryUnselectedBg)
+                                    .fill(selectedCategory == category ? Color.appAccentOrange : Color.appSurfaceCardWarm)
                             )
                             .overlay(
                                 Capsule()
