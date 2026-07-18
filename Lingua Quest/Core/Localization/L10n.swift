@@ -167,6 +167,10 @@ enum L10n {
             String(format: localized("profile.leaderboard.xp"), amount)
         }
     }
+    
+    enum Settings {
+        static var title: String { localized("settings.title") }
+    }
 
     private static func localized(_ key: String) -> String {
         return String(localized: String.LocalizationValue(key))

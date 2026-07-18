@@ -125,3 +125,5 @@
 "profile.achievements.title" = "الإنجازات";
 "profile.leaderboard.xp" = "%@ نقطة خبرة";
 "profile.top_explorers.title" = "أفضل المستكشفين";
+
+"settings.title" = "الإعدادات";
