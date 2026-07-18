@@ -53,6 +53,23 @@ extension Color {
     static let appAccentOrange = Color("TokenAccentOrange")           // #FF9900
     static let appAccentActiveLevel = Color("TokenAccentActiveLevel") // #7BF4FF
     
+    // MARK: - Additional Custom Tokens
+    static let appCategorySelectedOrange = Color("TokenCategorySelectedOrange") // #FF9500
+    static let appCategoryUnselectedBg = Color("TokenCategoryUnselectedBg")     // #FDF2E8
+    static let appEmptyCircleBg = Color("TokenEmptyCircleBg")                   // #F2FAF2
+    static let appEmptyStateSubtitle = Color("TokenEmptyStateSubtitle")         // #666666
+    static let appEmptyStateTitle = Color("TokenEmptyStateTitle")               // #594D40
+    static let appHeaderBirdCircleBg = Color("TokenHeaderBirdCircleBg")         // #FFC785
+    static let appHeaderTitleDark = Color("TokenHeaderTitleDark")               // #262626
+    static let appRed = Color("TokenRed")                                       // #CC4D4D
+    static let appTealGreen = Color("TokenTealGreen")                           // #338073
+    static let appTextSelectedBrown = Color("TokenTextSelectedBrown")           // #66330D
+    static let appTextUnselectedBrown = Color("TokenTextUnselectedBrown")       // #4D4033
+    static let appCardImageBackground = Color("TokenCardImageBackground")       // #E6D9CC
+    static let appTextDarkGray = Color("TokenTextDarkGray")                     // #4D4D4D
+    static let appProgressBar = Color("TokenFirstProgressBar")                  // #006B5F
+    static let appSecondaryProgressBar = Color("TokenSecondaryProgressBar")     // #FEEADC
+    
     // MARK: - Deprecated Tokens (Do not use in new code)
     
     @available(*, deprecated, renamed: "appBrandPrimary")
@@ -78,5 +95,5 @@ extension Color {
     
     @available(*, deprecated, renamed: "appSurfaceCard")
     static let appCardBackground = appSurfaceCard
-    
+
 }

@@ -103,6 +103,42 @@ enum L10n {
         static var alertLevelMessage: String { localized("onboarding.alert.level_message") }
     }
     
+    enum Gallery {
+        static var myCaptures: String { localized("gallery.my_captures") }
+        static func objectsCollected(_ count: Int) -> String {
+            String(format: localized("gallery.objects_collected"), count)
+        }
+        static var capturesSoFar: String { localized("gallery.captures_so_far") }
+        static var addNew: String { localized("gallery.add_new") }
+        static var noCapturesYet: String { localized("gallery.no_captures_yet") }
+        static var noCapturesSubtitle: String { localized("gallery.no_captures_subtitle") }
+        
+        enum Categories {
+            static var allItems: String { localized("gallery.categories.all_items") }
+            static var kitchen: String { localized("gallery.categories.kitchen") }
+            static var park: String { localized("gallery.categories.park") }
+            static var street: String { localized("gallery.categories.street") }
+        }
+    }
+
+    enum Home {
+        static var exploreWorlds: String { localized("home.explore_worlds") }
+        static var seeMore: String { localized("home.see_more") }
+        static var currentlyLearning: String { localized("home.currently_learning") }
+        static func level(_ count: Int) -> String { String(format: localized("home.level"), count) }
+        static func daysStreak(_ days: Int) -> String { String(format: localized("home.days_streak"), days) }
+        static var progress: String { localized("home.progress") }
+        static var continueLessonTitle: String { localized("home.continue_lesson") }
+        static var continueButton: String { localized("home.continue") }
+        static var lessonApple: String { localized("home.lesson.apple") }
+        static var lessonAppleDesc: String { localized("home.noun_la_pomme") }
+        static var kitchenWorld: String { localized("home.kitchen_world") }
+        static var cityWorld: String { localized("home.city_world") }
+        static var difficultyEasy: String { localized("home.difficulty.easy") }
+        static var difficultyMedium: String { localized("home.difficulty.medium") }
+        static var dailyStreakBonus: String { localized("home.daily_streak_bonus") }
+        static var claimDailyReward: String { localized("home.claim_daily_reward") }
+    }
     
     enum Profile {
         static var title: String { localized("profile.title") }
