@@ -102,6 +102,7 @@ extension Image {
         case appBarBird = "appBarBird"
         case world = "world_icon"
         case birdIdea = "BirdIdea"
+        case mascotSettings = "mascot_settings"
         
     }
     

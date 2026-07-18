@@ -186,6 +186,7 @@ enum L10n {
     
     enum Settings {
         static var title: String { localized("settings.title") }
+        static var subtitle: String { localized("settings.subtitle") }
         static var accountJourney: String { localized("settings.account_journey") }
     }
 
