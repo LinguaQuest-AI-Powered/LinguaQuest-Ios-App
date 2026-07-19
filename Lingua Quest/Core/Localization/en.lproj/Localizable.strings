@@ -140,6 +140,7 @@
 "home.city_world" = "City World";
 "home.difficulty.easy" = "EASY";
 "home.difficulty.medium" = "MEDIUM";
+"home.difficulty.hard" = "HARD";
 "home.lesson.apple" = "Apple";
 "home.daily_streak_bonus" = "Daily Streak Bonus!";
 "home.claim_daily_reward" = "Claim your daily reward!";
@@ -148,6 +149,7 @@
 "daily_reward.claim" = "Claim Reward";
 "daily_reward.coins_format" = "+%d Coins";
 "daily_reward.day_format" = "Day %d";
+"home.unlock_at_level" = "Unlock at Level %d";
 
 "profile.title" = "LinguaQuest";
 "profile.user_level" = "LEVEL %d";
@@ -211,3 +213,13 @@
 "game.skip_word.title" = "Stuck on this one?";
 "game.skip_word.subtitle" = "Skip this word for %d coins?";
 "game.skip_word.action" = "Skip Word";
+
+
+"worlds.filter.all" = "All";
+"worlds.all_worlds.title" = "All Worlds";
+"worlds.all_worlds.subtitle" = "Choose your next adventure";
+"worlds.park" = "Park World";
+"worlds.market" = "Market World";
+"worlds.airport" = "Airport World";
+"worlds.school" = "School World";
+"worlds.count_format" = "%d worlds";

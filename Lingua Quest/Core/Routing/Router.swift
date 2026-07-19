@@ -88,6 +88,9 @@ final class Router: RouterProtocol {
         case .wordInsight(let word):
             let viewModel = Resolver.shared.resolve(WordInsightViewModel.self)
             WordInsightView(viewModel: viewModel, word: word)
+        case .allWorlds:
+            let viewModel = Resolver.shared.resolve(AllWorldsViewModel.self)
+            AllWorldsView(viewModel: viewModel)
         }
     }
 }

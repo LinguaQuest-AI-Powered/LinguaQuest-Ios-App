@@ -6,14 +6,15 @@
 //
 
 import Foundation
-import SwiftUI
-
 
 struct WorldItem: Identifiable {
-    let id = UUID()
+    let id: String
     let title: String
-    let imageName: Image.Asset
-    let difficulty: String
+    let imageAssetName: String
+    let difficulty: WorldDifficulty
     let progress: Double
     let isCompleted: Bool
+    var unlockLevel: Int? = nil
+    
+    var isLocked: Bool { unlockLevel != nil }
 }

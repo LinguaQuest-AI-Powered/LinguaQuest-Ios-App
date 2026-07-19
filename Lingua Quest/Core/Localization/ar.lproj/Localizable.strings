@@ -139,6 +139,7 @@
 "home.city_world" = "عالم المدينة";
 "home.difficulty.easy" = "سهل";
 "home.difficulty.medium" = "متوسط";
+"home.difficulty.hard" = "صعب";
 "home.lesson.apple" = "تفاحة";
 "home.daily_streak_bonus" = "مكافأة سلسلة الأيام!";
 "home.claim_daily_reward" = "طالب بمكافأتك اليومية!";
@@ -147,6 +148,8 @@
 "daily_reward.claim" = "احصل على المكافأة";
 "daily_reward.coins_format" = "+%d عملة";
 "daily_reward.day_format" = "اليوم %d";
+"home.unlock_at_level" = "تفتح عند المستوى %d";
+
 
 
 "profile.title" = "لينجوا كويست";
@@ -210,3 +213,13 @@
 "game.skip_word.title" = "هل تواجه صعوبة؟";
 "game.skip_word.subtitle" = "تخطي هذه الكلمة مقابل %d عملة؟";
 "game.skip_word.action" = "تخطي الكلمة";
+
+
+"worlds.filter.all" = "الكل";
+"worlds.all_worlds.title" = "كل العوالم";
+"worlds.all_worlds.subtitle" = "اختر مغامرتك القادمة";
+"worlds.park" = "عالم الحديقة";
+"worlds.market" = "عالم السوق";
+"worlds.airport" = "عالم المطار";
+"worlds.school" = "عالم المدرسة";
+"worlds.count_format" = "%d عوالم";

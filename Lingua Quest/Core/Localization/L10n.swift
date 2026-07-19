@@ -180,6 +180,7 @@ enum L10n {
         static var cityWorld: String { localized("home.city_world") }
         static var difficultyEasy: String { localized("home.difficulty.easy") }
         static var difficultyMedium: String { localized("home.difficulty.medium") }
+        static var difficultyHard: String { localized("home.difficulty.hard") }
         static var dailyStreakBonus: String { localized("home.daily_streak_bonus") }
         static var claimDailyReward: String { localized("home.claim_daily_reward") }
         static var dailyRewardTitle: String { localized("daily_reward.title") }
@@ -192,6 +193,10 @@ enum L10n {
                 
         static func dayFormat(_ day: Int) -> String {
             String(format: localized("daily_reward.day_format"), day)
+        }
+        
+        static func unlockAtLevel(_ level: Int) -> String {
+            String(format: localized("home.unlock_at_level"), level)
         }
     }
     
@@ -274,6 +279,21 @@ enum L10n {
         static var inProgressLabel: String { localized("achievements.in_progress_label") }
         static var xpGainedLabel: String { localized("achievements.xp_gained_label") }
         static var claimRewards: String { localized("achievements.claim_rewards") }
+    }
+    
+    enum Worlds {
+        static var filterAll: String { localized("worlds.filter.all") }
+        static var allWorldsTitle: String { localized("worlds.all_worlds.title") }
+        static var allWorldsSubtitle: String { localized("worlds.all_worlds.subtitle") }
+        static var parkWorld: String { localized("worlds.park") }
+        static var marketWorld: String { localized("worlds.market") }
+        static var airportWorld: String { localized("worlds.airport") }
+        static var schoolWorld: String { localized("worlds.school") }
+        
+        static func worldsCountFormat(_ count: Int) -> String {
+            String(format: localized("worlds.count_format"), count)
+        }
+
     }
 
     private static func localized(_ key: String) -> String {

@@ -68,6 +68,10 @@ extension Color {
     // Outline Button
     static let appOutlineButton = Color("TokenOutlineButton")                   // #2DD4BF
     
+    // Glow
+    static let appGlowOrange = Color("TokenGlowOrange") // #FFD270
+    static let appGlowRed = Color("TokenGlowRed")       // #FF8A9F
+    
     // MARK: - Leaderboard Colors
     static let appPodiumGold = Color("TokenPodiumGold")
     static let appPodiumBronze = Color("TokenPodiumBronze")
