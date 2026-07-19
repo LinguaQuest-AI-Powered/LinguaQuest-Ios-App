@@ -11,11 +11,13 @@ struct DialogCardContainer<Content: View>: View {
 
     // MARK: - Layout Constants
 
-    private var mascotSize: CGFloat { 192 }
+    private var mascotWidth: CGFloat { customMascotSize?.width ?? 192 }
+    private var mascotHeight: CGFloat { customMascotSize?.height ?? 192 }
+    
     private var mascotOffset: CGFloat {
-        mascotSize * 0.5
+        mascotHeight * 0.5
     }
-    private var mascotTopSpacing: CGFloat { showMascot ? 120 : 32 }
+    private var mascotTopSpacing: CGFloat { showMascot ? (mascotOffset + 24) : 32 }
     private var horizontalPadding: CGFloat { 20 }
     private var bottomPadding: CGFloat { 30 }
     private var cornerRadius: CGFloat { 48 }
@@ -28,6 +30,7 @@ struct DialogCardContainer<Content: View>: View {
 
     private let showMascot: Bool
     private let mascotImage: Image.Asset
+    private let customMascotSize: CGSize?
     private let speechBubbleText: String?
     private let speechBubbleAnimated: Bool
     private let speechBubbleDelay: Double
@@ -37,6 +40,7 @@ struct DialogCardContainer<Content: View>: View {
     init(
         showMascot: Bool = true,
         mascotImage: Image.Asset = .dialogMascot,
+        customMascotSize: CGSize? = nil,
         speechBubbleText: String? = nil,
         speechBubbleAnimated: Bool = true,
         speechBubbleDelay: Double = 0.5,
@@ -45,6 +49,7 @@ struct DialogCardContainer<Content: View>: View {
     ) {
         self.showMascot = showMascot
         self.mascotImage = mascotImage
+        self.customMascotSize = customMascotSize
         self.speechBubbleText = speechBubbleText
         self.speechBubbleAnimated = speechBubbleAnimated
         self.speechBubbleDelay = speechBubbleDelay
@@ -88,7 +93,7 @@ private extension DialogCardContainer {
             Image(asset: mascotImage)
                 .resizable()
                 .scaledToFit()
-                .frame(width: mascotSize, height: mascotSize)
+                .frame(width: mascotWidth, height: mascotHeight)
         }
         .buttonStyle(.plain)
         .overlay(alignment: .top) {

@@ -135,6 +135,9 @@ enum L10n {
         static var notEnoughCoinsTitle: String { localized("game.not_enough_coins.title") }
         static var notEnoughCoinsSubtitle: String { localized("game.not_enough_coins.subtitle") }
         static var getMoreCoins: String { localized("game.not_enough_coins.get_more") }
+        static var skipWordTitle: String { localized("game.skip_word.title") }
+        static func skipWordSubtitle(_ coins: Int) -> String { String(format: localized("game.skip_word.subtitle"), coins) }
+        static var skipWordAction: String { localized("game.skip_word.action") }
     }
     
     enum Gallery {

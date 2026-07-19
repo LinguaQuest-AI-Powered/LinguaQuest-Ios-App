@@ -63,6 +63,7 @@ extension Image {
         case questionmarkCircleFill = "questionmark.circle.fill"
         case infoCircleFill = "info.circle.fill"
         case speakerSlashFill = "speaker.slash.fill"
+        case forwardFill = "forward.fill"
     }
     
     enum Asset: String {
@@ -119,6 +120,7 @@ extension Image {
         case mascotSettings = "mascot_settings"
         case mascotReward = "mascot_reward"
         case notEnoughCoins = "NotEnoughCoins"
+        case skip = "Skip"
     }
     
     init(icon: Icon) {

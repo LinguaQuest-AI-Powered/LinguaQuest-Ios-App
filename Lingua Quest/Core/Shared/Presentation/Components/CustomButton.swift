@@ -10,8 +10,7 @@ import SwiftUI
 enum ButtonType {
     case primary
     case secendry
-    // التعديل هنا: إضافة الـ shadowColor مع قيمة افتراضية عشان منكسرش أي كود قديم
-    case custom(textColor: Color, buttonColor: Color, shadowColor: Color = Color.black.opacity(0.3))
+     case custom(textColor: Color, buttonColor: Color, shadowColor: Color = Color.black.opacity(0.3))
 }
 
 enum ButtonStatus {

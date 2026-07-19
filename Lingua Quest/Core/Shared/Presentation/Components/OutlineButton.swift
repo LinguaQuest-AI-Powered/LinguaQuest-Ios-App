@@ -15,8 +15,7 @@ struct OutlineButton: View {
     var body: some View {
         Button(action: action) {
             Text(text)
-                .font(.system(size: 16, weight: .regular))
-                .foregroundColor(color)
+                .appTextStyle(.bodyLargeBold, color: color)
                 .frame(maxWidth: .infinity, maxHeight: 32)
                 .contentShape(Rectangle())
         }
@@ -25,7 +24,7 @@ struct OutlineButton: View {
         .cornerRadius(100)
         .overlay(
             RoundedRectangle(cornerRadius: 100)
-                .stroke(color, lineWidth: 1)
+                .stroke(color, lineWidth: 2)
         )
     }
 }

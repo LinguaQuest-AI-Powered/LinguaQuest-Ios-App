@@ -203,3 +203,7 @@
 "game.not_enough_coins.title" = "لا يوجد عملات كافية!";
 "game.not_enough_coins.subtitle" = "تحتاج إلى المزيد من العملات لاستخدام هذه المساعدة. استمر في الاستكشاف لجمع المزيد!";
 "game.not_enough_coins.get_more" = "احصل على المزيد من العملات";
+
+"game.skip_word.title" = "هل تواجه صعوبة؟";
+"game.skip_word.subtitle" = "تخطي هذه الكلمة مقابل %d عملة؟";
+"game.skip_word.action" = "تخطي الكلمة";

@@ -204,3 +204,7 @@
 "game.not_enough_coins.title" = "Not enough coins!";
 "game.not_enough_coins.subtitle" = "You need more coins to use this hint. Keep exploring to earn more!";
 "game.not_enough_coins.get_more" = "Get More Coins";
+
+"game.skip_word.title" = "Stuck on this one?";
+"game.skip_word.subtitle" = "Skip this word for %d coins?";
+"game.skip_word.action" = "Skip Word";

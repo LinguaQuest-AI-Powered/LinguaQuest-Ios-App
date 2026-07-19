@@ -13,7 +13,7 @@ struct NotEnoughCoinsDialog: View {
     var body: some View {
         DialogCardContainer(
             showMascot: true,
-            mascotImage: .emptyGalleryBird,
+            mascotImage: .notEnoughCoins,
             speechBubbleText: nil
         ) {
             VStack(spacing: 16) {
@@ -21,7 +21,7 @@ struct NotEnoughCoinsDialog: View {
                     .appTextStyle(.displayMedium, color: .appBrandBrown)
                 
                 Text(L10n.Game.notEnoughCoinsSubtitle)
-                    .appTextStyle(.bodyMedium, color: .appTextSecondary)
+                    .appTextStyle(.body, color: .appTextSecondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 16)
                 

@@ -38,7 +38,7 @@ final class CameraResultViewModel {
     private func simulateAPI() {
         Task {
             // Simulate processing time
-            try? await Task.sleep(nanoseconds: 30_000_000_000)
+            try? await Task.sleep(nanoseconds:10_000_000_000)
             
             // Randomly succeed or fail for testing/demonstration
             self.state = Bool.random() ? .success : .failure

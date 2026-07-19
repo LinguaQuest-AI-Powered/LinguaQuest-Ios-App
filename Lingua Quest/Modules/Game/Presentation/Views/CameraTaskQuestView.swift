@@ -13,7 +13,7 @@ struct CameraTaskQuestView: View {
     @State private var showHintBubble: Bool = false
     @State private var appliedHint: String? = nil
     @State private var showNotEnoughCoinsDialog = false
-    
+    @State private var showSkipDialog = false
     @State var viewModel: CameraTaskQuestViewModel
     
     var body: some View {
@@ -119,7 +119,7 @@ struct CameraTaskQuestView: View {
                             // Skip Button
                             OutlineButton(
                                 text: L10n.Game.skip,
-                                action: { /* Skip action */ }
+                                action: { showSkipDialog = true}
                             )
                         }
                     }
@@ -163,6 +163,19 @@ struct CameraTaskQuestView: View {
                 showNotEnoughCoinsDialog = false
             }
         }
+        .appDialog(isPresented: $showSkipDialog) {
+            SkipDialog(
+                skip: {
+                    showSkipDialog = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        showNotEnoughCoinsDialog = true
+                    }
+                },
+                cancel: {
+                    showSkipDialog = false
+                }
+            )
+        }
     }
 }
 
@@ -174,3 +187,5 @@ struct CameraTaskQuestView: View {
     CameraTaskQuestView(viewModel: CameraTaskQuestViewModel(router: Router()))
         .preferredColorScheme(.dark)
 }
+
+
