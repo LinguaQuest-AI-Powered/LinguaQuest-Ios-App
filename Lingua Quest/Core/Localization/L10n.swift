@@ -280,6 +280,21 @@ enum L10n {
         static var xpGainedLabel: String { localized("achievements.xp_gained_label") }
         static var claimRewards: String { localized("achievements.claim_rewards") }
     }
+    
+    enum Worlds {
+        static var filterAll: String { localized("worlds.filter.all") }
+        static var allWorldsTitle: String { localized("worlds.all_worlds.title") }
+        static var allWorldsSubtitle: String { localized("worlds.all_worlds.subtitle") }
+        static var parkWorld: String { localized("worlds.park") }
+        static var marketWorld: String { localized("worlds.market") }
+        static var airportWorld: String { localized("worlds.airport") }
+        static var schoolWorld: String { localized("worlds.school") }
+        
+        static func worldsCountFormat(_ count: Int) -> String {
+            String(format: localized("worlds.count_format"), count)
+        }
+
+    }
 
     private static func localized(_ key: String) -> String {
         return String(localized: String.LocalizationValue(key))

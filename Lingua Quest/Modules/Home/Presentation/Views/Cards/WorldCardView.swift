@@ -45,7 +45,8 @@ struct WorldCardView: View {
                 Image(asset: item.uiImage)
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 180, height: 100)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 100)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
                     .overlay(
                         RoundedRectangle(cornerRadius: 20)
@@ -104,24 +105,40 @@ struct WorldCardView: View {
                 
                 Text("\(Int(item.progress * 100))%")
                     .font(AppTextStyle.micro.font)
-                    .foregroundColor(Color.appProgressBar)
+                    .foregroundColor(item.uiBadgeColor)
             }
             
-            ZStack(alignment: .leading) {
-                Capsule()
-                    .fill(Color.appBackgroundWarm)
-                    .frame(height: 10)
-                
-                Capsule()
-                    .fill(
-                        LinearGradient(
-                            colors: [.appGlowTeal, .appSemanticSuccess],
-                            startPoint: .leading,
-                            endPoint: .trailing
+            GeometryReader { geometry in
+                ZStack(alignment: .leading) {
+                    Capsule()
+                        .fill(Color.appBackgroundWarm)
+                        .frame(height: 10)
+                    
+                    Capsule()
+                        .fill(
+                            LinearGradient(
+                                colors: progressGradientColors,
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
                         )
-                    )
-                    .frame(width: max(CGFloat(item.progress) * 150, 20), height: 10)
+                        .frame(width: max(geometry.size.width * CGFloat(item.progress), 10), height: 10)
+                }
             }
+            .frame(height: 10)
+        }
+    }
+    
+    // MARK: - Helpers
+    /// It determines the gradient colors based on difficulty to maintain the glow effect
+    private var progressGradientColors: [Color] {
+        switch item.difficulty {
+        case .easy:
+            return [.appGlowTeal, .appSemanticSuccess]
+        case .medium:
+            return [.appGlowOrange, .appAccentOrange]
+        case .hard:
+            return [.appGlowRed, .appAccentStreakRed]
         }
     }
 }
@@ -142,7 +159,7 @@ struct WorldCardView: View {
             item: WorldUIModel(
                 id: "airport", title: "Airport World", uiImage: .kitchen,
                 difficulty: .hard, uiDifficultyLabel: "Hard", uiBadgeColor: .appAccentStreakRed,
-                progress: 0.0, isCompleted: false, isLocked: true, unlockLevel: 15
+                progress: 0.5, isCompleted: false, isLocked: true, unlockLevel: 15
             )
         )
         .frame(width: 204)

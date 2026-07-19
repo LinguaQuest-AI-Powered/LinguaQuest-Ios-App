@@ -213,3 +213,13 @@
 "game.skip_word.title" = "هل تواجه صعوبة؟";
 "game.skip_word.subtitle" = "تخطي هذه الكلمة مقابل %d عملة؟";
 "game.skip_word.action" = "تخطي الكلمة";
+
+
+"worlds.filter.all" = "الكل";
+"worlds.all_worlds.title" = "كل العوالم";
+"worlds.all_worlds.subtitle" = "اختر مغامرتك القادمة";
+"worlds.park" = "عالم الحديقة";
+"worlds.market" = "عالم السوق";
+"worlds.airport" = "عالم المطار";
+"worlds.school" = "عالم المدرسة";
+"worlds.count_format" = "%d عوالم";

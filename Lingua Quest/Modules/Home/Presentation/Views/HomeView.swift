@@ -17,9 +17,14 @@ struct HomeView: View {
     @State private var pulseWorldButton = false
     
     let worlds: [WorldItem] = [
-        .init(id: "kitchen", title: L10n.Home.kitchenWorld, imageAssetName: "kitchen", difficulty: .easy, progress: 0.4, isCompleted: true),
-        .init(id: "city", title: L10n.Home.cityWorld, imageAssetName: "city", difficulty: .medium, progress: 0.18, isCompleted: false)
-    ]
+            .init(id: "kitchen", title: L10n.Home.kitchenWorld, imageAssetName: "kitchen", difficulty: .easy, progress: 0.4, isCompleted: true),
+            
+            .init(id: "city", title: L10n.Home.cityWorld, imageAssetName: "city", difficulty: .medium, progress: 0.85, isCompleted: false),
+            
+            .init(id: "airport", title: "Airport World", imageAssetName: "city", difficulty: .hard, progress: 0.75, isCompleted: false),
+            
+            .init(id: "supermarket", title: "Supermarket", imageAssetName: "kitchen", difficulty: .easy, progress: 0.15, isCompleted: false)
+        ]
     
     private var displayWorlds: [WorldUIModel] {
         worlds.map(WorldUIMapper.map)
