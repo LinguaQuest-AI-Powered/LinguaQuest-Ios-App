@@ -21,7 +21,7 @@ struct CaptureCardView: View {
                             .scaledToFill()
                     )
                     .clipped()
-                    .border(Color.white, width: 7)
+                    .border(Color.appSurfaceCard, width: 7)
                 
                 
                 Text(item.category.uppercased())
@@ -43,11 +43,11 @@ struct CaptureCardView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(item.englishName)
                         .font(.system(size: 12, weight: .bold, design: .rounded))
-                        .foregroundColor(.appTextDarkGray)
+                        .foregroundColor(.appTextPrimary)
                     
                     Text(item.translatedName)
                         .font(.system(size: 16, weight: .heavy, design: .rounded))
-                        .foregroundColor(.brown)
+                        .foregroundColor(.appBrandBrown)
                 }
                 
                 Spacer()
@@ -78,10 +78,10 @@ struct CaptureCardView: View {
                 }
             }
             .padding(12)
-            .background(Color.white)
+            .background(Color.appSurfaceCard)
         }
         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-        .shadow(color: .black.opacity(0.5), radius: 8, x: 0, y: 4)
+        .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
     }
 }
 

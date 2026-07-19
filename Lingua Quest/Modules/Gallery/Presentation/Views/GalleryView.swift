@@ -31,17 +31,8 @@ struct GalleryView: View {
             }
         }
         .background(
-            Group {
-                if items.isEmpty {
-                    Color.appBackgroundWarm
-                        .ignoresSafeArea()
-                } else {
-                    Image(asset: .appBackground)
-                        .resizable()
-                        .scaledToFill()
-                        .ignoresSafeArea()
-                }
-            }
+            HomeBackgroundView()
+                .ignoresSafeArea()
         )
     }
 }

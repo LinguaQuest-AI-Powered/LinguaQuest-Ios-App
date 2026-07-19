@@ -33,10 +33,10 @@ struct LinguaAvatarView: View {
                 }
             }
             .frame(width: size, height: size)
-            .background(Color.white)
+            .background(Color.appSurfaceCard)
             .clipShape(Circle())
             .padding(size * 0.035)
-            .background(Color.white)
+            .background(Color.appSurfaceCard)
             .clipShape(Circle())
             .overlay(Circle().stroke(Color.appBrandPrimary, lineWidth: size * 0.035))
             .shadow(color: .black.opacity(0.1), radius: size * 0.08, y: size * 0.08)

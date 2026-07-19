@@ -19,6 +19,8 @@ struct HomeView: View {
         .init(title: L10n.Home.cityWorld, imageName: .city, difficulty: L10n.Home.difficultyMedium, progress: 0.18, isCompleted: false)
     ]
     
+    @State private var animateItems: Bool = false
+    
     var body: some View {
         VStack(spacing: 0) {
             AppHeaderView(starCount: 15000000, coinCount: 20000)
@@ -33,35 +35,49 @@ struct HomeView: View {
                                 showDailyRewardDialog = true
                             }
                             .padding(.horizontal, 20)
+                            .offset(y: animateItems ? 0 : 30)
+                            .opacity(animateItems ? 1 : 0)
+                            .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.0), value: animateItems)
                             .transition(.move(edge: .top).combined(with: .opacity))
                         }
 
                         LearningCardView()
                             .padding(.horizontal, 20)
+                            .offset(y: animateItems ? 0 : 30)
+                            .opacity(animateItems ? 1 : 0)
+                            .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.15), value: animateItems)
 
-                        SectionHeaderView(
-                            title: L10n.Home.exploreWorlds,
-                            actionTitle: L10n.Home.seeMore
-                        )
-                        .padding(.horizontal, 20)
-
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: 16) {
-                                ForEach(worlds) { item in
-                                    Button(action: {
-                                        router.push(.gameLevels(worldName: item.title))
-                                    }) {
-                                        WorldCardView(item: item)
-                                    }
-                                    .buttonStyle(.plain)
-                                }
-                            }
+                        Group {
+                            SectionHeaderView(
+                                title: L10n.Home.exploreWorlds,
+                                actionTitle: L10n.Home.seeMore
+                            )
                             .padding(.horizontal, 20)
-                            .padding(.vertical, 4)
+
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack(spacing: 16) {
+                                    ForEach(worlds) { item in
+                                        Button(action: {
+                                            router.push(.gameLevels(worldName: item.title))
+                                        }) {
+                                            WorldCardView(item: item)
+                                        }
+                                        .buttonStyle(HomeScaleButtonStyle())
+                                    }
+                                }
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 4)
+                            }
                         }
+                        .offset(y: animateItems ? 0 : 30)
+                        .opacity(animateItems ? 1 : 0)
+                        .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.3), value: animateItems)
 
                         ContinueLessonCardView()
                             .padding(.horizontal, 20)
+                            .offset(y: animateItems ? 0 : 30)
+                            .opacity(animateItems ? 1 : 0)
+                            .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.45), value: animateItems)
 
                         Color.clear.frame(height: 100)
                     }
@@ -77,14 +93,23 @@ struct HomeView: View {
                         .clipShape(Circle())
                         .shadow(color: .black.opacity(0.15), radius: 5, x: 0, y: 3)
                 }
+                .buttonStyle(HomeScaleButtonStyle())
                 .padding(.trailing, 20)
                 .padding(.bottom, 20)
+                .offset(y: animateItems ? 0 : 50)
+                .opacity(animateItems ? 1 : 0)
+                .animation(.spring(response: 0.5, dampingFraction: 0.7).delay(0.6), value: animateItems)
             }
         }
         .background(
             HomeBackgroundView()
                 .ignoresSafeArea()
         )
+        .onAppear {
+            withAnimation {
+                animateItems = true
+            }
+        }
         .appDialog(isPresented: $showDailyRewardDialog) {
             DailyRewardCardContent(
                 days: dailyRewardViewModel.timelineDays,
@@ -101,6 +126,14 @@ struct HomeView: View {
                 }
             )
         }
+    }
+}
+
+struct HomeScaleButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+            .animation(.spring(response: 0.3, dampingFraction: 0.6), value: configuration.isPressed)
     }
 }
 
@@ -155,11 +188,20 @@ struct TopBarView: View {
 }
 
 struct HomeBackgroundView: View {
+    @Environment(\.colorScheme) private var colorScheme
+    
     var body: some View {
-        Image(asset: .homeBackground)
-            .resizable()
-            .scaledToFill()
-            .clipped()
+        ZStack {
+            Image(asset: .homeBackground)
+                .resizable()
+                .scaledToFill()
+                .clipped()
+            
+            if colorScheme == .dark {
+                Color.black.opacity(0.45)
+                    .ignoresSafeArea()
+            }
+        }
     }
 }
 
@@ -171,6 +213,7 @@ struct SectionHeaderView: View {
         HStack {
             Text(title)
                 .font(AppTextStyle.displaySmall.font)
+                .foregroundColor(Color.appTextPrimary)
             
             Spacer()
             

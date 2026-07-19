@@ -34,58 +34,85 @@ struct ProfileContentView: View {
     var onViewAllExplorers: () -> Void
     var onSettingsTapped: () -> Void
     
+    @State private var animateItems: Bool = false
+    
     // MARK: - Body
     var body: some View {
-        ZStack {
-            Color.appBackgroundWarm.ignoresSafeArea()
+        VStack(spacing: 0) {
+            let xpInt = Int(xpValue.replacingOccurrences(of: ",", with: "")) ?? 0
+            let coinsInt = Int(coinsValue.replacingOccurrences(of: ",", with: "")) ?? 0
+            AppHeaderView(starCount: xpInt, coinCount: coinsInt)
             
-            VStack(spacing: 0) {
-               AppHeaderView(starCount: 15000000, coinCount: 1250)
-                
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: 24) {
-                        ProfileHeader(
-                            userName: userName,
-                            userLevel: userLevel,
-                            avatarImage: nil,
-                            onEditTapped: onEditProfile
-                        )
-                        .padding(.top, 24)
-                        
-                        StatsGrid(
-                            coinsValue: coinsValue,
-                            xpValue: xpValue,
-                            streakValue: streakValue,
-                            worldsValue: worldsValue
-                        )
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 24) {
+                    ProfileHeader(
+                        userName: userName,
+                        userLevel: userLevel,
+                        avatarImage: nil,
+                        onEditTapped: onEditProfile
+                    )
+                    .padding(.top, 24)
+                    .offset(y: animateItems ? 0 : 30)
+                    .opacity(animateItems ? 1 : 0)
+                    .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.0), value: animateItems)
+                    
+                    StatsGrid(
+                        coinsValue: coinsValue,
+                        xpValue: xpValue,
+                        streakValue: streakValue,
+                        worldsValue: worldsValue
+                    )
+                    .padding(.horizontal, 20)
+                    .offset(y: animateItems ? 0 : 30)
+                    .opacity(animateItems ? 1 : 0)
+                    .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.15), value: animateItems)
+                    
+                    LinguaLearningProgressCard(
+                        languageName: languageName,
+                        journeyTitle: journeyTitle,
+                        levelName: levelName,
+                        currentXP: currentXP,
+                        targetXP: targetXP
+                    )
+                    .padding(.horizontal, 20)
+                    .offset(y: animateItems ? 0 : 30)
+                    .opacity(animateItems ? 1 : 0)
+                    .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.3), value: animateItems)
+                    
+                    LinguaSettingsPromptCard(action: onSettingsTapped)
                         .padding(.horizontal, 20)
-                        
-                        LinguaLearningProgressCard(
-                            languageName: languageName,
-                            journeyTitle: journeyTitle,
-                            levelName: levelName,
-                            currentXP: currentXP,
-                            targetXP: targetXP
-                        )
-                        .padding(.horizontal, 20)
-                        
-                        LinguaSettingsPromptCard(action: onSettingsTapped)
-                            .padding(.horizontal, 20)
-                        
-                        AchievementsSection(
-                            achievements: achievements,
-                            onViewAllTapped: onViewAllAchievements
-                        )
-                        
-                        TopExplorersSection(
-                            explorers: topExplorers,
-                            onViewAllTapped: onViewAllExplorers
-                        )
-                        .padding(.horizontal, 20)
-                        .padding(.bottom, 24)
-                    }
-                    .padding(.bottom, 80)
+                        .offset(y: animateItems ? 0 : 30)
+                        .opacity(animateItems ? 1 : 0)
+                        .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.4), value: animateItems)
+                    
+                    AchievementsSection(
+                        achievements: achievements,
+                        onViewAllTapped: onViewAllAchievements
+                    )
+                    .offset(y: animateItems ? 0 : 30)
+                    .opacity(animateItems ? 1 : 0)
+                    .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.5), value: animateItems)
+                    
+                    TopExplorersSection(
+                        explorers: topExplorers,
+                        onViewAllTapped: onViewAllExplorers
+                    )
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 24)
+                    .offset(y: animateItems ? 0 : 30)
+                    .opacity(animateItems ? 1 : 0)
+                    .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.6), value: animateItems)
                 }
+                .padding(.bottom, 80)
+            }
+        }
+        .background(
+            HomeBackgroundView()
+                .ignoresSafeArea()
+        )
+        .onAppear {
+            withAnimation {
+                animateItems = true
             }
         }
     }

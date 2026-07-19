@@ -13,19 +13,7 @@ struct ProfileView: View {
     
     var body: some View {
         Group {
-            if viewModel.isLoading {
-                VStack {
-                    ProgressView()
-                        .scaleEffect(1.5)
-                        .padding()
-                    Text("Loading Profile...")
-                        .appTextStyle(.body, color: .appTextSecondary)
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(
-                    Color.appBackgroundWarm.ignoresSafeArea()
-                )
-            } else if let error = viewModel.errorMessage {
+            if let error = viewModel.errorMessage {
                 VStack(spacing: 16) {
                     Text("Error: \(error)")
                         .appTextStyle(.bodyBold, color: .red)

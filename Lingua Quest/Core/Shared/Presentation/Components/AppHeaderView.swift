@@ -11,44 +11,40 @@ struct AppHeaderView: View {
     var starCount: Int
     var coinCount: Int
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
-        
         HStack(spacing: 8) {
             Image(.bird)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 44, height: 44)
-                .padding(6)
-                .background(Circle().fill(Color.white))
-                .overlay(Circle().stroke(Color.brown, lineWidth: 2))
+                .frame(width: 40, height: 40)
+                .padding(4)
+                .background(Circle().fill(Color.appSurfaceCard))
+                .overlay(Circle().stroke(Color.appBorderBrown, lineWidth: 2))
+                .shadow(color: .black.opacity(0.1), radius: 3)
             
             Text("LinguaQuest")
-                .font(.system(size: 28, weight: .heavy, design: .rounded))
-                .foregroundColor(.brown)
+                .font(.system(size: 26, weight: .heavy, design: .rounded))
+                .foregroundColor(.appBrandBrown)
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
             
             Spacer()
             
-            StatBadge(image: .xpIcon, value: starCount, iconBackground: .white)
-            StatBadge(image: .coinsIcon, value: coinCount, iconBackground: .brown)
+            RewardBadge(type: .xp, value: formatValue(starCount), size: .normal)
+            RewardBadge(type: .coin, value: formatValue(coinCount), size: .normal)
         }
-        .padding(.horizontal, 8)
-        .padding(.vertical, 10)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
         .background(
-            Color(red: 0.99, green: 0.95, blue: 0.91)
+            Rectangle()
+                .fill(.ultraThinMaterial)
                 .ignoresSafeArea(edges: .top)
         )
     }
-
-}
-
-struct StatBadge: View {
-    let image: ImageResource
-    let value: Int
-    let iconBackground: Color
     
-    private var formattedValue: String {
+    private func formatValue(_ value: Int) -> String {
         if value >= 1_000_000 {
             let formatted = String(format: "%.1fM", Double(value) / 1_000_000)
             return formatted.replacingOccurrences(of: ".0M", with: "M")
@@ -58,29 +54,5 @@ struct StatBadge: View {
         } else {
             return "\(value)"
         }
-    }
-    
-    var body: some View {
-        HStack(spacing: 6) {
-            ZStack {
-                Circle()
-                    .fill(iconBackground)
-                    .frame(width: 22, height: 22)
-                Image(image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 14, height: 14)
-            }
-            Text(formattedValue)
-                .font(.system(size: 16, weight: .bold, design: .rounded))
-                .foregroundColor(.black)
-                .fixedSize(horizontal: true, vertical: false)
-        }
-        .padding(.horizontal, 10)
-        .padding(.vertical, 6)
-        .background(Color.white)
-        .clipShape(Capsule())
-        .overlay(Capsule().stroke(Color.black.opacity(0.05), lineWidth: 1))
-        .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
     }
 }

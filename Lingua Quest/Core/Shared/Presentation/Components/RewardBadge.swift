@@ -15,7 +15,7 @@ enum RewardBadgeType {
     var icon: Image.SystemIcon {
         switch self {
         case .coin: return .dollarsignCircleFill
-        case .xp: return .rosette // Or starCircleFill, user requested better icon
+        case .xp: return .starCircleFill
         case .custom(let icon, _): return icon
         }
     }
@@ -23,7 +23,7 @@ enum RewardBadgeType {
     var color: Color {
         switch self {
         case .coin: return .appAccentGold
-        case .xp: return .appAccentOrange // Or purple if preferred
+        case .xp: return .appAccentTeal
         case .custom(_, let color): return color
         }
     }

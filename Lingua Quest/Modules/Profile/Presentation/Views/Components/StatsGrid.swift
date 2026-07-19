@@ -25,15 +25,15 @@ struct StatsGrid: View {
             StatCard(
                 value: coinsValue,
                 title: L10n.Profile.coins,
-                icon: .dollarsignCircleFill,
-                iconColor: .appBrandBrown
+                icon: RewardBadgeType.coin.icon,
+                iconColor: RewardBadgeType.coin.color
             )
             
             StatCard(
                 value: xpValue,
                 title: L10n.Profile.totalXP,
-                icon: .starCircleFill,
-                iconColor: .appAccentTeal
+                icon: RewardBadgeType.xp.icon,
+                iconColor: RewardBadgeType.xp.color
             )
             
             StatCard(
