@@ -167,3 +167,14 @@
 "word_insight.translation_label" = "Translation";
 "word_insight.memory_label" = "Memory Tip";
 "word_insight.fun_fact_label" = "Fun Fact";
+
+"achievements.title" = "Achievement";
+"achievements.my_trophies" = "My Trophies";
+"achievements.subtitle" = "Every word is a step deeper into the quest.";
+"achievements.filter_all" = "All";
+"achievements.filter_earned" = "Earned";
+"achievements.filter_locked" = "Locked";
+"achievements.earned_label" = "EARNED";
+"achievements.in_progress_label" = "IN PROGRESS";
+"achievements.xp_gained_label" = "XP GAINED";
+"achievements.claim_rewards" = "Claim Weekly Rewards";

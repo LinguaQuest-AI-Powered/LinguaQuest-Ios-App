@@ -58,7 +58,7 @@ struct ProfileView: View {
                         // Navigate to Edit Profile
                     },
                     onViewAllAchievements: {
-                        // Navigate to Achievements List
+                        router.push(.achievements)
                     },
                     onViewAllExplorers: {
                         router.push(.leaderboard)

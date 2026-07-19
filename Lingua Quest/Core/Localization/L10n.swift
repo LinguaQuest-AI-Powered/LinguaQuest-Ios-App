@@ -223,6 +223,19 @@ enum L10n {
         static var you: String { localized("leaderboard.you") }
     }
 
+    enum Achievements {
+        static var title: String { localized("achievements.title") }
+        static var myTrophies: String { localized("achievements.my_trophies") }
+        static var subtitle: String { localized("achievements.subtitle") }
+        static var filterAll: String { localized("achievements.filter_all") }
+        static var filterEarned: String { localized("achievements.filter_earned") }
+        static var filterLocked: String { localized("achievements.filter_locked") }
+        static var earnedLabel: String { localized("achievements.earned_label") }
+        static var inProgressLabel: String { localized("achievements.in_progress_label") }
+        static var xpGainedLabel: String { localized("achievements.xp_gained_label") }
+        static var claimRewards: String { localized("achievements.claim_rewards") }
+    }
+
     private static func localized(_ key: String) -> String {
         return String(localized: String.LocalizationValue(key))
     }

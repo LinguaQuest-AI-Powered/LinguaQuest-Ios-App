@@ -77,6 +77,8 @@ final class Router: RouterProtocol {
         case .leaderboard:
             let viewModel = Resolver.shared.resolve(LeaderboardViewModel.self)
             LeaderboardView(viewModel: viewModel)
+        case .achievements:
+            AchievementsView()
         }
     }
 }
