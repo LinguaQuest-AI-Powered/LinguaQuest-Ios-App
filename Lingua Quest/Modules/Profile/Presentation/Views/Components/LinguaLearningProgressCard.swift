@@ -35,11 +35,11 @@ struct LinguaLearningProgressCard: View {
         .background(
             RoundedRectangle(cornerRadius: 16)
                 .fill(Color.appSurfaceCardMuted)
-                .shadow(color: .appBorderWarm, radius: 0, x: 0, y: 4)
+                .shadow(color: .appBorderBrown, radius: 0, x: 0, y: 4)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 16)
-                .strokeBorder(Color.appBorderWarm, lineWidth: 2)
+                .strokeBorder(Color.appBorderBrown, lineWidth: 2)
         )
     }
 }
@@ -60,7 +60,7 @@ extension LinguaLearningProgressCard {
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: 12)
-                        .strokeBorder(Color.appBorderWarm, lineWidth: 1)
+                        .strokeBorder(Color.appBorderBrown, lineWidth: 1)
                 )
             
             // Titles
@@ -95,7 +95,7 @@ extension LinguaLearningProgressCard {
                 // Circular Progress
                 ZStack {
                     Circle()
-                        .strokeBorder(Color.appBorderWarm.opacity(0.4), lineWidth: 4)
+                        .strokeBorder(Color.appBorderBrown.opacity(0.4), lineWidth: 4)
                     
                     Circle()
                         .trim(from: 0, to: progressRatio)
@@ -116,7 +116,7 @@ extension LinguaLearningProgressCard {
                         .fill(Color.appBackgroundWarm)
                         .frame(height: 12)
                         .overlay(
-                            Capsule().strokeBorder(Color.appBorderWarm, lineWidth: 1)
+                            Capsule().strokeBorder(Color.appBorderBrown, lineWidth: 1)
                         )
                     
                     Capsule()

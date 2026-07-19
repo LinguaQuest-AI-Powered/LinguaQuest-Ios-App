@@ -50,8 +50,10 @@ final class Router: RouterProtocol {
         case .home: MainTabView()
         case .onBoarding: OnboardingContainerView()
         case .profile(let userId): Text("** \(userId)")
-        case .settings: Text("**")
-        case .login: 
+        case .settings:
+            let viewModel = Resolver.shared.resolve(SettingsViewModel.self)
+            SettingsView(viewModel: viewModel)
+        case .login:
             let viewModel = Resolver.shared.resolve(LoginViewModel.self)
             LoginView(viewModel: viewModel)
         case .signUp:

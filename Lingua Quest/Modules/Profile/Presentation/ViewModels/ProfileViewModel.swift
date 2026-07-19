@@ -9,9 +9,16 @@ import Observation
 
 @Observable
 final class ProfileViewModel {
+    // MARK: - Dependencies
+    private let router: RouterProtocol
+    
     // MARK: - State
     var isLoading: Bool = false
     var errorMessage: String? = nil
+    
+    init(router: RouterProtocol) {
+        self.router = router
+    }
     
     // MARK: - Top App Bar Data
     var coins: String = "0"
@@ -39,6 +46,10 @@ final class ProfileViewModel {
     var topExplorers: [ExplorerEntity] = []
     
     // MARK: - Intentions (Methods)
+    
+    func navigateToSettings() {
+        router.push(.settings)
+    }
     
     // Mock fetch profile data method
     func fetchProfileData() {

@@ -50,7 +50,7 @@ struct WelcomeStepView: View {
 
                 VStack(spacing: 12) {
                     CustomButton(
-                        type: .primary,
+                        type: .custom(textColor: .appTextSelectedBrown, buttonColor: .appAccentOrange, shadowColor: .appBrandBrown),
                         text: L10n.Onboarding.welcomeGetStarted,
                         action: onGetStarted
                     )

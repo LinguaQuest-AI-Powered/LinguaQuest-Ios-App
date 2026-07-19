@@ -53,6 +53,11 @@ extension Image {
         case trophyFill = "trophy.fill"
         case starFill = "star.fill"
         case rosette = "rosette"
+        case target = "target"
+        case bellFill = "bell.fill"
+        case moonFill = "moon.fill"
+        case questionmarkCircleFill = "questionmark.circle.fill"
+        case infoCircleFill = "info.circle.fill"
        
     }
     
@@ -106,6 +111,8 @@ extension Image {
         case user1 = "user1"
         case user2 = "user2"
         case user3 = "user3"
+        case mascotSettings = "mascot_settings"
+        
     }
     
     init(icon: Icon) {

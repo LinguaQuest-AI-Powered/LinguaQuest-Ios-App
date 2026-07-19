@@ -40,7 +40,7 @@ struct ForgetPasswordView: View {
                             .padding(.top, 8)
                             
                             CustomButton(
-                                type: .primary,
+                                type: .custom(textColor: .appTextSelectedBrown, buttonColor: .appAccentOrange, shadowColor: .appBrandBrown),
                                 text: L10n.Auth.sendResetLink,
                                 action: { viewModel.sendResetLink() },
                                 trailing: Image(systemIcon: .arrowRight)

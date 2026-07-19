@@ -52,9 +52,9 @@ struct LoginView: View {
                             }
                             Spacer()
                         }
-                        
+                                                
                         CustomButton(
-                            type: .primary,
+                            type: .custom(textColor: .appTextSelectedBrown, buttonColor: .appAccentOrange, shadowColor: .appBrandBrown),
                             text: L10n.Auth.logIn,
                             action: { viewModel.login() },
                             trailing: Image(systemIcon: .arrowRight)
@@ -113,10 +113,10 @@ struct LoginView: View {
 }
 
 #Preview("LightTheme") {
-    LoginView(viewModel: LoginViewModel(router: Router()))
+    LoginView(viewModel: LoginViewModel(router: Router(), userPreferences: UserPreferences()))
 }
 
 #Preview("DarkTheme") {
-    LoginView(viewModel: LoginViewModel(router: Router()))
+    LoginView(viewModel: LoginViewModel(router: Router(), userPreferences: UserPreferences()))
         .preferredColorScheme(.dark)
 }

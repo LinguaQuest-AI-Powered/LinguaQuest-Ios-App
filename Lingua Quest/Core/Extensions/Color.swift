@@ -26,12 +26,10 @@ extension Color {
     // Borders
     static let appBorderBrown = Color("TokenBorderBrown")             // #DBC2AD
     static let appBorderCool = Color("TokenBorderCool")               // #CFE6F2
-    static let appBorderWarm = Color("TokenBorderWarm")               // #DAC2AE
     static let appBorderLight = Color("TokenBorderLight")             // #F1DFD1
     
     // Text
     static let appTextPrimary = Color("TokenTextPrimary")             // #071E27
-    static let appTextDark = Color("TokenTextDark")                   // #1D1B17
     static let appTextSlate = Color("TokenTextSlate")                 // #1E293B
     static let appTextHeading = Color("TokenTextHeading")             // #231A11
     static let appTextSecondary = Color("TokenTextSecondary")         // #554434
@@ -45,8 +43,7 @@ extension Color {
     static let appAccentGold = Color("TokenAccentGold")               // #F59E0B
     static let appAccentRed = Color("TokenAccentRed")                 // #F43F5E
     static let appAccentStreakRed = Color("TokenAccentStreakRed")     // #BF0025
-    static let appAccentTealDark = Color("TokenAccentTealDark")       // #006A62
-    static let appAccentEarth = Color("TokenAccentEarth")             // #877462
+
     static let appBadgeTealBg = Color("TokenBadgeTealBg")             // #70F8E8
     static let appBadgeTealText = Color("TokenBadgeTealText")         // #007168
     static let appAccentTeal = Color("TokenAccentTeal")               // #006B59
@@ -54,8 +51,6 @@ extension Color {
     static let appAccentActiveLevel = Color("TokenAccentActiveLevel") // #7BF4FF
     
     // MARK: - Additional Custom Tokens
-    static let appCategorySelectedOrange = Color("TokenCategorySelectedOrange") // #FF9500
-    static let appCategoryUnselectedBg = Color("TokenCategoryUnselectedBg")     // #FDF2E8
     static let appEmptyCircleBg = Color("TokenEmptyCircleBg")                   // #F2FAF2
     static let appEmptyStateSubtitle = Color("TokenEmptyStateSubtitle")         // #666666
     static let appEmptyStateTitle = Color("TokenEmptyStateTitle")               // #594D40

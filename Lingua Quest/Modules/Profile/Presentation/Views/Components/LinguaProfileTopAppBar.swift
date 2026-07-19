@@ -56,7 +56,7 @@ struct LinguaProfileTopAppBar: View {
         .overlay(
             Rectangle()
                 .frame(height: 4)
-                .foregroundColor(.appBorderWarm),
+                .foregroundColor(.appBorderBrown),
             alignment: .bottom
         )
     }

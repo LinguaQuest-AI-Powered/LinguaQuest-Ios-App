@@ -16,7 +16,7 @@ struct RootView: View {
         NavigationStack(path: $router.path) {
             Group {
                 if !isOnboardingCompleted {
-                    router.view(for: .home) // change it
+                    router.view(for: .onBoarding)
                 } else {
                     if isLoggedIn {
                         router.view(for: .home)
@@ -35,8 +35,5 @@ struct RootView: View {
             }
         }
         .environment(router)
-        .task {
-            isOnboardingCompleted = false //TODO: this line is for testing onbarding only so after finish remove it
-        }
     }
 }

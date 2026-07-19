@@ -30,7 +30,7 @@ struct ProfileHeader: View {
             // User Info
             VStack(spacing: 8) {
                 Text(userName)
-                    .appTextStyle(.headingLarge, color: .appTextDark)
+                    .appTextStyle(.headingLarge, color: .appTextHeading)
                 
                 // MARK: Level Badge
                 HStack(spacing: 4) {

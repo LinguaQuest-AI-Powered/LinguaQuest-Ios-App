@@ -16,13 +16,15 @@ final class LoginViewModel {
     var isPasswordVisible = false
     
     private let router: RouterProtocol
+    private var userPreferences: UserPreferencesProtocol
     
-    init(router: RouterProtocol) {
+    init(router: RouterProtocol, userPreferences: UserPreferencesProtocol) {
         self.router = router
+        self.userPreferences = userPreferences
     }
     
     func login() {
-       
+       userPreferences.isLoggedIn = true
     }
     
     func forgotPassword() {

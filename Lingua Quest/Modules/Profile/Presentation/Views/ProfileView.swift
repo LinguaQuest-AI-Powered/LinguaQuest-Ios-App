@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @State private var viewModel = ProfileViewModel()
     @Environment(Router.self) private var router
+    @State var viewModel: ProfileViewModel
     
     var body: some View {
         Group {
@@ -62,6 +62,9 @@ struct ProfileView: View {
                     },
                     onViewAllExplorers: {
                         router.push(.leaderboard)
+                    },
+                    onSettingsTapped: {
+                        viewModel.navigateToSettings()
                     }
                 )
             }

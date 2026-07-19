@@ -140,3 +140,22 @@
 "profile.top_explorers.title" = "Top Explorers";
 "leaderboard.title" = "Leaderboard";
 "leaderboard.you" = "YOU";
+"profile.settingsCardTitle" = "Settings & Journey";
+"profile.settingsCardSubtitle" = "Manage your daily goals and app experience";
+
+"settings.title" = "Settings";
+"settings.subtitle" = "Customize your learning journey";
+"settings.account_journey" = "ACCOUNT & JOURNEY";
+"settings.edit_profile" = "Edit Profile";
+"settings.learning_language" = "Learning Language";
+"settings.daily_goal" = "Daily Goal";
+"settings.learning_streak" = "Learning Streak";
+"settings.app_experience" = "APP EXPERIENCE";
+"settings.notifications" = "Notifications";
+"settings.dark_mode" = "Dark Mode";
+"settings.sound_effects" = "Sound Effects";
+"settings.privacy_security" = "Privacy & Security";
+"settings.help_support" = "Help & Support";
+"settings.about_app" = "About App";
+"settings.save_changes" = "SAVE CHANGES";
+"settings.log_out" = "Log Out";

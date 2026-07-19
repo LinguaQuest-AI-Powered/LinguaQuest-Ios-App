@@ -165,6 +165,12 @@ enum L10n {
         static var viewAll: String { localized("profile.view_all") }
         static var achievementsTitle: String { localized("profile.achievements.title") }
         static var topExplorersTitle: String { localized("profile.top_explorers.title") }
+        static var settingsCardTitle: String {
+            localized("profile.settingsCardTitle")
+        }
+        static var settingsCardSubtitle: String {
+            localized("profile.settingsCardSubtitle")
+        }
         
         
         static func userLevel(_ level: Int) -> String {
@@ -182,6 +188,25 @@ enum L10n {
         static func explorerXP(_ amount: String) -> String {
             String(format: localized("profile.leaderboard.xp"), amount)
         }
+    }
+    
+    enum Settings {
+        static var title: String { localized("settings.title") }
+        static var subtitle: String { localized("settings.subtitle") }
+        static var accountJourney: String { localized("settings.account_journey") }
+        static var editProfile: String { localized("settings.edit_profile") }
+        static var learningLanguage: String { localized("settings.learning_language") }
+        static var dailyGoal: String { localized("settings.daily_goal") }
+        static var learningStreak: String { localized("settings.learning_streak") }
+        static var appExperience: String { localized("settings.app_experience") }
+        static var notifications: String { localized("settings.notifications") }
+        static var darkMode: String { localized("settings.dark_mode") }
+        static var soundEffects: String { localized("settings.sound_effects") }
+        static var privacySecurity: String { localized("settings.privacy_security") }
+        static var helpSupport: String { localized("settings.help_support") }
+        static var aboutApp: String { localized("settings.about_app") }
+        static var saveChanges: String { localized("settings.save_changes") }
+        static var logOut: String { localized("settings.log_out") }
     }
 
     enum Leaderboard {
