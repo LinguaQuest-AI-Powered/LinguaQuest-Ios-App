@@ -14,7 +14,7 @@ struct LeaderboardRowView: View {
         HStack(spacing: 16) {
             Text("\(user.rank)")
                 .font(.system(size: 18, weight: .bold))
-                .foregroundColor(user.isCurrentUser ? Color.teal : Color.appLeaderboardDarkText)
+                .foregroundColor(user.isCurrentUser ? Color.teal : Color.appTextHeading)
                 .frame(width: 36, alignment: .leading)
             
             ZStack(alignment: .bottomTrailing) {
@@ -41,7 +41,7 @@ struct LeaderboardRowView: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(user.name)
                     .font(.system(size: 16, weight: .semibold))
-                    .foregroundColor(user.isCurrentUser ? Color.teal : Color.appLeaderboardDarkText)
+                    .foregroundColor(user.isCurrentUser ? Color.teal : Color.appTextHeading)
                 
                 Text(user.title)
                     .font(.system(size: 12, weight: .regular))
@@ -63,7 +63,7 @@ struct LeaderboardRowView: View {
             VStack(alignment: .trailing, spacing: 2) {
                 Text("\(user.xp)")
                     .font(.system(size: 16, weight: .bold))
-                    .foregroundColor(user.isCurrentUser ? Color.teal : Color.appLeaderboardDarkText)
+                    .foregroundColor(user.isCurrentUser ? Color.teal : Color.appTextHeading)
                 
                 Text("XP")
                     .font(.system(size: 10, weight: .bold))
@@ -72,7 +72,7 @@ struct LeaderboardRowView: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
-        .background(user.isCurrentUser ? Color.teal.opacity(0.05) : Color.white)
+        .background(user.isCurrentUser ? Color.teal.opacity(0.05) : Color.appSurfaceCard)
         .cornerRadius(16)
         .overlay(
             RoundedRectangle(cornerRadius: 16)

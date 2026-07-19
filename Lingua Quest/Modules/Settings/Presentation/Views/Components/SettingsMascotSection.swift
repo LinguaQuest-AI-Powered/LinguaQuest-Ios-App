@@ -21,7 +21,7 @@ struct SettingsMascotSection: View {
                 .padding(.bottom, 8)
             
             Text(userName)
-                .appTextStyle(.displayLarge, color: .appBrandBrown)
+                .appTextStyle(.displayLarge, color: .appTextHeading)
             
             Text(L10n.Settings.subtitle)
                 .appTextStyle(.bodyLarge, color: .appTextSecondary)

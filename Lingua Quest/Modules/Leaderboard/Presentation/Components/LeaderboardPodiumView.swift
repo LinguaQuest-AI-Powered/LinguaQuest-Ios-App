@@ -23,17 +23,18 @@ struct LeaderboardPodiumView: View {
             }
             
             if topUsers.count > 0 {
-                VStack(spacing: -20) {
+                VStack(spacing: -15) {
                     Image(asset: .leaderBoardBird)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 146, height: 142)
+                        .frame(width: 130, height: 130)
                         .zIndex(1)
                         .scaleEffect(appear ? 1 : 0.01)
                         .rotationEffect(.degrees(appear ? 0 : -15))
                         .animation(.spring(response: 0.5, dampingFraction: 0.6).delay(0.6), value: appear)
                     
                     PodiumCard(user: topUsers[0], type: .gold)
+                        .zIndex(0)
                         .offset(y: appear ? 0 : 200)
                         .opacity(appear ? 1 : 0)
                         .animation(.spring(response: 0.6, dampingFraction: 0.7).delay(0.4), value: appear)
@@ -52,7 +53,7 @@ struct LeaderboardPodiumView: View {
             }
         }
         .padding(.horizontal)
-        .padding(.top, 40)
+        .padding(.top, 24)
         .padding(.bottom, 20)
         .onAppear {
             appear = true
@@ -100,11 +101,11 @@ struct PodiumCard: View {
                 
                 Text("#\(user.rank)")
                     .font(.system(size: 20, weight: .bold))
-                    .foregroundColor(Color.appPodiumBrownText)
+                    .foregroundColor(Color.appTextHeading)
                 
                 Text(user.name)
                     .font(.system(size: 14, weight: .semibold))
-                    .foregroundColor(Color.appPodiumBrownText)
+                    .foregroundColor(Color.appTextHeading)
                     .lineLimit(1)
                 
                 Text("\(user.xp) XP")
@@ -114,7 +115,7 @@ struct PodiumCard: View {
                 Spacer(minLength: 0)
             }
             .frame(width: type == .gold ? 120 : 100, height: type.height)
-            .background(type == .gold ? Color.white : Color.appSurfaceCardWarm)
+            .background(Color.appSurfaceCardWarm)
             .cornerRadius(16)
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
@@ -132,7 +133,7 @@ struct PodiumCard: View {
                     .overlay(
                         Circle().stroke(type.color, lineWidth: 4)
                     )
-                    .background(Circle().fill(Color.white))
+                    .background(Circle().fill(Color.appSurfaceCardWarm))
                 
                 ZStack {
                     Circle()

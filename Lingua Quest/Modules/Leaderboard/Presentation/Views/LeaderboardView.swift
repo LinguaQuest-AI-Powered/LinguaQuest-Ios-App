@@ -11,7 +11,10 @@ struct LeaderboardView: View {
     @State var viewModel: LeaderboardViewModel
     
     var body: some View {
-        VStack(spacing: 0) {
+        ZStack {
+            Color.appBackgroundWarm.ignoresSafeArea()
+            
+            VStack(spacing: 0) {
             LeaderboardHeaderView(
                 viewModel: viewModel,
             )
@@ -23,11 +26,13 @@ struct LeaderboardView: View {
                     LeaderboardListView(users: viewModel.otherUsers)
                 }
             }
-            .background(Color.appLeaderboardBackground)  
-        }
+                }
+            }
+        
         .navigationBarHidden(true)
         .edgesIgnoringSafeArea(.bottom)
     }
 }
+
 
 

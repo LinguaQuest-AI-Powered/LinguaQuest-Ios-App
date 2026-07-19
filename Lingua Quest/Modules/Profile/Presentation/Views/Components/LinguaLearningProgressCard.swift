@@ -104,7 +104,7 @@ extension LinguaLearningProgressCard {
                         .padding(2)
                     
                     Text(percentageString)
-                        .appTextStyle(.micro, color: .appBrandBrownDark)
+                        .appTextStyle(.micro, color: .appBrandPrimary)
                 }
                 .frame(width: 48, height: 48)
             }

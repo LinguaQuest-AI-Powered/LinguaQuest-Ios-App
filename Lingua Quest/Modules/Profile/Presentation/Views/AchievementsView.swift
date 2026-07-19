@@ -70,20 +70,15 @@ struct AchievementsView: View {
                         // Trophies Card
                         VStack(spacing: 16) {
                             ZStack {
-                                Circle()
-                                    .fill(Color.white)
-                                    .frame(width: 100, height: 100)
-                                    .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 5)
-                                
                                 Image(asset: .achivementBird)
                                     .resizable()
                                     .scaledToFit()
-                                    .frame(width: 120, height: 120)
+                                    .frame(width: 160, height: 160)
                             }
                             
                             VStack(spacing: 8) {
                                 Text(L10n.Achievements.myTrophies)
-                                    .appTextStyle(.headingLarge, color: .appBrandBrownDark)
+                                    .appTextStyle(.headingLarge, color: .appTextHeading)
                                 
                                 Text(L10n.Achievements.subtitle)
                                     .appTextStyle(.body, color: .appTextSecondary)
@@ -96,7 +91,7 @@ struct AchievementsView: View {
                         .background(
                             RoundedRectangle(cornerRadius: 16)
                                 .fill(LinearGradient(
-                                    colors: [Color.appSurfaceCardWarm, Color.white],
+                                    colors: [Color.appSurfaceCardWarm, Color.appSurfaceCard],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 ))
@@ -188,7 +183,7 @@ struct AchievementsView: View {
             }
         }) {
             Text(title)
-                .appTextStyle(.bodyBold, color: selectedTab == index ? .white : .appBrandBrownDark)
+                .appTextStyle(.bodyBold, color: selectedTab == index ? .white : .appTextPrimary)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(
                     selectedTab == index ? Color.appTealGreen : Color.clear
@@ -198,7 +193,7 @@ struct AchievementsView: View {
         }
     }
     
-    private func bottomStatView(value: String, title: String, valueColor: Color = .appBrandBrownDark) -> some View {
+    private func bottomStatView(value: String, title: String, valueColor: Color = .appTextHeading) -> some View {
         VStack(spacing: 4) {
             Text(value)
                 .appTextStyle(.headingLarge, color: valueColor)
@@ -229,7 +224,7 @@ struct AchievementGridItem: View {
             
             VStack(spacing: 4) {
                 Text(achievement.title)
-                    .appTextStyle(.bodyBold, color: .appBrandBrownDark)
+                    .appTextStyle(.bodyBold, color: .appTextHeading)
                     .multilineTextAlignment(.center)
                     .lineLimit(1)
                 
@@ -245,7 +240,7 @@ struct AchievementGridItem: View {
         .padding(.vertical, 16)
         .padding(.horizontal, 8)
         .frame(maxWidth: .infinity)
-        .background(Color.white)
+        .background(Color.appSurfaceCard)
         .cornerRadius(12)
         .overlay(
             RoundedRectangle(cornerRadius: 12)

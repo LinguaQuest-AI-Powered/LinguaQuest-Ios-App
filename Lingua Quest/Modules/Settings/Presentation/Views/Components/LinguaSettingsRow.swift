@@ -71,7 +71,7 @@ struct SettingsRowValue: View {
     var body: some View {
         HStack(spacing: 8) {
             Text(value)
-                .appTextStyle(.bodyBold, color: .appBrandBrown)
+                .appTextStyle(.bodyBold, color: .appTextPrimary)
             SettingsRowChevron()
         }
     }

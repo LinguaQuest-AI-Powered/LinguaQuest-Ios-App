@@ -18,9 +18,13 @@ struct DailyRewardCardContent: View {
     
     // MARK: - Body
     var body: some View {
-        DialogCardContainer(mascotImage: .mascotReward) {
+        DialogCardContainer(
+            mascotImage: .mascotReward,
+            customMascotSize: CGSize(width: 240, height: 240)
+        ) {
             VStack(spacing: 24) {
                 header
+                    .padding(.top, -40)
                 
                 DailyRewardTimelineView(days: days, completedCount: completedCount)
                     .padding(.horizontal, 4)

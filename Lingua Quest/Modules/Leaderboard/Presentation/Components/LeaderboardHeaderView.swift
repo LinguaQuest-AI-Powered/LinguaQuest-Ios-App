@@ -23,18 +23,22 @@ struct LeaderboardHeaderView: View {
             Spacer()
             
             Text(L10n.Leaderboard.title)
-                .font(.system(size: 24, weight: .bold))
-                .foregroundColor(Color.appPodiumBrownText)
+                .appTextStyle(.headingLarge, color: .appTextHeading)
             
             Spacer()
-            
             Circle()
                 .fill(Color.clear)
                 .frame(width: 44, height: 44)
         }
-        .padding(.horizontal)
-        .padding(.vertical, 12)
-        .background(Color.appLeaderboardBackground) 
+        .padding(.horizontal, 20)
+        .frame(height: 64)
+        .background(Color.clear)
+        .overlay(
+            Rectangle()
+                .frame(height: 1)
+                .foregroundColor(Color.appBorderBrown),
+            alignment: .bottom
+        )
     }
 }
 

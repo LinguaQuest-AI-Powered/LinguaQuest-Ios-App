@@ -11,12 +11,14 @@ struct CustomBackButton: View {
     
     var body: some View {
         Button(action: action) {
-            Image(systemIcon: .chevronLeft)
-                .font(.system(size: 16, weight: .bold))
-                .foregroundColor(.appBrandPrimary)
-                .frame(width: 38, height: 38)
-              
-                .shadow(color: Color.black.opacity(0.08), radius: 6, x: 0, y: 3)
+            Circle()
+                .fill(Color.appSurfaceCardMuted)
+                .frame(width: 44, height: 44)
+                .overlay(
+                    Image(systemIcon: .chevronLeft)
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(.appBrandPrimary)
+                )
         }
     
     }
