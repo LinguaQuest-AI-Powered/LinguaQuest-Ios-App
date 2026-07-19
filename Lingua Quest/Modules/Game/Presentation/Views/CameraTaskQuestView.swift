@@ -12,6 +12,7 @@ struct CameraTaskQuestView: View {
     @State private var showHintSheet: Bool = false
     @State private var showHintBubble: Bool = false
     @State private var appliedHint: String? = nil
+    @State private var showNotEnoughCoinsDialog = false
     
     @State var viewModel: CameraTaskQuestViewModel
     
@@ -144,11 +145,23 @@ struct CameraTaskQuestView: View {
             GameHintSheet(
                 coins: viewModel.coins,
                 onClose: { showHintSheet = false },
-                onSelectHint: { hintText in
+                onSelectHint: {
+                    hintText in
                     appliedHint = hintText
                     showHintSheet = false
+                },
+                onNotEnoughCoins: {
+                    showHintSheet = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        showNotEnoughCoinsDialog = true
+                    }
                 }
             )
+        }
+        .appDialog(isPresented: $showNotEnoughCoinsDialog) {
+            NotEnoughCoinsDialog {
+                showNotEnoughCoinsDialog = false
+            }
         }
     }
 }

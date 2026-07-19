@@ -118,7 +118,7 @@ extension Image {
         case user3 = "user3"
         case mascotSettings = "mascot_settings"
         case mascotReward = "mascot_reward"
-        
+        case notEnoughCoins = "NotEnoughCoins"
     }
     
     init(icon: Icon) {

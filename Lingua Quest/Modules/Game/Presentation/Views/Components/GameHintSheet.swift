@@ -11,6 +11,7 @@ struct GameHintSheet: View {
     let coins: Int
     let onClose: () -> Void
     let onSelectHint: (String) -> Void
+    let onNotEnoughCoins: () -> Void
     
     var body: some View {
         VStack(spacing: 20) {
@@ -65,7 +66,13 @@ struct GameHintSheet: View {
                     iconSystemName: nil,
                     title: L10n.Game.hintRevealFirstLetter,
                     cost: 25,
-                    action: { onSelectHint(L10n.Game.hintRevealFirstLetterMock) } // Mock
+                    action: {
+                        if coins >= 25 {
+                            onSelectHint(L10n.Game.hintRevealFirstLetterMock)
+                        } else {
+                            onNotEnoughCoins()
+                        }
+                    }
                 )
                 
                 hintOptionCard(
@@ -73,7 +80,13 @@ struct GameHintSheet: View {
                     iconSystemName: "info.circle",
                     title: L10n.Game.hintShowCategoryClue,
                     cost: 50,
-                    action: { onSelectHint(L10n.Game.hintShowCategoryClueMock) } // Mock
+                    action: {
+                        if coins >= 50 {
+                            onSelectHint(L10n.Game.hintShowCategoryClueMock)
+                        } else {
+                            onNotEnoughCoins()
+                        }
+                    }
                 )
             }
             .padding(.horizontal, 24)

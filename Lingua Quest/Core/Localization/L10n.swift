@@ -132,6 +132,9 @@ enum L10n {
         static func xpPoints(_ points: Int) -> String { String(format: localized("game.result.xp_points"), points) }
         static func coinsValue(_ points: Int) -> String { String(format: localized("game.result.coins_value"), points) }
         static func levelProgress(_ level: Int) -> String { String(format: localized("game.result.level_progress"), level) }
+        static var notEnoughCoinsTitle: String { localized("game.not_enough_coins.title") }
+        static var notEnoughCoinsSubtitle: String { localized("game.not_enough_coins.subtitle") }
+        static var getMoreCoins: String { localized("game.not_enough_coins.get_more") }
     }
     
     enum Gallery {

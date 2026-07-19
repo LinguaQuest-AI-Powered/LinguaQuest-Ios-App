@@ -200,3 +200,7 @@
 
 "word_insight.error.empty" = "Couldn't get AI review. Please try again.";
 "word_insight.error.parsing" = "Something went wrong reading the AI response. Please try again.";
+
+"game.not_enough_coins.title" = "Not enough coins!";
+"game.not_enough_coins.subtitle" = "You need more coins to use this hint. Keep exploring to earn more!";
+"game.not_enough_coins.get_more" = "Get More Coins";
