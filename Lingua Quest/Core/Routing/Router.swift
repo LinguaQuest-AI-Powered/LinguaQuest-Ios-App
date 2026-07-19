@@ -79,6 +79,9 @@ final class Router: RouterProtocol {
             LeaderboardView(viewModel: viewModel)
         case .achievements:
             AchievementsView()
+        case .wordInsight(let word):
+            let viewModel = Resolver.shared.resolve(WordInsightViewModel.self)
+            WordInsightView(viewModel: viewModel, word: word)
         }
     }
 }

@@ -178,3 +178,6 @@
 "achievements.in_progress_label" = "IN PROGRESS";
 "achievements.xp_gained_label" = "XP GAINED";
 "achievements.claim_rewards" = "Claim Weekly Rewards";
+
+"word_insight.error.empty" = "Couldn't get AI review. Please try again.";
+"word_insight.error.parsing" = "Something went wrong reading the AI response. Please try again.";

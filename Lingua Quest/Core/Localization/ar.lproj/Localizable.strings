@@ -177,3 +177,6 @@
 "achievements.in_progress_label" = "قيد التقدم";
 "achievements.xp_gained_label" = "الخبرة المكتسبة";
 "achievements.claim_rewards" = "استلم المكافآت الأسبوعية";
+
+"word_insight.error.empty" = "تعذر الحصول على مراجعة الذكاء الاصطناعي. يرجى المحاولة مجدداً.";
+"word_insight.error.parsing" = "حدث خطأ أثناء قراءة استجابة الذكاء الاصطناعي. يرجى المحاولة مجدداً.";

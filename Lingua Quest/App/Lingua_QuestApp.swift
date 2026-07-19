@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import FirebaseCore
 
 @main
 struct MyApp: App {
     init() {
+        FirebaseApp.configure()
         _ = Resolver.shared
     }
 

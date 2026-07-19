@@ -216,6 +216,8 @@ enum L10n {
         static var translationLabel: String { localized("word_insight.translation_label") }
         static var memoryLabel: String { localized("word_insight.memory_label") }
         static var funFactLabel: String { localized("word_insight.fun_fact_label") }
+        static var emptyResponseError: String { localized("word_insight.error.empty") }
+        static var parsingError: String { localized("word_insight.error.parsing") }
     }
 
     enum Leaderboard {
