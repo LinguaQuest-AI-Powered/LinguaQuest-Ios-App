@@ -56,3 +56,4 @@ fastlane/test_output
 !Config.xcconfig.template
 !Secrets.xcconfig.template
 Lingua Quest/agents/
+GoogleService-Info.plist
