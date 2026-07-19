@@ -10,9 +10,13 @@ import SwiftUI
 struct WordInsightView: View {
     // MARK: - Properties
     let word: WordCardEntity
-    var onBackTapped: () -> Void = {}
+    @State var viewModel: WordInsightViewModel
     
-    @State private var viewModel = WordInsightViewModel()
+    // MARK: - Init
+    init(viewModel: WordInsightViewModel, word: WordCardEntity) {
+        self.viewModel = viewModel
+        self.word = word
+    }
     
     // MARK: - Body
     var body: some View {
@@ -22,7 +26,7 @@ struct WordInsightView: View {
             word: viewModel.word,
             speakingSectionID: viewModel.speakingSectionID,
             insightSections: viewModel.insightSections,
-            onBackTapped: onBackTapped,
+            onBackTapped: { viewModel.onBackTapped() },
             onRetryTapped: { viewModel.retry() },
             onSpeakSection: { config in viewModel.toggleSpeaking(for: config) }
         )
@@ -33,9 +37,19 @@ struct WordInsightView: View {
     }
 }
 
+
 // MARK: - Preview
 #Preview {
     WordInsightView(
+        viewModel: WordInsightViewModel(
+            router: Router(),
+            getWordInsightUseCase: GetWordInsightUseCase(
+                repository: WordInsightRepositoryImpl(
+                    remoteDataSource: WordInsightRemoteDataSource()
+                )
+            ),
+            speechSynthesizer: AVSpeechSynthesizerService()
+        ),
         word: WordCardEntity(
             id: "1",
             sourceWord: "Apple",
@@ -44,7 +58,6 @@ struct WordInsightView: View {
             targetLanguage: "Arabic",
             category: "Food",
             imagePath: ""
-        ),
-        onBackTapped: {}
+        )
     )
 }

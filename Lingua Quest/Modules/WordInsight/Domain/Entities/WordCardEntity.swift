@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct WordCardEntity: Identifiable {
+struct WordCardEntity: Identifiable, Hashable {
     let id: String
     let sourceWord: String
     let translatedWord: String

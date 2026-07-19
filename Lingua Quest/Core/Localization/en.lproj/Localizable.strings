@@ -167,3 +167,5 @@
 "word_insight.translation_label" = "Translation";
 "word_insight.memory_label" = "Memory Tip";
 "word_insight.fun_fact_label" = "Fun Fact";
+"word_insight.error.empty" = "Couldn't get AI review. Please try again.";
+"word_insight.error.parsing" = "Something went wrong reading the AI response. Please try again.";

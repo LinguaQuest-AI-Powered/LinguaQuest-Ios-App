@@ -166,3 +166,5 @@
 "word_insight.translation_label" = "الترجمة";
 "word_insight.memory_label" = "نصيحة للحفظ";
 "word_insight.fun_fact_label" = "معلومة ممتعة";
+"word_insight.error.empty" = "تعذر الحصول على مراجعة الذكاء الاصطناعي. يرجى المحاولة مجدداً.";
+"word_insight.error.parsing" = "حدث خطأ أثناء قراءة استجابة الذكاء الاصطناعي. يرجى المحاولة مجدداً.";
