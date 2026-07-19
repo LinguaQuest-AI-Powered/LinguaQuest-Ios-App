@@ -18,7 +18,7 @@ struct DialogCardContainer<Content: View>: View {
     private var mascotOffset: CGFloat {
         mascotHeight * 0.5
     }
-    private var mascotTopSpacing: CGFloat { showMascot ? (mascotOffset + 24) : 32 }
+    private var mascotTopSpacing: CGFloat { showMascot ? (mascotOffset - 10) : 32 }
     private var horizontalPadding: CGFloat { 20 }
     private var bottomPadding: CGFloat { 30 }
     private var cornerRadius: CGFloat { 48 }

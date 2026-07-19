@@ -21,6 +21,7 @@ struct SignUpView: View {
                         VStack(spacing: 8) {
                             Text(L10n.Auth.createYourAccount)
                                 .appTextStyle(.displayLarge, color: .appTextSecondary)
+                                .multilineTextAlignment(.center)
                             
                             Text(L10n.Auth.createAccountDescription)
                                 .appTextStyle(.body, color: .appTextSecondary)

@@ -24,7 +24,7 @@ struct DailyRewardCardContent: View {
         ) {
             VStack(spacing: 24) {
                 header
-                    .padding(.top, -40)
+                    
                 
                 DailyRewardTimelineView(days: days, completedCount: completedCount)
                     .padding(.horizontal, 4)
