@@ -113,6 +113,7 @@ extension Image {
         case user2 = "user2"
         case user3 = "user3"
         case mascotSettings = "mascot_settings"
+        case mascotReward = "mascot_reward"
         
     }
     

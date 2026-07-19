@@ -155,6 +155,17 @@ enum L10n {
         static var difficultyMedium: String { localized("home.difficulty.medium") }
         static var dailyStreakBonus: String { localized("home.daily_streak_bonus") }
         static var claimDailyReward: String { localized("home.claim_daily_reward") }
+        static var dailyRewardTitle: String { localized("daily_reward.title") }
+        static var dailyRewardSubtitle: String { localized("daily_reward.subtitle") }
+        static var claimReward: String { localized("daily_reward.claim") }
+                
+        static func dailyRewardCoinsFormat(_ amount: Int) -> String {
+            String(format: localized("daily_reward.coins_format"), amount)
+        }
+                
+        static func dayFormat(_ day: Int) -> String {
+            String(format: localized("daily_reward.day_format"), day)
+        }
     }
     
     enum Profile {

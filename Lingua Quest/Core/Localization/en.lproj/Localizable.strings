@@ -126,6 +126,11 @@
 "home.lesson.apple" = "Apple";
 "home.daily_streak_bonus" = "Daily Streak Bonus!";
 "home.claim_daily_reward" = "Claim your daily reward!";
+"daily_reward.title" = "Daily\nReward!";
+"daily_reward.subtitle" = "You found a treasure on your\nadventure today.";
+"daily_reward.claim" = "Claim Reward";
+"daily_reward.coins_format" = "+%d Coins";
+"daily_reward.day_format" = "Day %d";
 
 "profile.title" = "LinguaQuest";
 "profile.user_level" = "LEVEL %d";
