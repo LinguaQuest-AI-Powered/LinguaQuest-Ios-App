@@ -18,11 +18,16 @@ final class Resolver {
 
     private func registerAssemblies() {
         _ = Assembler(
-            [NetworkAssembly(), RouterAssembly(), StorageAssembly(), AuthAssembly(), OnboardingAssembly(), GameAssembly()],
+            [
+                NetworkAssembly(), RouterAssembly(), StorageAssembly(),
+                AuthAssembly(), OnboardingAssembly(), GameAssembly(),
+                LeaderboardAssembly(), ProfileAssembly(), SettingsAssembly(),
+                WordInsightAssembly()
+            ],
             container: container
         )
     }
-
+    
     func resolve<T>(_ type: T.Type) -> T {
         guard let service = container.resolve(type) else {
             fatalError("Failed to resolve type: \(type)")

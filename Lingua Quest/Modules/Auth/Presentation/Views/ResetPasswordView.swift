@@ -75,7 +75,7 @@ struct ResetPasswordView: View {
                             }
                             
                             CustomButton(
-                                type: .primary,
+                                type: .custom(textColor: .appTextSelectedBrown, buttonColor: .appAccentOrange, shadowColor: .appBrandBrown),
                                 text: L10n.Auth.resetPassword,
                                 action: {
                                     viewModel.resetPassword()
@@ -120,3 +120,12 @@ struct ResetPasswordView: View {
     }
 }
 
+
+#Preview("LightTheme") {
+    ResetPasswordView(viewModel: ResetPasswordViewModel(router: Router()))
+}
+
+#Preview("DarkTheme") {
+    ResetPasswordView(viewModel: ResetPasswordViewModel(router: Router()))
+        .preferredColorScheme(.dark)
+}

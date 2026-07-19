@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TopExplorersSection: View {
     // MARK: - Properties
-    let explorers: [ExplorerEntity]
+    let explorers: [ExplorerUIModel]
     var onViewAllTapped: () -> Void
     
     // MARK: - Body
@@ -51,28 +51,12 @@ struct TopExplorersSection: View {
     }
 }
 
-// MARK: - UI Mapping Extension
-private extension ExplorerEntity {
-    var uiRank: String {
-        "\(rank)"
-    }
-    
-    var uiXPAmount: String {
-        let formattedXP = xp.formatted()
-        return L10n.Profile.explorerXP(formattedXP)
-    }
-    
-    var isTop: Bool {
-        rank == 1
-    }
-}
-
 // MARK: - Preview
 #Preview {
     let mockExplorers = [
-        ExplorerEntity(id: "1", rank: 1, name: "Marco Polo", xp: 12450, avatarImage: nil),
-        ExplorerEntity(id: "2", rank: 2, name: "Amelia Earhart", xp: 11200, avatarImage: nil),
-        ExplorerEntity(id: "3", rank: 3, name: "Ibn Battuta", xp: 9850, avatarImage: nil)
+        ExplorerUIModel(id: "1", name: "Marco Polo", uiRank: "1", uiXPAmount: "12,450 XP", avatarImage: nil, isTop: true),
+        ExplorerUIModel(id: "2", name: "Amelia Earhart", uiRank: "2", uiXPAmount: "11,200 XP", avatarImage: nil, isTop: false),
+        ExplorerUIModel(id: "3", name: "Ibn Battuta", uiRank: "3", uiXPAmount: "9,850 XP", avatarImage: nil, isTop: false)
     ]
     
     TopExplorersSection(explorers: mockExplorers) {

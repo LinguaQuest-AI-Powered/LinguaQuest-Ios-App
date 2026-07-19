@@ -57,7 +57,12 @@ extension Image {
         case boltSlashFill = "bolt.slash.fill"
         case cameraRotateFill = "camera.rotate.fill"
         case lightbulbFill = "lightbulb.fill"
-       
+        case target = "target"
+        case bellFill = "bell.fill"
+        case moonFill = "moon.fill"
+        case questionmarkCircleFill = "questionmark.circle.fill"
+        case infoCircleFill = "info.circle.fill"
+        case speakerSlashFill = "speaker.slash.fill"
     }
     
     enum Asset: String {
@@ -78,6 +83,8 @@ extension Image {
         case strongPasswordBird = "strong_pass_bird"
         case myCaptureBird = "my_capture_bird"
         case emptyGalleryBird = "empty_gallery_bird"
+        case leaderBoardBird = "leader_board_bird"
+        case achivementBird = "achivement_bird"
         case star = "star"
         case star2 = "star2"
         case ball = "ball"
@@ -106,6 +113,11 @@ extension Image {
         case appBarBird = "appBarBird"
         case world = "world_icon"
         case birdIdea = "BirdIdea"
+        case user1 = "user1"
+        case user2 = "user2"
+        case user3 = "user3"
+        case mascotSettings = "mascot_settings"
+        case mascotReward = "mascot_reward"
         
     }
     

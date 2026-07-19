@@ -10,7 +10,9 @@ import SwiftUI
 struct HomeView: View {
     @Environment(Router.self) var router
     @State private var hasClaimedDailyReward: Bool = false
-    @State private var showDailyBonus: Bool = false
+    
+    @State private var dailyRewardViewModel = DailyRewardViewModel()
+    @State private var showDailyRewardDialog = false
     
     let worlds: [WorldItem] = [
         .init(title: L10n.Home.kitchenWorld, imageName: .kitchen, difficulty: L10n.Home.difficultyEasy, progress: 0.4, isCompleted: true),
@@ -21,10 +23,18 @@ struct HomeView: View {
         VStack(spacing: 0) {
             AppHeaderView(starCount: 15000000, coinCount: 20000)
 
-            ZStack(alignment: .top) {
-                ZStack(alignment: .bottomTrailing) {
-                    ScrollView(showsIndicators: false) {
+            ZStack(alignment: .bottomTrailing) {
+                
+                ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 20) {
+                        
+                        if !hasClaimedDailyReward {
+                            DailyBonusCardView {
+                                showDailyRewardDialog = true
+                            }
+                            .padding(.horizontal, 20)
+                            .transition(.move(edge: .top).combined(with: .opacity))
+                        }
 
                         LearningCardView()
                             .padding(.horizontal, 20)
@@ -69,39 +79,31 @@ struct HomeView: View {
                 }
                 .padding(.trailing, 20)
                 .padding(.bottom, 20)
-                }
-                
-                if showDailyBonus && !hasClaimedDailyReward {
-                    DailyBonusCardView {
-                        withAnimation(.easeInOut(duration: 0.3)) {
-                            showDailyBonus = false
-                        }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                            hasClaimedDailyReward = true
-                        }
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.top, 16)
-                    .transition(.move(edge: .top).combined(with: .opacity))
-                    .zIndex(1)
-                }
             }
         }
         .background(
             HomeBackgroundView()
                 .ignoresSafeArea()
         )
-        .onAppear {
-            if !hasClaimedDailyReward {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                    withAnimation(.spring(response: 0.6, dampingFraction: 0.7)) {
-                        showDailyBonus = true
+        .appDialog(isPresented: $showDailyRewardDialog) {
+            DailyRewardCardContent(
+                days: dailyRewardViewModel.timelineDays,
+                completedCount: dailyRewardViewModel.completedNodesCount,
+                rewardAmount: dailyRewardViewModel.reward.rewardAmount,
+                onClaimTapped: {
+                    dailyRewardViewModel.claimReward()
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        showDailyRewardDialog = false
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        hasClaimedDailyReward = true
                     }
                 }
-            }
+            )
         }
     }
 }
+
 
 //TODO: Delete it and use the CustomTopBar instead of this one
 struct TopBarView: View {
@@ -152,7 +154,6 @@ struct TopBarView: View {
     }
 }
 
-
 struct HomeBackgroundView: View {
     var body: some View {
         Image(asset: .homeBackground)
@@ -185,4 +186,3 @@ struct SectionHeaderView: View {
         }
     }
 }
-

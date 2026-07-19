@@ -10,7 +10,8 @@ import SwiftUI
 enum ButtonType {
     case primary
     case secendry
-    case custom(textColor: Color, buttonColor: Color)
+    // التعديل هنا: إضافة الـ shadowColor مع قيمة افتراضية عشان منكسرش أي كود قديم
+    case custom(textColor: Color, buttonColor: Color, shadowColor: Color = Color.black.opacity(0.3))
 }
 
 enum ButtonStatus {
@@ -40,11 +41,11 @@ struct CustomButton: View {
                 return Color.appBrandPrimary
             case .secendry:
                 return Color.appBorderLight
-            case .custom(_, let buttonColor):
+            case .custom(_, let buttonColor, _):
                 return buttonColor
             }
         } else {
-            return .gray
+            return Color.appSurfaceCardMuted
         }
     }
     
@@ -55,11 +56,27 @@ struct CustomButton: View {
                 return Color.appTextOnPrimary
             case .secendry:
                 return Color.appTextSecondary
-            case .custom(let textColor, _):
+            case .custom(let textColor, _, _):
                 return textColor
             }
         } else {
-            return .white
+            return Color.appTextDarkGray
+        }
+    }
+    
+    // MARK: - Updated: Dynamic 3D Shadow Color
+    var shadowColor: Color {
+        if status == .enable {
+            switch type {
+            case .primary:
+                return Color.appBrandBrownDark
+            case .secendry:
+                return Color.appBorderBrown
+            case .custom(_, _, let customShadow):
+                return customShadow
+            }
+        } else {
+            return Color.appBorderBrown
         }
     }
     
@@ -78,27 +95,31 @@ struct CustomButton: View {
                 }
                 
                 Text(text)
-                    .font(AppTextStyle.bodyMedium.font)
+                    .appTextStyle(.bodyLargeBold, color: foregroundColor)
                 
                 if let trailing {
                     trailing
                         .font(AppTextStyle.captionMedium.font)
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: 32)
+            .frame(maxWidth: .infinity)
+            .frame(height: 56)
             .contentShape(Rectangle())
         }
-        .padding()
         .foregroundColor(foregroundColor)
-        .background(backgroundColor)
-        .cornerRadius(100)
-        .shadow(color: .black.opacity(0.25), radius: 6, x: 0, y: 3)
+        // MARK: - The 3D Magic
+        .background(
+            Capsule()
+                .fill(backgroundColor)
+                .shadow(color: shadowColor, radius: 0, x: 0, y: 4)
+        )
+        .padding(.bottom, 4)
         .disabled(status == .disable && disabledAction == nil)
     }
 }
 
 #Preview {
-    VStack(spacing: 16) {
+    VStack(spacing: 24) {
         CustomButton(
             type: .primary,
             text: "Primary Enabled",
@@ -114,25 +135,24 @@ struct CustomButton: View {
         
         CustomButton(
             type: .secendry,
-            text: "Secondry Enabled",
-            action: { print("Won't fire") },
+            text: "Secondary Enabled",
+            action: { print("Secondary tapped") },
             status: .enable
         )
         
         CustomButton(
-            type: .custom(textColor: .white, buttonColor: .blue),
-            text: "Custom Enabled",
+            type: .custom(textColor: .white, buttonColor: .appAccentTeal),
+            text: "Custom Default Shadow",
             action: { print("Custom tapped") },
             leading: Image(systemName: "star.fill")
         )
         
         CustomButton(
-            type: .custom(textColor: .black, buttonColor: .yellow),
-            text: "Custom with Trailing",
-            action: { print("Trailing tapped") },
-            trailing: Image(systemName: "arrow.right")
+            type: .custom(textColor: .appTextSelectedBrown, buttonColor: .appAccentOrange, shadowColor: .appBrandBrownDark),
+            text: "SAVE CHANGES (Custom 3D)",
+            action: { print("Save tapped") }
         )
     }
-    .padding()
+    .padding(24)
+    .background(Color.appBackgroundWarm)
 }
-

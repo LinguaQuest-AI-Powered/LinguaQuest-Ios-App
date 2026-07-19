@@ -3,6 +3,12 @@ import SwiftUI
 struct MainTabView: View {
     @State private var selectedTab = 0
     
+    private let profileViewModel: ProfileViewModel
+    
+    init() {
+        self.profileViewModel = Resolver.shared.resolve(ProfileViewModel.self)
+    }
+    
     var body: some View {
         TabView(selection: $selectedTab) {
             HomeView()
@@ -19,7 +25,7 @@ struct MainTabView: View {
                 }
                 .tag(1)
             
-            ProfileView()
+            ProfileView(viewModel: profileViewModel)
                 .tabItem {
                     Image(systemName: "person.crop.circle")
                     Text("Profile")

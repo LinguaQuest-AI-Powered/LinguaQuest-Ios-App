@@ -50,8 +50,10 @@ final class Router: RouterProtocol {
         case .home: MainTabView()
         case .onBoarding: OnboardingContainerView()
         case .profile(let userId): Text("** \(userId)")
-        case .settings: Text("**")
-        case .login: 
+        case .settings:
+            let viewModel = Resolver.shared.resolve(SettingsViewModel.self)
+            SettingsView(viewModel: viewModel)
+        case .login:
             let viewModel = Resolver.shared.resolve(LoginViewModel.self)
             LoginView(viewModel: viewModel)
         case .signUp:
@@ -78,6 +80,14 @@ final class Router: RouterProtocol {
         case .cameraResult(let targetWord):
             let viewModel = Resolver.shared.resolve(CameraResultViewModel.self, argument: targetWord)
             CameraResultView(viewModel: viewModel)
+        case .leaderboard:
+            let viewModel = Resolver.shared.resolve(LeaderboardViewModel.self)
+            LeaderboardView(viewModel: viewModel)
+        case .achievements:
+            AchievementsView()
+        case .wordInsight(let word):
+            let viewModel = Resolver.shared.resolve(WordInsightViewModel.self)
+            WordInsightView(viewModel: viewModel, word: word)
         }
     }
 }

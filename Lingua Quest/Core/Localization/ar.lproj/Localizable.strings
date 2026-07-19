@@ -16,6 +16,7 @@
 "common.retry" = "إعادة المحاولة";
 "common.cancel" = "إلغاء";
 "common.ok" = "حسنًا";
+"common.loading" = "جاري التحميل...";
 
 "auth.email_placeholder" = "البريد الإلكتروني";
 "auth.password_placeholder" = "كلمة المرور";
@@ -138,6 +139,11 @@
 "home.lesson.apple" = "تفاحة";
 "home.daily_streak_bonus" = "مكافأة سلسلة الأيام!";
 "home.claim_daily_reward" = "طالب بمكافأتك اليومية!";
+"daily_reward.title" = "مكافأة\nيومية!";
+"daily_reward.subtitle" = "لقد وجدت كنزاً في\nمغامرتك اليوم.";
+"daily_reward.claim" = "احصل على المكافأة";
+"daily_reward.coins_format" = "+%d عملة";
+"daily_reward.day_format" = "اليوم %d";
 
 
 "profile.title" = "لينجوا كويست";
@@ -152,3 +158,44 @@
 "profile.achievements.title" = "الإنجازات";
 "profile.leaderboard.xp" = "%@ نقطة خبرة";
 "profile.top_explorers.title" = "أفضل المستكشفين";
+"leaderboard.title" = "أفضل المستكشفين";
+"leaderboard.you" = "أنت";
+"profile.settingsCardTitle" = "الإعدادات والرحلة";
+"profile.settingsCardSubtitle" = "تحكم في أهدافك اليومية وتجربة التطبيق";
+
+"settings.title" = "الإعدادات";
+"settings.subtitle" = "خصص رحلتك التعليمية";
+"settings.account_journey" = "الحساب والرحلة";
+"settings.edit_profile" = "تعديل الملف الشخصي";
+"settings.learning_language" = "لغة التعلم";
+"settings.daily_goal" = "الهدف اليومي";
+"settings.learning_streak" = "سلسلة التعلم";
+"settings.app_experience" = "تجربة التطبيق";
+"settings.notifications" = "الإشعارات";
+"settings.dark_mode" = "الوضع المظلم";
+"settings.sound_effects" = "المؤثرات الصوتية";
+"settings.privacy_security" = "الخصوصية والأمان";
+"settings.help_support" = "المساعدة والدعم";
+"settings.about_app" = "عن التطبيق";
+"settings.save_changes" = "حفظ التغييرات";
+"settings.log_out" = "تسجيل الخروج";
+
+"word_insight.title" = "إضاءة الذكاء الاصطناعي";
+"word_insight.sentence_label" = "مثال في جملة";
+"word_insight.translation_label" = "الترجمة";
+"word_insight.memory_label" = "نصيحة للحفظ";
+"word_insight.fun_fact_label" = "معلومة ممتعة";
+
+"achievements.title" = "الإنجازات";
+"achievements.my_trophies" = "كؤوسي";
+"achievements.subtitle" = "كل كلمة هي خطوة أعمق في المغامرة.";
+"achievements.filter_all" = "الكل";
+"achievements.filter_earned" = "مكتسبة";
+"achievements.filter_locked" = "مقفلة";
+"achievements.earned_label" = "مكتسبة";
+"achievements.in_progress_label" = "قيد التقدم";
+"achievements.xp_gained_label" = "الخبرة المكتسبة";
+"achievements.claim_rewards" = "استلم المكافآت الأسبوعية";
+
+"word_insight.error.empty" = "تعذر الحصول على مراجعة الذكاء الاصطناعي. يرجى المحاولة مجدداً.";
+"word_insight.error.parsing" = "حدث خطأ أثناء قراءة استجابة الذكاء الاصطناعي. يرجى المحاولة مجدداً.";

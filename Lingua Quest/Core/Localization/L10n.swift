@@ -24,6 +24,7 @@ enum L10n {
         static var retry: String { localized("common.retry") }
         static var cancel: String { localized("common.cancel") }
         static var ok: String { localized("common.ok") }
+        static var loading: String { localized("common.loading") }
     }
 
     enum Auth {
@@ -168,6 +169,17 @@ enum L10n {
         static var difficultyMedium: String { localized("home.difficulty.medium") }
         static var dailyStreakBonus: String { localized("home.daily_streak_bonus") }
         static var claimDailyReward: String { localized("home.claim_daily_reward") }
+        static var dailyRewardTitle: String { localized("daily_reward.title") }
+        static var dailyRewardSubtitle: String { localized("daily_reward.subtitle") }
+        static var claimReward: String { localized("daily_reward.claim") }
+                
+        static func dailyRewardCoinsFormat(_ amount: Int) -> String {
+            String(format: localized("daily_reward.coins_format"), amount)
+        }
+                
+        static func dayFormat(_ day: Int) -> String {
+            String(format: localized("daily_reward.day_format"), day)
+        }
     }
     
     enum Profile {
@@ -179,6 +191,12 @@ enum L10n {
         static var viewAll: String { localized("profile.view_all") }
         static var achievementsTitle: String { localized("profile.achievements.title") }
         static var topExplorersTitle: String { localized("profile.top_explorers.title") }
+        static var settingsCardTitle: String {
+            localized("profile.settingsCardTitle")
+        }
+        static var settingsCardSubtitle: String {
+            localized("profile.settingsCardSubtitle")
+        }
         
         
         static func userLevel(_ level: Int) -> String {
@@ -196,6 +214,53 @@ enum L10n {
         static func explorerXP(_ amount: String) -> String {
             String(format: localized("profile.leaderboard.xp"), amount)
         }
+    }
+    
+    enum Settings {
+        static var title: String { localized("settings.title") }
+        static var subtitle: String { localized("settings.subtitle") }
+        static var accountJourney: String { localized("settings.account_journey") }
+        static var editProfile: String { localized("settings.edit_profile") }
+        static var learningLanguage: String { localized("settings.learning_language") }
+        static var dailyGoal: String { localized("settings.daily_goal") }
+        static var learningStreak: String { localized("settings.learning_streak") }
+        static var appExperience: String { localized("settings.app_experience") }
+        static var notifications: String { localized("settings.notifications") }
+        static var darkMode: String { localized("settings.dark_mode") }
+        static var soundEffects: String { localized("settings.sound_effects") }
+        static var privacySecurity: String { localized("settings.privacy_security") }
+        static var helpSupport: String { localized("settings.help_support") }
+        static var aboutApp: String { localized("settings.about_app") }
+        static var saveChanges: String { localized("settings.save_changes") }
+        static var logOut: String { localized("settings.log_out") }
+    }
+    
+    enum WordInsight {
+        static var title: String { localized("word_insight.title") }
+        static var sentenceLabel: String { localized("word_insight.sentence_label") }
+        static var translationLabel: String { localized("word_insight.translation_label") }
+        static var memoryLabel: String { localized("word_insight.memory_label") }
+        static var funFactLabel: String { localized("word_insight.fun_fact_label") }
+        static var emptyResponseError: String { localized("word_insight.error.empty") }
+        static var parsingError: String { localized("word_insight.error.parsing") }
+    }
+
+    enum Leaderboard {
+        static var title: String { localized("leaderboard.title") }
+        static var you: String { localized("leaderboard.you") }
+    }
+
+    enum Achievements {
+        static var title: String { localized("achievements.title") }
+        static var myTrophies: String { localized("achievements.my_trophies") }
+        static var subtitle: String { localized("achievements.subtitle") }
+        static var filterAll: String { localized("achievements.filter_all") }
+        static var filterEarned: String { localized("achievements.filter_earned") }
+        static var filterLocked: String { localized("achievements.filter_locked") }
+        static var earnedLabel: String { localized("achievements.earned_label") }
+        static var inProgressLabel: String { localized("achievements.in_progress_label") }
+        static var xpGainedLabel: String { localized("achievements.xp_gained_label") }
+        static var claimRewards: String { localized("achievements.claim_rewards") }
     }
 
     private static func localized(_ key: String) -> String {

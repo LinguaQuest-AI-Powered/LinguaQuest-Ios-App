@@ -25,13 +25,14 @@ struct ProfileContentView: View {
     let targetXP: Int
     
     // Lists Data
-    let achievements: [AchievementEntity]
-    let topExplorers: [ExplorerEntity]
+    let achievements: [AchievementUIModel]
+    let topExplorers: [ExplorerUIModel]
     
     // Actions
     var onEditProfile: () -> Void
     var onViewAllAchievements: () -> Void
     var onViewAllExplorers: () -> Void
+    var onSettingsTapped: () -> Void
     
     // MARK: - Body
     var body: some View {
@@ -39,7 +40,7 @@ struct ProfileContentView: View {
             Color.appBackgroundWarm.ignoresSafeArea()
             
             VStack(spacing: 0) {
-                LinguaProfileTopAppBar(coinsValue: coinsValue, gemsValue: gemsValue)
+               AppHeaderView(starCount: 15000000, coinCount: 1250)
                 
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 24) {
@@ -67,6 +68,9 @@ struct ProfileContentView: View {
                             targetXP: targetXP
                         )
                         .padding(.horizontal, 20)
+                        
+                        LinguaSettingsPromptCard(action: onSettingsTapped)
+                            .padding(.horizontal, 20)
                         
                         AchievementsSection(
                             achievements: achievements,
@@ -102,28 +106,32 @@ struct ProfileContentView: View {
         currentXP: 2450,
         targetXP: 3000,
         achievements: [
-            AchievementEntity(
+            AchievementUIModel(
                 id: "1",
                 title: "Wild Explorer",
                 subtitle: "Complete 10 lessons in...",
-                type: .wildExplorer
+                uiIcon: .trophyFill,
+                uiIconColor: .appBrandBrown,
+                uiBgColor: .appSurfaceCardWarm
             ),
-            
-            AchievementEntity(
-                id: "1",
-                title: "Wild Explorer",
+            AchievementUIModel(
+                id: "2",
+                title: "Perfect Week",
                 subtitle: "Complete 10 lessons in...",
-                type: .perfectWeek
+                uiIcon: .starFill,
+                uiIconColor: .appAccentTeal,
+                uiBgColor: .white
             )
         ],
         topExplorers: [
-            ExplorerEntity(id: "1", rank: 1, name: "Marco Polo", xp: 12450, avatarImage: nil),
-            ExplorerEntity(id: "2", rank: 2, name: "Amelia Earhart", xp: 11200, avatarImage: nil),
-            ExplorerEntity(id: "3", rank: 3, name: "Ibn Battuta", xp: 9850, avatarImage: nil)
+            ExplorerUIModel(id: "1", name: "Marco Polo", uiRank: "1", uiXPAmount: "12,450 XP", avatarImage: nil, isTop: true),
+            ExplorerUIModel(id: "2", name: "Amelia Earhart", uiRank: "2", uiXPAmount: "11,200 XP", avatarImage: nil, isTop: false),
+            ExplorerUIModel(id: "3", name: "Ibn Battuta", uiRank: "3", uiXPAmount: "9,850 XP", avatarImage: nil, isTop: false)
         ],
         onEditProfile: {},
         onViewAllAchievements: {},
-        onViewAllExplorers: {}
+        onViewAllExplorers: {},
+        onSettingsTapped: {}
     )
     .preferredColorScheme(.dark)
 }
