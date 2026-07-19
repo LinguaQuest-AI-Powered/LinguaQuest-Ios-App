@@ -34,10 +34,33 @@ final class WordInsightRemoteDataSource: WordInsightRemoteDataSourceProtocol {
                     funFact: raw.fact
                 )
             )
+        } catch let error as GenerateContentError {
+            #if DEBUG
+            print("🔴 GenerateContentError: \(error)")
+            #endif
+            return .failure(.generationFailed(describe(error)))
         } catch is DecodingError {
             return .failure(.parsingFailed)
         } catch {
+            #if DEBUG
+            print("🔴 Unknown error: \(error)")
+            #endif
             return .failure(.generationFailed(error.localizedDescription))
+        }
+    }
+
+    private func describe(_ error: GenerateContentError) -> String {
+        switch error {
+        case .internalError(let underlying):
+            return "Internal error: \(underlying.localizedDescription)"
+        case .promptImageContentError(let underlying):
+            return "Prompt content error: \(underlying.localizedDescription)"
+        case .promptBlocked(let response):
+            return "Prompt blocked: \(response.promptFeedback?.blockReason?.rawValue ?? "unknown")"
+        case .responseStoppedEarly(let reason, _):
+            return "Response stopped early: \(reason.rawValue)"
+        @unknown default:
+            return "Unknown generation error"
         }
     }
     
