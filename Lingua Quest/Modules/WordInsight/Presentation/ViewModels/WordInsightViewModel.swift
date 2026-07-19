@@ -9,7 +9,13 @@ import Observation
 import SwiftUI
 
 @Observable
+@MainActor
 final class WordInsightViewModel {
+    // MARK: - Dependencies
+    private let router: RouterProtocol
+    private let getWordInsightUseCase: GetWordInsightUseCaseProtocol
+    private let speechSynthesizer: SpeechSynthesizerProtocol
+    
     // MARK: - State
     var isLoading: Bool = false
     var errorMessage: String? = nil
@@ -17,10 +23,24 @@ final class WordInsightViewModel {
     var insight: AIWordInsightEntity? = nil
     var speakingSectionID: InsightSectionID? = nil
     
+    // MARK: - Init
+    init(
+        router: RouterProtocol,
+        getWordInsightUseCase: GetWordInsightUseCaseProtocol,
+        speechSynthesizer: SpeechSynthesizerProtocol
+    ) {
+        self.router = router
+        self.getWordInsightUseCase = getWordInsightUseCase
+        self.speechSynthesizer = speechSynthesizer
+        
+        self.speechSynthesizer.onFinishSpeaking = { [weak self] in
+            self?.speakingSectionID = nil
+        }
+    }
+    
     // MARK: - UI Models
-    /// Maps the raw AI response into ready-to-render UI section configs
     var insightSections: [InsightSectionConfig] {
-        guard let insight = insight, let word = word else { return [] }
+        guard let insight, let word else { return [] }
         
         return [
             InsightSectionConfig(
@@ -63,26 +83,24 @@ final class WordInsightViewModel {
         ]
     }
     
-    // MARK: - Intentions (Methods)
-    
-    /// Mock fetch — will be replaced by the real use case once wired to Architecture layer
+    // MARK: - Intentions
     func fetchInsight(for word: WordCardEntity) {
         self.word = word
-        self.isLoading = true
-        self.errorMessage = nil
+        isLoading = true
+        errorMessage = nil
+        insight = nil
         
         Task {
-            try? await Task.sleep(nanoseconds: 1_200_000_000)
+            let result = await getWordInsightUseCase.execute(for: word)
             
-            await MainActor.run {
-                self.insight = AIWordInsightEntity(
-                    exampleSentence: "She ate a red apple for breakfast.",
-                    sentenceTranslation: "أكلت تفاحة حمراء على الفطور.",
-                    memoryTip: "Think of the apple emoji 🍎 – it starts the ABC, just like learning starts with basics.",
-                    funFact: "There are more than 7,500 known cultivars of apples grown around the world."
-                )
-                self.isLoading = false
+            switch result {
+            case .success(let insight):
+                self.insight = insight
+            case .failure(let error):
+                self.errorMessage = error.localizedDescription
             }
+            
+            self.isLoading = false
         }
     }
     
@@ -92,7 +110,17 @@ final class WordInsightViewModel {
     }
     
     func toggleSpeaking(for config: InsightSectionConfig) {
-        speakingSectionID = (speakingSectionID == config.id) ? nil : config.id
-        // TTS trigger will be added once the speech service is wired in
+        if speakingSectionID == config.id {
+            speakingSectionID = nil
+            speechSynthesizer.stop()
+        } else {
+            speakingSectionID = config.id
+            speechSynthesizer.speak(text: config.content, languageCode: config.speechLanguage)
+        }
+    }
+    
+    func onBackTapped() {
+        speechSynthesizer.stop()
+        router.pop()
     }
 }

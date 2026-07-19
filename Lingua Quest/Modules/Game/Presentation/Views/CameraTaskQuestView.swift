@@ -108,7 +108,27 @@ struct CameraTaskQuestView: View {
                             CustomButton(
                                 type: .custom(textColor: .appTextSelectedBrown, buttonColor: .appAccentOrange, shadowColor: .appBrandBrown),
                                 text: L10n.Game.openCamera,
-                                action: { /* Open camera */ },
+                                action: {
+                                    /* Open camera */
+                                    
+                                    // 1. Trigger the camera scanner here
+                                    // 2. Once the scanner finishes and captures the word, call this function:
+                                            
+                                    // Creating a dummy object for testing purposes to ensure navigation works correctly
+                                    let dummyWord = WordCardEntity(
+                                        id: "123",
+                                        sourceWord: "Pan",
+                                        translatedWord: "مقلاة",
+                                        sourceLanguage: "English",
+                                        targetLanguage: "Arabic",
+                                        category: "Kitchen",
+                                        imagePath: ""
+                                    )
+                                    
+                                    // Navigate to the Word Insight feature
+                                    viewModel.onCaptureSuccess(capturedWord: dummyWord)
+                                    
+                                },
                                 leading: Image(systemIcon: .cameraFill)
                             )
                             
@@ -151,10 +171,18 @@ struct CameraTaskQuestView: View {
 }
 
 #Preview("LightTheme") {
-    CameraTaskQuestView(viewModel: CameraTaskQuestViewModel())
+    CameraTaskQuestView(
+        viewModel: CameraTaskQuestViewModel(
+                router: Router()
+        )
+    )
 }
 
 #Preview("DarkTheme") {
-    CameraTaskQuestView(viewModel: CameraTaskQuestViewModel())
-        .preferredColorScheme(.dark)
+    CameraTaskQuestView(
+        viewModel: CameraTaskQuestViewModel(
+                router: Router()
+        )
+    )
+.preferredColorScheme(.dark)
 }
