@@ -120,7 +120,7 @@ struct HomeView: View {
                 }
                 .buttonStyle(HomeScaleButtonStyle())
                 .padding(.trailing, 20)
-                .padding(.bottom, 20)
+                .padding(.bottom, 100)
                 .offset(y: animateItems ? 0 : 50)
                 .opacity(animateItems ? 1 : 0)
                 .animation(.spring(response: 0.5, dampingFraction: 0.7).delay(0.6), value: animateItems)
