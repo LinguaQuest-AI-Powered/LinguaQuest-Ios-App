@@ -31,16 +31,7 @@ struct SkipDialog: View {
                 }
                 
                 // Badge for coins
-                HStack(spacing: 6) {
-                    Image(systemIcon: .dollarsignCircleFill)
-                        .foregroundColor(.appAccentOrange)
-                    Text("-200")
-                        .appTextStyle(.headingMediumBold, color: .appAccentOrange)
-                }
-                .padding(.horizontal, 24)
-                .padding(.vertical, 10)
-                .background(Color.appAccentOrange.opacity(0.1))
-                .clipShape(Capsule())
+                RewardBadge(type: .coin, value: "-200", size: .normal)
                 
                 VStack(spacing: 12) {
                     CustomButton(

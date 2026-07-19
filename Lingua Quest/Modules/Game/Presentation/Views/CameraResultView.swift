@@ -119,7 +119,7 @@ struct CameraResultView: View {
         }
         
         private var successView: some View {
-            DialogCardContainer(mascotImage: .bird) {
+            DialogCardContainer(mascotImage: .perfect) {
                 VStack(spacing: 24) {
                     Text(L10n.Game.perfect)
                         .appTextStyle(.displayMedium, color: .appBrandBrown)
@@ -129,8 +129,8 @@ struct CameraResultView: View {
                     
                     // Rewards Pills
                     HStack(spacing: 16) {
-                        RewardPill(icon: .rosette, value: L10n.Game.xpPoints(viewModel.xpPoints), color: .purple)
-                        RewardPill(icon: .dollarsignCircleFill, value: L10n.Game.coinsValue(viewModel.coinsEarned), color: .appAccentGold)
+                        RewardBadge(type: .xp, value: L10n.Game.xpPoints(viewModel.xpPoints), size: .large)
+                        RewardBadge(type: .coin, value: L10n.Game.coinsValue(viewModel.coinsEarned), size: .large)
                     }
                     
                     // Progress
@@ -171,26 +171,3 @@ struct CameraResultView: View {
         }
     }
 
-    private struct RewardPill: View {
-        let icon: Image.SystemIcon
-        let value: String
-        let color: Color
-        
-        var body: some View {
-            HStack(spacing: 8) {
-                Image(systemIcon: icon)
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundColor(color)
-                
-                Text(value)
-                    .font(.system(size: 14, weight: .bold))
-                    .foregroundColor(.appBrandBrown)
-        }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 16)
-        .frame(maxWidth: .infinity)
-        .background(Color.white)
-        .cornerRadius(30)
-        .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y: 2)
-    }
-}

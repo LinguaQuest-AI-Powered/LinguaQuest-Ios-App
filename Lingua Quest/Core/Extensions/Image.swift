@@ -121,6 +121,7 @@ extension Image {
         case mascotReward = "mascot_reward"
         case notEnoughCoins = "NotEnoughCoins"
         case skip = "Skip"
+        case perfect = "perfect"
     }
     
     init(icon: Icon) {

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct NotEnoughCoinsDialog: View {
+    let missingCoins: Int
     let action: () -> Void
     
     var body: some View {
@@ -21,9 +22,11 @@ struct NotEnoughCoinsDialog: View {
                     .appTextStyle(.displayMedium, color: .appBrandBrown)
                 
                 Text(L10n.Game.notEnoughCoinsSubtitle)
-                    .appTextStyle(.body, color: .appTextSecondary)
+                    .appTextStyle(.bodyMedium, color: .appTextSecondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 16)
+                
+                RewardBadge(type: .coin, value: "-\(missingCoins)", size: .normal)
                 
                 CustomButton(
                     type: .custom(textColor: .appTextOnPrimary, buttonColor: .appAccentOrange, shadowColor: .appBrandBrown),
@@ -40,7 +43,7 @@ struct NotEnoughCoinsDialog: View {
 #Preview {
     ZStack {
         Color.black.opacity(0.4).ignoresSafeArea()
-        NotEnoughCoinsDialog(action: {})
+        NotEnoughCoinsDialog(missingCoins: 20, action: {})
             .padding(24)
     }
 }

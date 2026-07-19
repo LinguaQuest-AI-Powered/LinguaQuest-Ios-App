@@ -39,17 +39,7 @@ struct CameraTaskQuestView: View {
                     Spacer()
                     
                     // Coin Counter
-                    HStack(spacing: 4) {
-                        Image(systemIcon: .dollarsignCircleFill)
-                            .foregroundColor(.orange)
-                        Text("\(viewModel.coins)")
-                            .appTextStyle(.captionBold, color: .appTextSecondary)
-                    }
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 6)
-                    .background(Color.appSurfaceCard)
-                    .clipShape(Capsule())
-                    .shadow(color: .black.opacity(0.1), radius: 3, x: 0, y: 1)
+                    RewardBadge(type: .coin, value: "\(viewModel.coins)", size: .small)
                 }
                 .padding(.horizontal, 24)
                 .padding(.top, 16)
@@ -159,7 +149,7 @@ struct CameraTaskQuestView: View {
             )
         }
         .appDialog(isPresented: $showNotEnoughCoinsDialog) {
-            NotEnoughCoinsDialog {
+            NotEnoughCoinsDialog(missingCoins: 25) { // Or pass actual missing amount
                 showNotEnoughCoinsDialog = false
             }
         }
