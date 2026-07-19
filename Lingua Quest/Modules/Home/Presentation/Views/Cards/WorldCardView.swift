@@ -10,6 +10,7 @@ import SwiftUI
 
 struct WorldCardView: View {
     let item: WorldItem
+    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -20,6 +21,10 @@ struct WorldCardView: View {
                         .scaledToFill()
                         .frame(width: 180, height: 100)
                         .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Color.appSurfaceCard.opacity(0.72), lineWidth: 2)
+                        )
                     
                     Text(item.difficulty)
                         .font(AppTextStyle.micro.font)
@@ -43,6 +48,7 @@ struct WorldCardView: View {
             
             Text(item.title)
                 .font(AppTextStyle.bodyLargeMedium.font)
+                .foregroundColor(Color.appTextHeading)
             
             HStack {
                 Text(L10n.Home.progress)
@@ -62,14 +68,27 @@ struct WorldCardView: View {
                     .frame(height: 10)
                 
                 Capsule()
-                    .fill(Color.appSemanticSuccess)
+                    .fill(
+                        LinearGradient(
+                            colors: [.appGlowTeal, .appSemanticSuccess],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
                     .frame(width: max(CGFloat(item.progress) * 150, 20), height: 10)
             }
         }
         .padding(12)
         .frame(width: 204)
-        .background(Color.appSurfaceCard)
-        .clipShape(RoundedRectangle(cornerRadius: 24))
+        .background(
+            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                .fill(Color.appSurfaceCard.opacity(colorScheme == .dark ? 0.94 : 0.98))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                .stroke(Color.appBorderLight.opacity(colorScheme == .dark ? 0.6 : 0.8), lineWidth: 1)
+        )
+        .shadow(color: Color.black.opacity(colorScheme == .dark ? 0.20 : 0.08), radius: 14, x: 0, y: 8)
     }
 }
 

@@ -9,6 +9,8 @@ import SwiftUI
 
 
 struct LearningCardView: View {
+    @Environment(\.colorScheme) private var colorScheme
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack(alignment: .top, spacing: 12) {
@@ -26,6 +28,7 @@ struct LearningCardView: View {
                     
                     Text(L10n.Onboarding.languageSpanish)
                         .font(AppTextStyle.headingMedium.font)
+                        .foregroundColor(Color.appTextHeading)
                 }
                 
                 Spacer()
@@ -51,13 +54,27 @@ struct LearningCardView: View {
                     .frame(height: 10)
                 
                 Capsule()
-                    .fill(Color.appProgressBar)
+                    .fill(
+                        LinearGradient(
+                            colors: [.appGlowTeal, .appProgressBar],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
                     .frame(width: 165, height: 10)
+                    .shadow(color: Color.appGlowTeal.opacity(colorScheme == .dark ? 0.32 : 0.18), radius: 8, x: 0, y: 0)
             }
         }
         .padding(18)
-        .background(Color.appSurfaceCard)
-        .clipShape(RoundedRectangle(cornerRadius: 24))
+        .background(
+            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                .fill(Color.appSurfaceCard.opacity(colorScheme == .dark ? 0.94 : 0.98))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                .stroke(Color.appBorderLight.opacity(colorScheme == .dark ? 0.7 : 0.9), lineWidth: 1)
+        )
+        .shadow(color: Color.black.opacity(colorScheme == .dark ? 0.22 : 0.07), radius: 16, x: 0, y: 8)
     }
 }
 

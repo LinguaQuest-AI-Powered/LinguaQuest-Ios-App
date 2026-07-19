@@ -55,6 +55,9 @@
 "auth.google_label" = "جوجل";
 "auth.apple_label" = "أبل";
 "components.app_name" = "لينجوا كويست!";
+"tabs.home" = "الرئيسية";
+"tabs.gallery" = "المعرض";
+"tabs.profile" = "الملف";
 
 "onboarding.level.beginner.title" = "مبتدئ";
 "onboarding.level.intermediate.title" = "متوسط";

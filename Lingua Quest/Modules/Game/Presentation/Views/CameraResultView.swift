@@ -26,6 +26,13 @@ struct CameraResultView: View {
                 }
             }
             .animation(.spring(response: 0.55, dampingFraction: 0.82), value: viewModel.state)
+            
+            if viewModel.state == .success {
+                ConfettiView()
+                    .ignoresSafeArea()
+                    .allowsHitTesting(false)
+                    .zIndex(100)
+            }
         }
         .navigationBarHidden(true)
     }

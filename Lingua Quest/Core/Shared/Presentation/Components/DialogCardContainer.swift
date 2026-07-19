@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct DialogCardContainer<Content: View>: View {
+    @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - Layout Constants
 
@@ -77,7 +78,6 @@ struct DialogCardContainer<Content: View>: View {
                 mascotView
             }
         }
-        .compositingGroup()
         .dialogCardShadow()
         .padding(.top, showMascot ? (mascotOffset + 10) : 0)
     }
@@ -120,7 +120,7 @@ private extension DialogCardContainer {
     var cardBorder: some View {
         RoundedRectangle(cornerRadius: cornerRadius)
             .stroke(
-                Color.appBorderCool,
+                Color.appBorderCool.opacity(colorScheme == .dark ? 0.4 : 1.0),
                 lineWidth: borderWidth
             )
     }
@@ -128,24 +128,17 @@ private extension DialogCardContainer {
     var decorativeBackground: some View {
         ZStack {
             Circle()
-                .fill(Color.appGlowTeal.opacity(0.2))
-                .frame(width: glowSize,
-                       height: glowSize)
+                .fill(Color.appGlowTeal.opacity(colorScheme == .dark ? 0.12 : 0.2))
+                .frame(width: glowSize, height: glowSize)
+                .padding(glowBlur * 2)
                 .blur(radius: glowBlur)
-                .frame(
-                    maxWidth: .infinity,
-                    maxHeight: .infinity,
-                    alignment: .topTrailing
-                )
-                .offset(
-                    x: glowOffset,
-                    y: -glowOffset
-                )
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                .offset(x: glowOffset, y: -glowOffset)
 
             Circle()
-                .fill(Color.appGlowGold.opacity(0.2))
-                .frame(width: glowSize,
-                       height: glowSize)
+                .fill(Color.appGlowGold.opacity(colorScheme == .dark ? 0.12 : 0.2))
+                .frame(width: glowSize, height: glowSize)
+                .padding(glowBlur * 2)
                 .blur(radius: glowBlur)
                 .frame(
                     maxWidth: .infinity,

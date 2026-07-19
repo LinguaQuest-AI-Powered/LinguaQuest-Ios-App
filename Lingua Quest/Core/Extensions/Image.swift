@@ -36,6 +36,8 @@ extension Image {
         case photo = "photo"
         case xmark = "xmark"
         case magnifyingglass = "magnifyingglass"
+        case houseFill = "house.fill"
+        case photoOnRectangle = "photo.on.rectangle"
 
         case play = "play.fill"
         case sparkles = "sparkles"
@@ -60,6 +62,7 @@ extension Image {
         case target = "target"
         case bellFill = "bell.fill"
         case moonFill = "moon.fill"
+        case sliderHorizontal3 = "slider.horizontal.3"
         case questionmarkCircleFill = "questionmark.circle.fill"
         case infoCircleFill = "info.circle.fill"
         case speakerSlashFill = "speaker.slash.fill"

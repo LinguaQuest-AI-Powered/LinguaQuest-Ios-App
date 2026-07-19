@@ -39,9 +39,8 @@ struct ProfileContentView: View {
     // MARK: - Body
     var body: some View {
         VStack(spacing: 0) {
-            let xpInt = Int(xpValue.replacingOccurrences(of: ",", with: "")) ?? 0
-            let coinsInt = Int(coinsValue.replacingOccurrences(of: ",", with: "")) ?? 0
-            AppHeaderView(starCount: xpInt, coinCount: coinsInt)
+     
+            AppHeaderView(starCount: 15000000, coinCount: 20000)
             
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 24) {

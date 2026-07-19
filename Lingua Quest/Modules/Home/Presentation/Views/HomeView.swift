@@ -9,10 +9,12 @@ import SwiftUI
 
 struct HomeView: View {
     @Environment(Router.self) var router
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var hasClaimedDailyReward: Bool = false
     
     @State private var dailyRewardViewModel = DailyRewardViewModel()
     @State private var showDailyRewardDialog = false
+    @State private var pulseWorldButton = false
     
     let worlds: [WorldItem] = [
         .init(title: L10n.Home.kitchenWorld, imageName: .kitchen, difficulty: L10n.Home.difficultyEasy, progress: 0.4, isCompleted: true),
@@ -89,9 +91,20 @@ struct HomeView: View {
                         .font(AppTextStyle.headingMedium.font)
                         .foregroundColor(.white)
                         .frame(width: 60, height: 60)
-                        .background(Color.appSemanticSuccess)
+                        .background(
+                            Circle()
+                                .fill(
+                                    LinearGradient(
+                                        colors: [.appAccentTeal, .appSemanticSuccess],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                        )
+                        .overlay(Circle().stroke(Color.appGlowTeal.opacity(0.42), lineWidth: 2))
                         .clipShape(Circle())
-                        .shadow(color: .black.opacity(0.15), radius: 5, x: 0, y: 3)
+                        .shadow(color: Color.appGlowTeal.opacity(0.24), radius: 14, x: 0, y: 6)
+                        .scaleEffect(pulseWorldButton ? 1.04 : 0.96)
                 }
                 .buttonStyle(HomeScaleButtonStyle())
                 .padding(.trailing, 20)
@@ -108,6 +121,11 @@ struct HomeView: View {
         .onAppear {
             withAnimation {
                 animateItems = true
+            }
+            
+            guard !reduceMotion else { return }
+            withAnimation(.easeInOut(duration: 1.4).repeatForever(autoreverses: true)) {
+                pulseWorldButton = true
             }
         }
         .appDialog(isPresented: $showDailyRewardDialog) {
@@ -187,24 +205,6 @@ struct TopBarView: View {
     }
 }
 
-struct HomeBackgroundView: View {
-    @Environment(\.colorScheme) private var colorScheme
-    
-    var body: some View {
-        ZStack {
-            Image(asset: .homeBackground)
-                .resizable()
-                .scaledToFill()
-                .clipped()
-            
-            if colorScheme == .dark {
-                Color.black.opacity(0.45)
-                    .ignoresSafeArea()
-            }
-        }
-    }
-}
-
 struct SectionHeaderView: View {
     let title: String
     let actionTitle: String
@@ -213,7 +213,7 @@ struct SectionHeaderView: View {
         HStack {
             Text(title)
                 .font(AppTextStyle.displaySmall.font)
-                .foregroundColor(Color.appTextPrimary)
+                .foregroundColor(Color.appTextHeading)
             
             Spacer()
             
@@ -224,7 +224,7 @@ struct SectionHeaderView: View {
                     Image(systemIcon: .chevronDown)
                         .font(AppTextStyle.captionMedium.font)
                 }
-                .foregroundColor(Color.appTextPrimary)
+                .foregroundColor(Color.appTextHeading)
             }
         }
     }

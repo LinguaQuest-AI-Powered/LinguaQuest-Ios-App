@@ -54,6 +54,9 @@
 "auth.google_label" = "Google";
 "auth.apple_label" = "Apple";
 "components.app_name" = "Lingua Quest!";
+"tabs.home" = "Home";
+"tabs.gallery" = "Gallery";
+"tabs.profile" = "Profile";
 
 "onboarding.level.beginner.title" = "Beginner";
 "onboarding.level.intermediate.title" = "Intermediate";

@@ -10,6 +10,7 @@ import SwiftUI
 
 struct DailyBonusCardView: View {
     var action: () -> Void
+    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         Button(action: action) {
@@ -48,9 +49,18 @@ struct DailyBonusCardView: View {
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
-            .background(Color.appBrandPrimary)
+            .background(
+                LinearGradient(
+                    colors: [
+                        Color.appBrandPrimary,
+                        Color.appBrandPrimary.opacity(colorScheme == .dark ? 0.7 : 0.9)
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
             .clipShape(RoundedRectangle(cornerRadius: 32))
-            .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)
+            .shadow(color: Color.appBrandPrimary.opacity(colorScheme == .dark ? 0.3 : 0.15), radius: 12, x: 0, y: 6)
         }
         .buttonStyle(.plain)
     }

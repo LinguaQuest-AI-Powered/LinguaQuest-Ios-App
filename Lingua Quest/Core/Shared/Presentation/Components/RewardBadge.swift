@@ -40,6 +40,8 @@ struct RewardBadge: View {
     let value: String
     var size: RewardBadgeSize = .normal
     
+    @Environment(\.colorScheme) private var colorScheme
+    
     var body: some View {
         HStack(spacing: iconSpacing) {
             Image(systemIcon: type.icon)
@@ -55,9 +57,20 @@ struct RewardBadge: View {
         .padding(.horizontal, horizontalPadding)
         .padding(.vertical, verticalPadding)
         .frame(maxWidth: size == .large ? .infinity : nil)
-        .background(Color.appSurfaceCard)
+        .background(
+            Capsule()
+                .fill(.ultraThinMaterial)
+                .overlay(
+                    Capsule()
+                        .fill(Color.appSurfaceCard.opacity(colorScheme == .dark ? 0.84 : 0.94))
+                )
+        )
+        .overlay(
+            Capsule()
+                .stroke(type.color.opacity(colorScheme == .dark ? 0.28 : 0.16), lineWidth: 1)
+        )
         .clipShape(Capsule())
-        .shadow(color: .black.opacity(0.08), radius: shadowRadius, x: 0, y: shadowY)
+        .shadow(color: type.color.opacity(colorScheme == .dark ? 0.16 : 0.10), radius: shadowRadius, x: 0, y: shadowY)
     }
     
     // MARK: - Styling Helpers

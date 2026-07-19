@@ -73,6 +73,13 @@ enum L10n {
     enum Components {
         static var appName: String { localized("components.app_name") }
     }
+    
+    enum Tabs {
+        static var home: String { localized("tabs.home") }
+        static var gallery: String { localized("tabs.gallery") }
+        static var profile: String { localized("tabs.profile") }
+    }
+    
     enum Onboarding {
         static var beginnerTitle: String { localized("onboarding.level.beginner.title") }
         static var intermediateTitle: String { localized("onboarding.level.intermediate.title") }
