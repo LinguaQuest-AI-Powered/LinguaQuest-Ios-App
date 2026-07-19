@@ -16,6 +16,14 @@ struct HomeView: View {
     @State private var showDailyRewardDialog = false
     @State private var pulseWorldButton = false
     
+    @State private var showMyLanguagesSheet = false
+    @State private var selectedLanguage: UserLearningLanguage? = UserLearningLanguage(language: Language(code: "es", name: "Spanish", flag: "🇪🇸"), level: 12)
+    let userLanguages: [UserLearningLanguage] = [
+        UserLearningLanguage(language: Language(code: "es", name: "Spanish", flag: "🇪🇸"), level: 12),
+        UserLearningLanguage(language: Language(code: "fr", name: "French", flag: "🇫🇷"), level: 4),
+        UserLearningLanguage(language: Language(code: "ja", name: "Japanese", flag: "🇯🇵"), level: 3)
+    ]
+    
     let worlds: [WorldItem] = [
             .init(id: "kitchen", title: L10n.Home.kitchenWorld, imageAssetName: "kitchen", difficulty: .easy, progress: 0.4, isCompleted: true),
             
@@ -98,7 +106,7 @@ struct HomeView: View {
                     .padding(.top, 12)
                 }
 
-                Button(action: {}) {
+                Button(action: { showMyLanguagesSheet = true }) {
                     Image(asset: .world)
                         .font(AppTextStyle.headingMedium.font)
                         .foregroundColor(.white)
@@ -153,6 +161,16 @@ struct HomeView: View {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         hasClaimedDailyReward = true
                     }
+                }
+            )
+        }
+        .customBottomSheet(isPresented: $showMyLanguagesSheet, initialDetent: .custom(ratio: 0.7)) {
+            MyLanguagesBottomSheet(
+                isPresented: $showMyLanguagesSheet,
+                languages: userLanguages,
+                selectedLanguage: $selectedLanguage,
+                onAddNewLanguage: {
+                    // Navigate to add new language or show onboarding
                 }
             )
         }
