@@ -18,7 +18,7 @@ struct WorldCardView: View {
                     Image(asset: item.imageName)
                         .resizable()
                         .scaledToFill()
-                        .frame(width: 180, height: 128)
+                        .frame(width: 180, height: 100)
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                     
                     Text(item.difficulty)

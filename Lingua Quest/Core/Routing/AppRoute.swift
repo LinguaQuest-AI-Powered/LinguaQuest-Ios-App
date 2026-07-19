@@ -20,6 +20,7 @@ enum AppRoute: Hashable {
     case gameLevels(worldName: String)
     case cameraQuestTask
     case leaderboard
+    case achievements
     case wordInsight(word: WordCardEntity)
 }
 

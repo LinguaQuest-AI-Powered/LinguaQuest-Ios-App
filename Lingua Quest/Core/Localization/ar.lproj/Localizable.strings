@@ -171,5 +171,17 @@
 "word_insight.translation_label" = "الترجمة";
 "word_insight.memory_label" = "نصيحة للحفظ";
 "word_insight.fun_fact_label" = "معلومة ممتعة";
+
+"achievements.title" = "الإنجازات";
+"achievements.my_trophies" = "كؤوسي";
+"achievements.subtitle" = "كل كلمة هي خطوة أعمق في المغامرة.";
+"achievements.filter_all" = "الكل";
+"achievements.filter_earned" = "مكتسبة";
+"achievements.filter_locked" = "مقفلة";
+"achievements.earned_label" = "مكتسبة";
+"achievements.in_progress_label" = "قيد التقدم";
+"achievements.xp_gained_label" = "الخبرة المكتسبة";
+"achievements.claim_rewards" = "استلم المكافآت الأسبوعية";
+
 "word_insight.error.empty" = "تعذر الحصول على مراجعة الذكاء الاصطناعي. يرجى المحاولة مجدداً.";
 "word_insight.error.parsing" = "حدث خطأ أثناء قراءة استجابة الذكاء الاصطناعي. يرجى المحاولة مجدداً.";

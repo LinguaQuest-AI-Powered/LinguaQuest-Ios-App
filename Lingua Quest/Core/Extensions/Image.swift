@@ -80,6 +80,7 @@ extension Image {
         case myCaptureBird = "my_capture_bird"
         case emptyGalleryBird = "empty_gallery_bird"
         case leaderBoardBird = "leader_board_bird"
+        case achivementBird = "achivement_bird"
         case star = "star"
         case star2 = "star2"
         case ball = "ball"
