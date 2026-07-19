@@ -149,6 +149,7 @@
 "daily_reward.claim" = "Claim Reward";
 "daily_reward.coins_format" = "+%d Coins";
 "daily_reward.day_format" = "Day %d";
+"home.unlock_at_level" = "Unlock at Level %d";
 
 "profile.title" = "LinguaQuest";
 "profile.user_level" = "LEVEL %d";

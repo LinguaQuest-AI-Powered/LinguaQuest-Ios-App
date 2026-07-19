@@ -194,6 +194,10 @@ enum L10n {
         static func dayFormat(_ day: Int) -> String {
             String(format: localized("daily_reward.day_format"), day)
         }
+        
+        static func unlockAtLevel(_ level: Int) -> String {
+            String(format: localized("home.unlock_at_level"), level)
+        }
     }
     
     enum Profile {

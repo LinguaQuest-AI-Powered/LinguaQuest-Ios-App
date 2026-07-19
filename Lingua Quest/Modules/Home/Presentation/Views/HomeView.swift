@@ -17,9 +17,13 @@ struct HomeView: View {
     @State private var pulseWorldButton = false
     
     let worlds: [WorldItem] = [
-        .init(title: L10n.Home.kitchenWorld, imageName: .kitchen, difficulty: L10n.Home.difficultyEasy, progress: 0.4, isCompleted: true),
-        .init(title: L10n.Home.cityWorld, imageName: .city, difficulty: L10n.Home.difficultyMedium, progress: 0.18, isCompleted: false)
+        .init(id: "kitchen", title: L10n.Home.kitchenWorld, imageAssetName: "kitchen", difficulty: .easy, progress: 0.4, isCompleted: true),
+        .init(id: "city", title: L10n.Home.cityWorld, imageAssetName: "city", difficulty: .medium, progress: 0.18, isCompleted: false)
     ]
+    
+    private var displayWorlds: [WorldUIModel] {
+        worlds.map(WorldUIMapper.map)
+    }
     
     @State private var animateItems: Bool = false
     
@@ -52,19 +56,22 @@ struct HomeView: View {
                         Group {
                             SectionHeaderView(
                                 title: L10n.Home.exploreWorlds,
-                                actionTitle: L10n.Home.seeMore
+                                actionTitle: L10n.Home.seeMore,
+                                onActionTapped: { }
                             )
                             .padding(.horizontal, 20)
 
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack(spacing: 16) {
-                                    ForEach(worlds) { item in
+                                    ForEach(displayWorlds) { item in
                                         Button(action: {
                                             router.push(.gameLevels(worldName: item.title))
                                         }) {
                                             WorldCardView(item: item)
+                                                .frame(width: 204)
                                         }
                                         .buttonStyle(HomeScaleButtonStyle())
+                                        .disabled(item.isLocked)
                                     }
                                 }
                                 .padding(.horizontal, 20)
@@ -208,6 +215,7 @@ struct TopBarView: View {
 struct SectionHeaderView: View {
     let title: String
     let actionTitle: String
+    var onActionTapped: () -> Void = {}
     
     var body: some View {
         HStack {
@@ -217,7 +225,7 @@ struct SectionHeaderView: View {
             
             Spacer()
             
-            Button(action: {}) {
+            Button(action: onActionTapped) {
                 HStack(spacing: 4) {
                     Text(actionTitle)
                         .font(AppTextStyle.bodyBold.font)
