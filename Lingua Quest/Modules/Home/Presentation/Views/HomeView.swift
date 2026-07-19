@@ -62,7 +62,7 @@ struct HomeView: View {
                             SectionHeaderView(
                                 title: L10n.Home.exploreWorlds,
                                 actionTitle: L10n.Home.seeMore,
-                                onActionTapped: { }
+                                onActionTapped: { router.push(.allWorlds) }
                             )
                             .padding(.horizontal, 20)
 

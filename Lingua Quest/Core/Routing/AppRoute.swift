@@ -24,6 +24,7 @@ enum AppRoute: Hashable {
     case leaderboard
     case achievements
     case wordInsight(word: WordCardEntity)
+    case allWorlds
 }
 
 enum AppSheet: String, Identifiable {
