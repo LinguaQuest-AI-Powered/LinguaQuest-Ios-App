@@ -15,7 +15,7 @@ struct DialogCardContainer<Content: View>: View {
     private var mascotOffset: CGFloat {
         mascotSize * 0.5
     }
-    private var mascotTopSpacing: CGFloat { 120 }
+    private var mascotTopSpacing: CGFloat { showMascot ? 120 : 32 }
     private var horizontalPadding: CGFloat { 20 }
     private var bottomPadding: CGFloat { 30 }
     private var cornerRadius: CGFloat { 48 }
@@ -26,6 +26,7 @@ struct DialogCardContainer<Content: View>: View {
 
     // MARK: - Properties
 
+    private let showMascot: Bool
     private let mascotImage: Image.Asset
     private let speechBubbleText: String?
     private let speechBubbleAnimated: Bool
@@ -34,6 +35,7 @@ struct DialogCardContainer<Content: View>: View {
     private let content: Content
 
     init(
+        showMascot: Bool = true,
         mascotImage: Image.Asset = .dialogMascot,
         speechBubbleText: String? = nil,
         speechBubbleAnimated: Bool = true,
@@ -41,6 +43,7 @@ struct DialogCardContainer<Content: View>: View {
         onMascotTap: (() -> Void)? = nil,
         @ViewBuilder content: () -> Content
     ) {
+        self.showMascot = showMascot
         self.mascotImage = mascotImage
         self.speechBubbleText = speechBubbleText
         self.speechBubbleAnimated = speechBubbleAnimated
@@ -65,11 +68,13 @@ struct DialogCardContainer<Content: View>: View {
         .background(cardBackground)
         .overlay(cardBorder)
         .overlay(alignment: .top) {
-            mascotView
+            if showMascot {
+                mascotView
+            }
         }
         .compositingGroup()
         .dialogCardShadow()
-        .padding(.top, mascotOffset + 10)
+        .padding(.top, showMascot ? (mascotOffset + 10) : 0)
     }
 }
 

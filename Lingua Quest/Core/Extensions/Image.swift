@@ -53,6 +53,10 @@ extension Image {
         case trophyFill = "trophy.fill"
         case starFill = "star.fill"
         case rosette = "rosette"
+        case boltFill = "bolt.fill"
+        case boltSlashFill = "bolt.slash.fill"
+        case cameraRotateFill = "camera.rotate.fill"
+        case lightbulbFill = "lightbulb.fill"
        
     }
     

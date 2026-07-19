@@ -90,6 +90,7 @@
 "game.level_title" = "Level %@";
 "game.tap_for_help" = "TAP ME IF YOU\nWANT HELP";
 "game.scan_instruction" = "Scan a %@ in your real environment using the camera to complete this quest.";
+"game.find" = "Find:";
 "game.open_camera" = "Open Camera";
 "game.skip" = "Skip";
 "game.need_hint_title" = "Need a hint?";
@@ -98,6 +99,19 @@
 "game.hint.use" = "Use Hint";
 "game.hint.reveal_first_letter_mock" = "Starts with 'A'";
 "game.hint.show_category_clue_mock" = "It's a type of fruit";
+"game.result.not_quite" = "Not Quite!";
+"game.result.didnt_see_item" = "I didn't quite see a %@ there.";
+"game.result.make_sure_lit" = "Make sure the object is well lit!";
+"game.result.retry_camera" = "Retry Camera";
+"game.result.change_word" = "Change Word";
+"game.result.perfect" = "Perfect!";
+"game.result.you_found_it" = "You found it!";
+"game.result.next_level" = "Next Level";
+"game.result.analyzing" = "Analyzing...";
+"game.result.analyzing_subtitle" = "Looking closely at your photo...";
+"game.result.xp_points" = "+%d XP";
+"game.result.coins_value" = "+%d COINS";
+"game.result.level_progress" = "Level %d Progress";
 "gallery.my_captures" = "My Captures";
 "gallery.objects_collected" = "%d objects collected";
 "gallery.captures_so_far" = "0 captures so far";

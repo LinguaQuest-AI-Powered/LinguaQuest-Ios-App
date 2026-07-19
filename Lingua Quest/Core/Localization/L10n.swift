@@ -109,6 +109,7 @@ enum L10n {
         static func levelTitle(_ level: Int) -> String { String(format: localized("game.level_title"), "\(level)") }
         static var tapForHelp: String { localized("game.tap_for_help") }
         static func scanInstruction(_ word: String) -> String { String(format: localized("game.scan_instruction"), word) }
+        static var find: String { localized("game.find") }
         static var openCamera: String { localized("game.open_camera") }
         static var skip: String { localized("game.skip") }
         static var needHintTitle: String { localized("game.need_hint_title") }
@@ -117,6 +118,19 @@ enum L10n {
         static var useHint: String { localized("game.hint.use") }
         static var hintRevealFirstLetterMock: String { localized("game.hint.reveal_first_letter_mock") }
         static var hintShowCategoryClueMock: String { localized("game.hint.show_category_clue_mock") }
+        static var notQuite: String { localized("game.result.not_quite") }
+        static func didntSeeItem(_ item: String) -> String { String(format: localized("game.result.didnt_see_item"), item) }
+        static var makeSureLit: String { localized("game.result.make_sure_lit") }
+        static var retryCamera: String { localized("game.result.retry_camera") }
+        static var changeWord: String { localized("game.result.change_word") }
+        static var perfect: String { localized("game.result.perfect") }
+        static var youFoundIt: String { localized("game.result.you_found_it") }
+        static var nextLevel: String { localized("game.result.next_level") }
+        static var analyzing: String { localized("game.result.analyzing") }
+        static var analyzingSubtitle: String { localized("game.result.analyzing_subtitle") }
+        static func xpPoints(_ points: Int) -> String { String(format: localized("game.result.xp_points"), points) }
+        static func coinsValue(_ points: Int) -> String { String(format: localized("game.result.coins_value"), points) }
+        static func levelProgress(_ level: Int) -> String { String(format: localized("game.result.level_progress"), level) }
     }
     
     enum Gallery {

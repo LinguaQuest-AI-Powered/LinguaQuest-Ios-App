@@ -19,41 +19,41 @@ struct LanguageStepView: View {
     @State private var showAlert = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Image(asset: .bird3)
-                .resizable()
-                .scaledToFit()
-                .frame(height: 200)
-                .frame(maxWidth: .infinity)
+        VStack(alignment: .leading, spacing: 24) {
+            LoopedVideoPlayerView(videoAsset: .welcome)
+                .frame(height: 250)
+                .clipShape(RoundedRectangle(cornerRadius: 32, style: .continuous))
+                .shadow(color: Color.black.opacity(0.08), radius: 15, x: 0, y: 8)
 
-            Text(L10n.Onboarding.languageStepTitle)
-                .appTextStyle(.displaySmall,color: .appTextPrimary)
-                .frame(maxWidth: .infinity, alignment: .center)
+            VStack(spacing: 8) {
+                Text(L10n.Onboarding.languageStepTitle)
+                    .appTextStyle(.displaySmall, color: .appTextPrimary)
+                    .frame(maxWidth: .infinity, alignment: .center)
 
-            Text(L10n.Onboarding.languageStepSubtitle)
-                .appTextStyle(.bodyLarge, color: .appTextSecondary)
-                .frame(maxWidth: .infinity, alignment: .center)
+                Text(L10n.Onboarding.languageStepSubtitle)
+                    .appTextStyle(.bodyLarge, color: .appTextSecondary)
+                    .frame(maxWidth: .infinity, alignment: .center)
+            }
 
-            LanguageSelectorButton(
-                title: L10n.Onboarding.languageSelectorISpeak,
-                placeholder: L10n.Onboarding.languageSelectorPlaceholder,
-                selectedLanguage: state.selectedSpokenLanguage,
-                borderColor: Color.gray.opacity(0.15),
-                action: {
-                    showSpokenLanguageSheet = true
-                }
-            )
+            VStack(spacing: 16) {
+                LanguageSelectorButton(
+                    title: L10n.Onboarding.languageSelectorISpeak,
+                    placeholder: L10n.Onboarding.languageSelectorPlaceholder,
+                    selectedLanguage: state.selectedSpokenLanguage,
+                    action: {
+                        showSpokenLanguageSheet = true
+                    }
+                )
 
-            LanguageSelectorButton(
-                title: L10n.Onboarding.languageStepIWantToLearn,
-                placeholder: L10n.Onboarding.languageSelectorPlaceholder,
-                selectedLanguage: state.selectedLearningLanguage,
-                borderColor: Color.appBrandPrimary,
-                action: {
-                    showLearningLanguageSheet = true
-                }
-            )
-
+                LanguageSelectorButton(
+                    title: L10n.Onboarding.languageStepIWantToLearn,
+                    placeholder: L10n.Onboarding.languageSelectorPlaceholder,
+                    selectedLanguage: state.selectedLearningLanguage,
+                    action: {
+                        showLearningLanguageSheet = true
+                    }
+                )
+            }
 
             Spacer()
 

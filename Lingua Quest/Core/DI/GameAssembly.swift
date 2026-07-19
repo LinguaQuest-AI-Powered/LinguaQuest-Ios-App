@@ -15,8 +15,19 @@ final class GameAssembly: Assembly {
             GameLevelsViewModel()
         }
         
-        container.register(CameraTaskQuestViewModel.self) { _ in
-            CameraTaskQuestViewModel()
+        container.register(CameraTaskQuestViewModel.self) { resolver in
+            let router = resolver.resolve(RouterProtocol.self)!
+            return CameraTaskQuestViewModel(router: router)
+        }
+        
+        container.register(CameraCaptureViewModel.self) { (resolver, targetWord: String) in
+            let router = resolver.resolve(RouterProtocol.self)!
+            return CameraCaptureViewModel(targetWord: targetWord, router: router)
+        }
+        
+        container.register(CameraResultViewModel.self) { (resolver, targetWord: String) in
+            let router = resolver.resolve(RouterProtocol.self)!
+            return CameraResultViewModel(targetWord: targetWord, router: router)
         }
     }
 }

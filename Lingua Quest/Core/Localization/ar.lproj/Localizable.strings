@@ -89,6 +89,7 @@
 "game.level_title" = "مستوى %@";
 "game.tap_for_help" = "اضغط هنا إذا\nأردت المساعدة";
 "game.scan_instruction" = "قم بمسح %@ في بيئتك الحقيقية باستخدام الكاميرا لإكمال هذه المهمة.";
+"game.find" = "اعثر على:";
 "game.open_camera" = "افتح الكاميرا";
 "game.skip" = "تخطي";
 "game.need_hint_title" = "تحتاج مساعدة؟";
@@ -97,6 +98,19 @@
 "game.hint.use" = "استخدام التلميح";
 "game.hint.reveal_first_letter_mock" = "يبدأ بحرف 'A'";
 "game.hint.show_category_clue_mock" = "إنه نوع من الفاكهة";
+"game.result.not_quite" = "ليس تماماً!";
+"game.result.didnt_see_item" = "لم أستطع رؤية %@ بوضوح هناك.";
+"game.result.make_sure_lit" = "تأكد من أن العنصر مضاء جيداً!";
+"game.result.retry_camera" = "إعادة التقاط الصورة";
+"game.result.change_word" = "تغيير الكلمة";
+"game.result.perfect" = "ممتاز!";
+"game.result.you_found_it" = "لقد وجدتها!";
+"game.result.next_level" = "المستوى التالي";
+"game.result.analyzing" = "جاري التحليل...";
+"game.result.analyzing_subtitle" = "نتحقق من صورتك بعناية...";
+"game.result.xp_points" = "+%d نقطة خبرة";
+"game.result.coins_value" = "+%d عملة";
+"game.result.level_progress" = "التقدم في المستوى %d";
 "gallery.my_captures" = "التقاطاتي";
 "gallery.objects_collected" = "تم جمع %d أشياء";
 "gallery.captures_so_far" = "0 التقاطات حتى الآن";

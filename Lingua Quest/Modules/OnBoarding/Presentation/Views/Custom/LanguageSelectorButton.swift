@@ -11,16 +11,19 @@ struct LanguageSelectorButton: View {
     let title: String
     let placeholder: String
     let selectedLanguage: Language?
-    let borderColor: Color
     let action: () -> Void
+
+    private var isSelected: Bool {
+        selectedLanguage != nil
+    }
 
     var body: some View {
         Button(action: action) {
             VStack(alignment: .leading, spacing: 8) {
                 Text(title)
-                    .appTextStyle(.micro, color: .gray)
+                    .appTextStyle(.micro, color: .appTextSecondary.opacity(0.8))
 
-                HStack(spacing: 10) {
+                HStack(spacing: 12) {
                     if let selectedLanguage {
                         Text(selectedLanguage.flag)
                             .font(.system(size: 20))
@@ -30,33 +33,53 @@ struct LanguageSelectorButton: View {
                             .appTextStyle(.bodyLargeMedium, color: .appTextPrimary)
                     } else {
                         Text(placeholder)
-                            .appTextStyle(.bodyLargeMedium, color: .gray.opacity(0.7))
+                            .appTextStyle(.bodyLargeMedium, color: .appTextSecondary.opacity(0.5))
                     }
 
                     Spacer()
 
                     Image(systemIcon: .chevronDown)
-                        .appTextStyle(.captionMedium, color: .gray)
+                        .appTextStyle(.captionMedium, color: isSelected ? .appBrandPrimary : .appTextSecondary.opacity(0.6))
                 }
             }
-            .padding()
+            .padding(.horizontal, 20)
+            .padding(.vertical, 16)
             .background(Color.appSurfaceCard)
             .overlay {
                 RoundedRectangle(cornerRadius: 18)
-                    .stroke(borderColor, lineWidth: 1.5)
+                    .stroke(isSelected ? Color.appBrandPrimary : Color.appBorderLight, lineWidth: isSelected ? 2.0 : 1.5)
             }
             .cornerRadius(18)
+            .shadow(color: isSelected ? Color.appBrandPrimary.opacity(0.08) : Color.black.opacity(0.03), radius: 8, x: 0, y: 4)
         }
+        .buttonStyle(ScaleButtonStyle())
     }
 }
 
+struct ScaleButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
+            .animation(.spring(response: 0.3, dampingFraction: 0.6), value: configuration.isPressed)
+    }
+}
 
 #Preview {
-    LanguageSelectorButton(
-        title: "I SPEAK...",
-        placeholder: "Select language",
-        selectedLanguage: Language(code: "en", name: "English", flag: "🇬🇧"),
-        borderColor: Color.gray.opacity(0.15),
-        action: {}
-    )
+    VStack(spacing: 16) {
+        LanguageSelectorButton(
+            title: "I SPEAK...",
+            placeholder: "Select language",
+            selectedLanguage: nil,
+            action: {}
+        )
+        
+        LanguageSelectorButton(
+            title: "I WANT TO LEARN...",
+            placeholder: "Select language",
+            selectedLanguage: Language(code: "en", name: "English", flag: "🇬🇧"),
+            action: {}
+        )
+    }
+    .padding()
+    .background(Color.appBackgroundWarm)
 }

@@ -29,4 +29,11 @@ final class Resolver {
         }
         return service
     }
+    
+    func resolve<T, Arg1>(_ type: T.Type, argument: Arg1) -> T {
+        guard let service = container.resolve(type, argument: argument) else {
+            fatalError("Failed to resolve type: \(type) with argument: \(argument)")
+        }
+        return service
+    }
 }

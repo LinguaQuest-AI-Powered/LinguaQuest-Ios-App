@@ -72,6 +72,12 @@ final class Router: RouterProtocol {
         case .cameraQuestTask:
             let viewModel = Resolver.shared.resolve(CameraTaskQuestViewModel.self)
             CameraTaskQuestView(viewModel: viewModel)
+        case .cameraCapture(let targetWord):
+            let viewModel = Resolver.shared.resolve(CameraCaptureViewModel.self, argument: targetWord)
+            CameraCaptureView(viewModel: viewModel)
+        case .cameraResult(let targetWord):
+            let viewModel = Resolver.shared.resolve(CameraResultViewModel.self, argument: targetWord)
+            CameraResultView(viewModel: viewModel)
         }
     }
 }

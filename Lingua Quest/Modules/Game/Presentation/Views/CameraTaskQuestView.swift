@@ -108,7 +108,7 @@ struct CameraTaskQuestView: View {
                             CustomButton(
                                 type: .primary,
                                 text: L10n.Game.openCamera,
-                                action: { /* Open camera */ },
+                                action: { viewModel.openCamera() },
                                 leading: Image(systemIcon: .cameraFill)
                             )
                             
@@ -151,10 +151,10 @@ struct CameraTaskQuestView: View {
 }
 
 #Preview("LightTheme") {
-    CameraTaskQuestView(viewModel: CameraTaskQuestViewModel())
+    CameraTaskQuestView(viewModel: CameraTaskQuestViewModel(router: Router()))
 }
 
 #Preview("DarkTheme") {
-    CameraTaskQuestView(viewModel: CameraTaskQuestViewModel())
+    CameraTaskQuestView(viewModel: CameraTaskQuestViewModel(router: Router()))
         .preferredColorScheme(.dark)
 }
