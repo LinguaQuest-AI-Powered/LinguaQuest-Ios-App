@@ -140,6 +140,7 @@
 "home.city_world" = "City World";
 "home.difficulty.easy" = "EASY";
 "home.difficulty.medium" = "MEDIUM";
+"home.difficulty.hard" = "HARD";
 "home.lesson.apple" = "Apple";
 "home.daily_streak_bonus" = "Daily Streak Bonus!";
 "home.claim_daily_reward" = "Claim your daily reward!";

@@ -139,6 +139,7 @@
 "home.city_world" = "عالم المدينة";
 "home.difficulty.easy" = "سهل";
 "home.difficulty.medium" = "متوسط";
+"home.difficulty.hard" = "صعب";
 "home.lesson.apple" = "تفاحة";
 "home.daily_streak_bonus" = "مكافأة سلسلة الأيام!";
 "home.claim_daily_reward" = "طالب بمكافأتك اليومية!";
