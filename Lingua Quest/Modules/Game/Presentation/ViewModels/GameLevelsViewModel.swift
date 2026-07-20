@@ -12,6 +12,7 @@ import Observation
 @Observable
 class GameLevelsViewModel {
     var levels: [GameLevel] = []
+    var isLoading: Bool = true
     
     private let getGameLevelsUseCase: GetGameLevelsUseCase
     
@@ -20,10 +21,16 @@ class GameLevelsViewModel {
     }
     
     func fetchLevels(worldId: Int) async {
+        isLoading = true
         do {
             levels = try await getGameLevelsUseCase.execute(worldId: worldId)
+            
+            // Allow UI to render the Shimmer state on the correct final road length for a seamless transition
+            try? await Task.sleep(nanoseconds: 600_000_000)
+            
         } catch {
             print("Error fetching levels: \(error)")
         }
+        isLoading = false
     }
 }

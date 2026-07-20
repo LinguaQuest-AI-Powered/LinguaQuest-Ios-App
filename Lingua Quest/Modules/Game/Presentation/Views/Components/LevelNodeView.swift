@@ -10,7 +10,6 @@ import SwiftUI
 struct LevelNodeView: View {
     let level: GameLevel
     @Environment(\.colorScheme) var colorScheme
-    @State private var appeared = false
     @State private var pulseScale: CGFloat = 1.0
     @State private var glowOpacity: Double = 0.5
     @State private var bounceOffset: CGFloat = 0
@@ -26,17 +25,6 @@ struct LevelNodeView: View {
                 
             case .locked:
                 lockedNode
-            }
-        }
-        .scaleEffect(appeared ? 1 : 0)
-        .opacity(appeared ? 1 : 0)
-        .offset(y: appeared ? 0 : 30)
-        .onAppear {
-            withAnimation(
-                .spring(response: 0.6, dampingFraction: 0.6, blendDuration: 0.4)
-                .delay(Double(level.id) * 0.08)
-            ) {
-                appeared = true
             }
         }
     }

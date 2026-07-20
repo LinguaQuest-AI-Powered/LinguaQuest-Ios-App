@@ -23,7 +23,9 @@ struct GameLevelsView: View {
             GeometryReader { geo in
                 let w = geo.size.width
                 let levelSpacing: CGFloat = 160
-                let totalHeight = CGFloat(viewModel.levels.count) * levelSpacing + 200
+                // Enforce a minimum of 6 items so the road always reaches the bottom of the screen, even if the API returns fewer levels.
+                let itemsCount = max(viewModel.levels.isEmpty ? 6 : viewModel.levels.count, 6)
+                let totalHeight = CGFloat(itemsCount) * levelSpacing + 200
                 
                 // We add a massive buffer of extra grass image to the top and bottom.
                 // This means when you scroll past the limits (bounce), you just see more
@@ -68,19 +70,39 @@ struct GameLevelsView: View {
                                 .frame(width: w, height: totalHeight)
                             
                             // Level Nodes
-                            ForEach(Array(viewModel.levels.enumerated()), id: \.element.id) { index, level in
-                                let yPos = totalHeight - 100 - (CGFloat(index) * levelSpacing)
-                                let xPos = RoadMath.xPosition(for: yPos, in: w)
-                                
-                                Button {
-                                    router.push(.cameraQuestTask)
-                                } label: {
-                                    LevelNodeView(level: level)
+                            if viewModel.isLoading {
+                                ForEach(0..<itemsCount, id: \.self) { index in
+                                    let yPos = totalHeight - 100 - (CGFloat(index) * levelSpacing)
+                                    let xPos = RoadMath.xPosition(for: yPos, in: w)
+                                    
+                                    Circle()
+                                        .fill(Color.appShimmerBase)
+                                        .frame(width: 80, height: 80)
+                                        .shimmer(isActive: true)
+                                        .position(x: xPos, y: yPos)
+                                        .id(index)
                                 }
-                                .buttonStyle(.plain)
-                                .position(x: xPos, y: yPos)
-                                .id(level.id)
+                            } else {
+                                ForEach(Array(viewModel.levels.enumerated()), id: \.element.id) { index, level in
+                                    let yPos = totalHeight - 100 - (CGFloat(index) * levelSpacing)
+                                    let xPos = RoadMath.xPosition(for: yPos, in: w)
+                                    
+                                    Button {
+                                        router.push(.cameraQuestTask)
+                                    } label: {
+                                        LevelNodeView(level: level)
+                                    }
+                                    .buttonStyle(.plain)
+                                    .position(x: xPos, y: yPos)
+                                    .id(level.id)
+                                }
                             }
+                            
+                            // Permanent invisible anchor at the absolute bottom of the road
+                            Color.clear
+                                .frame(width: 1, height: 1)
+                                .position(x: w / 2, y: totalHeight)
+                                .id("bottom_anchor")
                             
                             // Floating sparkle particles for a magical feel
                             FloatingParticlesView(
@@ -92,15 +114,13 @@ struct GameLevelsView: View {
                         .frame(width: w, height: totalHeight)
                         // Apply the tiled grass as a background that bleeds massively out of the ZStack's bounds!
                         .background(
-                            ZStack(alignment: .topLeading) {
-                                
-                                // Custom Tiled Background with Crossfade to hide seams
+                            Group {
                                 let imageHeight: CGFloat = 1000
                                 let overlap: CGFloat = 0.2 // 20% overlap
                                 let stepHeight = imageHeight * (1.0 - overlap)
                                 let imageCount = Int(paddedHeight / stepHeight) + 2
                                 
-                                ZStack {
+                                LazyVStack(spacing: -imageHeight * overlap) {
                                     ForEach(0..<imageCount, id: \.self) { i in
                                         Image(asset: .gameLevelBackground)
                                             .resizable()
@@ -118,32 +138,35 @@ struct GameLevelsView: View {
                                                     endPoint: .bottom
                                                 )
                                             )
-                                            .position(
-                                                x: w / 2,
-                                                y: paddedHeight - (CGFloat(i) * stepHeight) - (imageHeight / 2)
-                                            )
-                                            .zIndex(CGFloat(i))
+                                            .zIndex(Double(-i))
                                     }
                                 }
-                                .frame(width: w, height: paddedHeight)
                                 .offset(y: -overscrollBuffer)
-                                
-                                // Dark Mode Overlay
-                                if colorScheme == .dark {
-                                    Color.black.opacity(0.35)
-                                        .frame(width: w, height: paddedHeight)
-                                        .offset(y: -overscrollBuffer)
-                                }
-                            }
+                                .overlay(
+                                    colorScheme == .dark ? Color.black.opacity(0.35) : Color.clear
+                                )
+                            },
+                            alignment: .top
                         )
                     }
-                    .onAppear {
-                        // Automatically scroll to the absolute bottom (Level 1) when the screen opens,
-                        // but only if levels exist. The .task below will fetch them, and we might need to scroll later.
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                            if !viewModel.levels.isEmpty {
-                                scrollProxy.scrollTo(viewModel.levels.first?.id ?? 1, anchor: .bottom)
+                    .onChange(of: viewModel.isLoading) { _, isLoading in
+                        if !isLoading {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                                scrollProxy.scrollTo("bottom_anchor", anchor: .bottom)
                             }
+                        }
+                    }
+                    .onChange(of: viewModel.levels) { _, newLevels in
+                        if !newLevels.isEmpty {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                                scrollProxy.scrollTo("bottom_anchor", anchor: .bottom)
+                            }
+                        }
+                    }
+                    .onAppear {
+                        // Immediately scroll to the bottom anchor of the road when view appears
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                            scrollProxy.scrollTo("bottom_anchor", anchor: .bottom)
                         }
                     }
                 }

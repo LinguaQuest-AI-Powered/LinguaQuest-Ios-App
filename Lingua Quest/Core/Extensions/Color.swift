@@ -78,4 +78,8 @@ extension Color {
     static let appPodiumBrownText = Color("TokenPodiumBrownText")
     static let appLeaderboardDarkText = Color("TokenLeaderboardDarkText")
     static let appLeaderboardBackground = Color("TokenLeaderboardBackground")
+    
+    // MARK: - Shimmer Colors
+    static let appShimmerBase = Color("TokenShimmerBase")
+    static let appShimmerHighlight = Color("TokenShimmerHighlight")
 }
