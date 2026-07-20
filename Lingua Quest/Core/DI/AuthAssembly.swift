@@ -28,6 +28,14 @@ final class AuthAssembly: Assembly {
             RegisterUseCase(repository: resolver.resolve(AuthRepositoryProtocol.self)!)
         }
 
+        container.register(SendOtpUseCaseProtocol.self) { resolver in
+            SendOtpUseCase(repository: resolver.resolve(AuthRepositoryProtocol.self)!)
+        }
+
+        container.register(VerifySignupOtpUseCaseProtocol.self) { resolver in
+            VerifySignupOtpUseCase(repository: resolver.resolve(AuthRepositoryProtocol.self)!)
+        }
+
         container.register(LoginViewModel.self) { resolver in
             LoginViewModel(
                 router: resolver.resolve(RouterProtocol.self)!,
@@ -48,8 +56,13 @@ final class AuthAssembly: Assembly {
             ForgetPasswordViewModel(router: resolver.resolve(RouterProtocol.self)!)
         }
 
-        container.register(VerifyEmailViewModel.self) { resolver in
-            VerifyEmailViewModel(router: resolver.resolve(RouterProtocol.self)!)
+        container.register(VerifyEmailViewModel.self) { (resolver, email: String) in
+            VerifyEmailViewModel(
+                email: email,
+                router: resolver.resolve(RouterProtocol.self)!,
+                sendOtpUseCase: resolver.resolve(SendOtpUseCaseProtocol.self)!,
+                verifySignupOtpUseCase: resolver.resolve(VerifySignupOtpUseCaseProtocol.self)!
+            )
         }
 
         container.register(ResetPasswordViewModel.self) { resolver in

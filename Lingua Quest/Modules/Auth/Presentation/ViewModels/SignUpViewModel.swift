@@ -89,3 +89,40 @@ final class SignUpViewModel {
         return englishLocale.localizedString(forLanguageCode: code)?.capitalized
     }
 }
+
+
+// MARK: - Preview Helper
+extension SignUpViewModel {
+    @MainActor
+    static var preview: SignUpViewModel {
+        class MockRouter: RouterProtocol {
+            func push(_ route: AppRoute) {}
+            func pushAndReplace(_ route: AppRoute) {}
+            func pushAndRemoveAll(_ route: AppRoute) {}
+            func pop() {}
+            func popToRoot() {}
+            func present(_ sheet: AppSheet) {}
+            func dismissSheet() {}
+        }
+        
+        class MockUserPreferences: UserPreferencesProtocol {
+            var isOnboardingCompleted: Bool = true
+            var spokenLanguageCode: String? = "ar"
+            var learningLanguageCode: String? = "en"
+            var userLevel: String? = "beginner"
+            var isLoggedIn: Bool = false
+        }
+        
+        class MockRegisterUseCase: RegisterUseCaseProtocol {
+            func execute(email: String, username: String, password: String, nativeLanguage: String, targetLanguage: String) async -> Result<RegisteredAccountEntity, AuthError> {
+                return .failure(.invalidCredentials)
+            }
+        }
+        
+        return SignUpViewModel(
+            router: MockRouter(),
+            userPreferences: MockUserPreferences(),
+            registerUseCase: MockRegisterUseCase()
+        )
+    }
+}

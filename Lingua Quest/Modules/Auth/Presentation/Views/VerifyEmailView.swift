@@ -95,6 +95,9 @@ struct VerifyEmailView: View {
                 isKeyboardShowing = true
             }
         }
+        .onDisappear {
+            viewModel.onDisappear()
+        }
     }
     
     @ViewBuilder
@@ -124,10 +127,10 @@ struct VerifyEmailView: View {
 }
 
 #Preview("LightTheme") {
-    VerifyEmailView(viewModel: VerifyEmailViewModel(router: Router()))
+    VerifyEmailView(viewModel: VerifyEmailViewModel.preview)
 }
 
 #Preview("DarkTheme") {
-    VerifyEmailView(viewModel: VerifyEmailViewModel(router: Router()))
+    VerifyEmailView(viewModel: VerifyEmailViewModel.preview)
         .preferredColorScheme(.dark)
 }

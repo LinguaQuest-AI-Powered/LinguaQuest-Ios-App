@@ -2,59 +2,135 @@
 //  VerifyEmailViewModel.swift
 //  Lingua Quest
 //
+//  Created by Omar Khaled Jaafar on 20/07/2026.
 //
+
 import Foundation
 import Observation
 
 @Observable
 @MainActor
 final class VerifyEmailViewModel {
-     var otpCode = "" {
-        didSet {
-            if otpCode.count > 4 {
-                otpCode = String(otpCode.prefix(4))
-            }
-        }
-    }
-    
-     var timeRemaining = 59
-    
+    // MARK: - Dependencies
     private let router: RouterProtocol
-    private var timer: Timer?
-    
-    init(router: RouterProtocol) {
+    private let sendOtpUseCase: SendOtpUseCaseProtocol
+    private let verifySignupOtpUseCase: VerifySignupOtpUseCaseProtocol
+
+    // MARK: - State
+    let email: String
+    var otpCode: String = ""
+    var timeRemaining: Int = 60
+    var isLoading: Bool = false
+    var errorMessage: String? = nil
+
+    private var countdownTask: Task<Void, Never>?
+    private let otpLength = 4
+
+    // MARK: - Init
+    init(email: String, router: RouterProtocol, sendOtpUseCase: SendOtpUseCaseProtocol, verifySignupOtpUseCase: VerifySignupOtpUseCaseProtocol) {
+        self.email = email
         self.router = router
-        startTimer()
+        self.sendOtpUseCase = sendOtpUseCase
+        self.verifySignupOtpUseCase = verifySignupOtpUseCase
+        startCountdown()
     }
-    
-    func startTimer() {
-        timeRemaining = 59
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
-            Task { @MainActor in
-                guard let self = self else { return }
-                if self.timeRemaining > 0 {
-                    self.timeRemaining -= 1
-                } else {
-                    self.timer?.invalidate()
-                }
+
+    func onDisappear() {
+        countdownTask?.cancel()
+    }
+
+    // MARK: - Intentions
+    func verifyCode() {
+        errorMessage = nil
+
+        guard otpCode.count == otpLength else {
+            errorMessage = L10n.Auth.Error.invalidOtpLength
+            return
+        }
+
+        isLoading = true
+
+        Task {
+            let result = await verifySignupOtpUseCase.execute(email: email, otp: otpCode)
+            isLoading = false
+
+            switch result {
+            case .success:
+                router.push(.login)
+            case .failure(let error):
+                errorMessage = error.errorDescription
             }
         }
     }
-    
-    func verifyCode() {
-        router.push(.resetPassword)
-    }
-    
+
     func resendCode() {
-        startTimer()
-        print("Resend code tapped")
+        guard timeRemaining == 0 else { return }
+        errorMessage = nil
+
+        Task {
+            let result = await sendOtpUseCase.execute(email: email, purpose: .signup)
+            switch result {
+            case .success:
+                startCountdown()
+            case .failure(let error):
+                errorMessage = error.errorDescription
+            }
+        }
     }
-    
+
     func navigateToLogin() {
-        timer?.invalidate()
-        router.popToRoot()
+        countdownTask?.cancel()
+        router.pop()
     }
-    
-    
+
+    // MARK: - Countdown
+    private func startCountdown() {
+        countdownTask?.cancel()
+        timeRemaining = 60
+
+        countdownTask = Task { [weak self] in
+            guard let self else { return }
+            while self.timeRemaining > 0 {
+                try? await Task.sleep(nanoseconds: 1_000_000_000)
+                guard !Task.isCancelled else { return }
+                self.timeRemaining -= 1
+            }
+        }
+    }
+}
+
+
+// MARK: - Preview Helper
+extension VerifyEmailViewModel {
+    @MainActor
+    static var preview: VerifyEmailViewModel {
+        class MockRouter: RouterProtocol {
+            func push(_ route: AppRoute) {}
+            func pushAndReplace(_ route: AppRoute) {}
+            func pushAndRemoveAll(_ route: AppRoute) {}
+            func pop() {}
+            func popToRoot() {}
+            func present(_ sheet: AppSheet) {}
+            func dismissSheet() {}
+        }
+        
+        class MockSendOtpUseCase: SendOtpUseCaseProtocol {
+            func execute(email: String, purpose: OtpPurpose) async -> Result<Void, AuthError> {
+                return .success(())
+            }
+        }
+        
+        class MockVerifySignupOtpUseCase: VerifySignupOtpUseCaseProtocol {
+            func execute(email: String, otp: String) async -> Result<Bool, AuthError> {
+                return .success(true)
+            }
+        }
+        
+        return VerifyEmailViewModel(
+            email: "test@linguaquest.com",
+            router: MockRouter(),
+            sendOtpUseCase: MockSendOtpUseCase(),
+            verifySignupOtpUseCase: MockVerifySignupOtpUseCase()
+        )
+    }
 }
