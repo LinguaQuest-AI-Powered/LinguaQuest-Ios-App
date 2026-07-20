@@ -28,10 +28,13 @@ struct ProfileView: View {
                 )
             } else {
                 ProfileContentView(
+                    rawCoins: viewModel.rawCoins,
+                    rawXP: viewModel.rawXP,
                     coinsValue: viewModel.coins,
                     gemsValue: viewModel.gems,
                     userName: viewModel.userName,
                     userLevel: viewModel.level,
+                    avatarImage: viewModel.avatarImage,
                     xpValue: viewModel.totalXP,
                     streakValue: viewModel.streak,
                     worldsValue: viewModel.worlds,

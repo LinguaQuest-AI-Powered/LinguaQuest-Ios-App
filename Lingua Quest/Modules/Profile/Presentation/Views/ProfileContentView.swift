@@ -9,10 +9,13 @@ import SwiftUI
 
 struct ProfileContentView: View {
     // MARK: - Properties
+    let rawCoins: Int
+    let rawXP: Int
     let coinsValue: String
     let gemsValue: String
     let userName: String
     let userLevel: Int
+    let avatarImage: String?
     let xpValue: String
     let streakValue: String
     let worldsValue: String
@@ -40,14 +43,14 @@ struct ProfileContentView: View {
     var body: some View {
         VStack(spacing: 0) {
      
-            AppHeaderView(starCount: 15000000, coinCount: 20000)
+            AppHeaderView(starCount: rawXP, coinCount: rawCoins)
             
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 24) {
                     ProfileHeader(
                         userName: userName,
                         userLevel: userLevel,
-                        avatarImage: nil,
+                        avatarImage: avatarImage,
                         onEditTapped: onEditProfile
                     )
                     .padding(.top, 24)
@@ -117,47 +120,4 @@ struct ProfileContentView: View {
     }
 }
 
-#Preview {
-    ProfileContentView(
-        coinsValue: "1,250",
-        gemsValue: "45",
-        userName: "Explorer Alex",
-        userLevel: 12,
-        xpValue: "4,500",
-        streakValue: "7 Days",
-        worldsValue: "2",
-        languageName: L10n.Onboarding.languageFrench,
-        journeyTitle: "Intermediate Journey",
-        levelName: "B1 LEVEL",
-        currentXP: 2450,
-        targetXP: 3000,
-        achievements: [
-            AchievementUIModel(
-                id: "1",
-                title: "Wild Explorer",
-                subtitle: "Complete 10 lessons in...",
-                uiIcon: .trophyFill,
-                uiIconColor: .appBrandBrown,
-                uiBgColor: .appSurfaceCardWarm
-            ),
-            AchievementUIModel(
-                id: "2",
-                title: "Perfect Week",
-                subtitle: "Complete 10 lessons in...",
-                uiIcon: .starFill,
-                uiIconColor: .appAccentTeal,
-                uiBgColor: .white
-            )
-        ],
-        topExplorers: [
-            ExplorerUIModel(id: "1", name: "Marco Polo", uiRank: "1", uiXPAmount: "12,450 XP", avatarImage: nil, isTop: true),
-            ExplorerUIModel(id: "2", name: "Amelia Earhart", uiRank: "2", uiXPAmount: "11,200 XP", avatarImage: nil, isTop: false),
-            ExplorerUIModel(id: "3", name: "Ibn Battuta", uiRank: "3", uiXPAmount: "9,850 XP", avatarImage: nil, isTop: false)
-        ],
-        onEditProfile: {},
-        onViewAllAchievements: {},
-        onViewAllExplorers: {},
-        onSettingsTapped: {}
-    )
-    .preferredColorScheme(.dark)
-}
+

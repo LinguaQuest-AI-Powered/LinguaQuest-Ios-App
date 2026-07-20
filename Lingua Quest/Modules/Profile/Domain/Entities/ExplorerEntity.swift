@@ -13,4 +13,5 @@ struct ExplorerEntity: Identifiable {
     let name: String
     let xp: Int
     let avatarImage: String?
+    let isCurrentUser: Bool
 }
