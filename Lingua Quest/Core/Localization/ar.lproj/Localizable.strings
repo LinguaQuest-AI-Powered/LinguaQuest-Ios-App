@@ -55,6 +55,26 @@
 "auth.verify" = "تأكيد";
 "auth.google_label" = "جوجل";
 "auth.apple_label" = "أبل";
+"auth_error_invalid_credentials" = "البريد الإلكتروني أو كلمة المرور غير صحيحة.";
+"auth_error_email_not_verified" = "برجاء توثيق بريدك الإلكتروني قبل تسجيل الدخول.";
+"auth_error_email_already_exists" = "يوجد حساب بالفعل بهذا البريد الإلكتروني.";
+"auth_error_username_already_taken" = "اسم المستخدم هذا مُستخدم بالفعل.";
+"auth_error_email_not_found" = "لم نتمكن من العثور على حساب بهذا البريد الإلكتروني.";
+"auth_error_invalid_otp" = "الكود الذي أدخلته غير صحيح.";
+"auth_error_otp_not_found" = "انتهت صلاحية هذا الكود، برجاء طلب كود جديد.";
+"auth_error_otp_cooldown" = "برجاء الانتظار قليلاً قبل طلب كود آخر.";
+"auth_error_max_otp_attempts" = "محاولات كثيرة جداً، برجاء طلب كود جديد.";
+"auth_error_invalid_reset_token" = "انتهت صلاحية رابط إعادة التعيين أو تم استخدامه بالفعل.";
+"auth_error_session_expired" = "انتهت جلستك، برجاء تسجيل الدخول مرة أخرى.";
+"auth_error_invalid_firebase_token" = "فشل تسجيل الدخول، برجاء المحاولة مرة أخرى.";
+"auth_error_internal_server" = "حدث خطأ ما من جانبنا، برجاء المحاولة لاحقاً.";
+"auth_error_generic" = "حدث خطأ ما، برجاء المحاولة مرة أخرى.";
+"auth_error_passwords_do_not_match" = "كلمتا المرور غير متطابقتين.";
+"auth_error_missing_onboarding_languages" = "برجاء إكمال إعداد اللغة قبل إنشاء الحساب.";
+"auth_error_invalid_otp_length" = "برجاء إدخال الكود المكون من 4 أرقام كاملاً.";
+
+
+
 "components.app_name" = "لينجوا كويست!";
 "tabs.home" = "الرئيسية";
 "tabs.gallery" = "المعرض";

@@ -54,6 +54,26 @@
 "auth.verify" = "VERIFY";
 "auth.google_label" = "Google";
 "auth.apple_label" = "Apple";
+"auth_error_invalid_credentials" = "Incorrect email or password. Please try again.";
+"auth_error_email_not_verified" = "Please verify your email before logging in.";
+"auth_error_email_already_exists" = "An account with this email already exists.";
+"auth_error_username_already_taken" = "This username is already taken.";
+"auth_error_email_not_found" = "We couldn't find an account with this email.";
+"auth_error_invalid_otp" = "The code you entered is incorrect.";
+"auth_error_otp_not_found" = "This code has expired. Please request a new one.";
+"auth_error_otp_cooldown" = "Please wait a moment before requesting another code.";
+"auth_error_max_otp_attempts" = "Too many attempts. Please request a new code.";
+"auth_error_invalid_reset_token" = "This reset link has expired or already been used.";
+"auth_error_session_expired" = "Your session has expired. Please log in again.";
+"auth_error_invalid_firebase_token" = "Sign-in failed. Please try again.";
+"auth_error_internal_server" = "Something went wrong on our end. Please try again later.";
+"auth_error_generic" = "Something went wrong. Please try again.";
+"auth_error_passwords_do_not_match" = "Passwords do not match.";
+"auth_error_missing_onboarding_languages" = "Please complete language setup before creating your account.";
+"auth_error_invalid_otp_length" = "Please enter the full 4-digit code.";
+
+
+
 "components.app_name" = "Lingua Quest!";
 "tabs.home" = "Home";
 "tabs.gallery" = "Gallery";
