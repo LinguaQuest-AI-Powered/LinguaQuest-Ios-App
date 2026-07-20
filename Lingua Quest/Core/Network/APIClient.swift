@@ -14,6 +14,11 @@ protocol APIClientProtocol {
 final class APIClient: APIClientProtocol {
     private let session: URLSession
     private let decoder: JSONDecoder
+    
+    /// Set after DI wiring completes (see Resolver.swift) to break the circular
+    /// dependency between APIClient <-> AuthTokenProvider <-> AuthRemoteDataSource.
+    /// Weak because the container (not APIClient) owns the provider's lifetime.
+    weak var tokenProvider: AuthTokenProviding?
 
     init(session: URLSession = .shared, decoder: JSONDecoder = APIClient.defaultDecoder) {
         self.session = session
@@ -25,9 +30,18 @@ final class APIClient: APIClientProtocol {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
     }
-
+    
+    
     func request<E: Endpoint, T: Decodable>(_ endpoint: E) async throws -> T {
-        let urlRequest = try endpoint.asURLRequest()
+        try await performRequest(endpoint, isRetryAfterRefresh: false)
+    }
+
+    private func performRequest<E: Endpoint, T: Decodable>(_ endpoint: E, isRetryAfterRefresh: Bool) async throws -> T {
+        var urlRequest = try endpoint.asURLRequest()
+
+        if endpoint.requiresAuth, let token = tokenProvider?.currentAccessToken() {
+            urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
 
         let (data, response): (Data, URLResponse)
         do {
@@ -41,8 +55,19 @@ final class APIClient: APIClientProtocol {
         }
 
         switch httpResponse.statusCode {
-        case 200...299: break
-        default: throw NetworkError.serverError(statusCode: httpResponse.statusCode, data: data)
+        case 200...299:
+            break
+
+        case 401 where endpoint.requiresAuth && !isRetryAfterRefresh:
+            // Access token likely expired — try a silent refresh, then retry once.
+            let refreshed = await tokenProvider?.refreshSession() ?? false
+            guard refreshed else {
+                throw NetworkError.serverError(statusCode: 401, data: data)
+            }
+            return try await performRequest(endpoint, isRetryAfterRefresh: true)
+
+        default:
+            throw NetworkError.serverError(statusCode: httpResponse.statusCode, data: data)
         }
 
         do {

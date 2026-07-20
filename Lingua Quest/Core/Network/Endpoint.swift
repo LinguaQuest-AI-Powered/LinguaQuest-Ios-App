@@ -19,12 +19,17 @@ protocol Endpoint {
     var headers: [String: String]? { get }
     var queryItems: [URLQueryItem]? { get }
     var body: Body? { get }
+    /// Whether this request needs `Authorization: Bearer <token>`.
+    /// Defaults to true per the API contract ("all endpoints outside /auth/** require authentication").
+    /// Auth endpoints that don't need it explicitly override this to false.
+    var requiresAuth: Bool { get }
 }
 
 extension Endpoint {
     var baseURL: URL { AppConfig.baseURL }
     var headers: [String: String]? { ["Content-Type": "application/json"] }
     var queryItems: [URLQueryItem]? { nil }
+    var requiresAuth: Bool { true }
 
     func asURLRequest() throws -> URLRequest {
         var components = URLComponents(url: baseURL.appendingPathComponent(path), resolvingAgainstBaseURL: false)
