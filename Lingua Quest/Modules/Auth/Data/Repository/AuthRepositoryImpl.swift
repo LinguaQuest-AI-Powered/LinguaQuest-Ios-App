@@ -21,7 +21,10 @@ final class AuthRepositoryImpl: AuthRepositoryProtocol {
     // MARK: - Implemented Methods
     
     func register(email: String, username: String, password: String, nativeLanguage: String, targetLanguage: String) async -> Result<RegisteredAccountEntity, AuthError> {
-        fatalError("register() has not been implemented yet")
+        await remoteDataSource.register(
+            email: email, username: username, password: password,
+            nativeLanguage: nativeLanguage, targetLanguage: targetLanguage
+        )
     }
     
     

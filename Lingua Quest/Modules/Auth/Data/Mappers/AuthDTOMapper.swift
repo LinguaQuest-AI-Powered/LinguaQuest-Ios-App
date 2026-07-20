@@ -39,3 +39,17 @@ enum AuthDTOMapper {
         return AuthError.from(errorKey: envelope.error.errorKey, message: envelope.error.errorMessage)
     }
 }
+
+
+extension AuthDTOMapper {
+    static func mapRegister(_ dto: RegisterResponseDataDTO) -> RegisteredAccountEntity {
+        RegisteredAccountEntity(
+            id: dto.id,
+            email: dto.email,
+            username: dto.username,
+            nativeLanguage: dto.nativeLanguage,
+            targetLanguage: dto.targetLanguage,
+            isVerified: dto.isVerified
+        )
+    }
+}

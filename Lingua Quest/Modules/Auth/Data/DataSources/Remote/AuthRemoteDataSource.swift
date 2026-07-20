@@ -24,4 +24,21 @@ final class AuthRemoteDataSource: AuthRemoteDataSourceProtocol {
             return .failure(AuthDTOMapper.mapError(error))
         }
     }
+
+    func register(
+        email: String, username: String, password: String,
+        nativeLanguage: String, targetLanguage: String
+    ) async -> Result<RegisteredAccountEntity, AuthError> {
+        do {
+            let response: SuccessResponseDTO<RegisterResponseDataDTO> = try await apiClient.request(
+                AuthEndpoint.Register(
+                    email: email, username: username, password: password,
+                    nativeLanguage: nativeLanguage, targetLanguage: targetLanguage
+                )
+            )
+            return .success(AuthDTOMapper.mapRegister(response.data))
+        } catch {
+            return .failure(AuthDTOMapper.mapError(error))
+        }
+    }
 }
