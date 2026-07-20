@@ -43,7 +43,7 @@ struct ProfileView: View {
                     achievements: viewModel.achievements,
                     topExplorers: viewModel.topExplorers,
                     onEditProfile: {
-                        // Navigate to Edit Profile
+                        router.push(.editProfile)
                     },
                     onViewAllAchievements: {
                         router.push(.achievements)
