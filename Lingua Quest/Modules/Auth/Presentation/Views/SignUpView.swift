@@ -128,10 +128,10 @@ struct SignUpView: View {
 }
 
 #Preview("LightTheme") {
-    SignUpView(viewModel: SignUpViewModel.preview)
+    SignUpView(viewModel: .preview)
 }
 
 #Preview("DarkTheme") {
-    SignUpView(viewModel: SignUpViewModel.preview)
+    SignUpView(viewModel: .preview)
         .preferredColorScheme(.dark)
 }

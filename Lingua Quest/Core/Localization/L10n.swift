@@ -69,6 +69,8 @@ enum L10n {
         static var verify: String { localized("auth.verify") }
         static var googleLabel: String { localized("auth.google_label") }
         static var appleLabel: String { localized("auth.apple_label") }
+        static var verifyResetCodeTitle: String { localized("auth_verify_reset_code_title") }
+        static var verifyResetCodeDesc: String { localized("auth_verify_reset_code_desc") }
         
         enum Error {
             static var invalidCredentials: String { localized("auth_error_invalid_credentials") }
@@ -88,6 +90,8 @@ enum L10n {
             static var passwordsDoNotMatch: String { localized("auth_error_passwords_do_not_match") }
             static var missingOnboardingLanguages: String { localized("auth_error_missing_onboarding_languages") }
             static var invalidOtpLength: String { localized("auth_error_invalid_otp_length") }
+            static var emailRequired: String { localized("auth_error_email_required") }
+            static var weakPassword: String { localized("auth_error_weak_password") }
         }
     }
     

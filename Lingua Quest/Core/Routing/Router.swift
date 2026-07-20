@@ -65,6 +65,9 @@ final class Router: RouterProtocol {
         case .verifyEmail(let email):
             let viewModel = Resolver.shared.resolve(VerifyEmailViewModel.self, argument: email)
             VerifyEmailView(viewModel: viewModel)
+        case .verifyPasswordResetOtp(let email):
+            let viewModel = Resolver.shared.resolve(VerifyPasswordResetOtpViewModel.self, argument: email)
+            VerifyPasswordResetOtpView(viewModel: viewModel)
         case .resetPassword(let resetToken):
             let viewModel = Resolver.shared.resolve(ResetPasswordViewModel.self, argument: resetToken)
             ResetPasswordView(viewModel: viewModel)

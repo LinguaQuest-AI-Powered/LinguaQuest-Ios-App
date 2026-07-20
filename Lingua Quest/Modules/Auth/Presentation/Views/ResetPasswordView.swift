@@ -126,10 +126,10 @@ struct ResetPasswordView: View {
 
 
 #Preview("LightTheme") {
-    ResetPasswordView(viewModel: ResetPasswordViewModel(router: Router()))
+    ResetPasswordView(viewModel: .preview)
 }
 
 #Preview("DarkTheme") {
-    ResetPasswordView(viewModel: ResetPasswordViewModel(router: Router()))
+    ResetPasswordView(viewModel: .preview)
         .preferredColorScheme(.dark)
 }

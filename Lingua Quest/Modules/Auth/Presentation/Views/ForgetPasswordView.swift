@@ -66,11 +66,10 @@ struct ForgetPasswordView: View {
 }
 
 #Preview("LightTheme") {
-    ForgetPasswordView(viewModel: ForgetPasswordViewModel(router: Router()))
+    ForgetPasswordView(viewModel: .preview)
 }
 
 #Preview("DarkTheme") {
-    ForgetPasswordView(viewModel: ForgetPasswordViewModel(router: Router()))
+    ForgetPasswordView(viewModel: .preview)
         .preferredColorScheme(.dark)
 }
-

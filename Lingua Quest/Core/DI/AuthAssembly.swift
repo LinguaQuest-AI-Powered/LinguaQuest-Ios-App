@@ -36,6 +36,14 @@ final class AuthAssembly: Assembly {
             VerifySignupOtpUseCase(repository: resolver.resolve(AuthRepositoryProtocol.self)!)
         }
 
+        container.register(VerifyPasswordResetOtpUseCaseProtocol.self) { resolver in
+            VerifyPasswordResetOtpUseCase(repository: resolver.resolve(AuthRepositoryProtocol.self)!)
+        }
+
+        container.register(ResetPasswordUseCaseProtocol.self) { resolver in
+            ResetPasswordUseCase(repository: resolver.resolve(AuthRepositoryProtocol.self)!)
+        }
+
         container.register(LoginViewModel.self) { resolver in
             LoginViewModel(
                 router: resolver.resolve(RouterProtocol.self)!,
@@ -52,10 +60,6 @@ final class AuthAssembly: Assembly {
             )
         }
 
-        container.register(ForgetPasswordViewModel.self) { resolver in
-            ForgetPasswordViewModel(router: resolver.resolve(RouterProtocol.self)!)
-        }
-
         container.register(VerifyEmailViewModel.self) { (resolver, email: String) in
             VerifyEmailViewModel(
                 email: email,
@@ -65,8 +69,28 @@ final class AuthAssembly: Assembly {
             )
         }
 
-        container.register(ResetPasswordViewModel.self) { resolver in
-            ResetPasswordViewModel(router: resolver.resolve(RouterProtocol.self)!)
+        container.register(ForgetPasswordViewModel.self) { resolver in
+            ForgetPasswordViewModel(
+                router: resolver.resolve(RouterProtocol.self)!,
+                sendOtpUseCase: resolver.resolve(SendOtpUseCaseProtocol.self)!
+            )
+        }
+
+        container.register(VerifyPasswordResetOtpViewModel.self) { (resolver, email: String) in
+            VerifyPasswordResetOtpViewModel(
+                email: email,
+                router: resolver.resolve(RouterProtocol.self)!,
+                sendOtpUseCase: resolver.resolve(SendOtpUseCaseProtocol.self)!,
+                verifyPasswordResetOtpUseCase: resolver.resolve(VerifyPasswordResetOtpUseCaseProtocol.self)!
+            )
+        }
+
+        container.register(ResetPasswordViewModel.self) { (resolver, resetToken: String) in
+            ResetPasswordViewModel(
+                resetToken: resetToken,
+                router: resolver.resolve(RouterProtocol.self)!,
+                resetPasswordUseCase: resolver.resolve(ResetPasswordUseCaseProtocol.self)!
+            )
         }
     }
 }

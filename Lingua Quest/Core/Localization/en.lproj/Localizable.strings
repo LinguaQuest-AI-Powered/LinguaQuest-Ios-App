@@ -54,6 +54,8 @@
 "auth.verify" = "VERIFY";
 "auth.google_label" = "Google";
 "auth.apple_label" = "Apple";
+"auth_verify_reset_code_title" = "Verify Your Code";
+"auth_verify_reset_code_desc" = "Enter the 4-digit code we sent to your email to reset your password.";
 "auth_error_invalid_credentials" = "Incorrect email or password. Please try again.";
 "auth_error_email_not_verified" = "Please verify your email before logging in.";
 "auth_error_email_already_exists" = "An account with this email already exists.";
@@ -71,6 +73,8 @@
 "auth_error_passwords_do_not_match" = "Passwords do not match.";
 "auth_error_missing_onboarding_languages" = "Please complete language setup before creating your account.";
 "auth_error_invalid_otp_length" = "Please enter the full 4-digit code.";
+"auth_error_email_required" = "Please enter your email address.";
+"auth_error_weak_password" = "Your password must be at least 8 characters and include a letter and a number.";
 
 
 

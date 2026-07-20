@@ -55,6 +55,8 @@
 "auth.verify" = "تأكيد";
 "auth.google_label" = "جوجل";
 "auth.apple_label" = "أبل";
+"auth_verify_reset_code_title" = "تحقق من الكود";
+"auth_verify_reset_code_desc" = "أدخل الكود المكوّن من 4 أرقام الذي أرسلناه إلى بريدك الإلكتروني لإعادة تعيين كلمة المرور.";
 "auth_error_invalid_credentials" = "البريد الإلكتروني أو كلمة المرور غير صحيحة.";
 "auth_error_email_not_verified" = "برجاء توثيق بريدك الإلكتروني قبل تسجيل الدخول.";
 "auth_error_email_already_exists" = "يوجد حساب بالفعل بهذا البريد الإلكتروني.";
@@ -72,6 +74,8 @@
 "auth_error_passwords_do_not_match" = "كلمتا المرور غير متطابقتين.";
 "auth_error_missing_onboarding_languages" = "برجاء إكمال إعداد اللغة قبل إنشاء الحساب.";
 "auth_error_invalid_otp_length" = "برجاء إدخال الكود المكون من 4 أرقام كاملاً.";
+"auth_error_email_required" = "برجاء إدخال بريدك الإلكتروني.";
+"auth_error_weak_password" = "يجب أن تكون كلمة المرور 8 أحرف على الأقل وتحتوي على حرف ورقم.";
 
 
 

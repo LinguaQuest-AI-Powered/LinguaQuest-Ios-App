@@ -127,10 +127,10 @@ struct VerifyEmailView: View {
 }
 
 #Preview("LightTheme") {
-    VerifyEmailView(viewModel: VerifyEmailViewModel.preview)
+    VerifyEmailView(viewModel: .preview)
 }
 
 #Preview("DarkTheme") {
-    VerifyEmailView(viewModel: VerifyEmailViewModel.preview)
+    VerifyEmailView(viewModel: .preview)
         .preferredColorScheme(.dark)
 }
