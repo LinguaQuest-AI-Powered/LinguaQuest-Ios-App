@@ -11,8 +11,24 @@ import Swinject
 @MainActor
 final class GameAssembly: Assembly { 
     func assemble(container: Container) {
-        container.register(GameLevelsViewModel.self) { _ in
-            GameLevelsViewModel()
+        container.register(GameRemoteDataSourceProtocol.self) { resolver in
+            let apiClient = resolver.resolve(APIClientProtocol.self)!
+            return GameRemoteDataSource(apiClient: apiClient)
+        }
+        
+        container.register(GameRepositoryProtocol.self) { resolver in
+            let remoteDS = resolver.resolve(GameRemoteDataSourceProtocol.self)!
+            return GameRepositoryImpl(remoteDataSource: remoteDS)
+        }
+        
+        container.register(GetGameLevelsUseCase.self) { resolver in
+            let repo = resolver.resolve(GameRepositoryProtocol.self)!
+            return GetGameLevelsUseCase(repository: repo)
+        }
+        
+        container.register(GameLevelsViewModel.self) { resolver in
+            let useCase = resolver.resolve(GetGameLevelsUseCase.self)!
+            return GameLevelsViewModel(getGameLevelsUseCase: useCase)
         }
         
         container.register(CameraTaskQuestViewModel.self) { resolver in

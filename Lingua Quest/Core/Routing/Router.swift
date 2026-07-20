@@ -68,9 +68,9 @@ final class Router: RouterProtocol {
         case .resetPassword:
             let viewModel = Resolver.shared.resolve(ResetPasswordViewModel.self)
             ResetPasswordView(viewModel: viewModel)
-        case .gameLevels(let worldName):
+        case .gameLevels(let worldId, let worldName):
             let viewModel = Resolver.shared.resolve(GameLevelsViewModel.self)
-            GameLevelsView(viewModel: viewModel, worldName: worldName)
+            GameLevelsView(viewModel: viewModel, worldName: worldName, worldId: worldId)
         case .cameraQuestTask:
             let viewModel = Resolver.shared.resolve(CameraTaskQuestViewModel.self)
             CameraTaskQuestView(viewModel: viewModel)

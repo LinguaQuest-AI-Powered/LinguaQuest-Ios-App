@@ -10,6 +10,7 @@ import SwiftUI
 struct GameLevelsView: View {
     @State var viewModel: GameLevelsViewModel
     var worldName: String
+    var worldId: Int
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) private var dismiss
     @Environment(Router.self) var router
@@ -137,15 +138,20 @@ struct GameLevelsView: View {
                         )
                     }
                     .onAppear {
-                        // Automatically scroll to the absolute bottom (Level 1) when the screen opens
+                        // Automatically scroll to the absolute bottom (Level 1) when the screen opens,
+                        // but only if levels exist. The .task below will fetch them, and we might need to scroll later.
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                            // We scroll to level 1 with a bottom anchor so the scrollview hits the very bottom edge
-                            scrollProxy.scrollTo(viewModel.levels.first?.id ?? 1, anchor: .bottom)
+                            if !viewModel.levels.isEmpty {
+                                scrollProxy.scrollTo(viewModel.levels.first?.id ?? 1, anchor: .bottom)
+                            }
                         }
                     }
                 }
             }
             .ignoresSafeArea()
+            .task {
+                await viewModel.fetchLevels(worldId: worldId)
+            }
             
             // LAYER 2: Top Navigation Bar
             HStack {
@@ -195,11 +201,12 @@ struct GameLevelsView: View {
     }
 }
 
-#Preview("LightTheme") {
-    GameLevelsView(viewModel: GameLevelsViewModel(), worldName: "Park World")
-}
-
-#Preview("DarkTheme") {
-    GameLevelsView(viewModel: GameLevelsViewModel(), worldName: "Park World")
-        .preferredColorScheme(.dark)
-}
+// #Preview("LightTheme") {
+//     // Requires mock GetGameLevelsUseCase
+//     // GameLevelsView(viewModel: GameLevelsViewModel(...), worldName: "Park World", worldId: 10)
+// }
+// 
+// #Preview("DarkTheme") {
+//     // GameLevelsView(viewModel: GameLevelsViewModel(...), worldName: "Park World", worldId: 10)
+//     //     .preferredColorScheme(.dark)
+// }
