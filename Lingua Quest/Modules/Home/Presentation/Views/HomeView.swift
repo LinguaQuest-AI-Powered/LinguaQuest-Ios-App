@@ -17,8 +17,9 @@ struct HomeView: View {
     @State private var pulseWorldButton = false
     
     @State private var showMyLanguagesSheet = false
+    @State private var showAddLanguageScreen = false
     @State private var selectedLanguage: UserLearningLanguage? = UserLearningLanguage(language: Language(code: "es", name: "Spanish", flag: "🇪🇸"), level: 12)
-    let userLanguages: [UserLearningLanguage] = [
+    @State private var userLanguages: [UserLearningLanguage] = [
         UserLearningLanguage(language: Language(code: "es", name: "Spanish", flag: "🇪🇸"), level: 12),
         UserLearningLanguage(language: Language(code: "fr", name: "French", flag: "🇫🇷"), level: 4),
         UserLearningLanguage(language: Language(code: "ja", name: "Japanese", flag: "🇯🇵"), level: 3)
@@ -170,9 +171,12 @@ struct HomeView: View {
                 languages: userLanguages,
                 selectedLanguage: $selectedLanguage,
                 onAddNewLanguage: {
-                    // Navigate to add new language or show onboarding
+                    showAddLanguageScreen = true
                 }
             )
+        }
+        .fullScreenCover(isPresented: $showAddLanguageScreen) {
+            AddLanguageView(userLanguages: $userLanguages)
         }
     }
 }

@@ -66,7 +66,7 @@ struct MyLanguagesBottomSheet: View {
             )
             .padding(.horizontal, 24)
             .padding(.top, 24)
-            .padding(.bottom, 125) // Added extra padding for tab bar clearance
+            .padding(.bottom, 125)
         }
     }
 }
