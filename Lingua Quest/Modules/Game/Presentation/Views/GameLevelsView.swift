@@ -75,10 +75,7 @@ struct GameLevelsView: View {
                                     let yPos = totalHeight - 100 - (CGFloat(index) * levelSpacing)
                                     let xPos = RoadMath.xPosition(for: yPos, in: w)
                                     
-                                    Circle()
-                                        .fill(Color.appShimmerBase)
-                                        .frame(width: 80, height: 80)
-                                        .shimmer(isActive: true)
+                                    GameLoadingNodeView(index: index)
                                         .position(x: xPos, y: yPos)
                                         .id(index)
                                 }

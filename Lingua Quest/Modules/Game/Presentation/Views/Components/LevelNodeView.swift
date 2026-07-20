@@ -171,9 +171,9 @@ struct LevelNodeView: View {
                 .shadow(color: Color.appBrandPrimary.opacity(0.5), radius: 12, x: 0, y: 5)
                 .offset(y: bounceOffset)
             
-            // Bird + Speech bubble positioned to the right
+            // Mascot positioned to the right, lower down so it doesn't cover the locked node above it
             MascotSpeechBubble()
-                .offset(x: 60, y: -100)
+                .offset(x: 75, y: -35)
         }
         .onAppear {
             // Pulse ring animation
