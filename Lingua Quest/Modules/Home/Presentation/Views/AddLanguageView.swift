@@ -2,6 +2,7 @@ import SwiftUI
 
 struct AddLanguageView: View {
     @Environment(\.dismiss) var dismiss
+    @Environment(\.colorScheme) private var colorScheme
     @Binding var userLanguages: [UserLearningLanguage]
     
     @State private var searchText: String = ""
@@ -28,9 +29,9 @@ struct AddLanguageView: View {
                 
                 Spacer()
                 
-                Text("Add languages")
+                Text(L10n.AddLanguage.title)
                     .font(AppTextStyle.headingMedium.font)
-                    .foregroundColor(Color.appBrandBrownDark)
+                    .foregroundColor(Color.appTextHeading)
                 
                 Spacer()
                 
@@ -42,7 +43,7 @@ struct AddLanguageView: View {
             .padding(.bottom, 16)
             
             // Subtitle
-            Text("Select the languages you'd like to learn")
+            Text(L10n.AddLanguage.subtitle)
                 .font(AppTextStyle.bodyLarge.font)
                 .foregroundColor(Color.appTextSecondary)
                 .padding(.bottom, 16)
@@ -51,17 +52,17 @@ struct AddLanguageView: View {
             HStack {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(Color.appBrandBrownDark)
-                TextField("Search languages...", text: $searchText)
+                TextField(L10n.AddLanguage.searchPlaceholder, text: $searchText)
                     .font(AppTextStyle.bodyLarge.font)
                     .foregroundColor(Color.appTextPrimary)
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
-            .background(Color.white)
+            .background(Color.appSurfaceCard.opacity(colorScheme == .dark ? 0.94 : 0.98))
             .cornerRadius(24)
             .overlay(
                 RoundedRectangle(cornerRadius: 24)
-                    .stroke(Color.appBorderLight, lineWidth: 1)
+                    .stroke(Color.appBorderLight.opacity(colorScheme == .dark ? 0.7 : 0.9), lineWidth: 1)
             )
             .padding(.horizontal, 24)
             .padding(.bottom, 24)
@@ -95,7 +96,7 @@ struct AddLanguageView: View {
             VStack {
                 CustomButton(
                     type: .primary,
-                    text: selectedLanguages.isEmpty ? "Add Selected" : "Add Selected (\(selectedLanguages.count))",
+                    text: selectedLanguages.isEmpty ? L10n.AddLanguage.addSelected : L10n.AddLanguage.addSelectedFormat(selectedLanguages.count),
                     action: {
                         addSelectedLanguages()
                         dismiss()
@@ -129,6 +130,7 @@ struct AddLanguageView: View {
 }
 
 struct LanguageGridCell: View {
+    @Environment(\.colorScheme) private var colorScheme
     let language: Language
     let isSelected: Bool
     let action: () -> Void
@@ -141,7 +143,7 @@ struct LanguageGridCell: View {
                     Spacer()
                     ZStack {
                         Circle()
-                            .stroke(isSelected ? Color.appGlowTeal : Color.appBorderLight, lineWidth: 1.5)
+                            .stroke(isSelected ? Color.appGlowTeal : Color.appBorderLight.opacity(colorScheme == .dark ? 0.7 : 0.9), lineWidth: 1.5)
                             .frame(width: 20, height: 20)
                         
                         if isSelected {
@@ -153,7 +155,7 @@ struct LanguageGridCell: View {
                                 .foregroundColor(.white)
                         } else {
                             Circle()
-                                .fill(Color.white)
+                                .fill(Color.appSurfaceCard.opacity(colorScheme == .dark ? 0.94 : 0.98))
                                 .frame(width: 20, height: 20)
                         }
                     }
@@ -180,11 +182,11 @@ struct LanguageGridCell: View {
             .padding(.bottom, 20)
             .background(
                 RoundedRectangle(cornerRadius: 32)
-                    .fill(isSelected ? Color.appBrandPrimary.opacity(0.1) : Color.white)
+                    .fill(isSelected ? Color.appBrandPrimary.opacity(colorScheme == .dark ? 0.15 : 0.1) : Color.appSurfaceCard.opacity(colorScheme == .dark ? 0.94 : 0.98))
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 32)
-                    .stroke(isSelected ? Color.appBrandPrimary : Color.clear, lineWidth: 2)
+                    .stroke(isSelected ? Color.appBrandPrimary : Color.appBorderLight.opacity(colorScheme == .dark ? 0.7 : 0.9), lineWidth: isSelected ? 2 : 1)
             )
         }
         .buttonStyle(ScaleButtonStyle())

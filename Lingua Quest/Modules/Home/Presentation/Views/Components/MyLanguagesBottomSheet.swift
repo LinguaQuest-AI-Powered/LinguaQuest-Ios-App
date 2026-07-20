@@ -21,7 +21,7 @@ struct MyLanguagesBottomSheet: View {
         VStack(spacing: 0) {
             // Header
             HStack {
-                Text("My Languages")
+                Text(L10n.Home.myLanguagesTitle)
                     .font(AppTextStyle.headingMedium.font)
                     .foregroundColor(Color.appTextHeading)
                 
@@ -57,7 +57,7 @@ struct MyLanguagesBottomSheet: View {
             // Add New Language Button
             CustomButton(
                 type: .primary,
-                text: "Add New Language",
+                text: L10n.Home.addNewLanguage,
                 action: {
                     isPresented = false
                     onAddNewLanguage()

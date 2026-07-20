@@ -223,3 +223,12 @@
 "worlds.airport" = "Airport World";
 "worlds.school" = "School World";
 "worlds.count_format" = "%d worlds";
+
+// My Languages & Add Language
+"home.my_languages_title" = "My Languages";
+"home.add_new_language" = "Add New Language";
+"add_language.title" = "Add languages";
+"add_language.subtitle" = "Select the languages you'd like to learn";
+"add_language.search_placeholder" = "Search languages...";
+"add_language.add_selected_format" = "Add Selected (%d)";
+"add_language.add_selected" = "Add Selected";
