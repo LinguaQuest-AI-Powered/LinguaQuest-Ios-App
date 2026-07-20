@@ -25,9 +25,11 @@ enum AppRoute: Hashable {
     case achievements
     case wordInsight(word: WordCardEntity)
     case allWorlds
+    case editProfile
 }
 
 enum AppSheet: String, Identifiable {
-    case editProfile
+    // Add sheet routes here in the future
+    case dummy // Added dummy to keep enum valid if needed
     var id: String { rawValue }
 }

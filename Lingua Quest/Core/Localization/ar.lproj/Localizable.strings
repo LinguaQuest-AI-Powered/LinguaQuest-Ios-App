@@ -225,6 +225,17 @@
 "worlds.school" = "عالم المدرسة";
 "worlds.count_format" = "%d عوالم";
 
+// MARK: - Edit Profile
+"edit_profile.title" = "تعديل الملف الشخصي";
+"edit_profile.change_photo" = "تغيير الصورة";
+"edit_profile.display_name" = "اسم العرض";
+"edit_profile.display_name_placeholder" = "المستكشف أليكس";
+"edit_profile.tagline" = "شعار المستكشف";
+"edit_profile.tagline_placeholder" = "استكشاف آفاق اللغة الفرنسية، كلمة بكلمة!";
+"edit_profile.info_text" = "اسمك ونبذتك التعريفية مرئية للمستكشفين الآخرين في قائمة المتصدرين.";
+"edit_profile.save_changes" = "حفظ التغييرات";
+"edit_profile.cancel" = "إلغاء";
+
 // My Languages & Add Language
 "home.my_languages_title" = "لغاتي";
 "home.add_new_language" = "إضافة لغة جديدة";
