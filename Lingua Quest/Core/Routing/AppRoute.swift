@@ -15,8 +15,8 @@ enum AppRoute: Hashable {
     case onBoarding
     case signUp
     case forgetPassword
-    case verifyEmail
-    case resetPassword
+    case verifyEmail(email: String)
+    case resetPassword(resetToken: String)
     case gameLevels(worldName: String)
     case cameraQuestTask
     case cameraCapture(targetWord: String)
