@@ -199,6 +199,9 @@ enum L10n {
         static func unlockAtLevel(_ level: Int) -> String {
             String(format: localized("home.unlock_at_level"), level)
         }
+        
+        static var myLanguagesTitle: String { localized("home.my_languages_title") }
+        static var addNewLanguage: String { localized("home.add_new_language") }
     }
     
     enum Profile {
@@ -306,6 +309,16 @@ enum L10n {
         static var infoText: String { localized("edit_profile.info_text") }
         static var saveChanges: String { localized("edit_profile.save_changes") }
         static var cancel: String { localized("edit_profile.cancel") }
+    }
+
+    enum AddLanguage {
+        static var title: String { localized("add_language.title") }
+        static var subtitle: String { localized("add_language.subtitle") }
+        static var searchPlaceholder: String { localized("add_language.search_placeholder") }
+        static func addSelectedFormat(_ count: Int) -> String {
+            String(format: localized("add_language.add_selected_format"), count)
+        }
+        static var addSelected: String { localized("add_language.add_selected") }
     }
 
     private static func localized(_ key: String) -> String {

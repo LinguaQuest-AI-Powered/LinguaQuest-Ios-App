@@ -16,6 +16,15 @@ struct HomeView: View {
     @State private var showDailyRewardDialog = false
     @State private var pulseWorldButton = false
     
+    @State private var showMyLanguagesSheet = false
+    @State private var showAddLanguageScreen = false
+    @State private var selectedLanguage: UserLearningLanguage? = UserLearningLanguage(language: Language(code: "es", name: "Spanish", flag: "🇪🇸"), level: 12)
+    @State private var userLanguages: [UserLearningLanguage] = [
+        UserLearningLanguage(language: Language(code: "es", name: "Spanish", flag: "🇪🇸"), level: 12),
+        UserLearningLanguage(language: Language(code: "fr", name: "French", flag: "🇫🇷"), level: 4),
+        UserLearningLanguage(language: Language(code: "ja", name: "Japanese", flag: "🇯🇵"), level: 3)
+    ]
+    
     let worlds: [WorldItem] = [
             .init(id: "kitchen", title: L10n.Home.kitchenWorld, imageAssetName: "kitchen", difficulty: .easy, progress: 0.4, isCompleted: true),
             
@@ -98,7 +107,7 @@ struct HomeView: View {
                     .padding(.top, 12)
                 }
 
-                Button(action: {}) {
+                Button(action: { showMyLanguagesSheet = true }) {
                     Image(asset: .world)
                         .font(AppTextStyle.headingMedium.font)
                         .foregroundColor(.white)
@@ -120,7 +129,7 @@ struct HomeView: View {
                 }
                 .buttonStyle(HomeScaleButtonStyle())
                 .padding(.trailing, 20)
-                .padding(.bottom, 20)
+                .padding(.bottom, 100)
                 .offset(y: animateItems ? 0 : 50)
                 .opacity(animateItems ? 1 : 0)
                 .animation(.spring(response: 0.5, dampingFraction: 0.7).delay(0.6), value: animateItems)
@@ -155,6 +164,19 @@ struct HomeView: View {
                     }
                 }
             )
+        }
+        .customBottomSheet(isPresented: $showMyLanguagesSheet, initialDetent: .custom(ratio: 0.7)) {
+            MyLanguagesBottomSheet(
+                isPresented: $showMyLanguagesSheet,
+                languages: userLanguages,
+                selectedLanguage: $selectedLanguage,
+                onAddNewLanguage: {
+                    showAddLanguageScreen = true
+                }
+            )
+        }
+        .fullScreenCover(isPresented: $showAddLanguageScreen) {
+            AddLanguageView(userLanguages: $userLanguages)
         }
     }
 }

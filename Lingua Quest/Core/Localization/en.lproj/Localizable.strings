@@ -225,7 +225,6 @@
 "worlds.school" = "School World";
 "worlds.count_format" = "%d worlds";
 
-// MARK: - Edit Profile
 "edit_profile.title" = "Edit Profile";
 "edit_profile.change_photo" = "Change Photo";
 "edit_profile.display_name" = "Display Name";
@@ -235,3 +234,11 @@
 "edit_profile.info_text" = "Your name and bio are visible to other explorers in the Leaderboard.";
 "edit_profile.save_changes" = "Save Changes";
 "edit_profile.cancel" = "Cancel";
+// My Languages & Add Language
+"home.my_languages_title" = "My Languages";
+"home.add_new_language" = "Add New Language";
+"add_language.title" = "Add languages";
+"add_language.subtitle" = "Select the languages you'd like to learn";
+"add_language.search_placeholder" = "Search languages...";
+"add_language.add_selected_format" = "Add Selected (%d)";
+"add_language.add_selected" = "Add Selected";

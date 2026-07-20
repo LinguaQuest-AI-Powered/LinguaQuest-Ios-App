@@ -235,3 +235,12 @@
 "edit_profile.info_text" = "اسمك ونبذتك التعريفية مرئية للمستكشفين الآخرين في قائمة المتصدرين.";
 "edit_profile.save_changes" = "حفظ التغييرات";
 "edit_profile.cancel" = "إلغاء";
+
+// My Languages & Add Language
+"home.my_languages_title" = "لغاتي";
+"home.add_new_language" = "إضافة لغة جديدة";
+"add_language.title" = "إضافة لغات";
+"add_language.subtitle" = "اختر اللغات التي ترغب بتعلمها";
+"add_language.search_placeholder" = "ابحث عن اللغات...";
+"add_language.add_selected_format" = "إضافة المحدد (%d)";
+"add_language.add_selected" = "إضافة المحدد";
