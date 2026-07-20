@@ -51,7 +51,7 @@ struct AchievementsView: View {
                     Spacer()
                     
                     Text(L10n.Achievements.title)
-                        .appTextStyle(.headingLarge, color: .appBrandBrown)
+                        .appTextStyle(.headingLarge, color: .appTextHeading)
                     
                     Spacer()
                     

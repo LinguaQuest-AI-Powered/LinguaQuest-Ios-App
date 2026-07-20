@@ -224,3 +224,12 @@
 "worlds.airport" = "عالم المطار";
 "worlds.school" = "عالم المدرسة";
 "worlds.count_format" = "%d عوالم";
+
+// My Languages & Add Language
+"home.my_languages_title" = "لغاتي";
+"home.add_new_language" = "إضافة لغة جديدة";
+"add_language.title" = "إضافة لغات";
+"add_language.subtitle" = "اختر اللغات التي ترغب بتعلمها";
+"add_language.search_placeholder" = "ابحث عن اللغات...";
+"add_language.add_selected_format" = "إضافة المحدد (%d)";
+"add_language.add_selected" = "إضافة المحدد";
