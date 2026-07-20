@@ -60,3 +60,9 @@ extension AuthDTOMapper {
         dto.isVerified
     }
 }
+
+extension AuthDTOMapper {
+    static func mapVerifyPasswordResetOtp(_ dto: VerifyPasswordResetOtpResponseDataDTO) -> (resetToken: String, expiresIn: Int) {
+        (resetToken: dto.resetToken, expiresIn: dto.expiresIn)
+    }
+}
