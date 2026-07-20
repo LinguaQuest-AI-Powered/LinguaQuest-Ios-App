@@ -14,10 +14,12 @@ protocol APIClientProtocol {
 final class APIClient: APIClientProtocol {
     private let session: URLSession
     private let decoder: JSONDecoder
+    private let tokenStorage: SecureTokenStorageProtocol?
 
-    init(session: URLSession = .shared, decoder: JSONDecoder = APIClient.defaultDecoder) {
+    init(session: URLSession = .shared, decoder: JSONDecoder = APIClient.defaultDecoder, tokenStorage: SecureTokenStorageProtocol? = nil) {
         self.session = session
         self.decoder = decoder
+        self.tokenStorage = tokenStorage
     }
 
     static var defaultDecoder: JSONDecoder {
@@ -27,7 +29,16 @@ final class APIClient: APIClientProtocol {
     }
 
     func request<E: Endpoint, T: Decodable>(_ endpoint: E) async throws -> T {
-        let urlRequest = try endpoint.asURLRequest()
+        var urlRequest = try endpoint.asURLRequest()
+        
+        let hardcodedToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." 
+        urlRequest.addValue("Bearer \(hardcodedToken)", forHTTPHeaderField: "Authorization")
+        
+        /*
+        if let token = tokenStorage?.getAccessToken() {
+            urlRequest.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        */
         
         // --- LOGGING REQUEST ---
         print("======== [API REQUEST] ========")
