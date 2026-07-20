@@ -63,4 +63,26 @@ final class AuthRemoteDataSource: AuthRemoteDataSourceProtocol {
             return .failure(AuthDTOMapper.mapError(error))
         }
     }
+    
+    func verifyPasswordResetOtp(email: String, otp: String) async -> Result<(resetToken: String, expiresIn: Int), AuthError> {
+        do {
+            let response: SuccessResponseDTO<VerifyPasswordResetOtpResponseDataDTO> = try await apiClient.request(
+                AuthEndpoint.VerifyPasswordResetOtp(email: email, otp: otp)
+            )
+            return .success(AuthDTOMapper.mapVerifyPasswordResetOtp(response.data))
+        } catch {
+            return .failure(AuthDTOMapper.mapError(error))
+        }
+    }
+
+    func resetPassword(resetToken: String, newPassword: String) async -> Result<Void, AuthError> {
+        do {
+            let _: SuccessResponseDTO<StatusResponseDataDTO> = try await apiClient.request(
+                AuthEndpoint.ResetPassword(resetToken: resetToken, newPassword: newPassword)
+            )
+            return .success(())
+        } catch {
+            return .failure(AuthDTOMapper.mapError(error))
+        }
+    }
 }

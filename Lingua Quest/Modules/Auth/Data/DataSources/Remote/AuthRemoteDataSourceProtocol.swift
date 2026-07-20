@@ -15,4 +15,6 @@ protocol AuthRemoteDataSourceProtocol {
     ) async -> Result<RegisteredAccountEntity, AuthError>
     func sendOtp(email: String, purpose: OtpPurpose) async -> Result<Void, AuthError>
     func verifySignupOtp(email: String, otp: String) async -> Result<Bool, AuthError>
+    func verifyPasswordResetOtp(email: String, otp: String) async -> Result<(resetToken: String, expiresIn: Int), AuthError>
+    func resetPassword(resetToken: String, newPassword: String) async -> Result<Void, AuthError>
 }

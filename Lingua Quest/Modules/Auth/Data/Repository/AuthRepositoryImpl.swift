@@ -53,11 +53,17 @@ final class AuthRepositoryImpl: AuthRepositoryProtocol {
     }
     
     func verifyPasswordResetOtp(email: String, otp: String) async -> Result<(resetToken: String, expiresIn: Int), AuthError> {
-        fatalError("verifyPasswordResetOtp() has not been implemented yet")
+        await remoteDataSource.verifyPasswordResetOtp(email: email, otp: otp)
     }
-    
+
     func resetPassword(resetToken: String, newPassword: String) async -> Result<Void, AuthError> {
-        fatalError("resetPassword() has not been implemented yet")
+        let result = await remoteDataSource.resetPassword(resetToken: resetToken, newPassword: newPassword)
+        if case .success = result {
+            // Per contract: successful reset invalidates all refresh tokens (forces re-login everywhere),
+            // so we clear the locally stored session too, keeping local state consistent with the backend.
+            tokenStorage.clearSession()
+        }
+        return result
     }
     
     func loginWithFirebase(idToken: String) async -> Result<(session: AuthSessionEntity, user: UserEntity, profileComplete: Bool), AuthError> {
