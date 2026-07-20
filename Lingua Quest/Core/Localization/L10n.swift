@@ -12,6 +12,7 @@ enum L10n {
     enum Network {
         static var invalidURL: String { localized("network.error.invalid_url") }
         static var noConnection: String { localized("network.error.no_connection") }
+        static var encodingFailed: String { localized("network.error.encoding_failed") }
         static var decodingFailed: String { localized("network.error.decoding_failed") }
         static var unauthorized: String { localized("network.error.unauthorized") }
         static var unknown: String { localized("network.error.unknown") }

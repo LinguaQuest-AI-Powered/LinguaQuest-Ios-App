@@ -113,10 +113,10 @@ struct LoginView: View {
 }
 
 #Preview("LightTheme") {
-    LoginView(viewModel: LoginViewModel(router: Router(), userPreferences: UserPreferences()))
+    LoginView(viewModel: LoginViewModel.preview)
 }
 
 #Preview("DarkTheme") {
-    LoginView(viewModel: LoginViewModel(router: Router(), userPreferences: UserPreferences()))
-        .preferredColorScheme(.dark)
+    LoginView(viewModel: LoginViewModel.preview)
+            .preferredColorScheme(.dark)
 }

@@ -7,6 +7,7 @@
 */
 "network.error.invalid_url" = "The request URL is invalid";
 "network.error.no_connection" = "No internet connection";
+"network.error.encoding_failed" = "Failed to process request data";
 "network.error.decoding_failed" = "Failed to parse the response";
 "network.error.server_error" = "Server error (%d)";
 "network.error.unauthorized" = "You are not authorized, please sign in again";
