@@ -21,35 +21,39 @@ final class AuthAssembly: Assembly {
         }
 
         container.register(LoginUseCaseProtocol.self) { resolver in
-            let repository = resolver.resolve(AuthRepositoryProtocol.self)!
-            return LoginUseCase(repository: repository)
+            LoginUseCase(repository: resolver.resolve(AuthRepositoryProtocol.self)!)
+        }
+
+        container.register(RegisterUseCaseProtocol.self) { resolver in
+            RegisterUseCase(repository: resolver.resolve(AuthRepositoryProtocol.self)!)
         }
 
         container.register(LoginViewModel.self) { resolver in
-            let router = resolver.resolve(RouterProtocol.self)!
-            let userPreferences = resolver.resolve(UserPreferencesProtocol.self)!
-            let loginUseCase = resolver.resolve(LoginUseCaseProtocol.self)!
-            return LoginViewModel(router: router, userPreferences: userPreferences, loginUseCase: loginUseCase)
+            LoginViewModel(
+                router: resolver.resolve(RouterProtocol.self)!,
+                userPreferences: resolver.resolve(UserPreferencesProtocol.self)!,
+                loginUseCase: resolver.resolve(LoginUseCaseProtocol.self)!
+            )
         }
 
         container.register(SignUpViewModel.self) { resolver in
-            let router = resolver.resolve(RouterProtocol.self)!
-            return SignUpViewModel(router: router)
+            SignUpViewModel(
+                router: resolver.resolve(RouterProtocol.self)!,
+                userPreferences: resolver.resolve(UserPreferencesProtocol.self)!,
+                registerUseCase: resolver.resolve(RegisterUseCaseProtocol.self)!
+            )
         }
 
         container.register(ForgetPasswordViewModel.self) { resolver in
-            let router = resolver.resolve(RouterProtocol.self)!
-            return ForgetPasswordViewModel(router: router)
+            ForgetPasswordViewModel(router: resolver.resolve(RouterProtocol.self)!)
         }
 
         container.register(VerifyEmailViewModel.self) { resolver in
-            let router = resolver.resolve(RouterProtocol.self)!
-            return VerifyEmailViewModel(router: router)
+            VerifyEmailViewModel(router: resolver.resolve(RouterProtocol.self)!)
         }
 
         container.register(ResetPasswordViewModel.self) { resolver in
-            let router = resolver.resolve(RouterProtocol.self)!
-            return ResetPasswordViewModel(router: router)
+            ResetPasswordViewModel(router: resolver.resolve(RouterProtocol.self)!)
         }
     }
 }
