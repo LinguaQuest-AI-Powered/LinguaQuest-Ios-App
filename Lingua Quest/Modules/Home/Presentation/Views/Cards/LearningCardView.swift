@@ -11,10 +11,17 @@ import SwiftUI
 struct LearningCardView: View {
     @Environment(\.colorScheme) private var colorScheme
     
+    let imageAsset: Image.Asset
+    let title: String
+    let languageName: String
+    let level: Int
+    let streakDays: Int
+    let progressWidth: CGFloat
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack(alignment: .top, spacing: 12) {
-                Image(asset: .spanish)
+                Image(asset: imageAsset)
                     .resizable()
                     .scaledToFill()
                     .frame(width: 46, height: 46)
@@ -22,11 +29,11 @@ struct LearningCardView: View {
                     .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color.appBorderBrown, lineWidth: 1))
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(L10n.Home.currentlyLearning)
+                    Text(title)
                         .font(AppTextStyle.micro.font)
                         .foregroundColor(Color.appTextSecondary)
                     
-                    Text(L10n.Onboarding.languageSpanish)
+                    Text(languageName)
                         .font(AppTextStyle.headingMedium.font)
                         .foregroundColor(Color.appTextHeading)
                 }
@@ -34,7 +41,7 @@ struct LearningCardView: View {
                 Spacer()
                 
                 VStack(alignment: .trailing, spacing: 6) {
-                    Text(L10n.Home.level(12))
+                    Text(L10n.Home.level(level))
                         .font(AppTextStyle.captionMedium.font)
                         .foregroundColor(Color.appTextSecondary)
                     
@@ -42,7 +49,7 @@ struct LearningCardView: View {
                         Image(systemIcon: .flameFill)
                             .foregroundColor(Color.red)
                         
-                        Text(L10n.Home.daysStreak(7))
+                        Text(L10n.Home.daysStreak(streakDays))
                             .font(AppTextStyle.captionMedium.font)
                     }
                 }
@@ -61,7 +68,7 @@ struct LearningCardView: View {
                             endPoint: .trailing
                         )
                     )
-                    .frame(width: 165, height: 10)
+                    .frame(width: progressWidth, height: 10)
                     .shadow(color: Color.appGlowTeal.opacity(colorScheme == .dark ? 0.32 : 0.18), radius: 8, x: 0, y: 0)
             }
         }
@@ -80,5 +87,12 @@ struct LearningCardView: View {
 
 
 #Preview {
-    LearningCardView()
+    LearningCardView(
+        imageAsset: .spanish,
+        title: L10n.Home.currentlyLearning,
+        languageName: L10n.Onboarding.languageSpanish,
+        level: 12,
+        streakDays: 7,
+        progressWidth: 165
+    )
 }

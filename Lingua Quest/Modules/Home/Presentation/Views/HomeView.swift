@@ -61,7 +61,14 @@ struct HomeView: View {
                             .transition(.move(edge: .top).combined(with: .opacity))
                         }
 
-                        LearningCardView()
+                        LearningCardView(
+                            imageAsset: .spanish,
+                            title: L10n.Home.currentlyLearning,
+                            languageName: L10n.Onboarding.languageSpanish,
+                            level: 12,
+                            streakDays: 7,
+                            progressWidth: 165
+                        )
                             .padding(.horizontal, 20)
                             .offset(y: animateItems ? 0 : 30)
                             .opacity(animateItems ? 1 : 0)
@@ -96,7 +103,14 @@ struct HomeView: View {
                         .opacity(animateItems ? 1 : 0)
                         .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.3), value: animateItems)
 
-                        ContinueLessonCardView()
+                        ContinueLessonCardView(
+                            title: L10n.Home.continueLessonTitle,
+                            lessonName: L10n.Home.lessonApple,
+                            lessonDescription: L10n.Home.lessonAppleDesc,
+                            imageAsset: .appleImage,
+                            buttonText: L10n.Home.continueButton,
+                            action: {}
+                        )
                             .padding(.horizontal, 20)
                             .offset(y: animateItems ? 0 : 30)
                             .opacity(animateItems ? 1 : 0)
@@ -186,56 +200,6 @@ struct HomeScaleButtonStyle: ButtonStyle {
         configuration.label
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
             .animation(.spring(response: 0.3, dampingFraction: 0.6), value: configuration.isPressed)
-    }
-}
-
-
-//TODO: Delete it and use the CustomTopBar instead of this one
-struct TopBarView: View {
-    var body: some View {
-        HStack(spacing: 12) {
-            Image(asset: .appBarBird)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 40, height: 40)
-                .clipShape(Circle())
-                .overlay(Circle().stroke(Color.appBorderBrown, lineWidth: 1))
-
-            Text(L10n.Components.appName)
-                .font(AppTextStyle.bodyBold.font)
-                .foregroundColor(Color.appTextSecondary)
-
-            Spacer()
-
-            HStack(spacing: 4) {
-                Image(asset: .star)
-                    .resizable()
-                    .frame(width: 14, height: 14)
-                Text("1,250")
-                    .font(AppTextStyle.captionMedium.font)
-            }
-            .padding(.horizontal, 10)
-            .padding(.vertical, 6)
-            .background(Color.white)
-            .clipShape(Capsule())
-
-            HStack(spacing: 4) {
-                Image(systemName: "centsign.circle.fill")
-                    .foregroundColor(Color.appIconBrown)
-                Text("45")
-                    .font(AppTextStyle.captionMedium.font)
-            }
-            .padding(.horizontal, 10)
-            .padding(.vertical, 6)
-            .background(Color.white)
-            .clipShape(Capsule())
-        }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 12)
-        .background(Color.white)
-        .overlay(alignment: .bottom) {
-            Divider()
-        }
     }
 }
 
