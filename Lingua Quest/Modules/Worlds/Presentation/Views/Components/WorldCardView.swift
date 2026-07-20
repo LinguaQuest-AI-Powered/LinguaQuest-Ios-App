@@ -167,3 +167,4 @@ struct WorldCardView: View {
     .padding()
     .background(Color.appBackgroundWarm)
 }
+
