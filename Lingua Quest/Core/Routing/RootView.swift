@@ -31,7 +31,7 @@ struct RootView: View {
         }
         .sheet(item: $router.presentedSheet) { sheet in
             switch sheet {
-            case .editProfile: Text("**")
+            case .dummy: EmptyView()
             }
         }
         .environment(router)

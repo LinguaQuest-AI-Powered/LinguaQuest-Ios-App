@@ -91,6 +91,8 @@ final class Router: RouterProtocol {
         case .allWorlds:
             let viewModel = Resolver.shared.resolve(AllWorldsViewModel.self)
             AllWorldsView(viewModel: viewModel)
+        case .editProfile:
+            EditProfileView()
         }
     }
 }
