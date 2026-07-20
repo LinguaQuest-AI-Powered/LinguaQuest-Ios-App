@@ -45,11 +45,11 @@ final class AuthRepositoryImpl: AuthRepositoryProtocol {
     }
     
     func sendOtp(email: String, purpose: OtpPurpose) async -> Result<Void, AuthError> {
-        fatalError("sendOtp() has not been implemented yet")
+        await remoteDataSource.sendOtp(email: email, purpose: purpose)
     }
-    
+
     func verifySignupOtp(email: String, otp: String) async -> Result<Bool, AuthError> {
-        fatalError("verifySignupOtp() has not been implemented yet")
+        await remoteDataSource.verifySignupOtp(email: email, otp: otp)
     }
     
     func verifyPasswordResetOtp(email: String, otp: String) async -> Result<(resetToken: String, expiresIn: Int), AuthError> {

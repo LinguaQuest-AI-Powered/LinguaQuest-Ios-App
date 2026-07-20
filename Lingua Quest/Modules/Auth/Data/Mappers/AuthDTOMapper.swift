@@ -53,3 +53,10 @@ extension AuthDTOMapper {
         )
     }
 }
+
+
+extension AuthDTOMapper {
+    static func mapVerifySignupOtp(_ dto: VerifySignupOtpResponseDataDTO) -> Bool {
+        dto.isVerified
+    }
+}

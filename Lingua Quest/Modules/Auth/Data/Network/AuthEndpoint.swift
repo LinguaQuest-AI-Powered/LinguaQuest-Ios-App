@@ -36,3 +36,28 @@ extension AuthEndpoint {
         }
     }
 }
+
+
+extension AuthEndpoint {
+    struct SendOtp: Endpoint {
+        let email: String
+        let purpose: OtpPurpose
+
+        var path: String { "/auth/otp/send" }
+        var method: HTTPMethod { .post }
+        var body: OtpSendRequestDTO? {
+            OtpSendRequestDTO(email: email, purpose: purpose.rawValue)
+        }
+    }
+
+    struct VerifySignupOtp: Endpoint {
+        let email: String
+        let otp: String
+
+        var path: String { "/auth/otp/verify" }
+        var method: HTTPMethod { .post }
+        var body: OtpVerifyRequestDTO? {
+            OtpVerifyRequestDTO(email: email, otp: otp)
+        }
+    }
+}

@@ -41,4 +41,26 @@ final class AuthRemoteDataSource: AuthRemoteDataSourceProtocol {
             return .failure(AuthDTOMapper.mapError(error))
         }
     }
+
+    func sendOtp(email: String, purpose: OtpPurpose) async -> Result<Void, AuthError> {
+        do {
+            let _: SuccessResponseDTO<StatusResponseDataDTO> = try await apiClient.request(
+                AuthEndpoint.SendOtp(email: email, purpose: purpose)
+            )
+            return .success(())
+        } catch {
+            return .failure(AuthDTOMapper.mapError(error))
+        }
+    }
+
+    func verifySignupOtp(email: String, otp: String) async -> Result<Bool, AuthError> {
+        do {
+            let response: SuccessResponseDTO<VerifySignupOtpResponseDataDTO> = try await apiClient.request(
+                AuthEndpoint.VerifySignupOtp(email: email, otp: otp)
+            )
+            return .success(AuthDTOMapper.mapVerifySignupOtp(response.data))
+        } catch {
+            return .failure(AuthDTOMapper.mapError(error))
+        }
+    }
 }
