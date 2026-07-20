@@ -224,3 +224,14 @@
 "worlds.airport" = "Airport World";
 "worlds.school" = "School World";
 "worlds.count_format" = "%d worlds";
+
+// MARK: - Edit Profile
+"edit_profile.title" = "Edit Profile";
+"edit_profile.change_photo" = "Change Photo";
+"edit_profile.display_name" = "Display Name";
+"edit_profile.display_name_placeholder" = "Explorer Alex";
+"edit_profile.tagline" = "Explorer's Tagline";
+"edit_profile.tagline_placeholder" = "Mapping the wild frontiers of the French language, one word at a time!";
+"edit_profile.info_text" = "Your name and bio are visible to other explorers in the Leaderboard.";
+"edit_profile.save_changes" = "Save Changes";
+"edit_profile.cancel" = "Cancel";

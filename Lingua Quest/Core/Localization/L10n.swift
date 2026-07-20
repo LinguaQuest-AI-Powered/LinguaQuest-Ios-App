@@ -294,7 +294,18 @@ enum L10n {
         static func worldsCountFormat(_ count: Int) -> String {
             String(format: localized("worlds.count_format"), count)
         }
-
+    }
+    
+    enum EditProfile {
+        static var title: String { localized("edit_profile.title") }
+        static var changePhoto: String { localized("edit_profile.change_photo") }
+        static var displayName: String { localized("edit_profile.display_name") }
+        static var displayNamePlaceholder: String { localized("edit_profile.display_name_placeholder") }
+        static var tagline: String { localized("edit_profile.tagline") }
+        static var taglinePlaceholder: String { localized("edit_profile.tagline_placeholder") }
+        static var infoText: String { localized("edit_profile.info_text") }
+        static var saveChanges: String { localized("edit_profile.save_changes") }
+        static var cancel: String { localized("edit_profile.cancel") }
     }
 
     private static func localized(_ key: String) -> String {
