@@ -8,6 +8,7 @@
 
 "network.error.invalid_url" = "رابط الطلب غير صحيح";
 "network.error.no_connection" = "لا يوجد اتصال بالإنترنت";
+"network.error.encoding_failed" = "فشل في تجهيز بيانات الطلب";
 "network.error.decoding_failed" = "فشل في تحويل البيانات";
 "network.error.server_error" = "خطأ من السيرفر (%d)";
 "network.error.unauthorized" = "غير مصرح لك، سجل الدخول مرة أخرى";

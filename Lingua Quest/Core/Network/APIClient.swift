@@ -8,7 +8,7 @@
 import Foundation
 
 protocol APIClientProtocol {
-    func request<T: Decodable>(_ endpoint: Endpoint) async throws -> T
+    func request<E: Endpoint, T: Decodable>(_ endpoint: E) async throws -> T
 }
 
 final class APIClient: APIClientProtocol {
@@ -26,7 +26,7 @@ final class APIClient: APIClientProtocol {
         return decoder
     }
 
-    func request<T: Decodable>(_ endpoint: Endpoint) async throws -> T {
+    func request<E: Endpoint, T: Decodable>(_ endpoint: E) async throws -> T {
         let urlRequest = try endpoint.asURLRequest()
 
         let (data, response): (Data, URLResponse)
@@ -42,7 +42,6 @@ final class APIClient: APIClientProtocol {
 
         switch httpResponse.statusCode {
         case 200...299: break
-        case 401: throw NetworkError.unauthorized
         default: throw NetworkError.serverError(statusCode: httpResponse.statusCode, data: data)
         }
 
