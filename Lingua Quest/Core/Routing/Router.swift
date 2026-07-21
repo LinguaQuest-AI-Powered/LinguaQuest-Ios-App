@@ -84,7 +84,8 @@ final class Router: RouterProtocol {
             let viewModel = Resolver.shared.resolve(LeaderboardViewModel.self)
             LeaderboardView(viewModel: viewModel)
         case .achievements:
-            AchievementsView()
+            let viewModel = Resolver.shared.resolve(AchievementsViewModel.self)
+            AchievementsView(viewModel: viewModel)
         case .wordInsight(let word):
             let viewModel = Resolver.shared.resolve(WordInsightViewModel.self)
             WordInsightView(viewModel: viewModel, word: word)

@@ -50,7 +50,7 @@ struct ProfileContentView: View {
                     ProfileHeader(
                         userName: userName,
                         userLevel: userLevel,
-                        avatarImage: avatarImage,
+                        avatarImage: "user1",
                         onEditTapped: onEditProfile
                     )
                     .padding(.top, 24)

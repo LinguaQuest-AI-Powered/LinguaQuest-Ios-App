@@ -1,31 +1,34 @@
+//
+//  AchievementsView.swift
+//  Lingua Quest
+//
+//  Created by Al3dwy on 20/07/2026.
+//
+
 import SwiftUI
 
 struct AchievementsView: View {
-    @Environment(Router.self) private var router
+    @State var viewModel: AchievementsViewModel
+    
     @State private var isAnimating = false
-    @State private var selectedTab: Int = 1
+    @State private var selectedTab: Int = 0 // 0 = ALL, 1 = EARNED, 2 = LOCKED
     
-    //TODO: delete those dummy achievements
-    let achievements: [AchievementUIModel] = [
-        AchievementUIModel(id: "1", title: "Wild Explorer", subtitle: "Oct 12", uiIcon: .trophyFill, uiIconColor: .appBrandBrown, uiBgColor: .appSurfaceCardWarm),
-        AchievementUIModel(id: "2", title: "Hidden Oasis", subtitle: "Nov 05", uiIcon: .starFill, uiIconColor: .appSemanticSuccess, uiBgColor: .appEmptyCircleBg),
-        AchievementUIModel(id: "3", title: "Streak Master", subtitle: "Oct 30", uiIcon: .medalFill, uiIconColor: .appBrandPrimary, uiBgColor: .appSurfaceCardWarm),
-        AchievementUIModel(id: "4", title: "Word Architect", subtitle: "Nov 12", uiIcon: .pencil, uiIconColor: .appBrandBrown, uiBgColor: .appSurfaceCardMuted),
-        AchievementUIModel(id: "5", title: "Speed Learner", subtitle: "Oct 02", uiIcon: .flameFill, uiIconColor: .appSemanticSuccess, uiBgColor: .appEmptyCircleBg),
-        AchievementUIModel(id: "6", title: "Global Citizen", subtitle: "Nov 10", uiIcon: .globeAmericasFill, uiIconColor: .appBrandBrown, uiBgColor: .appSurfaceCardWarm)
-    ]
+    var statusString: String {
+        switch selectedTab {
+        case 1: return "EARNED"
+        case 2: return "LOCKED"
+        default: return "ALL"
+        }
+    }
     
-    var filteredAchievements: [AchievementUIModel] {
+    var filteredAchievements: [FullAchievementUIModel] {
         switch selectedTab {
         case 1:
-            // Earned
-            return achievements.filter { (Int($0.id) ?? 0) <= 3 }
+            return viewModel.achievements.filter { $0.isEarned }
         case 2:
-            // Locked
-            return achievements.filter { (Int($0.id) ?? 0) > 3 }
+            return viewModel.achievements.filter { !$0.isEarned }
         default:
-            // All
-            return achievements
+            return viewModel.achievements
         }
     }
     
@@ -37,7 +40,7 @@ struct AchievementsView: View {
                 // Top Bar
                 HStack {
                     Button(action: {
-                        router.pop()
+                        viewModel.onBackTapped()
                     }) {
                         Circle()
                             .fill(Color.appSurfaceCardMuted)
@@ -79,7 +82,7 @@ struct AchievementsView: View {
                             VStack(spacing: 8) {
                                 Text(L10n.Achievements.myTrophies)
                                     .appTextStyle(.headingLarge, color: .appTextHeading)
-                                
+                                    
                                 Text(L10n.Achievements.subtitle)
                                     .appTextStyle(.body, color: .appTextSecondary)
                                     .multilineTextAlignment(.center)
@@ -123,15 +126,20 @@ struct AchievementsView: View {
                         .animation(.easeIn(duration: 0.5).delay(0.4), value: isAnimating)
                         
                         // Grid
-                        LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
-                            ForEach(Array(filteredAchievements.enumerated()), id: \.element.id) { index, achievement in
-                                AchievementGridItem(achievement: achievement)
+                        if viewModel.isLoading {
+                            ProgressView()
+                                .padding(.top, 40)
+                        } else {
+                            LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
+                                ForEach(filteredAchievements) { achievement in
+                                    AchievementGridItem(achievement: achievement)
+                                }
                             }
+                            .padding(.horizontal, 20)
+                            .padding(.bottom, 24)
+                            .opacity(isAnimating ? 1 : 0)
+                            .animation(.easeIn(duration: 0.5).delay(0.3), value: isAnimating)
                         }
-                        .padding(.horizontal, 20)
-                        .padding(.bottom, 24)
-                        .opacity(isAnimating ? 1 : 0)
-                        .animation(.easeIn(duration: 0.5).delay(0.3), value: isAnimating)
                     }
                 }
                 
@@ -140,30 +148,40 @@ struct AchievementsView: View {
                     Divider().background(Color.appBorderBrown)
                     
                     HStack(spacing: 0) {
-                        bottomStatView(value: "8", title: L10n.Achievements.earnedLabel)
+                        bottomStatView(value: "\(viewModel.earnedCount)", title: L10n.Achievements.earnedLabel)
                         Divider().frame(height: 30).background(Color.appBorderBrown)
-                        bottomStatView(value: "15", title: L10n.Achievements.inProgressLabel, valueColor: .appTealGreen)
+                        bottomStatView(value: "\(viewModel.inProgressCount)", title: L10n.Achievements.inProgressLabel, valueColor: .appTealGreen)
                         Divider().frame(height: 30).background(Color.appBorderBrown)
-                        bottomStatView(value: "240", title: L10n.Achievements.xpGainedLabel)
+                        bottomStatView(value: "\(viewModel.xpEarned)", title: L10n.Achievements.xpGainedLabel)
                     }
                     .padding(.top, 8)
                     
-                    Button(action: {
-                        // Claim rewards action
-                    }) {
-                        HStack {
-                            Image(systemIcon: .starCircleFill)
-                                .foregroundColor(.white)
-                            Text(L10n.Achievements.claimRewards)
-                                .appTextStyle(.bodyBold, color: .white)
+                    if let reward = viewModel.weeklyReward {
+                        Button(action: {
+                            Task {
+                                await viewModel.claimWeeklyReward()
+                            }
+                        }) {
+                            HStack {
+                                if viewModel.isClaimingReward {
+                                    ProgressView()
+                                        .tint(.white)
+                                } else {
+                                    Image(systemIcon: .starCircleFill)
+                                        .foregroundColor(reward.claimedThisWeek ? .appTextSecondary : .white)
+                                    Text(reward.claimedThisWeek ? "Reward Claimed" : L10n.Achievements.claimRewards)
+                                        .appTextStyle(.bodyBold, color: reward.claimedThisWeek ? .appTextSecondary : .white)
+                                }
+                            }
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 56)
+                            .background(reward.claimedThisWeek ? Color.appSurfaceCardMuted : Color.appBrandPrimary)
+                            .cornerRadius(12)
                         }
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 56)
-                        .background(Color.appBrandPrimary)
-                        .cornerRadius(12)
+                        .disabled(reward.claimedThisWeek || viewModel.isClaimingReward)
+                        .padding(.horizontal, 20)
+                        .padding(.bottom, 16)
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 16)
                 }
                 .background(Color.appSurfaceCardWarm)
                 .opacity(isAnimating ? 1 : 0)
@@ -171,8 +189,18 @@ struct AchievementsView: View {
             }
         }
         .navigationBarHidden(true)
+        .alert(isPresented: $viewModel.showClaimAlert) {
+            Alert(
+                title: Text("Rewards Claimed!"),
+                message: Text(viewModel.claimAlertMessage),
+                dismissButton: .default(Text("Awesome"))
+            )
+        }
         .onAppear {
             isAnimating = true
+            Task {
+                await viewModel.loadAchievements(status: "ALL")
+            }
         }
     }
     
@@ -206,7 +234,7 @@ struct AchievementsView: View {
 }
 
 struct AchievementGridItem: View {
-    let achievement: AchievementUIModel
+    let achievement: FullAchievementUIModel
     
     var body: some View {
         VStack(spacing: 12) {
@@ -215,11 +243,32 @@ struct AchievementGridItem: View {
                     .fill(achievement.uiBgColor)
                     .frame(width: 60, height: 60)
                 
-                Image(systemIcon: achievement.uiIcon)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 24, height: 24)
-                    .foregroundColor(achievement.uiIconColor)
+                if let urlString = achievement.iconUrl, let url = URL(string: urlString) {
+                    AsyncImage(url: url) { phase in
+                        switch phase {
+                        case .empty:
+                            ProgressView()
+                        case .success(let image):
+                            image.resizable()
+                                .scaledToFit()
+                                .frame(width: 32, height: 32)
+                        case .failure:
+                            Image(systemIcon: .starFill)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 24, height: 24)
+                                .foregroundColor(.appBrandBrown)
+                        @unknown default:
+                            EmptyView()
+                        }
+                    }
+                } else {
+                    Image(systemIcon: .starFill)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 24, height: 24)
+                        .foregroundColor(.appBrandBrown)
+                }
             }
             
             VStack(spacing: 4) {
@@ -228,12 +277,12 @@ struct AchievementGridItem: View {
                     .multilineTextAlignment(.center)
                     .lineLimit(1)
                 
-                Text(achievement.subtitle)
+                Text(achievement.isEarned ? "EARNED" : "\(achievement.progressPercent)%")
                     .font(.system(size: 10, weight: .bold))
-                    .foregroundColor(Color.appBadgeTealText)
+                    .foregroundColor(achievement.isEarned ? Color.appBadgeTealText : .appTextSecondary)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 4)
-                    .background(Color.appBadgeTealBg)
+                    .background(achievement.isEarned ? Color.appBadgeTealBg : Color.appBorderLight)
                     .clipShape(Capsule())
             }
         }
@@ -250,6 +299,22 @@ struct AchievementGridItem: View {
 }
 
 #Preview {
-    AchievementsView()
-        .environment(Router())
+    AchievementsView(viewModel: AchievementsViewModel(
+        router: Router(),
+        getAchievementsUseCase: GetAchievementsUseCase(
+            repository: AchievementsRepositoryImpl(
+                remoteDataSource: AchievementsRemoteDataSource(apiClient: APIClient())
+            )
+        ),
+        getWeeklyRewardUseCase: GetWeeklyRewardUseCase(
+            repository: AchievementsRepositoryImpl(
+                remoteDataSource: AchievementsRemoteDataSource(apiClient: APIClient())
+            )
+        ),
+        claimWeeklyRewardUseCase: ClaimWeeklyRewardUseCase(
+            repository: AchievementsRepositoryImpl(
+                remoteDataSource: AchievementsRemoteDataSource(apiClient: APIClient())
+            )
+        )
+    ))
 }
