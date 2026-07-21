@@ -66,3 +66,14 @@ extension AuthDTOMapper {
         (resetToken: dto.resetToken, expiresIn: dto.expiresIn)
     }
 }
+
+extension AuthDTOMapper {
+    static func mapRefreshToken(_ dto: RefreshTokenResponseDataDTO) -> AuthSessionEntity {
+        AuthSessionEntity(
+            accessToken: dto.accessToken,
+            refreshToken: dto.refreshToken,
+            tokenType: dto.tokenType,
+            expiresIn: dto.expiresIn
+        )
+    }
+}

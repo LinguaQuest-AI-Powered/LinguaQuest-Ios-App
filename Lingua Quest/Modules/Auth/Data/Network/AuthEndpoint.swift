@@ -15,6 +15,7 @@ enum AuthEndpoint {
         var path: String { "/auth/login" }
         var method: HTTPMethod { .post }
         var body: LoginRequestDTO? { LoginRequestDTO(email: email, password: password) }
+        var requiresAuth: Bool { false }
     }
 }
 
@@ -34,9 +35,9 @@ extension AuthEndpoint {
                 nativeLanguage: nativeLanguage, targetLanguage: targetLanguage
             )
         }
+        var requiresAuth: Bool { false }
     }
 }
-
 
 extension AuthEndpoint {
     struct SendOtp: Endpoint {
@@ -48,6 +49,7 @@ extension AuthEndpoint {
         var body: OtpSendRequestDTO? {
             OtpSendRequestDTO(email: email, purpose: purpose.rawValue)
         }
+        var requiresAuth: Bool { false }
     }
 
     struct VerifySignupOtp: Endpoint {
@@ -59,9 +61,9 @@ extension AuthEndpoint {
         var body: OtpVerifyRequestDTO? {
             OtpVerifyRequestDTO(email: email, otp: otp)
         }
+        var requiresAuth: Bool { false }
     }
 }
-
 
 extension AuthEndpoint {
     struct VerifyPasswordResetOtp: Endpoint {
@@ -73,6 +75,7 @@ extension AuthEndpoint {
         var body: OtpVerifyRequestDTO? {
             OtpVerifyRequestDTO(email: email, otp: otp)
         }
+        var requiresAuth: Bool { false }
     }
 
     struct ResetPassword: Endpoint {
@@ -84,5 +87,32 @@ extension AuthEndpoint {
         var body: ForgetPasswordRequestDTO? {
             ForgetPasswordRequestDTO(resetToken: resetToken, newPassword: newPassword)
         }
+        var requiresAuth: Bool { false }
+    }
+}
+
+// MARK: - Token Management
+extension AuthEndpoint {
+    struct RefreshToken: Endpoint {
+        let refreshToken: String
+
+        var path: String { "/auth/refresh-token" }
+        var method: HTTPMethod { .post }
+        var body: RefreshTokenRequestDTO? {
+            RefreshTokenRequestDTO(refreshToken: refreshToken)
+        }
+        var requiresAuth: Bool { false }
+    }
+
+    struct Logout: Endpoint {
+        let refreshToken: String
+        let allDevices: Bool
+
+        var path: String { "/auth/logout" }
+        var method: HTTPMethod { .post }
+        var body: LogoutRequestDTO? {
+            LogoutRequestDTO(refreshToken: refreshToken, allDevices: allDevices)
+        }
+        var requiresAuth: Bool { true }
     }
 }
