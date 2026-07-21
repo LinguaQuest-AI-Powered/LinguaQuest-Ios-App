@@ -13,23 +13,21 @@ struct DialogOverlay<DialogContent: View>: ViewModifier {
     let dialogContent: () -> DialogContent
     
     func body(content: Content) -> some View {
-        content.overlay {
-            if isPresented {
-                ZStack {
-                    Rectangle()
-                        .fill(Color.black.opacity(0.15))
-                        .background(.ultraThinMaterial)
-                        .ignoresSafeArea()
-                        .onTapGesture { isPresented = false }
-                    
-                    dialogContent()
-                        .padding(.horizontal, 24)
-                }
-                .transition(.opacity.combined(with: .scale(scale: 0.92)))
-                .zIndex(10)
+        content.windowOverlay(isPresented: $isPresented) {
+            ZStack {
+                Rectangle()
+                    .fill(Color.black.opacity(0.15))
+                    .background(.ultraThinMaterial)
+                    .ignoresSafeArea()
+                    .onTapGesture { isPresented = false }
+                
+                dialogContent()
+                    .padding(.horizontal, 24)
             }
+            .transition(.opacity.combined(with: .scale(scale: 0.92)))
+            .zIndex(10)
+            .animation(.spring(response: 0.4, dampingFraction: 0.8), value: isPresented)
         }
-        .animation(.spring(response: 0.4, dampingFraction: 0.8), value: isPresented)
     }
 }
 
