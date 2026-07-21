@@ -9,17 +9,27 @@ import Swinject
 
 final class AuthAssembly: Assembly {
     func assemble(container: Container) {
+        
+        // MARK: - Data Sources & Providers
         container.register(AuthRemoteDataSourceProtocol.self) { resolver in
             let apiClient = resolver.resolve(APIClientProtocol.self)!
             return AuthRemoteDataSource(apiClient: apiClient)
         }
+        
+        container.register(AuthTokenProviding.self) { resolver in
+            let tokenStorage = resolver.resolve(SecureTokenStorageProtocol.self)!
+            let remoteDataSource = resolver.resolve(AuthRemoteDataSourceProtocol.self)!
+            return AuthTokenProvider(tokenStorage: tokenStorage, remoteDataSource: remoteDataSource)
+        }.inObjectScope(.container)
 
+        // MARK: - Repositories
         container.register(AuthRepositoryProtocol.self) { resolver in
             let remoteDataSource = resolver.resolve(AuthRemoteDataSourceProtocol.self)!
             let tokenStorage = resolver.resolve(SecureTokenStorageProtocol.self)!
             return AuthRepositoryImpl(remoteDataSource: remoteDataSource, tokenStorage: tokenStorage)
         }
 
+        // MARK: - Use Cases
         container.register(LoginUseCaseProtocol.self) { resolver in
             LoginUseCase(repository: resolver.resolve(AuthRepositoryProtocol.self)!)
         }
@@ -43,7 +53,12 @@ final class AuthAssembly: Assembly {
         container.register(ResetPasswordUseCaseProtocol.self) { resolver in
             ResetPasswordUseCase(repository: resolver.resolve(AuthRepositoryProtocol.self)!)
         }
+        
+        container.register(RefreshTokenUseCaseProtocol.self) { resolver in
+            RefreshTokenUseCase(repository: resolver.resolve(AuthRepositoryProtocol.self)!)
+        }
 
+        // MARK: - View Models
         container.register(LoginViewModel.self) { resolver in
             LoginViewModel(
                 router: resolver.resolve(RouterProtocol.self)!,

@@ -14,6 +14,7 @@ final class Resolver {
     private init() {
         container = Container()
         registerAssemblies()
+        wireCircularDependencies()
     }
 
     private func registerAssemblies() {
@@ -26,6 +27,15 @@ final class Resolver {
             ],
             container: container
         )
+    }
+    
+    
+    /// Wires dependencies that can't be expressed through normal constructor injection
+    /// because they'd create a circular object graph at registration time.
+    /// Currently: APIClient <-> AuthTokenProvider <-> AuthRemoteDataSource(APIClient).
+    private func wireCircularDependencies() {
+        guard let apiClient = container.resolve(APIClientProtocol.self) as? APIClient else { return }
+        apiClient.tokenProvider = container.resolve(AuthTokenProviding.self)
     }
     
     func resolve<T>(_ type: T.Type) -> T {
