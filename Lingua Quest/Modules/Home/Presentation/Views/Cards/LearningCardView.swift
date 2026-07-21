@@ -11,7 +11,7 @@ import SwiftUI
 struct LearningCardView: View {
     @Environment(\.colorScheme) private var colorScheme
     
-    let imageAsset: Image.Asset
+    let flagEmoji: String
     let title: String
     let languageName: String
     let level: Int
@@ -21,10 +21,10 @@ struct LearningCardView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack(alignment: .top, spacing: 12) {
-                Image(asset: imageAsset)
-                    .resizable()
-                    .scaledToFill()
+                Text(flagEmoji)
+                    .font(.system(size: 28))
                     .frame(width: 46, height: 46)
+                    .background(Color.appSurfaceCard)
                     .clipShape(RoundedRectangle(cornerRadius: 14))
                     .overlay(RoundedRectangle(cornerRadius: 14).stroke(Color.appBorderBrown, lineWidth: 1))
                 
@@ -88,7 +88,7 @@ struct LearningCardView: View {
 
 #Preview {
     LearningCardView(
-        imageAsset: .spanish,
+        flagEmoji: "🇪🇸",
         title: L10n.Home.currentlyLearning,
         languageName: L10n.Onboarding.languageSpanish,
         level: 12,

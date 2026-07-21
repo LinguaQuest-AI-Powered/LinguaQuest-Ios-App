@@ -16,12 +16,6 @@ struct HomeView: View {
     
     @State private var showMyLanguagesSheet = false
     @State private var showAddLanguageScreen = false
-    @State private var selectedLanguage: UserLearningLanguage? = UserLearningLanguage(language: Language(code: "es", name: "Spanish", flag: "🇪🇸"), level: 12)
-    @State private var userLanguages: [UserLearningLanguage] = [
-        UserLearningLanguage(language: Language(code: "es", name: "Spanish", flag: "🇪🇸"), level: 12),
-        UserLearningLanguage(language: Language(code: "fr", name: "French", flag: "🇫🇷"), level: 4),
-        UserLearningLanguage(language: Language(code: "ja", name: "Japanese", flag: "🇯🇵"), level: 3)
-    ]
     
     private var displayWorlds: [WorldUIModel] {
         viewModel.displayWorlds
@@ -53,12 +47,12 @@ struct HomeView: View {
                         }
 
                         LearningCardView(
-                            imageAsset: .spanish,
+                            flagEmoji: viewModel.languageViewModel.activeLanguage?.flagEmoji ?? "🇪🇸",
                             title: L10n.Home.currentlyLearning,
-                            languageName: viewModel.homeData?.activeLanguage.name ?? L10n.Onboarding.languageSpanish,
-                            level: viewModel.homeData?.activeLanguage.level ?? 1,
+                            languageName: viewModel.languageViewModel.activeLanguage?.name ?? L10n.Onboarding.languageSpanish,
+                            level: viewModel.languageViewModel.activeLanguage?.level ?? 1,
                             streakDays: viewModel.homeData?.streakDays ?? 0,
-                            progressWidth: CGFloat(viewModel.homeData?.activeLanguage.levelProgressPercent ?? 0) * 1.65
+                            progressWidth: CGFloat(viewModel.languageViewModel.activeLanguage?.progressPercent ?? 0) * 1.65
                         )
                             .padding(.horizontal, 20)
                             .offset(y: animateItems ? 0 : 30)
@@ -157,6 +151,7 @@ struct HomeView: View {
             Task {
                 await viewModel.loadHomeData()
                 await viewModel.dailyRewardViewModel.loadDailyReward()
+                await viewModel.languageViewModel.loadMyLanguages()
             }
         }
         .appDialog(isPresented: $showDailyRewardDialog) {
@@ -181,16 +176,15 @@ struct HomeView: View {
         }
         .customBottomSheet(isPresented: $showMyLanguagesSheet, initialDetent: .custom(ratio: 0.7)) {
             MyLanguagesBottomSheet(
+                languageViewModel: viewModel.languageViewModel,
                 isPresented: $showMyLanguagesSheet,
-                languages: userLanguages,
-                selectedLanguage: $selectedLanguage,
                 onAddNewLanguage: {
                     showAddLanguageScreen = true
                 }
             )
         }
         .fullScreenCover(isPresented: $showAddLanguageScreen) {
-            AddLanguageView(userLanguages: $userLanguages)
+            AddLanguageView(languageViewModel: viewModel.languageViewModel)
         }
     }
 }

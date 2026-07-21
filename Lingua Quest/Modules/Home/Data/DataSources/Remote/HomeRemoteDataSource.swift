@@ -12,6 +12,11 @@ protocol HomeRemoteDataSourceProtocol {
     func getWorlds(languageId: Int, difficulty: String?) async throws -> WorldsResponseDTO
     func getDailyReward() async throws -> DailyRewardResponseDTO
     func claimDailyReward() async throws -> DailyRewardClaimResponseDTO
+    
+    func getMyLanguages() async throws -> MyLanguagesResponseDTO
+    func getAvailableLanguages() async throws -> AvailableLanguagesResponseDTO
+    func switchActiveLanguage(languageId: Int) async throws -> SwitchActiveLanguageResponseDTO
+    func addLanguages(languageIds: [Int]) async throws -> MyLanguagesResponseDTO
 }
 
 struct HomeRemoteDataSource: HomeRemoteDataSourceProtocol {
@@ -38,6 +43,26 @@ struct HomeRemoteDataSource: HomeRemoteDataSourceProtocol {
     
     func claimDailyReward() async throws -> DailyRewardClaimResponseDTO {
         let endpoint = HomeEndpoint.ClaimDailyReward()
+        return try await apiClient.request(endpoint)
+    }
+    
+    func getMyLanguages() async throws -> MyLanguagesResponseDTO {
+        let endpoint = LanguageEndpoint.GetMyLanguages()
+        return try await apiClient.request(endpoint)
+    }
+    
+    func getAvailableLanguages() async throws -> AvailableLanguagesResponseDTO {
+        let endpoint = LanguageEndpoint.GetAvailableLanguages()
+        return try await apiClient.request(endpoint)
+    }
+    
+    func switchActiveLanguage(languageId: Int) async throws -> SwitchActiveLanguageResponseDTO {
+        let endpoint = LanguageEndpoint.SwitchActiveLanguage(languageId: languageId)
+        return try await apiClient.request(endpoint)
+    }
+    
+    func addLanguages(languageIds: [Int]) async throws -> MyLanguagesResponseDTO {
+        let endpoint = LanguageEndpoint.AddLanguage(languageIds: languageIds)
         return try await apiClient.request(endpoint)
     }
 }

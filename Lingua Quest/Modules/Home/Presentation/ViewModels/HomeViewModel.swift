@@ -25,17 +25,27 @@ final class HomeViewModel {
     }
     
     let dailyRewardViewModel: DailyRewardViewModel
+    let languageViewModel: LanguageViewModel
     
     init(
         getHomeDataUseCase: GetHomeDataUseCaseProtocol,
         getHomeWorldsUseCase: GetHomeWorldsUseCaseProtocol,
         dailyRewardViewModel: DailyRewardViewModel,
+        languageViewModel: LanguageViewModel,
         router: RouterProtocol
     ) {
         self.getHomeDataUseCase = getHomeDataUseCase
         self.getHomeWorldsUseCase = getHomeWorldsUseCase
         self.dailyRewardViewModel = dailyRewardViewModel
+        self.languageViewModel = languageViewModel
         self.router = router
+        
+        // Listen for language switches to refresh home data
+        self.languageViewModel.onLanguageSwitched = { [weak self] in
+            Task {
+                await self?.loadHomeData()
+            }
+        }
     }
     
     func loadHomeData() async {
