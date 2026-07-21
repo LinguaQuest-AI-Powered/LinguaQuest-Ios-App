@@ -12,15 +12,16 @@ import Observation
 @Observable
 final class HomeViewModel {
     private let getHomeDataUseCase: GetHomeDataUseCaseProtocol
+    private let getHomeWorldsUseCase: GetHomeWorldsUseCaseProtocol
     private let router: RouterProtocol
-
+    
     var homeData: HomeData?
+    var fetchedWorlds: [ExploreWorld] = []
     var isLoading = false
     var errorMessage: String?
     
     var displayWorlds: [WorldUIModel] {
-        guard let worlds = homeData?.activeLanguage.exploreWorlds else { return [] }
-        return worlds.map { exploreWorld in
+        return fetchedWorlds.map { exploreWorld in
             let difficulty: WorldDifficulty = {
                 switch exploreWorld.difficulty {
                 case "EASY": return .easy
@@ -45,27 +46,38 @@ final class HomeViewModel {
             )
         }
     }
-
-    init(getHomeDataUseCase: GetHomeDataUseCaseProtocol, router: RouterProtocol) {
+    
+    init(getHomeDataUseCase: GetHomeDataUseCaseProtocol, getHomeWorldsUseCase: GetHomeWorldsUseCaseProtocol, router: RouterProtocol) {
         self.getHomeDataUseCase = getHomeDataUseCase
+        self.getHomeWorldsUseCase = getHomeWorldsUseCase
         self.router = router
     }
-
+    
     func loadHomeData() async {
         isLoading = true
         errorMessage = nil
+        async let homeDataTask = getHomeDataUseCase.execute()
+        async let worldsTask = getHomeWorldsUseCase.execute(languageId: 1, difficulty: "EASY")
+        
         do {
-            homeData = try await getHomeDataUseCase.execute()
+            homeData = try await homeDataTask
         } catch {
+            print("Failed to fetch home data: \(error)")
             errorMessage = error.localizedDescription
+        }
+        
+        do {
+            fetchedWorlds = try await worldsTask
+        } catch {
+            print("Failed to fetch worlds: \(error)")
         }
         isLoading = false
     }
-
+    
     func navigateToAllWorlds() {
         router.push(.allWorlds)
     }
-
+    
     func navigateToGameLevels(worldName: String) {
         router.push(.gameLevels(worldName: worldName))
     }

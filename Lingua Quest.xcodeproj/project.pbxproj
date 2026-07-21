@@ -410,6 +410,8 @@
 		};
 		1529B38A3006410600CCD74A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 1529B3683006410300CCD74A /* Lingua Quest */;
+			baseConfigurationReferenceRelativePath = App/Config.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -443,6 +445,8 @@
 		};
 		1529B38B3006410600CCD74A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 1529B3683006410300CCD74A /* Lingua Quest */;
+			baseConfigurationReferenceRelativePath = App/Config.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

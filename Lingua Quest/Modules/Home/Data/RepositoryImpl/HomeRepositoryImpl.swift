@@ -18,4 +18,9 @@ struct HomeRepositoryImpl: HomeRepositoryProtocol {
         let response = try await remoteDataSource.getHomeData()
         return response.toDomain()
     }
+    
+    func getWorlds(languageId: Int, difficulty: String) async throws -> [ExploreWorld] {
+        let response = try await remoteDataSource.getWorlds(languageId: languageId, difficulty: difficulty)
+        return response.data.worlds.map { $0.toDomain() }
+    }
 }

@@ -40,6 +40,16 @@ struct ExploreWorldDTO: Decodable {
     let completedLevels: Int
 }
 
+struct WorldsResponseDTO: Decodable {
+    let success: Bool
+    let data: WorldsDataDTO
+}
+
+struct WorldsDataDTO: Decodable {
+    let totalCount: Int
+    let worlds: [ExploreWorldDTO]
+}
+
 // MARK: - Mappers
 extension HomeResponseDTO {
     func toDomain() -> HomeData {

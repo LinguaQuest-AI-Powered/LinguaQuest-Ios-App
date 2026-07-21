@@ -25,10 +25,20 @@ final class HomeAssembly: Assembly {
             return GetHomeDataUseCase(repository: repository)
         }
         
+        container.register(GetHomeWorldsUseCaseProtocol.self) { resolver in
+            let repository = resolver.resolve(HomeRepositoryProtocol.self)!
+            return GetHomeWorldsUseCase(repository: repository)
+        }
+        
         container.register(HomeViewModel.self) { resolver in
-            let useCase = resolver.resolve(GetHomeDataUseCaseProtocol.self)!
+            let getHomeDataUseCase = resolver.resolve(GetHomeDataUseCaseProtocol.self)!
+            let getHomeWorldsUseCase = resolver.resolve(GetHomeWorldsUseCaseProtocol.self)!
             let router = resolver.resolve(RouterProtocol.self)!
-            return HomeViewModel(getHomeDataUseCase: useCase, router: router)
+            return HomeViewModel(
+                getHomeDataUseCase: getHomeDataUseCase,
+                getHomeWorldsUseCase: getHomeWorldsUseCase,
+                router: router
+            )
         }
     }
 }

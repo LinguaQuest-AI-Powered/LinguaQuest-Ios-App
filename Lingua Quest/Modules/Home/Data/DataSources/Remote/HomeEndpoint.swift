@@ -13,4 +13,20 @@ enum HomeEndpoint {
         var path: String { "/home" }
         var method: HTTPMethod { .get }
     }
+    
+    struct GetWorlds: Endpoint {
+        var body: EmptyBody?
+        
+        let languageId: Int
+        let difficulty: String
+        
+        var path: String { "/worlds" }
+        var method: HTTPMethod { .get }
+        var queryItems: [URLQueryItem]? {
+            [
+                URLQueryItem(name: "languageId", value: "\(languageId)"),
+                URLQueryItem(name: "difficulty", value: difficulty)
+            ]
+        }
+    }
 }
