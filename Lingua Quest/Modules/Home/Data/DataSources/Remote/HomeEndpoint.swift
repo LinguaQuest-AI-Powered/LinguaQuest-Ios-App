@@ -29,4 +29,16 @@ enum HomeEndpoint {
             ]
         }
     }
+    
+    struct GetDailyReward: Endpoint {
+        var body: EmptyBody?
+        var path: String { "/daily-reward" }
+        var method: HTTPMethod { .get }
+    }
+    
+    struct ClaimDailyReward: Endpoint {
+        var body: EmptyBody?
+        var path: String { "/daily-reward/claim" }
+        var method: HTTPMethod { .post }
+    }
 }

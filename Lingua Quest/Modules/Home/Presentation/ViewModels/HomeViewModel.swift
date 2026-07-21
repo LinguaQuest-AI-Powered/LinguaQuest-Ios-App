@@ -47,9 +47,17 @@ final class HomeViewModel {
         }
     }
     
-    init(getHomeDataUseCase: GetHomeDataUseCaseProtocol, getHomeWorldsUseCase: GetHomeWorldsUseCaseProtocol, router: RouterProtocol) {
+    let dailyRewardViewModel: DailyRewardViewModel
+    
+    init(
+        getHomeDataUseCase: GetHomeDataUseCaseProtocol,
+        getHomeWorldsUseCase: GetHomeWorldsUseCaseProtocol,
+        dailyRewardViewModel: DailyRewardViewModel,
+        router: RouterProtocol
+    ) {
         self.getHomeDataUseCase = getHomeDataUseCase
         self.getHomeWorldsUseCase = getHomeWorldsUseCase
+        self.dailyRewardViewModel = dailyRewardViewModel
         self.router = router
     }
     

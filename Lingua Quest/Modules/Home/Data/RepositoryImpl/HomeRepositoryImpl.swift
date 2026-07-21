@@ -23,4 +23,14 @@ struct HomeRepositoryImpl: HomeRepositoryProtocol {
         let response = try await remoteDataSource.getWorlds(languageId: languageId, difficulty: difficulty)
         return response.data.worlds.map { $0.toDomain() }
     }
+    
+    func getDailyReward() async throws -> DailyRewardEntity {
+        let response = try await remoteDataSource.getDailyReward()
+        return response.data.toDomain()
+    }
+    
+    func claimDailyReward() async throws -> DailyRewardClaimEntity {
+        let response = try await remoteDataSource.claimDailyReward()
+        return response.data.toDomain()
+    }
 }

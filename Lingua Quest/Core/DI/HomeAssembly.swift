@@ -30,13 +30,31 @@ final class HomeAssembly: Assembly {
             return GetHomeWorldsUseCase(repository: repository)
         }
         
+        container.register(GetDailyRewardUseCase.self) { resolver in
+            let repository = resolver.resolve(HomeRepositoryProtocol.self)!
+            return GetDailyRewardUseCase(repository: repository)
+        }
+        
+        container.register(ClaimDailyRewardUseCase.self) { resolver in
+            let repository = resolver.resolve(HomeRepositoryProtocol.self)!
+            return ClaimDailyRewardUseCase(repository: repository)
+        }
+        
+        container.register(DailyRewardViewModel.self) { resolver in
+            let getDailyRewardUseCase = resolver.resolve(GetDailyRewardUseCase.self)!
+            let claimDailyRewardUseCase = resolver.resolve(ClaimDailyRewardUseCase.self)!
+            return DailyRewardViewModel(getDailyRewardUseCase: getDailyRewardUseCase, claimDailyRewardUseCase: claimDailyRewardUseCase)
+        }
+        
         container.register(HomeViewModel.self) { resolver in
             let getHomeDataUseCase = resolver.resolve(GetHomeDataUseCaseProtocol.self)!
             let getHomeWorldsUseCase = resolver.resolve(GetHomeWorldsUseCaseProtocol.self)!
+            let dailyRewardViewModel = resolver.resolve(DailyRewardViewModel.self)!
             let router = resolver.resolve(RouterProtocol.self)!
             return HomeViewModel(
                 getHomeDataUseCase: getHomeDataUseCase,
                 getHomeWorldsUseCase: getHomeWorldsUseCase,
+                dailyRewardViewModel: dailyRewardViewModel,
                 router: router
             )
         }

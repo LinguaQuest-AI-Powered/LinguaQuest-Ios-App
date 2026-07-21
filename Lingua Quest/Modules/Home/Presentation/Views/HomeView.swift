@@ -10,9 +10,7 @@ import SwiftUI
 struct HomeView: View {
     @Bindable var viewModel: HomeViewModel
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @State private var hasClaimedDailyReward: Bool = false
     
-    @State private var dailyRewardViewModel = DailyRewardViewModel()
     @State private var showDailyRewardDialog = false
     @State private var pulseWorldButton = false
     
@@ -43,7 +41,7 @@ struct HomeView: View {
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 20) {
                         
-                        if !hasClaimedDailyReward {
+                        if !viewModel.dailyRewardViewModel.isClaimed && viewModel.dailyRewardViewModel.reward != nil {
                             DailyBonusCardView {
                                 showDailyRewardDialog = true
                             }
@@ -158,23 +156,28 @@ struct HomeView: View {
             
             Task {
                 await viewModel.loadHomeData()
+                await viewModel.dailyRewardViewModel.loadDailyReward()
             }
         }
         .appDialog(isPresented: $showDailyRewardDialog) {
-            DailyRewardCardContent(
-                days: dailyRewardViewModel.timelineDays,
-                completedCount: dailyRewardViewModel.completedNodesCount,
-                rewardAmount: dailyRewardViewModel.reward.rewardAmount,
-                onClaimTapped: {
-                    dailyRewardViewModel.claimReward()
-                    withAnimation(.easeInOut(duration: 0.3)) {
-                        showDailyRewardDialog = false
+            if let reward = viewModel.dailyRewardViewModel.reward {
+                DailyRewardCardContent(
+                    days: viewModel.dailyRewardViewModel.timelineDays,
+                    completedCount: viewModel.dailyRewardViewModel.completedNodesCount,
+                    rewardAmount: reward.rewardCoins,
+                    onClaimTapped: {
+                        Task {
+                            await viewModel.dailyRewardViewModel.claimReward()
+                            withAnimation(.easeInOut(duration: 0.3)) {
+                                showDailyRewardDialog = false
+                            }
+                        }
                     }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        hasClaimedDailyReward = true
-                    }
-                }
-            )
+                )
+            } else {
+                ProgressView()
+                    .padding()
+            }
         }
         .customBottomSheet(isPresented: $showMyLanguagesSheet, initialDetent: .custom(ratio: 0.7)) {
             MyLanguagesBottomSheet(

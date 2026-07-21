@@ -50,6 +50,34 @@ struct WorldsDataDTO: Decodable {
     let worlds: [ExploreWorldDTO]
 }
 
+struct DailyRewardResponseDTO: Decodable {
+    let success: Bool
+    let data: DailyRewardDataDTO
+}
+
+struct DailyRewardDataDTO: Decodable {
+    let claimedToday: Bool
+    let currentDay: Int
+    let cycleLength: Int
+    let rewardCoins: Int
+    let rewardXp: Int?
+    let streakDays: Int
+}
+
+struct DailyRewardClaimResponseDTO: Decodable {
+    let success: Bool
+    let data: DailyRewardClaimDataDTO
+}
+
+struct DailyRewardClaimDataDTO: Decodable {
+    let coinsAwarded: Int
+    let xpAwarded: Int?
+    let newCoinsBalance: Int
+    let newXpBalance: Int
+    let newStreakDays: Int
+    let nextDay: Int
+}
+
 // MARK: - Mappers
 extension HomeResponseDTO {
     func toDomain() -> HomeData {
@@ -81,6 +109,32 @@ extension ExploreWorldDTO {
             progressPercent: progressPercent,
             totalLevels: totalLevels,
             completedLevels: completedLevels
+        )
+    }
+}
+
+extension DailyRewardDataDTO {
+    func toDomain() -> DailyRewardEntity {
+        return DailyRewardEntity(
+            claimedToday: claimedToday,
+            currentDay: currentDay,
+            cycleLength: cycleLength,
+            rewardCoins: rewardCoins,
+            rewardXp: rewardXp,
+            streakDays: streakDays
+        )
+    }
+}
+
+extension DailyRewardClaimDataDTO {
+    func toDomain() -> DailyRewardClaimEntity {
+        return DailyRewardClaimEntity(
+            coinsAwarded: coinsAwarded,
+            xpAwarded: xpAwarded,
+            newCoinsBalance: newCoinsBalance,
+            newXpBalance: newXpBalance,
+            newStreakDays: newStreakDays,
+            nextDay: nextDay
         )
     }
 }
