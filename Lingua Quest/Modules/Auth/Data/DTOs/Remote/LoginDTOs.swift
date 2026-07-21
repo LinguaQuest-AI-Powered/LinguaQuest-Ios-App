@@ -26,5 +26,8 @@ struct UserDTO: Decodable {
     let photo: String?
     let nativeLanguage: String
     let isVerified: Bool
+    // TODO: Confirm this should be [String] or [TargetLanguageDTO].
+    // The Swagger spec defines it as an array of objects ({id, name, code}), but the login example shows [String].
+    // Keeping it as [String] temporarily to match the example, but it may crash if the backend sends objects.
     let targetLanguages: [String]
 }

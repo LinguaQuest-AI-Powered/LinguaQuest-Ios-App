@@ -1,5 +1,5 @@
 //
-//  VerifyEmailViewModel.swift
+//  VerifyPasswordResetOtpViewModel.swift
 //  Lingua Quest
 //
 //  Created by Omar Khaled Jaafar on 20/07/2026.
@@ -10,11 +10,11 @@ import Observation
 
 @Observable
 @MainActor
-final class VerifyEmailViewModel {
+final class VerifyPasswordResetOtpViewModel {
     // MARK: - Dependencies
     private let router: RouterProtocol
     private let sendOtpUseCase: SendOtpUseCaseProtocol
-    private let verifySignupOtpUseCase: VerifySignupOtpUseCaseProtocol
+    private let verifyPasswordResetOtpUseCase: VerifyPasswordResetOtpUseCaseProtocol
 
     // MARK: - State
     let email: String
@@ -35,11 +35,16 @@ final class VerifyEmailViewModel {
     private let otpLength = 4
 
     // MARK: - Init
-    init(email: String, router: RouterProtocol, sendOtpUseCase: SendOtpUseCaseProtocol, verifySignupOtpUseCase: VerifySignupOtpUseCaseProtocol) {
+    init(
+        email: String,
+        router: RouterProtocol,
+        sendOtpUseCase: SendOtpUseCaseProtocol,
+        verifyPasswordResetOtpUseCase: VerifyPasswordResetOtpUseCaseProtocol
+    ) {
         self.email = email
         self.router = router
         self.sendOtpUseCase = sendOtpUseCase
-        self.verifySignupOtpUseCase = verifySignupOtpUseCase
+        self.verifyPasswordResetOtpUseCase = verifyPasswordResetOtpUseCase
         startCountdown()
     }
 
@@ -59,12 +64,12 @@ final class VerifyEmailViewModel {
         isLoading = true
 
         Task {
-            let result = await verifySignupOtpUseCase.execute(email: email, otp: otpCode)
+            let result = await verifyPasswordResetOtpUseCase.execute(email: email, otp: otpCode)
             isLoading = false
 
             switch result {
-            case .success:
-                router.push(.login)
+            case .success(let (resetToken, _)):
+                router.push(.resetPassword(resetToken: resetToken))
             case .failure(let error):
                 errorMessage = error.errorDescription
             }
@@ -76,7 +81,7 @@ final class VerifyEmailViewModel {
         errorMessage = nil
 
         Task {
-            let result = await sendOtpUseCase.execute(email: email, purpose: .signup)
+            let result = await sendOtpUseCase.execute(email: email, purpose: .passwordReset)
             switch result {
             case .success:
                 startCountdown()
@@ -86,7 +91,7 @@ final class VerifyEmailViewModel {
         }
     }
 
-    func navigateToLogin() {
+    func navigateBack() {
         countdownTask?.cancel()
         router.pop()
     }
@@ -107,11 +112,10 @@ final class VerifyEmailViewModel {
     }
 }
 
-
 // MARK: - Preview Helper
-extension VerifyEmailViewModel {
+extension VerifyPasswordResetOtpViewModel {
     @MainActor
-    static var preview: VerifyEmailViewModel {
+    static var preview: VerifyPasswordResetOtpViewModel {
         class MockRouter: RouterProtocol {
             func push(_ route: AppRoute) {}
             func pushAndReplace(_ route: AppRoute) {}
@@ -121,24 +125,22 @@ extension VerifyEmailViewModel {
             func present(_ sheet: AppSheet) {}
             func dismissSheet() {}
         }
-        
+
         class MockSendOtpUseCase: SendOtpUseCaseProtocol {
-            func execute(email: String, purpose: OtpPurpose) async -> Result<Void, AuthError> {
-                return .success(())
+            func execute(email: String, purpose: OtpPurpose) async -> Result<Void, AuthError> { .success(()) }
+        }
+
+        class MockVerifyUseCase: VerifyPasswordResetOtpUseCaseProtocol {
+            func execute(email: String, otp: String) async -> Result<(resetToken: String, expiresIn: Int), AuthError> {
+                .success((resetToken: "rst_preview_token", expiresIn: 900))
             }
         }
-        
-        class MockVerifySignupOtpUseCase: VerifySignupOtpUseCaseProtocol {
-            func execute(email: String, otp: String) async -> Result<Bool, AuthError> {
-                return .success(true)
-            }
-        }
-        
-        return VerifyEmailViewModel(
-            email: "test@linguaquest.com",
+
+        return VerifyPasswordResetOtpViewModel(
+            email: "preview@example.com",
             router: MockRouter(),
             sendOtpUseCase: MockSendOtpUseCase(),
-            verifySignupOtpUseCase: MockVerifySignupOtpUseCase()
+            verifyPasswordResetOtpUseCase: MockVerifyUseCase()
         )
     }
 }

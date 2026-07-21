@@ -14,12 +14,15 @@ protocol APIClientProtocol {
 final class APIClient: APIClientProtocol {
     private let session: URLSession
     private let decoder: JSONDecoder
-    private let tokenStorage: SecureTokenStorageProtocol?
+    
+    /// Set after DI wiring completes (see Resolver.swift) to break the circular
+    /// dependency between APIClient <-> AuthTokenProvider <-> AuthRemoteDataSource.
+    /// Weak because the container (not APIClient) owns the provider's lifetime.
+    weak var tokenProvider: AuthTokenProviding?
 
-    init(session: URLSession = .shared, decoder: JSONDecoder = APIClient.defaultDecoder, tokenStorage: SecureTokenStorageProtocol? = nil) {
+    init(session: URLSession = .shared, decoder: JSONDecoder = APIClient.defaultDecoder) {
         self.session = session
         self.decoder = decoder
-        self.tokenStorage = tokenStorage
     }
 
     static var defaultDecoder: JSONDecoder {
@@ -27,20 +30,19 @@ final class APIClient: APIClientProtocol {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
     }
-
+    
     func request<E: Endpoint, T: Decodable>(_ endpoint: E) async throws -> T {
+        try await performRequest(endpoint, isRetryAfterRefresh: false)
+    }
+
+    private func performRequest<E: Endpoint, T: Decodable>(_ endpoint: E, isRetryAfterRefresh: Bool) async throws -> T {
         var urlRequest = try endpoint.asURLRequest()
-        
-        let hardcodedToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzbGFhaGFueTNAZ21haWwuY29tIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTc4NDU3MzI0MCwiZXhwIjoxNzg0NjU5NjQwfQ.RVOujy09qaqJZA7X8o9lTT4yUoyJqs8Wc6-HubU4kADEtWZr5x63YWhOLvQyAGM6micRWtfAZfU-i06Ce9mnNg" 
-        urlRequest.addValue("Bearer \(hardcodedToken)", forHTTPHeaderField: "Authorization")
-        
-        /*
-        if let token = tokenStorage?.getAccessToken() {
-            urlRequest.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+
+        if endpoint.requiresAuth, let token = tokenProvider?.currentAccessToken() {
+            urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
-        */
-        
-        // --- LOGGING REQUEST ---
+
+        // --- LOGGING REQUEST
         print("======== [API REQUEST] ========")
         print("URL: \(urlRequest.url?.absoluteString ?? "N/A")")
         print("METHOD: \(urlRequest.httpMethod ?? "N/A")")
@@ -57,6 +59,7 @@ final class APIClient: APIClientProtocol {
         do {
             (data, response) = try await session.data(for: urlRequest)
         } catch {
+            // --- LOGGING ERROR ---
             print("======== [API ERROR] ========")
             print("Network Error: \(error.localizedDescription)")
             print("Actual Error: \(error as NSError)")
@@ -67,7 +70,7 @@ final class APIClient: APIClientProtocol {
         guard let httpResponse = response as? HTTPURLResponse else {
             throw NetworkError.unknown(URLError(.badServerResponse))
         }
-        
+
         // --- LOGGING RESPONSE ---
         print("======== [API RESPONSE] ========")
         print("URL: \(httpResponse.url?.absoluteString ?? "N/A")")
@@ -81,13 +84,28 @@ final class APIClient: APIClientProtocol {
         // --------------------------------
 
         switch httpResponse.statusCode {
-        case 200...299: break
-        default: throw NetworkError.serverError(statusCode: httpResponse.statusCode, data: data)
+        case 200...299:
+            break
+
+        case 401 where endpoint.requiresAuth && !isRetryAfterRefresh:
+            // Access token likely expired — try a silent refresh, then retry once.
+            print("⚠️ [API] 401 Unauthorized. Attempting Silent Refresh...")
+            let refreshed = await tokenProvider?.refreshSession() ?? false
+            guard refreshed else {
+                print("❌ [API] Silent Refresh Failed. User must re-login.")
+                throw NetworkError.serverError(statusCode: 401, data: data)
+            }
+            print("✅ [API] Silent Refresh Succeeded. Retrying original request...")
+            return try await performRequest(endpoint, isRetryAfterRefresh: true)
+
+        default:
+            throw NetworkError.serverError(statusCode: httpResponse.statusCode, data: data)
         }
 
         do {
             return try decoder.decode(T.self, from: data)
         } catch {
+            // --- LOGGING DECODING ERROR ---
             print("======== [API DECODING ERROR] ========")
             print("Error: \(error)")
             print("======================================")

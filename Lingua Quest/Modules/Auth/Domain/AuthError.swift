@@ -38,11 +38,11 @@ enum AuthError: Error, Equatable {
         case "USERNAME_ALREADY_EXISTS": return .usernameAlreadyTaken // TODO: confirm exact key with backend dev
         case "EMAIL_NOT_FOUND": return .emailNotFound
         case "INVALID_OTP": return .invalidOtp
-        case "OTP_NOT_FOUND": return .otpNotFound
+        case "OTP_NOT_FOUND", "OTP_EXPIRED": return .otpNotFound
         case "OTP_COOLDOWN": return .otpCooldown
         case "MAX_ATTEMPTS_EXCEEDED": return .maxOtpAttemptsExceeded
-        case "INVALID_RESET_TOKEN": return .invalidResetToken
-        case "INVALID_REFRESH_TOKEN": return .invalidRefreshToken
+        case "INVALID_RESET_TOKEN", "RESET_TOKEN_EXPIRED": return .invalidResetToken
+        case "INVALID_REFRESH_TOKEN", "REFRESH_TOKEN_EXPIRED": return .invalidRefreshToken
         case "INVALID_FIREBASE_TOKEN": return .invalidFirebaseToken
         case "UNAUTHENTICATED": return .unauthenticated
         case "INTERNAL_SERVER_ERROR": return .internalServerError
@@ -55,6 +55,23 @@ extension AuthError: LocalizedError {
     /// Our own copy, not the backend's — keeps wording, tone, and language consistent
     /// with the rest of the app regardless of what the backend sends back.
     var errorDescription: String? {
-        return nil // TODO: Implement user-facing error messages for each case using L10n
+        switch self {
+        case .validation(let message): return message
+        case .invalidCredentials: return L10n.Auth.Error.invalidCredentials
+        case .emailNotVerified: return L10n.Auth.Error.emailNotVerified
+        case .emailAlreadyExists: return L10n.Auth.Error.emailAlreadyExists
+        case .usernameAlreadyTaken: return L10n.Auth.Error.usernameAlreadyTaken
+        case .emailNotFound: return L10n.Auth.Error.emailNotFound
+        case .invalidOtp: return L10n.Auth.Error.invalidOtp
+        case .otpNotFound: return L10n.Auth.Error.otpNotFound
+        case .otpCooldown: return L10n.Auth.Error.otpCooldown
+        case .maxOtpAttemptsExceeded: return L10n.Auth.Error.maxOtpAttemptsExceeded
+        case .invalidResetToken: return L10n.Auth.Error.invalidResetToken
+        case .invalidRefreshToken: return L10n.Auth.Error.sessionExpired
+        case .invalidFirebaseToken: return L10n.Auth.Error.invalidFirebaseToken
+        case .unauthenticated: return L10n.Auth.Error.sessionExpired
+        case .internalServerError: return L10n.Auth.Error.internalServerError
+        case .unknown: return L10n.Auth.Error.generic
+        }
     }
 }

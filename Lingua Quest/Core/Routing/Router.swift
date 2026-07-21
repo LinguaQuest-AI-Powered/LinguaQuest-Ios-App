@@ -62,11 +62,14 @@ final class Router: RouterProtocol {
         case .forgetPassword:
             let viewModel = Resolver.shared.resolve(ForgetPasswordViewModel.self)
             ForgetPasswordView(viewModel: viewModel)
-        case .verifyEmail:
-            let viewModel = Resolver.shared.resolve(VerifyEmailViewModel.self)
+        case .verifyEmail(let email):
+            let viewModel = Resolver.shared.resolve(VerifyEmailViewModel.self, argument: email)
             VerifyEmailView(viewModel: viewModel)
-        case .resetPassword:
-            let viewModel = Resolver.shared.resolve(ResetPasswordViewModel.self)
+        case .verifyPasswordResetOtp(let email):
+            let viewModel = Resolver.shared.resolve(VerifyPasswordResetOtpViewModel.self, argument: email)
+            VerifyPasswordResetOtpView(viewModel: viewModel)
+        case .resetPassword(let resetToken):
+            let viewModel = Resolver.shared.resolve(ResetPasswordViewModel.self, argument: resetToken)
             ResetPasswordView(viewModel: viewModel)
         case .gameLevels(let worldId, let worldName, let languageId):
             let viewModel = Resolver.shared.resolve(GameLevelsViewModel.self)
