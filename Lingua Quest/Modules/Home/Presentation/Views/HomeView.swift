@@ -10,7 +10,8 @@ import SwiftUI
 struct HomeView: View {
     @Bindable var viewModel: HomeViewModel
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    
+    @Environment(Router.self) private var router
+
     @State private var showDailyRewardDialog = false
     @State private var pulseWorldButton = false
     
@@ -97,7 +98,8 @@ struct HomeView: View {
                             action: {}
                         )
                         
-                        VoicePracticeCardView(action: { router.push(.voiceGame) })                            .padding(.horizontal, 20)
+                        VoicePracticeCardView(action: { router.push(.voiceGame) })
+                            .padding(.horizontal, 20)
                             .offset(y: animateItems ? 0 : 30)
                             .opacity(animateItems ? 1 : 0)
                             .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.45), value: animateItems)
