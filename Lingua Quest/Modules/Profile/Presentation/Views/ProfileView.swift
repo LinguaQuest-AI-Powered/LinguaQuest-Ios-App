@@ -52,7 +52,7 @@ struct ProfileView: View {
                         router.push(.achievements)
                     },
                     onViewAllExplorers: {
-                        router.push(.leaderboard)
+                        router.push(.leaderboard(languageId: viewModel.currentLanguageId))
                     },
                     onSettingsTapped: {
                         viewModel.navigateToSettings()

@@ -10,7 +10,7 @@ import SwiftUI
 struct TopExplorersSection: View {
     // MARK: - Properties
     let explorers: [ExplorerUIModel]
-    var onViewAllTapped: () -> Void
+    let onViewAllExplorers: () -> Void
     
     // MARK: - Body
     var body: some View {
@@ -20,7 +20,7 @@ struct TopExplorersSection: View {
             SectionHeader(
                 title: L10n.Profile.topExplorersTitle,
                 actionTitle: L10n.Profile.viewAll,
-                onActionTapped: onViewAllTapped
+                onActionTapped: onViewAllExplorers
             )
             
             // Leaderboard List

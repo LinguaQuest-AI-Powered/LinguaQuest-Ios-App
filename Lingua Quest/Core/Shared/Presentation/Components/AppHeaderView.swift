@@ -62,9 +62,9 @@ struct AppHeaderView: View {
         if value >= 1_000_000 {
             let formatted = String(format: "%.1fM", Double(value) / 1_000_000)
             return formatted.replacingOccurrences(of: ".0M", with: "M")
-        } else if value >= 10_000 {
-            let formatted = String(format: "%.1fK", Double(value) / 1_000)
-            return formatted.replacingOccurrences(of: ".0K", with: "K")
+        } else if value >= 1_000 {
+            let formatted = String(format: "%.1fk", Double(value) / 1_000)
+            return formatted.replacingOccurrences(of: ".0k", with: "k")
         } else {
             return "\(value)"
         }

@@ -38,6 +38,7 @@ final class ProfileViewModel {
     var currentLanguage: String = ""
     var journeyTitle: String = ""
     var languageLevel: String = ""
+    var currentLanguageId: Int = 0
     var currentLanguageXP: Int = 0
     var targetLanguageXP: Int = 0
     
@@ -93,6 +94,7 @@ final class ProfileViewModel {
         self.currentLanguage = profile.currentLanguageName
         self.journeyTitle = profile.journeyLabel
         self.languageLevel = "LEVEL \(profile.currentLanguageLevel)"
+        self.currentLanguageId = profile.currentLanguageId
         self.currentLanguageXP = profile.currentXp
         self.targetLanguageXP = profile.nextMilestoneXp
         

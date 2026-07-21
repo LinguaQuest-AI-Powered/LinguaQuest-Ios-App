@@ -97,7 +97,7 @@ struct ProfileContentView: View {
                     
                     TopExplorersSection(
                         explorers: topExplorers,
-                        onViewAllTapped: onViewAllExplorers
+                        onViewAllExplorers: onViewAllExplorers
                     )
                     .padding(.horizontal, 20)
                     .padding(.bottom, 24)

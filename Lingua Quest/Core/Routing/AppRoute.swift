@@ -21,7 +21,7 @@ enum AppRoute: Hashable {
     case cameraQuestTask
     case cameraCapture(targetWord: String)
     case cameraResult(targetWord: String)
-    case leaderboard
+    case leaderboard(languageId: Int)
     case achievements
     case wordInsight(word: WordCardEntity)
     case allWorlds
