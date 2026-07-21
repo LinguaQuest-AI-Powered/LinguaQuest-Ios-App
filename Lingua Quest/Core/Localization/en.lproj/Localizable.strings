@@ -203,6 +203,7 @@
 "settings.daily_goal" = "Daily Goal";
 "settings.learning_streak" = "Learning Streak";
 "settings.app_experience" = "APP EXPERIENCE";
+"settings.app_language" = "App Language";
 "settings.notifications" = "Notifications";
 "settings.dark_mode" = "Dark Mode";
 "settings.sound_effects" = "Sound Effects";
@@ -210,7 +211,10 @@
 "settings.help_support" = "Help & Support";
 "settings.about_app" = "About App";
 "settings.save_changes" = "SAVE CHANGES";
+"settings.terms_of_service" = "Terms of Service";
 "settings.log_out" = "Log Out";
+"settings.log_out_confirmation" = "Are you sure you want to log out?";
+"settings.choose_language" = "Choose your preferred language";
 
 
 "word_insight.title" = "AI Insight";

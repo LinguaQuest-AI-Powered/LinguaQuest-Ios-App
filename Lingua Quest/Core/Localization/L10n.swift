@@ -281,6 +281,7 @@ enum L10n {
         static var dailyGoal: String { localized("settings.daily_goal") }
         static var learningStreak: String { localized("settings.learning_streak") }
         static var appExperience: String { localized("settings.app_experience") }
+        static var appLanguage: String { localized("settings.app_language") }
         static var notifications: String { localized("settings.notifications") }
         static var darkMode: String { localized("settings.dark_mode") }
         static var soundEffects: String { localized("settings.sound_effects") }
@@ -289,6 +290,8 @@ enum L10n {
         static var aboutApp: String { localized("settings.about_app") }
         static var saveChanges: String { localized("settings.save_changes") }
         static var logOut: String { localized("settings.log_out") }
+        static var logOutConfirmation: String { localized("settings.log_out_confirmation") }
+        static var chooseLanguage: String { localized("settings.choose_language") }
     }
     
     enum WordInsight {
@@ -381,6 +384,11 @@ enum L10n {
     }
 
     private static func localized(_ key: String) -> String {
+        let appLanguage = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en"
+        if let path = Bundle.main.path(forResource: appLanguage, ofType: "lproj"),
+           let bundle = Bundle(path: path) {
+            return NSLocalizedString(key, tableName: nil, bundle: bundle, value: "", comment: "")
+        }
         return String(localized: String.LocalizationValue(key))
     }
 }

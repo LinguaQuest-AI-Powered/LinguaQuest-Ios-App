@@ -11,6 +11,8 @@ struct RootView: View {
     @State private var router = Resolver.shared.resolve(Router.self)
     @AppStorage(AppConstants.UserDefaultsKeys.isOnboardingCompleted) private var isOnboardingCompleted = false
     @AppStorage(AppConstants.UserDefaultsKeys.isLoggedIn) private var isLoggedIn = false
+    @AppStorage(AppConstants.UserDefaultsKeys.isDarkMode) private var isDarkMode = false
+    @AppStorage(AppConstants.UserDefaultsKeys.appLanguage) private var appLanguage = "en"
     
     var body: some View {
         NavigationStack(path: $router.path) {
@@ -29,11 +31,15 @@ struct RootView: View {
                 router.view(for: route)
             }
         }
+        .id(appLanguage)
         .sheet(item: $router.presentedSheet) { sheet in
             switch sheet {
             case .dummy: EmptyView()
             }
         }
         .environment(router)
+        .preferredColorScheme(isDarkMode ? .dark : .light)
+        .environment(\.locale, Locale(identifier: appLanguage))
+        .environment(\.layoutDirection, appLanguage == "ar" ? .rightToLeft : .leftToRight)
     }
 }
