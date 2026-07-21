@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    @Environment(Router.self) var router
+    @Bindable var viewModel: HomeViewModel
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var hasClaimedDailyReward: Bool = false
     
@@ -25,25 +25,18 @@ struct HomeView: View {
         UserLearningLanguage(language: Language(code: "ja", name: "Japanese", flag: "🇯🇵"), level: 3)
     ]
     
-    let worlds: [WorldItem] = [
-            .init(id: "kitchen", title: L10n.Home.kitchenWorld, imageAssetName: "kitchen", difficulty: .easy, progress: 0.4, isCompleted: true),
-            
-            .init(id: "city", title: L10n.Home.cityWorld, imageAssetName: "city", difficulty: .medium, progress: 0.85, isCompleted: false),
-            
-            .init(id: "airport", title: "Airport World", imageAssetName: "city", difficulty: .hard, progress: 0.75, isCompleted: false),
-            
-            .init(id: "supermarket", title: "Supermarket", imageAssetName: "kitchen", difficulty: .easy, progress: 0.15, isCompleted: false)
-        ]
-    
     private var displayWorlds: [WorldUIModel] {
-        worlds.map(WorldUIMapper.map)
+        viewModel.displayWorlds
     }
     
     @State private var animateItems: Bool = false
     
     var body: some View {
         VStack(spacing: 0) {
-            AppHeaderView(starCount: 15000000, coinCount: 20000)
+            AppHeaderView(
+                starCount: viewModel.homeData?.xp ?? 0,
+                coinCount: viewModel.homeData?.coins ?? 0
+            )
 
             ZStack(alignment: .bottomTrailing) {
                 
@@ -64,10 +57,10 @@ struct HomeView: View {
                         LearningCardView(
                             imageAsset: .spanish,
                             title: L10n.Home.currentlyLearning,
-                            languageName: L10n.Onboarding.languageSpanish,
-                            level: 12,
-                            streakDays: 7,
-                            progressWidth: 165
+                            languageName: viewModel.homeData?.activeLanguage.name ?? L10n.Onboarding.languageSpanish,
+                            level: viewModel.homeData?.activeLanguage.level ?? 1,
+                            streakDays: viewModel.homeData?.streakDays ?? 0,
+                            progressWidth: CGFloat(viewModel.homeData?.activeLanguage.levelProgressPercent ?? 0) * 1.65
                         )
                             .padding(.horizontal, 20)
                             .offset(y: animateItems ? 0 : 30)
@@ -78,7 +71,7 @@ struct HomeView: View {
                             SectionHeaderView(
                                 title: L10n.Home.exploreWorlds,
                                 actionTitle: L10n.Home.seeMore,
-                                onActionTapped: { router.push(.allWorlds) }
+                                onActionTapped: { viewModel.navigateToAllWorlds() }
                             )
                             .padding(.horizontal, 20)
 
@@ -86,7 +79,7 @@ struct HomeView: View {
                                 HStack(spacing: 16) {
                                     ForEach(displayWorlds) { item in
                                         Button(action: {
-                                            router.push(.gameLevels(worldName: item.title))
+                                            viewModel.navigateToGameLevels(worldName: item.title)
                                         }) {
                                             WorldCardView(item: item)
                                                 .frame(width: 204)
@@ -161,6 +154,10 @@ struct HomeView: View {
             guard !reduceMotion else { return }
             withAnimation(.easeInOut(duration: 1.4).repeatForever(autoreverses: true)) {
                 pulseWorldButton = true
+            }
+            
+            Task {
+                await viewModel.loadHomeData()
             }
         }
         .appDialog(isPresented: $showDailyRewardDialog) {
