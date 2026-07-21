@@ -14,4 +14,5 @@ struct ExplorerUIModel: Identifiable {
     let uiXPAmount: String
     let avatarImage: String?
     let isTop: Bool
+    let isCurrentUser: Bool
 }
