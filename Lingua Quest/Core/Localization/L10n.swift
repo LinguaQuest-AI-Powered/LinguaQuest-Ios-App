@@ -69,6 +69,34 @@ enum L10n {
         static var verify: String { localized("auth.verify") }
         static var googleLabel: String { localized("auth.google_label") }
         static var appleLabel: String { localized("auth.apple_label") }
+        static var verifyResetCodeTitle: String { localized("auth_verify_reset_code_title") }
+        static var verifyResetCodeDesc: String { localized("auth_verify_reset_code_desc") }
+        
+        enum Error {
+            static var invalidCredentials: String { localized("auth_error_invalid_credentials") }
+            static var emailNotVerified: String { localized("auth_error_email_not_verified") }
+            static var emailAlreadyExists: String { localized("auth_error_email_already_exists") }
+            static var usernameAlreadyTaken: String { localized("auth_error_username_already_taken") }
+            static var emailNotFound: String { localized("auth_error_email_not_found") }
+            static var invalidOtp: String { localized("auth_error_invalid_otp") }
+            static var otpNotFound: String { localized("auth_error_otp_not_found") }
+            static var otpCooldown: String { localized("auth_error_otp_cooldown") }
+            static var maxOtpAttemptsExceeded: String { localized("auth_error_max_otp_attempts") }
+            static var invalidResetToken: String { localized("auth_error_invalid_reset_token") }
+            static var sessionExpired: String { localized("auth_error_session_expired") }
+            static var invalidFirebaseToken: String { localized("auth_error_invalid_firebase_token") }
+            static var internalServerError: String { localized("auth_error_internal_server") }
+            static var generic: String { localized("auth_error_generic") }
+            static var passwordsDoNotMatch: String { localized("auth_error_passwords_do_not_match") }
+            static var missingOnboardingLanguages: String { localized("auth_error_missing_onboarding_languages") }
+            static var invalidOtpLength: String { localized("auth_error_invalid_otp_length") }
+            static var emailRequired: String { localized("auth_error_email_required") }
+            static var weakPassword: String { localized("auth_error_weak_password") }
+            static var emailAndPasswordRequired: String { localized("auth_error_email_and_password_required") }
+            static var allFieldsRequired: String { localized("auth_error_all_fields_required") }
+            static var invalidEmailFormat: String { localized("auth_error_invalid_email_format") }
+            static var invalidUsernameFormat: String { localized("auth_error_invalid_username_format") }
+        }
     }
     
     enum Components {

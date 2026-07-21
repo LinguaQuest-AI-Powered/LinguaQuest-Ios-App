@@ -9,9 +9,8 @@ import Swinject
 
 final class NetworkAssembly: Assembly {
     func assemble(container: Container) {
-        container.register(APIClientProtocol.self) { resolver in
-            let tokenStorage = resolver.resolve(SecureTokenStorageProtocol.self)
-            return APIClient(tokenStorage: tokenStorage)
+        container.register(APIClientProtocol.self) { _ in
+            return APIClient()
         }
         .inObjectScope(.container)
     }

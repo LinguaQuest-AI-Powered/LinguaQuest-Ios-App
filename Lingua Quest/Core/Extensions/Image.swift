@@ -38,6 +38,7 @@ extension Image {
         case magnifyingglass = "magnifyingglass"
         case houseFill = "house.fill"
         case photoOnRectangle = "photo.on.rectangle"
+        case exclamationmarkTriangleFill = "exclamationmark.triangle.fill"
 
         case play = "play.fill"
         case sparkles = "sparkles"

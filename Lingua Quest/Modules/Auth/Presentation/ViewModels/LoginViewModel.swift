@@ -6,6 +6,7 @@
 //
 
 import Observation
+import Foundation
 
 @Observable
 @MainActor
@@ -32,6 +33,13 @@ final class LoginViewModel {
     // MARK: - Intentions
     func login() {
         errorMessage = nil
+        
+        guard !email.trimmingCharacters(in: .whitespaces).isEmpty,
+              !password.isEmpty else {
+            errorMessage = L10n.Auth.Error.emailAndPasswordRequired
+            return
+        }
+        
         isLoading = true
 
         Task {
@@ -41,7 +49,6 @@ final class LoginViewModel {
             switch result {
             case .success:
                 userPreferences.isLoggedIn = true
-                router.push(.home)
 
             case .failure(let error):
                 errorMessage = error.errorDescription
