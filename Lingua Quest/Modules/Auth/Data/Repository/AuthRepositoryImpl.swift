@@ -41,7 +41,11 @@ final class AuthRepositoryImpl: AuthRepositoryProtocol {
     }
     
     func refreshToken(refreshToken: String) async -> Result<AuthSessionEntity, AuthError> {
-        fatalError("refreshToken() has not been implemented yet")
+        let result = await remoteDataSource.refreshToken(refreshToken: refreshToken)
+        if case let .success(session) = result {
+            tokenStorage.saveSession(accessToken: session.accessToken, refreshToken: session.refreshToken)
+        }
+        return result
     }
     
     func sendOtp(email: String, purpose: OtpPurpose) async -> Result<Void, AuthError> {

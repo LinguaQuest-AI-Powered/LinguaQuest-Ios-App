@@ -85,4 +85,15 @@ final class AuthRemoteDataSource: AuthRemoteDataSourceProtocol {
             return .failure(AuthDTOMapper.mapError(error))
         }
     }
+    
+    func refreshToken(refreshToken: String) async -> Result<AuthSessionEntity, AuthError> {
+        do {
+            let response: SuccessResponseDTO<RefreshTokenResponseDataDTO> = try await apiClient.request(
+                AuthEndpoint.RefreshToken(refreshToken: refreshToken)
+            )
+            return .success(AuthDTOMapper.mapRefreshToken(response.data))
+        } catch {
+            return .failure(AuthDTOMapper.mapError(error))
+        }
+    }
 }
