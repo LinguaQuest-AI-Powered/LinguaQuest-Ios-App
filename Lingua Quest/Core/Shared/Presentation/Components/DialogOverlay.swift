@@ -16,7 +16,9 @@ struct DialogOverlay<DialogContent: View>: ViewModifier {
         content.overlay {
             if isPresented {
                 ZStack {
-                    Color.black.opacity(0.45)
+                    Rectangle()
+                        .fill(Color.black.opacity(0.15))
+                        .background(.ultraThinMaterial)
                         .ignoresSafeArea()
                         .onTapGesture { isPresented = false }
                     

@@ -13,6 +13,8 @@ struct VoiceGameView: View {
     
     // For gesture
     @State private var isPressing = false
+    @State private var showSkipDialog = false
+    @State private var showNotEnoughCoinsDialog = false
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -140,7 +142,7 @@ struct VoiceGameView: View {
                     // Skip Button
                     OutlineButton(
                         text: L10n.Game.skip,
-                        action: { viewModel.skip() }
+                        action: { showSkipDialog = true }
                     )
                     .padding(.horizontal, 24)
                 }
@@ -161,5 +163,23 @@ struct VoiceGameView: View {
             }
         }
         .navigationBarHidden(true)
+        .appDialog(isPresented: $showSkipDialog) {
+            SkipDialog(
+                skip: {
+                    showSkipDialog = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        showNotEnoughCoinsDialog = true
+                    }
+                },
+                cancel: {
+                    showSkipDialog = false
+                }
+            )
+        }
+        .appDialog(isPresented: $showNotEnoughCoinsDialog) {
+            NotEnoughCoinsDialog(missingCoins: 25) { // Assuming 25 is missing
+                showNotEnoughCoinsDialog = false
+            }
+        }
     }
 }
