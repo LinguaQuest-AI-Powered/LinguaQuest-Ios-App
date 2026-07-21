@@ -31,7 +31,7 @@ final class APIClient: APIClientProtocol {
     func request<E: Endpoint, T: Decodable>(_ endpoint: E) async throws -> T {
         var urlRequest = try endpoint.asURLRequest()
         
-        let hardcodedToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." 
+        let hardcodedToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzbGFhaGFueTNAZ21haWwuY29tIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTc4NDU3MzI0MCwiZXhwIjoxNzg0NjU5NjQwfQ.RVOujy09qaqJZA7X8o9lTT4yUoyJqs8Wc6-HubU4kADEtWZr5x63YWhOLvQyAGM6micRWtfAZfU-i06Ce9mnNg" 
         urlRequest.addValue("Bearer \(hardcodedToken)", forHTTPHeaderField: "Authorization")
         
         /*
@@ -59,6 +59,7 @@ final class APIClient: APIClientProtocol {
         } catch {
             print("======== [API ERROR] ========")
             print("Network Error: \(error.localizedDescription)")
+            print("Actual Error: \(error as NSError)")
             print("=============================")
             throw NetworkError.noConnection
         }
