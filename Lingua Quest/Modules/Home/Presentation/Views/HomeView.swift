@@ -79,7 +79,7 @@ struct HomeView: View {
                                 HStack(spacing: 16) {
                                     ForEach(displayWorlds) { item in
                                         Button(action: {
-                                            router.push(.gameLevels(worldId: 10, worldName: item.title))
+                                            router.push(.gameLevels(worldId: 10, worldName: item.title, languageId: 1))
                                         }) {
                                             WorldCardView(item: item)
                                                 .frame(width: 204)

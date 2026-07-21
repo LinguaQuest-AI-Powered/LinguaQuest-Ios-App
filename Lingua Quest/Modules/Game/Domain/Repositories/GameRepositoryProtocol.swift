@@ -8,5 +8,5 @@
 import Foundation
 
 protocol GameRepositoryProtocol {
-    func getLevels(worldId: Int) async throws -> [GameLevel]
+    func getLevels(worldId: Int, languageId: Int) async throws -> [GameLevel]
 }
