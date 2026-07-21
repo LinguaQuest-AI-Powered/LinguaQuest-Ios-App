@@ -9,7 +9,7 @@ import Foundation
 
 protocol HomeRemoteDataSourceProtocol {
     func getHomeData() async throws -> HomeResponseDTO
-    func getWorlds(languageId: Int, difficulty: String) async throws -> WorldsResponseDTO
+    func getWorlds(languageId: Int, difficulty: String?) async throws -> WorldsResponseDTO
     func getDailyReward() async throws -> DailyRewardResponseDTO
     func claimDailyReward() async throws -> DailyRewardClaimResponseDTO
 }
@@ -26,7 +26,7 @@ struct HomeRemoteDataSource: HomeRemoteDataSourceProtocol {
         return try await apiClient.request(endpoint)
     }
     
-    func getWorlds(languageId: Int, difficulty: String) async throws -> WorldsResponseDTO {
+    func getWorlds(languageId: Int, difficulty: String?) async throws -> WorldsResponseDTO {
         let endpoint = HomeEndpoint.GetWorlds(languageId: languageId, difficulty: difficulty)
         return try await apiClient.request(endpoint)
     }

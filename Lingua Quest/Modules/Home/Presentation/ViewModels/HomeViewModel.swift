@@ -21,30 +21,7 @@ final class HomeViewModel {
     var errorMessage: String?
     
     var displayWorlds: [WorldUIModel] {
-        return fetchedWorlds.map { exploreWorld in
-            let difficulty: WorldDifficulty = {
-                switch exploreWorld.difficulty {
-                case "EASY": return .easy
-                case "MEDIUM": return .medium
-                default: return .hard
-                }
-            }()
-            
-            let assetName = URL(fileURLWithPath: exploreWorld.imageUrl).deletingPathExtension().lastPathComponent
-            
-            return WorldUIModel(
-                id: "\(exploreWorld.id)",
-                title: exploreWorld.name,
-                uiImage: Image.Asset(rawValue: assetName) ?? .city,
-                difficulty: difficulty,
-                uiDifficultyLabel: WorldUIMapper.label(for: difficulty),
-                uiBadgeColor: WorldUIMapper.badgeColor(for: difficulty),
-                progress: Double(exploreWorld.progressPercent) / 100.0,
-                isCompleted: exploreWorld.status == "COMPLETED",
-                isLocked: exploreWorld.status == "LOCKED",
-                unlockLevel: nil
-            )
-        }
+        return fetchedWorlds.map(WorldUIMapper.map)
     }
     
     let dailyRewardViewModel: DailyRewardViewModel

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol GetHomeWorldsUseCaseProtocol {
-    func execute(languageId: Int, difficulty: String) async throws -> [ExploreWorld]
+    func execute(languageId: Int, difficulty: String?) async throws -> [ExploreWorld]
 }
 
 struct GetHomeWorldsUseCase: GetHomeWorldsUseCaseProtocol {
@@ -18,7 +18,7 @@ struct GetHomeWorldsUseCase: GetHomeWorldsUseCaseProtocol {
         self.repository = repository
     }
 
-    func execute(languageId: Int, difficulty: String) async throws -> [ExploreWorld] {
+    func execute(languageId: Int, difficulty: String?) async throws -> [ExploreWorld] {
         return try await repository.getWorlds(languageId: languageId, difficulty: difficulty)
     }
 }

@@ -7,21 +7,31 @@
 
 import SwiftUI
 
-/// Shared mapper from the pure Domain WorldItem to a display-ready WorldUIModel.
+/// Shared mapper from the pure Domain ExploreWorld to a display-ready WorldUIModel.
 /// Kept as a standalone mapper (not a private method inside one ViewModel)
 enum WorldUIMapper {
-    static func map(_ entity: WorldItem) -> WorldUIModel {
-        WorldUIModel(
-            id: entity.id,
-            title: entity.title,
-            uiImage: Image.Asset(rawValue: entity.imageAssetName) ?? .kitchen,
-            difficulty: entity.difficulty,
-            uiDifficultyLabel: label(for: entity.difficulty),
-            uiBadgeColor: badgeColor(for: entity.difficulty),
-            progress: entity.progress,
-            isCompleted: entity.isCompleted,
-            isLocked: entity.isLocked,
-            unlockLevel: entity.unlockLevel
+    static func map(_ entity: ExploreWorld) -> WorldUIModel {
+        let difficulty: WorldDifficulty = {
+            switch entity.difficulty {
+            case "EASY": return .easy
+            case "MEDIUM": return .medium
+            default: return .hard
+            }
+        }()
+        
+        let assetName = URL(fileURLWithPath: entity.imageUrl).deletingPathExtension().lastPathComponent
+        
+        return WorldUIModel(
+            id: "\(entity.id)",
+            title: entity.name,
+            uiImage: Image.Asset(rawValue: assetName) ?? .kitchen,
+            difficulty: difficulty,
+            uiDifficultyLabel: label(for: difficulty),
+            uiBadgeColor: badgeColor(for: difficulty),
+            progress: Double(entity.progressPercent) / 100.0,
+            isCompleted: entity.status == "COMPLETED",
+            isLocked: entity.status == "LOCKED",
+            unlockLevel: nil
         )
     }
     

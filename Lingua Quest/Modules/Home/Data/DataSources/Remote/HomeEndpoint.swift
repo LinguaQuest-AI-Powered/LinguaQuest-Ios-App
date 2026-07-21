@@ -16,17 +16,19 @@ enum HomeEndpoint {
     
     struct GetWorlds: Endpoint {
         var body: EmptyBody?
-        
         let languageId: Int
-        let difficulty: String
+        let difficulty: String?
         
         var path: String { "/worlds" }
         var method: HTTPMethod { .get }
         var queryItems: [URLQueryItem]? {
-            [
-                URLQueryItem(name: "languageId", value: "\(languageId)"),
-                URLQueryItem(name: "difficulty", value: difficulty)
+            var items = [
+                URLQueryItem(name: "languageId", value: "\(languageId)")
             ]
+            if let diff = difficulty {
+                items.append(URLQueryItem(name: "difficulty", value: diff))
+            }
+            return items
         }
     }
     
