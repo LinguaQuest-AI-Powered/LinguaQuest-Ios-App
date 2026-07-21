@@ -37,7 +37,16 @@ final class AuthRepositoryImpl: AuthRepositoryProtocol {
     }
     
     func logout(refreshToken: String, allDevices: Bool) async -> Result<Void, AuthError> {
-        fatalError("logout() has not been implemented yet")
+        let result = await remoteDataSource.logout(refreshToken: refreshToken, allDevices: allDevices)
+        // Logout is idempotent per the contract — clear local state regardless of
+        // the backend outcome (e.g. an already-revoked token shouldn't block local sign-out).
+        tokenStorage.clearSession()
+        switch result {
+        case .success:
+            return .success(())
+        case .failure:
+            return .success(())
+        }
     }
     
     func refreshToken(refreshToken: String) async -> Result<AuthSessionEntity, AuthError> {

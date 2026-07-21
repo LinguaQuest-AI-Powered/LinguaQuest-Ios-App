@@ -18,4 +18,5 @@ protocol AuthRemoteDataSourceProtocol {
     func verifyPasswordResetOtp(email: String, otp: String) async -> Result<(resetToken: String, expiresIn: Int), AuthError>
     func resetPassword(resetToken: String, newPassword: String) async -> Result<Void, AuthError>
     func refreshToken(refreshToken: String) async -> Result<AuthSessionEntity, AuthError>
+    func logout(refreshToken: String, allDevices: Bool) async -> Result<Void, AuthError>
 }

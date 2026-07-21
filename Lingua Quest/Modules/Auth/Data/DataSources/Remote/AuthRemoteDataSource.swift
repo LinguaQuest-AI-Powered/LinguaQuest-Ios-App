@@ -96,4 +96,15 @@ final class AuthRemoteDataSource: AuthRemoteDataSourceProtocol {
             return .failure(AuthDTOMapper.mapError(error))
         }
     }
+    
+    func logout(refreshToken: String, allDevices: Bool) async -> Result<Void, AuthError> {
+        do {
+            let _: SuccessResponseDTO<StatusResponseDataDTO> = try await apiClient.request(
+                AuthEndpoint.Logout(refreshToken: refreshToken, allDevices: allDevices)
+            )
+            return .success(())
+        } catch {
+            return .failure(AuthDTOMapper.mapError(error))
+        }
+    }
 }
