@@ -28,14 +28,13 @@ struct VoiceGameView: View {
                     
                     Spacer()
                     
-                    Text(L10n.SpeakingLab.voicePractice)
-                        .appTextStyle(.headingLarge, color: .appTextHeading)
-                    
-                    Spacer()
-                    
                     // Coin Counter (mock value)
                     RewardBadge(type: .coin, value: "1,200", size: .small)
                 }
+                .overlay(
+                    Text(L10n.SpeakingLab.voicePractice)
+                        .appTextStyle(.headingLarge, color: .appTextHeading)
+                )
                 .padding(.horizontal, 20)
                 .frame(height: 64)
                 .background(Color.clear)

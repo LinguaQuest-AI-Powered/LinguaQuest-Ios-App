@@ -82,8 +82,7 @@ struct CameraResultView: View {
                             leading: Image(systemIcon: .arrowLeft) // We don't have a retry icon, using left arrow or custom
                         )
                         
-                        CustomButton(
-                            type: .secendry,
+                        OutlineButton(
                             text: L10n.Game.changeWord,
                             action: viewModel.onChangeWordTapped
                         )

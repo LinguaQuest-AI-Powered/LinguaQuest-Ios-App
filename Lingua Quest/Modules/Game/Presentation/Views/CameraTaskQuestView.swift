@@ -3,7 +3,7 @@
 //  Lingua Quest
 //
 //  Created by siam on 17/07/2026.
-//
+
 
 import SwiftUI
 
@@ -25,24 +25,26 @@ struct CameraTaskQuestView: View {
        
                 HStack {
                     CustomBackButton(action: { dismiss() })
-                        .background(
-                            Circle()
-                                .fill(Color.appSurfaceCard)
-                                .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
-                        )
-                    
+
                     Spacer()
-                    
-                    Text(L10n.Game.levelTitle(viewModel.levelId))
-                        .appTextStyle(.headingMediumBold, color: .appTextSecondary)
-                    
-                    Spacer()
-                    
+
                     // Coin Counter
                     RewardBadge(type: .coin, value: "\(viewModel.coins)", size: .small)
                 }
-                .padding(.horizontal, 24)
-                .padding(.top, 16)
+                .overlay(
+                    Text(L10n.Game.levelTitle(viewModel.levelId))
+                        .appTextStyle(.headingLarge, color: .appTextHeading)
+                )
+                .padding(.horizontal, 20)
+                .frame(height: 64)
+                .background(Color.clear)
+                .overlay(
+                    Rectangle()
+                        .frame(height: 1)
+                        .foregroundColor(Color.appBorderBrown),
+                    alignment: .bottom
+                )
+
                 
                 Spacer()
                 

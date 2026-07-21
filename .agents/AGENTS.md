@@ -1,3 +1,5 @@
+# Lingua Quest — iOS Project Rules
+
 When working on the **Lingua Quest** iOS project, follow these rules strictly and without exception.
 
 ---
@@ -11,9 +13,11 @@ Every newly created Swift file **MUST** include a reference header at the very t
 //  [Filename].swift
 //  Lingua Quest
 //
-//  Created by siam on [Current Date].
+//  Created by [Mac Username] on [Current Date].
 //
 ```
+
+- `[Mac Username]` must be the **current machine's system username** (e.g. the output of `whoami` / the macOS account name), **NOT** a fixed name like "siam". Since multiple developers work on this project, each person's generated files should carry their own machine username automatically.
 
 > **⚠️ IMPORTANT**: If an existing file already has a header with a different author's name, **DO NOT** modify or change the author's name. Leave the original author's name as is.
 
@@ -40,7 +44,7 @@ Every newly created Swift file **MUST** include a reference header at the very t
 
 ## 4. Typography
 
-- Use custom text styles if they are defined for the project (e.g. `AppTextStyle`). 
+- Use custom text styles if they are defined for the project (e.g. `AppTextStyle`).
 - Otherwise, maintain consistency with SwiftUI's standard scalable fonts and avoid hardcoded font sizes.
 
 ---
@@ -50,7 +54,7 @@ Every newly created Swift file **MUST** include a reference header at the very t
 - Use `Router` and `AppRoute` or `AppSheet` enums for **ALL** navigation (located in `Core/Routing/`).
 - **DO NOT** use `NavigationLink` or `@Environment(\.dismiss)` directly in views unless absolutely necessary for a standard SwiftUI component.
 - **Router Injection**: Inject `RouterProtocol` into the **ViewModel** via Swinject (e.g., `init(router: RouterProtocol)`). The View should delegate actions to the ViewModel (like `viewModel.onCardTapped()`), and the ViewModel should handle the actual routing (e.g., `router.push(...)`). Avoid using `@Environment(Router.self)` directly in Views if they have a ViewModel.
-- Navigation actions examples:
+- Navigation action examples:
   ```swift
   router.push(.productDetails(id: "123"))
   router.pushAndReplace(.login)
@@ -116,37 +120,79 @@ Modules/[FeatureName]/
 - ViewModel naming: `FeatureNameViewModel` (e.g., `HomeViewModel`).
 
 ---
+
 ## 10. Views & Animations
 
 - **Backgrounds**: Use `Color.appViewBackground.ignoresSafeArea()` for standard view backgrounds.
-- **Navigation Bar**: Use a Custom back button in the `.toolbar` instead of the default one.
+- **Navigation Bar**: Use a custom back button in the `.toolbar` instead of the default one.
 - **Animations**: Always add dynamic, modern animations to your Views. Use `.spring()`, `.easeInOut()`, and staggering delays when elements appear (`.onAppear`) or states change. The UI should feel lively, engaging, and premium (e.g. bouncing mascots, typewriter text, pulsing buttons, smooth transitions).
+
+---
 
 ## 11. Xcode Project References (`project.pbxproj`)
 
 - When creating, deleting, or moving files, update the Xcode project references (`project.pbxproj`) **manually**.
 - **DO NOT** use external or automated scripts to update the Xcode project file — they often corrupt the project structure.
 
+---
+
 ## 12. File Size Limits (Keep Files Small)
 
-- **Maximum File Size**: Do not let SwiftUI views or files grow excessively large. As a rule of thumb, keep files under 200-250 lines.
+- **Maximum File Size**: Do not let SwiftUI views or files grow excessively large. As a rule of thumb, keep files under 200–250 lines.
 - **Split and Extract**: If a file grows large, extract subviews, bottom sheets, or complex components into separate files.
 - **Shared Components**: Place generic, reusable extracted components inside `Modules/Shared/Presentation/Components/`.
-- use custom bottom sheet `CustomBottomSheet` for custom bottom sheets.
-- use custom dialog `DialogCardContainer` for custom dialogs.
-- use custom text field `CustomTextField` for custom text fields.
-- use custom button `AppButton` for custom buttons.
-...
+- Use custom bottom sheet `CustomBottomSheet` for custom bottom sheets.
+- Use custom dialog `DialogCardContainer` for custom dialogs.
+- Use custom text field `CustomTextField` for custom text fields.
+- Use custom button `AppButton` for custom buttons.
+
+---
 
 ## 13. Code Comments
+
 - **NO ARABIC COMMENTS**: It is strictly forbidden to write any comments in Arabic within the codebase. All code comments, TODOs, and documentation must be in English. If you encounter any existing Arabic comments, you must delete or translate them to English immediately.
 
+---
+
 ## 14. Dialogs and Overlays
+
 - All custom dialogs must be displayed using the `.appDialog(isPresented: $isPresented)` modifier which relies on the shared `DialogOverlay`.
 - **DO NOT** create manual `ZStack` overlays or hardcoded backgrounds (like `Color.black.opacity(...)` or `.ultraThinMaterial`) inside individual dialog views. Let the `DialogOverlay` handle the background blur and dimming.
 - Use `DialogCardContainer` for the actual card UI, and rely on its internal layout logic without adding custom manual padding hacks for mascots.
 
+---
+
 ## 15. API Parsing & Optional Fields
+
 - Define Data Transfer Object (DTO) properties as Optional (`?`) for fields that might be missing or occasionally `null` in API responses (e.g., summaries, nested objects) to prevent `keyNotFound` decoding crashes.
 - Handle these optionals cleanly in the Repository Mapper by providing empty arrays `[]` or default values like `0`.
 - When using the `?? []` operator with closures (e.g., `.map`), **always explicitly declare the array type** (e.g., `let explorers: [ExplorerEntity] = ...`) to prevent the Swift compiler from incorrectly inferring `[Any]` and throwing a `Cannot convert value of type '[Any]'` error.
+
+---
+
+## 16. Custom App Bar (Header)
+
+- When building a custom app bar, you must use an `.overlay()` for the title to guarantee it is **perfectly centered**, regardless of whether the trailing view is a `RewardBadge`, a clear circle, or missing.
+- **Structure Example**:
+  ```swift
+  HStack {
+      CustomBackButton(action: { dismiss() })
+      Spacer()
+      // If there is a trailing element, add it here, e.g.:
+      RewardBadge(type: .coin, value: "\(viewModel.coins)", size: .small)
+      // Or if no trailing element, you can leave it empty or add an invisible placeholder
+  }
+  .overlay(
+      Text(L10n.Screen.title)
+          .appTextStyle(.headingLarge, color: .appTextHeading)
+  )
+  .padding(.horizontal, 20)
+  .frame(height: 64)
+  ```
+
+---
+
+## 17. Reward Elements
+
+- Any UI element that displays **Coins** or **XP** MUST use the `RewardBadge` component.
+- Do not build custom text/icon combinations manually for rewards. Always reuse `RewardBadge(type: .coin, ...)` or `RewardBadge(type: .xp, ...)`.
