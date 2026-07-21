@@ -57,6 +57,10 @@ final class AuthAssembly: Assembly {
         container.register(RefreshTokenUseCaseProtocol.self) { resolver in
             RefreshTokenUseCase(repository: resolver.resolve(AuthRepositoryProtocol.self)!)
         }
+        
+        container.register(LogoutUseCaseProtocol.self) { resolver in
+            LogoutUseCase(repository: resolver.resolve(AuthRepositoryProtocol.self)!)
+        }
 
         // MARK: - View Models
         container.register(LoginViewModel.self) { resolver in
