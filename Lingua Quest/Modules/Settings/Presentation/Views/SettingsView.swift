@@ -24,23 +24,14 @@ struct SettingsView: View {
             onLearningLanguageTapped: {
                 // Navigate to Language Picker
             },
-            onDailyGoalTapped: {
-                // Navigate to Daily Goal Picker
-            },
-            onLearningStreakTapped: {
-                // Navigate to Streak Details
-            },
-            onPrivacyTapped: {
-                // Navigate to Privacy & Security
+            onAppLanguageTapped: {
+                // Navigate to App Language Picker
             },
             onHelpTapped: {
                 // Navigate to Help & Support
             },
             onAboutTapped: {
                 // Navigate to About App
-            },
-            onSaveChangesTapped: {
-                viewModel.saveChanges()
             },
             onLogOutTapped: {
                 viewModel.logOut()

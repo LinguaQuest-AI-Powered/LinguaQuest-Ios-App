@@ -78,6 +78,7 @@ extension Image {
         case person = "person"
         case squareAndPencil = "square.and.pencil"
         case infoCircle = "info.circle"
+        case textformatAlt = "textformat.alt"
     }
     
     enum Asset: String {

@@ -21,19 +21,15 @@ final class SettingsViewModel {
     var userName: String = "Explorer Alex"
     
     // MARK: - App Experience Toggles
+    var appLanguage: String = "English"
     var notificationsEnabled: Bool = true
     var darkModeEnabled: Bool = false
     var soundEffectsEnabled: Bool = true
     
     // MARK: - Account & Journey Data
-    var learningLanguage: String = "Spanish"
-    var dailyGoal: String = "15 mins"
-    var learningStreak: String = "12 Days"
+    var learningLanguage: String = "English"
     
     // MARK: - Intentions (Methods)
-    func saveChanges() {
-        // Persist settings (API call / local storage)
-    }
     
     func logOut() {
         // Clear session & navigate to auth flow

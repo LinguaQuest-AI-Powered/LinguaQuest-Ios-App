@@ -19,7 +19,7 @@ struct RootView: View {
                     router.view(for: .onBoarding)
                 } else {
                     if isLoggedIn {
-                        router.view(for: .home)
+                        router.view(for: .settings)
                     } else {
                         router.view(for: .login)
                     }

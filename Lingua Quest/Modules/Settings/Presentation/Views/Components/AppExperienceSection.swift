@@ -9,11 +9,12 @@ import SwiftUI
 
 struct AppExperienceSection: View {
     // MARK: - Properties
+    let appLanguage: String
     @Binding var notificationsEnabled: Bool
     @Binding var darkModeEnabled: Bool
     @Binding var soundEffectsEnabled: Bool
     
-    var onPrivacyTapped: () -> Void
+    var onAppLanguageTapped: () -> Void
     var onHelpTapped: () -> Void
     var onAboutTapped: () -> Void
     
@@ -23,6 +24,16 @@ struct AppExperienceSection: View {
             SettingsGroupLabel(title: L10n.Settings.appExperience)
             
             VStack(spacing: 0) {
+                LinguaSettingsRow(
+                    icon: .textformatAlt,
+                    iconBgColor: .appSemanticSuccess,
+                    title: L10n.Settings.appLanguage,
+                    showDivider: true
+                ) {
+                    SettingsRowValue(value: appLanguage)
+                }
+                .onTapGesture(perform: onAppLanguageTapped)
+                
                 LinguaSettingsRow(
                     icon: .bellFill,
                     iconBgColor: .appSemanticSuccess,
@@ -49,16 +60,6 @@ struct AppExperienceSection: View {
                 ) {
                     LinguaCustomToggle(isOn: $soundEffectsEnabled)
                 }
-                
-                LinguaSettingsRow(
-                    icon: .lockFill,
-                    iconBgColor: .appSemanticSuccess,
-                    title: L10n.Settings.privacySecurity,
-                    showDivider: true
-                ) {
-                    SettingsRowChevron()
-                }
-                .onTapGesture(perform: onPrivacyTapped)
                 
                 LinguaSettingsRow(
                     icon: .questionmarkCircleFill,
@@ -94,10 +95,11 @@ struct AppExperienceSection: View {
     @Previewable @State var sound = true
     
     return AppExperienceSection(
+        appLanguage: "English",
         notificationsEnabled: $notifications,
         darkModeEnabled: $darkMode,
         soundEffectsEnabled: $sound,
-        onPrivacyTapped: {},
+        onAppLanguageTapped: {},
         onHelpTapped: {},
         onAboutTapped: {}
     )

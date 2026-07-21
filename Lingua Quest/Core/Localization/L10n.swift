@@ -281,6 +281,7 @@ enum L10n {
         static var dailyGoal: String { localized("settings.daily_goal") }
         static var learningStreak: String { localized("settings.learning_streak") }
         static var appExperience: String { localized("settings.app_experience") }
+        static var appLanguage: String { localized("settings.app_language") }
         static var notifications: String { localized("settings.notifications") }
         static var darkMode: String { localized("settings.dark_mode") }
         static var soundEffects: String { localized("settings.sound_effects") }

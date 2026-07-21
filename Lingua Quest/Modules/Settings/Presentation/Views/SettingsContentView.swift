@@ -14,12 +14,9 @@ struct SettingsContentView: View {
     var onBackTapped: () -> Void
     var onEditProfileTapped: () -> Void
     var onLearningLanguageTapped: () -> Void
-    var onDailyGoalTapped: () -> Void
-    var onLearningStreakTapped: () -> Void
-    var onPrivacyTapped: () -> Void
+    var onAppLanguageTapped: () -> Void
     var onHelpTapped: () -> Void
     var onAboutTapped: () -> Void
-    var onSaveChangesTapped: () -> Void
     var onLogOutTapped: () -> Void
     
     // MARK: - Body
@@ -36,25 +33,21 @@ struct SettingsContentView: View {
                         
                         AccountJourneySection(
                             learningLanguage: viewModel.learningLanguage,
-                            dailyGoal: viewModel.dailyGoal,
-                            learningStreak: viewModel.learningStreak,
                             onEditProfileTapped: onEditProfileTapped,
-                            onLearningLanguageTapped: onLearningLanguageTapped,
-                            onDailyGoalTapped: onDailyGoalTapped,
-                            onLearningStreakTapped: onLearningStreakTapped
+                            onLearningLanguageTapped: onLearningLanguageTapped
                         )
                         
                         AppExperienceSection(
+                            appLanguage: viewModel.appLanguage,
                             notificationsEnabled: $viewModel.notificationsEnabled,
                             darkModeEnabled: $viewModel.darkModeEnabled,
                             soundEffectsEnabled: $viewModel.soundEffectsEnabled,
-                            onPrivacyTapped: onPrivacyTapped,
+                            onAppLanguageTapped: onAppLanguageTapped,
                             onHelpTapped: onHelpTapped,
                             onAboutTapped: onAboutTapped
                         )
                         
                         SettingsFooterSection(
-                            onSaveChangesTapped: onSaveChangesTapped,
                             onLogOutTapped: onLogOutTapped
                         )
                     }
@@ -74,12 +67,9 @@ struct SettingsContentView: View {
         onBackTapped: {},
         onEditProfileTapped: {},
         onLearningLanguageTapped: {},
-        onDailyGoalTapped: {},
-        onLearningStreakTapped: {},
-        onPrivacyTapped: {},
+        onAppLanguageTapped: {},
         onHelpTapped: {},
         onAboutTapped: {},
-        onSaveChangesTapped: {},
         onLogOutTapped: {}
     )
 }
