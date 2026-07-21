@@ -11,31 +11,67 @@ import Observation
 @Observable
 @MainActor
 final class LeaderboardViewModel {
-     var topUsers: [LeaderboardUser] = []
-     var otherUsers: [LeaderboardUser] = []
-    var router : RouterProtocol?
-    init(router : RouterProtocol) {
+    var topUsers: [LeaderboardUser] = []
+    var otherUsers: [LeaderboardUser] = []
+    var isLoading: Bool = false
+    var errorMessage: String? = nil
+    
+    private let router: RouterProtocol
+    private let getLeaderboardUseCase: GetLeaderboardUseCaseProtocol
+    private let languageId: Int
+    
+    init(router: RouterProtocol, getLeaderboardUseCase: GetLeaderboardUseCaseProtocol, languageId: Int) {
         self.router = router
-        loadMockData()
+        self.getLeaderboardUseCase = getLeaderboardUseCase
+        self.languageId = languageId
     }
     
-    func backToProfile(){
-        router?.pop()
+    func backToProfile() {
+        router.pop()
     }
     
-    private func loadMockData() {
-        topUsers = [
-            LeaderboardUser(id: "1", rank: 1, name: "Al3dwy", title: "Explorer", image: "user1", xp: 4250, avatarName: "advanced", isCurrentUser: false),
-            LeaderboardUser(id: "2", rank: 2, name: "Ferdinand", title: "Aviator", image: "user2", xp: 3890, avatarName: "intermediate", isCurrentUser: false),
-            LeaderboardUser(id: "3", rank: 3, name: "Ferdinand", title: "Traveler", image: "user3", xp: 3420, avatarName: "beginner", isCurrentUser: false)
-        ]
+    func fetchLeaderboard(scope: String = "GLOBAL", page: Int = 1, limit: Int = 20) {
+        isLoading = true
+        errorMessage = nil
         
-        otherUsers = [
-            LeaderboardUser(id: "98", rank: 98, name: "Ferdinand M.", title: "Novice", image: "user1", xp: 2900, avatarName: "beginner", isCurrentUser: false),
-            LeaderboardUser(id: "99", rank: 99, name: "Ferdinand", title: "Guide", image: "user2", xp: 2750, avatarName: "advanced", isCurrentUser: false),
-            LeaderboardUser(id: "100", rank: 100, name: "Explorer Sam", title: "Adventurer", image: "user3", xp: 3150, avatarName: "intermediate", isCurrentUser: true),
-            LeaderboardUser(id: "101", rank: 101, name: "Zheng He", title: "Admiral", image: "user1", xp: 2600, avatarName: "advanced", isCurrentUser: false),
-            LeaderboardUser(id: "102", rank: 102, name: "Xuanzang", title: "Monk", image: "user2", xp: 2550, avatarName: "beginner", isCurrentUser: false)
-        ]
+        Task {
+            do {
+                let data = try await getLeaderboardUseCase.execute(
+                    scope: scope,
+                    languageId: languageId,
+                    page: page,
+                    limit: limit
+                )
+                
+                await MainActor.run {
+                    self.topUsers = data.topThree.map { self.mapToUIModel($0) }
+                    self.otherUsers = data.entries.map { self.mapToUIModel($0) }
+                    self.isLoading = false
+                }
+            } catch {
+                await MainActor.run {
+                    self.errorMessage = error.localizedDescription
+                    self.isLoading = false
+                }
+            }
+        }
+    }
+    
+    private func mapToUIModel(_ entity: LeaderboardUserEntity) -> LeaderboardUser {
+        var fullAvatarUrl: String? = nil
+        if let path = entity.avatarImage {
+            fullAvatarUrl = AppConfig.baseURL.appendingPathComponent(path.hasPrefix("/") ? String(path.dropFirst()) : path).absoluteString
+        }
+        
+        return LeaderboardUser(
+            id: entity.id,
+            rank: entity.rank,
+            name: entity.name,
+            title: entity.title,
+            image: fullAvatarUrl ?? "",
+            xp: entity.xp,
+            avatarName: "beginner", // fallback or derive if needed
+            isCurrentUser: entity.isCurrentUser
+        )
     }
 }

@@ -18,7 +18,7 @@ struct LeaderboardRowView: View {
                 .frame(width: 36, alignment: .leading)
             
             ZStack(alignment: .bottomTrailing) {
-                Image(user.image)
+                Image(.user1)
                     .resizable()
                     .scaledToFill()
                     .frame(width: 48, height: 48)
