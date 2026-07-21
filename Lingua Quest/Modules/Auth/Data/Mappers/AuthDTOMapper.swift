@@ -39,3 +39,41 @@ enum AuthDTOMapper {
         return AuthError.from(errorKey: envelope.error.errorKey, message: envelope.error.errorMessage)
     }
 }
+
+
+extension AuthDTOMapper {
+    static func mapRegister(_ dto: RegisterResponseDataDTO) -> RegisteredAccountEntity {
+        RegisteredAccountEntity(
+            id: dto.id,
+            email: dto.email,
+            username: dto.username,
+            nativeLanguage: dto.nativeLanguage,
+            targetLanguage: dto.targetLanguage,
+            isVerified: dto.isVerified
+        )
+    }
+}
+
+
+extension AuthDTOMapper {
+    static func mapVerifySignupOtp(_ dto: VerifySignupOtpResponseDataDTO) -> Bool {
+        dto.isVerified
+    }
+}
+
+extension AuthDTOMapper {
+    static func mapVerifyPasswordResetOtp(_ dto: VerifyPasswordResetOtpResponseDataDTO) -> (resetToken: String, expiresIn: Int) {
+        (resetToken: dto.resetToken, expiresIn: dto.expiresIn)
+    }
+}
+
+extension AuthDTOMapper {
+    static func mapRefreshToken(_ dto: RefreshTokenResponseDataDTO) -> AuthSessionEntity {
+        AuthSessionEntity(
+            accessToken: dto.accessToken,
+            refreshToken: dto.refreshToken,
+            tokenType: dto.tokenType,
+            expiresIn: dto.expiresIn
+        )
+    }
+}

@@ -71,7 +71,7 @@ struct HomeView: View {
                                 HStack(spacing: 16) {
                                     ForEach(displayWorlds) { item in
                                         Button(action: {
-                                            viewModel.navigateToGameLevels(worldName: item.title)
+                                            router.push(.gameLevels(worldId: 10, worldName: item.title, languageId: 1))
                                         }) {
                                             WorldCardView(item: item)
                                                 .frame(width: 204)
@@ -96,7 +96,8 @@ struct HomeView: View {
                             buttonText: L10n.Home.continueButton,
                             action: {}
                         )
-                            .padding(.horizontal, 20)
+                        
+                        VoicePracticeCardView(action: { router.push(.voiceGame) })                            .padding(.horizontal, 20)
                             .offset(y: animateItems ? 0 : 30)
                             .opacity(animateItems ? 1 : 0)
                             .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.45), value: animateItems)

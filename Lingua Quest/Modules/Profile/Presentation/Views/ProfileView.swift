@@ -28,10 +28,13 @@ struct ProfileView: View {
                 )
             } else {
                 ProfileContentView(
+                    rawCoins: viewModel.rawCoins,
+                    rawXP: viewModel.rawXP,
                     coinsValue: viewModel.coins,
                     gemsValue: viewModel.gems,
                     userName: viewModel.userName,
                     userLevel: viewModel.level,
+                    avatarImage: viewModel.avatarImage,
                     xpValue: viewModel.totalXP,
                     streakValue: viewModel.streak,
                     worldsValue: viewModel.worlds,
@@ -43,13 +46,13 @@ struct ProfileView: View {
                     achievements: viewModel.achievements,
                     topExplorers: viewModel.topExplorers,
                     onEditProfile: {
-                        // Navigate to Edit Profile
+                        router.push(.editProfile)
                     },
                     onViewAllAchievements: {
                         router.push(.achievements)
                     },
                     onViewAllExplorers: {
-                        router.push(.leaderboard)
+                        router.push(.leaderboard(languageId: viewModel.currentLanguageId))
                     },
                     onSettingsTapped: {
                         viewModel.navigateToSettings()

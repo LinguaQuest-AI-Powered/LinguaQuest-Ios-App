@@ -15,5 +15,7 @@ enum LevelStatus: Equatable {
 
 struct GameLevel: Identifiable, Equatable {
     let id: Int
+    let order: Int
     let status: LevelStatus
+    let word: String?
 }

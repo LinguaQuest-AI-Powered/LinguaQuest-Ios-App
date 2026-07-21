@@ -69,6 +69,34 @@ enum L10n {
         static var verify: String { localized("auth.verify") }
         static var googleLabel: String { localized("auth.google_label") }
         static var appleLabel: String { localized("auth.apple_label") }
+        static var verifyResetCodeTitle: String { localized("auth_verify_reset_code_title") }
+        static var verifyResetCodeDesc: String { localized("auth_verify_reset_code_desc") }
+        
+        enum Error {
+            static var invalidCredentials: String { localized("auth_error_invalid_credentials") }
+            static var emailNotVerified: String { localized("auth_error_email_not_verified") }
+            static var emailAlreadyExists: String { localized("auth_error_email_already_exists") }
+            static var usernameAlreadyTaken: String { localized("auth_error_username_already_taken") }
+            static var emailNotFound: String { localized("auth_error_email_not_found") }
+            static var invalidOtp: String { localized("auth_error_invalid_otp") }
+            static var otpNotFound: String { localized("auth_error_otp_not_found") }
+            static var otpCooldown: String { localized("auth_error_otp_cooldown") }
+            static var maxOtpAttemptsExceeded: String { localized("auth_error_max_otp_attempts") }
+            static var invalidResetToken: String { localized("auth_error_invalid_reset_token") }
+            static var sessionExpired: String { localized("auth_error_session_expired") }
+            static var invalidFirebaseToken: String { localized("auth_error_invalid_firebase_token") }
+            static var internalServerError: String { localized("auth_error_internal_server") }
+            static var generic: String { localized("auth_error_generic") }
+            static var passwordsDoNotMatch: String { localized("auth_error_passwords_do_not_match") }
+            static var missingOnboardingLanguages: String { localized("auth_error_missing_onboarding_languages") }
+            static var invalidOtpLength: String { localized("auth_error_invalid_otp_length") }
+            static var emailRequired: String { localized("auth_error_email_required") }
+            static var weakPassword: String { localized("auth_error_weak_password") }
+            static var emailAndPasswordRequired: String { localized("auth_error_email_and_password_required") }
+            static var allFieldsRequired: String { localized("auth_error_all_fields_required") }
+            static var invalidEmailFormat: String { localized("auth_error_invalid_email_format") }
+            static var invalidUsernameFormat: String { localized("auth_error_invalid_username_format") }
+        }
     }
     
     enum Components {
@@ -173,6 +201,12 @@ enum L10n {
         static func level(_ count: Int) -> String { String(format: localized("home.level"), count) }
         static func daysStreak(_ days: Int) -> String { String(format: localized("home.days_streak"), days) }
         static var progress: String { localized("home.progress") }
+        static var start: String { localized("home.start") }
+        static var voicePracticeTitle: String { localized("home.voice_practice_title") }
+        static var voicePracticeSubtitle: String { localized("home.voice_practice_subtitle") }
+        static func voicePracticeProgress(completed: Int, total: Int) -> String {
+            String(format: localized("home.voice_practice_progress"), completed, total)
+        }
         static var continueLessonTitle: String { localized("home.continue_lesson") }
         static var continueButton: String { localized("home.continue") }
         static var lessonApple: String { localized("home.lesson.apple") }
@@ -297,7 +331,18 @@ enum L10n {
         static func worldsCountFormat(_ count: Int) -> String {
             String(format: localized("worlds.count_format"), count)
         }
-
+    }
+    
+    enum EditProfile {
+        static var title: String { localized("edit_profile.title") }
+        static var changePhoto: String { localized("edit_profile.change_photo") }
+        static var displayName: String { localized("edit_profile.display_name") }
+        static var displayNamePlaceholder: String { localized("edit_profile.display_name_placeholder") }
+        static var tagline: String { localized("edit_profile.tagline") }
+        static var taglinePlaceholder: String { localized("edit_profile.tagline_placeholder") }
+        static var infoText: String { localized("edit_profile.info_text") }
+        static var saveChanges: String { localized("edit_profile.save_changes") }
+        static var cancel: String { localized("edit_profile.cancel") }
     }
 
     enum AddLanguage {
@@ -308,6 +353,31 @@ enum L10n {
             String(format: localized("add_language.add_selected_format"), count)
         }
         static var addSelected: String { localized("add_language.add_selected") }
+    }
+
+    enum SpeakingLab {
+        static func lessonTitle(_ number: Int) -> String { String(format: localized("speaking_lab.lesson_title"), number) }
+        static var voicePractice: String { localized("speaking_lab.voice_practice") }
+        static var youCanDoIt: String { localized("speaking_lab.you_can_do_it") }
+        static var listening: String { localized("speaking_lab.listening") }
+        static var pronounceThis: String { localized("speaking_lab.pronounce_this") }
+        static var listen: String { localized("speaking_lab.listen") }
+        static var tapAndHoldToRecord: String { localized("speaking_lab.tap_and_hold_to_record") }
+        static var recording: String { localized("speaking_lab.recording") }
+        static var mockTargetSentence: String { localized("speaking_lab.mock_target_sentence") }
+        static var reviewRecording: String { localized("speaking_lab.review_recording") }
+        static var reviewRecordingSubtitle: String { localized("speaking_lab.review_recording_subtitle") }
+        static var discard: String { localized("speaking_lab.discard") }
+        static var process: String { localized("speaking_lab.process") }
+        static var rating: String { localized("speaking_lab.rating") }
+        static var continueTitle: String { localized("speaking_lab.continue_title") }
+        static var returnHome: String { localized("speaking_lab.return_home") }
+        static var retry: String { localized("speaking_lab.retry") }
+        static var feedbackGreatJob: String { localized("speaking_lab.feedback_great_job") }
+        static var feedbackNeedsWork: String { localized("speaking_lab.feedback_needs_work") }
+        static var score: String { localized("speaking_lab.score") }
+        static var evaluatingTitle: String { localized("speaking_lab.evaluating_title") }
+        static var evaluatingSubtitle: String { localized("speaking_lab.evaluating_subtitle") }
     }
 
     private static func localized(_ key: String) -> String {

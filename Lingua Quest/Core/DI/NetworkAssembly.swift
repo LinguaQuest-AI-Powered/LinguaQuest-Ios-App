@@ -9,7 +9,9 @@ import Swinject
 
 final class NetworkAssembly: Assembly {
     func assemble(container: Container) {
-        container.register(APIClientProtocol.self) { _ in APIClient() }
-            .inObjectScope(.container)
+        container.register(APIClientProtocol.self) { _ in
+            return APIClient()
+        }
+        .inObjectScope(.container)
     }
 }

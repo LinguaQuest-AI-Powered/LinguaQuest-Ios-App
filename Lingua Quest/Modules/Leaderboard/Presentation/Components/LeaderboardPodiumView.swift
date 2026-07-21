@@ -125,7 +125,7 @@ struct PodiumCard: View {
             .padding(.top, type.avatarSize / 2)
             
             ZStack(alignment: .bottomTrailing) {
-                Image(user.image)
+                Image(.user2)
                     .resizable()
                     .scaledToFill()
                     .frame(width: type.avatarSize, height: type.avatarSize)

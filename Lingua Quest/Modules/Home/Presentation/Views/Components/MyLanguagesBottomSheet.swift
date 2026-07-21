@@ -66,8 +66,8 @@ struct MyLanguagesBottomSheet: View {
                 leading: Image(systemName: "plus")
             )
             .padding(.horizontal, 24)
-            .padding(.top, 24)
-            .padding(.bottom, 125)
+            .padding(.top, 16)
+            .padding(.bottom, 40)
         }
     }
 }

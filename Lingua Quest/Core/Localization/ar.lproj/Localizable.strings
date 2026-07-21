@@ -55,6 +55,32 @@
 "auth.verify" = "تأكيد";
 "auth.google_label" = "جوجل";
 "auth.apple_label" = "أبل";
+"auth_verify_reset_code_title" = "تحقق من الكود";
+"auth_verify_reset_code_desc" = "أدخل الكود المكوّن من 4 أرقام الذي أرسلناه إلى بريدك الإلكتروني لإعادة تعيين كلمة المرور.";
+"auth_error_invalid_credentials" = "البريد الإلكتروني أو كلمة المرور غير صحيحة.";
+"auth_error_email_not_verified" = "برجاء توثيق بريدك الإلكتروني قبل تسجيل الدخول.";
+"auth_error_email_already_exists" = "يوجد حساب بالفعل بهذا البريد الإلكتروني.";
+"auth_error_username_already_taken" = "اسم المستخدم هذا مُستخدم بالفعل.";
+"auth_error_email_not_found" = "لم نتمكن من العثور على حساب بهذا البريد الإلكتروني.";
+"auth_error_invalid_otp" = "الكود الذي أدخلته غير صحيح.";
+"auth_error_otp_not_found" = "انتهت صلاحية هذا الكود، برجاء طلب كود جديد.";
+"auth_error_otp_cooldown" = "برجاء الانتظار قليلاً قبل طلب كود آخر.";
+"auth_error_max_otp_attempts" = "محاولات كثيرة جداً، برجاء طلب كود جديد.";
+"auth_error_invalid_reset_token" = "انتهت صلاحية رابط إعادة التعيين أو تم استخدامه بالفعل.";
+"auth_error_session_expired" = "انتهت جلستك، برجاء تسجيل الدخول مرة أخرى.";
+"auth_error_invalid_firebase_token" = "فشل تسجيل الدخول، برجاء المحاولة مرة أخرى.";
+"auth_error_internal_server" = "حدث خطأ ما من جانبنا، برجاء المحاولة لاحقاً.";
+"auth_error_generic" = "حدث خطأ ما، برجاء المحاولة مرة أخرى.";
+"auth_error_passwords_do_not_match" = "كلمتا المرور غير متطابقتين.";
+"auth_error_missing_onboarding_languages" = "برجاء إكمال إعداد اللغة قبل إنشاء الحساب.";
+"auth_error_invalid_otp_length" = "برجاء إدخال الكود المكون من 4 أرقام كاملاً.";
+"auth_error_email_required" = "برجاء إدخال بريدك الإلكتروني.";
+"auth_error_weak_password" = "يجب أن تكون كلمة المرور 8 أحرف على الأقل وتحتوي على حرف ورقم.";
+"auth_error_email_and_password_required" = "الرجاء إدخال البريد الإلكتروني وكلمة المرور.";
+"auth_error_all_fields_required" = "الرجاء ملء جميع الحقول.";
+"auth_error_invalid_email_format" = "الرجاء إدخال بريد إلكتروني صحيح.";
+"auth_error_invalid_username_format" = "يجب أن يتكون اسم المستخدم من 3-30 حرفاً (أحرف وأرقام وشرطة سفلية فقط).";
+
 "components.app_name" = "لينجوا كويست!";
 "tabs.home" = "الرئيسية";
 "tabs.gallery" = "المعرض";
@@ -114,7 +140,7 @@
 "game.result.analyzing" = "جاري التحليل...";
 "game.result.analyzing_subtitle" = "نتحقق من صورتك بعناية...";
 "game.result.xp_points" = "+%d نقطة خبرة";
-"game.result.coins_value" = "+%d عملة";
+"game.result.coins_value" = "+%d $";
 "game.result.level_progress" = "التقدم في المستوى %d";
 "gallery.my_captures" = "التقاطاتي";
 "gallery.objects_collected" = "تم جمع %d أشياء";
@@ -225,6 +251,17 @@
 "worlds.school" = "عالم المدرسة";
 "worlds.count_format" = "%d عوالم";
 
+// MARK: - Edit Profile
+"edit_profile.title" = "تعديل الملف الشخصي";
+"edit_profile.change_photo" = "تغيير الصورة";
+"edit_profile.display_name" = "اسم العرض";
+"edit_profile.display_name_placeholder" = "المستكشف أليكس";
+"edit_profile.tagline" = "شعار المستكشف";
+"edit_profile.tagline_placeholder" = "استكشاف آفاق اللغة الفرنسية، كلمة بكلمة!";
+"edit_profile.info_text" = "اسمك ونبذتك التعريفية مرئية للمستكشفين الآخرين في قائمة المتصدرين.";
+"edit_profile.save_changes" = "حفظ التغييرات";
+"edit_profile.cancel" = "إلغاء";
+
 // My Languages & Add Language
 "home.my_languages_title" = "لغاتي";
 "home.add_new_language" = "إضافة لغة جديدة";
@@ -233,3 +270,32 @@
 "add_language.search_placeholder" = "ابحث عن اللغات...";
 "add_language.add_selected_format" = "إضافة المحدد (%d)";
 "add_language.add_selected" = "إضافة المحدد";
+
+"home.start" = "ابدأ";
+"home.voice_practice_title" = "التدريب الصوتي";
+"home.voice_practice_subtitle" = "تدرب على النطق";
+"home.voice_practice_progress" = "أكملت %d/%d اليوم";
+
+"speaking_lab.lesson_title" = "الدرس %d";
+"speaking_lab.voice_practice" = "التدريب الصوتي";
+"speaking_lab.you_can_do_it" = "يمكنك فعلها!";
+"speaking_lab.listening" = "جارِ الاستماع...";
+"speaking_lab.pronounce_this" = "انطق هذا:";
+"speaking_lab.listen" = "استمع";
+"speaking_lab.tap_and_hold_to_record" = "اضغط للتسجيل";
+"speaking_lab.recording" = "جارِ التسجيل...";
+"speaking_lab.mock_target_sentence" = "التفاحة حمراء";
+
+"speaking_lab.review_recording" = "مراجعة التسجيل";
+"speaking_lab.review_recording_subtitle" = "استمع إلى نطقك قبل الإرسال.";
+"speaking_lab.discard" = "تجاهل";
+"speaking_lab.process" = "معالجة";
+"speaking_lab.rating" = "التقييم: %@/10";
+"speaking_lab.continue_title" = "استمرار";
+"speaking_lab.return_home" = "العودة للرئيسية";
+"speaking_lab.retry" = "إعادة المحاولة";
+"speaking_lab.feedback_great_job" = "عمل رائع! حاول التركيز أكثر على نطق حرف 'r' في كلمة 'red'.";
+"speaking_lab.feedback_needs_work" = "لقد اقتربت يا بطل! لنجرب نطق الكلمة الأخيرة مرة أخرى معاً.";
+"speaking_lab.score" = "النتيجة";
+"speaking_lab.evaluating_title" = "جاري تقييم الصوت...";
+"speaking_lab.evaluating_subtitle" = "نستمع بدقة لطريقة نطقك للكلمات.";

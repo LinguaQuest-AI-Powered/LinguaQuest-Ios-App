@@ -31,6 +31,7 @@ struct CustomButton: View {
     // Optional
     var leading: Image?
     var trailing: Image?
+    var isLoading: Bool = false
     var disabledAction: (() -> Void)? = nil
     
     var backgroundColor: Color {
@@ -81,24 +82,28 @@ struct CustomButton: View {
     
     var body: some View {
         Button {
-            if status == .enable {
+            if status == .enable && !isLoading {
                 action()
             } else {
                 disabledAction?()
             }
         } label: {
             HStack(spacing: 8) {
-                if let leading {
-                    leading
-                        .font(AppTextStyle.captionMedium.font)
-                }
-                
-                Text(text)
-                    .appTextStyle(.bodyLargeBold, color: foregroundColor)
-                
-                if let trailing {
-                    trailing
-                        .font(AppTextStyle.captionMedium.font)
+                if isLoading {
+                    CustomLoadingIndicator(color: foregroundColor)
+                } else {
+                    if let leading {
+                        leading
+                            .font(AppTextStyle.captionMedium.font)
+                    }
+                    
+                    Text(text)
+                        .appTextStyle(.bodyLargeBold, color: foregroundColor)
+                    
+                    if let trailing {
+                        trailing
+                            .font(AppTextStyle.captionMedium.font)
+                    }
                 }
             }
             .frame(maxWidth: .infinity)
@@ -113,7 +118,33 @@ struct CustomButton: View {
                 .shadow(color: shadowColor, radius: 0, x: 0, y: 4)
         )
         .padding(.bottom, 4)
-        .disabled(status == .disable && disabledAction == nil)
+        .disabled((status == .disable || isLoading) && disabledAction == nil)
+    }
+}
+
+struct CustomLoadingIndicator: View {
+    let color: Color
+    @State private var isAnimating = false
+    
+    var body: some View {
+        HStack(spacing: 6) {
+            ForEach(0..<3, id: \.self) { index in
+                Circle()
+                    .fill(color)
+                    .frame(width: 8, height: 8)
+                    .scaleEffect(isAnimating ? 1.2 : 0.5)
+                    .opacity(isAnimating ? 1.0 : 0.3)
+                    .animation(
+                        .easeInOut(duration: 0.6)
+                        .repeatForever()
+                        .delay(0.2 * Double(index)),
+                        value: isAnimating
+                    )
+            }
+        }
+        .onAppear {
+            isAnimating = true
+        }
     }
 }
 
@@ -150,6 +181,13 @@ struct CustomButton: View {
             type: .custom(textColor: .appTextSelectedBrown, buttonColor: .appAccentOrange, shadowColor: .appBrandBrownDark),
             text: "SAVE CHANGES (Custom 3D)",
             action: { print("Save tapped") }
+        )
+        
+        CustomButton(
+            type: .primary,
+            text: "Loading State",
+            action: { print("Won't fire") },
+            isLoading: true
         )
     }
     .padding(24)

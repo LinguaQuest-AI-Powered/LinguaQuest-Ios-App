@@ -45,8 +45,32 @@ struct VerifyEmailView: View {
                                     .focused($isKeyboardShowing)
                                     .foregroundColor(.clear)
                                     .accentColor(.clear)
+                                    .onChange(of: viewModel.otpCode) { _, newValue in
+                                        if newValue.count > 4 {
+                                            viewModel.otpCode = String(newValue.prefix(4))
+                                        }
+                                    }
                             }
                             .padding(.top, 8)
+                            
+                            if let errorMessage = viewModel.errorMessage {
+                                HStack(spacing: 8) {
+                                    Image(systemIcon: .exclamationmarkTriangleFill)
+                                        .foregroundColor(.appSemanticError)
+                                    Text(errorMessage)
+                                        .appTextStyle(.captionMedium, color: .appSemanticError)
+                                        .multilineTextAlignment(.leading)
+                                    Spacer()
+                                }
+                                .padding(12)
+                                .background(Color.appSemanticError.opacity(0.1))
+                                .cornerRadius(8)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color.appSemanticError.opacity(0.3), lineWidth: 1)
+                                )
+                                .transition(.opacity.combined(with: .move(edge: .top)))
+                            }
                             VStack(spacing: 8) {
                                 HStack(spacing: 4) {
                                     Image(systemIcon: .timer)
@@ -72,9 +96,11 @@ struct VerifyEmailView: View {
                                 type: .custom(textColor: .appTextSelectedBrown, buttonColor: .appAccentOrange, shadowColor: .appBrandBrown),
                                 text: L10n.Auth.verify,
                                 action: { viewModel.verifyCode() },
-                                trailing:  Image(systemIcon: .checkmarkCircleFill)
+                                trailing:  Image(systemIcon: .checkmarkCircleFill),
+                                isLoading: viewModel.isLoading
                             )
                         }
+                        .animation(.easeInOut, value: viewModel.errorMessage)
                     }
                     .padding(.horizontal, 24)
                 }
@@ -94,6 +120,9 @@ struct VerifyEmailView: View {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 isKeyboardShowing = true
             }
+        }
+        .onDisappear {
+            viewModel.onDisappear()
         }
     }
     
@@ -124,10 +153,10 @@ struct VerifyEmailView: View {
 }
 
 #Preview("LightTheme") {
-    VerifyEmailView(viewModel: VerifyEmailViewModel(router: Router()))
+    VerifyEmailView(viewModel: .preview)
 }
 
 #Preview("DarkTheme") {
-    VerifyEmailView(viewModel: VerifyEmailViewModel(router: Router()))
+    VerifyEmailView(viewModel: .preview)
         .preferredColorScheme(.dark)
 }

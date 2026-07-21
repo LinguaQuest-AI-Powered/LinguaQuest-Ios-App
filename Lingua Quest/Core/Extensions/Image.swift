@@ -38,6 +38,7 @@ extension Image {
         case magnifyingglass = "magnifyingglass"
         case houseFill = "house.fill"
         case photoOnRectangle = "photo.on.rectangle"
+        case exclamationmarkTriangleFill = "exclamationmark.triangle.fill"
 
         case play = "play.fill"
         case sparkles = "sparkles"
@@ -67,6 +68,16 @@ extension Image {
         case infoCircleFill = "info.circle.fill"
         case speakerSlashFill = "speaker.slash.fill"
         case forwardFill = "forward.fill"
+        case forwardEndFill = "forward.end.fill"
+        case micFill = "mic.fill"
+        case pauseFill = "pause.fill"
+        case trash = "trash"
+        case checkmarkCircle = "checkmark.circle"
+        
+        // Added for Edit Profile
+        case person = "person"
+        case squareAndPencil = "square.and.pencil"
+        case infoCircle = "info.circle"
     }
     
     enum Asset: String {
@@ -125,6 +136,7 @@ extension Image {
         case notEnoughCoins = "NotEnoughCoins"
         case skip = "Skip"
         case perfect = "perfect"
+        case micBird = "Mic"
     }
     
     init(icon: Icon) {

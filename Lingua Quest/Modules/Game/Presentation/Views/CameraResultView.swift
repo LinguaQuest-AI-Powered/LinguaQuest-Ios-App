@@ -9,7 +9,6 @@ import SwiftUI
 
 struct CameraResultView: View {
     @State var viewModel: CameraResultViewModel
-    @State private var isAnalyzingPulsing = false
     
     var body: some View {
         ZStack {
@@ -38,44 +37,15 @@ struct CameraResultView: View {
     }
     
     private var loadingView: some View {
-        DialogCardContainer(showMascot: false) {
-            VStack(spacing: 28) {
-                // Video container with shadow and circular frame - larger size
-                ZStack {
-                    Circle()
-                        .fill(Color(red: 254/255, green: 254/255, blue: 254/255))
-                        .frame(width: 250, height: 250)
-                        .shadow(color: Color.black.opacity(0.06), radius: 8, x: 0, y: 3)
-                    
-                    LoopedVideoPlayerView(videoAsset: .loading)
-                        .frame(width: 230, height: 230)
-                        .clipShape(Circle())
-                }
-                
-                VStack(spacing: 12) {
-                    Text(L10n.Game.analyzing)
-                        .appTextStyle(.displayMedium, color: .appBrandBrown)
-                        .scaleEffect(isAnalyzingPulsing ? 1.05 : 0.95)
-                        .opacity(isAnalyzingPulsing ? 1.0 : 0.7)
-                        .animation(.easeInOut(duration: 1.0).repeatForever(autoreverses: true), value: isAnalyzingPulsing)
-                    
-                    Text(L10n.Game.analyzingSubtitle)
-                        .appTextStyle(.body, color: .appTextSecondary)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 16)
-                }
-            }
-            .padding(.bottom, 24)
-        }
-        .padding(.horizontal, 24)
-        .transition(.scale.combined(with: .opacity))
-        .onAppear {
-            isAnalyzingPulsing = true
-        }
+        SharedEvaluatingView(
+            videoAsset: .loading,
+            title: L10n.Game.analyzing,
+            subtitle: L10n.Game.analyzingSubtitle
+        )
     }
     
     private var failureView: some View {
-        DialogCardContainer(mascotImage: .bird) {
+        DialogCardContainer(mascotImage: .weakPasswordBird) {
             VStack(spacing: 24) {
                     Text(L10n.Game.notQuite)
                         .appTextStyle(.displayMedium, color: .appBrandBrown)
@@ -112,8 +82,7 @@ struct CameraResultView: View {
                             leading: Image(systemIcon: .arrowLeft) // We don't have a retry icon, using left arrow or custom
                         )
                         
-                        CustomButton(
-                            type: .secendry,
+                        OutlineButton(
                             text: L10n.Game.changeWord,
                             action: viewModel.onChangeWordTapped
                         )

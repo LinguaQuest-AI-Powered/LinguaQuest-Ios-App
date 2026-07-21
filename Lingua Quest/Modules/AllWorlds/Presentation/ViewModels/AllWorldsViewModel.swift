@@ -62,7 +62,8 @@ final class AllWorldsViewModel {
     
     func onWorldTapped(_ world: WorldUIModel) {
         guard !world.isLocked else { return }
-        router.push(.gameLevels(worldName: world.title))
+        // Temporarily passing a hash of the id as the worldId until Worlds API uses integers
+        router.push(.gameLevels(worldId: 10, worldName: world.title, languageId: 1))
     }
     
     func onBackTapped() {
