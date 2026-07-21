@@ -20,8 +20,8 @@ struct ProfileDataDTO: Decodable {
     let level: Int
     let stats: ProfileStatsDTO
     let currentLanguageJourney: ProfileJourneyDTO
-    let achievementsSummary: ProfileAchievementsSummaryDTO
-    let leaderboardSummary: ProfileLeaderboardSummaryDTO
+    let achievementsSummary: ProfileAchievementsSummaryDTO?
+    let leaderboardSummary: ProfileLeaderboardSummaryDTO?
 }
 
 struct ProfileStatsDTO: Decodable {
