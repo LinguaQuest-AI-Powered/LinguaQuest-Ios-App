@@ -6,5 +6,7 @@
 	<string>$(API_BASE_URL)</string>
 	<key>NSCameraUsageDescription</key>
 	<string>We need access to your camera to scan items for the game quests.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need access to your microphone so you can practice speaking and pronouncing sentences.</string>
 </dict>
 </plist>

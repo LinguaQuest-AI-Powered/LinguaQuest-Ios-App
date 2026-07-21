@@ -5,19 +5,78 @@
 //  Created by siam on 21/07/2026.
 //
 
+import Foundation
 import Swinject
 
 @MainActor
 final class SpeakingLabAssembly: Assembly {
     func assemble(container: Container) {
-        container.register(VoiceGameViewModel.self) { resolver in
-            let router = resolver.resolve(RouterProtocol.self)!
-            return VoiceGameViewModel(router: router)
+        
+        // Data Sources
+        container.register(VoiceEvaluationRemoteDataSourceProtocol.self) { _ in
+            return VoiceEvaluationRemoteDataSource()
+        }.inObjectScope(.container)
+        
+        container.register(VoiceProgressRemoteDataSourceProtocol.self) { _ in
+            return VoiceProgressRemoteDataSource()
+        }.inObjectScope(.container)
+        
+        // Repository
+        container.register(VoiceEvaluationRepositoryProtocol.self) { resolver in
+            let evalDataSource = resolver.resolve(VoiceEvaluationRemoteDataSourceProtocol.self)!
+            let progDataSource = resolver.resolve(VoiceProgressRemoteDataSourceProtocol.self)!
+            return VoiceEvaluationRepositoryImpl(evaluationDataSource: evalDataSource, progressDataSource: progDataSource)
+        }.inObjectScope(.container)
+        
+        // Use Cases
+        container.register(GetDailyVoiceSentencesUseCase.self) { resolver in
+            let repo = resolver.resolve(VoiceEvaluationRepositoryProtocol.self)!
+            return GetDailyVoiceSentencesUseCase(repository: repo)
         }
         
-        container.register(VoiceGameResultViewModel.self) { resolver in
+        container.register(EvaluateVoiceUseCase.self) { resolver in
+            let repo = resolver.resolve(VoiceEvaluationRepositoryProtocol.self)!
+            return EvaluateVoiceUseCase(repository: repo)
+        }
+        
+        container.register(SaveVoiceProgressUseCase.self) { resolver in
+            let repo = resolver.resolve(VoiceEvaluationRepositoryProtocol.self)!
+            return SaveVoiceProgressUseCase(repository: repo)
+        }
+        
+        // Services
+        container.register(AudioRecorderServiceProtocol.self) { _ in
+            return AudioRecorderService()
+        }.inObjectScope(.transient)
+        
+        // ViewModels
+        container.register(VoiceGameViewModel.self) { resolver in
             let router = resolver.resolve(RouterProtocol.self)!
-            return VoiceGameResultViewModel(router: router)
+            let getSentencesUseCase = resolver.resolve(GetDailyVoiceSentencesUseCase.self)!
+            let evaluateUseCase = resolver.resolve(EvaluateVoiceUseCase.self)!
+            let audioService = resolver.resolve(AudioRecorderServiceProtocol.self)!
+            let speechService = resolver.resolve(SpeechSynthesizerProtocol.self)!
+            
+            return VoiceGameViewModel(
+                router: router,
+                getSentencesUseCase: getSentencesUseCase,
+                evaluateUseCase: evaluateUseCase,
+                audioService: audioService,
+                speechService: speechService
+            )
+        }
+        
+        container.register(VoiceGameResultViewModel.self) { (resolver, args: (Data, VoiceSentence)) in
+            let router = resolver.resolve(RouterProtocol.self)!
+            let evaluateUseCase = resolver.resolve(EvaluateVoiceUseCase.self)!
+            let saveProgressUseCase = resolver.resolve(SaveVoiceProgressUseCase.self)!
+            return VoiceGameResultViewModel(
+                router: router,
+                evaluateUseCase: evaluateUseCase,
+                saveProgressUseCase: saveProgressUseCase,
+                audioData: args.0,
+                sentence: args.1
+            )
         }
     }
 }

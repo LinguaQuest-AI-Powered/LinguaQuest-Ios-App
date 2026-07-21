@@ -64,12 +64,15 @@ struct VoiceGameView: View {
                         
                         // Target Word
                         Text(viewModel.targetSentence)
-                            .appTextStyle(.displayLarge, color: .appTextHeading)
+                            .appTextStyle(.headingLarge, color: .appTextHeading)
                             .multilineTextAlignment(.center)
+                            .lineLimit(nil)
+                            .minimumScaleFactor(0.8)
+                            .fixedSize(horizontal: false, vertical: true)
                         
                         // Listen Button
                         Button(action: {
-                            // Play audio action
+                            viewModel.playTargetSentence()
                         }) {
                             HStack(spacing: 8) {
                                 Image(systemIcon: .speakerWave2Fill)
@@ -148,8 +151,10 @@ struct VoiceGameView: View {
                 .padding(.bottom, 40)
             }
             
-            if viewModel.showReviewDialog {
+            if viewModel.showReviewDialog, let audioData = viewModel.audioData {
                 ReviewRecordingDialog(
+                    audioData: audioData,
+                    audioDuration: viewModel.recordingDuration,
                     onDiscard: {
                         withAnimation {
                             viewModel.discardRecording()

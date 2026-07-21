@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15A61621300F74EC00F19795 /* FirebaseAILogic in Frameworks */ = {isa = PBXBuildFile; productRef = 15A61620300F74EC00F19795 /* FirebaseAILogic */; };
+		15A61623300F74EC00F19795 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 15A61622300F74EC00F19795 /* FirebaseFirestore */; };
 		33A0F053300C347200611A63 /* FirebaseAI in Frameworks */ = {isa = PBXBuildFile; productRef = 33A0F052300C347200611A63 /* FirebaseAI */; };
 		6D3CA5B03008808A00736812 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3CA5AF3008808A00736812 /* Swinject */; };
 /* End PBXBuildFile section */
@@ -57,6 +59,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15A61621300F74EC00F19795 /* FirebaseAILogic in Frameworks */,
+				15A61623300F74EC00F19795 /* FirebaseFirestore in Frameworks */,
 				6D3CA5B03008808A00736812 /* Swinject in Frameworks */,
 				33A0F053300C347200611A63 /* FirebaseAI in Frameworks */,
 			);
@@ -121,6 +125,8 @@
 			packageProductDependencies = (
 				6D3CA5AF3008808A00736812 /* Swinject */,
 				33A0F052300C347200611A63 /* FirebaseAI */,
+				15A61620300F74EC00F19795 /* FirebaseAILogic */,
+				15A61622300F74EC00F19795 /* FirebaseFirestore */,
 			);
 			productName = "Lingua Quest";
 			productReference = 1529B3663006410300CCD74A /* Lingua Quest.app */;
@@ -619,6 +625,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		15A61620300F74EC00F19795 /* FirebaseAILogic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 33A0F051300C347200611A63 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAILogic;
+		};
+		15A61622300F74EC00F19795 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 33A0F051300C347200611A63 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
 		33A0F052300C347200611A63 /* FirebaseAI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 33A0F051300C347200611A63 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

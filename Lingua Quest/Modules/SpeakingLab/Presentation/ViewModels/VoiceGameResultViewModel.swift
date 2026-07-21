@@ -24,56 +24,79 @@ final class VoiceGameResultViewModel {
     var coinsEarned: Int = 0
     
     private let router: RouterProtocol
+    private let evaluateUseCase: EvaluateVoiceUseCase
+    private let saveProgressUseCase: SaveVoiceProgressUseCase
+    private let audioData: Data
+    private let sentence: VoiceSentence
     
-    init(router: RouterProtocol) {
+    init(router: RouterProtocol, evaluateUseCase: EvaluateVoiceUseCase, saveProgressUseCase: SaveVoiceProgressUseCase, audioData: Data, sentence: VoiceSentence) {
         self.router = router
+        self.evaluateUseCase = evaluateUseCase
+        self.saveProgressUseCase = saveProgressUseCase
+        self.audioData = audioData
+        self.sentence = sentence
+        
         startEvaluation()
     }
     
     private func startEvaluation() {
         state = .evaluating
         
-        // Mock evaluation process
         Task {
-            try? await Task.sleep(nanoseconds: 2_500_000_000)
-            
-            // Mock result (randomly success or failure for demonstration)
-            let isSuccess = Bool.random()
-            
-            if isSuccess {
-                self.rating = 8
-                self.words = [
-                    WordResult(word: "The", isCorrect: true),
-                    WordResult(word: "apple", isCorrect: true),
-                    WordResult(word: "is", isCorrect: true),
-                    WordResult(word: "red", isCorrect: true)
-                ]
-                self.xpPoints = 150
-                self.coinsEarned = 20
-                self.state = .success
-            } else {
-                self.rating = 4
-                self.words = [
-                    WordResult(word: "The", isCorrect: true),
-                    WordResult(word: "apple", isCorrect: false), // red
-                    WordResult(word: "is", isCorrect: true),
-                    WordResult(word: "red", isCorrect: false) // red
-                ]
-                self.state = .failure
+            do {
+                let result = try await evaluateUseCase.execute(audioData: audioData, targetText: sentence.text)
+                await MainActor.run {
+                    processResult(result)
+                }
+            } catch {
+                print("Evaluation failed: \(error)")
+                await MainActor.run {
+                    state = .failure
+                }
             }
         }
     }
     
-    func onContinue() {
-        router.popToRoot()
+    private func processResult(_ result: VoiceEvaluationResult) {
+        self.rating = result.rating
+        
+        // Build WordResult list matching the original text vs correctness
+        let sentenceWords = sentence.text.split(separator: " ").map { String($0) }
+        var mappedWords: [WordResult] = []
+        
+        for word in sentenceWords {
+            // Very simple heuristic to match words regardless of punctuation for display
+            let cleanWord = word.components(separatedBy: CharacterSet.alphanumerics.inverted).joined().lowercased()
+            let isWrong = result.wrongWords.contains { $0.lowercased() == cleanWord }
+            mappedWords.append(WordResult(word: word, isCorrect: !isWrong))
+        }
+        
+        self.words = mappedWords
+        self.xpPoints = result.rating * 10
+        self.coinsEarned = result.rating >= 7 ? 10 : 2
+        self.state = result.rating >= 6 ? .success : .failure
+        
+        // Save progress asynchronously
+        Task {
+            do {
+                try await saveProgressUseCase.execute(sentenceId: sentence.id, result: result)
+            } catch {
+                print("Failed to save voice progress: \(error)")
+            }
+        }
+    }
+    
+    func skip() {
+        // Here we could pop back and select the next sentence
+        // For now just return to previous screen
+        router.pop()
+    }
+    
+    func playAgain() {
+        router.pop()
     }
     
     func onReturnHome() {
-        router.popToRoot()
-    }
-    
-    func onRetry() {
-        // Pop back to the game to retry
-        router.pop()
+        router.popToRoot() // or appropriate navigation
     }
 }

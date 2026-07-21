@@ -34,7 +34,7 @@ struct VoiceFailureView: View {
                     CustomButton(
                         type: .primary,
                         text: L10n.SpeakingLab.retry,
-                        action: { viewModel.onRetry() },
+                        action: { viewModel.playAgain() },
                         leading: Image(systemIcon: .arrowLeft)
                     )
                     

@@ -23,7 +23,7 @@ enum AppRoute: Hashable {
     case voiceGame
     case cameraCapture(targetWord: String)
     case cameraResult(targetWord: String)
-    case voiceGameResult
+    case voiceGameResult(audioData: Data, sentence: VoiceSentence)
     case leaderboard(languageId: Int)
     case achievements
     case wordInsight(word: WordCardEntity)

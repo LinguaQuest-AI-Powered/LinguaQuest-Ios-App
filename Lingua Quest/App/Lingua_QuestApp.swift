@@ -7,10 +7,13 @@
 
 import SwiftUI
 import FirebaseCore
+import FirebaseAppCheck
 
 @main
 struct MyApp: App {
     init() {
+        let providerFactory = AppCheckDebugProviderFactory()
+        AppCheck.setAppCheckProviderFactory(providerFactory)
         FirebaseApp.configure()
         _ = Resolver.shared
     }

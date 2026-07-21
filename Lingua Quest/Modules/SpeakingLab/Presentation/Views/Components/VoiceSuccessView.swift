@@ -40,7 +40,7 @@ struct VoiceSuccessView: View {
                     CustomButton(
                         type: .primary,
                         text: L10n.SpeakingLab.continueTitle,
-                        action: { viewModel.onContinue() }
+                        action: { viewModel.skip() }
                     )
                     
                     OutlineButton(

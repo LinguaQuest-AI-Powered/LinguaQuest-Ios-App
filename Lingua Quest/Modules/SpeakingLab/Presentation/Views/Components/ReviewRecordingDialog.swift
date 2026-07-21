@@ -6,10 +6,45 @@
 //
 
 import SwiftUI
+import AVFoundation
+import Combine
+
+class AudioPlayerController: NSObject, ObservableObject, AVAudioPlayerDelegate {
+    @Published var isPlaying = false
+    private var audioPlayer: AVAudioPlayer?
+    
+    func play(data: Data) {
+        if isPlaying {
+            audioPlayer?.pause()
+            isPlaying = false
+        } else {
+            do {
+                if audioPlayer == nil {
+                    audioPlayer = try AVAudioPlayer(data: data)
+                    audioPlayer?.delegate = self
+                }
+                audioPlayer?.play()
+                isPlaying = true
+            } catch {
+                print("Failed to play audio: \\(error)")
+            }
+        }
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        DispatchQueue.main.async {
+            self.isPlaying = false
+        }
+    }
+}
 
 struct ReviewRecordingDialog: View {
+    var audioData: Data
+    var audioDuration: Int
     var onDiscard: () -> Void
     var onProcess: () -> Void
+    
+    @StateObject private var playerController = AudioPlayerController()
     
     var body: some View {
         ZStack {
@@ -39,12 +74,14 @@ struct ReviewRecordingDialog: View {
                     
                     // Audio Player Mock
                     HStack(spacing: 16) {
-                        Button(action: {}) {
+                        Button(action: {
+                            playerController.play(data: audioData)
+                        }) {
                             Circle()
                                 .fill(Color.appAccentOrange)
                                 .frame(width: 48, height: 48)
                                 .overlay(
-                                    Image(systemIcon: .play)
+                                    Image(systemName: playerController.isPlaying ? "pause.fill" : "play.fill")
                                         .foregroundColor(.white)
                                 )
                         }
@@ -60,7 +97,7 @@ struct ReviewRecordingDialog: View {
                         
                         Spacer()
                         
-                        Text("0:04")
+                        Text(String(format: "%02d:%02d", audioDuration / 60, audioDuration % 60))
                             .font(AppTextStyle.bodyBold.font)
                             .foregroundColor(.appTextHeading)
                     }
