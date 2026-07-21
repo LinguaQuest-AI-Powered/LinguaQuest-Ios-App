@@ -18,7 +18,7 @@ final class ProfileRepositoryImpl: ProfileRepositoryProtocol {
         let response = try await remoteDataSource.fetchProfile()
         let data = response.data
         
-        let achievements = data.achievementsSummary.preview.map { dto in
+        let achievements: [AchievementEntity] = data.achievementsSummary?.preview.map { dto in
             let type: AchievementType = dto.name.contains("Wild Explorer") ? .wildExplorer : .perfectWeek
             return AchievementEntity(
                 id: "\(dto.id)",
@@ -26,9 +26,9 @@ final class ProfileRepositoryImpl: ProfileRepositoryProtocol {
                 subtitle: dto.description,
                 type: type
             )
-        }
+        } ?? []
         
-        let explorers = data.leaderboardSummary.preview.map { dto in
+        let explorers: [ExplorerEntity] = data.leaderboardSummary?.preview.map { dto in
             ExplorerEntity(
                 id: "\(dto.userId)",
                 rank: dto.rank,
@@ -37,7 +37,7 @@ final class ProfileRepositoryImpl: ProfileRepositoryProtocol {
                 avatarImage: dto.photoUrl,
                 isCurrentUser: dto.isCurrentUser
             )
-        }
+        } ?? []
         
         return UserProfileEntity(
             id: "\(data.id)",
@@ -56,8 +56,8 @@ final class ProfileRepositoryImpl: ProfileRepositoryProtocol {
             journeyLabel: data.currentLanguageJourney.journeyLabel,
             currentXp: data.currentLanguageJourney.currentXp,
             nextMilestoneXp: data.currentLanguageJourney.nextMilestoneXp,
-            achievementsCount: data.achievementsSummary.earnedCount,
-            totalAchievements: data.achievementsSummary.totalCount,
+            achievementsCount: data.achievementsSummary?.earnedCount ?? 0,
+            totalAchievements: data.achievementsSummary?.totalCount ?? 0,
             achievements: achievements,
             topExplorers: explorers
         )
