@@ -31,7 +31,7 @@ struct TopExplorersSection: View {
                         rank: explorer.uiRank,
                         name: explorer.name,
                         xpAmount: explorer.uiXPAmount,
-                        avatarImage: explorer.avatarImage,
+                        avatarImage: "user2",
                         isTop: explorer.isTop,
                         isCurrentUser: explorer.isCurrentUser // Passing the new property
                     )
