@@ -14,5 +14,7 @@ enum AppConstants {
         static let spokenLanguageCode = "spokenLanguageCode"
         static let learningLanguageCode = "learningLanguageCode"
         static let userLevel = "userLevel"
+        static let isDarkMode = "isDarkMode"
+        static let appLanguage = "appLanguage"
     }
 }

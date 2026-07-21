@@ -78,6 +78,7 @@ extension Image {
         case person = "person"
         case squareAndPencil = "square.and.pencil"
         case infoCircle = "info.circle"
+        case textformatAlt = "textformat.alt"
     }
     
     enum Asset: String {
@@ -126,6 +127,8 @@ extension Image {
         case city = "city_world"
         case appleImage = "appleImage"
         case appBarBird = "appBarBird"
+        case chooseLanguageBird = "choose_language_bird"
+        case logoutBird = "logout_bird"
         case world = "world_icon"
         case birdIdea = "BirdIdea"
         case user1 = "user1"
