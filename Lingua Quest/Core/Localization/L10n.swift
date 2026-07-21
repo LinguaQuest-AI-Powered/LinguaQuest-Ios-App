@@ -227,6 +227,9 @@ enum L10n {
         static func unlockAtLevel(_ level: Int) -> String {
             String(format: localized("home.unlock_at_level"), level)
         }
+        
+        static var myLanguagesTitle: String { localized("home.my_languages_title") }
+        static var addNewLanguage: String { localized("home.add_new_language") }
     }
     
     enum Profile {
@@ -322,7 +325,28 @@ enum L10n {
         static func worldsCountFormat(_ count: Int) -> String {
             String(format: localized("worlds.count_format"), count)
         }
+    }
+    
+    enum EditProfile {
+        static var title: String { localized("edit_profile.title") }
+        static var changePhoto: String { localized("edit_profile.change_photo") }
+        static var displayName: String { localized("edit_profile.display_name") }
+        static var displayNamePlaceholder: String { localized("edit_profile.display_name_placeholder") }
+        static var tagline: String { localized("edit_profile.tagline") }
+        static var taglinePlaceholder: String { localized("edit_profile.tagline_placeholder") }
+        static var infoText: String { localized("edit_profile.info_text") }
+        static var saveChanges: String { localized("edit_profile.save_changes") }
+        static var cancel: String { localized("edit_profile.cancel") }
+    }
 
+    enum AddLanguage {
+        static var title: String { localized("add_language.title") }
+        static var subtitle: String { localized("add_language.subtitle") }
+        static var searchPlaceholder: String { localized("add_language.search_placeholder") }
+        static func addSelectedFormat(_ count: Int) -> String {
+            String(format: localized("add_language.add_selected_format"), count)
+        }
+        static var addSelected: String { localized("add_language.add_selected") }
     }
 
     private static func localized(_ key: String) -> String {

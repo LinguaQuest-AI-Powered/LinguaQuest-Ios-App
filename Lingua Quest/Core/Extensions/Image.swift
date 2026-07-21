@@ -68,6 +68,11 @@ extension Image {
         case infoCircleFill = "info.circle.fill"
         case speakerSlashFill = "speaker.slash.fill"
         case forwardFill = "forward.fill"
+        
+        // Added for Edit Profile
+        case person = "person"
+        case squareAndPencil = "square.and.pencil"
+        case infoCircle = "info.circle"
     }
     
     enum Asset: String {

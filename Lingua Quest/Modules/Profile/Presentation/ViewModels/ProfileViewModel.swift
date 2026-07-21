@@ -12,52 +12,43 @@ import SwiftUI
 final class ProfileViewModel {
     // MARK: - Dependencies
     private let router: RouterProtocol
+    private let getProfileUseCase: GetProfileUseCaseProtocol?
     
     // MARK: - State
     var isLoading: Bool = false
     var errorMessage: String? = nil
     
     // MARK: - Top App Bar Data
-    var coins: String = "1,250"
-    var gems: String = "45"
+    var coins: String = "0"
+    var gems: String = "0"
+    var rawCoins: Int = 0
+    var rawXP: Int = 0
     
     // MARK: - Header Data
-    var userName: String = "Explorer Alex"
-    var level: Int = 12
+    var userName: String = ""
+    var level: Int = 1
     var avatarImage: String? = nil
     
     // MARK: - Stats Data
-    var totalXP: String = "4,500"
-    var streak: String = "7 Days"
-    var worlds: String = "2"
+    var totalXP: String = "0"
+    var streak: String = "0 Days"
+    var worlds: String = "0"
     
     // MARK: - Learning Progress Data
-    var currentLanguage: String = L10n.Onboarding.languageFrench
-    var journeyTitle: String = "Intermediate Journey"
-    var languageLevel: String = "B1 LEVEL"
-    var currentLanguageXP: Int = 2450
-    var targetLanguageXP: Int = 3000
+    var currentLanguage: String = ""
+    var journeyTitle: String = ""
+    var languageLevel: String = ""
+    var currentLanguageId: Int = 0
+    var currentLanguageXP: Int = 0
+    var targetLanguageXP: Int = 0
     
     // MARK: - Lists Data
     var achievements: [AchievementUIModel] = []
     var topExplorers: [ExplorerUIModel] = []
     
-    init(router: RouterProtocol) {
+    init(router: RouterProtocol, getProfileUseCase: GetProfileUseCaseProtocol? = nil) {
         self.router = router
-        
-        // Map Mock Lists in initializer
-        let rawAchievements = [
-            AchievementEntity(id: "1", title: "Wild Explorer", subtitle: "Complete 10 lessons in...", type: .wildExplorer),
-            AchievementEntity(id: "2", title: "Perfect Week", subtitle: "7 days streak without...", type: .perfectWeek)
-        ]
-        self.achievements = rawAchievements.map { self.mapAchievementToUIModel($0) }
-        
-        let rawExplorers = [
-            ExplorerEntity(id: "1", rank: 1, name: "Marco Polo", xp: 12450, avatarImage: nil),
-            ExplorerEntity(id: "2", rank: 2, name: "Amelia Earhart", xp: 11200, avatarImage: nil),
-            ExplorerEntity(id: "3", rank: 3, name: "Ibn Battuta", xp: 9850, avatarImage: nil)
-        ]
-        self.topExplorers = rawExplorers.map { self.mapExplorerToUIModel($0) }
+        self.getProfileUseCase = getProfileUseCase
     }
     
     // MARK: - Intentions (Methods)
@@ -66,9 +57,49 @@ final class ProfileViewModel {
         router.push(.settings)
     }
     
-    // Mock fetch profile data method - does nothing now since data is set in init
     func fetchProfileData() {
-        // No action needed, data loads instantly
+        guard let getProfileUseCase = getProfileUseCase else { return }
+        
+        isLoading = true
+        errorMessage = nil
+        
+        Task {
+            do {
+                let profile = try await getProfileUseCase.execute()
+                await MainActor.run {
+                    self.populateData(from: profile)
+                    self.isLoading = false
+                }
+            } catch {
+                await MainActor.run {
+                    self.errorMessage = error.localizedDescription
+                    self.isLoading = false
+                }
+            }
+        }
+    }
+    
+    private func populateData(from profile: UserProfileEntity) {
+        self.userName = profile.username
+        self.level = profile.level
+        self.avatarImage = profile.avatarUrl
+        
+        self.coins = profile.coins.formatted()
+        self.rawCoins = profile.coins
+        self.totalXP = profile.totalXp.formatted()
+        self.rawXP = profile.totalXp
+        self.streak = "\(profile.streakDays) Days"
+        self.worlds = "\(profile.worldsCount)"
+        
+        self.currentLanguage = profile.currentLanguageName
+        self.journeyTitle = profile.journeyLabel
+        self.languageLevel = "LEVEL \(profile.currentLanguageLevel)"
+        self.currentLanguageId = profile.currentLanguageId
+        self.currentLanguageXP = profile.currentXp
+        self.targetLanguageXP = profile.nextMilestoneXp
+        
+        self.achievements = profile.achievements.map { self.mapAchievementToUIModel($0) }
+        self.topExplorers = profile.topExplorers.map { self.mapExplorerToUIModel($0) }
     }
     
     // MARK: - Mappers
@@ -105,7 +136,8 @@ final class ProfileViewModel {
             uiRank: "\(entity.rank)",
             uiXPAmount: L10n.Profile.explorerXP(entity.xp.formatted()),
             avatarImage: entity.avatarImage,
-            isTop: entity.rank == 1
+            isTop: entity.rank == 1,
+            isCurrentUser: entity.isCurrentUser
         )
     }
 }

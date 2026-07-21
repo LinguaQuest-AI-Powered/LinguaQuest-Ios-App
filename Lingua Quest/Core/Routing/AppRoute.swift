@@ -18,17 +18,19 @@ enum AppRoute: Hashable {
     case verifyEmail(email: String)
     case verifyPasswordResetOtp(email: String)
     case resetPassword(resetToken: String)
-    case gameLevels(worldName: String)
+    case gameLevels(worldId: Int, worldName: String)
     case cameraQuestTask
     case cameraCapture(targetWord: String)
     case cameraResult(targetWord: String)
-    case leaderboard
+    case leaderboard(languageId: Int)
     case achievements
     case wordInsight(word: WordCardEntity)
     case allWorlds
+    case editProfile
 }
 
 enum AppSheet: String, Identifiable {
-    case editProfile
+    // Add sheet routes here in the future
+    case dummy // Added dummy to keep enum valid if needed
     var id: String { rawValue }
 }

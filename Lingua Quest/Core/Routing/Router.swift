@@ -71,9 +71,9 @@ final class Router: RouterProtocol {
         case .resetPassword(let resetToken):
             let viewModel = Resolver.shared.resolve(ResetPasswordViewModel.self, argument: resetToken)
             ResetPasswordView(viewModel: viewModel)
-        case .gameLevels(let worldName):
+        case .gameLevels(let worldId, let worldName):
             let viewModel = Resolver.shared.resolve(GameLevelsViewModel.self)
-            GameLevelsView(viewModel: viewModel, worldName: worldName)
+            GameLevelsView(viewModel: viewModel, worldName: worldName, worldId: worldId)
         case .cameraQuestTask:
             let viewModel = Resolver.shared.resolve(CameraTaskQuestViewModel.self)
             CameraTaskQuestView(viewModel: viewModel)
@@ -83,17 +83,20 @@ final class Router: RouterProtocol {
         case .cameraResult(let targetWord):
             let viewModel = Resolver.shared.resolve(CameraResultViewModel.self, argument: targetWord)
             CameraResultView(viewModel: viewModel)
-        case .leaderboard:
-            let viewModel = Resolver.shared.resolve(LeaderboardViewModel.self)
+        case .leaderboard(let languageId):
+            let viewModel = Resolver.shared.resolve(LeaderboardViewModel.self, argument: languageId)
             LeaderboardView(viewModel: viewModel)
         case .achievements:
-            AchievementsView()
+            let viewModel = Resolver.shared.resolve(AchievementsViewModel.self)
+            AchievementsView(viewModel: viewModel)
         case .wordInsight(let word):
             let viewModel = Resolver.shared.resolve(WordInsightViewModel.self)
             WordInsightView(viewModel: viewModel, word: word)
         case .allWorlds:
             let viewModel = Resolver.shared.resolve(AllWorldsViewModel.self)
             AllWorldsView(viewModel: viewModel)
+        case .editProfile:
+            EditProfileView()
         }
     }
 }

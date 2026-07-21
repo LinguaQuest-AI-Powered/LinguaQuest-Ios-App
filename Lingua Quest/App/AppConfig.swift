@@ -9,10 +9,15 @@ import Foundation
 enum AppConfig {
     
     static var baseURL: URL {
-        let urlString = string(for: .apiBaseURL).trimmingCharacters(in: .whitespacesAndNewlines)
+        let host = string(for: .apiBaseURL).trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        let urlString = host.hasPrefix("http") ? host : "https://" + host
+        
+        print("🚀 READ URL STRING: '\(urlString)'")
+        
         guard let url = URL(string: urlString) else {
             preconditionFailure(
-                "The value of \(Key.apiBaseURL.rawValue) in Info.plist is not a valid URL — check Config/Config.xcconfig"
+                "The value of \(Key.apiBaseURL.rawValue) in Info.plist is not a valid URL ('\(urlString)') — check Config/Config.xcconfig"
             )
         }
         return url
