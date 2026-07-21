@@ -22,6 +22,7 @@ class VoiceGameViewModel {
     var targetSentence: String = L10n.SpeakingLab.mockTargetSentence
     
     var recordingDuration: Int = 0
+    var showReviewDialog: Bool = false
     private var timer: Timer?
     
     init(router: RouterProtocol) {
@@ -51,7 +52,19 @@ class VoiceGameViewModel {
         recordingState = .finished
         timer?.invalidate()
         timer = nil
+        showReviewDialog = true
         // TODO: Implement stop recording logic and processing
+    }
+    
+    func discardRecording() {
+        showReviewDialog = false
+        recordingState = .idle
+        recordingDuration = 0
+    }
+    
+    func processRecording() {
+        showReviewDialog = false
+        // TODO: Handle processing logic
     }
     
     func skip() {

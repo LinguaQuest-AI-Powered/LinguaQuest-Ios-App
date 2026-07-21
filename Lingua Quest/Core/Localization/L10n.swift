@@ -337,6 +337,10 @@ enum L10n {
         static var tapAndHoldToRecord: String { localized("speaking_lab.tap_and_hold_to_record") }
         static var recording: String { localized("speaking_lab.recording") }
         static var mockTargetSentence: String { localized("speaking_lab.mock_target_sentence") }
+        static var reviewRecording: String { localized("speaking_lab.review_recording") }
+        static var reviewRecordingSubtitle: String { localized("speaking_lab.review_recording_subtitle") }
+        static var discard: String { localized("speaking_lab.discard") }
+        static var process: String { localized("speaking_lab.process") }
     }
 
     private static func localized(_ key: String) -> String {

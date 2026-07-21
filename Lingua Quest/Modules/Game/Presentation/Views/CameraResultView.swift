@@ -75,7 +75,7 @@ struct CameraResultView: View {
     }
     
     private var failureView: some View {
-        DialogCardContainer(mascotImage: .bird) {
+        DialogCardContainer(mascotImage: .weakPasswordBird) {
             VStack(spacing: 24) {
                     Text(L10n.Game.notQuite)
                         .appTextStyle(.displayMedium, color: .appBrandBrown)

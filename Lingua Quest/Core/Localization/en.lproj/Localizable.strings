@@ -257,3 +257,8 @@
 "speaking_lab.tap_and_hold_to_record" = "Tap and hold to record";
 "speaking_lab.recording" = "Recording...";
 "speaking_lab.mock_target_sentence" = "The apple is red";
+
+"speaking_lab.review_recording" = "Review Recording";
+"speaking_lab.review_recording_subtitle" = "Listen back to your pronunciation before submitting.";
+"speaking_lab.discard" = "DISCARD";
+"speaking_lab.process" = "PROCESS";

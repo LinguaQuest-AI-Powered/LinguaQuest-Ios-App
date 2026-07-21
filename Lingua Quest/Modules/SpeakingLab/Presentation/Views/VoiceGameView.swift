@@ -146,6 +146,19 @@ struct VoiceGameView: View {
                 }
                 .padding(.bottom, 40)
             }
+            
+            if viewModel.showReviewDialog {
+                ReviewRecordingDialog(
+                    onDiscard: {
+                        withAnimation {
+                            viewModel.discardRecording()
+                        }
+                    },
+                    onProcess: {
+                        viewModel.processRecording()
+                    }
+                )
+            }
         }
         .navigationBarHidden(true)
     }

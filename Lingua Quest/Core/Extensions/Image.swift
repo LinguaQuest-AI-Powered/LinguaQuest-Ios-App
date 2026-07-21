@@ -70,6 +70,8 @@ extension Image {
         case forwardEndFill = "forward.end.fill"
         case micFill = "mic.fill"
         case pauseFill = "pause.fill"
+        case trash = "trash"
+        case checkmarkCircle = "checkmark.circle"
         
         // Added for Edit Profile
         case person = "person"

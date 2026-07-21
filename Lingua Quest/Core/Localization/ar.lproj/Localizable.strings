@@ -259,3 +259,8 @@
 "speaking_lab.tap_and_hold_to_record" = "اضغط للتسجيل";
 "speaking_lab.recording" = "جارِ التسجيل...";
 "speaking_lab.mock_target_sentence" = "التفاحة حمراء";
+
+"speaking_lab.review_recording" = "مراجعة التسجيل";
+"speaking_lab.review_recording_subtitle" = "استمع إلى نطقك قبل الإرسال.";
+"speaking_lab.discard" = "تجاهل";
+"speaking_lab.process" = "معالجة";
