@@ -51,6 +51,7 @@ final class ProfileRepositoryImpl: ProfileRepositoryProtocol {
             worldsCount: data.stats.worldsCount,
             currentLanguageName: data.currentLanguageJourney.name,
             currentLanguageCode: data.currentLanguageJourney.code,
+            currentLanguageId: data.currentLanguageJourney.languageId,
             currentLanguageLevel: data.currentLanguageJourney.level,
             journeyLabel: data.currentLanguageJourney.journeyLabel,
             currentXp: data.currentLanguageJourney.currentXp,

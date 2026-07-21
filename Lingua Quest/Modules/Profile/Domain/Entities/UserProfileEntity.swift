@@ -21,6 +21,7 @@ struct UserProfileEntity {
     
     let currentLanguageName: String
     let currentLanguageCode: String
+    let currentLanguageId: Int
     let currentLanguageLevel: Int
     let journeyLabel: String
     let currentXp: Int
