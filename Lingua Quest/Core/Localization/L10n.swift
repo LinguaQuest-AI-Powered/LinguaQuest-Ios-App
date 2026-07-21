@@ -173,6 +173,12 @@ enum L10n {
         static func level(_ count: Int) -> String { String(format: localized("home.level"), count) }
         static func daysStreak(_ days: Int) -> String { String(format: localized("home.days_streak"), days) }
         static var progress: String { localized("home.progress") }
+        static var start: String { localized("home.start") }
+        static var voicePracticeTitle: String { localized("home.voice_practice_title") }
+        static var voicePracticeSubtitle: String { localized("home.voice_practice_subtitle") }
+        static func voicePracticeProgress(completed: Int, total: Int) -> String {
+            String(format: localized("home.voice_practice_progress"), completed, total)
+        }
         static var continueLessonTitle: String { localized("home.continue_lesson") }
         static var continueButton: String { localized("home.continue") }
         static var lessonApple: String { localized("home.lesson.apple") }
@@ -319,6 +325,18 @@ enum L10n {
             String(format: localized("add_language.add_selected_format"), count)
         }
         static var addSelected: String { localized("add_language.add_selected") }
+    }
+
+    enum SpeakingLab {
+        static func lessonTitle(_ number: Int) -> String { String(format: localized("speaking_lab.lesson_title"), number) }
+        static var voicePractice: String { localized("speaking_lab.voice_practice") }
+        static var youCanDoIt: String { localized("speaking_lab.you_can_do_it") }
+        static var listening: String { localized("speaking_lab.listening") }
+        static var pronounceThis: String { localized("speaking_lab.pronounce_this") }
+        static var listen: String { localized("speaking_lab.listen") }
+        static var tapAndHoldToRecord: String { localized("speaking_lab.tap_and_hold_to_record") }
+        static var recording: String { localized("speaking_lab.recording") }
+        static var mockTargetSentence: String { localized("speaking_lab.mock_target_sentence") }
     }
 
     private static func localized(_ key: String) -> String {

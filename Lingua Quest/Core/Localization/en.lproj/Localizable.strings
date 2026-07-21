@@ -242,3 +242,18 @@
 "add_language.search_placeholder" = "Search languages...";
 "add_language.add_selected_format" = "Add Selected (%d)";
 "add_language.add_selected" = "Add Selected";
+
+"home.start" = "Start";
+"home.voice_practice_title" = "Voice Practice";
+"home.voice_practice_subtitle" = "Practice your pronunciation";
+"home.voice_practice_progress" = "%d/%d completed today";
+
+"speaking_lab.lesson_title" = "LESSON %d";
+"speaking_lab.voice_practice" = "Voice Practice";
+"speaking_lab.you_can_do_it" = "You can do it!";
+"speaking_lab.listening" = "Listening...";
+"speaking_lab.pronounce_this" = "PRONOUNCE THIS:";
+"speaking_lab.listen" = "Listen";
+"speaking_lab.tap_and_hold_to_record" = "Tap and hold to record";
+"speaking_lab.recording" = "Recording...";
+"speaking_lab.mock_target_sentence" = "The apple is red";

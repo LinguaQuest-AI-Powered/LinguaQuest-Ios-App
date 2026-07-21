@@ -80,6 +80,9 @@ final class Router: RouterProtocol {
         case .cameraResult(let targetWord):
             let viewModel = Resolver.shared.resolve(CameraResultViewModel.self, argument: targetWord)
             CameraResultView(viewModel: viewModel)
+        case .voiceGame:
+            let viewModel = Resolver.shared.resolve(VoiceGameViewModel.self)
+            VoiceGameView(viewModel: viewModel)
         case .leaderboard(let languageId):
             let viewModel = Resolver.shared.resolve(LeaderboardViewModel.self, argument: languageId)
             LeaderboardView(viewModel: viewModel)

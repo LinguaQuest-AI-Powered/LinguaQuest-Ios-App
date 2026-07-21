@@ -96,7 +96,7 @@ struct HomeView: View {
                         .opacity(animateItems ? 1 : 0)
                         .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.3), value: animateItems)
 
-                        ContinueLessonCardView()
+                        VoicePracticeCardView(action: { router.push(.voiceGame) })
                             .padding(.horizontal, 20)
                             .offset(y: animateItems ? 0 : 30)
                             .opacity(animateItems ? 1 : 0)

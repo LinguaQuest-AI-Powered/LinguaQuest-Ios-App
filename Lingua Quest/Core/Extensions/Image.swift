@@ -67,6 +67,9 @@ extension Image {
         case infoCircleFill = "info.circle.fill"
         case speakerSlashFill = "speaker.slash.fill"
         case forwardFill = "forward.fill"
+        case forwardEndFill = "forward.end.fill"
+        case micFill = "mic.fill"
+        case pauseFill = "pause.fill"
         
         // Added for Edit Profile
         case person = "person"
@@ -130,6 +133,7 @@ extension Image {
         case notEnoughCoins = "NotEnoughCoins"
         case skip = "Skip"
         case perfect = "perfect"
+        case micBird = "Mic"
     }
     
     init(icon: Icon) {

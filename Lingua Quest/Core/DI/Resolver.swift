@@ -22,7 +22,8 @@ final class Resolver {
                 NetworkAssembly(), RouterAssembly(), StorageAssembly(),
                 AuthAssembly(), OnboardingAssembly(), GameAssembly(),
                 LeaderboardAssembly(), ProfileAssembly(), SettingsAssembly(),
-                WordInsightAssembly(), AllWorldsAssembly(), AchievementsAssembly()
+                WordInsightAssembly(), AllWorldsAssembly(), AchievementsAssembly(),
+                SpeakingLabAssembly()
             ],
             container: container
         )

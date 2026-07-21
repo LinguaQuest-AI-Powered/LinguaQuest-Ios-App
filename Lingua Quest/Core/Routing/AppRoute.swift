@@ -19,6 +19,7 @@ enum AppRoute: Hashable {
     case resetPassword
     case gameLevels(worldId: Int, worldName: String, languageId: Int)
     case cameraQuestTask
+    case voiceGame
     case cameraCapture(targetWord: String)
     case cameraResult(targetWord: String)
     case leaderboard(languageId: Int)

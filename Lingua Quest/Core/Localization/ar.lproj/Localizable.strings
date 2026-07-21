@@ -244,3 +244,18 @@
 "add_language.search_placeholder" = "ابحث عن اللغات...";
 "add_language.add_selected_format" = "إضافة المحدد (%d)";
 "add_language.add_selected" = "إضافة المحدد";
+
+"home.start" = "ابدأ";
+"home.voice_practice_title" = "التدريب الصوتي";
+"home.voice_practice_subtitle" = "تدرب على النطق";
+"home.voice_practice_progress" = "أكملت %d/%d اليوم";
+
+"speaking_lab.lesson_title" = "الدرس %d";
+"speaking_lab.voice_practice" = "التدريب الصوتي";
+"speaking_lab.you_can_do_it" = "يمكنك فعلها!";
+"speaking_lab.listening" = "جارِ الاستماع...";
+"speaking_lab.pronounce_this" = "انطق هذا:";
+"speaking_lab.listen" = "استمع";
+"speaking_lab.tap_and_hold_to_record" = "اضغط للتسجيل";
+"speaking_lab.recording" = "جارِ التسجيل...";
+"speaking_lab.mock_target_sentence" = "التفاحة حمراء";
