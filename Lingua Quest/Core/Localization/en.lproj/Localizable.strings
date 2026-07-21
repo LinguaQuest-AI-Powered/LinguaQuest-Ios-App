@@ -75,8 +75,10 @@
 "auth_error_invalid_otp_length" = "Please enter the full 4-digit code.";
 "auth_error_email_required" = "Please enter your email address.";
 "auth_error_weak_password" = "Your password must be at least 8 characters and include a letter and a number.";
-
-
+"auth_error_email_and_password_required" = "Please enter both your email and password.";
+"auth_error_all_fields_required" = "Please fill in all the fields.";
+"auth_error_invalid_email_format" = "Please enter a valid email address.";
+"auth_error_invalid_username_format" = "Username must be 3-30 characters (letters, numbers, and underscores only).";
 
 "components.app_name" = "Lingua Quest!";
 "tabs.home" = "Home";

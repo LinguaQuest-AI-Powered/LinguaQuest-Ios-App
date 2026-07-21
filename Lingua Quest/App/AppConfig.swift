@@ -9,16 +9,13 @@ import Foundation
 enum AppConfig {
     
     static var baseURL: URL {
-        guard let url = URL(string: string(for: .apiBaseURL)) else {
+        let urlString = string(for: .apiBaseURL).trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let url = URL(string: urlString) else {
             preconditionFailure(
                 "The value of \(Key.apiBaseURL.rawValue) in Info.plist is not a valid URL — check Config/Config.xcconfig"
             )
         }
         return url
-    }
-    
-    static var apiKey: String {
-        string(for: .apiKey)
     }
     
     static var appVersion: String {
@@ -31,7 +28,6 @@ enum AppConfig {
     
     private enum Key: String {
         case apiBaseURL = "API_BASE_URL"
-        case apiKey = "API_KEY"
     }
     
     private static func string(for key: Key) -> String {

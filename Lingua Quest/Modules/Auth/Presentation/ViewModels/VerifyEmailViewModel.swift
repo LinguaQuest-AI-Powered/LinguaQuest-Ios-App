@@ -18,7 +18,15 @@ final class VerifyEmailViewModel {
 
     // MARK: - State
     let email: String
-    var otpCode: String = ""
+    var otpCode: String = "" {
+        didSet {
+            let digitsOnly = otpCode.filter(\.isNumber)
+            let clamped = String(digitsOnly.prefix(otpLength))
+            if clamped != otpCode {
+                otpCode = clamped
+            }
+        }
+    }
     var timeRemaining: Int = 60
     var isLoading: Bool = false
     var errorMessage: String? = nil

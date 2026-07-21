@@ -37,13 +37,38 @@ final class SignUpViewModel {
     func createAccount() {
         errorMessage = nil
 
+        guard !username.trimmingCharacters(in: .whitespaces).isEmpty,
+              !email.trimmingCharacters(in: .whitespaces).isEmpty,
+              !password.isEmpty else {
+            errorMessage = L10n.Auth.Error.allFieldsRequired
+            return
+        }
+
+        guard isValidEmail(email) else {
+            errorMessage = L10n.Auth.Error.invalidEmailFormat
+            return
+        }
+
+        guard (3...30).contains(username.count),
+              username.allSatisfy({ $0.isLetter || $0.isNumber || $0 == "_" }) else {
+            errorMessage = L10n.Auth.Error.invalidUsernameFormat
+            return
+        }
+
+        guard password.count >= 8,
+              password.rangeOfCharacter(from: .decimalDigits) != nil,
+              password.rangeOfCharacter(from: .letters) != nil else {
+            errorMessage = L10n.Auth.Error.weakPassword
+            return
+        }
+
         guard password == confirmPassword else {
             errorMessage = L10n.Auth.Error.passwordsDoNotMatch
             return
         }
 
         guard let nativeLanguage = backendLanguageName(for: userPreferences.spokenLanguageCode),
-                let targetLanguage = backendLanguageName(for: userPreferences.learningLanguageCode) else {
+              let targetLanguage = backendLanguageName(for: userPreferences.learningLanguageCode) else {
             errorMessage = L10n.Auth.Error.missingOnboardingLanguages
             return
         }
@@ -60,15 +85,29 @@ final class SignUpViewModel {
             switch result {
             case .success(let account):
                 router.push(.verifyEmail(email: account.email))
-
             case .failure(let error):
                 errorMessage = error.errorDescription
             }
         }
     }
 
+    // MARK: - Helpers
+    private func isValidEmail(_ email: String) -> Bool {
+        let pattern = #"^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"#
+        return email.range(of: pattern, options: .regularExpression) != nil
+    }
+    
+    /// Converts stored language code (e.g., "es") to the English display name (e.g., "Spanish")
+    /// expected by the Backend, regardless of the user's device language.
+    private func backendLanguageName(for code: String?) -> String? {
+        guard let code else { return nil }
+        // Force English locale so the backend always gets standard English names
+        let englishLocale = Locale(identifier: "en_US")
+        return englishLocale.localizedString(forLanguageCode: code)?.capitalized
+    }
+
     func navigateToLogin() {
-        router.push(.login)
+        router.pop()
     }
 
     func continueWithGoogle() {
@@ -79,15 +118,6 @@ final class SignUpViewModel {
         // Wired up once Firebase OAuth flow is implemented
     }
 
-    // MARK: - Helpers
-    /// Converts stored language code (e.g., "es") to the English display name (e.g., "Spanish")
-    /// expected by the Backend, regardless of the user's device language.
-    private func backendLanguageName(for code: String?) -> String? {
-        guard let code else { return nil }
-        // Force English locale so the backend always gets standard English names
-        let englishLocale = Locale(identifier: "en_US")
-        return englishLocale.localizedString(forLanguageCode: code)?.capitalized
-    }
 }
 
 

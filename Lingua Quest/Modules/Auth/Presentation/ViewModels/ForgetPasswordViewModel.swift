@@ -30,8 +30,8 @@ final class ForgetPasswordViewModel {
     func sendResetLink() {
         errorMessage = nil
 
-        guard !email.isEmpty else {
-            //errorMessage = L10n.Auth.Error.emailRequired
+        guard !email.trimmingCharacters(in: .whitespaces).isEmpty else {
+            errorMessage = L10n.Auth.Error.emailRequired
             return
         }
 

@@ -36,6 +36,7 @@ extension Color {
     
     // Accents & Icons
     static let appSemanticSuccess = Color("TokenSemanticSuccess")                  // Light #006B5C      Dark #00917A
+    static let appSemanticError = Color("TokenAccentRed")                          // Matches the red token
     static let appGlowTeal = Color("TokenGlowTeal")                                // Light #68FADD      Dark #4ADBC0
     static let appGlowGold = Color("TokenGlowGold")                                // Light #D0AE00      Dark #B89800
     static let appIconBrown = Color("TokenIconBrown")                              // Light #887361      Dark #C4A882

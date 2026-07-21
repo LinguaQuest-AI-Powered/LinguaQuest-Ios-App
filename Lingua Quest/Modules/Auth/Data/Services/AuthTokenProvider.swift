@@ -17,7 +17,8 @@ final class AuthTokenProvider: AuthTokenProviding {
 
     /// Coalesces concurrent refresh attempts — if 3 requests 401 at once,
     /// we only want ONE actual call to /auth/refresh-token.
-    private var inFlightRefresh: Task<Bool, Never>?
+    private var _inFlightRefresh: Task<Bool, Never>?
+    private let lock = NSLock()
 
     init(tokenStorage: SecureTokenStorageProtocol, remoteDataSource: AuthRemoteDataSourceProtocol) {
         self.tokenStorage = tokenStorage
@@ -29,8 +30,10 @@ final class AuthTokenProvider: AuthTokenProviding {
     }
 
     func refreshSession() async -> Bool {
-        if let inFlightRefresh {
-            return await inFlightRefresh.value
+        lock.lock()
+        if let existingTask = _inFlightRefresh {
+            lock.unlock()
+            return await existingTask.value
         }
 
         let task = Task<Bool, Never> { [tokenStorage, remoteDataSource] in
@@ -48,9 +51,16 @@ final class AuthTokenProvider: AuthTokenProviding {
             }
         }
 
-        inFlightRefresh = task
+        _inFlightRefresh = task
+        lock.unlock()
+        
         let result = await task.value
-        inFlightRefresh = nil
+        
+        lock.lock()
+        // Only clear if it hasn't been replaced by another refresh (unlikely but safe)
+        _inFlightRefresh = nil
+        lock.unlock()
+        
         return result
     }
 }

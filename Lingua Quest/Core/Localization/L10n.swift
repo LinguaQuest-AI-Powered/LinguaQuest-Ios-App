@@ -92,6 +92,10 @@ enum L10n {
             static var invalidOtpLength: String { localized("auth_error_invalid_otp_length") }
             static var emailRequired: String { localized("auth_error_email_required") }
             static var weakPassword: String { localized("auth_error_weak_password") }
+            static var emailAndPasswordRequired: String { localized("auth_error_email_and_password_required") }
+            static var allFieldsRequired: String { localized("auth_error_all_fields_required") }
+            static var invalidEmailFormat: String { localized("auth_error_invalid_email_format") }
+            static var invalidUsernameFormat: String { localized("auth_error_invalid_username_format") }
         }
     }
     

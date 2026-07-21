@@ -38,11 +38,11 @@ enum AuthError: Error, Equatable {
         case "USERNAME_ALREADY_EXISTS": return .usernameAlreadyTaken // TODO: confirm exact key with backend dev
         case "EMAIL_NOT_FOUND": return .emailNotFound
         case "INVALID_OTP": return .invalidOtp
-        case "OTP_NOT_FOUND": return .otpNotFound
+        case "OTP_NOT_FOUND", "OTP_EXPIRED": return .otpNotFound
         case "OTP_COOLDOWN": return .otpCooldown
         case "MAX_ATTEMPTS_EXCEEDED": return .maxOtpAttemptsExceeded
-        case "INVALID_RESET_TOKEN": return .invalidResetToken
-        case "INVALID_REFRESH_TOKEN": return .invalidRefreshToken
+        case "INVALID_RESET_TOKEN", "RESET_TOKEN_EXPIRED": return .invalidResetToken
+        case "INVALID_REFRESH_TOKEN", "REFRESH_TOKEN_EXPIRED": return .invalidRefreshToken
         case "INVALID_FIREBASE_TOKEN": return .invalidFirebaseToken
         case "UNAUTHENTICATED": return .unauthenticated
         case "INTERNAL_SERVER_ERROR": return .internalServerError
