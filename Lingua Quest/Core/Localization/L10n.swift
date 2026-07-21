@@ -341,6 +341,15 @@ enum L10n {
         static var reviewRecordingSubtitle: String { localized("speaking_lab.review_recording_subtitle") }
         static var discard: String { localized("speaking_lab.discard") }
         static var process: String { localized("speaking_lab.process") }
+        static var rating: String { localized("speaking_lab.rating") }
+        static var continueTitle: String { localized("speaking_lab.continue_title") }
+        static var returnHome: String { localized("speaking_lab.return_home") }
+        static var retry: String { localized("speaking_lab.retry") }
+        static var feedbackGreatJob: String { localized("speaking_lab.feedback_great_job") }
+        static var feedbackNeedsWork: String { localized("speaking_lab.feedback_needs_work") }
+        static var score: String { localized("speaking_lab.score") }
+        static var evaluatingTitle: String { localized("speaking_lab.evaluating_title") }
+        static var evaluatingSubtitle: String { localized("speaking_lab.evaluating_subtitle") }
     }
 
     private static func localized(_ key: String) -> String {

@@ -262,3 +262,12 @@
 "speaking_lab.review_recording_subtitle" = "Listen back to your pronunciation before submitting.";
 "speaking_lab.discard" = "DISCARD";
 "speaking_lab.process" = "PROCESS";
+"speaking_lab.rating" = "Rating: %@/10";
+"speaking_lab.continue_title" = "Continue";
+"speaking_lab.return_home" = "Return Home";
+"speaking_lab.retry" = "Retry";
+"speaking_lab.feedback_great_job" = "Great job! Try to emphasize the 'r' sound in 'red' a bit more.";
+"speaking_lab.feedback_needs_work" = "Almost there, explorer! Let's try that last word one more time together.";
+"speaking_lab.score" = "SCORE";
+"speaking_lab.evaluating_title" = "Evaluating Voice...";
+"speaking_lab.evaluating_subtitle" = "Listening closely to your pronunciation.";

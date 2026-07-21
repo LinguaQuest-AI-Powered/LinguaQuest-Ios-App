@@ -64,7 +64,7 @@ class VoiceGameViewModel {
     
     func processRecording() {
         showReviewDialog = false
-        // TODO: Handle processing logic
+        router.push(.voiceGameResult)
     }
     
     func skip() {

@@ -264,3 +264,12 @@
 "speaking_lab.review_recording_subtitle" = "استمع إلى نطقك قبل الإرسال.";
 "speaking_lab.discard" = "تجاهل";
 "speaking_lab.process" = "معالجة";
+"speaking_lab.rating" = "التقييم: %@/10";
+"speaking_lab.continue_title" = "استمرار";
+"speaking_lab.return_home" = "العودة للرئيسية";
+"speaking_lab.retry" = "إعادة المحاولة";
+"speaking_lab.feedback_great_job" = "عمل رائع! حاول التركيز أكثر على نطق حرف 'r' في كلمة 'red'.";
+"speaking_lab.feedback_needs_work" = "لقد اقتربت يا بطل! لنجرب نطق الكلمة الأخيرة مرة أخرى معاً.";
+"speaking_lab.score" = "النتيجة";
+"speaking_lab.evaluating_title" = "جاري تقييم الصوت...";
+"speaking_lab.evaluating_subtitle" = "نستمع بدقة لطريقة نطقك للكلمات.";

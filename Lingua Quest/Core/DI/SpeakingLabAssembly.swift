@@ -14,5 +14,10 @@ final class SpeakingLabAssembly: Assembly {
             let router = resolver.resolve(RouterProtocol.self)!
             return VoiceGameViewModel(router: router)
         }
+        
+        container.register(VoiceGameResultViewModel.self) { resolver in
+            let router = resolver.resolve(RouterProtocol.self)!
+            return VoiceGameResultViewModel(router: router)
+        }
     }
 }

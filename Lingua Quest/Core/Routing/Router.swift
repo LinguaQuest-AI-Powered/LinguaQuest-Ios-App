@@ -83,6 +83,9 @@ final class Router: RouterProtocol {
         case .voiceGame:
             let viewModel = Resolver.shared.resolve(VoiceGameViewModel.self)
             VoiceGameView(viewModel: viewModel)
+        case .voiceGameResult:
+            let viewModel = Resolver.shared.resolve(VoiceGameResultViewModel.self)
+            VoiceGameResultView(viewModel: viewModel)
         case .leaderboard(let languageId):
             let viewModel = Resolver.shared.resolve(LeaderboardViewModel.self, argument: languageId)
             LeaderboardView(viewModel: viewModel)
