@@ -7,24 +7,29 @@
 
 import Foundation
 
-enum ProfileEndpoint: Endpoint {
-    case getProfile
-    
-    var path: String {
-        switch self {
-        case .getProfile:
-            return "/profile"
-        }
+enum ProfileEndpoint {
+    struct GetProfile: Endpoint {
+        var path: String { "/profile" }
+        var method: HTTPMethod { .get }
+        var body: EmptyBody? { nil }
+        var requiresAuth: Bool { true }
     }
     
-    var method: HTTPMethod {
-        switch self {
-        case .getProfile:
-            return .get
+    struct CompleteProfile: Endpoint {
+        let nativeLanguageId: Int
+        let targetLanguageId: Int
+        let username: String?
+        
+        var path: String { "/profile/complete-profile" }
+        var method: HTTPMethod { .post }
+        var body: CompleteProfileRequestDTO? {
+            CompleteProfileRequestDTO(
+                nativeLanguageId: nativeLanguageId,
+                targetLanguageId: targetLanguageId,
+                username: username
+            )
         }
-    }
-    
-    var body: EmptyBody? {
-        return nil
+        var requiresAuth: Bool { true }
     }
 }
+

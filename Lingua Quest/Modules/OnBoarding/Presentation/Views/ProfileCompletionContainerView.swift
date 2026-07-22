@@ -40,5 +40,28 @@ struct ProfileCompletionContainerView: View {
             }
         }
         .animation(.easeInOut, value: viewModel.state.currentStep)
+        .overlay {
+            if viewModel.isLoading {
+                ZStack {
+                    Color.black.opacity(0.3)
+                        .ignoresSafeArea()
+                    ProgressView()
+                        .padding()
+                        .background(Color(UIColor.systemBackground))
+                        .cornerRadius(8)
+                        .shadow(radius: 10)
+                }
+            }
+        }
+        .alert("Error", isPresented: Binding(
+            get: { viewModel.errorMessage != nil },
+            set: { if !$0 { viewModel.errorMessage = nil } }
+        )) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            if let error = viewModel.errorMessage {
+                Text(error)
+            }
+        }
     }
 }

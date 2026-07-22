@@ -89,7 +89,9 @@ final class AuthAssembly: Assembly {
         container.register(ProfileCompletionViewModel.self) { resolver in
             ProfileCompletionViewModel(
                 router: resolver.resolve(RouterProtocol.self)!,
-                userPreferences: resolver.resolve(UserPreferencesProtocol.self)!
+                userPreferences: resolver.resolve(UserPreferencesProtocol.self)!,
+                getAvailableLanguagesUseCase: resolver.resolve(GetAvailableLanguagesUseCase.self)!,
+                completeProfileUseCase: resolver.resolve(CompleteProfileUseCaseProtocol.self)!
             )
         }
 
