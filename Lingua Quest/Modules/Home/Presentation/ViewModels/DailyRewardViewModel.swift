@@ -56,8 +56,10 @@ final class DailyRewardViewModel {
     // MARK: - Intentions
     
     @MainActor
-    func loadDailyReward() async {
-        isLoading = true
+    func loadDailyReward(forceRefresh: Bool = false) async {
+        if reward == nil || forceRefresh {
+            isLoading = true
+        }
         errorMessage = nil
         do {
             reward = try await getDailyRewardUseCase.execute()

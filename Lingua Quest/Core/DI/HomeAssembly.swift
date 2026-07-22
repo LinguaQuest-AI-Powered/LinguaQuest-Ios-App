@@ -10,6 +10,10 @@ import Swinject
 final class HomeAssembly: Assembly {
     func assemble(container: Container) {
         
+        container.register(HomeLocalDataSourceProtocol.self) { _ in
+            return HomeLocalDataSource()
+        }.inObjectScope(.container)
+        
         container.register(HomeRemoteDataSourceProtocol.self) { resolver in
             let apiClient = resolver.resolve(APIClientProtocol.self)!
             return HomeRemoteDataSource(apiClient: apiClient)
@@ -17,7 +21,8 @@ final class HomeAssembly: Assembly {
         
         container.register(HomeRepositoryProtocol.self) { resolver in
             let remoteDataSource = resolver.resolve(HomeRemoteDataSourceProtocol.self)!
-            return HomeRepositoryImpl(remoteDataSource: remoteDataSource)
+            let localDataSource = resolver.resolve(HomeLocalDataSourceProtocol.self)!
+            return HomeRepositoryImpl(remoteDataSource: remoteDataSource, localDataSource: localDataSource)
         }
         
         container.register(GetHomeDataUseCaseProtocol.self) { resolver in

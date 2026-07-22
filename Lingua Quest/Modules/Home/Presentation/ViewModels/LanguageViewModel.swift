@@ -47,8 +47,10 @@ final class LanguageViewModel {
         self.addLanguagesUseCase = addLanguagesUseCase
     }
     
-    func loadMyLanguages() async {
-        isLoadingMyLanguages = true
+    func loadMyLanguages(forceRefresh: Bool = false) async {
+        if myLanguages.isEmpty || forceRefresh {
+            isLoadingMyLanguages = true
+        }
         errorMessage = nil
         do {
             myLanguages = try await getMyLanguagesUseCase.execute()

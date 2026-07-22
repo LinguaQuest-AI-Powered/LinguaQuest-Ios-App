@@ -43,13 +43,16 @@ final class HomeViewModel {
         // Listen for language switches to refresh home data
         self.languageViewModel.onLanguageSwitched = { [weak self] in
             Task {
-                await self?.loadHomeData()
+                await self?.loadHomeData(forceRefresh: true)
             }
         }
     }
     
-    func loadHomeData() async {
-        isLoading = true
+    func loadHomeData(forceRefresh: Bool = false) async {
+        if homeData == nil || forceRefresh {
+            isLoading = true
+        }
+        
         errorMessage = nil
         async let homeDataTask = getHomeDataUseCase.execute()
         async let worldsTask = getHomeWorldsUseCase.execute(languageId: 1, difficulty: "EASY")

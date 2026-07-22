@@ -34,79 +34,84 @@ struct HomeView: View {
             ZStack(alignment: .bottomTrailing) {
                 
                 ScrollView(showsIndicators: false) {
-                    VStack(alignment: .leading, spacing: 20) {
-                        
-                        if !viewModel.dailyRewardViewModel.isClaimed && viewModel.dailyRewardViewModel.reward != nil {
-                            DailyBonusCardView {
-                                showDailyRewardDialog = true
-                            }
-                            .padding(.horizontal, 20)
-                            .offset(y: animateItems ? 0 : 30)
-                            .opacity(animateItems ? 1 : 0)
-                            .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.0), value: animateItems)
-                            .transition(.move(edge: .top).combined(with: .opacity))
-                        }
-
-                        LearningCardView(
-                            flagEmoji: viewModel.languageViewModel.activeLanguage?.flagEmoji ?? "🇪🇸",
-                            title: L10n.Home.currentlyLearning,
-                            languageName: viewModel.languageViewModel.activeLanguage?.name ?? L10n.Onboarding.languageSpanish,
-                            level: viewModel.languageViewModel.activeLanguage?.level ?? 1,
-                            streakDays: viewModel.homeData?.streakDays ?? 0,
-                            progressWidth: CGFloat(viewModel.languageViewModel.activeLanguage?.progressPercent ?? 0) * 1.65
-                        )
-                            .padding(.horizontal, 20)
-                            .offset(y: animateItems ? 0 : 30)
-                            .opacity(animateItems ? 1 : 0)
-                            .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.15), value: animateItems)
-
-                        Group {
-                            SectionHeaderView(
-                                title: L10n.Home.exploreWorlds,
-                                actionTitle: L10n.Home.seeMore,
-                                onActionTapped: { viewModel.navigateToAllWorlds() }
-                            )
-                            .padding(.horizontal, 20)
-
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack(spacing: 16) {
-                                    ForEach(displayWorlds) { item in
-                                        Button(action: {
-                                            router.push(.gameLevels(worldId: 10, worldName: item.title, languageId: 1))
-                                        }) {
-                                            WorldCardView(item: item)
-                                                .frame(width: 204)
-                                        }
-                                        .buttonStyle(HomeScaleButtonStyle())
-                                        .disabled(item.isLocked)
-                                    }
+                    if viewModel.isLoading {
+                        HomeSkeletonView()
+                            .padding(.top, 12)
+                    } else {
+                        VStack(alignment: .leading, spacing: 20) {
+                            
+                            if !viewModel.dailyRewardViewModel.isClaimed && viewModel.dailyRewardViewModel.reward != nil {
+                                DailyBonusCardView {
+                                    showDailyRewardDialog = true
                                 }
                                 .padding(.horizontal, 20)
-                                .padding(.vertical, 4)
+                                .offset(y: animateItems ? 0 : 30)
+                                .opacity(animateItems ? 1 : 0)
+                                .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.0), value: animateItems)
+                                .transition(.move(edge: .top).combined(with: .opacity))
                             }
-                        }
-                        .offset(y: animateItems ? 0 : 30)
-                        .opacity(animateItems ? 1 : 0)
-                        .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.3), value: animateItems)
 
-                        ContinueLessonCardView(
-                            title: L10n.Home.continueLessonTitle,
-                            lessonName: L10n.Home.lessonApple,
-                            lessonDescription: L10n.Home.lessonAppleDesc,
-                            imageAsset: .appleImage,
-                            buttonText: L10n.Home.continueButton,
-                            action: {}
-                        ).padding(.horizontal, 20)
-                        
-                        VoicePracticeCardView(action: { router.push(.voiceGame) })
-                            .padding(.horizontal, 20)
+                            LearningCardView(
+                                flagEmoji: viewModel.languageViewModel.activeLanguage?.flagEmoji ?? "🇪🇸",
+                                title: L10n.Home.currentlyLearning,
+                                languageName: viewModel.languageViewModel.activeLanguage?.name ?? L10n.Onboarding.languageSpanish,
+                                level: viewModel.languageViewModel.activeLanguage?.level ?? 1,
+                                streakDays: viewModel.homeData?.streakDays ?? 0,
+                                progressWidth: CGFloat(viewModel.languageViewModel.activeLanguage?.progressPercent ?? 0) * 1.65
+                            )
+                                .padding(.horizontal, 20)
+                                .offset(y: animateItems ? 0 : 30)
+                                .opacity(animateItems ? 1 : 0)
+                                .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.15), value: animateItems)
+
+                            Group {
+                                SectionHeaderView(
+                                    title: L10n.Home.exploreWorlds,
+                                    actionTitle: L10n.Home.seeMore,
+                                    onActionTapped: { viewModel.navigateToAllWorlds() }
+                                )
+                                .padding(.horizontal, 20)
+
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 16) {
+                                        ForEach(displayWorlds) { item in
+                                            Button(action: {
+                                                router.push(.gameLevels(worldId: 10, worldName: item.title, languageId: 1))
+                                            }) {
+                                                WorldCardView(item: item)
+                                                    .frame(width: 204)
+                                            }
+                                            .buttonStyle(HomeScaleButtonStyle())
+                                            .disabled(item.isLocked)
+                                        }
+                                    }
+                                    .padding(.horizontal, 20)
+                                    .padding(.vertical, 4)
+                                }
+                            }
                             .offset(y: animateItems ? 0 : 30)
                             .opacity(animateItems ? 1 : 0)
-                            .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.45), value: animateItems)
+                            .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.3), value: animateItems)
 
-                        Color.clear.frame(height: 100)
+                            ContinueLessonCardView(
+                                title: L10n.Home.continueLessonTitle,
+                                lessonName: L10n.Home.lessonApple,
+                                lessonDescription: L10n.Home.lessonAppleDesc,
+                                imageAsset: .appleImage,
+                                buttonText: L10n.Home.continueButton,
+                                action: {}
+                            ).padding(.horizontal, 20)
+                            
+                            VoicePracticeCardView(action: { router.push(.voiceGame) })
+                                .padding(.horizontal, 20)
+                                .offset(y: animateItems ? 0 : 30)
+                                .opacity(animateItems ? 1 : 0)
+                                .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.45), value: animateItems)
+
+                            Color.clear.frame(height: 100)
+                        }
+                        .padding(.top, 12)
                     }
-                    .padding(.top, 12)
                 }
 
                 Button(action: { showMyLanguagesSheet = true }) {
@@ -225,3 +230,59 @@ struct SectionHeaderView: View {
         }
     }
 }
+
+struct HomeSkeletonView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            
+            LearningCardView(
+                flagEmoji: "🇪🇸",
+                title: L10n.Home.currentlyLearning,
+                languageName: "Spanish",
+                level: 1,
+                streakDays: 0,
+                progressWidth: 100
+            )
+            .padding(.horizontal, 20)
+            
+            Group {
+                SectionHeaderView(
+                    title: L10n.Home.exploreWorlds,
+                    actionTitle: L10n.Home.seeMore,
+                    onActionTapped: {}
+                )
+                .padding(.horizontal, 20)
+
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 16) {
+                        ForEach(0..<3, id: \.self) { _ in
+                            RoundedRectangle(cornerRadius: 24)
+                                .fill(Color.appSurfaceCard)
+                                .frame(width: 204, height: 260)
+                        }
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 4)
+                }
+            }
+
+            ContinueLessonCardView(
+                title: L10n.Home.continueLessonTitle,
+                lessonName: L10n.Home.lessonApple,
+                lessonDescription: L10n.Home.lessonAppleDesc,
+                imageAsset: .appleImage,
+                buttonText: L10n.Home.continueButton,
+                action: {}
+            )
+            .padding(.horizontal, 20)
+            
+            VoicePracticeCardView(action: {})
+                .padding(.horizontal, 20)
+
+            Color.clear.frame(height: 100)
+        }
+        .redacted(reason: .placeholder)
+        .shimmer()
+    }
+}
+
