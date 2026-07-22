@@ -16,9 +16,17 @@ struct CaptureCardView: View {
                 Rectangle()
                     .fill(Color.appCardImageBackground)
                     .overlay(
-                        Image(asset: Image.Asset(rawValue: item.image) ?? .apple)
-                            .resizable()
-                            .scaledToFill()
+                        Group {
+                            if let data = item.imageData, let uiImage = UIImage(data: data) {
+                                Image(uiImage: uiImage)
+                                    .resizable()
+                                    .scaledToFill()
+                            } else {
+                                Image(asset: Image.Asset(rawValue: item.image ?? "") ?? .apple)
+                                    .resizable()
+                                    .scaledToFill()
+                            }
+                        }
                     )
                     .clipped()
                     .border(Color.appSurfaceCard, width: 7)
