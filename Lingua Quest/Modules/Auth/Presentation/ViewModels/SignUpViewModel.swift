@@ -15,6 +15,7 @@ final class SignUpViewModel {
     private let router: RouterProtocol
     private let userPreferences: UserPreferencesProtocol
     private let registerUseCase: RegisterUseCaseProtocol
+    private let oauthSignInHandler: OAuthSignInHandlerProtocol
 
     // MARK: - State
     var username: String = ""
@@ -27,10 +28,16 @@ final class SignUpViewModel {
     var errorMessage: String? = nil
 
     // MARK: - Init
-    init(router: RouterProtocol, userPreferences: UserPreferencesProtocol, registerUseCase: RegisterUseCaseProtocol) {
+    init(
+        router: RouterProtocol,
+        userPreferences: UserPreferencesProtocol,
+        registerUseCase: RegisterUseCaseProtocol,
+        oauthSignInHandler: OAuthSignInHandlerProtocol
+    ) {
         self.router = router
         self.userPreferences = userPreferences
         self.registerUseCase = registerUseCase
+        self.oauthSignInHandler = oauthSignInHandler
     }
 
     // MARK: - Intentions
@@ -111,11 +118,27 @@ final class SignUpViewModel {
     }
 
     func continueWithGoogle() {
-        // Wired up once Firebase OAuth flow is implemented
+        Task { await handleOAuth(.google) }
     }
 
     func continueWithApple() {
-        // Wired up once Firebase OAuth flow is implemented
+        Task { await handleOAuth(.apple) }
+    }
+    
+    private func handleOAuth(_ provider: OAuthProviderType) async {
+        errorMessage = nil
+        isLoading = true
+
+        let result = await oauthSignInHandler.handleSignIn(provider: provider)
+        isLoading = false
+
+        switch result {
+        case .success:
+            // State is already updated in handler (isLoggedIn = true)
+            break
+        case .failure(let message):
+            errorMessage = message
+        }
     }
 
 }
@@ -137,10 +160,11 @@ extension SignUpViewModel {
         
         class MockUserPreferences: UserPreferencesProtocol {
             var isOnboardingCompleted: Bool = true
+            var isLoggedIn: Bool = false
+            var needsProfileCompletion: Bool = false
             var spokenLanguageCode: String? = "ar"
             var learningLanguageCode: String? = "en"
             var userLevel: String? = "beginner"
-            var isLoggedIn: Bool = false
         }
         
         class MockRegisterUseCase: RegisterUseCaseProtocol {
@@ -148,11 +172,17 @@ extension SignUpViewModel {
                 return .failure(.invalidCredentials)
             }
         }
+        class MockOAuthSignInHandler: OAuthSignInHandlerProtocol {
+            func handleSignIn(provider: OAuthProviderType) async -> OAuthSignInResult {
+                return .failure(message: "Mock failure")
+            }
+        }
         
         return SignUpViewModel(
             router: MockRouter(),
             userPreferences: MockUserPreferences(),
-            registerUseCase: MockRegisterUseCase()
+            registerUseCase: MockRegisterUseCase(),
+            oauthSignInHandler: MockOAuthSignInHandler()
         )
     }
 }

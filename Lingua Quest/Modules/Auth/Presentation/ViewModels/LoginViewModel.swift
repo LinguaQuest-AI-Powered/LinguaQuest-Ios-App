@@ -15,6 +15,7 @@ final class LoginViewModel {
     private let router: RouterProtocol
     private var userPreferences: UserPreferencesProtocol
     private let loginUseCase: LoginUseCaseProtocol
+    private let oauthSignInHandler: OAuthSignInHandlerProtocol
 
     // MARK: - State
     var email: String = ""
@@ -24,11 +25,18 @@ final class LoginViewModel {
     var errorMessage: String? = nil
 
     // MARK: - Init
-    init(router: RouterProtocol, userPreferences: UserPreferencesProtocol, loginUseCase: LoginUseCaseProtocol) {
+    init(
+        router: RouterProtocol,
+        userPreferences: UserPreferencesProtocol,
+        loginUseCase: LoginUseCaseProtocol,
+        oauthSignInHandler: OAuthSignInHandlerProtocol
+    ) {
         self.router = router
         self.userPreferences = userPreferences
         self.loginUseCase = loginUseCase
+        self.oauthSignInHandler = oauthSignInHandler
     }
+
 
     // MARK: - Intentions
     func login() {
@@ -47,8 +55,12 @@ final class LoginViewModel {
             isLoading = false
 
             switch result {
-            case .success:
+            case .success(let data):
                 userPreferences.isLoggedIn = true
+                let user = data.user
+                if user.nativeLanguage == nil || user.targetLanguages.isEmpty {
+                    userPreferences.needsProfileCompletion = true
+                }
 
             case .failure(let error):
                 errorMessage = error.errorDescription
@@ -61,15 +73,36 @@ final class LoginViewModel {
     }
 
     func navigateToSignUp() {
-        router.push(.signUp)
+        if userPreferences.spokenLanguageCode == nil || userPreferences.learningLanguageCode == nil {
+            router.push(.completeProfile)
+        } else {
+            router.push(.signUp)
+        }
     }
 
     func continueWithGoogle() {
-        // Wired up once Firebase OAuth flow is implemented (loginWithFirebase use case)
+        Task { await handleOAuth(.google) }
     }
 
     func continueWithApple() {
-        // Wired up once Firebase OAuth flow is implemented (loginWithFirebase use case)
+        Task { await handleOAuth(.apple) }
+    }
+    
+    // MARK: - OAuth Shared Flow
+    private func handleOAuth(_ provider: OAuthProviderType) async {
+        errorMessage = nil
+        isLoading = true
+
+        let result = await oauthSignInHandler.handleSignIn(provider: provider)
+        isLoading = false
+
+        switch result {
+        case .success:
+            // State is already updated in handler (isLoggedIn = true, needsProfileCompletion set if needed)
+            break
+        case .failure(let message):
+            errorMessage = message
+        }
     }
 }
 
@@ -91,10 +124,11 @@ extension LoginViewModel {
         
         class MockUserPreferences: UserPreferencesProtocol {
             var isOnboardingCompleted: Bool = true
+            var isLoggedIn: Bool = false
+            var needsProfileCompletion: Bool = false
             var spokenLanguageCode: String? = "ar"
             var learningLanguageCode: String? = "en"
             var userLevel: String? = "beginner"
-            var isLoggedIn: Bool = false
         }
         
         class MockLoginUseCase: LoginUseCaseProtocol {
@@ -102,11 +136,17 @@ extension LoginViewModel {
                 return .failure(.invalidCredentials)
             }
         }
+        class MockOAuthSignInHandler: OAuthSignInHandlerProtocol {
+            func handleSignIn(provider: OAuthProviderType) async -> OAuthSignInResult {
+                return .failure(message: "Mock failure")
+            }
+        }
         
         return LoginViewModel(
             router: MockRouter(),
             userPreferences: MockUserPreferences(),
-            loginUseCase: MockLoginUseCase()
+            loginUseCase: MockLoginUseCase(),
+            oauthSignInHandler: MockOAuthSignInHandler()
         )
     }
 }

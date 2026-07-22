@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		33A0F053300C347200611A63 /* FirebaseAI in Frameworks */ = {isa = PBXBuildFile; productRef = 33A0F052300C347200611A63 /* FirebaseAI */; };
+		33AFF8B4300F3670002F5017 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 33AFF8B3300F3670002F5017 /* FirebaseAuth */; };
+		33AFF8B7300F37A3002F5017 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 33AFF8B6300F37A3002F5017 /* GoogleSignIn */; };
+		33AFF8B9300F37A3002F5017 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 33AFF8B8300F37A3002F5017 /* GoogleSignInSwift */; };
 		6D3CA5B03008808A00736812 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3CA5AF3008808A00736812 /* Swinject */; };
 /* End PBXBuildFile section */
 
@@ -57,7 +60,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33AFF8B9300F37A3002F5017 /* GoogleSignInSwift in Frameworks */,
 				6D3CA5B03008808A00736812 /* Swinject in Frameworks */,
+				33AFF8B7300F37A3002F5017 /* GoogleSignIn in Frameworks */,
+				33AFF8B4300F3670002F5017 /* FirebaseAuth in Frameworks */,
 				33A0F053300C347200611A63 /* FirebaseAI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -85,6 +91,7 @@
 				1529B3683006410300CCD74A /* Lingua Quest */,
 				1529B3783006410600CCD74A /* Lingua QuestTests */,
 				1529B3823006410600CCD74A /* Lingua QuestUITests */,
+				33AFF8B2300F366F002F5017 /* Frameworks */,
 				1529B3673006410300CCD74A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -97,6 +104,13 @@
 				1529B37F3006410600CCD74A /* Lingua QuestUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		33AFF8B2300F366F002F5017 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -121,6 +135,9 @@
 			packageProductDependencies = (
 				6D3CA5AF3008808A00736812 /* Swinject */,
 				33A0F052300C347200611A63 /* FirebaseAI */,
+				33AFF8B3300F3670002F5017 /* FirebaseAuth */,
+				33AFF8B6300F37A3002F5017 /* GoogleSignIn */,
+				33AFF8B8300F37A3002F5017 /* GoogleSignInSwift */,
 			);
 			productName = "Lingua Quest";
 			productReference = 1529B3663006410300CCD74A /* Lingua Quest.app */;
@@ -208,6 +225,7 @@
 			packageReferences = (
 				6D3CA5AE3008808A00736812 /* XCRemoteSwiftPackageReference "Swinject" */,
 				33A0F051300C347200611A63 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				33AFF8B5300F37A3002F5017 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1529B3673006410300CCD74A /* Products */;
@@ -415,6 +433,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Lingua Quest/Lingua Quest.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
@@ -450,6 +469,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Lingua Quest/Lingua Quest.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
@@ -608,6 +628,14 @@
 				minimumVersion = 12.16.0;
 			};
 		};
+		33AFF8B5300F37A3002F5017 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.2.0;
+			};
+		};
 		6D3CA5AE3008808A00736812 /* XCRemoteSwiftPackageReference "Swinject" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Swinject/Swinject.git";
@@ -623,6 +651,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 33A0F051300C347200611A63 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAI;
+		};
+		33AFF8B3300F3670002F5017 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 33A0F051300C347200611A63 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		33AFF8B6300F37A3002F5017 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 33AFF8B5300F37A3002F5017 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		33AFF8B8300F37A3002F5017 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 33AFF8B5300F37A3002F5017 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
 		};
 		6D3CA5AF3008808A00736812 /* Swinject */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -49,6 +49,9 @@ final class Router: RouterProtocol {
         switch route {
         case .home: MainTabView()
         case .onBoarding: OnboardingContainerView()
+        case .completeProfile:
+            let viewModel = Resolver.shared.resolve(ProfileCompletionViewModel.self)
+            ProfileCompletionContainerView(viewModel: viewModel)
         case .profile(let userId): Text("** \(userId)")
         case .settings:
             let viewModel = Resolver.shared.resolve(SettingsViewModel.self)

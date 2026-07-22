@@ -23,7 +23,7 @@ enum AuthDTOMapper {
             photo: dto.user.photo,
             nativeLanguage: dto.user.nativeLanguage,
             isVerified: dto.user.isVerified,
-            targetLanguages: dto.user.targetLanguages
+            targetLanguages: dto.user.targetLanguages.map { $0.name }
         )
         return (session, user)
     }
@@ -75,5 +75,27 @@ extension AuthDTOMapper {
             tokenType: dto.tokenType,
             expiresIn: dto.expiresIn
         )
+    }
+}
+
+
+
+extension AuthDTOMapper {
+    static func mapOAuthLogin(_ dto: OAuthResponseDataDTO) -> (session: AuthSessionEntity, user: UserEntity, profileComplete: Bool) {
+        let session = AuthSessionEntity(
+            accessToken: dto.accessToken,
+            refreshToken: dto.refreshToken,
+            tokenType: dto.tokenType,
+            expiresIn: dto.expiresIn
+        )
+        let user = UserEntity(
+            id: dto.user.id,
+            username: dto.user.username,
+            photo: dto.user.photo,
+            nativeLanguage: dto.user.nativeLanguage,
+            isVerified: dto.user.isVerified,
+            targetLanguages: dto.user.targetLanguages.map { $0.name }
+        )
+        return (session, user, dto.profileComplete)
     }
 }

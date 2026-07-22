@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseCore
+import GoogleSignIn
 
 @main
 struct MyApp: App {
@@ -17,7 +18,10 @@ struct MyApp: App {
 
     var body: some Scene {
         WindowGroup {
-           RootView()
+            RootView()
+                .onOpenURL { url in
+                    GIDSignIn.sharedInstance.handle(url)
+                }
         }
     }
 }

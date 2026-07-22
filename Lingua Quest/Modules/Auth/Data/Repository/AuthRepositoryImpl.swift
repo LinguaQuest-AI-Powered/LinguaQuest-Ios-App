@@ -80,7 +80,11 @@ final class AuthRepositoryImpl: AuthRepositoryProtocol {
     }
     
     func loginWithFirebase(idToken: String) async -> Result<(session: AuthSessionEntity, user: UserEntity, profileComplete: Bool), AuthError> {
-        .failure(.unknown("Firebase login is not implemented yet."))
+        let result = await remoteDataSource.loginWithFirebase(idToken: idToken)
+        if case let .success((session, _, _)) = result {
+            tokenStorage.saveSession(accessToken: session.accessToken, refreshToken: session.refreshToken)
+        }
+        return result
     }
     
     
