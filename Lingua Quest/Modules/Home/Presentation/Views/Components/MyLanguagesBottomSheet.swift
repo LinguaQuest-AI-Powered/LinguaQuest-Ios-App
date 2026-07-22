@@ -12,9 +12,8 @@ struct UserLearningLanguage: Identifiable, Equatable {
 }
 
 struct MyLanguagesBottomSheet: View {
+    @Bindable var languageViewModel: LanguageViewModel
     @Binding var isPresented: Bool
-    let languages: [UserLearningLanguage]
-    @Binding var selectedLanguage: UserLearningLanguage?
     var onAddNewLanguage: () -> Void
     
     var body: some View {
@@ -40,13 +39,15 @@ struct MyLanguagesBottomSheet: View {
             // Languages List
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 16) {
-                    ForEach(languages) { item in
+                    ForEach(languageViewModel.myLanguages) { item in
                         LanguageItemRow(
                             item: item,
-                            isSelected: selectedLanguage?.id == item.id,
+                            isSelected: languageViewModel.selectedLanguageId == item.id,
                             action: {
-                                selectedLanguage = item
-                                isPresented = false
+                                Task {
+                                    await languageViewModel.switchActiveLanguage(to: item.id)
+                                    isPresented = false
+                                }
                             }
                         )
                     }
@@ -72,7 +73,7 @@ struct MyLanguagesBottomSheet: View {
 }
 
 struct LanguageItemRow: View {
-    let item: UserLearningLanguage
+    let item: MyTargetLanguage
     let isSelected: Bool
     let action: () -> Void
     
@@ -88,13 +89,13 @@ struct LanguageItemRow: View {
                             Circle().stroke(Color.appBorderLight, lineWidth: 1)
                         )
                     
-                    Text(item.language.flag)
+                    Text(item.flagEmoji)
                         .font(.system(size: 28))
                 }
                 
                 // Text
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(item.language.name)
+                    Text(item.name)
                         .font(AppTextStyle.bodyBold.font)
                         .foregroundColor(Color.appTextHeading)
                     
@@ -126,22 +127,21 @@ struct LanguageItemRow: View {
     }
 }
 
-// Preview
-#Preview {
-    ZStack(alignment: .bottom) {
-        Color.black.opacity(0.5).ignoresSafeArea()
-        
-        CustomBottomSheet(isPresented: .constant(true), initialDetent: .medium) {
-            MyLanguagesBottomSheet(
-                isPresented: .constant(true),
-                languages: [
-                    UserLearningLanguage(language: Language(code: "es", name: "Spanish", flag: "🇪🇸"), level: 12),
-                    UserLearningLanguage(language: Language(code: "fr", name: "French", flag: "🇫🇷"), level: 4),
-                    UserLearningLanguage(language: Language(code: "ja", name: "Japanese", flag: "🇯🇵"), level: 3)
-                ],
-                selectedLanguage: .constant(UserLearningLanguage(language: Language(code: "es", name: "Spanish", flag: "🇪🇸"), level: 12)),
-                onAddNewLanguage: {}
-            )
-        }
-    }
-}
+// #Preview {
+//     ZStack(alignment: .bottom) {
+//         Color.black.opacity(0.5).ignoresSafeArea()
+//         
+//         CustomBottomSheet(isPresented: .constant(true), initialDetent: .medium) {
+//             MyLanguagesBottomSheet(
+//                 languageViewModel: LanguageViewModel(
+//                     getMyLanguagesUseCase: GetMyLanguagesUseCase(repository: HomeRepositoryImpl(remoteDataSource: HomeRemoteDataSource(apiClient: APIClient()))),
+//                     getAvailableLanguagesUseCase: GetAvailableLanguagesUseCase(repository: HomeRepositoryImpl(remoteDataSource: HomeRemoteDataSource(apiClient: APIClient()))),
+//                     switchActiveLanguageUseCase: SwitchActiveLanguageUseCase(repository: HomeRepositoryImpl(remoteDataSource: HomeRemoteDataSource(apiClient: APIClient()))),
+//                     addLanguagesUseCase: AddLanguagesUseCase(repository: HomeRepositoryImpl(remoteDataSource: HomeRemoteDataSource(apiClient: APIClient())))
+//                 ),
+//                 isPresented: .constant(true),
+//                 onAddNewLanguage: {}
+//             )
+//         }
+//     }
+// }

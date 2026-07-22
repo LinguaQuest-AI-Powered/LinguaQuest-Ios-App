@@ -11,16 +11,18 @@ struct MainTabView: View {
     }
     
     private let profileViewModel: ProfileViewModel
+    private let homeViewModel: HomeViewModel
     
     init() {
         self.profileViewModel = Resolver.shared.resolve(ProfileViewModel.self)
+        self.homeViewModel = Resolver.shared.resolve(HomeViewModel.self)
         UITabBar.appearance().isHidden = true
     }
     
     var body: some View {
         ZStack(alignment: .bottom) {
             TabView(selection: selectedTab) {
-                HomeView()
+                HomeView(viewModel: homeViewModel)
                     .tag(MainTabItem.home)
                 
                 GalleryView()
