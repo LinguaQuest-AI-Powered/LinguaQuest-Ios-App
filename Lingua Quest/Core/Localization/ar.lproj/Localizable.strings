@@ -204,14 +204,18 @@
 "settings.daily_goal" = "الهدف اليومي";
 "settings.learning_streak" = "سلسلة التعلم";
 "settings.app_experience" = "تجربة التطبيق";
+"settings.app_language" = "لغة التطبيق";
 "settings.notifications" = "الإشعارات";
 "settings.dark_mode" = "الوضع المظلم";
 "settings.sound_effects" = "المؤثرات الصوتية";
 "settings.privacy_security" = "الخصوصية والأمان";
 "settings.help_support" = "المساعدة والدعم";
 "settings.about_app" = "عن التطبيق";
+"settings.terms_of_service" = "شروط الخدمة";
 "settings.save_changes" = "حفظ التغييرات";
 "settings.log_out" = "تسجيل الخروج";
+"settings.log_out_confirmation" = "هل أنت متأكد أنك تريد تسجيل الخروج؟";
+"settings.choose_language" = "اختر لغتك المفضلة";
 
 "word_insight.title" = "إضاءة الذكاء الاصطناعي";
 "word_insight.sentence_label" = "مثال في جملة";

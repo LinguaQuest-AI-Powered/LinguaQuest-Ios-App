@@ -1,7 +1,14 @@
 import SwiftUI
 
 struct MainTabView: View {
-    @State private var selectedTab: MainTabItem = .home
+    @SceneStorage("MainTabView.selectedTab") private var selectedTabRawValue: Int = MainTabItem.home.rawValue
+    
+    private var selectedTab: Binding<MainTabItem> {
+        Binding(
+            get: { MainTabItem(rawValue: selectedTabRawValue) ?? .home },
+            set: { selectedTabRawValue = $0.rawValue }
+        )
+    }
     
     private let profileViewModel: ProfileViewModel
     private let homeViewModel: HomeViewModel
@@ -14,7 +21,7 @@ struct MainTabView: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            TabView(selection: $selectedTab) {
+            TabView(selection: selectedTab) {
                 HomeView(viewModel: homeViewModel)
                     .tag(MainTabItem.home)
                 
@@ -26,7 +33,7 @@ struct MainTabView: View {
             }
             .toolbar(.hidden, for: .tabBar)
             
-            LinguaQuestTabBar(selectedTab: $selectedTab)
+            LinguaQuestTabBar(selectedTab: selectedTab)
                 .padding(.horizontal, 22)
                 .padding(.bottom, 8)
         }
