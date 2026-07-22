@@ -29,10 +29,12 @@ extension Endpoint {
     var baseURL: URL { AppConfig.baseURL }
     var headers: [String: String]? {
         var dict = ["Content-Type": "application/json"]
-        // The mock server requires a Bearer token.
-        // We use the actual token if available, otherwise a dummy token to satisfy the mock server's OpenAPI validation.
-        let token = SecureTokenStorage().getAccessToken() ?? "dummy_mock_token"
-        dict["Authorization"] = "Bearer \(token)"
+        if requiresAuth {
+            // The mock server requires a Bearer token.
+            // We use the actual token if available, otherwise a dummy token to satisfy the mock server's OpenAPI validation.
+            let token = SecureTokenStorage().getAccessToken() ?? "dummy_mock_token"
+            dict["Authorization"] = "Bearer \(token)"
+        }
         return dict
     }
     var queryItems: [URLQueryItem]? { nil }

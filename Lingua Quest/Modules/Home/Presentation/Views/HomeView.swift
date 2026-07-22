@@ -96,7 +96,7 @@ struct HomeView: View {
                             imageAsset: .appleImage,
                             buttonText: L10n.Home.continueButton,
                             action: {}
-                        )
+                        ).padding(.horizontal, 20)
                         
                         VoicePracticeCardView(action: { router.push(.voiceGame) })
                             .padding(.horizontal, 20)

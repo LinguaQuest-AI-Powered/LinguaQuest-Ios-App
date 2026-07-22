@@ -3,8 +3,6 @@
 <plist version="1.0">
 <dict>
 	<key>API_BASE_URL</key>
-	<string>https://linguaquest-api-docs.onrender.com</string>
-	<key>NSCameraUsageDescription</key>
-	<string>We need access to your camera to scan items for the game quests.</string>
+	<string>$(API_BASE_URL)</string>
 </dict>
 </plist>
