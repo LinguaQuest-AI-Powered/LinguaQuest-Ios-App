@@ -10,6 +10,8 @@ import SwiftUI
 struct SettingsView: View {
     // MARK: - Properties
     @State var viewModel: SettingsViewModel
+    @State private var showLanguagePicker = false
+    @State private var showLogoutConfirm = false
     
     // MARK: - Body
     var body: some View {
@@ -19,19 +21,13 @@ struct SettingsView: View {
                 viewModel.onBackTapped()
             },
             onEditProfileTapped: {
-                // Navigate to Edit Profile
+                viewModel.onEditProfileTapped()
             },
             onLearningLanguageTapped: {
                 // Navigate to Language Picker
             },
-            onDailyGoalTapped: {
-                // Navigate to Daily Goal Picker
-            },
-            onLearningStreakTapped: {
-                // Navigate to Streak Details
-            },
-            onPrivacyTapped: {
-                // Navigate to Privacy & Security
+            onAppLanguageTapped: {
+                showLanguagePicker = true
             },
             onHelpTapped: {
                 // Navigate to Help & Support
@@ -39,18 +35,38 @@ struct SettingsView: View {
             onAboutTapped: {
                 // Navigate to About App
             },
-            onSaveChangesTapped: {
-                viewModel.saveChanges()
-            },
             onLogOutTapped: {
-                viewModel.logOut()
+                showLogoutConfirm = true
             }
         )
         .navigationBarHidden(true)
+        .appDialog(isPresented: $showLanguagePicker) {
+            LanguageSelectDialog(
+                onSelectEnglish: {
+                    viewModel.appLanguageCode = "en"
+                    showLanguagePicker = false
+                },
+                onSelectArabic: {
+                    viewModel.appLanguageCode = "ar"
+                    showLanguagePicker = false
+                },
+                onCancel: {
+                    showLanguagePicker = false
+                }
+            )
+        }
+        .appDialog(isPresented: $showLogoutConfirm) {
+            LogoutConfirmDialog(
+                onConfirm: {
+                    showLogoutConfirm = false
+                    viewModel.logOut()
+                },
+                onCancel: {
+                    showLogoutConfirm = false
+                }
+            )
+        }
     }
 }
 
 // MARK: - Preview
-#Preview {
-    SettingsView(viewModel: SettingsViewModel(router: Router()))
-}

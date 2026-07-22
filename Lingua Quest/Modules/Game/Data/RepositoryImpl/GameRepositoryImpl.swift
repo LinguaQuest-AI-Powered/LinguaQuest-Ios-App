@@ -14,8 +14,8 @@ struct GameRepositoryImpl: GameRepositoryProtocol {
         self.remoteDataSource = remoteDataSource
     }
     
-    func getLevels(worldId: Int) async throws -> [GameLevel] {
-        let response = try await remoteDataSource.getLevels(worldId: worldId)
+    func getLevels(worldId: Int, languageId: Int) async throws -> [GameLevel] {
+        let response = try await remoteDataSource.getLevels(worldId: worldId, languageId: languageId)
         return response.data.levels.map { dto in
             let status: LevelStatus
             switch dto.status {

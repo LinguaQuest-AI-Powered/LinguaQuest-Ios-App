@@ -260,11 +260,9 @@ struct CustomBottomSheetModifier<SheetContent: View>: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .overlay {
-                if isPresented {
-                    CustomBottomSheet(isPresented: $isPresented, initialDetent: initialDetent) {
-                        sheetContent
-                    }
+            .windowOverlay(isPresented: $isPresented) {
+                CustomBottomSheet(isPresented: $isPresented, initialDetent: initialDetent) {
+                    sheetContent
                 }
             }
     }

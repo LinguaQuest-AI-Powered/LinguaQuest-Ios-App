@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseCore
+import SwiftData
 import GoogleSignIn
 
 @main
@@ -23,5 +24,6 @@ struct MyApp: App {
                     GIDSignIn.sharedInstance.handle(url)
                 }
         }
+        .modelContainer(for: CapturedItemEntity.self)
     }
 }

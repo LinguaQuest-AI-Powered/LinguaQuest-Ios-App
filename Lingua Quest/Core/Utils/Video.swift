@@ -11,5 +11,6 @@ enum Video {
     enum Asset: String {
         case loading = "loading"
         case welcome = "welcome"
+        case speakingLabEvaluating = "Evaluating"
     }
 }

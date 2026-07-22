@@ -8,6 +8,10 @@
 import Foundation
 
 struct DailyRewardEntity {
+    let claimedToday: Bool
     let currentDay: Int
-    let rewardAmount: Int
+    let cycleLength: Int
+    let rewardCoins: Int
+    let rewardXp: Int?
+    let streakDays: Int
 }

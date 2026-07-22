@@ -13,11 +13,18 @@ struct ContinueLessonCardView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var floatArtwork = false
     
+    let title: String
+    let lessonName: String
+    let lessonDescription: String
+    let imageAsset: Image.Asset
+    let buttonText: String
+    let action: () -> Void
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text(L10n.Home.continueLessonTitle)
+                    Text(title)
                         .font(AppTextStyle.micro.font)
                         .foregroundColor(Color.appTextSecondary)
                         .padding(.horizontal, 10)
@@ -26,11 +33,11 @@ struct ContinueLessonCardView: View {
                             Capsule().fill(Color.appSurfaceCardWarm.opacity(colorScheme == .dark ? 0.35 : 1.0))
                         )
                     
-                    Text(L10n.Home.lessonApple)
+                    Text(lessonName)
                         .font(AppTextStyle.displayMedium.font)
                         .foregroundColor(Color.appTextHeading)
                     
-                    Text(L10n.Home.lessonAppleDesc)
+                    Text(lessonDescription)
                         .font(AppTextStyle.bodyMedium.font)
                         .foregroundColor(Color.appTextPrimary)
                 }
@@ -42,7 +49,7 @@ struct ContinueLessonCardView: View {
                         .fill(Color.appSurfaceCardWarm.opacity(colorScheme == .dark ? 0.25 : 1.0))
                         .frame(width: 96, height: 96)
                     
-                    Image(asset: .appleImage)
+                    Image(asset: imageAsset)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 60, height: 60)
@@ -50,10 +57,10 @@ struct ContinueLessonCardView: View {
                 }
             }
             
-            Button(action: {}) {
+            Button(action: action) {
                 HStack(spacing: 8) {
                     Image(systemIcon: .play)
-                    Text(L10n.Home.continueButton)
+                    Text(buttonText)
                         .font(AppTextStyle.bodyLargeMedium.font)
                 }
                 .foregroundColor(.white)
@@ -91,5 +98,12 @@ struct ContinueLessonCardView: View {
 
 
 #Preview {
-    ContinueLessonCardView()
+    ContinueLessonCardView(
+        title: L10n.Home.continueLessonTitle,
+        lessonName: L10n.Home.lessonApple,
+        lessonDescription: L10n.Home.lessonAppleDesc,
+        imageAsset: .appleImage,
+        buttonText: L10n.Home.continueButton,
+        action: {}
+    )
 }

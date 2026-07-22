@@ -11,6 +11,7 @@ struct GameLevelsView: View {
     @State var viewModel: GameLevelsViewModel
     var worldName: String
     var worldId: Int
+    var languageId: Int
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) private var dismiss
     @Environment(Router.self) var router
@@ -170,7 +171,7 @@ struct GameLevelsView: View {
             }
             .ignoresSafeArea()
             .task {
-                await viewModel.fetchLevels(worldId: worldId)
+                await viewModel.fetchLevels(worldId: worldId, languageId: languageId)
             }
             
             // LAYER 2: Top Navigation Bar

@@ -1,22 +1,31 @@
 import SwiftUI
 
 struct MainTabView: View {
-    @State private var selectedTab: MainTabItem = .home
+    @SceneStorage("MainTabView.selectedTab") private var selectedTabRawValue: Int = MainTabItem.home.rawValue
+    
+    private var selectedTab: Binding<MainTabItem> {
+        Binding(
+            get: { MainTabItem(rawValue: selectedTabRawValue) ?? .home },
+            set: { selectedTabRawValue = $0.rawValue }
+        )
+    }
     
     private let profileViewModel: ProfileViewModel
+    private let homeViewModel: HomeViewModel
     
     init() {
         self.profileViewModel = Resolver.shared.resolve(ProfileViewModel.self)
+        self.homeViewModel = Resolver.shared.resolve(HomeViewModel.self)
         UITabBar.appearance().isHidden = true
     }
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            TabView(selection: $selectedTab) {
-                HomeView()
+            TabView(selection: selectedTab) {
+                HomeView(viewModel: homeViewModel)
                     .tag(MainTabItem.home)
                 
-                GalleryView()
+                GalleryView(viewModel: Resolver.shared.resolve(GalleryViewModel.self))
                     .tag(MainTabItem.gallery)
                 
                 ProfileView(viewModel: profileViewModel)
@@ -24,7 +33,7 @@ struct MainTabView: View {
             }
             .toolbar(.hidden, for: .tabBar)
             
-            LinguaQuestTabBar(selectedTab: $selectedTab)
+            LinguaQuestTabBar(selectedTab: selectedTab)
                 .padding(.horizontal, 22)
                 .padding(.bottom, 8)
         }

@@ -91,7 +91,7 @@ struct WorldCardView: View {
             .foregroundColor(Color.appTextHeading)
             .padding(.horizontal, 12)
             .padding(.vertical, 4)
-            .background(Capsule().fill(Color.white.opacity(0.85)))
+            .background(Capsule().fill(Color.white.opacity(0.50)))
     }
     
     private var progressSection: some View {

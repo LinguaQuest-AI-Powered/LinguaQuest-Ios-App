@@ -203,6 +203,12 @@ enum L10n {
         static func level(_ count: Int) -> String { String(format: localized("home.level"), count) }
         static func daysStreak(_ days: Int) -> String { String(format: localized("home.days_streak"), days) }
         static var progress: String { localized("home.progress") }
+        static var start: String { localized("home.start") }
+        static var voicePracticeTitle: String { localized("home.voice_practice_title") }
+        static var voicePracticeSubtitle: String { localized("home.voice_practice_subtitle") }
+        static func voicePracticeProgress(completed: Int, total: Int) -> String {
+            String(format: localized("home.voice_practice_progress"), completed, total)
+        }
         static var continueLessonTitle: String { localized("home.continue_lesson") }
         static var continueButton: String { localized("home.continue") }
         static var lessonApple: String { localized("home.lesson.apple") }
@@ -277,6 +283,7 @@ enum L10n {
         static var dailyGoal: String { localized("settings.daily_goal") }
         static var learningStreak: String { localized("settings.learning_streak") }
         static var appExperience: String { localized("settings.app_experience") }
+        static var appLanguage: String { localized("settings.app_language") }
         static var notifications: String { localized("settings.notifications") }
         static var darkMode: String { localized("settings.dark_mode") }
         static var soundEffects: String { localized("settings.sound_effects") }
@@ -285,6 +292,8 @@ enum L10n {
         static var aboutApp: String { localized("settings.about_app") }
         static var saveChanges: String { localized("settings.save_changes") }
         static var logOut: String { localized("settings.log_out") }
+        static var logOutConfirmation: String { localized("settings.log_out_confirmation") }
+        static var chooseLanguage: String { localized("settings.choose_language") }
     }
     
     enum WordInsight {
@@ -351,7 +360,37 @@ enum L10n {
         static var addSelected: String { localized("add_language.add_selected") }
     }
 
+    enum SpeakingLab {
+        static func lessonTitle(_ number: Int) -> String { String(format: localized("speaking_lab.lesson_title"), number) }
+        static var voicePractice: String { localized("speaking_lab.voice_practice") }
+        static var youCanDoIt: String { localized("speaking_lab.you_can_do_it") }
+        static var listening: String { localized("speaking_lab.listening") }
+        static var pronounceThis: String { localized("speaking_lab.pronounce_this") }
+        static var listen: String { localized("speaking_lab.listen") }
+        static var tapAndHoldToRecord: String { localized("speaking_lab.tap_and_hold_to_record") }
+        static var recording: String { localized("speaking_lab.recording") }
+        static var mockTargetSentence: String { localized("speaking_lab.mock_target_sentence") }
+        static var reviewRecording: String { localized("speaking_lab.review_recording") }
+        static var reviewRecordingSubtitle: String { localized("speaking_lab.review_recording_subtitle") }
+        static var discard: String { localized("speaking_lab.discard") }
+        static var process: String { localized("speaking_lab.process") }
+        static var rating: String { localized("speaking_lab.rating") }
+        static var continueTitle: String { localized("speaking_lab.continue_title") }
+        static var returnHome: String { localized("speaking_lab.return_home") }
+        static var retry: String { localized("speaking_lab.retry") }
+        static var feedbackGreatJob: String { localized("speaking_lab.feedback_great_job") }
+        static var feedbackNeedsWork: String { localized("speaking_lab.feedback_needs_work") }
+        static var score: String { localized("speaking_lab.score") }
+        static var evaluatingTitle: String { localized("speaking_lab.evaluating_title") }
+        static var evaluatingSubtitle: String { localized("speaking_lab.evaluating_subtitle") }
+    }
+
     private static func localized(_ key: String) -> String {
+        let appLanguage = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en"
+        if let path = Bundle.main.path(forResource: appLanguage, ofType: "lproj"),
+           let bundle = Bundle(path: path) {
+            return NSLocalizedString(key, tableName: nil, bundle: bundle, value: "", comment: "")
+        }
         return String(localized: String.LocalizationValue(key))
     }
 }

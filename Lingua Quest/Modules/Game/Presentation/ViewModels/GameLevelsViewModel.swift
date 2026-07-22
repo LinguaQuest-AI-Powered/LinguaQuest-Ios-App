@@ -20,10 +20,10 @@ class GameLevelsViewModel {
         self.getGameLevelsUseCase = getGameLevelsUseCase
     }
     
-    func fetchLevels(worldId: Int) async {
+    func fetchLevels(worldId: Int, languageId: Int) async {
         isLoading = true
         do {
-            levels = try await getGameLevelsUseCase.execute(worldId: worldId)
+            levels = try await getGameLevelsUseCase.execute(worldId: worldId, languageId: languageId)
             
             // Allow UI to render the Shimmer state on the correct final road length for a seamless transition
             try? await Task.sleep(nanoseconds: 600_000_000)

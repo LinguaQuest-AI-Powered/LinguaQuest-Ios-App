@@ -10,13 +10,9 @@ import SwiftUI
 struct AccountJourneySection: View {
     // MARK: - Properties
     let learningLanguage: String
-    let dailyGoal: String
-    let learningStreak: String
     
     var onEditProfileTapped: () -> Void
     var onLearningLanguageTapped: () -> Void
-    var onDailyGoalTapped: () -> Void
-    var onLearningStreakTapped: () -> Void
     
     // MARK: - Body
     var body: some View {
@@ -38,31 +34,11 @@ struct AccountJourneySection: View {
                     icon: .globe,
                     iconBgColor: .appAccentOrange,
                     title: L10n.Settings.learningLanguage,
-                    showDivider: true
+                    showDivider: false
                 ) {
                     SettingsRowValue(value: learningLanguage)
                 }
                 .onTapGesture(perform: onLearningLanguageTapped)
-                
-                LinguaSettingsRow(
-                    icon: .target,
-                    iconBgColor: .appAccentOrange,
-                    title: L10n.Settings.dailyGoal,
-                    showDivider: true
-                ) {
-                    SettingsRowValue(value: dailyGoal)
-                }
-                .onTapGesture(perform: onDailyGoalTapped)
-                
-                LinguaSettingsRow(
-                    icon: .flameFill,
-                    iconBgColor: .appAccentOrange,
-                    title: L10n.Settings.learningStreak,
-                    showDivider: false
-                ) {
-                    SettingsRowValue(value: learningStreak)
-                }
-                .onTapGesture(perform: onLearningStreakTapped)
             }
             .background(Color.appSurfaceCard)
             .cornerRadius(20)
@@ -75,12 +51,8 @@ struct AccountJourneySection: View {
 #Preview {
     AccountJourneySection(
         learningLanguage: "Spanish",
-        dailyGoal: "15 mins",
-        learningStreak: "12 Days",
         onEditProfileTapped: {},
-        onLearningLanguageTapped: {},
-        onDailyGoalTapped: {},
-        onLearningStreakTapped: {}
+        onLearningLanguageTapped: {}
     )
     .padding()
     .background(Color.appBackgroundWarm)

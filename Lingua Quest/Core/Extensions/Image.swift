@@ -68,11 +68,17 @@ extension Image {
         case infoCircleFill = "info.circle.fill"
         case speakerSlashFill = "speaker.slash.fill"
         case forwardFill = "forward.fill"
+        case forwardEndFill = "forward.end.fill"
+        case micFill = "mic.fill"
+        case pauseFill = "pause.fill"
+        case trash = "trash"
+        case checkmarkCircle = "checkmark.circle"
         
         // Added for Edit Profile
         case person = "person"
         case squareAndPencil = "square.and.pencil"
         case infoCircle = "info.circle"
+        case textformatAlt = "textformat.alt"
     }
     
     enum Asset: String {
@@ -121,6 +127,8 @@ extension Image {
         case city = "city_world"
         case appleImage = "appleImage"
         case appBarBird = "appBarBird"
+        case chooseLanguageBird = "choose_language_bird"
+        case logoutBird = "logout_bird"
         case world = "world_icon"
         case birdIdea = "BirdIdea"
         case user1 = "user1"
@@ -131,6 +139,7 @@ extension Image {
         case notEnoughCoins = "NotEnoughCoins"
         case skip = "Skip"
         case perfect = "perfect"
+        case micBird = "Mic"
     }
     
     init(icon: Icon) {

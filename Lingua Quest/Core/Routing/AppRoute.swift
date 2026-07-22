@@ -19,10 +19,12 @@ enum AppRoute: Hashable {
     case verifyEmail(email: String)
     case verifyPasswordResetOtp(email: String)
     case resetPassword(resetToken: String)
-    case gameLevels(worldId: Int, worldName: String)
+    case gameLevels(worldId: Int, worldName: String, languageId: Int)
     case cameraQuestTask
+    case voiceGame
     case cameraCapture(targetWord: String)
     case cameraResult(targetWord: String)
+    case voiceGameResult
     case leaderboard(languageId: Int)
     case achievements
     case wordInsight(word: WordCardEntity)

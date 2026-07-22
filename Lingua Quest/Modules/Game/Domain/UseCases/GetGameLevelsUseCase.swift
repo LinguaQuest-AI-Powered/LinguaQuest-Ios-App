@@ -14,7 +14,7 @@ struct GetGameLevelsUseCase {
         self.repository = repository
     }
     
-    func execute(worldId: Int) async throws -> [GameLevel] {
-        return try await repository.getLevels(worldId: worldId)
+    func execute(worldId: Int, languageId: Int) async throws -> [GameLevel] {
+        return try await repository.getLevels(worldId: worldId, languageId: languageId)
     }
 }

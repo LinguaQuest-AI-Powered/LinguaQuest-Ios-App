@@ -15,6 +15,8 @@ protocol UserPreferencesProtocol {
     var spokenLanguageCode: String? { get set }
     var learningLanguageCode: String? { get set }
     var userLevel: String? { get set }
+    var isDarkMode: Bool { get set }
+    var appLanguage: String { get set }
 }
 
 final class UserPreferences: UserPreferencesProtocol {
@@ -48,5 +50,15 @@ final class UserPreferences: UserPreferencesProtocol {
     var needsProfileCompletion: Bool {
         get { defaults.bool(forKey: AppConstants.UserDefaultsKeys.needsProfileCompletion) }
         set { defaults.set(newValue, forKey: AppConstants.UserDefaultsKeys.needsProfileCompletion) }
+    }
+    
+    var isDarkMode: Bool {
+        get { defaults.bool(forKey: AppConstants.UserDefaultsKeys.isDarkMode) }
+        set { defaults.set(newValue, forKey: AppConstants.UserDefaultsKeys.isDarkMode) }
+    }
+    
+    var appLanguage: String {
+        get { defaults.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en" }
+        set { defaults.set(newValue, forKey: AppConstants.UserDefaultsKeys.appLanguage) }
     }
 }

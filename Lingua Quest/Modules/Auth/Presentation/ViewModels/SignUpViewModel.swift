@@ -165,6 +165,8 @@ extension SignUpViewModel {
             var spokenLanguageCode: String? = "ar"
             var learningLanguageCode: String? = "en"
             var userLevel: String? = "beginner"
+            var isDarkMode: Bool = false
+            var appLanguage: String = "en"
         }
         
         class MockRegisterUseCase: RegisterUseCaseProtocol {
