@@ -7,15 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		108BFA8F4F0897934B241105 /* CapturedItemEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B8E16E28F30EB922FC809B /* CapturedItemEntity.swift */; };
 		33A0F053300C347200611A63 /* FirebaseAI in Frameworks */ = {isa = PBXBuildFile; productRef = 33A0F052300C347200611A63 /* FirebaseAI */; };
 		3F65F092E9CC7B40F998F78C /* SwiftDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CC9E8558BD408E124A1904 /* SwiftDataManager.swift */; };
 		3FA9F46862CA6368C1A8BB81 /* GalleryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E756B6B0EC24234F84F9F3 /* GalleryViewModel.swift */; };
 		4E87E6474BBE05BEA0DA6AFF /* GalleryAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274751E695A446C8579FD14F /* GalleryAssembly.swift */; };
 		6D3CA5B03008808A00736812 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3CA5AF3008808A00736812 /* Swinject */; };
 		9465035612FCCC4429C23DCE /* GetCapturedItemsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374933684ACF5CC8B4F363D9 /* GetCapturedItemsUseCase.swift */; };
-		A6AFB7CE21FBEF37FD61F991 /* GalleryRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C55344454CFE1C8A6429D8 /* GalleryRepositoryProtocol.swift */; };
-		E1E5803A0F20469E6ACB08C0 /* GalleryRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A040A6F42437407FCF156C /* GalleryRepositoryImpl.swift */; };
 		F00CFA7C9A8D9AE95D3C35A6 /* SaveCapturedItemUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D24671A8C580A100F31D040 /* SaveCapturedItemUseCase.swift */; };
 /* End PBXBuildFile section */
 
@@ -50,25 +47,36 @@
 		73B8E16E28F30EB922FC809B /* CapturedItemEntity.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CapturedItemEntity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		6DE398FC30108D1800F498A7 /* Exceptions for "Lingua Quest" folder in "Lingua Quest" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Core/DI/GalleryAssembly.swift,
+				Core/Storage/SwiftDataManager.swift,
+				Modules/Gallery/Domain/UseCases/GetCapturedItemsUseCase.swift,
+				Modules/Gallery/Domain/UseCases/SaveCapturedItemUseCase.swift,
+				Modules/Gallery/Presentation/ViewModels/GalleryViewModel.swift,
+			);
+			target = 1529B3653006410300CCD74A /* Lingua Quest */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		1529B3683006410300CCD74A /* Lingua Quest */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				6DE398FC30108D1800F498A7 /* Exceptions for "Lingua Quest" folder in "Lingua Quest" target */,
 			);
 			path = "Lingua Quest";
 			sourceTree = "<group>";
 		};
 		1529B3783006410600CCD74A /* Lingua QuestTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = "Lingua QuestTests";
 			sourceTree = "<group>";
 		};
 		1529B3823006410600CCD74A /* Lingua QuestUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = "Lingua QuestUITests";
 			sourceTree = "<group>";
 		};
@@ -106,7 +114,6 @@
 			children = (
 				33A040A6F42437407FCF156C /* GalleryRepositoryImpl.swift */,
 			);
-			name = RepositoryImpl;
 			path = RepositoryImpl;
 			sourceTree = "<group>";
 		};
@@ -136,7 +143,6 @@
 			children = (
 				3C9F7BD864FB67D69CC0B08A /* Local */,
 			);
-			name = DataSources;
 			path = DataSources;
 			sourceTree = "<group>";
 		};
@@ -145,7 +151,6 @@
 			children = (
 				72C55344454CFE1C8A6429D8 /* GalleryRepositoryProtocol.swift */,
 			);
-			name = Repositories;
 			path = Repositories;
 			sourceTree = "<group>";
 		};
@@ -154,7 +159,6 @@
 			children = (
 				22E756B6B0EC24234F84F9F3 /* GalleryViewModel.swift */,
 			);
-			name = ViewModels;
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
@@ -163,7 +167,6 @@
 			children = (
 				73B8E16E28F30EB922FC809B /* CapturedItemEntity.swift */,
 			);
-			name = Local;
 			path = Local;
 			sourceTree = "<group>";
 		};
@@ -172,7 +175,6 @@
 			children = (
 				30FFAEAAA63DC5B3594B5123 /* ViewModels */,
 			);
-			name = Presentation;
 			path = Presentation;
 			sourceTree = "<group>";
 		};
@@ -182,7 +184,6 @@
 				95F257BBC50A33E06AE83044 /* Modules */,
 				776BEF3EE1C1A547C0925596 /* Core */,
 			);
-			name = "Lingua Quest";
 			path = "Lingua Quest";
 			sourceTree = "<group>";
 		};
@@ -192,7 +193,6 @@
 				90C8EE3866DC2D704CE495BD /* Storage */,
 				E1AFBB728F59997168F36EBC /* DI */,
 			);
-			name = Core;
 			path = Core;
 			sourceTree = "<group>";
 		};
@@ -202,7 +202,6 @@
 				374933684ACF5CC8B4F363D9 /* GetCapturedItemsUseCase.swift */,
 				6D24671A8C580A100F31D040 /* SaveCapturedItemUseCase.swift */,
 			);
-			name = UseCases;
 			path = UseCases;
 			sourceTree = "<group>";
 		};
@@ -212,7 +211,6 @@
 				2549924D3844E97C7CB278C0 /* DataSources */,
 				005216CDB39C3B3C16E9BF13 /* RepositoryImpl */,
 			);
-			name = Data;
 			path = Data;
 			sourceTree = "<group>";
 		};
@@ -221,7 +219,6 @@
 			children = (
 				14CC9E8558BD408E124A1904 /* SwiftDataManager.swift */,
 			);
-			name = Storage;
 			path = Storage;
 			sourceTree = "<group>";
 		};
@@ -230,7 +227,6 @@
 			children = (
 				E61D847238286601B1CF6F74 /* Gallery */,
 			);
-			name = Modules;
 			path = Modules;
 			sourceTree = "<group>";
 		};
@@ -240,7 +236,6 @@
 				2D544AED9D960102B0E25112 /* Repositories */,
 				8861011EEF016E063A7856F9 /* UseCases */,
 			);
-			name = Domain;
 			path = Domain;
 			sourceTree = "<group>";
 		};
@@ -249,7 +244,6 @@
 			children = (
 				274751E695A446C8579FD14F /* GalleryAssembly.swift */,
 			);
-			name = DI;
 			path = DI;
 			sourceTree = "<group>";
 		};
@@ -260,7 +254,6 @@
 				D0301632B4BF1C4B1FCF9EBC /* Domain */,
 				4B830D93CC2FB534756C4F50 /* Presentation */,
 			);
-			name = Gallery;
 			path = Gallery;
 			sourceTree = "<group>";
 		};
@@ -411,9 +404,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				108BFA8F4F0897934B241105 /* CapturedItemEntity.swift in Sources */,
-				E1E5803A0F20469E6ACB08C0 /* GalleryRepositoryImpl.swift in Sources */,
-				A6AFB7CE21FBEF37FD61F991 /* GalleryRepositoryProtocol.swift in Sources */,
 				9465035612FCCC4429C23DCE /* GetCapturedItemsUseCase.swift in Sources */,
 				F00CFA7C9A8D9AE95D3C35A6 /* SaveCapturedItemUseCase.swift in Sources */,
 				3FA9F46862CA6368C1A8BB81 /* GalleryViewModel.swift in Sources */,
