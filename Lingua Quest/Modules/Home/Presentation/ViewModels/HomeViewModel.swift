@@ -76,7 +76,7 @@ final class HomeViewModel {
         router.push(.allWorlds)
     }
     
-    func navigateToGameLevels(worldId: Int, worldName: String, lagnuageId: Int) {
-        router.push(.gameLevels(worldId: worldId, worldName: worldName, languageId: lagnuageId))
+    func navigateToGameLevels(worldId: Int, worldName: String, languageId: Int) {
+        router.push(.gameLevels(worldId: worldId, worldName: worldName, languageId: languageId))
     }
 }
