@@ -9,9 +9,11 @@ import Foundation
 
 final class ProfileRepositoryImpl: ProfileRepositoryProtocol {
     private let remoteDataSource: ProfileRemoteDataSourceProtocol
+    private let tokenStorage: SecureTokenStorageProtocol
 
-    init(remoteDataSource: ProfileRemoteDataSourceProtocol) {
+    init(remoteDataSource: ProfileRemoteDataSourceProtocol, tokenStorage: SecureTokenStorageProtocol) {
         self.remoteDataSource = remoteDataSource
+        self.tokenStorage = tokenStorage
     }
 
     func getProfile() async throws -> UserProfileEntity {
@@ -61,5 +63,27 @@ final class ProfileRepositoryImpl: ProfileRepositoryProtocol {
             achievements: achievements,
             topExplorers: explorers
         )
+    }
+    
+    func completeProfile(nativeLanguageId: Int, targetLanguageId: Int, username: String?) async throws -> (session: AuthSessionEntity, user: UserEntity, profileComplete: Bool) {
+        do {
+            let response = try await remoteDataSource.completeProfile(
+                nativeLanguageId: nativeLanguageId,
+                targetLanguageId: targetLanguageId,
+                username: username
+            )
+            
+            let result = AuthDTOMapper.mapOAuthLogin(response.data)
+            
+            // Save the new tokens!
+            tokenStorage.saveSession(
+                accessToken: result.session.accessToken,
+                refreshToken: result.session.refreshToken
+            )
+            
+            return result
+        } catch {
+            throw AuthDTOMapper.mapError(error)
+        }
     }
 }

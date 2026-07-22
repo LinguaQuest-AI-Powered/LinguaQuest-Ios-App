@@ -9,4 +9,5 @@ import Foundation
 
 protocol ProfileRepositoryProtocol {
     func getProfile() async throws -> UserProfileEntity
+    func completeProfile(nativeLanguageId: Int, targetLanguageId: Int, username: String?) async throws -> (session: AuthSessionEntity, user: UserEntity, profileComplete: Bool)
 }

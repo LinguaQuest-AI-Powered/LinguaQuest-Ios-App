@@ -65,7 +65,7 @@ final class ResetPasswordViewModel {
 
             switch result {
             case .success:
-                router.pushAndRemoveAll(.login)
+                router.popToRoot()
             case .failure(let error):
                 errorMessage = error.errorDescription
             }
@@ -73,7 +73,7 @@ final class ResetPasswordViewModel {
     }
 
     func navigateToLogin() {
-        router.pushAndRemoveAll(.login)
+        router.popToRoot()
     }
 }
 
