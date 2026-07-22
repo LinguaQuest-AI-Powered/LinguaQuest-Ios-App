@@ -59,17 +59,3 @@ struct SettingsContentView: View {
         }
     }
 }
-
-// MARK: - Preview
-#Preview {
-    SettingsContentView(
-        viewModel: SettingsViewModel(router: Router()),
-        onBackTapped: {},
-        onEditProfileTapped: {},
-        onLearningLanguageTapped: {},
-        onAppLanguageTapped: {},
-        onHelpTapped: {},
-        onAboutTapped: {},
-        onLogOutTapped: {}
-    )
-}
