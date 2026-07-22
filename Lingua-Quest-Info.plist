@@ -2,7 +2,23 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>API_BASE_URL</key>
-	<string>$(API_BASE_URL)</string>
+    <key>API_BASE_URL</key>
+    <string>$(API_BASE_URL)</string>
+    
+    <key>NSCameraUsageDescription</key>
+    <string>We need access to your camera to scan items for the game quests.</string>
+
+    <key>GIDClientID</key>
+    <string>569083981229-pbvgaunq5i8r5d0h70umvk6ipkl6fbep.apps.googleusercontent.com</string>
+    
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>com.googleusercontent.apps.569083981229-pbvgaunq5i8r5d0h70umvk6ipkl6fbep</string>
+            </array>
+        </dict>
+    </array>
 </dict>
 </plist>

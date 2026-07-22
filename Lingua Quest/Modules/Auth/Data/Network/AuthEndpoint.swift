@@ -116,3 +116,14 @@ extension AuthEndpoint {
         var requiresAuth: Bool { true }
     }
 }
+
+
+extension AuthEndpoint {
+    struct FirebaseLogin: Endpoint {
+        let idToken: String
+        var path: String { "/auth/oauth/firebase" }
+        var method: HTTPMethod { .post }
+        var body: FirebaseLoginRequestDTO? { FirebaseLoginRequestDTO(idToken: idToken) }
+        var requiresAuth: Bool { false }
+    }
+}

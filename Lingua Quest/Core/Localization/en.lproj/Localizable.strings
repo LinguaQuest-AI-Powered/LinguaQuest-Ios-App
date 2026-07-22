@@ -272,6 +272,8 @@
 "add_language.search_placeholder" = "Search languages...";
 "add_language.add_selected_format" = "Add Selected (%d)";
 "add_language.add_selected" = "Add Selected";
+"auth_error_oauth_profile_setup_coming_soon" = "Profile setup for OAuth is coming soon.";
+"auth_error_oauth_cancelled_or_failed" = "Sign in with Google/Apple was cancelled or failed.";
 
 "home.start" = "Start";
 "home.voice_practice_title" = "Voice Practice";

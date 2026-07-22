@@ -10,6 +10,15 @@ import Swinject
 final class AuthAssembly: Assembly {
     func assemble(container: Container) {
         
+        // MARK: - Services (OAuth)
+        container.register(GoogleSignInServiceProtocol.self) { _ in
+            GoogleSignInService()
+        }
+
+        container.register(AppleSignInServiceProtocol.self) { _ in
+            AppleSignInService()
+        }
+
         // MARK: - Data Sources & Providers
         container.register(AuthRemoteDataSourceProtocol.self) { resolver in
             let apiClient = resolver.resolve(APIClientProtocol.self)!
@@ -61,13 +70,35 @@ final class AuthAssembly: Assembly {
         container.register(LogoutUseCaseProtocol.self) { resolver in
             LogoutUseCase(repository: resolver.resolve(AuthRepositoryProtocol.self)!)
         }
+        
+        container.register(FirebaseLoginUseCaseProtocol.self) { resolver in
+            FirebaseLoginUseCase(repository: resolver.resolve(AuthRepositoryProtocol.self)!)
+        }
+
+        // MARK: - Handlers
+        container.register(OAuthSignInHandlerProtocol.self) { resolver in
+            OAuthSignInHandler(
+                googleSignInService: resolver.resolve(GoogleSignInServiceProtocol.self)!,
+                appleSignInService: resolver.resolve(AppleSignInServiceProtocol.self)!,
+                firebaseLoginUseCase: resolver.resolve(FirebaseLoginUseCaseProtocol.self)!,
+                userPreferences: resolver.resolve(UserPreferencesProtocol.self)!
+            )
+        }
 
         // MARK: - View Models
+        container.register(ProfileCompletionViewModel.self) { resolver in
+            ProfileCompletionViewModel(
+                router: resolver.resolve(RouterProtocol.self)!,
+                userPreferences: resolver.resolve(UserPreferencesProtocol.self)!
+            )
+        }
+
         container.register(LoginViewModel.self) { resolver in
             LoginViewModel(
                 router: resolver.resolve(RouterProtocol.self)!,
                 userPreferences: resolver.resolve(UserPreferencesProtocol.self)!,
-                loginUseCase: resolver.resolve(LoginUseCaseProtocol.self)!
+                loginUseCase: resolver.resolve(LoginUseCaseProtocol.self)!,
+                oauthSignInHandler: resolver.resolve(OAuthSignInHandlerProtocol.self)!
             )
         }
 
@@ -75,7 +106,8 @@ final class AuthAssembly: Assembly {
             SignUpViewModel(
                 router: resolver.resolve(RouterProtocol.self)!,
                 userPreferences: resolver.resolve(UserPreferencesProtocol.self)!,
-                registerUseCase: resolver.resolve(RegisterUseCaseProtocol.self)!
+                registerUseCase: resolver.resolve(RegisterUseCaseProtocol.self)!,
+                oauthSignInHandler: resolver.resolve(OAuthSignInHandlerProtocol.self)!
             )
         }
 

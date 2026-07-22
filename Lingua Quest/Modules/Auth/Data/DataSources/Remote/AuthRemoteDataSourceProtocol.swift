@@ -19,4 +19,5 @@ protocol AuthRemoteDataSourceProtocol {
     func resetPassword(resetToken: String, newPassword: String) async -> Result<Void, AuthError>
     func refreshToken(refreshToken: String) async -> Result<AuthSessionEntity, AuthError>
     func logout(refreshToken: String, allDevices: Bool) async -> Result<Void, AuthError>
+    func loginWithFirebase(idToken: String) async -> Result<(session: AuthSessionEntity, user: UserEntity, profileComplete: Bool), AuthError>
 }

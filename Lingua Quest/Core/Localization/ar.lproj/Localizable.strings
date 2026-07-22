@@ -274,6 +274,8 @@
 "add_language.search_placeholder" = "ابحث عن اللغات...";
 "add_language.add_selected_format" = "إضافة المحدد (%d)";
 "add_language.add_selected" = "إضافة المحدد";
+"auth_error_oauth_profile_setup_coming_soon" = "إعداد الملف الشخصي عبر تسجيل الدخول الاجتماعي سيكون متاحاً قريباً.";
+"auth_error_oauth_cancelled_or_failed" = "تم إلغاء تسجيل الدخول أو فشل.";
 
 "home.start" = "ابدأ";
 "home.voice_practice_title" = "التدريب الصوتي";

@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		33A0F053300C347200611A63 /* FirebaseAI in Frameworks */ = {isa = PBXBuildFile; productRef = 33A0F052300C347200611A63 /* FirebaseAI */; };
+		33AFF8B4300F3670002F5017 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 33AFF8B3300F3670002F5017 /* FirebaseAuth */; };
+		33AFF8B7300F37A3002F5017 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 33AFF8B6300F37A3002F5017 /* GoogleSignIn */; };
+		33AFF8B9300F37A3002F5017 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 33AFF8B8300F37A3002F5017 /* GoogleSignInSwift */; };
 		3F65F092E9CC7B40F998F78C /* SwiftDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CC9E8558BD408E124A1904 /* SwiftDataManager.swift */; };
 		3FA9F46862CA6368C1A8BB81 /* GalleryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E756B6B0EC24234F84F9F3 /* GalleryViewModel.swift */; };
 		4E87E6474BBE05BEA0DA6AFF /* GalleryAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274751E695A446C8579FD14F /* GalleryAssembly.swift */; };
@@ -87,7 +90,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33AFF8B9300F37A3002F5017 /* GoogleSignInSwift in Frameworks */,
 				6D3CA5B03008808A00736812 /* Swinject in Frameworks */,
+				33AFF8B7300F37A3002F5017 /* GoogleSignIn in Frameworks */,
+				33AFF8B4300F3670002F5017 /* FirebaseAuth in Frameworks */,
 				33A0F053300C347200611A63 /* FirebaseAI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -123,6 +129,7 @@
 				1529B3683006410300CCD74A /* Lingua Quest */,
 				1529B3783006410600CCD74A /* Lingua QuestTests */,
 				1529B3823006410600CCD74A /* Lingua QuestUITests */,
+				33AFF8B2300F366F002F5017 /* Frameworks */,
 				1529B3673006410300CCD74A /* Products */,
 				54896DB26D6A8508CC78E1C6 /* Lingua Quest */,
 			);
@@ -137,6 +144,13 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		33AFF8B2300F366F002F5017 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+		sourceTree = "<group>";
 		};
 		2549924D3844E97C7CB278C0 /* DataSources */ = {
 			isa = PBXGroup;
@@ -279,6 +293,9 @@
 			packageProductDependencies = (
 				6D3CA5AF3008808A00736812 /* Swinject */,
 				33A0F052300C347200611A63 /* FirebaseAI */,
+				33AFF8B3300F3670002F5017 /* FirebaseAuth */,
+				33AFF8B6300F37A3002F5017 /* GoogleSignIn */,
+				33AFF8B8300F37A3002F5017 /* GoogleSignInSwift */,
 			);
 			productName = "Lingua Quest";
 			productReference = 1529B3663006410300CCD74A /* Lingua Quest.app */;
@@ -362,6 +379,7 @@
 			packageReferences = (
 				6D3CA5AE3008808A00736812 /* XCRemoteSwiftPackageReference "Swinject" */,
 				33A0F051300C347200611A63 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				33AFF8B5300F37A3002F5017 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1529B3673006410300CCD74A /* Products */;
@@ -445,7 +463,7 @@
 		1529B3873006410600CCD74A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = 1529B3683006410300CCD74A /* Lingua Quest */;
-			baseConfigurationReferenceRelativePath = App/Resources/Config.xcconfig;
+			baseConfigurationReferenceRelativePath = App/Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -511,7 +529,7 @@
 		1529B3883006410600CCD74A /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = 1529B3683006410300CCD74A /* Lingua Quest */;
-			baseConfigurationReferenceRelativePath = App/Resources/Config.xcconfig;
+			baseConfigurationReferenceRelativePath = App/Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -570,10 +588,11 @@
 		1529B38A3006410600CCD74A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = 1529B3683006410300CCD74A /* Lingua Quest */;
-			baseConfigurationReferenceRelativePath = App/Resources/Config.xcconfig;
+			baseConfigurationReferenceRelativePath = App/Config.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Lingua Quest/Lingua Quest.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
@@ -606,10 +625,11 @@
 		1529B38B3006410600CCD74A /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = 1529B3683006410300CCD74A /* Lingua Quest */;
-			baseConfigurationReferenceRelativePath = App/Resources/Config.xcconfig;
+			baseConfigurationReferenceRelativePath = App/Config.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Lingua Quest/Lingua Quest.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
@@ -642,7 +662,7 @@
 		1529B38D3006410600CCD74A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = 1529B3683006410300CCD74A /* Lingua Quest */;
-			baseConfigurationReferenceRelativePath = App/Resources/Config.xcconfig;
+			baseConfigurationReferenceRelativePath = App/Config.xcconfig;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -665,7 +685,7 @@
 		1529B38E3006410600CCD74A /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = 1529B3683006410300CCD74A /* Lingua Quest */;
-			baseConfigurationReferenceRelativePath = App/Resources/Config.xcconfig;
+			baseConfigurationReferenceRelativePath = App/Config.xcconfig;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -688,7 +708,7 @@
 		1529B3903006410600CCD74A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = 1529B3683006410300CCD74A /* Lingua Quest */;
-			baseConfigurationReferenceRelativePath = App/Resources/Config.xcconfig;
+			baseConfigurationReferenceRelativePath = App/Config.xcconfig;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -709,7 +729,7 @@
 		1529B3913006410600CCD74A /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = 1529B3683006410300CCD74A /* Lingua Quest */;
-			baseConfigurationReferenceRelativePath = App/Resources/Config.xcconfig;
+			baseConfigurationReferenceRelativePath = App/Config.xcconfig;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -777,6 +797,14 @@
 				minimumVersion = 12.16.0;
 			};
 		};
+		33AFF8B5300F37A3002F5017 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.2.0;
+			};
+		};
 		6D3CA5AE3008808A00736812 /* XCRemoteSwiftPackageReference "Swinject" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Swinject/Swinject.git";
@@ -792,6 +820,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 33A0F051300C347200611A63 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAI;
+		};
+		33AFF8B3300F3670002F5017 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 33A0F051300C347200611A63 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		33AFF8B6300F37A3002F5017 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 33AFF8B5300F37A3002F5017 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		33AFF8B8300F37A3002F5017 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 33AFF8B5300F37A3002F5017 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
 		};
 		6D3CA5AF3008808A00736812 /* Swinject */ = {
 			isa = XCSwiftPackageProductDependency;

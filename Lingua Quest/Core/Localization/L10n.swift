@@ -96,6 +96,8 @@ enum L10n {
             static var allFieldsRequired: String { localized("auth_error_all_fields_required") }
             static var invalidEmailFormat: String { localized("auth_error_invalid_email_format") }
             static var invalidUsernameFormat: String { localized("auth_error_invalid_username_format") }
+            static var oauthProfileSetupComingSoon: String { localized("auth_error_oauth_profile_setup_coming_soon") }
+            static var oauthCancelledOrFailed: String { localized("auth_error_oauth_cancelled_or_failed") }
         }
     }
     

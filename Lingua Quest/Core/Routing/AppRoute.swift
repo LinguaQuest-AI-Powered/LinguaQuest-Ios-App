@@ -13,6 +13,7 @@ enum AppRoute: Hashable {
     case settings
     case login
     case onBoarding
+    case completeProfile
     case signUp
     case forgetPassword
     case verifyEmail(email: String)

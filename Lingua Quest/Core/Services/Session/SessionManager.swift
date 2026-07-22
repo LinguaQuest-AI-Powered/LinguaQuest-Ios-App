@@ -54,6 +54,7 @@ final class SessionManager: SessionManagerProtocol {
     private func endLocalSession() async {
         tokenStorage.clearSession()
         userPreferences.isLoggedIn = false
+        userPreferences.needsProfileCompletion = false
         router.pushAndRemoveAll(.login)
     }
 }
