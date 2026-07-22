@@ -7,6 +7,7 @@
 
 import Foundation
 import Observation
+import UIKit
 
 @Observable
 @MainActor
@@ -37,6 +38,7 @@ final class CameraCaptureViewModel {
     func onCaptureTapped() {
         // Mock capture for debugging: Stop camera and push result view
         cameraManager.stopSession()
-        router.push(.cameraResult(targetWord: targetWord))
+        let imageData = cameraManager.capturedImage?.jpegData(compressionQuality: 0.8)
+        router.push(.cameraResult(targetWord: targetWord, imageData: imageData))
     }
 }
