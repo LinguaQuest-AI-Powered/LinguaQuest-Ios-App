@@ -7,8 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		108BFA8F4F0897934B241105 /* CapturedItemEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B8E16E28F30EB922FC809B /* CapturedItemEntity.swift */; };
 		33A0F053300C347200611A63 /* FirebaseAI in Frameworks */ = {isa = PBXBuildFile; productRef = 33A0F052300C347200611A63 /* FirebaseAI */; };
+		3F65F092E9CC7B40F998F78C /* SwiftDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CC9E8558BD408E124A1904 /* SwiftDataManager.swift */; };
+		3FA9F46862CA6368C1A8BB81 /* GalleryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E756B6B0EC24234F84F9F3 /* GalleryViewModel.swift */; };
+		4E87E6474BBE05BEA0DA6AFF /* GalleryAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274751E695A446C8579FD14F /* GalleryAssembly.swift */; };
 		6D3CA5B03008808A00736812 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3CA5AF3008808A00736812 /* Swinject */; };
+		9465035612FCCC4429C23DCE /* GetCapturedItemsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374933684ACF5CC8B4F363D9 /* GetCapturedItemsUseCase.swift */; };
+		A6AFB7CE21FBEF37FD61F991 /* GalleryRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C55344454CFE1C8A6429D8 /* GalleryRepositoryProtocol.swift */; };
+		E1E5803A0F20469E6ACB08C0 /* GalleryRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A040A6F42437407FCF156C /* GalleryRepositoryImpl.swift */; };
+		F00CFA7C9A8D9AE95D3C35A6 /* SaveCapturedItemUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D24671A8C580A100F31D040 /* SaveCapturedItemUseCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,24 +37,38 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		14CC9E8558BD408E124A1904 /* SwiftDataManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SwiftDataManager.swift; sourceTree = "<group>"; };
 		1529B3663006410300CCD74A /* Lingua Quest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lingua Quest.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1529B3753006410600CCD74A /* Lingua QuestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Lingua QuestTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1529B37F3006410600CCD74A /* Lingua QuestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Lingua QuestUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		22E756B6B0EC24234F84F9F3 /* GalleryViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GalleryViewModel.swift; sourceTree = "<group>"; };
+		274751E695A446C8579FD14F /* GalleryAssembly.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GalleryAssembly.swift; sourceTree = "<group>"; };
+		33A040A6F42437407FCF156C /* GalleryRepositoryImpl.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GalleryRepositoryImpl.swift; sourceTree = "<group>"; };
+		374933684ACF5CC8B4F363D9 /* GetCapturedItemsUseCase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GetCapturedItemsUseCase.swift; sourceTree = "<group>"; };
+		6D24671A8C580A100F31D040 /* SaveCapturedItemUseCase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SaveCapturedItemUseCase.swift; sourceTree = "<group>"; };
+		72C55344454CFE1C8A6429D8 /* GalleryRepositoryProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GalleryRepositoryProtocol.swift; sourceTree = "<group>"; };
+		73B8E16E28F30EB922FC809B /* CapturedItemEntity.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CapturedItemEntity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		1529B3683006410300CCD74A /* Lingua Quest */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = "Lingua Quest";
 			sourceTree = "<group>";
 		};
 		1529B3783006410600CCD74A /* Lingua QuestTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = "Lingua QuestTests";
 			sourceTree = "<group>";
 		};
 		1529B3823006410600CCD74A /* Lingua QuestUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = "Lingua QuestUITests";
 			sourceTree = "<group>";
 		};
@@ -79,6 +101,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		005216CDB39C3B3C16E9BF13 /* RepositoryImpl */ = {
+			isa = PBXGroup;
+			children = (
+				33A040A6F42437407FCF156C /* GalleryRepositoryImpl.swift */,
+			);
+			name = RepositoryImpl;
+			path = RepositoryImpl;
+			sourceTree = "<group>";
+		};
 		1529B35D3006410300CCD74A = {
 			isa = PBXGroup;
 			children = (
@@ -86,6 +117,7 @@
 				1529B3783006410600CCD74A /* Lingua QuestTests */,
 				1529B3823006410600CCD74A /* Lingua QuestUITests */,
 				1529B3673006410300CCD74A /* Products */,
+				54896DB26D6A8508CC78E1C6 /* Lingua Quest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -97,6 +129,139 @@
 				1529B37F3006410600CCD74A /* Lingua QuestUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		2549924D3844E97C7CB278C0 /* DataSources */ = {
+			isa = PBXGroup;
+			children = (
+				3C9F7BD864FB67D69CC0B08A /* Local */,
+			);
+			name = DataSources;
+			path = DataSources;
+			sourceTree = "<group>";
+		};
+		2D544AED9D960102B0E25112 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				72C55344454CFE1C8A6429D8 /* GalleryRepositoryProtocol.swift */,
+			);
+			name = Repositories;
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		30FFAEAAA63DC5B3594B5123 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				22E756B6B0EC24234F84F9F3 /* GalleryViewModel.swift */,
+			);
+			name = ViewModels;
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		3C9F7BD864FB67D69CC0B08A /* Local */ = {
+			isa = PBXGroup;
+			children = (
+				73B8E16E28F30EB922FC809B /* CapturedItemEntity.swift */,
+			);
+			name = Local;
+			path = Local;
+			sourceTree = "<group>";
+		};
+		4B830D93CC2FB534756C4F50 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				30FFAEAAA63DC5B3594B5123 /* ViewModels */,
+			);
+			name = Presentation;
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		54896DB26D6A8508CC78E1C6 /* Lingua Quest */ = {
+			isa = PBXGroup;
+			children = (
+				95F257BBC50A33E06AE83044 /* Modules */,
+				776BEF3EE1C1A547C0925596 /* Core */,
+			);
+			name = "Lingua Quest";
+			path = "Lingua Quest";
+			sourceTree = "<group>";
+		};
+		776BEF3EE1C1A547C0925596 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				90C8EE3866DC2D704CE495BD /* Storage */,
+				E1AFBB728F59997168F36EBC /* DI */,
+			);
+			name = Core;
+			path = Core;
+			sourceTree = "<group>";
+		};
+		8861011EEF016E063A7856F9 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				374933684ACF5CC8B4F363D9 /* GetCapturedItemsUseCase.swift */,
+				6D24671A8C580A100F31D040 /* SaveCapturedItemUseCase.swift */,
+			);
+			name = UseCases;
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		8FCD1194222668AF0CA1196A /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				2549924D3844E97C7CB278C0 /* DataSources */,
+				005216CDB39C3B3C16E9BF13 /* RepositoryImpl */,
+			);
+			name = Data;
+			path = Data;
+			sourceTree = "<group>";
+		};
+		90C8EE3866DC2D704CE495BD /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				14CC9E8558BD408E124A1904 /* SwiftDataManager.swift */,
+			);
+			name = Storage;
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		95F257BBC50A33E06AE83044 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				E61D847238286601B1CF6F74 /* Gallery */,
+			);
+			name = Modules;
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		D0301632B4BF1C4B1FCF9EBC /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				2D544AED9D960102B0E25112 /* Repositories */,
+				8861011EEF016E063A7856F9 /* UseCases */,
+			);
+			name = Domain;
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		E1AFBB728F59997168F36EBC /* DI */ = {
+			isa = PBXGroup;
+			children = (
+				274751E695A446C8579FD14F /* GalleryAssembly.swift */,
+			);
+			name = DI;
+			path = DI;
+			sourceTree = "<group>";
+		};
+		E61D847238286601B1CF6F74 /* Gallery */ = {
+			isa = PBXGroup;
+			children = (
+				8FCD1194222668AF0CA1196A /* Data */,
+				D0301632B4BF1C4B1FCF9EBC /* Domain */,
+				4B830D93CC2FB534756C4F50 /* Presentation */,
+			);
+			name = Gallery;
+			path = Gallery;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,8 +308,6 @@
 				1529B3783006410600CCD74A /* Lingua QuestTests */,
 			);
 			name = "Lingua QuestTests";
-			packageProductDependencies = (
-			);
 			productName = "Lingua QuestTests";
 			productReference = 1529B3753006410600CCD74A /* Lingua QuestTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -166,8 +329,6 @@
 				1529B3823006410600CCD74A /* Lingua QuestUITests */,
 			);
 			name = "Lingua QuestUITests";
-			packageProductDependencies = (
-			);
 			productName = "Lingua QuestUITests";
 			productReference = 1529B37F3006410600CCD74A /* Lingua QuestUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -250,6 +411,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				108BFA8F4F0897934B241105 /* CapturedItemEntity.swift in Sources */,
+				E1E5803A0F20469E6ACB08C0 /* GalleryRepositoryImpl.swift in Sources */,
+				A6AFB7CE21FBEF37FD61F991 /* GalleryRepositoryProtocol.swift in Sources */,
+				9465035612FCCC4429C23DCE /* GetCapturedItemsUseCase.swift in Sources */,
+				F00CFA7C9A8D9AE95D3C35A6 /* SaveCapturedItemUseCase.swift in Sources */,
+				3FA9F46862CA6368C1A8BB81 /* GalleryViewModel.swift in Sources */,
+				3F65F092E9CC7B40F998F78C /* SwiftDataManager.swift in Sources */,
+				4E87E6474BBE05BEA0DA6AFF /* GalleryAssembly.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

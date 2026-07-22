@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseCore
+import SwiftData
 
 @main
 struct MyApp: App {
@@ -19,5 +20,6 @@ struct MyApp: App {
         WindowGroup {
            RootView()
         }
+        .modelContainer(for: CapturedItemEntity.self)
     }
 }

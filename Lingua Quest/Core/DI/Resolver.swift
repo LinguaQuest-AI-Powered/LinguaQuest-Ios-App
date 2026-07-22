@@ -22,7 +22,7 @@ final class Resolver {
         _ = Assembler(
             [
                 NetworkAssembly(), RouterAssembly(), StorageAssembly(),
-                AuthAssembly(), OnboardingAssembly(), GameAssembly(),
+                AuthAssembly(), OnboardingAssembly(), GameAssembly(), GalleryAssembly(),
                 LeaderboardAssembly(), ProfileAssembly(), SettingsAssembly(),HomeAssembly(),
                 WordInsightAssembly(), AllWorldsAssembly(), AchievementsAssembly(),
                 SpeakingLabAssembly(),

@@ -25,7 +25,7 @@ struct MainTabView: View {
                 HomeView(viewModel: homeViewModel)
                     .tag(MainTabItem.home)
                 
-                GalleryView()
+                GalleryView(viewModel: Resolver.shared.resolve(GalleryViewModel.self))
                     .tag(MainTabItem.gallery)
                 
                 ProfileView(viewModel: profileViewModel)

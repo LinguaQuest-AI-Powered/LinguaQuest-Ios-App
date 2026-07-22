@@ -8,24 +8,35 @@
 import SwiftUI
 
 struct GalleryView: View {
-    
-    var items: [CapturedItem] = CapturedItem.mocks
+    @State var viewModel: GalleryViewModel
     
     var body: some View {
         VStack(spacing: 0) {
             AppHeaderView(starCount: 15000000, coinCount: 20000)
             
-            if items.isEmpty {
+            // Temporary debug button
+            Button(action: {
+                viewModel.saveMockItem()
+            }) {
+                Text("Save Mock Item (Debug)")
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color.blue)
+                    .cornerRadius(8)
+            }
+            .padding(.top, 8)
+            
+            if viewModel.items.isEmpty {
                 VStack(spacing: 0) {
-                    MyCapturesHeaderView(objectsCollected: items.count)
+                    MyCapturesHeaderView(objectsCollected: viewModel.items.count)
                     EmptyGalleryView()
                 }
                 .frame(maxHeight: .infinity, alignment: .top)
             } else {
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 0) {
-                        MyCapturesHeaderView(objectsCollected: items.count)
-                        GalleryGridView(items: items)
+                        MyCapturesHeaderView(objectsCollected: viewModel.items.count)
+                        GalleryGridView(items: viewModel.items)
                     }
                 }
             }
@@ -34,14 +45,17 @@ struct GalleryView: View {
             HomeBackgroundView()
                 .ignoresSafeArea()
         )
+        .onAppear {
+            viewModel.loadItems()
+        }
     }
 }
 
 #Preview("LightTheme") {
-    GalleryView()
+    GalleryView(viewModel: Resolver.shared.resolve(GalleryViewModel.self))
 }
 
 #Preview("DarkTheme") {
-    GalleryView()
+    GalleryView(viewModel: Resolver.shared.resolve(GalleryViewModel.self))
         .preferredColorScheme(.dark)
 }
