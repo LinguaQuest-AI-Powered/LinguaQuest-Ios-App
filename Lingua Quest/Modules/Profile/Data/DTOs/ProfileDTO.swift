@@ -14,12 +14,13 @@ struct ProfileResponseDTO: Decodable {
 
 struct ProfileDataDTO: Decodable {
     let id: Int
-    let username: String
-    let nativeLanguage: String
+    let email: String
+    let username: String?
+    let nativeLanguage: String?
     let photoUrl: String?
-    let level: Int
-    let stats: ProfileStatsDTO
-    let currentLanguageJourney: ProfileJourneyDTO
+    let level: Int?
+    let stats: ProfileStatsDTO?
+    let currentLanguageJourney: ProfileJourneyDTO?
     let achievementsSummary: ProfileAchievementsSummaryDTO?
     let leaderboardSummary: ProfileLeaderboardSummaryDTO?
 }
