@@ -39,31 +39,13 @@ struct ForgetPasswordView: View {
                             )
                             .padding(.top, 8)
                             
-                            if let errorMessage = viewModel.errorMessage {
-                                HStack(spacing: 8) {
-                                    Image(systemIcon: .exclamationmarkTriangleFill)
-                                        .foregroundColor(.appSemanticError)
-                                    Text(errorMessage)
-                                        .appTextStyle(.captionMedium, color: .appSemanticError)
-                                        .multilineTextAlignment(.leading)
-                                    Spacer()
-                                }
-                                .padding(12)
-                                .background(Color.appSemanticError.opacity(0.1))
-                                .cornerRadius(8)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .stroke(Color.appSemanticError.opacity(0.3), lineWidth: 1)
-                                )
-                                .transition(.opacity.combined(with: .move(edge: .top)))
-                            }
-                            
+                            // Removed inline error message
                             CustomButton(
                                 type: .custom(textColor: .appTextSelectedBrown, buttonColor: .appAccentOrange, shadowColor: .appBrandBrown),
                                 text: L10n.Auth.sendResetLink,
                                 action: { viewModel.sendResetLink() },
                                 trailing: Image(systemIcon: .arrowRight),
-                                isLoading: viewModel.isLoading
+                                isLoading: false
                             )
                         }
                         .animation(.easeInOut, value: viewModel.errorMessage)
@@ -82,6 +64,22 @@ struct ForgetPasswordView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        .authLoadingOverlay(isLoading: viewModel.isLoading)
+        .alert(
+            L10n.Common.error,
+            isPresented: Binding(
+                get: { viewModel.errorMessage != nil },
+                set: { if !$0 { viewModel.errorMessage = nil } }
+            )
+        ) {
+            Button(L10n.Common.ok) {
+                viewModel.errorMessage = nil
+            }
+        } message: {
+            if let errorMessage = viewModel.errorMessage {
+                Text(errorMessage)
+            }
+        }
     }
 }
 

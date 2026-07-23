@@ -321,3 +321,5 @@
 "settings.toast_notifications_enabled" = "Notifications enabled.";
 "settings.toast_notifications_paused" = "Notifications off. Daily reminder paused.";
 "settings.select_reminder_time" = "Select Reminder Time";
+
+"common.error" = "Error";

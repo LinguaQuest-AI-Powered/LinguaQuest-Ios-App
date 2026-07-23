@@ -74,24 +74,7 @@ struct ResetPasswordView: View {
                                 )
                             }
                             
-                            if let errorMessage = viewModel.errorMessage {
-                                HStack(spacing: 8) {
-                                    Image(systemIcon: .exclamationmarkTriangleFill)
-                                        .foregroundColor(.appSemanticError)
-                                    Text(errorMessage)
-                                        .appTextStyle(.captionMedium, color: .appSemanticError)
-                                        .multilineTextAlignment(.leading)
-                                    Spacer()
-                                }
-                                .padding(12)
-                                .background(Color.appSemanticError.opacity(0.1))
-                                .cornerRadius(8)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .stroke(Color.appSemanticError.opacity(0.3), lineWidth: 1)
-                                )
-                                .transition(.opacity.combined(with: .move(edge: .top)))
-                            }
+                            // Removed inline error message
                             
                             CustomButton(
                                 type: .custom(textColor: .appTextSelectedBrown, buttonColor: .appAccentOrange, shadowColor: .appBrandBrown),
@@ -100,7 +83,7 @@ struct ResetPasswordView: View {
                                     viewModel.resetPassword()
                                 },
                                 trailing: Image(systemIcon: .arrowRight),
-                                isLoading: viewModel.isLoading
+                                isLoading: false
                             )
                             .padding(.top, 8)
                         }
@@ -122,6 +105,22 @@ struct ResetPasswordView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        .authLoadingOverlay(isLoading: viewModel.isLoading)
+        .alert(
+            L10n.Common.error,
+            isPresented: Binding(
+                get: { viewModel.errorMessage != nil },
+                set: { if !$0 { viewModel.errorMessage = nil } }
+            )
+        ) {
+            Button(L10n.Common.ok) {
+                viewModel.errorMessage = nil
+            }
+        } message: {
+            if let errorMessage = viewModel.errorMessage {
+                Text(errorMessage)
+            }
+        }
     }
     
     private func passwordStrengthColor(for progress: Double) -> Color {

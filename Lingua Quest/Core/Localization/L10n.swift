@@ -26,6 +26,7 @@ enum L10n {
         static var cancel: String { localized("common.cancel") }
         static var ok: String { localized("common.ok") }
         static var loading: String { localized("common.loading") }
+        static var error: String { localized("common.error") }
     }
 
     enum Auth {

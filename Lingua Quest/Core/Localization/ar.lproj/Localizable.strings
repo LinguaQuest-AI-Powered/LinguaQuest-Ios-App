@@ -323,3 +323,5 @@
 "settings.toast_notifications_enabled" = "تم تفعيل الإشعارات.";
 "settings.toast_notifications_paused" = "تم إيقاف الإشعارات. التذكير اليومي متوقف.";
 "settings.select_reminder_time" = "اختر وقت التذكير";
+
+"common.error" = "خطأ";
