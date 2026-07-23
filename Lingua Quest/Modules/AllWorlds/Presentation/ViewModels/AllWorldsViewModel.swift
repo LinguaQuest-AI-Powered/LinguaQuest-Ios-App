@@ -13,6 +13,7 @@ final class AllWorldsViewModel {
     // MARK: - Dependencies
     private let router: RouterProtocol
     private let getHomeWorldsUseCase: GetHomeWorldsUseCaseProtocol
+    private let languageViewModel: LanguageViewModel
     
     // MARK: - State
     var isLoading: Bool = false
@@ -20,9 +21,10 @@ final class AllWorldsViewModel {
     private var worlds: [ExploreWorld] = []
     
     // MARK: - Init
-    init(router: RouterProtocol, getHomeWorldsUseCase: GetHomeWorldsUseCaseProtocol) {
+    init(router: RouterProtocol, getHomeWorldsUseCase: GetHomeWorldsUseCaseProtocol, languageViewModel: LanguageViewModel) {
         self.router = router
         self.getHomeWorldsUseCase = getHomeWorldsUseCase
+        self.languageViewModel = languageViewModel
         Task { await loadWorlds() }
     }
     
@@ -46,10 +48,12 @@ final class AllWorldsViewModel {
     func loadWorlds() async {
         isLoading = true
         
+        let currentLangId = languageViewModel.activeLanguage?.id ?? 1
+        
         do {
-            async let easy = getHomeWorldsUseCase.execute(languageId: 1, difficulty: "EASY")
-            async let medium = getHomeWorldsUseCase.execute(languageId: 1, difficulty: "MEDIUM")
-            async let hard = getHomeWorldsUseCase.execute(languageId: 1, difficulty: "HARD")
+            async let easy = getHomeWorldsUseCase.execute(languageId: currentLangId, difficulty: "EASY")
+            async let medium = getHomeWorldsUseCase.execute(languageId: currentLangId, difficulty: "MEDIUM")
+            async let hard = getHomeWorldsUseCase.execute(languageId: currentLangId, difficulty: "HARD")
             
             let easyWorlds = (try? await easy) ?? []
             let mediumWorlds = (try? await medium) ?? []
@@ -67,8 +71,9 @@ final class AllWorldsViewModel {
     
     func onWorldTapped(_ world: WorldUIModel) {
         guard !world.isLocked else { return }
+        let currentLangId = languageViewModel.activeLanguage?.id ?? 1
         // Temporarily passing a hash of the id as the worldId until Worlds API uses integers
-        router.push(.gameLevels(worldId: 10, worldName: world.title, languageId: 1))
+        router.push(.gameLevels(worldId: Int(world.id) ?? 10, worldName: world.title, languageId: currentLangId))
     }
     
     func onBackTapped() {
