@@ -25,15 +25,21 @@ final class SpeakingLabAssembly: Assembly {
             return VoiceSentenceGeneratorDataSource()
         }.inObjectScope(.container)
         
+        container.register(SpeechRecognitionServiceProtocol.self) { _ in
+            return SpeechRecognitionService()
+        }.inObjectScope(.container)
+        
         // Repository
         container.register(VoiceEvaluationRepositoryProtocol.self) { resolver in
             let evalDataSource = resolver.resolve(VoiceEvaluationRemoteDataSourceProtocol.self)!
             let progDataSource = resolver.resolve(VoiceProgressRemoteDataSourceProtocol.self)!
             let genDataSource = resolver.resolve(VoiceSentenceGeneratorDataSourceProtocol.self)!
+            let speechService = resolver.resolve(SpeechRecognitionServiceProtocol.self)!
             return VoiceEvaluationRepositoryImpl(
                 evaluationDataSource: evalDataSource,
                 progressDataSource: progDataSource,
-                generatorDataSource: genDataSource
+                generatorDataSource: genDataSource,
+                speechRecognitionService: speechService
             )
         }.inObjectScope(.container)
         

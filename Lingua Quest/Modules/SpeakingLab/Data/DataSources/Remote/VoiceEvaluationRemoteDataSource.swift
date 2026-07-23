@@ -6,32 +6,30 @@
 //
 
 import Foundation
-import FirebaseAI
-import FirebaseAILogic
 
 protocol VoiceEvaluationRemoteDataSourceProtocol {
-    func evaluateAudio(audioData: Data, targetText: String) async throws -> VoiceEvaluationResponseDTO
+    func evaluateSpokenText(spokenText: String, targetText: String) async throws -> VoiceEvaluationResponseDTO
 }
 
 class VoiceEvaluationRemoteDataSource: VoiceEvaluationRemoteDataSourceProtocol {
-    func evaluateAudio(audioData: Data, targetText: String) async throws -> VoiceEvaluationResponseDTO {
+    func evaluateSpokenText(spokenText: String, targetText: String) async throws -> VoiceEvaluationResponseDTO {
         let promptText = """
         You are a supportive language coach. The user is practicing speaking a sentence.
         Target Sentence: "\(targetText)"
+        What the user actually said (transcribed): "\(spokenText)"
         
-        Analyze the provided audio recording.
-        1. Compare what they actually said to the Target Sentence.
-        2. Identify correctly pronounced words and incorrectly pronounced (or missing/extra) words.
-        3. Provide a score out of 100.
-        4. Give a short, encouraging piece of advice (max 2 sentences).
+        Compare what they said to the Target Sentence.
+        1. Identify correctly spoken words and incorrectly spoken (or missing/extra) words.
+        2. Provide a score out of 100 based on accuracy.
+        3. Give a short, encouraging piece of advice (max 2 sentences).
         
-        CRITICAL RULE: If the audio is completely silent, incomprehensible, or you cannot hear any speech, you MUST STILL respond with the JSON format below. In this case, set rating to 0, correct_words to empty, put all words from the target sentence into wrong_words, and give advice such as "I couldn't hear you. Please try speaking clearly."
+        CRITICAL RULE: If the spoken text is empty or completely unrelated, set rating to 0, correct_words to empty, put all words from the target sentence into wrong_words, and give advice such as "I couldn't understand you. Please try speaking more clearly."
         
         Respond STRICTLY in the following JSON format (no markdown, no backticks, just raw JSON):
         {
             "rating": <integer score between 0 and 100>,
-            "correct_words": [<array of correctly pronounced words as strings>],
-            "wrong_words": [<array of incorrectly pronounced words as strings>],
+            "correct_words": [<array of correctly spoken words as strings>],
+            "wrong_words": [<array of incorrectly spoken or missing words as strings>],
             "advice": "<a short, encouraging tip for improvement>"
         }
         """
@@ -42,17 +40,12 @@ class VoiceEvaluationRemoteDataSource: VoiceEvaluationRemoteDataSourceProtocol {
         request.setValue("Bearer \(AppConfig.aiKey)", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        // We use Voxtral which is designed for audio understanding
-        let base64Audio = audioData.base64EncodedString()
-        let combinedContent = "\(promptText)\n\n[Audio Data: data:audio/m4a;base64,\(base64Audio)]"
-        
         let payload: [String: Any] = [
-            "model_id": "mistral.voxtral-small-24b-2507",
-            "max_tokens": 1000,
+            "model_id": "deepseek.v3.2",
             "messages": [
                 [
                     "role": "user",
-                    "content": combinedContent
+                    "content": promptText
                 ]
             ]
         ]
@@ -70,9 +63,6 @@ class VoiceEvaluationRemoteDataSource: VoiceEvaluationRemoteDataSourceProtocol {
             throw NSError(domain: "VoiceEvaluation", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "API Error: \(errorMsg)"])
         }
         
-        let rawString = String(data: data, encoding: .utf8) ?? "Unreadable response"
-        print("RAW BEDROCK RESPONSE: \(rawString)")
-        
         struct BedrockResponse: Codable {
             let output_text: String
         }
@@ -81,7 +71,8 @@ class VoiceEvaluationRemoteDataSource: VoiceEvaluationRemoteDataSourceProtocol {
         do {
             bedrockResponse = try JSONDecoder().decode(BedrockResponse.self, from: data)
         } catch {
-            throw NSError(domain: "VoiceEvaluation", code: 0, userInfo: [NSLocalizedDescriptionKey: "Unexpected API Response Format: \(rawString)"])
+            let rawString = String(data: data, encoding: .utf8) ?? "Unreadable"
+            throw NSError(domain: "VoiceEvaluation", code: 0, userInfo: [NSLocalizedDescriptionKey: "Unexpected API Response: \(rawString)"])
         }
         
         var rawText = bedrockResponse.output_text
@@ -106,6 +97,7 @@ class VoiceEvaluationRemoteDataSource: VoiceEvaluationRemoteDataSourceProtocol {
             return result
         } catch {
             print("JSON DECODING ERROR: \(error)")
+            print("Raw text was: \(rawText)")
             throw error
         }
     }

@@ -12,6 +12,7 @@ class VoiceEvaluationRepositoryImpl: VoiceEvaluationRepositoryProtocol {
     private let evaluationDataSource: VoiceEvaluationRemoteDataSourceProtocol
     private let progressDataSource: VoiceProgressRemoteDataSourceProtocol
     private let generatorDataSource: VoiceSentenceGeneratorDataSourceProtocol
+    private let speechRecognitionService: SpeechRecognitionServiceProtocol
     
     private var deviceId: String {
         UIDevice.current.identifierForVendor?.uuidString ?? "unknown_device"
@@ -20,11 +21,13 @@ class VoiceEvaluationRepositoryImpl: VoiceEvaluationRepositoryProtocol {
     init(
         evaluationDataSource: VoiceEvaluationRemoteDataSourceProtocol,
         progressDataSource: VoiceProgressRemoteDataSourceProtocol,
-        generatorDataSource: VoiceSentenceGeneratorDataSourceProtocol
+        generatorDataSource: VoiceSentenceGeneratorDataSourceProtocol,
+        speechRecognitionService: SpeechRecognitionServiceProtocol
     ) {
         self.evaluationDataSource = evaluationDataSource
         self.progressDataSource = progressDataSource
         self.generatorDataSource = generatorDataSource
+        self.speechRecognitionService = speechRecognitionService
     }
     
     func getDailySentences() async throws -> [VoiceSentence] {
@@ -46,7 +49,37 @@ class VoiceEvaluationRepositoryImpl: VoiceEvaluationRepositoryProtocol {
     }
     
     func evaluateAudio(audioData: Data, targetText: String) async throws -> VoiceEvaluationResult {
-        let dto = try await evaluationDataSource.evaluateAudio(audioData: audioData, targetText: targetText)
+        // Step 1: Save audio to a temp file for SFSpeechRecognizer
+        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("eval_recording.m4a")
+        try audioData.write(to: tempURL)
+        
+        // Step 2: Transcribe audio locally using Apple Speech Recognition
+        // Use German locale since that's the target language
+        let locale = Locale(identifier: "de-DE")
+        let spokenText: String
+        do {
+            spokenText = try await speechRecognitionService.transcribeAudio(at: tempURL, locale: locale)
+            print("Speech Recognition Result: \"\(spokenText)\"")
+        } catch {
+            print("Speech recognition failed: \(error). Using empty transcription.")
+            // If speech recognition fails, send empty text so AI gives 0 score
+            let dto = try await evaluationDataSource.evaluateSpokenText(
+                spokenText: "",
+                targetText: targetText
+            )
+            return VoiceEvaluationResult(
+                rating: dto.rating,
+                correctWords: dto.correct_words,
+                wrongWords: dto.wrong_words,
+                advice: dto.advice
+            )
+        }
+        
+        // Step 3: Send transcribed text to AI for evaluation
+        let dto = try await evaluationDataSource.evaluateSpokenText(
+            spokenText: spokenText,
+            targetText: targetText
+        )
         
         return VoiceEvaluationResult(
             rating: dto.rating,
