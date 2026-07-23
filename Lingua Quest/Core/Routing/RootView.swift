@@ -11,6 +11,7 @@ struct RootView: View {
     @State private var router = Resolver.shared.resolve(Router.self)
     @AppStorage(AppConstants.UserDefaultsKeys.isOnboardingCompleted) private var isOnboardingCompleted = false
     @AppStorage(AppConstants.UserDefaultsKeys.isLoggedIn) private var isLoggedIn = false
+    @AppStorage(AppConstants.UserDefaultsKeys.needsProfileCompletion) private var needsProfileCompletion = false
     @AppStorage(AppConstants.UserDefaultsKeys.isDarkMode) private var isDarkMode = false
     @AppStorage(AppConstants.UserDefaultsKeys.appLanguage) private var appLanguage = "en"
     
@@ -19,12 +20,12 @@ struct RootView: View {
             Group {
                 if !isOnboardingCompleted {
                     router.view(for: .onBoarding)
+                } else if isLoggedIn && needsProfileCompletion {
+                    router.view(for: .completeProfile)
+                } else if isLoggedIn {
+                    router.view(for: .home)
                 } else {
-                    if isLoggedIn {
-                        router.view(for: .home)
-                    } else {
-                        router.view(for: .login)
-                    }
+                    router.view(for: .login)
                 }
             }
             .navigationDestination(for: AppRoute.self) { route in

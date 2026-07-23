@@ -9,9 +9,9 @@ import Foundation
 
 struct UserEntity: Identifiable {
     let id: Int
-    let username: String
+    let username: String?
     let photo: String?
-    let nativeLanguage: String
+    let nativeLanguage: String?
     let isVerified: Bool
     let targetLanguages: [String]
 }

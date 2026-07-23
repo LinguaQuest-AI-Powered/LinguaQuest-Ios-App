@@ -8,36 +8,41 @@ import SwiftUI
 struct CaptureCardView: View {
     let item: CapturedItem
     
+    @Environment(\.colorScheme) private var colorScheme
+    
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(alignment: .leading, spacing: 12) {
             
             ZStack(alignment: .topTrailing) {
-                
-                Rectangle()
-                    .fill(Color.appCardImageBackground)
-                    .overlay(
-                        Image(asset: Image.Asset(rawValue: item.image) ?? .apple)
+                Group {
+                    if let data = item.imageData, let uiImage = UIImage(data: data) {
+                        Image(uiImage: uiImage)
                             .resizable()
                             .scaledToFill()
-                    )
-                    .clipped()
-                    .border(Color.appSurfaceCard, width: 7)
-                
+                    } else {
+                        Image(asset: Image.Asset(rawValue: item.image ?? "") ?? .apple)
+                            .resizable()
+                            .scaledToFill()
+                    }
+                }
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .frame(height: 140)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(Color.appSurfaceCard.opacity(0.72), lineWidth: 2)
+                )
                 
                 Text(item.category.uppercased())
                     .font(.system(size: 10, weight: .black, design: .rounded))
                     .foregroundColor(.white)
                     .padding(.horizontal, 10)
-                    .padding(.vertical, 6)
+                    .padding(.vertical, 5)
                     .background(
-                        Capsule()
-                            .fill(Color.appTealGreen)
-                            .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
+                        Capsule().fill(Color.appTealGreen)
                     )
-                    .padding([.top, .trailing], 10)
+                    .padding(8)
             }
-            .frame(height: 140)
-            
             
             HStack(alignment: .bottom) {
                 VStack(alignment: .leading, spacing: 4) {
@@ -77,11 +82,17 @@ struct CaptureCardView: View {
                     }
                 }
             }
-            .padding(12)
-            .background(Color.appSurfaceCard)
         }
-        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-        .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
+        .padding(12)
+        .background(
+            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                .fill(Color.appSurfaceCard.opacity(colorScheme == .dark ? 0.94 : 0.98))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                .stroke(Color.appBorderLight.opacity(colorScheme == .dark ? 0.6 : 0.8), lineWidth: 1)
+        )
+        .shadow(color: Color.black.opacity(colorScheme == .dark ? 0.20 : 0.08), radius: 14, x: 0, y: 8)
     }
 }
 

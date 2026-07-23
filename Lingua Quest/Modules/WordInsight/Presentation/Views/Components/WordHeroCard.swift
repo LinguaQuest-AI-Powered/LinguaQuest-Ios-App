@@ -16,11 +16,23 @@ struct WordHeroCard: View {
     // MARK: - Body
     var body: some View {
         ZStack(alignment: .bottom) {
-            AsyncImage(url: URL(string: word.imagePath)) { phase in
-                if let image = phase.image {
-                    image.resizable().scaledToFill()
+            Group {
+                if let data = word.imageData, let uiImage = UIImage(data: data) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .scaledToFill()
+                } else if let assetName = word.imageAsset {
+                    Image(assetName)
+                        .resizable()
+                        .scaledToFill()
                 } else {
-                    Color.appBorderLight
+                    AsyncImage(url: URL(string: word.imagePath)) { phase in
+                        if let image = phase.image {
+                            image.resizable().scaledToFill()
+                        } else {
+                            Color.appBorderLight
+                        }
+                    }
                 }
             }
             .frame(height: 240)

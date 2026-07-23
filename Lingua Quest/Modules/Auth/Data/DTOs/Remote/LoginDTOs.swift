@@ -20,14 +20,41 @@ struct LoginResponseDataDTO: Decodable {
     let user: UserDTO
 }
 
+struct TargetLanguageDTO: Decodable {
+    let id: Int
+    let name: String
+    let code: String
+}
+
 struct UserDTO: Decodable {
     let id: Int
-    let username: String
+    let username: String?
     let photo: String?
-    let nativeLanguage: String
+    let nativeLanguage: String?
     let isVerified: Bool
-    // TODO: Confirm this should be [String] or [TargetLanguageDTO].
-    // The Swagger spec defines it as an array of objects ({id, name, code}), but the login example shows [String].
-    // Keeping it as [String] temporarily to match the example, but it may crash if the backend sends objects.
-    let targetLanguages: [String]
+    let targetLanguages: [TargetLanguageDTO]
+    
+    enum CodingKeys: String, CodingKey {
+        case id, username, photo, nativeLanguage, isVerified, targetLanguages
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(Int.self, forKey: .id)
+        username = try container.decodeIfPresent(String.self, forKey: .username)
+        photo = try container.decodeIfPresent(String.self, forKey: .photo)
+        nativeLanguage = try container.decodeIfPresent(String.self, forKey: .nativeLanguage)
+        isVerified = try container.decode(Bool.self, forKey: .isVerified)
+        
+        // Flexible decoder to safely handle both arrays of objects (Swagger Schema) and flat strings (Swagger Login Example)
+        if let objects = try? container.decode([TargetLanguageDTO].self, forKey: .targetLanguages) {
+            targetLanguages = objects
+        } else if let strings = try? container.decode([String].self, forKey: .targetLanguages) {
+            targetLanguages = strings.enumerated().map { index, name in
+                TargetLanguageDTO(id: index, name: name, code: "")
+            }
+        } else {
+            targetLanguages = []
+        }
+    }
 }

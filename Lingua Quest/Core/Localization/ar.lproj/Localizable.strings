@@ -265,6 +265,11 @@
 "edit_profile.info_text" = "اسمك ونبذتك التعريفية مرئية للمستكشفين الآخرين في قائمة المتصدرين.";
 "edit_profile.save_changes" = "حفظ التغييرات";
 "edit_profile.cancel" = "إلغاء";
+"edit_profile.choose_photo_source" = "اختر صورة الملف الشخصي";
+"edit_profile.camera" = "الكاميرا";
+"edit_profile.gallery" = "معرض الصور";
+"edit_profile.uploading_photo" = "جاري رفع الصورة...";
+
 
 // My Languages & Add Language
 "home.my_languages_title" = "لغاتي";
@@ -274,6 +279,8 @@
 "add_language.search_placeholder" = "ابحث عن اللغات...";
 "add_language.add_selected_format" = "إضافة المحدد (%d)";
 "add_language.add_selected" = "إضافة المحدد";
+"auth_error_oauth_profile_setup_coming_soon" = "إعداد الملف الشخصي عبر تسجيل الدخول الاجتماعي سيكون متاحاً قريباً.";
+"auth_error_oauth_cancelled_or_failed" = "تم إلغاء تسجيل الدخول أو فشل.";
 
 "home.start" = "ابدأ";
 "home.voice_practice_title" = "التدريب الصوتي";
@@ -305,3 +312,14 @@
 "speaking_lab.evaluating_subtitle" = "نستمع بدقة لطريقة نطقك للكلمات.";
 "speaking_lab.loading_sentences" = "جاري تحميل الجمل...";
 "speaking_lab.failed_to_load" = "فشل تحميل الجمل";
+
+"settings.daily_reminder" = "تذكير يومي";
+"settings.reminder_time" = "وقت التذكير";
+"settings.repeat" = "تكرار";
+"settings.repeat_every_day" = "كل يوم";
+"settings.repeat_weekdays" = "أيام الأسبوع";
+"settings.repeat_weekends" = "عطلة نهاية الأسبوع";
+"settings.repeat_custom" = "مخصص";
+"settings.toast_notifications_enabled" = "تم تفعيل الإشعارات.";
+"settings.toast_notifications_paused" = "تم إيقاف الإشعارات. التذكير اليومي متوقف.";
+"settings.select_reminder_time" = "اختر وقت التذكير";

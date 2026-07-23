@@ -9,9 +9,11 @@ import Foundation
 
 final class ProfileRepositoryImpl: ProfileRepositoryProtocol {
     private let remoteDataSource: ProfileRemoteDataSourceProtocol
+    private let tokenStorage: SecureTokenStorageProtocol
 
-    init(remoteDataSource: ProfileRemoteDataSourceProtocol) {
+    init(remoteDataSource: ProfileRemoteDataSourceProtocol, tokenStorage: SecureTokenStorageProtocol) {
         self.remoteDataSource = remoteDataSource
+        self.tokenStorage = tokenStorage
     }
 
     func getProfile() async throws -> UserProfileEntity {
@@ -41,25 +43,58 @@ final class ProfileRepositoryImpl: ProfileRepositoryProtocol {
         
         return UserProfileEntity(
             id: "\(data.id)",
-            username: data.username,
+            username: data.username ?? "User",
             nativeLanguage: data.nativeLanguage,
             avatarUrl: data.photoUrl,
-            level: data.level,
-            coins: data.stats.coins,
-            totalXp: data.stats.totalXp,
-            streakDays: data.stats.streakDays,
-            worldsCount: data.stats.worldsCount,
-            currentLanguageName: data.currentLanguageJourney.name,
-            currentLanguageCode: data.currentLanguageJourney.code,
-            currentLanguageId: data.currentLanguageJourney.languageId,
-            currentLanguageLevel: data.currentLanguageJourney.level,
-            journeyLabel: data.currentLanguageJourney.journeyLabel,
-            currentXp: data.currentLanguageJourney.currentXp,
-            nextMilestoneXp: data.currentLanguageJourney.nextMilestoneXp,
+            level: data.level ?? 1,
+            coins: data.stats?.coins ?? 0,
+            totalXp: data.stats?.totalXp ?? 0,
+            streakDays: data.stats?.streakDays ?? 0,
+            worldsCount: data.stats?.worldsCount ?? 0,
+            currentLanguageName: data.currentLanguageJourney?.name ?? "",
+            currentLanguageCode: data.currentLanguageJourney?.code ?? "",
+            currentLanguageId: data.currentLanguageJourney?.languageId ?? 0,
+            currentLanguageLevel: data.currentLanguageJourney?.level ?? 1,
+            journeyLabel: data.currentLanguageJourney?.journeyLabel ?? "",
+            currentXp: data.currentLanguageJourney?.currentXp ?? 0,
+            nextMilestoneXp: data.currentLanguageJourney?.nextMilestoneXp ?? 100,
             achievementsCount: data.achievementsSummary?.earnedCount ?? 0,
             totalAchievements: data.achievementsSummary?.totalCount ?? 0,
             achievements: achievements,
             topExplorers: explorers
         )
     }
+
+    func completeProfile(nativeLanguageId: Int, targetLanguageId: Int, username: String?) async throws -> (session: AuthSessionEntity, user: UserEntity, profileComplete: Bool) {
+        do {
+            let response = try await remoteDataSource.completeProfile(
+                nativeLanguageId: nativeLanguageId,
+                targetLanguageId: targetLanguageId,
+                username: username
+            )
+            
+            let result = AuthDTOMapper.mapOAuthLogin(response.data)
+            
+            // Save the new tokens!
+            tokenStorage.saveSession(
+                accessToken: result.session.accessToken,
+                refreshToken: result.session.refreshToken
+            )
+            
+            return result
+        } catch {
+            throw AuthDTOMapper.mapError(error)
+        }
+    }
+
+    func uploadPhoto(imageData: Data, mimeType: String) async throws -> String {
+        let response = try await remoteDataSource.uploadPhoto(imageData: imageData, mimeType: mimeType)
+        return response.data.photoUrl
+    }
+    
+    func updateProfile(username: String) async throws -> String {
+        let response = try await remoteDataSource.updateProfile(username: username)
+        return response.data.username
+    }
 }
+

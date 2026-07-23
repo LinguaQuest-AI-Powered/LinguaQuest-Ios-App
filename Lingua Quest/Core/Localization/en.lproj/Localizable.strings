@@ -264,6 +264,11 @@
 "edit_profile.info_text" = "Your name and bio are visible to other explorers in the Leaderboard.";
 "edit_profile.save_changes" = "Save Changes";
 "edit_profile.cancel" = "Cancel";
+"edit_profile.choose_photo_source" = "Choose Profile Photo";
+"edit_profile.camera" = "Camera";
+"edit_profile.gallery" = "Gallery";
+"edit_profile.uploading_photo" = "Uploading photo...";
+
 // My Languages & Add Language
 "home.my_languages_title" = "My Languages";
 "home.add_new_language" = "Add New Language";
@@ -272,6 +277,8 @@
 "add_language.search_placeholder" = "Search languages...";
 "add_language.add_selected_format" = "Add Selected (%d)";
 "add_language.add_selected" = "Add Selected";
+"auth_error_oauth_profile_setup_coming_soon" = "Profile setup for OAuth is coming soon.";
+"auth_error_oauth_cancelled_or_failed" = "Sign in with Google/Apple was cancelled or failed.";
 
 "home.start" = "Start";
 "home.voice_practice_title" = "Voice Practice";
@@ -303,3 +310,14 @@
 "speaking_lab.evaluating_subtitle" = "Listening closely to your pronunciation.";
 "speaking_lab.loading_sentences" = "Loading Sentences...";
 "speaking_lab.failed_to_load" = "Failed to load sentences";
+
+"settings.daily_reminder" = "Daily Reminder";
+"settings.reminder_time" = "Reminder Time";
+"settings.repeat" = "Repeat";
+"settings.repeat_every_day" = "Every Day";
+"settings.repeat_weekdays" = "Weekdays";
+"settings.repeat_weekends" = "Weekends";
+"settings.repeat_custom" = "Custom";
+"settings.toast_notifications_enabled" = "Notifications enabled.";
+"settings.toast_notifications_paused" = "Notifications off. Daily reminder paused.";
+"settings.select_reminder_time" = "Select Reminder Time";

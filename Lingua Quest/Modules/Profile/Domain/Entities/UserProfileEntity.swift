@@ -10,7 +10,7 @@ import Foundation
 struct UserProfileEntity {
     let id: String
     let username: String
-    let nativeLanguage: String
+    let nativeLanguage: String?
     let avatarUrl: String?
     let level: Int
     

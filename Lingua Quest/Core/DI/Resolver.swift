@@ -22,8 +22,8 @@ final class Resolver {
         _ = Assembler(
             [
                 NetworkAssembly(), RouterAssembly(), StorageAssembly(),
-                AuthAssembly(), OnboardingAssembly(), GameAssembly(),
-                LeaderboardAssembly(), ProfileAssembly(), SettingsAssembly(),
+                AuthAssembly(), OnboardingAssembly(), GameAssembly(), GalleryAssembly(),
+                LeaderboardAssembly(), ProfileAssembly(), SettingsAssembly(),HomeAssembly(),
                 WordInsightAssembly(), AllWorldsAssembly(), AchievementsAssembly(),
                 SpeakingLabAssembly(),
                 SessionAssembly()
@@ -51,6 +51,13 @@ final class Resolver {
     func resolve<T, Arg1>(_ type: T.Type, argument: Arg1) -> T {
         guard let service = container.resolve(type, argument: argument) else {
             fatalError("Failed to resolve type: \(type) with argument: \(argument)")
+        }
+        return service
+    }
+    
+    func resolve<T, Arg1, Arg2>(_ type: T.Type, arguments arg1: Arg1, _ arg2: Arg2) -> T {
+        guard let service = container.resolve(type, arguments: arg1, arg2) else {
+            fatalError("Failed to resolve type: \(type) with arguments: \(arg1), \(arg2)")
         }
         return service
     }

@@ -23,11 +23,21 @@ protocol Endpoint {
     /// Defaults to true per the API contract ("all endpoints outside /auth/** require authentication").
     /// Auth endpoints that don't need it explicitly override this to false.
     var requiresAuth: Bool { get }
+    func asURLRequest() throws -> URLRequest
 }
 
 extension Endpoint {
     var baseURL: URL { AppConfig.baseURL }
-    var headers: [String: String]? { ["Content-Type": "application/json"] }
+    var headers: [String: String]? {
+        var dict = ["Content-Type": "application/json"]
+        if requiresAuth {
+            // The mock server requires a Bearer token.
+            // We use the actual token if available, otherwise a dummy token to satisfy the mock server's OpenAPI validation.
+            let token = SecureTokenStorage().getAccessToken() ?? "dummy_mock_token"
+            dict["Authorization"] = "Bearer \(token)"
+        }
+        return dict
+    }
     var queryItems: [URLQueryItem]? { nil }
     var requiresAuth: Bool { true }
 

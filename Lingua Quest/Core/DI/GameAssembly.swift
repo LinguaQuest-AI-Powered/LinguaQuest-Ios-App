@@ -6,6 +6,7 @@
 //
 
 
+import Foundation
 import Swinject
 
 @MainActor
@@ -41,9 +42,10 @@ final class GameAssembly: Assembly {
             return CameraCaptureViewModel(targetWord: targetWord, router: router)
         }
         
-        container.register(CameraResultViewModel.self) { (resolver, targetWord: String) in
+        container.register(CameraResultViewModel.self) { (resolver, targetWord: String, imageData: Data?) in
             let router = resolver.resolve(RouterProtocol.self)!
-            return CameraResultViewModel(targetWord: targetWord, router: router)
+            let saveUseCase = resolver.resolve(SaveCapturedItemUseCase.self)!
+            return CameraResultViewModel(targetWord: targetWord, imageData: imageData, saveUseCase: saveUseCase, router: router)
         }
     }
 }

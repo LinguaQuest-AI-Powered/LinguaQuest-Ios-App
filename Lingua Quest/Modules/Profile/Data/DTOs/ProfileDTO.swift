@@ -12,14 +12,40 @@ struct ProfileResponseDTO: Decodable {
     let data: ProfileDataDTO
 }
 
-struct ProfileDataDTO: Decodable {
+// MARK: - Update Profile
+struct UpdateProfileRequestDTO: Encodable {
+    let username: String
+}
+
+struct UpdateProfileResponseDTO: Decodable {
+    let success: Bool
+    let data: UpdateProfileDataDTO
+}
+
+struct UpdateProfileDataDTO: Decodable {
     let id: Int
     let username: String
-    let nativeLanguage: String
+}
+
+struct UploadPhotoResponseDTO: Decodable {
+    let success: Bool
+    let data: UploadPhotoDataDTO
+}
+
+struct UploadPhotoDataDTO: Decodable {
+    let photoUrl: String
+}
+
+
+struct ProfileDataDTO: Decodable {
+    let id: Int
+    let email: String
+    let username: String?
+    let nativeLanguage: String?
     let photoUrl: String?
-    let level: Int
-    let stats: ProfileStatsDTO
-    let currentLanguageJourney: ProfileJourneyDTO
+    let level: Int?
+    let stats: ProfileStatsDTO?
+    let currentLanguageJourney: ProfileJourneyDTO?
     let achievementsSummary: ProfileAchievementsSummaryDTO?
     let leaderboardSummary: ProfileLeaderboardSummaryDTO?
 }

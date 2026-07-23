@@ -10,7 +10,15 @@
 		15A61621300F74EC00F19795 /* FirebaseAILogic in Frameworks */ = {isa = PBXBuildFile; productRef = 15A61620300F74EC00F19795 /* FirebaseAILogic */; };
 		15A61623300F74EC00F19795 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 15A61622300F74EC00F19795 /* FirebaseFirestore */; };
 		33A0F053300C347200611A63 /* FirebaseAI in Frameworks */ = {isa = PBXBuildFile; productRef = 33A0F052300C347200611A63 /* FirebaseAI */; };
+		33AFF8B4300F3670002F5017 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 33AFF8B3300F3670002F5017 /* FirebaseAuth */; };
+		33AFF8B7300F37A3002F5017 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 33AFF8B6300F37A3002F5017 /* GoogleSignIn */; };
+		33AFF8B9300F37A3002F5017 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 33AFF8B8300F37A3002F5017 /* GoogleSignInSwift */; };
+		3F65F092E9CC7B40F998F78C /* SwiftDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CC9E8558BD408E124A1904 /* SwiftDataManager.swift */; };
+		3FA9F46862CA6368C1A8BB81 /* GalleryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E756B6B0EC24234F84F9F3 /* GalleryViewModel.swift */; };
+		4E87E6474BBE05BEA0DA6AFF /* GalleryAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274751E695A446C8579FD14F /* GalleryAssembly.swift */; };
 		6D3CA5B03008808A00736812 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 6D3CA5AF3008808A00736812 /* Swinject */; };
+		9465035612FCCC4429C23DCE /* GetCapturedItemsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374933684ACF5CC8B4F363D9 /* GetCapturedItemsUseCase.swift */; };
+		F00CFA7C9A8D9AE95D3C35A6 /* SaveCapturedItemUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D24671A8C580A100F31D040 /* SaveCapturedItemUseCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,14 +39,39 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		14CC9E8558BD408E124A1904 /* SwiftDataManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SwiftDataManager.swift; sourceTree = "<group>"; };
 		1529B3663006410300CCD74A /* Lingua Quest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lingua Quest.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1529B3753006410600CCD74A /* Lingua QuestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Lingua QuestTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1529B37F3006410600CCD74A /* Lingua QuestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Lingua QuestUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		22E756B6B0EC24234F84F9F3 /* GalleryViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GalleryViewModel.swift; sourceTree = "<group>"; };
+		274751E695A446C8579FD14F /* GalleryAssembly.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GalleryAssembly.swift; sourceTree = "<group>"; };
+		33A040A6F42437407FCF156C /* GalleryRepositoryImpl.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GalleryRepositoryImpl.swift; sourceTree = "<group>"; };
+		374933684ACF5CC8B4F363D9 /* GetCapturedItemsUseCase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GetCapturedItemsUseCase.swift; sourceTree = "<group>"; };
+		6D24671A8C580A100F31D040 /* SaveCapturedItemUseCase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SaveCapturedItemUseCase.swift; sourceTree = "<group>"; };
+		72C55344454CFE1C8A6429D8 /* GalleryRepositoryProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GalleryRepositoryProtocol.swift; sourceTree = "<group>"; };
+		73B8E16E28F30EB922FC809B /* CapturedItemEntity.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CapturedItemEntity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		6DE398FC30108D1800F498A7 /* Exceptions for "Lingua Quest" folder in "Lingua Quest" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Core/DI/GalleryAssembly.swift,
+				Core/Storage/SwiftDataManager.swift,
+				Modules/Gallery/Domain/UseCases/GetCapturedItemsUseCase.swift,
+				Modules/Gallery/Domain/UseCases/SaveCapturedItemUseCase.swift,
+				Modules/Gallery/Presentation/ViewModels/GalleryViewModel.swift,
+			);
+			target = 1529B3653006410300CCD74A /* Lingua Quest */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		1529B3683006410300CCD74A /* Lingua Quest */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				6DE398FC30108D1800F498A7 /* Exceptions for "Lingua Quest" folder in "Lingua Quest" target */,
+			);
 			path = "Lingua Quest";
 			sourceTree = "<group>";
 		};
@@ -61,7 +94,10 @@
 			files = (
 				15A61621300F74EC00F19795 /* FirebaseAILogic in Frameworks */,
 				15A61623300F74EC00F19795 /* FirebaseFirestore in Frameworks */,
+				33AFF8B9300F37A3002F5017 /* GoogleSignInSwift in Frameworks */,
 				6D3CA5B03008808A00736812 /* Swinject in Frameworks */,
+				33AFF8B7300F37A3002F5017 /* GoogleSignIn in Frameworks */,
+				33AFF8B4300F3670002F5017 /* FirebaseAuth in Frameworks */,
 				33A0F053300C347200611A63 /* FirebaseAI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -83,13 +119,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		005216CDB39C3B3C16E9BF13 /* RepositoryImpl */ = {
+			isa = PBXGroup;
+			children = (
+				33A040A6F42437407FCF156C /* GalleryRepositoryImpl.swift */,
+			);
+			path = RepositoryImpl;
+			sourceTree = "<group>";
+		};
 		1529B35D3006410300CCD74A = {
 			isa = PBXGroup;
 			children = (
 				1529B3683006410300CCD74A /* Lingua Quest */,
 				1529B3783006410600CCD74A /* Lingua QuestTests */,
 				1529B3823006410600CCD74A /* Lingua QuestUITests */,
+				33AFF8B2300F366F002F5017 /* Frameworks */,
 				1529B3673006410300CCD74A /* Products */,
+				54896DB26D6A8508CC78E1C6 /* Lingua Quest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,6 +147,132 @@
 				1529B37F3006410600CCD74A /* Lingua QuestUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		2549924D3844E97C7CB278C0 /* DataSources */ = {
+			isa = PBXGroup;
+			children = (
+				3C9F7BD864FB67D69CC0B08A /* Local */,
+			);
+			path = DataSources;
+			sourceTree = "<group>";
+		};
+		2D544AED9D960102B0E25112 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				72C55344454CFE1C8A6429D8 /* GalleryRepositoryProtocol.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		30FFAEAAA63DC5B3594B5123 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				22E756B6B0EC24234F84F9F3 /* GalleryViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		33AFF8B2300F366F002F5017 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3C9F7BD864FB67D69CC0B08A /* Local */ = {
+			isa = PBXGroup;
+			children = (
+				73B8E16E28F30EB922FC809B /* CapturedItemEntity.swift */,
+			);
+			path = Local;
+			sourceTree = "<group>";
+		};
+		4B830D93CC2FB534756C4F50 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				30FFAEAAA63DC5B3594B5123 /* ViewModels */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		54896DB26D6A8508CC78E1C6 /* Lingua Quest */ = {
+			isa = PBXGroup;
+			children = (
+				95F257BBC50A33E06AE83044 /* Modules */,
+				776BEF3EE1C1A547C0925596 /* Core */,
+			);
+			path = "Lingua Quest";
+			sourceTree = "<group>";
+		};
+		776BEF3EE1C1A547C0925596 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				90C8EE3866DC2D704CE495BD /* Storage */,
+				E1AFBB728F59997168F36EBC /* DI */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		8861011EEF016E063A7856F9 /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				374933684ACF5CC8B4F363D9 /* GetCapturedItemsUseCase.swift */,
+				6D24671A8C580A100F31D040 /* SaveCapturedItemUseCase.swift */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		8FCD1194222668AF0CA1196A /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				2549924D3844E97C7CB278C0 /* DataSources */,
+				005216CDB39C3B3C16E9BF13 /* RepositoryImpl */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		90C8EE3866DC2D704CE495BD /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				14CC9E8558BD408E124A1904 /* SwiftDataManager.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		95F257BBC50A33E06AE83044 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				E61D847238286601B1CF6F74 /* Gallery */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		D0301632B4BF1C4B1FCF9EBC /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				2D544AED9D960102B0E25112 /* Repositories */,
+				8861011EEF016E063A7856F9 /* UseCases */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		E1AFBB728F59997168F36EBC /* DI */ = {
+			isa = PBXGroup;
+			children = (
+				274751E695A446C8579FD14F /* GalleryAssembly.swift */,
+			);
+			path = DI;
+			sourceTree = "<group>";
+		};
+		E61D847238286601B1CF6F74 /* Gallery */ = {
+			isa = PBXGroup;
+			children = (
+				8FCD1194222668AF0CA1196A /* Data */,
+				D0301632B4BF1C4B1FCF9EBC /* Domain */,
+				4B830D93CC2FB534756C4F50 /* Presentation */,
+			);
+			path = Gallery;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,6 +299,9 @@
 				33A0F052300C347200611A63 /* FirebaseAI */,
 				15A61620300F74EC00F19795 /* FirebaseAILogic */,
 				15A61622300F74EC00F19795 /* FirebaseFirestore */,
+				33AFF8B3300F3670002F5017 /* FirebaseAuth */,
+				33AFF8B6300F37A3002F5017 /* GoogleSignIn */,
+				33AFF8B8300F37A3002F5017 /* GoogleSignInSwift */,
 			);
 			productName = "Lingua Quest";
 			productReference = 1529B3663006410300CCD74A /* Lingua Quest.app */;
@@ -149,8 +324,6 @@
 				1529B3783006410600CCD74A /* Lingua QuestTests */,
 			);
 			name = "Lingua QuestTests";
-			packageProductDependencies = (
-			);
 			productName = "Lingua QuestTests";
 			productReference = 1529B3753006410600CCD74A /* Lingua QuestTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -172,8 +345,6 @@
 				1529B3823006410600CCD74A /* Lingua QuestUITests */,
 			);
 			name = "Lingua QuestUITests";
-			packageProductDependencies = (
-			);
 			productName = "Lingua QuestUITests";
 			productReference = 1529B37F3006410600CCD74A /* Lingua QuestUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -214,6 +385,7 @@
 			packageReferences = (
 				6D3CA5AE3008808A00736812 /* XCRemoteSwiftPackageReference "Swinject" */,
 				33A0F051300C347200611A63 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				33AFF8B5300F37A3002F5017 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1529B3673006410300CCD74A /* Products */;
@@ -256,6 +428,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9465035612FCCC4429C23DCE /* GetCapturedItemsUseCase.swift in Sources */,
+				F00CFA7C9A8D9AE95D3C35A6 /* SaveCapturedItemUseCase.swift in Sources */,
+				3FA9F46862CA6368C1A8BB81 /* GalleryViewModel.swift in Sources */,
+				3F65F092E9CC7B40F998F78C /* SwiftDataManager.swift in Sources */,
+				4E87E6474BBE05BEA0DA6AFF /* GalleryAssembly.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,6 +598,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Lingua Quest/Lingua Quest.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
@@ -429,6 +607,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to scan items for the game quests.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need access to your microphone so you can practice speaking and pronouncing sentences.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to update your profile photo.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -458,6 +637,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Lingua Quest/Lingua Quest.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
@@ -466,6 +646,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to scan items for the game quests.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need access to your microphone so you can practice speaking and pronouncing sentences.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to update your profile photo.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -490,6 +671,8 @@
 		};
 		1529B38D3006410600CCD74A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 1529B3683006410300CCD74A /* Lingua Quest */;
+			baseConfigurationReferenceRelativePath = App/Config.xcconfig;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -511,6 +694,8 @@
 		};
 		1529B38E3006410600CCD74A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 1529B3683006410300CCD74A /* Lingua Quest */;
+			baseConfigurationReferenceRelativePath = App/Config.xcconfig;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -532,6 +717,8 @@
 		};
 		1529B3903006410600CCD74A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 1529B3683006410300CCD74A /* Lingua Quest */;
+			baseConfigurationReferenceRelativePath = App/Config.xcconfig;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -551,6 +738,8 @@
 		};
 		1529B3913006410600CCD74A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 1529B3683006410300CCD74A /* Lingua Quest */;
+			baseConfigurationReferenceRelativePath = App/Config.xcconfig;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -618,6 +807,14 @@
 				minimumVersion = 12.16.0;
 			};
 		};
+		33AFF8B5300F37A3002F5017 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.2.0;
+			};
+		};
 		6D3CA5AE3008808A00736812 /* XCRemoteSwiftPackageReference "Swinject" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Swinject/Swinject.git";
@@ -643,6 +840,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 33A0F051300C347200611A63 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAI;
+		};
+		33AFF8B3300F3670002F5017 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 33A0F051300C347200611A63 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		33AFF8B6300F37A3002F5017 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 33AFF8B5300F37A3002F5017 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		33AFF8B8300F37A3002F5017 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 33AFF8B5300F37A3002F5017 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
 		};
 		6D3CA5AF3008808A00736812 /* Swinject */ = {
 			isa = XCSwiftPackageProductDependency;

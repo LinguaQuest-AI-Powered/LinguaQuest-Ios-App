@@ -3,19 +3,16 @@ import SwiftUI
 struct AddLanguageView: View {
     @Environment(\.dismiss) var dismiss
     @Environment(\.colorScheme) private var colorScheme
-    @Binding var userLanguages: [UserLearningLanguage]
+    @Bindable var languageViewModel: LanguageViewModel
     
     @State private var searchText: String = ""
-    @State private var selectedLanguages: Set<UUID> = []
+    @State private var selectedLanguageIds: Set<Int> = []
     
-    // All available languages from OnboardingEntities
-    private let allLanguages = Language.allGlobalLanguages
-    
-    var filteredLanguages: [Language] {
+    var filteredLanguages: [AvailableLanguage] {
         if searchText.isEmpty {
-            return allLanguages
+            return languageViewModel.availableLanguages
         } else {
-            return allLanguages.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+            return languageViewModel.availableLanguages.filter { $0.name.lowercased().contains(searchText.lowercased()) }
         }
     }
     
@@ -73,12 +70,12 @@ struct AddLanguageView: View {
                     ForEach(filteredLanguages) { language in
                         LanguageGridCell(
                             language: language,
-                            isSelected: selectedLanguages.contains(language.id),
+                            isSelected: selectedLanguageIds.contains(language.id),
                             action: {
-                                if selectedLanguages.contains(language.id) {
-                                    selectedLanguages.remove(language.id)
+                                if selectedLanguageIds.contains(language.id) {
+                                    selectedLanguageIds.remove(language.id)
                                 } else {
-                                    selectedLanguages.insert(language.id)
+                                    selectedLanguageIds.insert(language.id)
                                 }
                             }
                         )
@@ -96,12 +93,14 @@ struct AddLanguageView: View {
             VStack {
                 CustomButton(
                     type: .primary,
-                    text: selectedLanguages.isEmpty ? L10n.AddLanguage.addSelected : L10n.AddLanguage.addSelectedFormat(selectedLanguages.count),
+                    text: selectedLanguageIds.isEmpty ? L10n.AddLanguage.addSelected : L10n.AddLanguage.addSelectedFormat(selectedLanguageIds.count),
                     action: {
-                        addSelectedLanguages()
-                        dismiss()
+                        Task {
+                            await languageViewModel.addLanguages(languageIds: Array(selectedLanguageIds))
+                            dismiss()
+                        }
                     },
-                    status: selectedLanguages.isEmpty ? .disable : .enable
+                    status: selectedLanguageIds.isEmpty ? .disable : .enable
                 )
                 .padding(.horizontal, 24)
                 .padding(.bottom, 32)
@@ -115,15 +114,9 @@ struct AddLanguageView: View {
                 )
             )
         }
-    }
-    
-    private func addSelectedLanguages() {
-        let languagesToAdd = allLanguages.filter { selectedLanguages.contains($0.id) }
-        
-        for lang in languagesToAdd {
-            // Don't add if already exists
-            if !userLanguages.contains(where: { $0.language.id == lang.id }) {
-                userLanguages.append(UserLearningLanguage(language: lang, level: 1))
+        .onAppear {
+            Task {
+                await languageViewModel.loadAvailableLanguages()
             }
         }
     }
@@ -131,7 +124,7 @@ struct AddLanguageView: View {
 
 struct LanguageGridCell: View {
     @Environment(\.colorScheme) private var colorScheme
-    let language: Language
+    let language: AvailableLanguage
     let isSelected: Bool
     let action: () -> Void
     
@@ -168,7 +161,7 @@ struct LanguageGridCell: View {
                         .frame(width: 60, height: 60)
                         .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
                     
-                    Text(language.flag)
+                    Text(language.flagEmoji)
                         .font(.system(size: 36))
                 }
                 
@@ -193,6 +186,6 @@ struct LanguageGridCell: View {
     }
 }
 
-#Preview {
-    AddLanguageView(userLanguages: .constant([]))
-}
+// #Preview {
+//     AddLanguageView(languageViewModel: LanguageViewModel(...))
+// }

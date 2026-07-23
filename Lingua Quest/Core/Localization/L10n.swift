@@ -96,6 +96,8 @@ enum L10n {
             static var allFieldsRequired: String { localized("auth_error_all_fields_required") }
             static var invalidEmailFormat: String { localized("auth_error_invalid_email_format") }
             static var invalidUsernameFormat: String { localized("auth_error_invalid_username_format") }
+            static var oauthProfileSetupComingSoon: String { localized("auth_error_oauth_profile_setup_coming_soon") }
+            static var oauthCancelledOrFailed: String { localized("auth_error_oauth_cancelled_or_failed") }
         }
     }
     
@@ -292,6 +294,18 @@ enum L10n {
         static var logOut: String { localized("settings.log_out") }
         static var logOutConfirmation: String { localized("settings.log_out_confirmation") }
         static var chooseLanguage: String { localized("settings.choose_language") }
+        
+        static var dailyReminder: String { localized("settings.daily_reminder") }
+        static var reminderTime: String { localized("settings.reminder_time") }
+        static var repeatFrequency: String { localized("settings.repeat") }
+        static var repeatEveryDay: String { localized("settings.repeat_every_day") }
+        static var repeatWeekdays: String { localized("settings.repeat_weekdays") }
+        static var repeatWeekends: String { localized("settings.repeat_weekends") }
+        static var repeatCustom: String { localized("settings.repeat_custom") }
+        
+        static var notificationsEnabledToast: String { localized("settings.toast_notifications_enabled") }
+        static var notificationsPausedToast: String { localized("settings.toast_notifications_paused") }
+        static var selectReminderTime: String { localized("settings.select_reminder_time") }
     }
     
     enum WordInsight {
@@ -346,7 +360,12 @@ enum L10n {
         static var infoText: String { localized("edit_profile.info_text") }
         static var saveChanges: String { localized("edit_profile.save_changes") }
         static var cancel: String { localized("edit_profile.cancel") }
+        static var choosePhotoSource: String { localized("edit_profile.choose_photo_source") }
+        static var camera: String { localized("edit_profile.camera") }
+        static var gallery: String { localized("edit_profile.gallery") }
+        static var uploadingPhoto: String { localized("edit_profile.uploading_photo") }
     }
+
 
     enum AddLanguage {
         static var title: String { localized("add_language.title") }

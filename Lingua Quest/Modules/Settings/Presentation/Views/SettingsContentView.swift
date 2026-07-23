@@ -18,6 +18,7 @@ struct SettingsContentView: View {
     var onHelpTapped: () -> Void
     var onAboutTapped: () -> Void
     var onLogOutTapped: () -> Void
+    var onRepeatTapped: () -> Void
     
     // MARK: - Body
     var body: some View {
@@ -45,6 +46,13 @@ struct SettingsContentView: View {
                             onAppLanguageTapped: onAppLanguageTapped,
                             onHelpTapped: onHelpTapped,
                             onAboutTapped: onAboutTapped
+                        )
+                        
+                        DailyReminderSection(
+                            dailyReminderEnabled: $viewModel.dailyReminderEnabled,
+                            reminderTime: $viewModel.reminderTime,
+                            repeatText: viewModel.getRepeatDaysText(),
+                            onRepeatTapped: onRepeatTapped
                         )
                         
                         SettingsFooterSection(

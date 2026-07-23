@@ -107,4 +107,15 @@ final class AuthRemoteDataSource: AuthRemoteDataSourceProtocol {
             return .failure(AuthDTOMapper.mapError(error))
         }
     }
+    
+    func loginWithFirebase(idToken: String) async -> Result<(session: AuthSessionEntity, user: UserEntity, profileComplete: Bool), AuthError> {
+        do {
+            let response: SuccessResponseDTO<OAuthResponseDataDTO> = try await apiClient.request(
+                AuthEndpoint.FirebaseLogin(idToken: idToken)
+            )
+            return .success(AuthDTOMapper.mapOAuthLogin(response.data))
+        } catch {
+            return .failure(AuthDTOMapper.mapError(error))
+        }
+    }
 }

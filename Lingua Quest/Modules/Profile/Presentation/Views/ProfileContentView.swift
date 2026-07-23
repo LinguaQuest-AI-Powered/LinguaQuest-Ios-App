@@ -50,9 +50,10 @@ struct ProfileContentView: View {
                     ProfileHeader(
                         userName: userName,
                         userLevel: userLevel,
-                        avatarImage: "user1",
+                        avatarImage: avatarImage,
                         onEditTapped: onEditProfile
                     )
+
                     .padding(.top, 24)
                     .offset(y: animateItems ? 0 : 30)
                     .opacity(animateItems ? 1 : 0)
