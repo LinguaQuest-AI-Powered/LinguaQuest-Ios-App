@@ -12,6 +12,31 @@ struct ProfileResponseDTO: Decodable {
     let data: ProfileDataDTO
 }
 
+// MARK: - Update Profile
+struct UpdateProfileRequestDTO: Encodable {
+    let username: String
+}
+
+struct UpdateProfileResponseDTO: Decodable {
+    let success: Bool
+    let data: UpdateProfileDataDTO
+}
+
+struct UpdateProfileDataDTO: Decodable {
+    let id: Int
+    let username: String
+}
+
+struct UploadPhotoResponseDTO: Decodable {
+    let success: Bool
+    let data: UploadPhotoDataDTO
+}
+
+struct UploadPhotoDataDTO: Decodable {
+    let photoUrl: String
+}
+
+
 struct ProfileDataDTO: Decodable {
     let id: Int
     let email: String

@@ -9,4 +9,7 @@ import Foundation
 
 protocol ProfileRepositoryProtocol {
     func getProfile() async throws -> UserProfileEntity
+    func uploadPhoto(imageData: Data, mimeType: String) async throws -> String
+    func updateProfile(username: String) async throws -> String
 }
+

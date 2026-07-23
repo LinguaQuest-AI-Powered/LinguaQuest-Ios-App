@@ -62,4 +62,15 @@ final class ProfileRepositoryImpl: ProfileRepositoryProtocol {
             topExplorers: explorers
         )
     }
+
+    func uploadPhoto(imageData: Data, mimeType: String) async throws -> String {
+        let response = try await remoteDataSource.uploadPhoto(imageData: imageData, mimeType: mimeType)
+        return response.data.photoUrl
+    }
+    
+    func updateProfile(username: String) async throws -> String {
+        let response = try await remoteDataSource.updateProfile(username: username)
+        return response.data.username
+    }
 }
+
