@@ -14,19 +14,19 @@ struct HomeResponseDTO: Decodable {
 }
 
 struct HomeDataContentDTO: Decodable {
-    let xp: Int
-    let coins: Int
-    let streakDays: Int
+    let xp: Int?
+    let coins: Int?
+    let streakDays: Int?
 }
 
 struct ActiveLanguageDTO: Decodable {
-    let id: Int
-    let name: String
-    let code: String
-    let imageUrl: String
-    let level: Int
-    let levelProgressPercent: Int
-    let exploreWorlds: [ExploreWorldDTO]
+    let id: Int?
+    let name: String?
+    let code: String?
+    let imageUrl: String?
+    let level: Int?
+    let levelProgressPercent: Int?
+    let exploreWorlds: [ExploreWorldDTO]?
 }
 
 struct ExploreWorldDTO: Decodable {
@@ -82,17 +82,17 @@ struct DailyRewardClaimDataDTO: Decodable {
 extension HomeResponseDTO {
     func toDomain() -> HomeData {
         return HomeData(
-            xp: data.xp,
-            coins: data.coins,
-            streakDays: data.streakDays,
+            xp: data.xp ?? 0,
+            coins: data.coins ?? 0,
+            streakDays: data.streakDays ?? 0,
             activeLanguage: ActiveLanguage(
-                id: activeLanguage.id,
-                name: activeLanguage.name,
-                code: activeLanguage.code,
-                imageUrl: activeLanguage.imageUrl,
-                level: activeLanguage.level,
-                levelProgressPercent: activeLanguage.levelProgressPercent,
-                exploreWorlds: activeLanguage.exploreWorlds.map { $0.toDomain() }
+                id: activeLanguage.id ?? 1,
+                name: activeLanguage.name ?? "Unknown",
+                code: activeLanguage.code ?? "EN",
+                imageUrl: activeLanguage.imageUrl ?? "",
+                level: activeLanguage.level ?? 1,
+                levelProgressPercent: activeLanguage.levelProgressPercent ?? 0,
+                exploreWorlds: activeLanguage.exploreWorlds?.map { $0.toDomain() } ?? []
             )
         )
     }
