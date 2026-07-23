@@ -56,6 +56,8 @@ final class OAuthSignInHandler: OAuthSignInHandlerProtocol {
                 userPreferences.isLoggedIn = true
                 if !profileComplete {
                     userPreferences.needsProfileCompletion = true
+                } else {
+                    userPreferences.needsProfileCompletion = false
                 }
                 return .success
 

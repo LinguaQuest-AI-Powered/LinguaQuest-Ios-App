@@ -26,6 +26,7 @@ enum AuthError: Error, Equatable {
     case invalidFirebaseToken
     case unauthenticated
     case internalServerError
+    case profileAlreadyCompleted
     case unknown(String)      // fallback only — raw backend message for logging/debugging
 
     /// Central place to translate a backend errorKey into a strongly-typed AuthError.
@@ -46,6 +47,7 @@ enum AuthError: Error, Equatable {
         case "INVALID_FIREBASE_TOKEN": return .invalidFirebaseToken
         case "UNAUTHENTICATED": return .unauthenticated
         case "INTERNAL_SERVER_ERROR": return .internalServerError
+        case "PROFILE_ALREADY_COMPLETED": return .profileAlreadyCompleted
         default: return .unknown(message)
         }
     }
@@ -71,6 +73,7 @@ extension AuthError: LocalizedError {
         case .invalidFirebaseToken: return L10n.Auth.Error.invalidFirebaseToken
         case .unauthenticated: return L10n.Auth.Error.sessionExpired
         case .internalServerError: return L10n.Auth.Error.internalServerError
+        case .profileAlreadyCompleted: return "Profile is already completed"
         case .unknown: return L10n.Auth.Error.generic
         }
     }

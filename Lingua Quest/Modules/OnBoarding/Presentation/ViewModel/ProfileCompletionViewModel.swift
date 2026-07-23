@@ -103,7 +103,11 @@ final class ProfileCompletionViewModel {
                     case .success:
                         userPreferences.needsProfileCompletion = false
                     case .failure(let error):
-                        errorMessage = error.errorDescription
+                        if case .profileAlreadyCompleted = error {
+                            userPreferences.needsProfileCompletion = false
+                        } else {
+                            errorMessage = error.errorDescription
+                        }
                     }
                 } catch {
                     isLoading = false
