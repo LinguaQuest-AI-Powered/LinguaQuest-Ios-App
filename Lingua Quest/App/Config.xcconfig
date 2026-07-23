@@ -1,0 +1,11 @@
+//
+//  Config.xcconfig
+//  Lingua Quest
+//
+//  Created by TaqieAllah on 21/07/2026.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project
+//API_BASE_URL = https:/$()/linguaquest-api-docs.onrender.com
+API_BASE_URL = https:/$()/linguaquest-backend-d9th.onrender.com/api/v1

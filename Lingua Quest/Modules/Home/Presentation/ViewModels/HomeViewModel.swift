@@ -54,8 +54,15 @@ final class HomeViewModel {
         }
         
         errorMessage = nil
+        
+        if languageViewModel.myLanguages.isEmpty || forceRefresh {
+            await languageViewModel.loadMyLanguages(forceRefresh: forceRefresh)
+        }
+        
+        let currentLangId = languageViewModel.activeLanguage?.id ?? 1
+        
         async let homeDataTask = getHomeDataUseCase.execute()
-        async let worldsTask = getHomeWorldsUseCase.execute(languageId: 1, difficulty: "EASY")
+        async let worldsTask = getHomeWorldsUseCase.execute(languageId: currentLangId, difficulty: "EASY")
         
         do {
             homeData = try await homeDataTask

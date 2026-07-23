@@ -12,7 +12,8 @@ final class AllWorldsAssembly: Assembly {
         container.register(AllWorldsViewModel.self) { resolver in
             let router = resolver.resolve(RouterProtocol.self)!
             let getHomeWorldsUseCase = resolver.resolve(GetHomeWorldsUseCaseProtocol.self)!
-            return AllWorldsViewModel(router: router, getHomeWorldsUseCase: getHomeWorldsUseCase)
+            let languageViewModel = resolver.resolve(LanguageViewModel.self)!
+            return AllWorldsViewModel(router: router, getHomeWorldsUseCase: getHomeWorldsUseCase, languageViewModel: languageViewModel)
         }
     }
 }

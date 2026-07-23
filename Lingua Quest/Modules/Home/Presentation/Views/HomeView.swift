@@ -97,14 +97,6 @@ struct HomeView: View {
                             .opacity(animateItems ? 1 : 0)
                             .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.3), value: animateItems)
 
-                            ContinueLessonCardView(
-                                title: L10n.Home.continueLessonTitle,
-                                lessonName: L10n.Home.lessonApple,
-                                lessonDescription: L10n.Home.lessonAppleDesc,
-                                imageAsset: .appleImage,
-                                buttonText: L10n.Home.continueButton,
-                                action: {}
-                            ).padding(.horizontal, 20)
                             
                             VoicePracticeCardView(action: { router.push(.voiceGame) })
                                 .padding(.horizontal, 20)
