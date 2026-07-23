@@ -54,6 +54,11 @@ final class HomeViewModel {
         }
         
         errorMessage = nil
+        
+        if languageViewModel.myLanguages.isEmpty || forceRefresh {
+            await languageViewModel.loadMyLanguages(forceRefresh: forceRefresh)
+        }
+        
         let currentLangId = languageViewModel.activeLanguage?.id ?? 1
         
         async let homeDataTask = getHomeDataUseCase.execute()
