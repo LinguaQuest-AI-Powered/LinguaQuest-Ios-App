@@ -8,7 +8,14 @@
 import SwiftUI
 
 struct VoicePracticeCardView: View {
+    var completed: Int
+    var total: Int
     var action: () -> Void
+    
+    private var progressFraction: Double {
+        guard total > 0 else { return 0 }
+        return Double(completed) / Double(total)
+    }
     
     var body: some View {
         VStack(spacing: 20) {
@@ -31,12 +38,13 @@ struct VoicePracticeCardView: View {
                                 
                                 Capsule()
                                     .fill(Color.appAccentOrange)
-                                    .frame(width: proxy.size.width * 0.6, height: 10)
+                                    .frame(width: proxy.size.width * progressFraction, height: 10)
+                                    .animation(.spring(response: 0.5, dampingFraction: 0.8), value: progressFraction)
                             }
                         }
                         .frame(height: 10)
                         
-                        Text(L10n.Home.voicePracticeProgress(completed: 3, total: 5))
+                        Text(L10n.Home.voicePracticeProgress(completed: completed, total: total))
                             .font(AppTextStyle.captionMedium.font)
                             .foregroundColor(.appBrandBrown)
                     }
@@ -54,7 +62,7 @@ struct VoicePracticeCardView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 64, height: 64)
-                        .offset(y: 4) // Adjust if the bird needs to sit at the bottom, or remove offset
+                        .offset(y: 4)
                 }
             }
             
@@ -82,7 +90,7 @@ struct VoicePracticeCardView: View {
 #Preview {
     ZStack {
         Color.gray.ignoresSafeArea()
-        VoicePracticeCardView(action: {})
+        VoicePracticeCardView(completed: 2, total: 5, action: {})
             .padding()
     }
 }

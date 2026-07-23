@@ -65,7 +65,6 @@ final class VoiceGameResultViewModel {
         var mappedWords: [WordResult] = []
         
         for word in sentenceWords {
-            // Very simple heuristic to match words regardless of punctuation for display
             let cleanWord = word.components(separatedBy: CharacterSet.alphanumerics.inverted).joined().lowercased()
             let isWrong = result.wrongWords.contains { $0.lowercased() == cleanWord }
             mappedWords.append(WordResult(word: word, isCorrect: !isWrong))
@@ -76,27 +75,28 @@ final class VoiceGameResultViewModel {
         self.coinsEarned = result.rating >= 7 ? 10 : 2
         self.state = result.rating >= 6 ? .success : .failure
         
-        // Save progress asynchronously
-        Task {
-            do {
-                try await saveProgressUseCase.execute(sentenceId: sentence.id, result: result)
-            } catch {
-                print("Failed to save voice progress: \(error)")
+        // Save progress only on success
+        if result.rating >= 6 {
+            Task {
+                do {
+                    try await saveProgressUseCase.execute(sentenceId: sentence.id)
+                } catch {
+                    print("Failed to save voice progress: \(error)")
+                }
             }
         }
     }
     
     func skip() {
-        // Here we could pop back and select the next sentence
-        // For now just return to previous screen
         router.pop()
     }
     
+    /// Retry: pop back to VoiceGameView so user can re-record same sentence
     func playAgain() {
         router.pop()
     }
     
     func onReturnHome() {
-        router.popToRoot() // or appropriate navigation
+        router.popToRoot()
     }
 }

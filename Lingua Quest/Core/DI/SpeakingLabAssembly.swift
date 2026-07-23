@@ -21,11 +21,20 @@ final class SpeakingLabAssembly: Assembly {
             return VoiceProgressRemoteDataSource()
         }.inObjectScope(.container)
         
+        container.register(VoiceSentenceGeneratorDataSourceProtocol.self) { _ in
+            return VoiceSentenceGeneratorDataSource()
+        }.inObjectScope(.container)
+        
         // Repository
         container.register(VoiceEvaluationRepositoryProtocol.self) { resolver in
             let evalDataSource = resolver.resolve(VoiceEvaluationRemoteDataSourceProtocol.self)!
             let progDataSource = resolver.resolve(VoiceProgressRemoteDataSourceProtocol.self)!
-            return VoiceEvaluationRepositoryImpl(evaluationDataSource: evalDataSource, progressDataSource: progDataSource)
+            let genDataSource = resolver.resolve(VoiceSentenceGeneratorDataSourceProtocol.self)!
+            return VoiceEvaluationRepositoryImpl(
+                evaluationDataSource: evalDataSource,
+                progressDataSource: progDataSource,
+                generatorDataSource: genDataSource
+            )
         }.inObjectScope(.container)
         
         // Use Cases
@@ -42,6 +51,11 @@ final class SpeakingLabAssembly: Assembly {
         container.register(SaveVoiceProgressUseCase.self) { resolver in
             let repo = resolver.resolve(VoiceEvaluationRepositoryProtocol.self)!
             return SaveVoiceProgressUseCase(repository: repo)
+        }
+        
+        container.register(GetVoiceProgressUseCase.self) { resolver in
+            let repo = resolver.resolve(VoiceEvaluationRepositoryProtocol.self)!
+            return GetVoiceProgressUseCase(repository: repo)
         }
         
         // Services

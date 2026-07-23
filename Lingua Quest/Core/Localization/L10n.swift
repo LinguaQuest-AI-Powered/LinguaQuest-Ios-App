@@ -381,6 +381,8 @@ enum L10n {
         static var score: String { localized("speaking_lab.score") }
         static var evaluatingTitle: String { localized("speaking_lab.evaluating_title") }
         static var evaluatingSubtitle: String { localized("speaking_lab.evaluating_subtitle") }
+        static var loadingSentences: String { localized("speaking_lab.loading_sentences") }
+        static var failedToLoad: String { localized("speaking_lab.failed_to_load") }
     }
 
     private static func localized(_ key: String) -> String {

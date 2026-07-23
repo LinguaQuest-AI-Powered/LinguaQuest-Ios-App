@@ -13,22 +13,33 @@ class AudioPlayerController: NSObject, ObservableObject, AVAudioPlayerDelegate {
     @Published var isPlaying = false
     private var audioPlayer: AVAudioPlayer?
     
-    func play(data: Data) {
+    func playFromURL(_ url: URL) {
         if isPlaying {
             audioPlayer?.pause()
             isPlaying = false
         } else {
             do {
+                let session = AVAudioSession.sharedInstance()
+                try session.setCategory(.playback, mode: .default)
+                try session.setActive(true)
+                
                 if audioPlayer == nil {
-                    audioPlayer = try AVAudioPlayer(data: data)
+                    audioPlayer = try AVAudioPlayer(contentsOf: url)
                     audioPlayer?.delegate = self
+                    audioPlayer?.prepareToPlay()
                 }
                 audioPlayer?.play()
                 isPlaying = true
             } catch {
-                print("Failed to play audio: \\(error)")
+                print("Failed to play audio: \(error)")
             }
         }
+    }
+    
+    func stop() {
+        audioPlayer?.stop()
+        audioPlayer = nil
+        isPlaying = false
     }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
@@ -39,7 +50,7 @@ class AudioPlayerController: NSObject, ObservableObject, AVAudioPlayerDelegate {
 }
 
 struct ReviewRecordingDialog: View {
-    var audioData: Data
+    var recordingURL: URL
     var audioDuration: Int
     var onDiscard: () -> Void
     var onProcess: () -> Void
@@ -72,10 +83,10 @@ struct ReviewRecordingDialog: View {
                             .padding(.horizontal, 16)
                     }
                     
-                    // Audio Player Mock
+                    // Audio Player
                     HStack(spacing: 16) {
                         Button(action: {
-                            playerController.play(data: audioData)
+                            playerController.playFromURL(recordingURL)
                         }) {
                             Circle()
                                 .fill(Color.appAccentOrange)
@@ -86,9 +97,9 @@ struct ReviewRecordingDialog: View {
                                 )
                         }
                         
-                        // Mock Waveform
+                        // Waveform visualization
                         HStack(spacing: 4) {
-                            ForEach([0.4, 0.7, 1.0, 0.6, 0.8, 1.0, 0.5, 0.9], id: \.self) { scale in
+                            ForEach(Array([0.4, 0.7, 1.0, 0.6, 0.8, 1.0, 0.5, 0.9].enumerated()), id: \.offset) { _, scale in
                                 Capsule()
                                     .fill(Color.appAccentOrange)
                                     .frame(width: 4, height: 24 * scale)
@@ -107,7 +118,10 @@ struct ReviewRecordingDialog: View {
                     
                     // Buttons
                     HStack(spacing: 16) {
-                        Button(action: onDiscard) {
+                        Button(action: {
+                            playerController.stop()
+                            onDiscard()
+                        }) {
                             HStack(spacing: 8) {
                                 Image(systemIcon: .trash)
                                 Text(L10n.SpeakingLab.discard)
@@ -123,7 +137,10 @@ struct ReviewRecordingDialog: View {
                             )
                         }
                         
-                        Button(action: onProcess) {
+                        Button(action: {
+                            playerController.stop()
+                            onProcess()
+                        }) {
                             HStack(spacing: 8) {
                                 Image(systemIcon: .checkmarkCircle)
                                 Text(L10n.SpeakingLab.process)
@@ -139,6 +156,9 @@ struct ReviewRecordingDialog: View {
                 }
             }
             .padding(.horizontal, 24)
+        }
+        .onDisappear {
+            playerController.stop()
         }
     }
 }

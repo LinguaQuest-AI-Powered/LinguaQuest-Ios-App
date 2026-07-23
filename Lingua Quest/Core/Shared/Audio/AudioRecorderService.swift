@@ -12,6 +12,7 @@ protocol AudioRecorderServiceProtocol {
     func requestPermissions() async -> Bool
     func startRecording() throws
     func stopRecording() -> Data?
+    func getRecordingURL() -> URL?
 }
 
 class AudioRecorderService: NSObject, AudioRecorderServiceProtocol, AVAudioRecorderDelegate {
@@ -20,7 +21,7 @@ class AudioRecorderService: NSObject, AudioRecorderServiceProtocol, AVAudioRecor
     
     override init() {
         let tempDir = FileManager.default.temporaryDirectory
-        self.fileURL = tempDir.appendingPathComponent("recording.wav")
+        self.fileURL = tempDir.appendingPathComponent("recording.m4a")
         super.init()
     }
     
@@ -38,12 +39,10 @@ class AudioRecorderService: NSObject, AudioRecorderServiceProtocol, AVAudioRecor
         try audioSession.setActive(true)
         
         let settings: [String: Any] = [
-            AVFormatIDKey: Int(kAudioFormatLinearPCM),
+            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
             AVSampleRateKey: 16000,
             AVNumberOfChannelsKey: 1, // Mono
-            AVLinearPCMBitDepthKey: 16,
-            AVLinearPCMIsBigEndianKey: false,
-            AVLinearPCMIsFloatKey: false
+            AVEncoderAudioQualityKey: AVAudioQuality.min.rawValue
         ]
         
         audioRecorder = try AVAudioRecorder(url: fileURL, settings: settings)
@@ -58,5 +57,12 @@ class AudioRecorderService: NSObject, AudioRecorderServiceProtocol, AVAudioRecor
             return nil
         }
         return data
+    }
+    
+    func getRecordingURL() -> URL? {
+        guard FileManager.default.fileExists(atPath: fileURL.path) else {
+            return nil
+        }
+        return fileURL
     }
 }

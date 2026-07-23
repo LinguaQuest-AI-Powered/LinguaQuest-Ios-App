@@ -6,20 +6,43 @@
 //
 
 import Foundation
+import UIKit
 
 class VoiceEvaluationRepositoryImpl: VoiceEvaluationRepositoryProtocol {
     private let evaluationDataSource: VoiceEvaluationRemoteDataSourceProtocol
     private let progressDataSource: VoiceProgressRemoteDataSourceProtocol
-    private let userId: String // In a real app, this would come from a SessionManager or Auth service
+    private let generatorDataSource: VoiceSentenceGeneratorDataSourceProtocol
     
-    init(evaluationDataSource: VoiceEvaluationRemoteDataSourceProtocol, progressDataSource: VoiceProgressRemoteDataSourceProtocol) {
+    private var deviceId: String {
+        UIDevice.current.identifierForVendor?.uuidString ?? "unknown_device"
+    }
+    
+    init(
+        evaluationDataSource: VoiceEvaluationRemoteDataSourceProtocol,
+        progressDataSource: VoiceProgressRemoteDataSourceProtocol,
+        generatorDataSource: VoiceSentenceGeneratorDataSourceProtocol
+    ) {
         self.evaluationDataSource = evaluationDataSource
         self.progressDataSource = progressDataSource
-        self.userId = "current_user_123" // Mock user ID for now
+        self.generatorDataSource = generatorDataSource
     }
     
     func getDailySentences() async throws -> [VoiceSentence] {
-        return try await progressDataSource.getDailySentences()
+        // Check Firestore for today's sentences
+        if let cachedDTOs = try await progressDataSource.getTodaySentences(deviceId: deviceId) {
+            let sentences: [VoiceSentence] = cachedDTOs.map { $0.toEntity() }
+            return sentences
+        }
+        
+        // Generate new sentences via AI
+        let language = "German"
+        let generatedDTOs = try await generatorDataSource.generateSentences(language: language, count: 5)
+        
+        // Save to Firestore
+        try await progressDataSource.saveDailySentences(deviceId: deviceId, sentences: generatedDTOs)
+        
+        let sentences: [VoiceSentence] = generatedDTOs.map { $0.toEntity() }
+        return sentences
     }
     
     func evaluateAudio(audioData: Data, targetText: String) async throws -> VoiceEvaluationResult {
@@ -33,14 +56,11 @@ class VoiceEvaluationRepositoryImpl: VoiceEvaluationRepositoryProtocol {
         )
     }
     
-    func saveSentenceProgress(sentenceId: String, result: VoiceEvaluationResult) async throws {
-        let dto = VoiceEvaluationResponseDTO(
-            rating: result.rating,
-            correct_words: result.correctWords,
-            wrong_words: result.wrongWords,
-            advice: result.advice
-        )
-        
-        try await progressDataSource.saveSentenceProgress(userId: userId, sentenceId: sentenceId, result: dto)
+    func markSentenceCompleted(sentenceId: String) async throws {
+        try await progressDataSource.markSentenceCompleted(deviceId: deviceId, sentenceId: sentenceId)
+    }
+    
+    func getProgress() async throws -> (completed: Int, total: Int) {
+        return try await progressDataSource.getProgress(deviceId: deviceId)
     }
 }

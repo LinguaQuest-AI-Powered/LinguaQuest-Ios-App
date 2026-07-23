@@ -2,11 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AI_KEY</key>
+	<string>$(AI_KEY)</string>
 	<key>API_BASE_URL</key>
 	<string>$(API_BASE_URL)</string>
-	<key>NSCameraUsageDescription</key>
-	<string>We need access to your camera to scan items for the game quests.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>We need access to your microphone so you can practice speaking and pronouncing sentences.</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

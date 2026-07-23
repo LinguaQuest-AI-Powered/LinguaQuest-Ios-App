@@ -11,6 +11,8 @@ struct HomeView: View {
     @Environment(Router.self) var router
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var hasClaimedDailyReward: Bool = false
+    @State private var voiceCompleted: Int = 0
+    @State private var voiceTotal: Int = 5
     
     @State private var dailyRewardViewModel = DailyRewardViewModel()
     @State private var showDailyRewardDialog = false
@@ -96,7 +98,7 @@ struct HomeView: View {
                         .opacity(animateItems ? 1 : 0)
                         .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.3), value: animateItems)
 
-                        VoicePracticeCardView(action: { router.push(.voiceGame) })
+                        VoicePracticeCardView(completed: voiceCompleted, total: voiceTotal, action: { router.push(.voiceGame) })
                             .padding(.horizontal, 20)
                             .offset(y: animateItems ? 0 : 30)
                             .opacity(animateItems ? 1 : 0)
@@ -144,6 +146,8 @@ struct HomeView: View {
                 animateItems = true
             }
             
+            loadVoiceProgress()
+            
             guard !reduceMotion else { return }
             withAnimation(.easeInOut(duration: 1.4).repeatForever(autoreverses: true)) {
                 pulseWorldButton = true
@@ -177,6 +181,21 @@ struct HomeView: View {
         }
         .fullScreenCover(isPresented: $showAddLanguageScreen) {
             AddLanguageView(userLanguages: $userLanguages)
+        }
+    }
+    
+    private func loadVoiceProgress() {
+        let useCase = Resolver.shared.resolve(GetVoiceProgressUseCase.self)
+        Task {
+            do {
+                let progress = try await useCase.execute()
+                await MainActor.run {
+                    voiceCompleted = progress.completed
+                    voiceTotal = progress.total
+                }
+            } catch {
+                print("Failed to load voice progress: \(error)")
+            }
         }
     }
 }

@@ -10,6 +10,6 @@ import Foundation
 struct VoiceSentence: Identifiable, Equatable, Hashable {
     let id: String
     let text: String
-    let translation: String?
     let difficulty: String
+    let language: String
 }

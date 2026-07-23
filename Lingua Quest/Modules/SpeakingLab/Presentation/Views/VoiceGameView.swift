@@ -47,50 +47,102 @@ struct VoiceGameView: View {
                 
                 Spacer()
                 
-                // Main Content Card
-                DialogCardContainer(
-                    mascotImage: viewModel.recordingState == .idle ? .bird3 : .micBird,
-                    speechBubbleText: viewModel.recordingState == .idle ? L10n.SpeakingLab.youCanDoIt : L10n.SpeakingLab.listening,
-                    onMascotTap: {
-                        // Optional mascot tap
-                    }
-                ) {
-                    VStack(spacing: 24) {
-                        // Top Label
-                        Text(L10n.SpeakingLab.pronounceThis)
-                            .font(AppTextStyle.captionBold.font)
-                            .foregroundColor(Color.appTextSecondary)
-                            .textCase(.uppercase)
-                        
-                        // Target Word
-                        Text(viewModel.targetSentence)
-                            .appTextStyle(.headingLarge, color: .appTextHeading)
-                            .multilineTextAlignment(.center)
-                            .lineLimit(nil)
-                            .minimumScaleFactor(0.8)
-                            .fixedSize(horizontal: false, vertical: true)
-                        
-                        // Listen Button
-                        Button(action: {
-                            viewModel.playTargetSentence()
-                        }) {
-                            HStack(spacing: 8) {
-                                Image(systemIcon: .speakerWave2Fill)
-                                Text(L10n.SpeakingLab.listen)
-                                    .font(AppTextStyle.bodyBold.font)
-                            }
-                            .foregroundColor(Color.appTextSecondary)
+                if viewModel.isLoadingSentences {
+                    // Loading state
+                    DialogCardContainer(
+                        mascotImage: .bird3,
+                        speechBubbleText: L10n.SpeakingLab.youCanDoIt
+                    ) {
+                        VStack(spacing: 16) {
+                            ProgressView()
+                                .scaleEffect(1.5)
+                                .tint(Color.appAccentOrange)
+                            
+                            Text(L10n.SpeakingLab.loadingSentences)
+                                .appTextStyle(.bodyMedium, color: .appTextSecondary)
                         }
+                        .padding(.vertical, 40)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.appSurfaceCard)
+                        .clipShape(RoundedRectangle(cornerRadius: 24))
                     }
-                    .padding(.vertical, 32)
-                    .padding(.horizontal, 16)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.appSurfaceCard)
-                    .clipShape(RoundedRectangle(cornerRadius: 24))
-                    .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 4)
+                    .padding(.horizontal, 24)
+                    .padding(.top, 32)
+                } else if let error = viewModel.loadError {
+                    // Error state
+                    DialogCardContainer(
+                        mascotImage: .weakPasswordBird,
+                        speechBubbleText: L10n.SpeakingLab.feedbackNeedsWork
+                    ) {
+                        VStack(spacing: 16) {
+                            Text(L10n.SpeakingLab.failedToLoad)
+                                .appTextStyle(.headingMedium, color: .appTextHeading)
+                            
+                            Text(error)
+                                .appTextStyle(.bodyMedium, color: .appTextSecondary)
+                                .multilineTextAlignment(.center)
+                                .lineLimit(3)
+                            
+                            CustomButton(
+                                type: .primary,
+                                text: L10n.SpeakingLab.retry,
+                                action: { viewModel.retrySentences() }
+                            )
+                        }
+                        .padding(.vertical, 24)
+                        .padding(.horizontal, 16)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.appSurfaceCard)
+                        .clipShape(RoundedRectangle(cornerRadius: 24))
+                    }
+                    .padding(.horizontal, 24)
+                    .padding(.top, 32)
+                } else {
+                    // Main Content Card
+                    DialogCardContainer(
+                        mascotImage: viewModel.recordingState == .idle ? .bird3 : .micBird,
+                        speechBubbleText: viewModel.recordingState == .idle ? L10n.SpeakingLab.youCanDoIt : L10n.SpeakingLab.listening,
+                        onMascotTap: {
+                            // Optional mascot tap
+                        }
+                    ) {
+                        VStack(spacing: 24) {
+                            // Top Label
+                            Text(L10n.SpeakingLab.pronounceThis)
+                                .font(AppTextStyle.captionBold.font)
+                                .foregroundColor(Color.appTextSecondary)
+                                .textCase(.uppercase)
+                            
+                            // Target Word
+                            Text(viewModel.targetSentence)
+                                .appTextStyle(.headingLarge, color: .appTextHeading)
+                                .multilineTextAlignment(.center)
+                                .lineLimit(nil)
+                                .minimumScaleFactor(0.8)
+                                .fixedSize(horizontal: false, vertical: true)
+                            
+                            // Listen Button
+                            Button(action: {
+                                viewModel.playTargetSentence()
+                            }) {
+                                HStack(spacing: 8) {
+                                    Image(systemIcon: .speakerWave2Fill)
+                                    Text(L10n.SpeakingLab.listen)
+                                        .font(AppTextStyle.bodyBold.font)
+                                }
+                                .foregroundColor(Color.appTextSecondary)
+                            }
+                        }
+                        .padding(.vertical, 32)
+                        .padding(.horizontal, 16)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.appSurfaceCard)
+                        .clipShape(RoundedRectangle(cornerRadius: 24))
+                        .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 4)
+                    }
+                    .padding(.horizontal, 24)
+                    .padding(.top, 32)
                 }
-                .padding(.horizontal, 24)
-                .padding(.top, 32)
                 
                 Spacer()
                 
@@ -151,9 +203,9 @@ struct VoiceGameView: View {
                 .padding(.bottom, 40)
             }
             
-            if viewModel.showReviewDialog, let audioData = viewModel.audioData {
+            if viewModel.showReviewDialog, let fileURL = viewModel.recordingFileURL {
                 ReviewRecordingDialog(
-                    audioData: audioData,
+                    recordingURL: fileURL,
                     audioDuration: viewModel.recordingDuration,
                     onDiscard: {
                         withAnimation {
@@ -181,9 +233,12 @@ struct VoiceGameView: View {
             )
         }
         .appDialog(isPresented: $showNotEnoughCoinsDialog) {
-            NotEnoughCoinsDialog(missingCoins: 25) { // Assuming 25 is missing
+            NotEnoughCoinsDialog(missingCoins: 25) {
                 showNotEnoughCoinsDialog = false
             }
+        }
+        .onAppear {
+            viewModel.resetForRetry()
         }
     }
 }

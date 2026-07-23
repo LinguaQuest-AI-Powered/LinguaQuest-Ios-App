@@ -7,32 +7,19 @@
 
 import Foundation
 import FirebaseAI
+import FirebaseAILogic
 
 protocol VoiceEvaluationRemoteDataSourceProtocol {
     func evaluateAudio(audioData: Data, targetText: String) async throws -> VoiceEvaluationResponseDTO
 }
 
 class VoiceEvaluationRemoteDataSource: VoiceEvaluationRemoteDataSourceProtocol {
-    private let model: GenerativeModel
-    
-    init() {
-        let config = GenerationConfig(
-            temperature: 0.0,
-            responseMIMEType: "application/json"
-        )
-        
-        self.model = FirebaseAI.firebaseAI(backend: .googleAI()).generativeModel(
-            modelName: "gemini-3.5-flash",
-            generationConfig: config
-        )
-    }
-    
     func evaluateAudio(audioData: Data, targetText: String) async throws -> VoiceEvaluationResponseDTO {
         let promptText = """
         You are a supportive language coach. The user is practicing speaking a sentence.
         Target Sentence: "\(targetText)"
         
-        Analyze the provided audio recording (in base64 format).
+        Analyze the provided audio recording.
         1. Compare what they actually said to the Target Sentence.
         2. Identify correctly pronounced words and incorrectly pronounced (or missing/extra) words.
         3. Provide a score out of 100.
@@ -49,35 +36,76 @@ class VoiceEvaluationRemoteDataSource: VoiceEvaluationRemoteDataSourceProtocol {
         }
         """
         
-        let audioPart = InlineDataPart(data: audioData, mimeType: "audio/pcm;rate=16000")
+        let url = URL(string: "http://apiaccess.iti.net.eg/api/v1/student/chat")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("Bearer \(AppConfig.aiKey)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let response = try await model.generateContent(promptText, audioPart)
+        // We use Voxtral which is designed for audio understanding
+        let base64Audio = audioData.base64EncodedString()
+        let combinedContent = "\(promptText)\n\n[Audio Data: data:audio/m4a;base64,\(base64Audio)]"
         
-        var rawText = response.text ?? ""
-        print("RAW GEMINI RESPONSE:\n\(rawText)") // Print the raw response for debugging
+        let payload: [String: Any] = [
+            "model_id": "mistral.voxtral-small-24b-2507",
+            "max_tokens": 1000,
+            "messages": [
+                [
+                    "role": "user",
+                    "content": combinedContent
+                ]
+            ]
+        ]
         
-        // Sanitize markdown if the model ignored our instructions
+        request.httpBody = try JSONSerialization.data(withJSONObject: payload)
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw NSError(domain: "VoiceEvaluation", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid response"])
+        }
+        
+        guard httpResponse.statusCode >= 200 && httpResponse.statusCode < 300 else {
+            let errorMsg = String(data: data, encoding: .utf8) ?? "Unknown error"
+            throw NSError(domain: "VoiceEvaluation", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "API Error: \(errorMsg)"])
+        }
+        
+        let rawString = String(data: data, encoding: .utf8) ?? "Unreadable response"
+        print("RAW BEDROCK RESPONSE: \(rawString)")
+        
+        struct BedrockResponse: Codable {
+            let output_text: String
+        }
+        
+        let bedrockResponse: BedrockResponse
+        do {
+            bedrockResponse = try JSONDecoder().decode(BedrockResponse.self, from: data)
+        } catch {
+            throw NSError(domain: "VoiceEvaluation", code: 0, userInfo: [NSLocalizedDescriptionKey: "Unexpected API Response Format: \(rawString)"])
+        }
+        
+        var rawText = bedrockResponse.output_text
+        
+        // Extract JSON from markdown or introductory text
+        if let jsonStart = rawText.range(of: "```json\n"),
+           let jsonEnd = rawText.range(of: "\n```", range: jsonStart.upperBound..<rawText.endIndex) {
+            rawText = String(rawText[jsonStart.upperBound..<jsonEnd.lowerBound])
+        } else if let jsonStart = rawText.firstIndex(of: "{"),
+                  let jsonEnd = rawText.lastIndex(of: "}") {
+            rawText = String(rawText[jsonStart...jsonEnd])
+        }
+        
         rawText = rawText.trimmingCharacters(in: .whitespacesAndNewlines)
-        if rawText.hasPrefix("```json") {
-            rawText = rawText.dropFirst(7).description
-        }
-        if rawText.hasPrefix("```") {
-            rawText = rawText.dropFirst(3).description
-        }
-        if rawText.hasSuffix("```") {
-            rawText = rawText.dropLast(3).description
-        }
-        rawText = rawText.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        guard let data = rawText.data(using: .utf8), !data.isEmpty else {
+        guard let jsonData = rawText.data(using: .utf8), !jsonData.isEmpty else {
             throw NSError(domain: "VoiceEvaluation", code: 0, userInfo: [NSLocalizedDescriptionKey: "Empty or invalid response from model"])
         }
         
         do {
-            let result = try JSONDecoder().decode(VoiceEvaluationResponseDTO.self, from: data)
+            let result = try JSONDecoder().decode(VoiceEvaluationResponseDTO.self, from: jsonData)
             return result
         } catch {
-            print("JSON DECODING ERROR: \\(error)")
+            print("JSON DECODING ERROR: \(error)")
             throw error
         }
     }

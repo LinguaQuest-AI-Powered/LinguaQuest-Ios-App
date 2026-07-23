@@ -301,3 +301,5 @@
 "speaking_lab.score" = "SCORE";
 "speaking_lab.evaluating_title" = "Evaluating Voice...";
 "speaking_lab.evaluating_subtitle" = "Listening closely to your pronunciation.";
+"speaking_lab.loading_sentences" = "Loading Sentences...";
+"speaking_lab.failed_to_load" = "Failed to load sentences";

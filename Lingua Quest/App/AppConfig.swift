@@ -31,8 +31,13 @@ enum AppConfig {
         Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
     }
     
+    static var aiKey: String {
+        string(for: .aiKey).trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
     private enum Key: String {
         case apiBaseURL = "API_BASE_URL"
+        case aiKey = "AI_KEY"
     }
     
     private static func string(for key: Key) -> String {

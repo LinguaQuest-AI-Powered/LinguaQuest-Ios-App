@@ -303,3 +303,5 @@
 "speaking_lab.score" = "النتيجة";
 "speaking_lab.evaluating_title" = "جاري تقييم الصوت...";
 "speaking_lab.evaluating_subtitle" = "نستمع بدقة لطريقة نطقك للكلمات.";
+"speaking_lab.loading_sentences" = "جاري تحميل الجمل...";
+"speaking_lab.failed_to_load" = "فشل تحميل الجمل";

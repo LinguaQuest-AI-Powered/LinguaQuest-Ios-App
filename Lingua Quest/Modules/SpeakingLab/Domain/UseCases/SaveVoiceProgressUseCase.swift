@@ -14,7 +14,7 @@ class SaveVoiceProgressUseCase {
         self.repository = repository
     }
     
-    func execute(sentenceId: String, result: VoiceEvaluationResult) async throws {
-        try await repository.saveSentenceProgress(sentenceId: sentenceId, result: result)
+    func execute(sentenceId: String) async throws {
+        try await repository.markSentenceCompleted(sentenceId: sentenceId)
     }
 }

@@ -10,5 +10,6 @@ import Foundation
 protocol VoiceEvaluationRepositoryProtocol {
     func getDailySentences() async throws -> [VoiceSentence]
     func evaluateAudio(audioData: Data, targetText: String) async throws -> VoiceEvaluationResult
-    func saveSentenceProgress(sentenceId: String, result: VoiceEvaluationResult) async throws
+    func markSentenceCompleted(sentenceId: String) async throws
+    func getProgress() async throws -> (completed: Int, total: Int)
 }

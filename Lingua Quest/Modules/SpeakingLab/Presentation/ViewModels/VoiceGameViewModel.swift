@@ -24,16 +24,19 @@ class VoiceGameViewModel {
     private let speechService: SpeechSynthesizerProtocol
     
     var recordingState: VoiceRecordingState = .idle
-    var targetSentence: String = L10n.SpeakingLab.mockTargetSentence
+    var targetSentence: String = ""
     
     var recordingDuration: Int = 0
     var showReviewDialog: Bool = false
     var isLoadingResult: Bool = false
+    var isLoadingSentences: Bool = false
+    var loadError: String?
     private var timer: Timer?
     
     var dailySentences: [VoiceSentence] = []
     var currentSentenceIndex: Int = 0
     var audioData: Data?
+    var recordingFileURL: URL?
     
     init(router: RouterProtocol,
          getSentencesUseCase: GetDailyVoiceSentencesUseCase,
@@ -52,10 +55,33 @@ class VoiceGameViewModel {
     }
     
     func playTargetSentence() {
-        speechService.speak(text: targetSentence, languageCode: "en-US")
+        // Determine language code for speech synthesis from the sentence
+        let languageCode = currentSentence?.language ?? "de"
+        let speechCode = mapToSpeechCode(languageCode)
+        speechService.speak(text: targetSentence, languageCode: speechCode)
+    }
+    
+    var currentSentence: VoiceSentence? {
+        guard currentSentenceIndex < dailySentences.count else { return nil }
+        return dailySentences[currentSentenceIndex]
+    }
+    
+    private func mapToSpeechCode(_ code: String) -> String {
+        // Map simple language names/codes to BCP-47 for AVSpeechSynthesizer
+        switch code.lowercased() {
+        case "de", "german": return "de-DE"
+        case "es", "spanish": return "es-ES"
+        case "fr", "french": return "fr-FR"
+        case "en", "english": return "en-US"
+        case "ja", "japanese": return "ja-JP"
+        case "ar", "arabic": return "ar-SA"
+        default: return "de-DE"
+        }
     }
     
     private func loadSentences() async {
+        isLoadingSentences = true
+        loadError = nil
         do {
             self.dailySentences = try await getSentencesUseCase.execute()
             if let first = dailySentences.first {
@@ -63,6 +89,14 @@ class VoiceGameViewModel {
             }
         } catch {
             print("Failed to load daily sentences: \(error)")
+            loadError = error.localizedDescription
+        }
+        isLoadingSentences = false
+    }
+    
+    func retrySentences() {
+        Task {
+            await loadSentences()
         }
     }
     
@@ -99,6 +133,7 @@ class VoiceGameViewModel {
         timer?.invalidate()
         timer = nil
         self.audioData = audioService.stopRecording()
+        self.recordingFileURL = audioService.getRecordingURL()
         showReviewDialog = true
     }
     
@@ -107,6 +142,7 @@ class VoiceGameViewModel {
         recordingState = .idle
         recordingDuration = 0
         audioData = nil
+        recordingFileURL = nil
     }
     
     func processRecording() {
@@ -114,6 +150,15 @@ class VoiceGameViewModel {
         showReviewDialog = false
         
         router.push(.voiceGameResult(audioData: data, sentence: dailySentences[currentSentenceIndex]))
+    }
+    
+    /// Called when returning from result screen after retry
+    func resetForRetry() {
+        recordingState = .idle
+        recordingDuration = 0
+        audioData = nil
+        recordingFileURL = nil
+        showReviewDialog = false
     }
     
     func skip() {
