@@ -49,11 +49,19 @@ final class APIClient: APIClientProtocol {
         if let headers = urlRequest.allHTTPHeaderFields {
             print("HEADERS: \(headers)")
         }
-        if let bodyData = urlRequest.httpBody, let bodyString = String(data: bodyData, encoding: .utf8) {
-            print("BODY: \(bodyString)")
+        if let bodyData = urlRequest.httpBody {
+            print("BODY SIZE: \(bodyData.count) bytes")
+            if let bodyString = String(data: bodyData, encoding: .utf8) {
+                print("BODY: \(bodyString)")
+            } else {
+                let prefixData = bodyData.prefix(min(500, bodyData.count))
+                let asciiString = String(decoding: prefixData, as: UTF8.self)
+                print("BODY PREFIX LOG:\n\(asciiString)")
+            }
         }
         print("===============================")
         // -------------------------------
+
 
         let (data, response): (Data, URLResponse)
         do {
