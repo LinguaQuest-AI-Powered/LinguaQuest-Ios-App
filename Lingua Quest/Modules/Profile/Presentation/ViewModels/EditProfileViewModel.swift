@@ -50,7 +50,7 @@ final class EditProfileViewModel {
                 await MainActor.run {
                     self.displayName = profile.username
                     if let url = profile.avatarUrl, !url.isEmpty {
-                        self.avatarImage = url
+                        self.avatarImage = AppConfig.resolveURL(url)
                     }
                     self.isLoading = false
                 }
@@ -90,7 +90,9 @@ final class EditProfileViewModel {
             do {
                 let photoUrl = try await uploadProfilePhotoUseCase.execute(imageData: imageData, mimeType: "image/jpeg")
                 await MainActor.run {
-                    self.avatarImage = photoUrl
+                    let fullUrl = AppConfig.resolveURL(photoUrl)
+                    self.avatarImage = fullUrl
+                    UserDefaults.standard.set(fullUrl, forKey: AppConstants.UserDefaultsKeys.cachedAvatarUrl)
                     self.isUploadingPhoto = false
                 }
             } catch {
@@ -129,16 +131,4 @@ final class EditProfileViewModel {
     }
 }
 
-// MARK: - UIImage resize helper
-private extension UIImage {
-    func resizedForAvatar(maxDimension: CGFloat = 512) -> UIImage {
-        let maxSide = max(size.width, size.height)
-        guard maxSide > maxDimension else { return self }
-        let ratio = maxDimension / maxSide
-        let newSize = CGSize(width: size.width * ratio, height: size.height * ratio)
-        let renderer = UIGraphicsImageRenderer(size: newSize)
-        return renderer.image { _ in
-            self.draw(in: CGRect(origin: .zero, size: newSize))
-        }
-    }
-}
+

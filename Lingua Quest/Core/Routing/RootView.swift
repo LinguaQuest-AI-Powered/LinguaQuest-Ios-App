@@ -30,9 +30,9 @@ struct RootView: View {
             }
             .navigationDestination(for: AppRoute.self) { route in
                 router.view(for: route)
+                    .id(appLanguage)
             }
         }
-        .id(appLanguage)
         .sheet(item: $router.presentedSheet) { sheet in
             switch sheet {
             case .dummy: EmptyView()
