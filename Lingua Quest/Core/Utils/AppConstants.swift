@@ -17,5 +17,6 @@ enum AppConstants {
         static let userLevel = "userLevel"
         static let isDarkMode = "isDarkMode"
         static let appLanguage = "appLanguage"
+        static let cachedAvatarUrl = "cachedAvatarUrl"
     }
 }
