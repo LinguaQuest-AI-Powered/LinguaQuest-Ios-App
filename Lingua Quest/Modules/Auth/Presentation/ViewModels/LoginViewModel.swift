@@ -15,6 +15,7 @@ final class LoginViewModel {
     private let router: RouterProtocol
     private var userPreferences: UserPreferencesProtocol
     private let loginUseCase: LoginUseCaseProtocol
+    private let getProfileUseCase: GetProfileUseCaseProtocol
     private let oauthSignInHandler: OAuthSignInHandlerProtocol
 
     // MARK: - State
@@ -29,11 +30,13 @@ final class LoginViewModel {
         router: RouterProtocol,
         userPreferences: UserPreferencesProtocol,
         loginUseCase: LoginUseCaseProtocol,
+        getProfileUseCase: GetProfileUseCaseProtocol,
         oauthSignInHandler: OAuthSignInHandlerProtocol
     ) {
         self.router = router
         self.userPreferences = userPreferences
         self.loginUseCase = loginUseCase
+        self.getProfileUseCase = getProfileUseCase
         self.oauthSignInHandler = oauthSignInHandler
     }
 
@@ -52,18 +55,23 @@ final class LoginViewModel {
 
         Task {
             let result = await loginUseCase.execute(email: email, password: password)
-            isLoading = false
 
             switch result {
             case .success(let data):
                 userPreferences.isLoggedIn = true
-                let user = data.user
-                if user.nativeLanguage == nil || user.targetLanguages.isEmpty {
-                    userPreferences.needsProfileCompletion = true
+                do {
+                    let profile = try await getProfileUseCase.execute()
+                    userPreferences.needsProfileCompletion = profile.currentLanguageCode.isEmpty
+                } catch {
+                    // Fallback
+                    let user = data.user
+                    userPreferences.needsProfileCompletion = user.nativeLanguage == nil || user.targetLanguages.isEmpty
                 }
+                isLoading = false
 
             case .failure(let error):
                 errorMessage = error.errorDescription
+                isLoading = false
             }
         }
     }
@@ -144,10 +152,17 @@ extension LoginViewModel {
             }
         }
         
+        class MockGetProfileUseCase: GetProfileUseCaseProtocol {
+            func execute() async throws -> UserProfileEntity {
+                throw AuthError.unknown("Mock Error")
+            }
+        }
+        
         return LoginViewModel(
             router: MockRouter(),
             userPreferences: MockUserPreferences(),
             loginUseCase: MockLoginUseCase(),
+            getProfileUseCase: MockGetProfileUseCase(),
             oauthSignInHandler: MockOAuthSignInHandler()
         )
     }

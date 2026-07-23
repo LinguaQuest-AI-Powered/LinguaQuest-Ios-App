@@ -100,6 +100,7 @@ final class AuthAssembly: Assembly {
                 router: resolver.resolve(RouterProtocol.self)!,
                 userPreferences: resolver.resolve(UserPreferencesProtocol.self)!,
                 loginUseCase: resolver.resolve(LoginUseCaseProtocol.self)!,
+                getProfileUseCase: resolver.resolve(GetProfileUseCaseProtocol.self)!,
                 oauthSignInHandler: resolver.resolve(OAuthSignInHandlerProtocol.self)!
             )
         }

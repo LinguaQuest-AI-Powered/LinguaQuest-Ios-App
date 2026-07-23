@@ -95,8 +95,9 @@ final class ProfileViewModel {
             do {
                 let photoUrl = try await uploadProfilePhotoUseCase.execute(imageData: imageData, mimeType: mimeType)
                 await MainActor.run {
-                    self.avatarImage = photoUrl
-                    UserDefaults.standard.set(photoUrl, forKey: AppConstants.UserDefaultsKeys.cachedAvatarUrl)
+                    let fullUrl = AppConfig.resolveURL(photoUrl)
+                    self.avatarImage = fullUrl
+                    UserDefaults.standard.set(fullUrl, forKey: AppConstants.UserDefaultsKeys.cachedAvatarUrl)
                     self.isUploadingPhoto = false
                 }
             } catch {
@@ -136,8 +137,9 @@ final class ProfileViewModel {
         self.userName = profile.username
         self.level = profile.level
         if let avatarUrl = profile.avatarUrl, !avatarUrl.isEmpty {
-            self.avatarImage = avatarUrl
-            UserDefaults.standard.set(avatarUrl, forKey: AppConstants.UserDefaultsKeys.cachedAvatarUrl)
+            let fullUrl = AppConfig.resolveURL(avatarUrl)
+            self.avatarImage = fullUrl
+            UserDefaults.standard.set(fullUrl, forKey: AppConstants.UserDefaultsKeys.cachedAvatarUrl)
         } else {
             self.avatarImage = "user1"
             UserDefaults.standard.removeObject(forKey: AppConstants.UserDefaultsKeys.cachedAvatarUrl)
@@ -203,19 +205,5 @@ final class ProfileViewModel {
     }
 }
 
-// MARK: - UIImage Extension
-private extension UIImage {
-    func resizedForAvatar(maxDimension: CGFloat = 512) -> UIImage {
-        let maxSide = max(size.width, size.height)
-        guard maxSide > maxDimension else { return self }
-        
-        let ratio = maxDimension / maxSide
-        let newSize = CGSize(width: size.width * ratio, height: size.height * ratio)
-        
-        let renderer = UIGraphicsImageRenderer(size: newSize)
-        return renderer.image { _ in
-            self.draw(in: CGRect(origin: .zero, size: newSize))
-        }
-    }
-}
+
 
