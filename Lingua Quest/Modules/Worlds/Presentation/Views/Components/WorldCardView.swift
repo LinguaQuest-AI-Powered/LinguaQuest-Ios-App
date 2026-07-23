@@ -46,8 +46,8 @@ struct WorldCardView: View {
                     .resizable()
                     .scaledToFill()
                     .frame(maxWidth: .infinity)
-                    .frame(height: 100)
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .frame(height: 90)
+                    .clipShape(RoundedRectangle(cornerRadius: 25))
                     .overlay(
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(Color.appSurfaceCard.opacity(0.72), lineWidth: 2)
