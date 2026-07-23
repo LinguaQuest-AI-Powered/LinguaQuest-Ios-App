@@ -17,12 +17,18 @@ final class ProfileAssembly: Assembly {
         
         container.register(ProfileRepositoryProtocol.self) { resolver in
             let remoteDataSource = resolver.resolve(ProfileRemoteDataSourceProtocol.self)!
-            return ProfileRepositoryImpl(remoteDataSource: remoteDataSource)
+            let tokenStorage = resolver.resolve(SecureTokenStorageProtocol.self)!
+            return ProfileRepositoryImpl(remoteDataSource: remoteDataSource, tokenStorage: tokenStorage)
         }
         
         container.register(GetProfileUseCaseProtocol.self) { resolver in
             let repository = resolver.resolve(ProfileRepositoryProtocol.self)!
             return GetProfileUseCase(repository: repository)
+        }
+        
+        container.register(CompleteProfileUseCaseProtocol.self) { resolver in
+            let repository = resolver.resolve(ProfileRepositoryProtocol.self)!
+            return CompleteProfileUseCase(repository: repository)
         }
         
         container.register(UploadProfilePhotoUseCaseProtocol.self) { resolver in

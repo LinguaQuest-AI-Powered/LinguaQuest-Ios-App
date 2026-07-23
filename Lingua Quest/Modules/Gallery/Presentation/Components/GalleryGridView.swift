@@ -16,8 +16,8 @@ struct GalleryGridView: View {
     ]
     
     var items: [CapturedItem]
+    var onItemTapped: (CapturedItem) -> Void
     
-   
     let columns = [
         GridItem(.flexible(), spacing: 16),
         GridItem(.flexible(), spacing: 16)
@@ -38,8 +38,13 @@ struct GalleryGridView: View {
             
             LazyVGrid(columns: columns, spacing: 20) {
                 ForEach(filteredItems) { item in
-                    CaptureCardView(item: item)
-                        .transition(.scale(scale: 0.8).combined(with: .opacity))
+                    Button(action: {
+                        onItemTapped(item)
+                    }) {
+                        CaptureCardView(item: item)
+                    }
+                    .buttonStyle(.plain)
+                    .transition(.scale(scale: 0.8).combined(with: .opacity))
                 }
             }
             .padding(.horizontal, 20)
@@ -52,6 +57,6 @@ struct GalleryGridView: View {
 #Preview {
     ZStack {
         Color.cyan.opacity(0.3).ignoresSafeArea()
-        GalleryGridView(items: CapturedItem.mocks)
+        GalleryGridView(items: CapturedItem.mocks, onItemTapped: { _ in })
     }
 }

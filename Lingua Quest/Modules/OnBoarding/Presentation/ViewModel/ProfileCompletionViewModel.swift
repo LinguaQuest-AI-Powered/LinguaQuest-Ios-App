@@ -14,10 +14,22 @@ final class ProfileCompletionViewModel {
     private(set) var state = OnboardingUiState()
     private var userPreferences: UserPreferencesProtocol
     private let router: RouterProtocol
+    private let getAvailableLanguagesUseCase: GetAvailableLanguagesUseCase
+    private let completeProfileUseCase: CompleteProfileUseCaseProtocol
+    
+    var isLoading: Bool = false
+    var errorMessage: String? = nil
 
-    init(router: RouterProtocol, userPreferences: UserPreferencesProtocol) {
+    init(
+        router: RouterProtocol,
+        userPreferences: UserPreferencesProtocol,
+        getAvailableLanguagesUseCase: GetAvailableLanguagesUseCase,
+        completeProfileUseCase: CompleteProfileUseCaseProtocol
+    ) {
         self.router = router
         self.userPreferences = userPreferences
+        self.getAvailableLanguagesUseCase = getAvailableLanguagesUseCase
+        self.completeProfileUseCase = completeProfileUseCase
         // Skip welcome step, go straight to language selection
         self.state.currentStep = .language
     }
@@ -26,12 +38,6 @@ final class ProfileCompletionViewModel {
         switch state.currentStep {
         case .welcome, .language:
             if userPreferences.isLoggedIn {
-                // If we are logged in but don't want to complete profile right now,
-                // we technically shouldn't allow back to bypass the block, but if we do,
-                // we should clear the login state so they aren't stuck on a blank/broken screen.
-                // However, a better UX is just to log them out or pop to root.
-                // For safety, let's pop to root (Login) and clear session via SessionManager 
-                // but since we don't have SessionManager here, we just pop.
                 router.popToRoot() 
             } else {
                 router.pop()
@@ -66,9 +72,44 @@ final class ProfileCompletionViewModel {
         userPreferences.userLevel = state.selectedLevel?.rawValue
         
         if userPreferences.isLoggedIn {
-            // Post-Auth (OAuth new user)
-            // Just clear the flag, and the RootView state machine will auto-swap to Home
-            userPreferences.needsProfileCompletion = false
+            guard let spokenCode = state.selectedSpokenLanguage?.code,
+                  let learningCode = state.selectedLearningLanguage?.code else { return }
+            
+            isLoading = true
+            errorMessage = nil
+            
+            Task {
+                do {
+                    // Fetch available languages from the backend
+                    let availableLanguages = try await getAvailableLanguagesUseCase.execute()
+                    
+                    // Map local string codes to backend integer IDs
+                    // Backend uses 2-letter codes, same as our local generator.
+                    guard let nativeLangId = availableLanguages.first(where: { $0.code == spokenCode })?.id,
+                          let targetLangId = availableLanguages.first(where: { $0.code == learningCode })?.id else {
+                        throw AuthError.unknown("Selected language is not supported by the backend.")
+                    }
+                    
+                    // Complete profile using the retrieved IDs
+                    let result = await completeProfileUseCase.execute(
+                        nativeLanguageId: nativeLangId,
+                        targetLanguageId: targetLangId,
+                        username: nil // Username is collected later or handled via other means
+                    )
+                    
+                    isLoading = false
+                    
+                    switch result {
+                    case .success:
+                        userPreferences.needsProfileCompletion = false
+                    case .failure(let error):
+                        errorMessage = error.errorDescription
+                    }
+                } catch {
+                    isLoading = false
+                    errorMessage = (error as? AuthError)?.errorDescription ?? error.localizedDescription
+                }
+            }
         } else {
             // Pre-Registration (skipped onboarding)
             // Replace current view with SignUp

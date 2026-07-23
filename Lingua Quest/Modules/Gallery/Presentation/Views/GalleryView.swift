@@ -36,7 +36,9 @@ struct GalleryView: View {
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 0) {
                         MyCapturesHeaderView(objectsCollected: viewModel.items.count)
-                        GalleryGridView(items: viewModel.items)
+                        GalleryGridView(items: viewModel.items, onItemTapped: { item in
+                            viewModel.onWordTapped(item)
+                        })
                     }
                 }
             }

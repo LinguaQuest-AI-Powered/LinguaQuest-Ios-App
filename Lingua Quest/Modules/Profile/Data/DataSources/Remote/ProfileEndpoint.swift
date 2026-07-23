@@ -7,97 +7,84 @@
 
 import Foundation
 
-enum ProfileEndpoint: Endpoint {
-    case getProfile
-    case uploadPhoto(data: Data, mimeType: String, boundary: String)
-    case updateProfile(username: String)
-    
-    var path: String {
-        switch self {
-        case .getProfile, .updateProfile:
-            return "/profile"
-        case .uploadPhoto:
-            return "/profile/photo"
-        }
+enum ProfileEndpoint {
+    struct GetProfile: Endpoint {
+        var path: String { "/profile" }
+        var method: HTTPMethod { .get }
+        var body: EmptyBody? { nil }
+        var requiresAuth: Bool { true }
     }
     
-    var method: HTTPMethod {
-        switch self {
-        case .getProfile:
-            return .get
-        case .uploadPhoto:
-            return .post
-        case .updateProfile:
-            return .patch
-        }
-    }
-    
-    var headers: [String: String]? {
-        var dict: [String: String] = [:]
-        switch self {
-        case .getProfile, .updateProfile:
-            dict["Content-Type"] = "application/json"
-        case .uploadPhoto(_, _, let boundary):
-            dict["Content-Type"] = "multipart/form-data; boundary=\(boundary)"
-        }
-        dict["Accept"] = "application/json"
+    struct CompleteProfile: Endpoint {
+        let nativeLanguageId: Int
+        let targetLanguageId: Int
+        let username: String?
         
-        if requiresAuth, let token = SecureTokenStorage().getAccessToken() {
-            dict["Authorization"] = "Bearer \(token)"
+        var path: String { "/profile/complete-profile" }
+        var method: HTTPMethod { .post }
+        var body: CompleteProfileRequestDTO? {
+            CompleteProfileRequestDTO(
+                nativeLanguageId: nativeLanguageId,
+                targetLanguageId: targetLanguageId,
+                username: username
+            )
         }
-        return dict
-    }
-
-    var body: EmptyBody? {
-        return nil
+        var requiresAuth: Bool { true }
     }
     
-    func asURLRequest() throws -> URLRequest {
-        switch self {
-        case .uploadPhoto(let data, let mimeType, let boundary):
+    struct uploadPhoto: Endpoint {
+        let data: Data
+        let mimeType: String
+        let boundary: String
+        
+        var path: String { "/profile/photo" }
+        var method: HTTPMethod { .post }
+        var body: EmptyBody? { nil }
+        var requiresAuth: Bool { true }
+        
+        var headers: [String: String]? {
+            var dict: [String: String] = [:]
+            dict["Content-Type"] = "multipart/form-data; boundary=\(boundary)"
+            dict["Accept"] = "application/json"
+            if requiresAuth, let token = SecureTokenStorage().getAccessToken() {
+                dict["Authorization"] = "Bearer \(token)"
+            }
+            return dict
+        }
+        
+        func asURLRequest() throws -> URLRequest {
             let components = URLComponents(url: baseURL.appendingPathComponent(path), resolvingAgainstBaseURL: false)
-            guard let url = components?.url else { throw NetworkError.invalidURL }
-            
-            var request = URLRequest(url: url)
-            request.httpMethod = method.rawValue
-            
-            var customHeaders = headers ?? [:]
-            customHeaders["Content-Type"] = "multipart/form-data; boundary=\(boundary)"
-            request.allHTTPHeaderFields = customHeaders
-            
-            var body = Data()
-            let filename = mimeType == "image/png" ? "photo.png" : "photo.jpg"
-            
-            // Direct UTF-8 appending to ensure byte data accuracy without memory overhead or parsing errors
-            let crlf = "\r\n"
-            
-            body.append(contentsOf: "--\(boundary)\(crlf)".utf8)
-            body.append(contentsOf: "Content-Disposition: form-data; name=\"photo\"; filename=\"\(filename)\"\(crlf)".utf8)
-            body.append(contentsOf: "Content-Type: \(mimeType)\(crlf)\(crlf)".utf8)
-            body.append(data)
-            body.append(contentsOf: "\(crlf)".utf8)
-            body.append(contentsOf: "--\(boundary)--\(crlf)".utf8)
-            
-            request.httpBody = body
-            return request
-
-        default:
-            var components = URLComponents(url: baseURL.appendingPathComponent(path), resolvingAgainstBaseURL: false)
-            components?.queryItems = queryItems
-            
             guard let url = components?.url else { throw NetworkError.invalidURL }
             
             var request = URLRequest(url: url)
             request.httpMethod = method.rawValue
             request.allHTTPHeaderFields = headers
             
-            // updateProfile sends a JSON body
-            if case .updateProfile(let username) = self {
-                let dto = UpdateProfileRequestDTO(username: username)
-                request.httpBody = try JSONEncoder().encode(dto)
-            }
+            var bodyData = Foundation.Data()
+            let crlf = "\r\n"
+            let filename = mimeType == "image/png" ? "photo.png" : "photo.jpg"
             
+            bodyData.append(contentsOf: "--\(boundary)\(crlf)".utf8)
+            bodyData.append(contentsOf: "Content-Disposition: form-data; name=\"photo\"; filename=\"\(filename)\"\(crlf)".utf8)
+            bodyData.append(contentsOf: "Content-Type: \(mimeType)\(crlf)\(crlf)".utf8)
+            bodyData.append(data)
+            bodyData.append(contentsOf: "\(crlf)".utf8)
+            bodyData.append(contentsOf: "--\(boundary)--\(crlf)".utf8)
+            
+            request.httpBody = bodyData
             return request
         }
     }
+    
+    struct updateProfile: Endpoint {
+        let username: String
+        
+        var path: String { "/profile" }
+        var method: HTTPMethod { .patch }
+        var body: UpdateProfileRequestDTO? {
+            UpdateProfileRequestDTO(username: username)
+        }
+        var requiresAuth: Bool { true }
+    }
 }
+

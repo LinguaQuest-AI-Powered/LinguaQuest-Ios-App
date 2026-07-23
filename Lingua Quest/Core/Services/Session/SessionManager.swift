@@ -55,6 +55,6 @@ final class SessionManager: SessionManagerProtocol {
         tokenStorage.clearSession()
         userPreferences.isLoggedIn = false
         userPreferences.needsProfileCompletion = false
-        router.pushAndRemoveAll(.login)
+        router.popToRoot()
     }
 }
