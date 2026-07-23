@@ -22,6 +22,20 @@ enum AppConfig {
         }
         return url
     }
+
+   
+    static func resolveURL(_ path: String) -> String {
+        let trimmed = path.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return trimmed }
+        if trimmed.hasPrefix("http://") || trimmed.hasPrefix("https://") {
+            return trimmed
+        }
+        
+        let base = baseURL.absoluteString
+        let origin = base.hasSuffix("/") ? String(base.dropLast()) : base
+        let separator = trimmed.hasPrefix("/") ? "" : "/"
+        return origin + separator + trimmed
+    }
     
     static var appVersion: String {
         Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
