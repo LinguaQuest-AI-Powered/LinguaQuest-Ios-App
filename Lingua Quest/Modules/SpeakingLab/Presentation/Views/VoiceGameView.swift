@@ -61,16 +61,9 @@ struct VoiceGameView: View {
                         mascotImage: .bird3,
                         speechBubbleText: L10n.SpeakingLab.youCanDoIt
                     ) {
-                        VStack(spacing: 16) {
-                            ProgressView()
-                                .scaleEffect(1.5)
-                                .tint(Color.appAccentOrange)
-                            
-                            Text(L10n.SpeakingLab.loadingSentences)
-                                .appTextStyle(.bodyMedium, color: .appTextSecondary)
-                        }
-                        .padding(.vertical, 40)
-                        .frame(maxWidth: .infinity)
+                        BouncingDotsLoadingView()
+                            .padding(.vertical, 40)
+                            .frame(maxWidth: .infinity)
                         .background(Color.appSurfaceCard)
                         .clipShape(RoundedRectangle(cornerRadius: 24))
                     }
@@ -249,6 +242,47 @@ struct VoiceGameView: View {
         }
         .onAppear {
             viewModel.resetForRetry()
+        }
+    }
+}
+
+private struct BouncingDotsLoadingView: View {
+    @State private var phase: CGFloat = 0
+    @State private var textOpacity: Double = 0.6
+    
+    var body: some View {
+        VStack(spacing: 24) {
+            HStack(spacing: 12) {
+                ForEach(0..<3) { index in
+                    Circle()
+                        .fill(dotColor(for: index))
+                        .frame(width: 16, height: 16)
+                        .offset(y: sin(phase + CGFloat(index) * .pi / 2) * -8)
+                        .scaleEffect(1.0 + (sin(phase + CGFloat(index) * .pi / 2) * 0.2))
+                }
+            }
+            .onAppear {
+                withAnimation(Animation.linear(duration: 1.2).repeatForever(autoreverses: false)) {
+                    phase = .pi * 2
+                }
+            }
+            
+            Text(L10n.SpeakingLab.loadingSentences)
+                .appTextStyle(.bodyBold, color: .appTextSecondary)
+                .opacity(textOpacity)
+                .onAppear {
+                    withAnimation(Animation.easeInOut(duration: 1.0).repeatForever(autoreverses: true)) {
+                        textOpacity = 1.0
+                    }
+                }
+        }
+    }
+    
+    private func dotColor(for index: Int) -> Color {
+        switch index {
+        case 0: return .appAccentOrange
+        case 1: return .appBrandBrown
+        default: return .appAccentGold
         }
     }
 }
