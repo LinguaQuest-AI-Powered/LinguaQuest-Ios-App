@@ -32,9 +32,9 @@ struct ActiveLanguageDTO: Decodable {
 struct ExploreWorldDTO: Decodable {
     let id: Int
     let name: String
-    let imageUrl: String
+    let imageUrl: String?
     let difficulty: String
-    let status: String
+    let status: String?
     let progressPercent: Int
     let totalLevels: Int
     let completedLevels: Int
@@ -103,9 +103,9 @@ extension ExploreWorldDTO {
         return ExploreWorld(
             id: id,
             name: name,
-            imageUrl: imageUrl,
+            imageUrl: imageUrl ?? "",
             difficulty: difficulty,
-            status: status,
+            status: status ?? "UNLOCKED",
             progressPercent: progressPercent,
             totalLevels: totalLevels,
             completedLevels: completedLevels

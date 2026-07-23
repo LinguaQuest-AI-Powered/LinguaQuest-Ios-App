@@ -47,10 +47,15 @@ final class AllWorldsViewModel {
         isLoading = true
         
         do {
-            // Passing nil for difficulty fetches all worlds
-            worlds = try await getHomeWorldsUseCase.execute(languageId: 1, difficulty: nil)
-        } catch {
-            print("Failed to fetch all worlds: \(error)")
+            async let easy = getHomeWorldsUseCase.execute(languageId: 1, difficulty: "EASY")
+            async let medium = getHomeWorldsUseCase.execute(languageId: 1, difficulty: "MEDIUM")
+            async let hard = getHomeWorldsUseCase.execute(languageId: 1, difficulty: "HARD")
+            
+            let easyWorlds = (try? await easy) ?? []
+            let mediumWorlds = (try? await medium) ?? []
+            let hardWorlds = (try? await hard) ?? []
+            
+            worlds = easyWorlds + mediumWorlds + hardWorlds
         }
         
         isLoading = false

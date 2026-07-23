@@ -17,7 +17,7 @@ enum GameEndpoint {
         var path: String { "/worlds/\(worldId)/levels" }
         var method: HTTPMethod { .get }
         var queryItems: [URLQueryItem]? {
-            [URLQueryItem(name: "languageid", value: String(languageId))]
+            [URLQueryItem(name: "languageId", value: String(languageId))]
         }
     }
 }
