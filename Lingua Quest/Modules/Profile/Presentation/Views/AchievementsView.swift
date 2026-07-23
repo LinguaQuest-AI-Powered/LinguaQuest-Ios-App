@@ -302,18 +302,21 @@ struct AchievementGridItem: View {
     AchievementsView(viewModel: AchievementsViewModel(
         router: Router(),
         getAchievementsUseCase: GetAchievementsUseCase(
-            repository: AchievementsRepositoryImpl(
-                remoteDataSource: AchievementsRemoteDataSource(apiClient: APIClient())
+            repository: ProfileRepositoryImpl(
+                remoteDataSource: ProfileRemoteDataSource(apiClient: APIClient()),
+                tokenStorage: SecureTokenStorage()
             )
         ),
         getWeeklyRewardUseCase: GetWeeklyRewardUseCase(
-            repository: AchievementsRepositoryImpl(
-                remoteDataSource: AchievementsRemoteDataSource(apiClient: APIClient())
+            repository: ProfileRepositoryImpl(
+                remoteDataSource: ProfileRemoteDataSource(apiClient: APIClient()),
+                tokenStorage: SecureTokenStorage()
             )
         ),
         claimWeeklyRewardUseCase: ClaimWeeklyRewardUseCase(
-            repository: AchievementsRepositoryImpl(
-                remoteDataSource: AchievementsRemoteDataSource(apiClient: APIClient())
+            repository: ProfileRepositoryImpl(
+                remoteDataSource: ProfileRemoteDataSource(apiClient: APIClient()),
+                tokenStorage: SecureTokenStorage()
             )
         )
     ))

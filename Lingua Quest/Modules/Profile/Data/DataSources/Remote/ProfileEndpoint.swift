@@ -86,5 +86,48 @@ enum ProfileEndpoint {
         }
         var requiresAuth: Bool { true }
     }
+    
+    // MARK: - Achievements
+    struct GetAchievements: Endpoint {
+        let status: String
+        var path: String { "/achievements" }
+        var method: HTTPMethod { .get }
+        var body: EmptyBody? { nil }
+        var queryItems: [URLQueryItem]? {
+            [URLQueryItem(name: "status", value: status)]
+        }
+    }
+    
+    struct GetWeeklyReward: Endpoint {
+        var path: String { "/achievements/weekly-reward" }
+        var method: HTTPMethod { .get }
+        var body: EmptyBody? { nil }
+    }
+    
+    struct ClaimWeeklyReward: Endpoint {
+        var path: String { "/achievements/weekly-reward/claim" }
+        var method: HTTPMethod { .post }
+        var body: EmptyBody? { nil }
+    }
+    
+    // MARK: - Leaderboard
+    struct GetLeaderboard: Endpoint {
+        let scope: String
+        let languageId: Int
+        let page: Int
+        let limit: Int
+        
+        var path: String { "/leaderboard" }
+        var method: HTTPMethod { .get }
+        var body: EmptyBody? { nil }
+        var queryItems: [URLQueryItem]? {
+            [
+                URLQueryItem(name: "scope", value: scope),
+                URLQueryItem(name: "languageId", value: "\(languageId)"),
+                URLQueryItem(name: "page", value: "\(page)"),
+                URLQueryItem(name: "limit", value: "\(limit)")
+            ]
+        }
+    }
 }
 

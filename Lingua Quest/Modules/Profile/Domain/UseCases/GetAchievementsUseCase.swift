@@ -12,9 +12,9 @@ protocol GetAchievementsUseCaseProtocol {
 }
 
 final class GetAchievementsUseCase: GetAchievementsUseCaseProtocol {
-    private let repository: AchievementsRepositoryProtocol
+    private let repository: ProfileRepositoryProtocol
 
-    init(repository: AchievementsRepositoryProtocol) {
+    init(repository: ProfileRepositoryProtocol) {
         self.repository = repository
     }
 

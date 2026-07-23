@@ -23,8 +23,8 @@ final class Resolver {
             [
                 NetworkAssembly(), RouterAssembly(), StorageAssembly(),
                 AuthAssembly(), OnboardingAssembly(), GameAssembly(), GalleryAssembly(),
-                LeaderboardAssembly(), ProfileAssembly(), SettingsAssembly(),HomeAssembly(),
-                WordInsightAssembly(), AllWorldsAssembly(), AchievementsAssembly(),
+                ProfileAssembly(), HomeAssembly(),
+                WordInsightAssembly(), AllWorldsAssembly(),
                 SpeakingLabAssembly(),
                 SessionAssembly()
             ],

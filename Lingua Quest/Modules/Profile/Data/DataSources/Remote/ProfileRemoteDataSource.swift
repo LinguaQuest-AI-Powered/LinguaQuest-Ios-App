@@ -12,6 +12,14 @@ protocol ProfileRemoteDataSourceProtocol {
     func completeProfile(nativeLanguageId: Int, targetLanguageId: Int, username: String?) async throws -> SuccessResponseDTO<OAuthResponseDataDTO>
     func uploadPhoto(imageData: Data, mimeType: String) async throws -> UploadPhotoResponseDTO
     func updateProfile(username: String) async throws -> UpdateProfileResponseDTO
+    
+    // Achievements
+    func fetchAchievements(status: String) async throws -> AchievementsResponseDTO
+    func getWeeklyReward() async throws -> WeeklyRewardResponseDTO
+    func claimWeeklyReward() async throws -> ClaimRewardResponseDTO
+    
+    // Leaderboard
+    func fetchLeaderboard(scope: String, languageId: Int, page: Int, limit: Int) async throws -> LeaderboardResponseDTO
 }
 
 final class ProfileRemoteDataSource: ProfileRemoteDataSourceProtocol {
@@ -44,7 +52,22 @@ final class ProfileRemoteDataSource: ProfileRemoteDataSourceProtocol {
     func updateProfile(username: String) async throws -> UpdateProfileResponseDTO {
         return try await apiClient.request(ProfileEndpoint.updateProfile(username: username))
     }
+    
+    // MARK: - Achievements
+    func fetchAchievements(status: String) async throws -> AchievementsResponseDTO {
+        return try await apiClient.request(ProfileEndpoint.GetAchievements(status: status))
+    }
+
+    func getWeeklyReward() async throws -> WeeklyRewardResponseDTO {
+        return try await apiClient.request(ProfileEndpoint.GetWeeklyReward())
+    }
+
+    func claimWeeklyReward() async throws -> ClaimRewardResponseDTO {
+        return try await apiClient.request(ProfileEndpoint.ClaimWeeklyReward())
+    }
+    
+    // MARK: - Leaderboard
+    func fetchLeaderboard(scope: String, languageId: Int, page: Int, limit: Int) async throws -> LeaderboardResponseDTO {
+        return try await apiClient.request(ProfileEndpoint.GetLeaderboard(scope: scope, languageId: languageId, page: page, limit: limit))
+    }
 }
-
-
-

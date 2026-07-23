@@ -12,9 +12,9 @@ protocol GetLeaderboardUseCaseProtocol {
 }
 
 final class GetLeaderboardUseCase: GetLeaderboardUseCaseProtocol {
-    private let repository: LeaderboardRepositoryProtocol
+    private let repository: ProfileRepositoryProtocol
 
-    init(repository: LeaderboardRepositoryProtocol) {
+    init(repository: ProfileRepositoryProtocol) {
         self.repository = repository
     }
 

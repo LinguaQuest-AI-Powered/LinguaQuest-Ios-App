@@ -62,6 +62,55 @@ final class ProfileAssembly: Assembly {
                 uploadProfilePhotoUseCase: uploadProfilePhotoUseCase
             )
         }
+        
+        // MARK: - Achievements
+        container.register(GetAchievementsUseCaseProtocol.self) { resolver in
+            let repository = resolver.resolve(ProfileRepositoryProtocol.self)!
+            return GetAchievementsUseCase(repository: repository)
+        }
+        
+        container.register(GetWeeklyRewardUseCaseProtocol.self) { resolver in
+            let repository = resolver.resolve(ProfileRepositoryProtocol.self)!
+            return GetWeeklyRewardUseCase(repository: repository)
+        }
+        
+        container.register(ClaimWeeklyRewardUseCaseProtocol.self) { resolver in
+            let repository = resolver.resolve(ProfileRepositoryProtocol.self)!
+            return ClaimWeeklyRewardUseCase(repository: repository)
+        }
+        
+        container.register(AchievementsViewModel.self) { resolver in
+            let router = resolver.resolve(RouterProtocol.self)!
+            let getAchievementsUseCase = resolver.resolve(GetAchievementsUseCaseProtocol.self)!
+            let getWeeklyRewardUseCase = resolver.resolve(GetWeeklyRewardUseCaseProtocol.self)!
+            let claimWeeklyRewardUseCase = resolver.resolve(ClaimWeeklyRewardUseCaseProtocol.self)!
+            
+            return AchievementsViewModel(
+                router: router,
+                getAchievementsUseCase: getAchievementsUseCase,
+                getWeeklyRewardUseCase: getWeeklyRewardUseCase,
+                claimWeeklyRewardUseCase: claimWeeklyRewardUseCase
+            )
+        }
+        
+        // MARK: - Leaderboard
+        container.register(GetLeaderboardUseCaseProtocol.self) { resolver in
+            let repository = resolver.resolve(ProfileRepositoryProtocol.self)!
+            return GetLeaderboardUseCase(repository: repository)
+        }
+        
+        container.register(LeaderboardViewModel.self) { (resolver, languageId: Int) in
+            let router = resolver.resolve(RouterProtocol.self)!
+            let getLeaderboardUseCase = resolver.resolve(GetLeaderboardUseCaseProtocol.self)!
+            return LeaderboardViewModel(router: router, getLeaderboardUseCase: getLeaderboardUseCase, languageId: languageId)
+        }
+        
+        // MARK: - Settings
+        container.register(SettingsViewModel.self) { resolver in
+            let router = resolver.resolve(RouterProtocol.self)!
+            let sessionManager = resolver.resolve(SessionManagerProtocol.self)!
+            return SettingsViewModel(router: router, sessionManager: sessionManager)
+        }
     }
 }
 
