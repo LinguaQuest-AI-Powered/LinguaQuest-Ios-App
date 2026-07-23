@@ -14,13 +14,31 @@ class GalleryViewModel {
     private let getCapturedItemsUseCase: GetCapturedItemsUseCase
     private let saveCapturedItemUseCase: SaveCapturedItemUseCase
     private let router: RouterProtocol
+    private let userPreferences: UserPreferencesProtocol
     
     var items: [CapturedItem] = []
     
-    init(getCapturedItemsUseCase: GetCapturedItemsUseCase, saveCapturedItemUseCase: SaveCapturedItemUseCase, router: RouterProtocol) {
+    init(getCapturedItemsUseCase: GetCapturedItemsUseCase, saveCapturedItemUseCase: SaveCapturedItemUseCase, router: RouterProtocol, userPreferences: UserPreferencesProtocol) {
         self.getCapturedItemsUseCase = getCapturedItemsUseCase
         self.saveCapturedItemUseCase = saveCapturedItemUseCase
         self.router = router
+        self.userPreferences = userPreferences
+    }
+    
+    func onWordTapped(_ item: CapturedItem) {
+        let word = WordCardEntity(
+            id: item.id.uuidString,
+            sourceWord: item.englishName,
+            translatedWord: item.translatedName,
+            sourceLanguage: userPreferences.spokenLanguageCode ?? "en-US",
+            targetLanguage: userPreferences.learningLanguageCode ?? "es-ES",
+            category: item.category,
+            imagePath: "",
+            imageData: item.imageData,
+            // Fallback to "apple" if no image data or asset exists (matching Gallery UI)
+            imageAsset: item.image ?? (item.imageData == nil ? "apple" : nil)
+        )
+        router.push(.wordInsight(word: word))
     }
     
     func loadItems() {

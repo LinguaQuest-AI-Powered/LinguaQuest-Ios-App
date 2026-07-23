@@ -45,7 +45,7 @@ struct WordInsightContentView: View {
     @ViewBuilder
     private var stateContent: some View {
         if isLoading {
-            LoadingView()
+            shimmerSkeleton
         } else if let errorMessage {
             ErrorView(message: errorMessage, onRetry: onRetryTapped)
         } else if let word {
@@ -58,6 +58,45 @@ struct WordInsightContentView: View {
                     onSpeak: { onSpeakSection(config) }
                 )
             }
+        }
+    }
+    
+    @ViewBuilder
+    private var shimmerSkeleton: some View {
+        // Hero Card Skeleton
+        RoundedRectangle(cornerRadius: 24)
+            .fill(Color.appShimmerBase)
+            .frame(height: 240)
+            .shimmer()
+        
+        // Insight Section Skeletons (4 blocks)
+        ForEach(0..<4, id: \.self) { _ in
+            VStack(alignment: .leading, spacing: 12) {
+                HStack(spacing: 8) {
+                    Circle()
+                        .fill(Color.appShimmerBase)
+                        .frame(width: 32, height: 32)
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.appShimmerBase)
+                        .frame(width: 120, height: 20)
+                    Spacer()
+                }
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(Color.appShimmerBase)
+                        .frame(height: 16)
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(Color.appShimmerBase)
+                        .frame(height: 16)
+                        .padding(.trailing, 40)
+                }
+            }
+            .padding(16)
+            .background(Color.appSurfaceCard)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .shadow(color: .black.opacity(0.05), radius: 8, x: 0, y: 4)
+            .shimmer()
         }
     }
 }
