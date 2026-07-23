@@ -38,9 +38,6 @@ struct MainTabView: View {
                 .padding(.bottom, 8)
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
-        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("ResetToHomeTab"))) { _ in
-            selectedTabRawValue = MainTabItem.home.rawValue
-        }
     }
 }
 
