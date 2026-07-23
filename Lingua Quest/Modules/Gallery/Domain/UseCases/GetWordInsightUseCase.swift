@@ -13,10 +13,10 @@ protocol GetWordInsightUseCaseProtocol {
 
 final class GetWordInsightUseCase: GetWordInsightUseCaseProtocol {
     // MARK: - Properties
-    private let repository: WordInsightRepositoryProtocol
+    private let repository: GalleryRepositoryProtocol
     
     // MARK: - Init
-    init(repository: WordInsightRepositoryProtocol) {
+    init(repository: GalleryRepositoryProtocol) {
         self.repository = repository
     }
     

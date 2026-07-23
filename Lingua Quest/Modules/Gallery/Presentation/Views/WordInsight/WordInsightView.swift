@@ -44,7 +44,7 @@ struct WordInsightView: View {
         viewModel: WordInsightViewModel(
             router: Router(),
             getWordInsightUseCase: GetWordInsightUseCase(
-                repository: WordInsightRepositoryImpl(
+                repository: GalleryRepositoryImpl(
                     remoteDataSource: WordInsightRemoteDataSource()
                 )
             ),

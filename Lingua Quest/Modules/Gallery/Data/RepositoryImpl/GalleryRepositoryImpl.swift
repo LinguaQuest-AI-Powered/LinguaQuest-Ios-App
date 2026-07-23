@@ -9,8 +9,10 @@ import Foundation
 import SwiftData
 
 class GalleryRepositoryImpl: GalleryRepositoryProtocol {
+    private let remoteDataSource: WordInsightRemoteDataSourceProtocol
     
-    init() {
+    init(remoteDataSource: WordInsightRemoteDataSourceProtocol) {
+        self.remoteDataSource = remoteDataSource
     }
     
     func getCapturedItems() async throws -> [CapturedItem] {
@@ -47,5 +49,10 @@ class GalleryRepositoryImpl: GalleryRepositoryProtocol {
             modelContext.insert(entity)
             try modelContext.save()
         }
+    }
+    
+    // MARK: - Word Insight
+    func getInsight(for word: WordCardEntity) async -> Result<AIWordInsightEntity, WordInsightError> {
+        await remoteDataSource.getInsight(for: word)
     }
 }
