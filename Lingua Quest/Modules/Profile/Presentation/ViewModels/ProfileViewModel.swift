@@ -13,10 +13,15 @@ final class ProfileViewModel {
     // MARK: - Dependencies
     private let router: RouterProtocol
     private let getProfileUseCase: GetProfileUseCaseProtocol?
+    private let uploadProfilePhotoUseCase: UploadProfilePhotoUseCaseProtocol?
     
     // MARK: - State
     var isLoading: Bool = false
+    var isUploadingPhoto: Bool = false
     var errorMessage: String? = nil
+    var showPhotoSourcePicker: Bool = false
+    var showCameraPicker: Bool = false
+    var showGalleryPicker: Bool = false
     
     // MARK: - Top App Bar Data
     var coins: String = "0"
@@ -27,7 +32,7 @@ final class ProfileViewModel {
     // MARK: - Header Data
     var userName: String = ""
     var level: Int = 1
-    var avatarImage: String? = nil
+    var avatarImage: String? = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.cachedAvatarUrl)
     
     // MARK: - Stats Data
     var totalXP: String = "0"
@@ -46,9 +51,14 @@ final class ProfileViewModel {
     var achievements: [AchievementUIModel] = []
     var topExplorers: [ExplorerUIModel] = []
     
-    init(router: RouterProtocol, getProfileUseCase: GetProfileUseCaseProtocol? = nil) {
+    init(
+        router: RouterProtocol,
+        getProfileUseCase: GetProfileUseCaseProtocol? = nil,
+        uploadProfilePhotoUseCase: UploadProfilePhotoUseCaseProtocol? = nil
+    ) {
         self.router = router
         self.getProfileUseCase = getProfileUseCase
+        self.uploadProfilePhotoUseCase = uploadProfilePhotoUseCase
     }
     
     // MARK: - Intentions (Methods)
@@ -57,7 +67,50 @@ final class ProfileViewModel {
         router.push(.settings)
     }
     
+    func onEditPhotoTapped() {
+        showPhotoSourcePicker = true
+    }
+    
+    func selectSourceCamera() {
+        showPhotoSourcePicker = false
+        showCameraPicker = true
+    }
+    
+    func selectSourceGallery() {
+        showPhotoSourcePicker = false
+        showGalleryPicker = true
+    }
+    
+    func uploadPhoto(image: UIImage) {
+        let resizedImage = image.resizedForAvatar(maxDimension: 512)
+        guard let uploadProfilePhotoUseCase = uploadProfilePhotoUseCase,
+              let imageData = resizedImage.jpegData(compressionQuality: 0.8) else { return }
+        
+        let mimeType = "image/jpeg"
+        
+        isUploadingPhoto = true
+        errorMessage = nil
+        
+        Task {
+            do {
+                let photoUrl = try await uploadProfilePhotoUseCase.execute(imageData: imageData, mimeType: mimeType)
+                await MainActor.run {
+                    self.avatarImage = photoUrl
+                    UserDefaults.standard.set(photoUrl, forKey: AppConstants.UserDefaultsKeys.cachedAvatarUrl)
+                    self.isUploadingPhoto = false
+                }
+            } catch {
+                await MainActor.run {
+                    self.errorMessage = error.localizedDescription
+                    self.isUploadingPhoto = false
+                }
+            }
+        }
+    }
+
+    
     func fetchProfileData() {
+
         guard let getProfileUseCase = getProfileUseCase else { return }
         
         isLoading = true
@@ -82,7 +135,15 @@ final class ProfileViewModel {
     private func populateData(from profile: UserProfileEntity) {
         self.userName = profile.username
         self.level = profile.level
-        self.avatarImage = profile.avatarUrl
+        if let avatarUrl = profile.avatarUrl, !avatarUrl.isEmpty {
+            self.avatarImage = avatarUrl
+            UserDefaults.standard.set(avatarUrl, forKey: AppConstants.UserDefaultsKeys.cachedAvatarUrl)
+        } else {
+            self.avatarImage = "user1"
+            UserDefaults.standard.removeObject(forKey: AppConstants.UserDefaultsKeys.cachedAvatarUrl)
+        }
+
+
         
         self.coins = profile.coins.formatted()
         self.rawCoins = profile.coins
@@ -141,3 +202,20 @@ final class ProfileViewModel {
         )
     }
 }
+
+// MARK: - UIImage Extension
+private extension UIImage {
+    func resizedForAvatar(maxDimension: CGFloat = 512) -> UIImage {
+        let maxSide = max(size.width, size.height)
+        guard maxSide > maxDimension else { return self }
+        
+        let ratio = maxDimension / maxSide
+        let newSize = CGSize(width: size.width * ratio, height: size.height * ratio)
+        
+        let renderer = UIGraphicsImageRenderer(size: newSize)
+        return renderer.image { _ in
+            self.draw(in: CGRect(origin: .zero, size: newSize))
+        }
+    }
+}
+

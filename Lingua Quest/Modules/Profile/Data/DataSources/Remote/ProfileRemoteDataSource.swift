@@ -10,6 +10,8 @@ import Foundation
 protocol ProfileRemoteDataSourceProtocol {
     func fetchProfile() async throws -> ProfileResponseDTO
     func completeProfile(nativeLanguageId: Int, targetLanguageId: Int, username: String?) async throws -> SuccessResponseDTO<OAuthResponseDataDTO>
+    func uploadPhoto(imageData: Data, mimeType: String) async throws -> UploadPhotoResponseDTO
+    func updateProfile(username: String) async throws -> UpdateProfileResponseDTO
 }
 
 final class ProfileRemoteDataSource: ProfileRemoteDataSourceProtocol {
@@ -32,4 +34,17 @@ final class ProfileRemoteDataSource: ProfileRemoteDataSourceProtocol {
             )
         )
     }
+    
+    func uploadPhoto(imageData: Data, mimeType: String) async throws -> UploadPhotoResponseDTO {
+        let boundary = "Boundary-\(UUID().uuidString)"
+        let endpoint = ProfileEndpoint.uploadPhoto(data: imageData, mimeType: mimeType, boundary: boundary)
+        return try await apiClient.request(endpoint)
+    }
+    
+    func updateProfile(username: String) async throws -> UpdateProfileResponseDTO {
+        return try await apiClient.request(ProfileEndpoint.updateProfile(username: username))
+    }
 }
+
+
+

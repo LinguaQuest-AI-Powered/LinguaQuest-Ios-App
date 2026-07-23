@@ -31,5 +31,60 @@ enum ProfileEndpoint {
         }
         var requiresAuth: Bool { true }
     }
+    
+    struct uploadPhoto: Endpoint {
+        let data: Data
+        let mimeType: String
+        let boundary: String
+        
+        var path: String { "/profile/photo" }
+        var method: HTTPMethod { .post }
+        var body: EmptyBody? { nil }
+        var requiresAuth: Bool { true }
+        
+        var headers: [String: String]? {
+            var dict: [String: String] = [:]
+            dict["Content-Type"] = "multipart/form-data; boundary=\(boundary)"
+            dict["Accept"] = "application/json"
+            if requiresAuth, let token = SecureTokenStorage().getAccessToken() {
+                dict["Authorization"] = "Bearer \(token)"
+            }
+            return dict
+        }
+        
+        func asURLRequest() throws -> URLRequest {
+            let components = URLComponents(url: baseURL.appendingPathComponent(path), resolvingAgainstBaseURL: false)
+            guard let url = components?.url else { throw NetworkError.invalidURL }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = method.rawValue
+            request.allHTTPHeaderFields = headers
+            
+            var bodyData = Foundation.Data()
+            let crlf = "\r\n"
+            let filename = mimeType == "image/png" ? "photo.png" : "photo.jpg"
+            
+            bodyData.append(contentsOf: "--\(boundary)\(crlf)".utf8)
+            bodyData.append(contentsOf: "Content-Disposition: form-data; name=\"photo\"; filename=\"\(filename)\"\(crlf)".utf8)
+            bodyData.append(contentsOf: "Content-Type: \(mimeType)\(crlf)\(crlf)".utf8)
+            bodyData.append(data)
+            bodyData.append(contentsOf: "\(crlf)".utf8)
+            bodyData.append(contentsOf: "--\(boundary)--\(crlf)".utf8)
+            
+            request.httpBody = bodyData
+            return request
+        }
+    }
+    
+    struct updateProfile: Endpoint {
+        let username: String
+        
+        var path: String { "/profile" }
+        var method: HTTPMethod { .patch }
+        var body: UpdateProfileRequestDTO? {
+            UpdateProfileRequestDTO(username: username)
+        }
+        var requiresAuth: Bool { true }
+    }
 }
 

@@ -264,6 +264,11 @@
 "edit_profile.info_text" = "Your name and bio are visible to other explorers in the Leaderboard.";
 "edit_profile.save_changes" = "Save Changes";
 "edit_profile.cancel" = "Cancel";
+"edit_profile.choose_photo_source" = "Choose Profile Photo";
+"edit_profile.camera" = "Camera";
+"edit_profile.gallery" = "Gallery";
+"edit_profile.uploading_photo" = "Uploading photo...";
+
 // My Languages & Add Language
 "home.my_languages_title" = "My Languages";
 "home.add_new_language" = "Add New Language";

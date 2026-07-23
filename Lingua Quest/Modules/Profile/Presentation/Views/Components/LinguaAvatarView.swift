@@ -19,19 +19,41 @@ struct LinguaAvatarView: View {
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             
-            // Main Avatar Image
             Group {
                 if let imageName = imageName, !imageName.isEmpty {
-                    Image(imageName)
+                    if (imageName.hasPrefix("http://") || imageName.hasPrefix("https://")), let url = URL(string: imageName) {
+                        AsyncImage(url: url) { phase in
+                            switch phase {
+                            case .empty:
+                                ProgressView()
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                            case .failure:
+                                Image(.user1)
+                                    .resizable()
+                                    .scaledToFill()
+                            @unknown default:
+                                Image(.user1)
+                                    .resizable()
+                                    .scaledToFill()
+                            }
+                        }
+                    } else {
+                        Image(imageName)
+                            .resizable()
+                            .scaledToFill()
+                    }
+                } else {
+                    // Default Fallback Image
+                    Image(.user1)
                         .resizable()
                         .scaledToFill()
-                } else {
-                    // Fallback Placeholder
-                    Image(systemIcon: .personCropCircleFill)
-                        .resizable()
-                        .foregroundColor(.gray.opacity(0.5))
                 }
             }
+
+
             .frame(width: size, height: size)
             .background(Color.appSurfaceCard)
             .clipShape(Circle())

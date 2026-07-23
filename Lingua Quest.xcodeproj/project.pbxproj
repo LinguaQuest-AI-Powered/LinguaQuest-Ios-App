@@ -600,6 +600,7 @@
 				INFOPLIST_FILE = "Lingua-Quest-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to scan items for the game quests.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to update your profile photo.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -637,6 +638,7 @@
 				INFOPLIST_FILE = "Lingua-Quest-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to scan items for the game quests.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to update your profile photo.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;

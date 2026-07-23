@@ -64,7 +64,7 @@ final class ProfileRepositoryImpl: ProfileRepositoryProtocol {
             topExplorers: explorers
         )
     }
-    
+
     func completeProfile(nativeLanguageId: Int, targetLanguageId: Int, username: String?) async throws -> (session: AuthSessionEntity, user: UserEntity, profileComplete: Bool) {
         do {
             let response = try await remoteDataSource.completeProfile(
@@ -86,4 +86,15 @@ final class ProfileRepositoryImpl: ProfileRepositoryProtocol {
             throw AuthDTOMapper.mapError(error)
         }
     }
+
+    func uploadPhoto(imageData: Data, mimeType: String) async throws -> String {
+        let response = try await remoteDataSource.uploadPhoto(imageData: imageData, mimeType: mimeType)
+        return response.data.photoUrl
+    }
+    
+    func updateProfile(username: String) async throws -> String {
+        let response = try await remoteDataSource.updateProfile(username: username)
+        return response.data.username
+    }
 }
+

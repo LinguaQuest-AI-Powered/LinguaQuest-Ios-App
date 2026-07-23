@@ -348,7 +348,12 @@ enum L10n {
         static var infoText: String { localized("edit_profile.info_text") }
         static var saveChanges: String { localized("edit_profile.save_changes") }
         static var cancel: String { localized("edit_profile.cancel") }
+        static var choosePhotoSource: String { localized("edit_profile.choose_photo_source") }
+        static var camera: String { localized("edit_profile.camera") }
+        static var gallery: String { localized("edit_profile.gallery") }
+        static var uploadingPhoto: String { localized("edit_profile.uploading_photo") }
     }
+
 
     enum AddLanguage {
         static var title: String { localized("add_language.title") }

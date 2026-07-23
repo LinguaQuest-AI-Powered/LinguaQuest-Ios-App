@@ -23,6 +23,7 @@ protocol Endpoint {
     /// Defaults to true per the API contract ("all endpoints outside /auth/** require authentication").
     /// Auth endpoints that don't need it explicitly override this to false.
     var requiresAuth: Bool { get }
+    func asURLRequest() throws -> URLRequest
 }
 
 extension Endpoint {
