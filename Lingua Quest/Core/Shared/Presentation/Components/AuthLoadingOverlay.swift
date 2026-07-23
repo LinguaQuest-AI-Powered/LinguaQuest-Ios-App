@@ -8,8 +8,16 @@
 import SwiftUI
 
 struct AuthLoadingOverlay: ViewModifier {
+    @Environment(\.colorScheme) private var colorScheme
     let isLoading: Bool
     @State private var isPulsing: Bool = false
+
+    // MARK: - Layout Constants (matching DialogCardContainer)
+    private let cornerRadius: CGFloat = 48
+    private let borderWidth: CGFloat = 2
+    private let glowSize: CGFloat = 256
+    private let glowBlur: CGFloat = 32
+    private let glowOffset: CGFloat = 94
 
     func body(content: Content) -> some View {
         ZStack {
@@ -18,27 +26,12 @@ struct AuthLoadingOverlay: ViewModifier {
 
             if isLoading {
                 ZStack {
-                    // 1. Full-screen dimmed blurred background
-                    Color.black.opacity(0.3)
-                        .background(.regularMaterial)
+                    // Full-screen dimmed blurred background
+                    Color.black.opacity(0.15)
+                        .background(.ultraThinMaterial)
                         .ignoresSafeArea()
-                    
-                    // 2. Glowing background orbs for magical effect
-                    ZStack {
-                        Circle()
-                            .fill(Color.appAccentOrange.opacity(0.3))
-                            .frame(width: 250, height: 250)
-                            .blur(radius: 60)
-                            .offset(x: -80, y: -80)
-                            
-                        Circle()
-                            .fill(Color.appSemanticSuccess.opacity(0.3))
-                            .frame(width: 250, height: 250)
-                            .blur(radius: 60)
-                            .offset(x: 80, y: 80)
-                    }
 
-                    // 3. Premium Glassmorphic Card
+                    // Premium Card (DialogCardContainer style)
                     VStack(spacing: 28) {
                         ZStack {
                             // Pulsing rings
@@ -48,9 +41,9 @@ struct AuthLoadingOverlay: ViewModifier {
                                 .scaleEffect(isPulsing ? 1.3 : 0.8)
                                 .opacity(isPulsing ? 0 : 1)
                                 .animation(.easeOut(duration: 1.5).repeatForever(autoreverses: false), value: isPulsing)
-                            
+
                             Circle()
-                                .stroke(Color.appSemanticSuccess.opacity(0.4), lineWidth: 3)
+                                .stroke(Color.appGlowTeal.opacity(0.4), lineWidth: 3)
                                 .frame(width: 140, height: 140)
                                 .scaleEffect(isPulsing ? 1.5 : 0.9)
                                 .opacity(isPulsing ? 0 : 1)
@@ -68,7 +61,7 @@ struct AuthLoadingOverlay: ViewModifier {
                         VStack(spacing: 16) {
                             Text(L10n.Common.loading)
                                 .appTextStyle(.headingLarge, color: .appTextPrimary)
-                            
+
                             ProgressView()
                                 .tint(.appAccentOrange)
                                 .scaleEffect(1.2)
@@ -76,15 +69,12 @@ struct AuthLoadingOverlay: ViewModifier {
                     }
                     .padding(.horizontal, 48)
                     .padding(.vertical, 40)
-                    .background(
-                        RoundedRectangle(cornerRadius: 32)
-                            .fill(Color.appSurfaceCard.opacity(0.95))
-                            .shadow(color: .black.opacity(0.12), radius: 24, x: 0, y: 12)
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 32)
-                            .stroke(Color.white.opacity(0.5), lineWidth: 1.5)
-                    )
+                    .frame(maxWidth: .infinity)
+                    .background(cardBackground)
+                    .overlay(cardBorder)
+                    .shadow(color: .black.opacity(0.10), radius: 10, x: 0, y: 10)
+                    .shadow(color: .black.opacity(0.08), radius: 6, x: 0, y: 4)
+                    .padding(.horizontal, 24)
                     .onAppear {
                         isPulsing = true
                     }
@@ -93,6 +83,45 @@ struct AuthLoadingOverlay: ViewModifier {
                 .animation(.spring(response: 0.4, dampingFraction: 0.8), value: isLoading)
                 .zIndex(100)
             }
+        }
+    }
+
+    // MARK: - Card Background (same as DialogCardContainer)
+
+    private var cardBackground: some View {
+        RoundedRectangle(cornerRadius: cornerRadius)
+            .fill(Color.appSurfaceCard)
+            .overlay {
+                decorativeBackground
+            }
+            .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+    }
+
+    private var cardBorder: some View {
+        RoundedRectangle(cornerRadius: cornerRadius)
+            .stroke(
+                Color.appBorderCool.opacity(colorScheme == .dark ? 0.4 : 1.0),
+                lineWidth: borderWidth
+            )
+    }
+
+    private var decorativeBackground: some View {
+        ZStack {
+            Circle()
+                .fill(Color.appGlowTeal.opacity(colorScheme == .dark ? 0.12 : 0.2))
+                .frame(width: glowSize, height: glowSize)
+                .padding(glowBlur * 2)
+                .blur(radius: glowBlur)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                .offset(x: glowOffset, y: -glowOffset)
+
+            Circle()
+                .fill(Color.appGlowGold.opacity(colorScheme == .dark ? 0.12 : 0.2))
+                .frame(width: glowSize, height: glowSize)
+                .padding(glowBlur * 2)
+                .blur(radius: glowBlur)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
+                .offset(x: -glowOffset, y: glowOffset)
         }
     }
 }
