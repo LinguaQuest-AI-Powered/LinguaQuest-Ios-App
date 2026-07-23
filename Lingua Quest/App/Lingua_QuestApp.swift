@@ -12,10 +12,7 @@ import GoogleSignIn
 
 @main
 struct MyApp: App {
-    init() {
-        FirebaseApp.configure()
-        _ = Resolver.shared
-    }
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
     var body: some Scene {
         WindowGroup {
