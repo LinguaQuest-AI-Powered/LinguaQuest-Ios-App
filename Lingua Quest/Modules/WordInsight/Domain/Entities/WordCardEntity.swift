@@ -15,4 +15,18 @@ struct WordCardEntity: Identifiable, Hashable {
     let targetLanguage: String
     let category: String
     let imagePath: String
+    let imageData: Data?
+    let imageAsset: String?
+    
+    init(id: String, sourceWord: String, translatedWord: String, sourceLanguage: String, targetLanguage: String, category: String, imagePath: String, imageData: Data? = nil, imageAsset: String? = nil) {
+        self.id = id
+        self.sourceWord = sourceWord
+        self.translatedWord = translatedWord
+        self.sourceLanguage = sourceLanguage
+        self.targetLanguage = targetLanguage
+        self.category = category
+        self.imagePath = imagePath
+        self.imageData = imageData
+        self.imageAsset = imageAsset
+    }
 }
