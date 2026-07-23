@@ -265,6 +265,11 @@
 "edit_profile.info_text" = "اسمك ونبذتك التعريفية مرئية للمستكشفين الآخرين في قائمة المتصدرين.";
 "edit_profile.save_changes" = "حفظ التغييرات";
 "edit_profile.cancel" = "إلغاء";
+"edit_profile.choose_photo_source" = "اختر صورة الملف الشخصي";
+"edit_profile.camera" = "الكاميرا";
+"edit_profile.gallery" = "معرض الصور";
+"edit_profile.uploading_photo" = "جاري رفع الصورة...";
+
 
 // My Languages & Add Language
 "home.my_languages_title" = "لغاتي";
