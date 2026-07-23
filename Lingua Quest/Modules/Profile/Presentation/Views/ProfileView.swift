@@ -12,52 +12,95 @@ struct ProfileView: View {
     @State var viewModel: ProfileViewModel
     
     var body: some View {
-        Group {
-            if let error = viewModel.errorMessage {
-                VStack(spacing: 16) {
-                    Text("Error: \(error)")
-                        .appTextStyle(.bodyBold, color: .red)
-                    Button("Retry") {
-                        viewModel.fetchProfileData()
+        ZStack {
+            Group {
+                if let error = viewModel.errorMessage {
+                    VStack(spacing: 16) {
+                        Text("Error: \(error)")
+                            .appTextStyle(.bodyBold, color: .red)
+                        Button("Retry") {
+                            viewModel.fetchProfileData()
+                        }
+                        .buttonStyle(.borderedProminent)
                     }
-                    .buttonStyle(.borderedProminent)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(
+                        Color.appBackgroundWarm.ignoresSafeArea()
+                    )
+                } else {
+                    ProfileContentView(
+                        rawCoins: viewModel.rawCoins,
+                        rawXP: viewModel.rawXP,
+                        coinsValue: viewModel.coins,
+                        gemsValue: viewModel.gems,
+                        userName: viewModel.userName,
+                        userLevel: viewModel.level,
+                        avatarImage: viewModel.avatarImage,
+                        xpValue: viewModel.totalXP,
+                        streakValue: viewModel.streak,
+                        worldsValue: viewModel.worlds,
+                        languageName: viewModel.currentLanguage,
+                        journeyTitle: viewModel.journeyTitle,
+                        levelName: viewModel.languageLevel,
+                        currentXP: viewModel.currentLanguageXP,
+                        targetXP: viewModel.targetLanguageXP,
+                        achievements: viewModel.achievements,
+                        topExplorers: viewModel.topExplorers,
+                        onEditProfile: {
+                            viewModel.onEditPhotoTapped()
+                        },
+                        onViewAllAchievements: {
+                            router.push(.achievements)
+                        },
+                        onViewAllExplorers: {
+                            router.push(.leaderboard(languageId: viewModel.currentLanguageId))
+                        },
+                        onSettingsTapped: {
+                            viewModel.navigateToSettings()
+                        }
+                    )
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(
-                    Color.appBackgroundWarm.ignoresSafeArea()
-                )
-            } else {
-                ProfileContentView(
-                    rawCoins: viewModel.rawCoins,
-                    rawXP: viewModel.rawXP,
-                    coinsValue: viewModel.coins,
-                    gemsValue: viewModel.gems,
-                    userName: viewModel.userName,
-                    userLevel: viewModel.level,
-                    avatarImage: viewModel.avatarImage,
-                    xpValue: viewModel.totalXP,
-                    streakValue: viewModel.streak,
-                    worldsValue: viewModel.worlds,
-                    languageName: viewModel.currentLanguage,
-                    journeyTitle: viewModel.journeyTitle,
-                    levelName: viewModel.languageLevel,
-                    currentXP: viewModel.currentLanguageXP,
-                    targetXP: viewModel.targetLanguageXP,
-                    achievements: viewModel.achievements,
-                    topExplorers: viewModel.topExplorers,
-                    onEditProfile: {
-                        router.push(.editProfile)
-                    },
-                    onViewAllAchievements: {
-                        router.push(.achievements)
-                    },
-                    onViewAllExplorers: {
-                        router.push(.leaderboard(languageId: viewModel.currentLanguageId))
-                    },
-                    onSettingsTapped: {
-                        viewModel.navigateToSettings()
-                    }
-                )
+            }
+            
+            if viewModel.isUploadingPhoto {
+                Color.black.opacity(0.4)
+                    .ignoresSafeArea()
+                
+                VStack(spacing: 16) {
+                    ProgressView()
+                        .scaleEffect(1.3)
+                        .tint(.white)
+                    
+                    Text(L10n.EditProfile.uploadingPhoto)
+                        .appTextStyle(.bodyBold, color: .white)
+                }
+                .padding(24)
+                .background(Color.appSurfaceCard)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .shadow(radius: 10)
+            }
+        }
+        .customBottomSheet(isPresented: $viewModel.showPhotoSourcePicker, initialDetent: .custom(ratio: 0.38)) {
+            ProfilePhotoSourceBottomSheet(
+                onCameraSelected: {
+                    viewModel.selectSourceCamera()
+                },
+                onGallerySelected: {
+                    viewModel.selectSourceGallery()
+                },
+                onCancelSelected: {
+                    viewModel.showPhotoSourcePicker = false
+                }
+            )
+        }
+        .sheet(isPresented: $viewModel.showCameraPicker) {
+            ImagePicker(sourceType: .camera) { image in
+                viewModel.uploadPhoto(image: image)
+            }
+        }
+        .sheet(isPresented: $viewModel.showGalleryPicker) {
+            ImagePicker(sourceType: .photoLibrary) { image in
+                viewModel.uploadPhoto(image: image)
             }
         }
         .onAppear {
@@ -65,3 +108,4 @@ struct ProfileView: View {
         }
     }
 }
+
