@@ -294,6 +294,18 @@ enum L10n {
         static var logOut: String { localized("settings.log_out") }
         static var logOutConfirmation: String { localized("settings.log_out_confirmation") }
         static var chooseLanguage: String { localized("settings.choose_language") }
+        
+        static var dailyReminder: String { localized("settings.daily_reminder") }
+        static var reminderTime: String { localized("settings.reminder_time") }
+        static var repeatFrequency: String { localized("settings.repeat") }
+        static var repeatEveryDay: String { localized("settings.repeat_every_day") }
+        static var repeatWeekdays: String { localized("settings.repeat_weekdays") }
+        static var repeatWeekends: String { localized("settings.repeat_weekends") }
+        static var repeatCustom: String { localized("settings.repeat_custom") }
+        
+        static var notificationsEnabledToast: String { localized("settings.toast_notifications_enabled") }
+        static var notificationsPausedToast: String { localized("settings.toast_notifications_paused") }
+        static var selectReminderTime: String { localized("settings.select_reminder_time") }
     }
     
     enum WordInsight {

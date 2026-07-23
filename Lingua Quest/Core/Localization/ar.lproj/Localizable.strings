@@ -310,3 +310,14 @@
 "speaking_lab.score" = "النتيجة";
 "speaking_lab.evaluating_title" = "جاري تقييم الصوت...";
 "speaking_lab.evaluating_subtitle" = "نستمع بدقة لطريقة نطقك للكلمات.";
+
+"settings.daily_reminder" = "تذكير يومي";
+"settings.reminder_time" = "وقت التذكير";
+"settings.repeat" = "تكرار";
+"settings.repeat_every_day" = "كل يوم";
+"settings.repeat_weekdays" = "أيام الأسبوع";
+"settings.repeat_weekends" = "عطلة نهاية الأسبوع";
+"settings.repeat_custom" = "مخصص";
+"settings.toast_notifications_enabled" = "تم تفعيل الإشعارات.";
+"settings.toast_notifications_paused" = "تم إيقاف الإشعارات. التذكير اليومي متوقف.";
+"settings.select_reminder_time" = "اختر وقت التذكير";

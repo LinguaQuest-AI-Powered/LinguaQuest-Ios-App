@@ -12,6 +12,7 @@ struct SettingsView: View {
     @State var viewModel: SettingsViewModel
     @State private var showLanguagePicker = false
     @State private var showLogoutConfirm = false
+    @State private var showRepeatPicker = false
     
     // MARK: - Body
     var body: some View {
@@ -37,9 +38,24 @@ struct SettingsView: View {
             },
             onLogOutTapped: {
                 showLogoutConfirm = true
+            },
+            onRepeatTapped: {
+                showRepeatPicker = true
             }
         )
         .navigationBarHidden(true)
+        .appToast(
+            isPresented: $viewModel.showToast,
+            type: viewModel.toastType,
+            title: viewModel.toastTitle,
+            subtitle: viewModel.toastSubtitle
+        )
+        .customBottomSheet(isPresented: $showRepeatPicker, initialDetent: .custom(ratio: 0.55)) {
+            RepeatSelectionBottomSheet(
+                repeatDays: $viewModel.reminderRepeatDays,
+                onSave: { showRepeatPicker = false }
+            )
+        }
         .appDialog(isPresented: $showLanguagePicker) {
             LanguageSelectDialog(
                 onSelectEnglish: {

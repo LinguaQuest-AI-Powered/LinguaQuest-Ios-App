@@ -308,3 +308,14 @@
 "speaking_lab.score" = "SCORE";
 "speaking_lab.evaluating_title" = "Evaluating Voice...";
 "speaking_lab.evaluating_subtitle" = "Listening closely to your pronunciation.";
+
+"settings.daily_reminder" = "Daily Reminder";
+"settings.reminder_time" = "Reminder Time";
+"settings.repeat" = "Repeat";
+"settings.repeat_every_day" = "Every Day";
+"settings.repeat_weekdays" = "Weekdays";
+"settings.repeat_weekends" = "Weekends";
+"settings.repeat_custom" = "Custom";
+"settings.toast_notifications_enabled" = "Notifications enabled.";
+"settings.toast_notifications_paused" = "Notifications off. Daily reminder paused.";
+"settings.select_reminder_time" = "Select Reminder Time";

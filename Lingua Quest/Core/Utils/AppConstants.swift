@@ -18,5 +18,10 @@ enum AppConstants {
         static let isDarkMode = "isDarkMode"
         static let appLanguage = "appLanguage"
         static let cachedAvatarUrl = "cachedAvatarUrl"
+        
+        static let notificationsEnabled = "notificationsEnabled"
+        static let dailyReminderEnabled = "dailyReminderEnabled"
+        static let reminderTime = "reminderTime"
+        static let reminderRepeatDays = "reminderRepeatDays"
     }
 }
