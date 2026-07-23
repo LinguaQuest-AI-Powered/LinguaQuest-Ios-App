@@ -19,3 +19,4 @@
 //   3) Do NOT commit the new file — it is already added to .gitignore.
 // =====================================================================
 API_BASE_URL =
+AI_KEY =
