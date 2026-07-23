@@ -125,7 +125,7 @@ extension Image {
         case dog = "dog"
         case kitchen = "kitchen_world"
         case city = "city_world"
-        case appleImage = "appleImage"
+        case appleLogo = "appleLogo"
         case appBarBird = "appBarBird"
         case chooseLanguageBird = "choose_language_bird"
         case logoutBird = "logout_bird"

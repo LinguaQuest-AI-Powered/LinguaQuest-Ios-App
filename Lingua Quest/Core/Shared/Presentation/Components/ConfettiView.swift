@@ -54,8 +54,11 @@ struct ConfettiView: UIViewRepresentable {
         view.layer.addSublayer(emitter)
         
         // Stop emitting after 1.5 seconds for a burst effect
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            emitter.birthRate = 0
+        Task { @MainActor [weak view] in
+            try? await Task.sleep(for: .seconds(1.5))
+            if let targetEmitter = view?.layer.sublayers?.first(where: { $0 is CAEmitterLayer }) as? CAEmitterLayer {
+                targetEmitter.birthRate = 0
+            }
         }
         
         return view

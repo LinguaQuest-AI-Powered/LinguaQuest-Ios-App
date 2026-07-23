@@ -15,7 +15,7 @@ struct HomeView: View {
     @State private var voiceCompleted: Int = 0
     @State private var voiceTotal: Int = 5
     
-    @State private var dailyRewardViewModel = DailyRewardViewModel()
+
     @State private var showDailyRewardDialog = false
     @State private var pulseWorldButton = false
     
@@ -100,17 +100,9 @@ struct HomeView: View {
                                     .padding(.vertical, 4)
                                 }
                             }
->>>>>>> development
                             .offset(y: animateItems ? 0 : 30)
                             .opacity(animateItems ? 1 : 0)
                             .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.3), value: animateItems)
-
-                            
-                            VoicePracticeCardView(action: { router.push(.voiceGame) })
-                                .padding(.horizontal, 20)
-                                .offset(y: animateItems ? 0 : 30)
-                                .opacity(animateItems ? 1 : 0)
-                                .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.45), value: animateItems)
 
                             Color.clear.frame(height: 100)
                         }
@@ -291,13 +283,13 @@ struct HomeSkeletonView: View {
                 title: L10n.Home.continueLessonTitle,
                 lessonName: L10n.Home.lessonApple,
                 lessonDescription: L10n.Home.lessonAppleDesc,
-                imageAsset: .appleImage,
+                imageAsset: .appleLogo,
                 buttonText: L10n.Home.continueButton,
                 action: {}
             )
             .padding(.horizontal, 20)
             
-            VoicePracticeCardView(action: {})
+            VoicePracticeCardView(completed: 0, total: 5, action: {})
                 .padding(.horizontal, 20)
 
             Color.clear.frame(height: 100)

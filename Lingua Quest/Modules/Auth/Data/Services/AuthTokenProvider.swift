@@ -30,36 +30,38 @@ final class AuthTokenProvider: AuthTokenProviding {
     }
 
     func refreshSession() async -> Bool {
-        lock.lock()
-        if let existingTask = _inFlightRefresh {
-            lock.unlock()
-            return await existingTask.value
+        let taskToAwait: Task<Bool, Never> = lock.withLock {
+            if let existingTask = _inFlightRefresh {
+                return existingTask
+            }
+
+            let task = Task<Bool, Never> { [tokenStorage, remoteDataSource] in
+                guard let refreshToken = tokenStorage.getRefreshToken() else { return false }
+
+                let result = await remoteDataSource.refreshToken(refreshToken: refreshToken)
+                switch result {
+                case .success(let session):
+                    tokenStorage.saveSession(accessToken: session.accessToken, refreshToken: session.refreshToken)
+                    return true
+                case .failure:
+                    tokenStorage.clearSession()
+                    NotificationCenter.default.post(name: .sessionExpired, object: nil)
+                    return false
+                }
+            }
+
+            _inFlightRefresh = task
+            return task
         }
-
-        let task = Task<Bool, Never> { [tokenStorage, remoteDataSource] in
-            guard let refreshToken = tokenStorage.getRefreshToken() else { return false }
-
-            let result = await remoteDataSource.refreshToken(refreshToken: refreshToken)
-            switch result {
-            case .success(let session):
-                tokenStorage.saveSession(accessToken: session.accessToken, refreshToken: session.refreshToken)
-                return true
-            case .failure:
-                tokenStorage.clearSession()
-                NotificationCenter.default.post(name: .sessionExpired, object: nil)
-                return false
+        
+        let result = await taskToAwait.value
+        
+        lock.withLock {
+            // Only clear if it hasn't been replaced by another refresh (unlikely but safe)
+            if _inFlightRefresh == taskToAwait {
+                _inFlightRefresh = nil
             }
         }
-
-        _inFlightRefresh = task
-        lock.unlock()
-        
-        let result = await task.value
-        
-        lock.lock()
-        // Only clear if it hasn't been replaced by another refresh (unlikely but safe)
-        _inFlightRefresh = nil
-        lock.unlock()
         
         return result
     }

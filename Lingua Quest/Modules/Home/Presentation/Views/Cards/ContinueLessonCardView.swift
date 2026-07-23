@@ -102,7 +102,7 @@ struct ContinueLessonCardView: View {
         title: L10n.Home.continueLessonTitle,
         lessonName: L10n.Home.lessonApple,
         lessonDescription: L10n.Home.lessonAppleDesc,
-        imageAsset: .appleImage,
+        imageAsset: .appleLogo,
         buttonText: L10n.Home.continueButton,
         action: {}
     )
