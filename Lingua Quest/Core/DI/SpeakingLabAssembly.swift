@@ -13,16 +13,18 @@ final class SpeakingLabAssembly: Assembly {
     func assemble(container: Container) {
         
         // Data Sources
-        container.register(VoiceEvaluationRemoteDataSourceProtocol.self) { _ in
-            return VoiceEvaluationRemoteDataSource()
+        container.register(VoiceEvaluationRemoteDataSourceProtocol.self) { resolver in
+            let apiClient = resolver.resolve(APIClientProtocol.self)!
+            return VoiceEvaluationRemoteDataSource(apiClient: apiClient)
         }.inObjectScope(.container)
         
         container.register(VoiceProgressRemoteDataSourceProtocol.self) { _ in
             return VoiceProgressRemoteDataSource()
         }.inObjectScope(.container)
         
-        container.register(VoiceSentenceGeneratorDataSourceProtocol.self) { _ in
-            return VoiceSentenceGeneratorDataSource()
+        container.register(VoiceSentenceGeneratorDataSourceProtocol.self) { resolver in
+            let apiClient = resolver.resolve(APIClientProtocol.self)!
+            return VoiceSentenceGeneratorDataSource(apiClient: apiClient)
         }.inObjectScope(.container)
         
         container.register(SpeechRecognitionServiceProtocol.self) { _ in

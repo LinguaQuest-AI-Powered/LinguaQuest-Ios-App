@@ -14,72 +14,23 @@ protocol VoiceSentenceGeneratorDataSourceProtocol {
 }
 
 class VoiceSentenceGeneratorDataSource: VoiceSentenceGeneratorDataSourceProtocol {
+    private let apiClient: APIClientProtocol
+    
+    init(apiClient: APIClientProtocol) {
+        self.apiClient = apiClient
+    }
+    
     func generateSentences(language: String, count: Int) async throws -> [VoiceSentenceDTO] {
-        let promptText = """
-        Generate exactly \(count) unique sentences in \(language) for a language learning app.
-        The sentences should be practical, everyday sentences that a learner would use.
-        
-        Mix the difficulty levels:
-        - 2 sentences should be "Easy" (short, simple vocabulary)
-        - 2 sentences should be "Medium" (moderate length, common phrases)
-        - 1 sentence should be "Hard" (longer, more complex structure)
-        
-        Respond STRICTLY in the following JSON format (no markdown, no backticks, just raw JSON):
-        [
-            {
-                "id": "<unique_uuid_string>",
-                "text": "<the sentence in \(language)>",
-                "difficulty": "<Easy|Medium|Hard>"
-            }
-        ]
-        
-        IMPORTANT: Generate exactly \(count) sentences. Each id must be a unique UUID string.
-        """
-        
-        let url = URL(string: "http://apiaccess.iti.net.eg/api/v1/student/chat")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("Bearer \(AppConfig.aiKey)", forHTTPHeaderField: "Authorization")
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        let payload: [String: Any] = [
-            "model_id": "deepseek.v3.2",
-            "messages": [
-                [
-                    "role": "user",
-                    "content": promptText
-                ]
-            ]
-        ]
-        
-        request.httpBody = try JSONSerialization.data(withJSONObject: payload)
-        
-        let (data, response) = try await URLSession.shared.data(for: request)
-        
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw NSError(domain: "VoiceSentenceGenerator", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid response"])
-        }
-        
-        guard httpResponse.statusCode >= 200 && httpResponse.statusCode < 300 else {
-            let errorMsg = String(data: data, encoding: .utf8) ?? "Unknown error"
-            throw NSError(domain: "VoiceSentenceGenerator", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: "API Error: \(errorMsg)"])
-        }
-        
-        let rawString = String(data: data, encoding: .utf8) ?? "Unreadable response"
-        print("RAW BEDROCK RESPONSE: \(rawString)")
-        
-        struct BedrockResponse: Codable {
-            let output_text: String
-        }
+        let endpoint = VoiceSentenceGeneratorEndpoint(language: language, count: count)
         
         let bedrockResponse: BedrockResponse
         do {
-            bedrockResponse = try JSONDecoder().decode(BedrockResponse.self, from: data)
+            bedrockResponse = try await apiClient.request(endpoint)
         } catch {
-            throw NSError(domain: "VoiceSentenceGenerator", code: 0, userInfo: [NSLocalizedDescriptionKey: "Unexpected API Response Format: \(rawString)"])
+            throw NSError(domain: "VoiceSentenceGenerator", code: 0, userInfo: [NSLocalizedDescriptionKey: "API Error: \(error.localizedDescription)"])
         }
         
-        var rawText = bedrockResponse.output_text
+        var rawText = bedrockResponse.outputText
         
         // Sanitize markdown if the model ignored our instructions
         rawText = rawText.trimmingCharacters(in: .whitespacesAndNewlines)

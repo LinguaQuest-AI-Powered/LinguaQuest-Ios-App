@@ -35,9 +35,19 @@ enum AppConfig {
         string(for: .aiKey).trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
+    static var aiBaseURL: URL {
+        let host = string(for: .aiBaseURL).trimmingCharacters(in: .whitespacesAndNewlines)
+        let urlString = host.hasPrefix("http") ? host : "https://" + host
+        guard let url = URL(string: urlString) else {
+            preconditionFailure("Invalid URL for AI_BASE_URL: \(urlString)")
+        }
+        return url
+    }
+    
     private enum Key: String {
         case apiBaseURL = "API_BASE_URL"
         case aiKey = "AI_KEY"
+        case aiBaseURL = "AI_BASE_URL"
     }
     
     private static func string(for key: Key) -> String {
