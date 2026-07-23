@@ -16,6 +16,14 @@ struct VoiceGameView: View {
     @State private var showSkipDialog = false
     @State private var showNotEnoughCoinsDialog = false
     
+    private var isMicLocked: Bool {
+        viewModel.isLoadingSentences || viewModel.isPlayingAudio || viewModel.isLoadingResult
+    }
+    
+    private var isListenLocked: Bool {
+        viewModel.recordingState != .idle || viewModel.isLoadingSentences || viewModel.isLoadingResult || viewModel.isPlayingAudio
+    }
+    
     var body: some View {
         ZStack(alignment: .top) {
             Color.appBackgroundWarm
@@ -130,8 +138,9 @@ struct VoiceGameView: View {
                                     Text(L10n.SpeakingLab.listen)
                                         .font(AppTextStyle.bodyBold.font)
                                 }
-                                .foregroundColor(Color.appTextSecondary)
+                                .foregroundColor(isListenLocked ? Color.appTextSecondary.opacity(0.4) : Color.appTextSecondary)
                             }
+                            .disabled(isListenLocked)
                         }
                         .padding(.vertical, 32)
                         .padding(.horizontal, 16)
@@ -181,17 +190,18 @@ struct VoiceGameView: View {
                     }) {
                         ZStack {
                             Circle()
-                                .fill(viewModel.recordingState == .recording ? Color.red : Color.appAccentOrange)
+                                .fill(isMicLocked ? Color.gray.opacity(0.3) : (viewModel.recordingState == .recording ? Color.red : Color.appAccentOrange))
                                 .frame(width: 96, height: 96)
-                                .shadow(color: viewModel.recordingState == .recording ? Color.red.opacity(0.3) : Color.appBrandBrown, radius: 0, x: 0, y: 6)
+                                .shadow(color: isMicLocked ? .clear : (viewModel.recordingState == .recording ? Color.red.opacity(0.3) : Color.appBrandBrown), radius: 0, x: 0, y: isMicLocked ? 0 : 6)
                                 .scaleEffect(viewModel.recordingState == .recording ? 1.1 : 1.0)
                             
                             Image(systemIcon: viewModel.recordingState == .recording ? .pauseFill : .micFill)
                                 .font(.system(size: 32, weight: .bold))
-                                .foregroundColor(viewModel.recordingState == .recording ? .white : Color.appTextSelectedBrown)
+                                .foregroundColor(isMicLocked ? Color.gray : (viewModel.recordingState == .recording ? .white : Color.appTextSelectedBrown))
                                 .scaleEffect(viewModel.recordingState == .recording ? 1.2 : 1.0)
                         }
                     }
+                    .disabled(isMicLocked)
                     
                     // Skip Button
                     OutlineButton(

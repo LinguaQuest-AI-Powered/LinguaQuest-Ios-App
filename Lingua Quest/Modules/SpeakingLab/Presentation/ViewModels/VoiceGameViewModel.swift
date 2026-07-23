@@ -30,6 +30,7 @@ class VoiceGameViewModel {
     var showReviewDialog: Bool = false
     var isLoadingResult: Bool = false
     var isLoadingSentences: Bool = false
+    var isPlayingAudio: Bool = false
     var loadError: String?
     private var timer: Timer?
     
@@ -58,6 +59,13 @@ class VoiceGameViewModel {
         // Determine language code for speech synthesis from the sentence
         let languageCode = currentSentence?.language ?? "de"
         let speechCode = mapToSpeechCode(languageCode)
+        
+        isPlayingAudio = true
+        speechService.onFinishSpeaking = { [weak self] in
+            Task { @MainActor in
+                self?.isPlayingAudio = false
+            }
+        }
         speechService.speak(text: targetSentence, languageCode: speechCode)
     }
     
