@@ -9,8 +9,4 @@ import Foundation
 
 struct BedrockResponse: Codable {
     let outputText: String
-    
-    enum CodingKeys: String, CodingKey {
-        case outputText = "output_text"
-    }
 }

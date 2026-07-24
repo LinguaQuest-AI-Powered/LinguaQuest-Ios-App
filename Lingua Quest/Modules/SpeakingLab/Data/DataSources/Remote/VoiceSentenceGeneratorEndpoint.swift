@@ -22,7 +22,7 @@ struct VoiceSentenceGeneratorEndpoint: AIEndpoint {
     let count: Int
     
     var path: String {
-        return "/student/chat"
+        return "/chat"
     }
     
     var method: HTTPMethod {

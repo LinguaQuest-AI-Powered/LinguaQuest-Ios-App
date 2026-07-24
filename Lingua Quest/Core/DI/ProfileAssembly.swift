@@ -109,7 +109,12 @@ final class ProfileAssembly: Assembly {
         container.register(SettingsViewModel.self) { resolver in
             let router = resolver.resolve(RouterProtocol.self)!
             let sessionManager = resolver.resolve(SessionManagerProtocol.self)!
-            return SettingsViewModel(router: router, sessionManager: sessionManager)
+            let activateUseCase = resolver.resolve(ActivateLockScreenVocabularyUseCaseProtocol.self)
+            return SettingsViewModel(
+                router: router, 
+                sessionManager: sessionManager,
+                activateLockScreenVocabularyUseCase: activateUseCase
+            )
         }
     }
 }

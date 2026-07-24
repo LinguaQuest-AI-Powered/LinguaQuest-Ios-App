@@ -139,6 +139,8 @@ extension LoginViewModel {
             var userLevel: String? = "beginner"
             var isDarkMode: Bool = false
             var appLanguage: String = "en"
+            var coinBalance: Int = 0
+            var isLockScreenVocabularyEnabled: Bool = false
         }
         
         class MockLoginUseCase: LoginUseCaseProtocol {

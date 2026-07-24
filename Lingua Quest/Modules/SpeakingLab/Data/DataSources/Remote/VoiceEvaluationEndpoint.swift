@@ -22,7 +22,7 @@ struct VoiceEvaluationEndpoint: AIEndpoint {
     let targetText: String
     
     var path: String {
-        return "/student/chat"
+        return "/chat"
     }
     
     var method: HTTPMethod {

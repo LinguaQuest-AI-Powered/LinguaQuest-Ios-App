@@ -30,6 +30,8 @@ final class GalleryAssembly: Assembly {
             GalleryViewModel(
                 getCapturedItemsUseCase: r.resolve(GetCapturedItemsUseCase.self)!,
                 saveCapturedItemUseCase: r.resolve(SaveCapturedItemUseCase.self)!,
+                getSavedVocabularyWordsUseCase: r.resolve(GetSavedVocabularyWordsUseCaseProtocol.self),
+                speechSynthesizer: r.resolve(SpeechSynthesizerProtocol.self),
                 router: r.resolve(RouterProtocol.self)!,
                 userPreferences: r.resolve(UserPreferencesProtocol.self)!
             )

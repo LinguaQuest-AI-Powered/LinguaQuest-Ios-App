@@ -25,7 +25,9 @@ final class Resolver {
                 AuthAssembly(), OnboardingAssembly(), GameAssembly(), GalleryAssembly(),
                 ProfileAssembly(), HomeAssembly(),
                 SpeakingLabAssembly(),
-                SessionAssembly()
+                SessionAssembly(),
+               
+                LockScreenVocabularyAssembly()
             ],
             container: container
         )
