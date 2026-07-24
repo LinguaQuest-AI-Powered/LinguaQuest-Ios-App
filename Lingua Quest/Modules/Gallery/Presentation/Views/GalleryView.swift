@@ -9,36 +9,137 @@ import SwiftUI
 
 struct GalleryView: View {
     @State var viewModel: GalleryViewModel
+    @State private var selectedTab: Int = 0
+    @Namespace private var tabNamespace
+    
+    // For Word Filters
+    let wordCategories = ["All", "easy", "medium", "hard"]
+    let wordLocalizedTitles = [
+        "All": L10n.Gallery.filterAll,
+        "easy": L10n.Home.difficultyEasy,
+        "medium": L10n.Home.difficultyMedium,
+        "hard": L10n.Home.difficultyHard
+    ]
     
     var body: some View {
         VStack(spacing: 0) {
             AppHeaderView(starCount: 15000000, coinCount: 20000)
             
-            // Temporary debug button
-            Button(action: {
-                viewModel.saveMockItem()
-            }) {
-                Text("Save Mock Item (Debug)")
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(Color.blue)
-                    .cornerRadius(8)
-            }
-            .padding(.top, 8)
-            
-            if viewModel.items.isEmpty {
-                VStack(spacing: 0) {
-                    MyCapturesHeaderView(objectsCollected: viewModel.items.count)
-                    EmptyGalleryView()
+
+            if viewModel.isLockScreenVocabularyEnabled {
+                HStack(spacing: 0) {
+                    Button(action: { withAnimation { selectedTab = 0 } }) {
+                        VStack(spacing: 6) {
+                            Text(L10n.Gallery.capturesTab)
+                                .font(.system(size: 18, weight: selectedTab == 0 ? .bold : .medium, design: .rounded))
+                                .foregroundColor(selectedTab == 0 ? .appAccentOrange : .appTextSecondary.opacity(0.6))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.8)
+                            
+                            Rectangle()
+                                .fill(selectedTab == 0 ? Color.appAccentOrange : Color.clear)
+                                .frame(height: 3)
+                                .cornerRadius(1.5)
+                                .matchedGeometryEffect(id: "TabUnderline", in: tabNamespace, isSource: selectedTab == 0)
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
+                    
+                    Button(action: { withAnimation { selectedTab = 1 } }) {
+                        VStack(spacing: 6) {
+                            Text(L10n.Gallery.wordsTab)
+                                .font(.system(size: 18, weight: selectedTab == 1 ? .bold : .medium, design: .rounded))
+                                .foregroundColor(selectedTab == 1 ? .appAccentOrange : .appTextSecondary.opacity(0.6))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.8)
+                            
+                            Rectangle()
+                                .fill(selectedTab == 1 ? Color.appAccentOrange : Color.clear)
+                                .frame(height: 3)
+                                .cornerRadius(1.5)
+                                .matchedGeometryEffect(id: "TabUnderline", in: tabNamespace, isSource: selectedTab == 1)
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
                 }
-                .frame(maxHeight: .infinity, alignment: .top)
+                .padding(.horizontal, 20)
+                .padding(.top, 16)
+                .padding(.bottom, 8)
             } else {
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: 0) {
-                        MyCapturesHeaderView(objectsCollected: viewModel.items.count)
-                        GalleryGridView(items: viewModel.items, onItemTapped: { item in
+                HStack {
+                    Text(L10n.Gallery.capturesTab)
+                        .font(.system(size: 28, weight: .bold, design: .rounded))
+                        .foregroundColor(.appTextHeading)
+                    Spacer()
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 20)
+                .padding(.bottom, 4)
+            }
+            
+            let currentSubtitle = selectedTab == 0
+                ? (viewModel.items.isEmpty ? L10n.Gallery.noCapturesYet : L10n.Gallery.objectsCollected(viewModel.items.count))
+                : (viewModel.filteredVocabularyWords.isEmpty ? L10n.Gallery.noCapturesYet : L10n.Gallery.objectsCollected(viewModel.filteredVocabularyWords.count))
+                
+            HStack {
+                Text(currentSubtitle)
+                    .font(.system(size: 15, weight: .medium, design: .rounded))
+                    .foregroundColor(.appTextSecondary.opacity(0.8))
+                Spacer()
+            }
+            .padding(.horizontal, 20)
+            .padding(.bottom, 16)
+            
+            if selectedTab == 0 {
+                if viewModel.items.isEmpty {
+                    EmptyGalleryView()
+                        .frame(maxHeight: .infinity, alignment: .center)
+                } else {
+                    GalleryGridView(
+                        items: viewModel.items,
+                        onItemTapped: { item in
                             viewModel.onWordTapped(item)
-                        })
+                        }
+                    )
+                }
+            } else {
+                VStack(spacing: 0) {
+                    CategoryFilterView(
+                        categories: wordCategories,
+                        localizedTitles: wordLocalizedTitles,
+                        selectedCategory: Binding(
+                            get: { viewModel.selectedDifficultyFilter ?? "All" },
+                            set: { newValue in
+                                viewModel.selectedDifficultyFilter = newValue == "All" ? nil : newValue
+                            }
+                        )
+                    )
+                    .padding(.bottom, 10)
+                    
+                    if viewModel.filteredVocabularyWords.isEmpty {
+                        EmptyGalleryView(
+                            showAddButton: false,
+                            title: L10n.Gallery.emptyFilterWordsTitle,
+                            subtitle: L10n.Gallery.emptyFilterWordsSubtitle
+                        )
+                            .frame(maxHeight: .infinity, alignment: .center)
+                    } else {
+                        ScrollView(showsIndicators: false) {
+                            LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 20) {
+                                ForEach(viewModel.filteredVocabularyWords) { word in
+                                    Button(action: {
+                                        viewModel.onVocabularyWordTapped(word)
+                                    }) {
+                                        VocabularyWordCard(word: word, onSpeakTapped: {
+                                            viewModel.onSpeakTapped(word)
+                                        })
+                                    }
+                                    .buttonStyle(.plain)
+                                    .transition(.scale(scale: 0.8).combined(with: .opacity))
+                                }
+                            }
+                            .padding(20)
+                        }
                     }
                 }
             }
@@ -48,6 +149,25 @@ struct GalleryView: View {
                 .ignoresSafeArea()
         )
         .onAppear {
+            viewModel.loadItems()
+            if !viewModel.isLockScreenVocabularyEnabled {
+                selectedTab = 0
+            }
+        }
+        .appDialog(isPresented: $viewModel.showVocabularyDialog) {
+            if let selectedWord = viewModel.selectedVocabularyWord {
+                VocabularyWordDetailDialog(word: selectedWord, onSpeakTapped: {
+                    viewModel.onSpeakTapped(selectedWord)
+                }, onDismiss: {
+                    viewModel.showVocabularyDialog = false
+                    viewModel.selectedVocabularyWord = nil
+                })
+            } else {
+                EmptyView()
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("VocabularyNotificationTapped"))) { _ in
+            selectedTab = 1
             viewModel.loadItems()
         }
     }
@@ -61,3 +181,4 @@ struct GalleryView: View {
     GalleryView(viewModel: Resolver.shared.resolve(GalleryViewModel.self))
         .preferredColorScheme(.dark)
 }
+

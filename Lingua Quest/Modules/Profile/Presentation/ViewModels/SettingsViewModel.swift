@@ -14,10 +14,12 @@ final class SettingsViewModel {
     // MARK: - Dependencies
     private let router: RouterProtocol
     private let sessionManager: SessionManagerProtocol
+    private let activateLockScreenVocabularyUseCase: ActivateLockScreenVocabularyUseCaseProtocol?
 
-    init(router: RouterProtocol, sessionManager: SessionManagerProtocol) {
+    init(router: RouterProtocol, sessionManager: SessionManagerProtocol, activateLockScreenVocabularyUseCase: ActivateLockScreenVocabularyUseCaseProtocol? = nil) {
         self.router = router
         self.sessionManager = sessionManager
+        self.activateLockScreenVocabularyUseCase = activateLockScreenVocabularyUseCase
     }
     
     // MARK: - User Data
@@ -45,6 +47,18 @@ final class SettingsViewModel {
         }
     }
     var soundEffectsEnabled: Bool = true
+    
+    var isLockScreenVocabularyEnabled: Bool = UserDefaults.standard.bool(forKey: AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled) {
+        didSet {
+            handleLockScreenVocabularyToggle()
+        }
+    }
+    
+    // MARK: - Lock Screen Vocabulary State
+    var showActivationDialog: Bool = false
+    var activationState: ActivationState = .idle
+    var showNotEnoughCoins: Bool = false
+    var missingCoins: Int = 0
     
     // MARK: - Daily Reminder Toggles
     var dailyReminderEnabled: Bool = UserDefaults.standard.bool(forKey: AppConstants.UserDefaultsKeys.dailyReminderEnabled) {
@@ -102,6 +116,57 @@ final class SettingsViewModel {
         } else {
             LocalNotificationManager.shared.cancelDailyReminder()
             showToast(title: "Notifications", subtitle: L10n.Settings.notificationsPausedToast, type: .info)
+        }
+    }
+    
+    private func handleLockScreenVocabularyToggle() {
+        let isSavedAsEnabled = UserDefaults.standard.bool(forKey: AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled)
+        
+        if isLockScreenVocabularyEnabled && !isSavedAsEnabled {
+            // Revert state temporarily until confirmed
+            isLockScreenVocabularyEnabled = false
+            showActivationDialog = true
+        } else if !isLockScreenVocabularyEnabled && isSavedAsEnabled {
+            // User disabled it
+            UserDefaults.standard.set(false, forKey: AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled)
+            showToast(title: L10n.LockScreenVocabulary.toggleLabel, subtitle: L10n.LockScreenVocabulary.disabledToast, type: .info)
+        }
+    }
+    
+    func confirmActivation() {
+        guard let activateLockScreenVocabularyUseCase = activateLockScreenVocabularyUseCase else { return }
+        
+        let currentBalance = AppConstants.Common.fixedCoinBalance
+        let cost = AppConstants.Common.unlockVocabularyCost
+        
+        if currentBalance >= cost {
+            activationState = .loading
+            Task {
+                let result = await activateLockScreenVocabularyUseCase.execute()
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success:
+                        self.activationState = .success
+                        UserDefaults.standard.set(true, forKey: AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled)
+                        self.isLockScreenVocabularyEnabled = true
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            self.showActivationDialog = false
+                            self.activationState = .idle
+                        }
+                    case .failure:
+                        self.activationState = .failure
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            self.showActivationDialog = false
+                            self.activationState = .idle
+                        }
+                    }
+                }
+            }
+        } else {
+            self.missingCoins = cost - currentBalance
+            self.showNotEnoughCoins = true
         }
     }
     

@@ -81,9 +81,9 @@
 "auth_error_invalid_email_format" = "الرجاء إدخال بريد إلكتروني صحيح.";
 "auth_error_invalid_username_format" = "يجب أن يتكون اسم المستخدم من 3-30 حرفاً (أحرف وأرقام وشرطة سفلية فقط).";
 
-"components.app_name" = "لينجوا كويست!";
+"components.app_name" = "لينجوا كويست";
 "tabs.home" = "الرئيسية";
-"tabs.gallery" = "المعرض";
+"tabs.gallery" = "يومياتي";
 "tabs.profile" = "الملف";
 
 "onboarding.level.beginner.title" = "مبتدئ";
@@ -325,3 +325,22 @@
 "settings.select_reminder_time" = "اختر وقت التذكير";
 
 "common.error" = "خطأ";
+
+"gallery.my_journal" = "مجلتي";
+"gallery.categories.words" = "كلمات";
+"lock_screen_vocab.toggle_label" = "كلمات ذكية في شاشة القفل";
+"lock_screen_vocab.activation_title" = "فتح الكلمات الذكية";
+"lock_screen_vocab.activation_subtitle" = "احصل على كلمة جديدة في شاشة القفل كل مرة تغلق فيها التطبيق.";
+"lock_screen_vocab.activate_action" = "افتح بـ 1,500";
+"lock_screen_vocab.activated_toast" = "تم تفعيل الكلمات الذكية!";
+"lock_screen_vocab.disabled_toast" = "تم إيقاف الكلمات الذكية.";
+
+"lock_screen_vocab.tap_to_open_and_listen" = "اضغط للفتح والاستماع";
+"word_insight.example" = "مثال:";
+"gallery.tab.captures" = "صور اللعبة";
+"gallery.tab.words" = "كلمات ذكية";
+"gallery.filter.all" = "الكل";
+"gallery.empty.filter.words.title" = "لا توجد كلمات";
+"gallery.empty.filter.words.subtitle" = "لم يتم العثور على أي كلمات تناسب هذا الفلتر.";
+"gallery.empty.filter.items.title" = "لا توجد عناصر";
+"gallery.empty.filter.items.subtitle" = "لم يتم العثور على أي عناصر في هذا القسم.";

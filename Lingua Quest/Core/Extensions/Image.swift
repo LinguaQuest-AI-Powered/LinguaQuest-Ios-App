@@ -39,6 +39,7 @@ extension Image {
         case houseFill = "house.fill"
         case photoOnRectangle = "photo.on.rectangle"
         case exclamationmarkTriangleFill = "exclamationmark.triangle.fill"
+        case bookFill = "book.fill"
 
         case play = "play.fill"
         case sparkles = "sparkles"
@@ -79,11 +80,14 @@ extension Image {
         case squareAndPencil = "square.and.pencil"
         case infoCircle = "info.circle"
         case textformatAlt = "textformat.alt"
+        
+        // Added for Widget
+        case handTapFill = "hand.tap.fill"
+        case characterBookClosedFill = "character.book.closed.fill"
     }
     
     enum Asset: String {
         case appBackground = "app_background"
-        case dialogMascot = "image"
         case linquaQuest = "linguaQuest"
         case bird = "bird"
         case bird2 = "bird2"
@@ -98,7 +102,6 @@ extension Image {
         case weakPasswordBird = "weak_pass_bird"
         case strongPasswordBird = "strong_pass_bird"
         case myCaptureBird = "my_capture_bird"
-        case emptyGalleryBird = "empty_gallery_bird"
         case leaderBoardBird = "leader_board_bird"
         case achivementBird = "achivement_bird"
         case star = "star"
@@ -140,6 +143,7 @@ extension Image {
         case skip = "Skip"
         case perfect = "perfect"
         case micBird = "Mic"
+        case emptyGallary = "emptyGallary"
     }
     
     init(icon: Icon) {

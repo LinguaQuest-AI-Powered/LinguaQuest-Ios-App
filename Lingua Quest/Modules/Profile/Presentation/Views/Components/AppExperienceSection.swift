@@ -13,6 +13,7 @@ struct AppExperienceSection: View {
     @Binding var notificationsEnabled: Bool
     @Binding var darkModeEnabled: Bool
     @Binding var soundEffectsEnabled: Bool
+    @Binding var isLockScreenVocabularyEnabled: Bool
     
     var onAppLanguageTapped: () -> Void
     var onHelpTapped: () -> Void
@@ -62,6 +63,15 @@ struct AppExperienceSection: View {
                 }
                 
                 LinguaSettingsRow(
+                    icon: .bookFill,
+                    iconBgColor: .appSemanticSuccess,
+                    title: L10n.LockScreenVocabulary.toggleLabel,
+                    showDivider: true
+                ) {
+                    LinguaCustomToggle(isOn: $isLockScreenVocabularyEnabled)
+                }
+                
+                LinguaSettingsRow(
                     icon: .questionmarkCircleFill,
                     iconBgColor: .appSemanticSuccess,
                     title: L10n.Settings.helpSupport,
@@ -93,12 +103,14 @@ struct AppExperienceSection: View {
     @Previewable @State var notifications = true
     @Previewable @State var darkMode = false
     @Previewable @State var sound = true
+    @Previewable @State var isVocabEnabled = false
     
     return AppExperienceSection(
         appLanguage: "English",
         notificationsEnabled: $notifications,
         darkModeEnabled: $darkMode,
         soundEffectsEnabled: $sound,
+        isLockScreenVocabularyEnabled: $isVocabEnabled,
         onAppLanguageTapped: {},
         onHelpTapped: {},
         onAboutTapped: {}

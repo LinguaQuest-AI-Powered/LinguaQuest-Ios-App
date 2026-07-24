@@ -80,9 +80,9 @@
 "auth_error_invalid_email_format" = "Please enter a valid email address.";
 "auth_error_invalid_username_format" = "Username must be 3-30 characters (letters, numbers, and underscores only).";
 
-"components.app_name" = "Lingua Quest!";
+"components.app_name" = "Lingua Quest";
 "tabs.home" = "Home";
-"tabs.gallery" = "Gallery";
+"tabs.gallery" = "My Journal";
 "tabs.profile" = "Profile";
 
 "onboarding.level.beginner.title" = "Beginner";
@@ -323,3 +323,22 @@
 "settings.select_reminder_time" = "Select Reminder Time";
 
 "common.error" = "Error";
+
+"gallery.my_journal" = "My Journal";
+"gallery.categories.words" = "Words";
+"lock_screen_vocab.toggle_label" = "AI Lock Screen Vocabulary";
+"lock_screen_vocab.activation_title" = "Unlock AI Vocabulary";
+"lock_screen_vocab.activation_subtitle" = "Get a new vocabulary word on your lock screen every time you close the app.";
+"lock_screen_vocab.activate_action" = "Unlock for 1,500";
+"lock_screen_vocab.activated_toast" = "AI Vocabulary enabled!";
+"lock_screen_vocab.disabled_toast" = "AI Vocabulary disabled.";
+
+"lock_screen_vocab.tap_to_open_and_listen" = "Tap to open & listen";
+"word_insight.example" = "Example:";
+"gallery.tab.captures" = "Game Captures";
+"gallery.tab.words" = "My Words";
+"gallery.filter.all" = "All";
+"gallery.empty.filter.words.title" = "No Words";
+"gallery.empty.filter.words.subtitle" = "No words found for this filter.";
+"gallery.empty.filter.items.title" = "No Items";
+"gallery.empty.filter.items.subtitle" = "No items found for this section.";

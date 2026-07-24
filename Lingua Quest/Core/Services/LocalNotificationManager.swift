@@ -8,10 +8,13 @@
 import Foundation
 import UserNotifications
 
-final class LocalNotificationManager {
+final class LocalNotificationManager: NSObject, UNUserNotificationCenterDelegate {
     static let shared = LocalNotificationManager()
     
-    private init() {}
+    private override init() {
+        super.init()
+        UNUserNotificationCenter.current().delegate = self
+    }
     
     func requestAuthorization() async throws -> Bool {
         let center = UNUserNotificationCenter.current()
@@ -64,5 +67,45 @@ final class LocalNotificationManager {
         let center = UNUserNotificationCenter.current()
         let identifiers = (1...7).map { "dailyReminder-\($0)" }
         center.removePendingNotificationRequests(withIdentifiers: identifiers)
+    }
+    
+    // MARK: - Vocabulary Notifications
+    func scheduleVocabularyNotification(word: String, meaning: String, wordId: UUID) {
+        Task {
+            let isAuthorized = try? await requestAuthorization()
+            guard isAuthorized == true else { return }
+            
+            let center = UNUserNotificationCenter.current()
+            
+            let content = UNMutableNotificationContent()
+            content.title = "Learn: \(word)"
+            content.body = meaning
+            content.sound = .default
+            content.userInfo = ["wordId": wordId.uuidString]
+            
+            // Trigger after a short delay (e.g., 5 seconds for demo/testing, or when entering background in real use case)
+            // Note: In a real app, we might schedule this for when the app enters the background, or randomly during the day.
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+            let request = UNNotificationRequest(identifier: "vocabulary-\(wordId.uuidString)", content: content, trigger: trigger)
+            
+            do {
+                try await center.add(request)
+            } catch {
+                print("Failed to schedule vocabulary notification: \(error)")
+            }
+        }
+    }
+    
+    // MARK: - UNUserNotificationCenterDelegate
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+        if let wordIdString = userInfo["wordId"] as? String, let wordId = UUID(uuidString: wordIdString) {
+            NotificationCenter.default.post(name: NSNotification.Name("VocabularyNotificationTapped"), object: nil, userInfo: ["wordId": wordId])
+        }
+        completionHandler()
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.banner, .sound, .badge])
     }
 }

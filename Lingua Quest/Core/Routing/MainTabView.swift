@@ -33,6 +33,9 @@ struct MainTabView: View {
         }
         .id(appLanguage)
         .ignoresSafeArea(.keyboard, edges: .bottom)
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("VocabularyNotificationTapped"))) { _ in
+            selectedTab = .gallery
+        }
     }
 }
 

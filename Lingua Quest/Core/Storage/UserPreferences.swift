@@ -17,6 +17,8 @@ protocol UserPreferencesProtocol {
     var userLevel: String? { get set }
     var isDarkMode: Bool { get set }
     var appLanguage: String { get set }
+    var coinBalance: Int { get set }
+    var isLockScreenVocabularyEnabled: Bool { get set }
 }
 
 final class UserPreferences: UserPreferencesProtocol {
@@ -60,5 +62,15 @@ final class UserPreferences: UserPreferencesProtocol {
     var appLanguage: String {
         get { defaults.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en" }
         set { defaults.set(newValue, forKey: AppConstants.UserDefaultsKeys.appLanguage) }
+    }
+    
+    var coinBalance: Int {
+        get { defaults.integer(forKey: AppConstants.UserDefaultsKeys.coinBalance) }
+        set { defaults.set(newValue, forKey: AppConstants.UserDefaultsKeys.coinBalance) }
+    }
+    
+    var isLockScreenVocabularyEnabled: Bool {
+        get { defaults.bool(forKey: AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled) }
+        set { defaults.set(newValue, forKey: AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled) }
     }
 }

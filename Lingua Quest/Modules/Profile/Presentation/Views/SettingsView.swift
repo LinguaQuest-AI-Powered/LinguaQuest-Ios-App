@@ -82,6 +82,27 @@ struct SettingsView: View {
                 }
             )
         }
+        .appDialog(isPresented: $viewModel.showActivationDialog) {
+            ActivationConfirmDialog(
+                viewModel: viewModel,
+                onConfirm: {
+                    viewModel.confirmActivation()
+                },
+                onCancel: {
+                    viewModel.showActivationDialog = false
+                    viewModel.isLockScreenVocabularyEnabled = false
+                }
+            )
+        }
+        .appDialog(isPresented: $viewModel.showNotEnoughCoins) {
+            NotEnoughCoinsDialog(
+                missingCoins: viewModel.missingCoins,
+                action: {
+                    viewModel.showNotEnoughCoins = false
+                    viewModel.isLockScreenVocabularyEnabled = false
+                }
+            )
+        }
     }
 }
 

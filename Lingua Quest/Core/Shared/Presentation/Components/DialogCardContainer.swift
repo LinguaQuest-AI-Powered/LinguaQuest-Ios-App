@@ -40,7 +40,7 @@ struct DialogCardContainer<Content: View>: View {
 
     init(
         showMascot: Bool = true,
-        mascotImage: Image.Asset = .dialogMascot,
+        mascotImage: Image.Asset = .bird,
         customMascotSize: CGSize? = nil,
         speechBubbleText: String? = nil,
         speechBubbleAnimated: Bool = true,

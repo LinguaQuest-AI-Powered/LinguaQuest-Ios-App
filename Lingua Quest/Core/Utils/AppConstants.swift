@@ -23,5 +23,14 @@ enum AppConstants {
         static let dailyReminderEnabled = "dailyReminderEnabled"
         static let reminderTime = "reminderTime"
         static let reminderRepeatDays = "reminderRepeatDays"
+        static let coinBalance = "coinBalance"
+        static let isLockScreenVocabularyEnabled = "isLockScreenVocabularyEnabled"
+
     }
-}
+    enum Common {
+        static let targetLanguageValue = "ar"
+        static let noOfWorldGeneratedInAiLockScreen = 5
+        static let fixedCoinBalance = 15000000
+        static let unlockVocabularyCost = 0
+    }
+} 

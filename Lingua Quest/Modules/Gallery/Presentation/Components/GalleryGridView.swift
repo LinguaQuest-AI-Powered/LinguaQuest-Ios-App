@@ -36,20 +36,31 @@ struct GalleryGridView: View {
             CategoryFilterView(categories: allCategories, localizedTitles: localizedTitles, selectedCategory: $selectedCategory)
                 .padding(.bottom, 10)
             
-            LazyVGrid(columns: columns, spacing: 20) {
-                ForEach(filteredItems) { item in
-                    Button(action: {
-                        onItemTapped(item)
-                    }) {
-                        CaptureCardView(item: item)
+            if filteredItems.isEmpty {
+                EmptyGalleryView(
+                    showAddButton: false,
+                    title: L10n.Gallery.emptyFilterItemsTitle,
+                    subtitle: L10n.Gallery.emptyFilterItemsSubtitle
+                )
+                    .frame(maxHeight: .infinity, alignment: .center)
+            } else {
+                ScrollView(showsIndicators: false) {
+                    LazyVGrid(columns: columns, spacing: 20) {
+                        ForEach(filteredItems) { item in
+                            Button(action: {
+                                onItemTapped(item)
+                            }) {
+                                CaptureCardView(item: item)
+                            }
+                            .buttonStyle(.plain)
+                            .transition(.scale(scale: 0.8).combined(with: .opacity))
+                        }
                     }
-                    .buttonStyle(.plain)
-                    .transition(.scale(scale: 0.8).combined(with: .opacity))
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 40)
+                    .animation(.spring(response: 0.4, dampingFraction: 0.8, blendDuration: 0), value: selectedCategory)
                 }
             }
-            .padding(.horizontal, 20)
-            .padding(.bottom, 40)
-            .animation(.spring(response: 0.4, dampingFraction: 0.8, blendDuration: 0), value: selectedCategory)
         }
     }
 }

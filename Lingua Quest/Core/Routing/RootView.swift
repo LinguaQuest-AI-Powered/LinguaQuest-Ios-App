@@ -42,5 +42,6 @@ struct RootView: View {
         .preferredColorScheme(isDarkMode ? .dark : .light)
         .environment(\.locale, Locale(identifier: appLanguage))
         .environment(\.layoutDirection, appLanguage == "ar" ? .rightToLeft : .leftToRight)
+        .globalVocabularyDeepLink()
     }
 }
