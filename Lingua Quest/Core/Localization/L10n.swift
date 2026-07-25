@@ -427,6 +427,9 @@ enum L10n {
         static var yourGoal: String { localized("boss_level.your_goal") }
         static var readCarefully: String { localized("boss_level.read_carefully") }
         static var startRoleplay: String { localized("boss_level.start_roleplay") }
+        static func objectivePrefix(_ obj: String) -> String { String(format: localized("boss_level.objective_prefix"), obj) }
+        static var endPhase: String { localized("boss_level.end_phase") }
+        static var timeoutFeedback: String { localized("boss_level.timeout_feedback") }
     }
 
 

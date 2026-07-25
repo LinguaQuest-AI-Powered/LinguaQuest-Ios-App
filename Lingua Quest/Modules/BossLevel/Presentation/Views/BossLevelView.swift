@@ -57,8 +57,6 @@ struct BossLevelView: View {
                         onMicRelease: { viewModel.stopSpeaking() },
                         onEndCall: { viewModel.endChallenge() }
                     )
-                    .padding(.horizontal, 24)
-                    .padding(.bottom, 24)
                 }
                 
             case .error:
@@ -72,10 +70,10 @@ struct BossLevelView: View {
         .onAppear { viewModel.onAppear() }
         .onDisappear { viewModel.onDisappear() }
         .alert(
-            isMicError ? "Microphone Access Required" : "Error",
+            isMicError ? L10n.BossLevel.statusError : "Error",
             isPresented: Binding(
-                   get: { if case .error = viewModel.viewState { return true }; return false },
-                   set: { _ in }
+                get: { if case .error = viewModel.viewState { return true }; return false },
+                set: { _ in }
             )
         ) {
             if isMicError {
@@ -84,9 +82,9 @@ struct BossLevelView: View {
                         UIApplication.shared.open(url)
                     }
                 }
-                Button("Cancel", role: .cancel) { viewModel.onCloseTapped() }
-            } else {
-                Button("OK") { viewModel.onCloseTapped() }
+            }
+            Button("OK", role: .cancel) {
+                viewModel.onCloseTapped()
             }
         } message: {
             if case .error(let msg) = viewModel.viewState {
@@ -111,11 +109,32 @@ struct BossLevelView: View {
         }
         .overlay(
             Text(L10n.BossLevel.title)
-                .font(.system(size: 26, weight: .bold, design: .rounded))
-                .foregroundColor(Color.appTextHeading)
+                .appTextStyle(.headingMediumBold, color: .appTextHeading)
         )
         .padding(.horizontal, 24)
         .frame(height: 64)
+    }
+
+    private var activeObjective: some View {
+        VStack(spacing: 8) {
+            if let objective = viewModel.scenario?.objective {
+                Text(L10n.BossLevel.objectivePrefix(objective))
+                    .appTextStyle(.body, color: .white)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+                
+
+            }
+            Text(viewModel.formattedTimeRemaining)
+                .appTextStyle(.body, color: .white.opacity(0.95))
+        }
+        .padding(.horizontal, 20)
+        .padding(.vertical, 16)
+        .frame(maxWidth: .infinity)
+        .background(Color.appBossBanner)
+        .cornerRadius(16)
+        .padding(.horizontal, 20)
     }
 
     // MARK: - Lobby Content
@@ -137,6 +156,7 @@ struct BossLevelView: View {
                     Text(scenario.roleDescription)
                         .appTextStyle(.caption, color: .appTextSecondary)
                         .multilineTextAlignment(.center)
+                        .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                         .padding(.horizontal, 24)
                 }
@@ -145,14 +165,16 @@ struct BossLevelView: View {
                 VStack(spacing: 16) {
                     Text(L10n.BossLevel.yourGoal)
                         .appTextStyle(.headingMedium, color: .appAccentOrange)
-
+                    
                     Text(scenario.objective)
                         .appTextStyle(.bodyLargeBold, color: .appTextHeading)
                         .multilineTextAlignment(.center)
+                        .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                     
                     Text(L10n.BossLevel.readCarefully)
-                        .appTextStyle(.micro, color: .appTextSecondary)
+                        .appTextStyle(.microSemibold, color: .appTextSecondary)
+                        .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
 
                 }
@@ -184,20 +206,22 @@ struct BossLevelView: View {
     // MARK: - Active session content
 
     private var activeSessionContent: some View {
-        VStack(spacing: 24) {
-            BossLevelVisualizerView(
-                isAISpeaking: viewModel.sessionState.isAISpeaking,
-                isUserSpeaking: viewModel.sessionState.isUserSpeaking,
-                aiAudioLevel: viewModel.sessionState.aiAudioLevel,
-                userAudioLevel: viewModel.sessionState.userAudioLevel
-            )
-
+        VStack(spacing: 16) {
+            activeObjective
+            // Thinking/Listening Bird Mascot
+            Image(asset: .micBird)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 120, height: 120)
+                .scaleEffect(viewModel.sessionState.isAISpeaking ? 1.05 : 1.0)
+                .animation(.easeInOut(duration: 0.6).repeatForever(autoreverses: true), value: viewModel.sessionState.isAISpeaking)
+            
             BossLevelTranscriptView(
                 messages: viewModel.messages,
-                onTapToTalk: { /* tap-to-talk replaced by hold gesture */ }
+                onTapToTalk: { /* handled by controls */ }
             )
-            .frame(maxHeight: 220)
-            .padding(.horizontal, 20)
+            
+            Spacer(minLength: 10)
         }
     }
 }

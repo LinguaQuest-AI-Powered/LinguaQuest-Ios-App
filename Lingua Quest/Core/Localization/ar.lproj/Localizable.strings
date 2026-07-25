@@ -347,3 +347,6 @@
 "boss_level.your_goal" = "هدفك";
 "boss_level.read_carefully" = "(اقرأ بعناية بلغتك الأم قبل البدء)";
 "boss_level.start_roleplay" = "بدء تبادل الأدوار";
+"boss_level.objective_prefix" = "الهدف: %@";
+"boss_level.end_phase" = "إنهاء المرحلة";
+"boss_level.timeout_feedback" = "انتهى الوقت! لم تتمكن من إتمام المهمة في الوقت المحدد. حاول مرة أخرى وأسرع في الإجابة.";

@@ -346,3 +346,6 @@
 "boss_level.your_goal" = "Your Goal";
 "boss_level.read_carefully" = "(Read carefully in your native language before starting)";
 "boss_level.start_roleplay" = "Start Roleplay";
+"boss_level.objective_prefix" = "Objective: %@";
+"boss_level.end_phase" = "End Phase";
+"boss_level.timeout_feedback" = "Time's up! You didn't complete the task in time. Try again and respond faster.";

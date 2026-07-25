@@ -20,8 +20,7 @@ struct BossLevelHeaderView: View {
         }
         .overlay(
             Text(title)
-                .font(.system(size: 18, weight: .bold, design: .rounded))
-                .foregroundColor(Color.appTextHeading)
+                .appTextStyle(.bodyLargeBold, color: .appTextHeading)
         )
         .padding(.horizontal, 20)
         .frame(height: 64)
@@ -34,8 +33,7 @@ struct BossLevelHeaderView: View {
                 .fill(statusColor)
                 .frame(width: 8, height: 8)
             Text(statusText)
-                .font(.system(size: 12, weight: .medium, design: .rounded))
-                .foregroundColor(Color.appTextSecondary)
+                .appTextStyle(.microSemibold, color: .appTextSecondary)
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 6)

@@ -23,12 +23,19 @@ final class BossLevelViewModel {
     private(set) var viewState: BossLevelViewState = .loading
     private(set) var sessionState = BossLevelSessionState()
     private(set) var messages: [RoleplayMessage] = []
+    private(set) var timeRemaining: Int = 120
+    
+    var formattedTimeRemaining: String {
+        let minutes = timeRemaining / 60
+        let seconds = timeRemaining % 60
+        return String(format: "%02d:%02d", minutes, seconds)
+    }
     
     /// True while the user is physically holding the mic button.
     private(set) var isHoldingMic: Bool = false
 
     private let scenarioId: String
-    private var scenario: BossScenario?
+    private(set) var scenario: BossScenario?
     
     private let scenarioRepository: ScenarioRepositoryProtocol
     private let repository: BossLevelRepositoryProtocol
@@ -38,6 +45,7 @@ final class BossLevelViewModel {
     private let router: RouterProtocol
     
     private var stateListenTask: Task<Void, Never>?
+    private var timerTask: Task<Void, Never>?
 
     init(
         scenarioId: String,
@@ -67,6 +75,8 @@ final class BossLevelViewModel {
     func onDisappear() {
         stateListenTask?.cancel()
         stateListenTask = nil
+        timerTask?.cancel()
+        timerTask = nil
         Task { await stopSessionUseCase.execute() }
     }
     
@@ -90,6 +100,8 @@ final class BossLevelViewModel {
         guard let scenario = scenario else { return }
         viewState = .active
         messages.removeAll()
+        timeRemaining = 120
+        startTimer()
         
         Task {
             let prompt = PromptFactory.createLiveSessionPrompt(scenario: scenario)
@@ -105,6 +117,8 @@ final class BossLevelViewModel {
     func endChallenge() {
         guard let scenario = scenario else { return }
         isHoldingMic = false
+        timerTask?.cancel()
+        timerTask = nil
         viewState = .evaluating
         
         Task {
@@ -120,9 +134,43 @@ final class BossLevelViewModel {
     }
 
     func onCloseTapped() {
+        timerTask?.cancel()
+        timerTask = nil
         Task {
             await stopSessionUseCase.execute()
             router.pop()
+        }
+    }
+
+    // MARK: - Timer
+
+    private func startTimer() {
+        timerTask?.cancel()
+        timerTask = Task { [weak self] in
+            while let self = self, self.timeRemaining > 0 {
+                try? await Task.sleep(nanoseconds: 1_000_000_000)
+                guard !Task.isCancelled else { return }
+                self.timeRemaining -= 1
+                if self.timeRemaining <= 0 {
+                    self.handleTimeout()
+                    break
+                }
+            }
+        }
+    }
+
+    private func handleTimeout() {
+        isHoldingMic = false
+        timerTask?.cancel()
+        timerTask = nil
+        Task {
+            await stopSessionUseCase.execute()
+            let result = BossEvaluationResult(
+                task_completed: false,
+                fluency_score: 0,
+                feedback_message: L10n.BossLevel.timeoutFeedback
+            )
+            viewState = .result(result)
         }
     }
 
