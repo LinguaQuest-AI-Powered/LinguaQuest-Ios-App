@@ -14,11 +14,18 @@ final class SettingsViewModel {
     // MARK: - Dependencies
     private let router: RouterProtocol
     private let sessionManager: SessionManagerProtocol
+    private let statsService: StatsService
     private let activateLockScreenVocabularyUseCase: ActivateLockScreenVocabularyUseCaseProtocol?
 
-    init(router: RouterProtocol, sessionManager: SessionManagerProtocol, activateLockScreenVocabularyUseCase: ActivateLockScreenVocabularyUseCaseProtocol? = nil) {
+    init(
+        router: RouterProtocol,
+        sessionManager: SessionManagerProtocol,
+        statsService: StatsService,
+        activateLockScreenVocabularyUseCase: ActivateLockScreenVocabularyUseCaseProtocol? = nil
+    ) {
         self.router = router
         self.sessionManager = sessionManager
+        self.statsService = statsService
         self.activateLockScreenVocabularyUseCase = activateLockScreenVocabularyUseCase
     }
     
@@ -136,7 +143,7 @@ final class SettingsViewModel {
     func confirmActivation() {
         guard let activateLockScreenVocabularyUseCase = activateLockScreenVocabularyUseCase else { return }
         
-        let currentBalance = AppConstants.Common.fixedCoinBalance
+        let currentBalance = statsService.coins
         let cost = AppConstants.Common.unlockVocabularyCost
         
         if currentBalance >= cost {

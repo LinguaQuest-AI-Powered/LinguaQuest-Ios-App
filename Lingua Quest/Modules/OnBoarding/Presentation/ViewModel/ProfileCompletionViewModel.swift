@@ -12,7 +12,7 @@ import Observation
 @MainActor
 final class ProfileCompletionViewModel {
     private(set) var state = OnboardingUiState()
-    private var userPreferences: UserPreferencesProtocol
+    private var userPreferences: UserPreferences
     private let router: RouterProtocol
     private let getAvailableLanguagesUseCase: GetAvailableLanguagesUseCase
     private let completeProfileUseCase: CompleteProfileUseCaseProtocol
@@ -22,7 +22,7 @@ final class ProfileCompletionViewModel {
 
     init(
         router: RouterProtocol,
-        userPreferences: UserPreferencesProtocol,
+        userPreferences: UserPreferences,
         getAvailableLanguagesUseCase: GetAvailableLanguagesUseCase,
         completeProfileUseCase: CompleteProfileUseCaseProtocol
     ) {

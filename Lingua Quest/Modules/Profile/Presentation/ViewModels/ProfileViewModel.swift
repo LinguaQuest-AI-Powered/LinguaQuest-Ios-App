@@ -14,6 +14,7 @@ final class ProfileViewModel {
     private let router: RouterProtocol
     private let getProfileUseCase: GetProfileUseCaseProtocol?
     private let uploadProfilePhotoUseCase: UploadProfilePhotoUseCaseProtocol?
+    let statsService: StatsService
     
     // MARK: - State
     var isLoading: Bool = false
@@ -24,10 +25,8 @@ final class ProfileViewModel {
     var showGalleryPicker: Bool = false
     
     // MARK: - Top App Bar Data
-    var coins: String = "0"
     var gems: String = "0"
-    var rawCoins: Int = 0
-    var rawXP: Int = 0
+
     
     // MARK: - Header Data
     var userName: String = ""
@@ -35,8 +34,6 @@ final class ProfileViewModel {
     var avatarImage: String? = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.cachedAvatarUrl)
     
     // MARK: - Stats Data
-    var totalXP: String = "0"
-    var streak: String = "0 Days"
     var worlds: String = "0"
     
     // MARK: - Learning Progress Data
@@ -54,11 +51,13 @@ final class ProfileViewModel {
     init(
         router: RouterProtocol,
         getProfileUseCase: GetProfileUseCaseProtocol? = nil,
-        uploadProfilePhotoUseCase: UploadProfilePhotoUseCaseProtocol? = nil
+        uploadProfilePhotoUseCase: UploadProfilePhotoUseCaseProtocol? = nil,
+        statsService: StatsService
     ) {
         self.router = router
         self.getProfileUseCase = getProfileUseCase
         self.uploadProfilePhotoUseCase = uploadProfilePhotoUseCase
+        self.statsService = statsService
     }
     
     // MARK: - Intentions (Methods)
@@ -145,13 +144,8 @@ final class ProfileViewModel {
             UserDefaults.standard.removeObject(forKey: AppConstants.UserDefaultsKeys.cachedAvatarUrl)
         }
 
-
+        statsService.syncBalances(coins: profile.coins, xp: profile.totalXp, streakDays: profile.streakDays)
         
-        self.coins = profile.coins.formatted()
-        self.rawCoins = profile.coins
-        self.totalXP = profile.totalXp.formatted()
-        self.rawXP = profile.totalXp
-        self.streak = "\(profile.streakDays) Days"
         self.worlds = "\(profile.worldsCount)"
         
         self.currentLanguage = profile.currentLanguageName

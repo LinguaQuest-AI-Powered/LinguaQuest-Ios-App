@@ -35,8 +35,8 @@ struct HomeView: View {
     var body: some View {
         VStack(spacing: 0) {
             AppHeaderView(
-                starCount: viewModel.homeData?.xp ?? 0,
-                coinCount: viewModel.homeData?.coins ?? 0
+                starCount: viewModel.statsService.xp,
+                coinCount: viewModel.statsService.coins
             )
 
             ZStack(alignment: .bottomTrailing) {

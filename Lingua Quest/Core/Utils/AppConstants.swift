@@ -24,6 +24,11 @@ enum AppConstants {
         static let reminderTime = "reminderTime"
         static let reminderRepeatDays = "reminderRepeatDays"
         static let coinBalance = "coinBalance"
+        static let xpBalance = "xpBalance"
+        static let streakDays = "streakDays"
+        static let userEmail = "userEmail"
+        static let nativeLanguageName = "nativeLanguageName"
+        static let targetLanguageName = "targetLanguageName"
         static let isLockScreenVocabularyEnabled = "isLockScreenVocabularyEnabled"
 
     }
@@ -31,7 +36,6 @@ enum AppConstants {
         static let defaultUserName = "Alex"
         static let targetLanguageValue = "ar"
         static let noOfWorldGeneratedInAiLockScreen = 5
-        static let fixedCoinBalance = 15000000
         static let unlockVocabularyCost = 0
     }
 } 

@@ -56,10 +56,12 @@ final class ProfileAssembly: Assembly {
             let router = resolver.resolve(RouterProtocol.self)!
             let getProfile = resolver.resolve(GetProfileUseCaseProtocol.self)
             let uploadPhoto = resolver.resolve(UploadProfilePhotoUseCaseProtocol.self)
+            let statsService = resolver.resolve(StatsService.self)!
             return ProfileViewModel(
                 router: router,
                 getProfileUseCase: getProfile,
-                uploadProfilePhotoUseCase: uploadPhoto
+                uploadProfilePhotoUseCase: uploadPhoto,
+                statsService: statsService
             )
         }.inObjectScope(.container)
         
@@ -109,10 +111,12 @@ final class ProfileAssembly: Assembly {
         container.register(SettingsViewModel.self) { resolver in
             let router = resolver.resolve(RouterProtocol.self)!
             let sessionManager = resolver.resolve(SessionManagerProtocol.self)!
+            let statsService = resolver.resolve(StatsService.self)!
             let activateUseCase = resolver.resolve(ActivateLockScreenVocabularyUseCaseProtocol.self)
             return SettingsViewModel(
                 router: router, 
                 sessionManager: sessionManager,
+                statsService: statsService,
                 activateLockScreenVocabularyUseCase: activateUseCase
             )
         }

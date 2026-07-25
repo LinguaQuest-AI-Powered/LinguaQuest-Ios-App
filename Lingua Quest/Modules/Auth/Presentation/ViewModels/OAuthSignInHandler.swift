@@ -25,13 +25,13 @@ final class OAuthSignInHandler: OAuthSignInHandlerProtocol {
     private let googleSignInService: GoogleSignInServiceProtocol
     private let appleSignInService: AppleSignInServiceProtocol
     private let firebaseLoginUseCase: FirebaseLoginUseCaseProtocol
-    private var userPreferences: UserPreferencesProtocol
+    private var userPreferences: UserPreferences
 
     init(
         googleSignInService: GoogleSignInServiceProtocol,
         appleSignInService: AppleSignInServiceProtocol,
         firebaseLoginUseCase: FirebaseLoginUseCaseProtocol,
-        userPreferences: UserPreferencesProtocol
+        userPreferences: UserPreferences
     ) {
         self.googleSignInService = googleSignInService
         self.appleSignInService = appleSignInService
