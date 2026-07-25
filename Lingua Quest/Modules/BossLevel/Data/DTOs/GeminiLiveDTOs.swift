@@ -39,10 +39,14 @@ struct GeminiLiveSetupMessage: Encodable {
     let setup: GeminiLiveSetupPayload
 }
 
+struct GeminiLiveAudioTranscriptionConfig: Encodable {}
+
 struct GeminiLiveSetupPayload: Encodable {
     let model: String
     let generationConfig: GeminiLiveGenerationConfig
     let systemInstruction: GeminiLiveSystemInstruction?
+    let inputAudioTranscription: GeminiLiveAudioTranscriptionConfig?
+    let outputAudioTranscription: GeminiLiveAudioTranscriptionConfig?
 }
 
 struct GeminiLiveGenerationConfig: Encodable {
@@ -78,12 +82,22 @@ struct GeminiLiveServerMessage: Decodable {
     struct Empty: Decodable {}
     let setupComplete: Empty?
     let serverContent: GeminiLiveServerContent?
+    let inputTranscription: GeminiLiveTranscription?
+    let outputTranscription: GeminiLiveTranscription?
+    let inputAudioTranscription: GeminiLiveTranscription?
+    let outputAudioTranscription: GeminiLiveTranscription?
+}
+
+struct GeminiLiveTranscription: Decodable {
+    let text: String?
 }
 
 struct GeminiLiveServerContent: Decodable {
     let modelTurn: GeminiLiveModelTurn?
     let turnComplete: Bool?
     let interrupted: Bool?
+    let inputTranscription: GeminiLiveTranscription?
+    let outputTranscription: GeminiLiveTranscription?
 }
 
 struct GeminiLiveModelTurn: Decodable {

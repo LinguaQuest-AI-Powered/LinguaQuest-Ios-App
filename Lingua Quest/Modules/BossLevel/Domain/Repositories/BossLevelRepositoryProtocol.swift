@@ -10,6 +10,8 @@ import Foundation
 enum BossLevelEvent {
     case stateChanged(BossLevelSessionState)
     case messageReceived(RoleplayMessage)
+    case aiTranscriptChunk(String)
+    case turnCompleted
     case error(Error)
 }
 

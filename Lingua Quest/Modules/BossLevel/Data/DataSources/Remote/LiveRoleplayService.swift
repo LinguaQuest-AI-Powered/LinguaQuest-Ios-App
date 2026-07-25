@@ -10,6 +10,8 @@ import Foundation
 enum LiveRoleplayServiceEvent {
     case connected
     case textPart(String)
+    case userTranscript(String)
+    case aiTranscriptChunk(String)
     case audioPart(Data)
     case turnCompleted
     case error(Error)
@@ -148,10 +150,13 @@ final class LiveRoleplayService: NSObject, URLSessionWebSocketDelegate {
     // MARK: - Private send helpers
 
     private func sendSetupMessage(systemInstruction: String) {
+        let emptyConfig = GeminiLiveAudioTranscriptionConfig()
         let payload = GeminiLiveSetupPayload(
             model: "models/gemini-2.5-flash-native-audio-preview-12-2025",
             generationConfig: GeminiLiveGenerationConfig(responseModalities: ["AUDIO"]),
-            systemInstruction: GeminiLiveSystemInstruction(parts: [GeminiLivePart(text: systemInstruction)])
+            systemInstruction: GeminiLiveSystemInstruction(parts: [GeminiLivePart(text: systemInstruction)]),
+            inputAudioTranscription: emptyConfig,
+            outputAudioTranscription: emptyConfig
         )
         print("🚀 [LiveRoleplay] Sending setup — model: gemini-2.5-flash-native-audio-preview-12-2025")
         sendJSON(GeminiLiveSetupMessage(setup: payload))
@@ -211,6 +216,13 @@ final class LiveRoleplayService: NSObject, URLSessionWebSocketDelegate {
 
     private func parseIncomingMessage(_ jsonText: String) {
         guard let data = jsonText.data(using: .utf8) else { return }
+
+        // Debug: log the top-level JSON keys so we can see what the server sends
+        if let rawObj = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+            let keys = rawObj.keys.sorted().joined(separator: ", ")
+            print("🚀 [LiveRoleplay] Incoming keys: [\(keys)]")
+        }
+
         do {
             let msg = try JSONDecoder().decode(GeminiLiveServerMessage.self, from: data)
 
@@ -223,12 +235,24 @@ final class LiveRoleplayService: NSObject, URLSessionWebSocketDelegate {
                 for chunk in queued { transmitAudio(chunk) }
             }
 
+            let inputTxt = msg.serverContent?.inputTranscription?.text ?? msg.inputTranscription?.text ?? msg.inputAudioTranscription?.text
+            if let inputTxt = inputTxt, !inputTxt.isEmpty {
+                print("🚀 [LiveRoleplay] User Transcript: \(inputTxt)")
+                onEvent?(.userTranscript(inputTxt))
+            }
+
+            let outputTxt = msg.serverContent?.outputTranscription?.text ?? msg.outputTranscription?.text ?? msg.outputAudioTranscription?.text
+            if let outputTxt = outputTxt, !outputTxt.isEmpty {
+                print("🚀 [LiveRoleplay] AI Transcript Chunk: \(outputTxt)")
+                onEvent?(.aiTranscriptChunk(outputTxt))
+            }
+
             guard let content = msg.serverContent else { return }
 
             if let parts = content.modelTurn?.parts {
                 for part in parts {
                     if let text = part.text, !text.isEmpty {
-                        print("🚀 [LiveRoleplay] Text: \(text.prefix(80))")
+                        print("🚀 [LiveRoleplay] ModelTurn Text: \(text.prefix(80))")
                         onEvent?(.textPart(text))
                     }
                     if let inline = part.inlineData,

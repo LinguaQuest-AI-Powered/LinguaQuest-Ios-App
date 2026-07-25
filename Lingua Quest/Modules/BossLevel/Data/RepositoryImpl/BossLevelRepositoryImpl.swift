@@ -192,8 +192,15 @@ final class BossLevelRepositoryImpl: BossLevelRepositoryProtocol {
             state.status = .connected
             notifyStateChanged()
 
-        case .textPart(let text):
-            stateContinuation?.yield(.messageReceived(RoleplayMessage(sender: .ai, text: text)))
+        case .textPart:
+            // Native audio model's modelTurn.text is internal thinking — skip it
+            break
+
+        case .userTranscript(let text):
+            stateContinuation?.yield(.messageReceived(RoleplayMessage(sender: .user, text: text)))
+
+        case .aiTranscriptChunk(let chunk):
+            stateContinuation?.yield(.aiTranscriptChunk(chunk))
 
         case .audioPart(let data):
             audioPlayer.playChunk(data)
@@ -201,6 +208,7 @@ final class BossLevelRepositoryImpl: BossLevelRepositoryProtocol {
         case .turnCompleted:
             state.isAISpeaking = false
             notifyStateChanged()
+            stateContinuation?.yield(.turnCompleted)
 
         case .error(let error):
             print("🚀 [Repo] LiveService error: \(error.localizedDescription)")

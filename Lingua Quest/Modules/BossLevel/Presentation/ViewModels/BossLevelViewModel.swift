@@ -33,6 +33,8 @@ final class BossLevelViewModel {
     
     /// True while the user is physically holding the mic button.
     private(set) var isHoldingMic: Bool = false
+    
+    private var isAITurnActive: Bool = false
 
     private let scenarioId: String
     private(set) var scenario: BossScenario?
@@ -100,6 +102,7 @@ final class BossLevelViewModel {
         guard let scenario = scenario else { return }
         viewState = .active
         messages.removeAll()
+        isAITurnActive = false
         timeRemaining = 120
         startTimer()
         
@@ -179,6 +182,7 @@ final class BossLevelViewModel {
     func startSpeaking() {
         guard case .active = viewState, !isHoldingMic else { return }
         isHoldingMic = true
+        isAITurnActive = false
         repository.startSpeaking()
     }
 
@@ -204,7 +208,17 @@ final class BossLevelViewModel {
         case .stateChanged(let newState):
             self.sessionState = newState
         case .messageReceived(let message):
+            self.isAITurnActive = false
             self.messages.append(message)
+        case .aiTranscriptChunk(let chunk):
+            if self.isAITurnActive, let lastIndex = self.messages.indices.last, self.messages[lastIndex].sender == .ai {
+                self.messages[lastIndex].text += chunk
+            } else {
+                self.isAITurnActive = true
+                self.messages.append(RoleplayMessage(sender: .ai, text: chunk))
+            }
+        case .turnCompleted:
+            self.isAITurnActive = false
         case .error(let error):
             if case .active = self.viewState {
                 self.viewState = .error(error.localizedDescription)

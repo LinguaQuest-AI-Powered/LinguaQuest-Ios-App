@@ -25,7 +25,14 @@ struct BossLevelTranscriptView: View {
             }
             .onChange(of: messages.count) { _, _ in
                 if let lastId = messages.last?.id {
-                    withAnimation {
+                    withAnimation(.easeOut(duration: 0.25)) {
+                        proxy.scrollTo(lastId, anchor: .bottom)
+                    }
+                }
+            }
+            .onChange(of: messages.last?.text) { _, _ in
+                if let lastId = messages.last?.id {
+                    withAnimation(.easeOut(duration: 0.25)) {
                         proxy.scrollTo(lastId, anchor: .bottom)
                     }
                 }

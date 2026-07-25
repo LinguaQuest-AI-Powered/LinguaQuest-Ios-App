@@ -78,13 +78,11 @@ struct BossLevelControlsView: View {
     // MARK: - End Call Button
 
     private var endCallButton: some View {
-        Button(action: onEndCall) {
-            Text(L10n.BossLevel.endPhase)
-                .appTextStyle(.bodyBold, color: .white)
-                .frame(maxWidth: .infinity)
-                .frame(height: 52)
-                .background(Color.appAccentRed)
-                .cornerRadius(26)
-        }
+        CustomButton(
+            type: .custom(textColor: .appTextHeading, buttonColor: .appAccentStreakRed, shadowColor: .appBrandBrownDark),
+            text: L10n.BossLevel.endPhase,
+            action: onEndCall,
+            status: .enable
+        )
     }
 }
