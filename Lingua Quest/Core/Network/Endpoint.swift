@@ -7,6 +7,14 @@
 
 import Foundation
 
+/// Network caching behavior
+enum CachePolicy {
+    case ignoreCache
+    case returnCacheDataElseLoad
+    case returnCacheDataDontLoad
+    case useProtocolCachePolicy
+}
+
 /// Used by endpoints that don't send a body (GET requests, etc.)
 struct EmptyBody: Encodable {}
 
@@ -23,6 +31,10 @@ protocol Endpoint {
     /// Defaults to true per the API contract ("all endpoints outside /auth/** require authentication").
     /// Auth endpoints that don't need it explicitly override this to false.
     var requiresAuth: Bool { get }
+    
+    /// Caching policy for this request. Defaults to .ignoreCache
+    var cachePolicy: CachePolicy { get }
+    
     func asURLRequest() throws -> URLRequest
 }
 
@@ -40,6 +52,7 @@ extension Endpoint {
     }
     var queryItems: [URLQueryItem]? { nil }
     var requiresAuth: Bool { true }
+    var cachePolicy: CachePolicy { .ignoreCache }
 
     func asURLRequest() throws -> URLRequest {
         var components = URLComponents(url: baseURL.appendingPathComponent(path), resolvingAgainstBaseURL: false)
@@ -50,6 +63,17 @@ extension Endpoint {
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
         request.allHTTPHeaderFields = headers
+        
+        switch cachePolicy {
+        case .ignoreCache:
+            request.cachePolicy = .reloadIgnoringLocalCacheData
+        case .returnCacheDataElseLoad:
+            request.cachePolicy = .returnCacheDataElseLoad
+        case .returnCacheDataDontLoad:
+            request.cachePolicy = .returnCacheDataDontLoad
+        case .useProtocolCachePolicy:
+            request.cachePolicy = .useProtocolCachePolicy
+        }
 
         if let body {
             do {

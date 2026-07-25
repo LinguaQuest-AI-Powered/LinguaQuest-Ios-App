@@ -54,14 +54,14 @@ final class ProfileAssembly: Assembly {
         
         container.register(ProfileViewModel.self) { resolver in
             let router = resolver.resolve(RouterProtocol.self)!
-            let getProfileUseCase = resolver.resolve(GetProfileUseCaseProtocol.self)!
-            let uploadProfilePhotoUseCase = resolver.resolve(UploadProfilePhotoUseCaseProtocol.self)!
+            let getProfile = resolver.resolve(GetProfileUseCaseProtocol.self)
+            let uploadPhoto = resolver.resolve(UploadProfilePhotoUseCaseProtocol.self)
             return ProfileViewModel(
                 router: router,
-                getProfileUseCase: getProfileUseCase,
-                uploadProfilePhotoUseCase: uploadProfilePhotoUseCase
+                getProfileUseCase: getProfile,
+                uploadProfilePhotoUseCase: uploadPhoto
             )
-        }
+        }.inObjectScope(.container)
         
         // MARK: - Achievements
         container.register(GetAchievementsUseCaseProtocol.self) { resolver in

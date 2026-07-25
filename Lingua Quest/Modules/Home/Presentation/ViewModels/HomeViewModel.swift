@@ -48,11 +48,14 @@ final class HomeViewModel {
         }
     }
     
+    private var hasLoadedInitialData = false
+
     func loadHomeData(forceRefresh: Bool = false) async {
-        if homeData == nil || forceRefresh {
+        if (!hasLoadedInitialData && homeData == nil) || forceRefresh {
             isLoading = true
         }
         
+        hasLoadedInitialData = true
         errorMessage = nil
         
         if languageViewModel.myLanguages.isEmpty || forceRefresh {

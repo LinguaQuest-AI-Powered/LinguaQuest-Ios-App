@@ -4,12 +4,14 @@ struct MainTabView: View {
     @State private var selectedTab: MainTabItem = .home
     @AppStorage(AppConstants.UserDefaultsKeys.appLanguage) private var appLanguage = "en"
     
-    private let profileViewModel: ProfileViewModel
-    private let homeViewModel: HomeViewModel
+    @State private var profileViewModel: ProfileViewModel
+    @State private var homeViewModel: HomeViewModel
+    @State private var galleryViewModel: GalleryViewModel
     
     init() {
-        self.profileViewModel = Resolver.shared.resolve(ProfileViewModel.self)
-        self.homeViewModel = Resolver.shared.resolve(HomeViewModel.self)
+        _profileViewModel = State(initialValue: Resolver.shared.resolve(ProfileViewModel.self))
+        _homeViewModel = State(initialValue: Resolver.shared.resolve(HomeViewModel.self))
+        _galleryViewModel = State(initialValue: Resolver.shared.resolve(GalleryViewModel.self))
         UITabBar.appearance().isHidden = true
     }
     
@@ -19,7 +21,7 @@ struct MainTabView: View {
                 HomeView(viewModel: homeViewModel)
                     .tag(MainTabItem.home)
                 
-                GalleryView(viewModel: Resolver.shared.resolve(GalleryViewModel.self))
+                GalleryView(viewModel: galleryViewModel)
                     .tag(MainTabItem.gallery)
                 
                 ProfileView(viewModel: profileViewModel)

@@ -49,7 +49,7 @@ final class HomeAssembly: Assembly {
             let getDailyRewardUseCase = resolver.resolve(GetDailyRewardUseCase.self)!
             let claimDailyRewardUseCase = resolver.resolve(ClaimDailyRewardUseCase.self)!
             return DailyRewardViewModel(getDailyRewardUseCase: getDailyRewardUseCase, claimDailyRewardUseCase: claimDailyRewardUseCase)
-        }
+        }.inObjectScope(.container)
         
         container.register(GetMyLanguagesUseCase.self) { resolver in
             let repository = resolver.resolve(HomeRepositoryProtocol.self)!
@@ -82,7 +82,7 @@ final class HomeAssembly: Assembly {
                 switchActiveLanguageUseCase: switchActive,
                 addLanguagesUseCase: addLangs
             )
-        }
+        }.inObjectScope(.container)
         
         container.register(HomeViewModel.self) { resolver in
             let getHomeDataUseCase = resolver.resolve(GetHomeDataUseCaseProtocol.self)!
@@ -97,7 +97,7 @@ final class HomeAssembly: Assembly {
                 languageViewModel: languageViewModel,
                 router: router
             )
-        }
+        }.inObjectScope(.container)
         
         container.register(AllWorldsViewModel.self) { resolver in
             let router = resolver.resolve(RouterProtocol.self)!

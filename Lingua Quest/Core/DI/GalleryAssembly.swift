@@ -35,7 +35,7 @@ final class GalleryAssembly: Assembly {
                 router: r.resolve(RouterProtocol.self)!,
                 userPreferences: r.resolve(UserPreferencesProtocol.self)!
             )
-        }
+        }.inObjectScope(.container)
         
         // MARK: - Word Insight
         container.register(SpeechSynthesizerProtocol.self) { _ in
