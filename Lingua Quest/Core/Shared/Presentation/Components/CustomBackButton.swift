@@ -18,6 +18,7 @@ struct CustomBackButton: View {
                     Image(systemIcon: .chevronLeft)
                         .font(.system(size: 16, weight: .bold))
                         .foregroundColor(.appBrandPrimary)
+                        .flipsForRightToLeftLayoutDirection(true)
                 )
         }
     
