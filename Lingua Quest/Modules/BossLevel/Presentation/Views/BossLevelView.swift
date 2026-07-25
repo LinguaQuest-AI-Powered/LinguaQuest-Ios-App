@@ -41,14 +41,6 @@ struct BossLevelView: View {
                     Spacer()
                     lobbyContent(scenario: scenario)
                     Spacer()
-                    CustomButton(
-                        type: .primary,
-                        text: "Start Challenge",
-                        action: { viewModel.startChallenge() },
-                        status: .enable
-                    )
-                    .padding(.horizontal, 24)
-                    .padding(.bottom, 24)
                 }
                 
             case .active:
@@ -129,36 +121,64 @@ struct BossLevelView: View {
     // MARK: - Lobby Content
 
     private func lobbyContent(scenario: BossScenario) -> some View {
-        VStack(spacing: 32) {
-            ZStack {
-                Circle()
-                    .stroke(Color.appBrandPrimary.opacity(0.7), lineWidth: 3)
-                    .frame(width: 164, height: 164)
-                Circle()
-                    .fill(Color.appSurfaceCard)
-                    .frame(width: 154, height: 154)
-                Image(systemName: "bird.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 72, height: 72)
-                    .foregroundColor(Color.appBrandBrownDark)
-            }
+        DialogCardContainer(
+            showMascot: true,
+            mascotImage: .bird3,
+            customMascotSize: CGSize(width: 200, height: 200)
+        ) {
+            VStack(spacing: 16) {
+                Text(L10n.BossLevel.phase)
+                    .appTextStyle(.headingLarge, color: .appAccentOrange)
+                
+                VStack(spacing: 12) {
+                    Text(L10n.BossLevel.meetBoss(scenario.bossName))
+                        .appTextStyle(.headingMedium, color: .appTextHeading)
+                    
+                    Text(scenario.roleDescription)
+                        .appTextStyle(.caption, color: .appTextSecondary)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding(.horizontal, 24)
+                }
+                
+                // Goal Box
+                VStack(spacing: 16) {
+                    Text(L10n.BossLevel.yourGoal)
+                        .appTextStyle(.headingMedium, color: .appAccentOrange)
 
-            VStack(spacing: 12) {
-                Text(scenario.bossName)
-                    .appTextStyle(.headingLarge, color: .appTextHeading)
+                    Text(scenario.objective)
+                        .appTextStyle(.bodyLargeBold, color: .appTextHeading)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                    
+                    Text(L10n.BossLevel.readCarefully)
+                        .appTextStyle(.micro, color: .appTextSecondary)
+                        .fixedSize(horizontal: false, vertical: true)
+
+                }
+                .padding(.vertical, 24)
+                .padding(.horizontal, 20)
+                .frame(maxWidth: .infinity)
+                .background(Color.appBackgroundWarm.opacity(0.5))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(Color.appAccentOrange.opacity(0.8), lineWidth: 1.5)
+                )
+                .cornerRadius(16)
+                .padding(.top, 16)
                 
-                Text(scenario.objective)
-                    .appTextStyle(.bodyLarge, color: .appTextPrimary)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, 28)
+                Spacer()
                 
-                Text("Hold the mic button to speak. Release to listen.")
-                    .font(.system(size: 14, weight: .medium))
-                    .foregroundColor(Color.appBrandPrimary)
-                    .padding(.top, 8)
+                CustomButton(
+                    type: .custom(textColor: .appTextHeading, buttonColor: .appAccentOrange, shadowColor: .appBrandBrownDark),
+                    text: L10n.BossLevel.startRoleplay,
+                    action: { viewModel.startChallenge() },
+                    status: .enable
+                )
             }
         }
+        .padding(.horizontal, 24)
+        .padding(.bottom, 20)
     }
 
     // MARK: - Active session content

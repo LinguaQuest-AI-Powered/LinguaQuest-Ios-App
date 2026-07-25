@@ -342,4 +342,8 @@
 "boss_level.live_transcript" = "المحادثة المباشرة";
 "boss_level.lingo_persona" = "مرشد الذكاء الاصطناعي لينجو";
 "boss_level.connection_error" = "تعذر الاتصال بالمحادثة الصوتية. يرجى التحقق من الشبكة.";
-
+"boss_level.phase" = "مرحلة الزعيم";
+"boss_level.meet_boss" = "قابل %@";
+"boss_level.your_goal" = "هدفك";
+"boss_level.read_carefully" = "(اقرأ بعناية بلغتك الأم قبل البدء)";
+"boss_level.start_roleplay" = "بدء تبادل الأدوار";

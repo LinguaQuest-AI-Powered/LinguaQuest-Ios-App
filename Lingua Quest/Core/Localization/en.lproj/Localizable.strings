@@ -341,4 +341,8 @@
 "boss_level.live_transcript" = "Live Conversation";
 "boss_level.lingo_persona" = "Lingo AI Guide";
 "boss_level.connection_error" = "Unable to connect to Voice AI. Please check your network.";
-
+"boss_level.phase" = "Boss Phase";
+"boss_level.meet_boss" = "Meet %@";
+"boss_level.your_goal" = "Your Goal";
+"boss_level.read_carefully" = "(Read carefully in your native language before starting)";
+"boss_level.start_roleplay" = "Start Roleplay";

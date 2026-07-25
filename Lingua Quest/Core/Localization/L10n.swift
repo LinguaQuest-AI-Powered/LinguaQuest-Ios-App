@@ -422,6 +422,11 @@ enum L10n {
         static var liveTranscript: String { localized("boss_level.live_transcript") }
         static var lingoPersona: String { localized("boss_level.lingo_persona") }
         static var connectionError: String { localized("boss_level.connection_error") }
+        static var phase: String { localized("boss_level.phase") }
+        static func meetBoss(_ name: String) -> String { String(format: localized("boss_level.meet_boss"), name) }
+        static var yourGoal: String { localized("boss_level.your_goal") }
+        static var readCarefully: String { localized("boss_level.read_carefully") }
+        static var startRoleplay: String { localized("boss_level.start_roleplay") }
     }
 
 
