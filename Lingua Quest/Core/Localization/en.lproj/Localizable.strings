@@ -323,3 +323,22 @@
 "settings.select_reminder_time" = "Select Reminder Time";
 
 "common.error" = "Error";
+
+// Boss Level Voice AI
+"boss_level.title" = "Boss Challenge";
+"boss_level.status_connecting" = "Connecting to Lingo...";
+"boss_level.status_connected" = "Connected";
+"boss_level.status_disconnected" = "Disconnected";
+"boss_level.status_speaking" = "Lingo Speaking...";
+"boss_level.status_listening" = "Listening to you...";
+"boss_level.status_error" = "Connection Error";
+"boss_level.tap_to_talk" = "Tap to talk";
+"boss_level.hold_to_speak" = "Hold to Speak";
+"boss_level.release_to_send" = "Release to Send";
+"boss_level.mute_mic" = "Mute Mic";
+"boss_level.unmute_mic" = "Unmute Mic";
+"boss_level.end_session" = "End Call";
+"boss_level.live_transcript" = "Live Conversation";
+"boss_level.lingo_persona" = "Lingo AI Guide";
+"boss_level.connection_error" = "Unable to connect to Voice AI. Please check your network.";
+

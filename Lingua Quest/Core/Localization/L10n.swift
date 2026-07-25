@@ -405,6 +405,26 @@ enum L10n {
         static var failedToLoad: String { localized("speaking_lab.failed_to_load") }
     }
 
+    enum BossLevel {
+        static var title: String { localized("boss_level.title") }
+        static var statusConnecting: String { localized("boss_level.status_connecting") }
+        static var statusConnected: String { localized("boss_level.status_connected") }
+        static var statusDisconnected: String { localized("boss_level.status_disconnected") }
+        static var statusSpeaking: String { localized("boss_level.status_speaking") }
+        static var statusListening: String { localized("boss_level.status_listening") }
+        static var statusError: String { localized("boss_level.status_error") }
+        static var tapToTalk: String { localized("boss_level.tap_to_talk") }
+        static var holdToSpeak: String { localized("boss_level.hold_to_speak") }
+        static var releaseToSend: String { localized("boss_level.release_to_send") }
+        static var muteMic: String { localized("boss_level.mute_mic") }
+        static var unmuteMic: String { localized("boss_level.unmute_mic") }
+        static var endSession: String { localized("boss_level.end_session") }
+        static var liveTranscript: String { localized("boss_level.live_transcript") }
+        static var lingoPersona: String { localized("boss_level.lingo_persona") }
+        static var connectionError: String { localized("boss_level.connection_error") }
+    }
+
+
     private static func localized(_ key: String) -> String {
         let appLanguage = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en"
         if let path = Bundle.main.path(forResource: appLanguage, ofType: "lproj"),

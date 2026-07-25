@@ -325,3 +325,21 @@
 "settings.select_reminder_time" = "اختر وقت التذكير";
 
 "common.error" = "خطأ";
+
+"boss_level.title" = "تحدي الزعيم";
+"boss_level.status_connecting" = "جاري الاتصال بـ لينجو...";
+"boss_level.status_connected" = "متصل";
+"boss_level.status_disconnected" = "غير متصل";
+"boss_level.status_speaking" = "لينجو يتحدث...";
+"boss_level.status_listening" = "يستمع إليك...";
+"boss_level.status_error" = "خطأ في الاتصال";
+"boss_level.tap_to_talk" = "انقر للتحدث";
+"boss_level.hold_to_speak" = "اضغط مع الاستمرار للتحدث";
+"boss_level.release_to_send" = "ارفع إصبعك للإرسال";
+"boss_level.mute_mic" = "كتم الصوت";
+"boss_level.unmute_mic" = "تشغيل الميكروفون";
+"boss_level.end_session" = "إنهاء المكالمة";
+"boss_level.live_transcript" = "المحادثة المباشرة";
+"boss_level.lingo_persona" = "مرشد الذكاء الاصطناعي لينجو";
+"boss_level.connection_error" = "تعذر الاتصال بالمحادثة الصوتية. يرجى التحقق من الشبكة.";
+

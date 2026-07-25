@@ -30,6 +30,7 @@ enum AppRoute: Hashable {
     case wordInsight(word: WordCardEntity)
     case allWorlds
     case editProfile
+    case bossLevel(scenarioTitle: String)
 }
 
 enum AppSheet: String, Identifiable {
