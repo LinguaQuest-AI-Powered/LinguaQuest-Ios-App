@@ -54,16 +54,23 @@ struct VoicePracticeCardView: View {
                 Spacer()
                 
                 ZStack {
+                    // Refined rounded background
                     RoundedRectangle(cornerRadius: 16)
                         .fill(Color.appAccentOrange.opacity(0.1))
                         .frame(width: 80, height: 80)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(Color.appAccentOrange.opacity(0.3), lineWidth: 1.5)
+                        )
+                        .shadow(color: Color.appAccentOrange.opacity(0.08), radius: 8, x: 0, y: 4)
                     
                     Image(asset: .micBird)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 64, height: 64)
+                        .frame(width: 68, height: 68)
                         .offset(y: 4)
                 }
+                .frame(width: 80, height: 80)
             }
             
             Button(action: action) {

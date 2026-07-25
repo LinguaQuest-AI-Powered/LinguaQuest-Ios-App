@@ -328,7 +328,7 @@
 
 "gallery.my_journal" = "مجلتي";
 "gallery.categories.words" = "كلمات";
-"lock_screen_vocab.toggle_label" = "كلمات ذكية في شاشة القفل";
+"lock_screen_vocab.toggle_label" = "كلماتي في شاشة القفل";
 "lock_screen_vocab.activation_title" = "فتح الكلمات الذكية";
 "lock_screen_vocab.activation_subtitle" = "احصل على كلمة جديدة في شاشة القفل كل مرة تغلق فيها التطبيق.";
 "lock_screen_vocab.activate_action" = "افتح بـ 1,500";
@@ -338,7 +338,7 @@
 "lock_screen_vocab.tap_to_open_and_listen" = "اضغط للفتح والاستماع";
 "word_insight.example" = "مثال:";
 "gallery.tab.captures" = "صور اللعبة";
-"gallery.tab.words" = "كلمات ذكية";
+"gallery.tab.words" = "كلماتي";
 "gallery.filter.all" = "الكل";
 "gallery.empty.filter.words.title" = "لا توجد كلمات";
 "gallery.empty.filter.words.subtitle" = "لم يتم العثور على أي كلمات تناسب هذا الفلتر.";

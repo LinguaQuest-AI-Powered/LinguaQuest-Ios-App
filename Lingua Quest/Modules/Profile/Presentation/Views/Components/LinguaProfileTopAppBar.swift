@@ -17,17 +17,34 @@ struct LinguaProfileTopAppBar: View {
         HStack {
             // MARK: Logo & Title
             HStack(spacing: 12) {
-                Image(asset: .bird)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 36, height: 36)
-                    .frame(width: 40, height: 40)
-                    .background(Color.white)
-                    .clipShape(Circle())
-                    .overlay(Circle().strokeBorder(Color.appBrandBrown, lineWidth: 2))
+                ZStack {
+                    Circle()
+                        .fill(Color.appSurfaceCard)
+                        .frame(width: 44, height: 44)
+                        .overlay(
+                            Circle()
+                                .stroke(
+                                    LinearGradient(
+                                        colors: [
+                                            Color.appBrandPrimary.opacity(0.8),
+                                            Color.appAccentGold.opacity(0.6)
+                                        ],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    ),
+                                    lineWidth: 2
+                                )
+                        )
+                        .shadow(color: Color.black.opacity(0.08), radius: 4, x: 0, y: 2)
+                    
+                    Image(asset: .bird)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 32, height: 32)
+                }
                 
                 Text(L10n.Profile.title)
-                    .appTextStyle(.headingLarge, color: .appBrandBrown)
+                    .appTextStyle(.headingLarge, color: .appTextHeading)
             }
             
             Spacer()
