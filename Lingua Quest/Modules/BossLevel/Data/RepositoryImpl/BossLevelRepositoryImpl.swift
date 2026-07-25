@@ -50,22 +50,16 @@ final class BossLevelRepositoryImpl: BossLevelRepositoryProtocol {
         // Only update speaking flag when it actually changes to avoid state-stream spam.
         audioRecorder.onAudioLevelChanged = { [weak self] level in
             guard let self else { return }
-            let wasSpeaking = self.state.isUserSpeaking
             self.state.userAudioLevel = level
-            self.state.isUserSpeaking = level > 0.03
-            if self.state.isUserSpeaking != wasSpeaking {
-                self.notifyStateChanged()
-            }
+            self.state.isUserSpeaking = self.isSpeaking
+            self.notifyStateChanged()
         }
 
         audioPlayer.onAudioLevelChanged = { [weak self] level in
             guard let self else { return }
-            let was = self.state.isAISpeaking
             self.state.aiAudioLevel = level
             self.state.isAISpeaking = level > 0.05
-            if self.state.isAISpeaking != was {
-                self.notifyStateChanged()
-            }
+            self.notifyStateChanged()
         }
 
         audioPlayer.onPlaybackFinished = { [weak self] in

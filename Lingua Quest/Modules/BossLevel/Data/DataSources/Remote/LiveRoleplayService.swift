@@ -52,7 +52,7 @@ final class LiveRoleplayService: NSObject, URLSessionWebSocketDelegate {
             return
         }
 
-        let urlString = "wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=\(apiKey)"
+        let urlString = "wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key=\(apiKey)"
         guard let url = URL(string: urlString) else {
             onEvent?(.error(NSError(domain: "LiveRoleplayService", code: -1,
                                     userInfo: [NSLocalizedDescriptionKey: "Invalid WebSocket URL"])))
@@ -84,13 +84,15 @@ final class LiveRoleplayService: NSObject, URLSessionWebSocketDelegate {
     }
 
     /// Tells Gemini the user has finished their turn.
-    /// Must be called after the last audio chunk so Gemini knows to generate a reply.
+    /// For native-audio models, we send a small silence buffer via realtimeInput
+    /// so the model detects end-of-speech. Sending clientContent.turnComplete
+    /// causes a 1007 "Invalid Argument" on native audio preview models.
     func sendClientTurnComplete() {
-        guard isSocketOpen else { return }
-        print("🚀 [LiveRoleplay] Sending clientContent turnComplete")
-        sendJSON(GeminiLiveClientTurnCompleteMessage(
-            clientContent: GeminiLiveClientContentPayload(turns: nil, turnComplete: true)
-        ))
+        guard isSocketOpen, isSetupComplete else { return }
+        print("🚀 [LiveRoleplay] Sending end-of-turn silence")
+        // Send ~200ms of silence (16kHz × 2 bytes × 0.2s = 6400 bytes of zeros)
+        let silenceData = Data(count: 6400)
+        transmitAudio(silenceData)
     }
 
     /// Enqueues a 16kHz / mono / 16-bit PCM chunk.
