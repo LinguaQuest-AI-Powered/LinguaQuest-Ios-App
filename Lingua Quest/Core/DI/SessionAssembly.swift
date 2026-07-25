@@ -14,6 +14,7 @@ final class SessionAssembly: Assembly {
                 router: resolver.resolve(RouterProtocol.self)!,
                 tokenStorage: resolver.resolve(SecureTokenStorageProtocol.self)!,
                 userPreferences: resolver.resolve(UserPreferencesProtocol.self)!,
+                statsService: resolver.resolve(StatsServiceProtocol.self)!,
                 logoutUseCase: resolver.resolve(LogoutUseCaseProtocol.self)!
             )
         }.inObjectScope(.container)
