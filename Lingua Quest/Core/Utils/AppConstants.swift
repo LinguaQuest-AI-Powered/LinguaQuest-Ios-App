@@ -37,5 +37,6 @@ enum AppConstants {
         static let targetLanguageValue = "ar"
         static let noOfWorldGeneratedInAiLockScreen = 5
         static let unlockVocabularyCost = 0
+        static let changeWordCost = 50
     }
 } 

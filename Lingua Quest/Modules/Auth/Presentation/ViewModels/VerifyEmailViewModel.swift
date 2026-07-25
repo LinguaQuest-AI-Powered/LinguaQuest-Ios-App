@@ -117,6 +117,7 @@ extension VerifyEmailViewModel {
             func pushAndReplace(_ route: AppRoute) {}
             func pushAndRemoveAll(_ route: AppRoute) {}
             func pop() {}
+            func pop(count: Int) {}
             func popToRoot() {}
             func present(_ sheet: AppSheet) {}
             func dismissSheet() {}

@@ -243,8 +243,8 @@
 "game.not_enough_coins.get_more" = "احصل على المزيد من العملات";
 
 "game.skip_word.title" = "هل تواجه صعوبة؟";
-"game.skip_word.subtitle" = "تخطي هذه الكلمة مقابل %d عملة؟";
-"game.skip_word.action" = "تخطي الكلمة";
+"game.skip_word.subtitle" = "تغيير هذه الكلمة مقابل %d عملة؟";
+"game.skip_word.action" = "تغيير الكلمة";
 
 
 "worlds.filter.all" = "الكل";

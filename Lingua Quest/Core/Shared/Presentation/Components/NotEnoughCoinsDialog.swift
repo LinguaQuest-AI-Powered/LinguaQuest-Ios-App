@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct NotEnoughCoinsDialog: View {
+    let title: String
+    let subtitle: String
     let missingCoins: Int
     let action: () -> Void
     
@@ -18,10 +20,10 @@ struct NotEnoughCoinsDialog: View {
             speechBubbleText: nil
         ) {
             VStack(spacing: 16) {
-                Text(L10n.Game.notEnoughCoinsTitle)
+                Text(title)
                     .appTextStyle(.displayMedium, color: .appBrandBrown)
                 
-                Text(L10n.Game.notEnoughCoinsSubtitle)
+                Text(subtitle)
                     .appTextStyle(.bodyMedium, color: .appTextSecondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 16)
@@ -43,7 +45,12 @@ struct NotEnoughCoinsDialog: View {
 #Preview {
     ZStack {
         Color.black.opacity(0.4).ignoresSafeArea()
-        NotEnoughCoinsDialog(missingCoins: 20, action: {})
-            .padding(24)
+        NotEnoughCoinsDialog(
+            title: "لا يوجد عملات كافية!",
+            subtitle: "تحتاج إلى المزيد من العملات لاستخدام هذه المساعدة.",
+            missingCoins: 20,
+            action: {}
+        )
+        .padding(24)
     }
 }

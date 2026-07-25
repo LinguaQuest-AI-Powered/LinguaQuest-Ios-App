@@ -8,10 +8,11 @@
 import Foundation
 import Observation
 
-enum CameraResultState {
+enum CameraResultState: Equatable {
     case loading
-    case success
-    case failure
+    case match
+    case notMatch
+    case error(message: String)
 }
 
 @Observable
@@ -21,10 +22,10 @@ final class CameraResultViewModel {
     var state: CameraResultState = .loading
     
     // For successful states
-    let xpPoints: Int = 10
-    let coinsEarned: Int = 5
-    let currentLevelProgress: Double = 0.8 // 80% for demonstration
-    let currentLevelIndex: Int = 12
+    var xpPoints: Int = 0
+    var coinsEarned: Int = 0
+    var currentLevelProgress: Double = 0.0
+    var currentLevelIndex: Int = 0
     
     let imageData: Data?
     private let saveUseCase: SaveCapturedItemUseCase
@@ -42,26 +43,40 @@ final class CameraResultViewModel {
     private func simulateAPI() {
         Task {
             // Simulate processing time
-            try? await Task.sleep(nanoseconds:2_000_000_000)
+            try? await Task.sleep(nanoseconds: 2_000_000_000)
             
-            // Randomly succeed or fail for testing/demonstration
-            self.state = Bool.random() ? .success : .failure
+            // Randomly succeed, fail (notMatch), or API error for testing/demonstration
+            let rand = Int.random(in: 0...2)
             
-            // Save the captured item
-            let item = CapturedItem(
-                id: UUID(),
-                englishName: self.targetWord, // Mocking API response with targetWord for now
-                translatedName: self.targetWord,
-                category: "GAME",
-                imageData: self.imageData,
-                isCorrect: self.state == .success,
-                timestamp: Date()
-            )
+            if rand == 0 {
+                self.xpPoints = 50
+                self.coinsEarned = 10
+                self.currentLevelIndex = 4
+                self.currentLevelProgress = 0.85
+                self.state = .match
+            } else if rand == 1 {
+                self.state = .notMatch
+            } else {
+                self.state = .error(message: "Validation error - one or more fields are missing or malformed")
+            }
             
-            do {
-                try await saveUseCase.execute(item: item)
-            } catch {
-                print("Failed to save capture: \(error)")
+            // Save the captured item if matched
+            if case .match = self.state {
+                let item = CapturedItem(
+                    id: UUID(),
+                    englishName: self.targetWord,
+                    translatedName: self.targetWord,
+                    category: "GAME",
+                    imageData: self.imageData,
+                    isCorrect: true,
+                    timestamp: Date()
+                )
+                
+                do {
+                    try await saveUseCase.execute(item: item)
+                } catch {
+                    print("Failed to save capture: \(error)")
+                }
             }
         }
     }
@@ -71,12 +86,12 @@ final class CameraResultViewModel {
     }
     
     func onChangeWordTapped() {
-        // According to our game flow, maybe go back to level details or map
-        router.popToRoot()
+        // Go back to CameraTaskQuestView (pop result and capture views)
+        router.pop(count: 2)
     }
     
     func onNextLevelTapped() {
-        // Move to the next task or root
-        router.popToRoot()
+        // Go back to GameLevelsView (pop result, capture, and quest views)
+        router.pop(count: 3)
     }
 }

@@ -96,6 +96,8 @@ struct SettingsView: View {
         }
         .appDialog(isPresented: $viewModel.showNotEnoughCoins) {
             NotEnoughCoinsDialog(
+                title: L10n.Game.notEnoughCoinsTitle,
+                subtitle: L10n.Game.notEnoughCoinsSubtitle,
                 missingCoins: viewModel.missingCoins,
                 action: {
                     viewModel.showNotEnoughCoins = false

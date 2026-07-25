@@ -84,6 +84,7 @@ extension Image {
         // Added for Widget
         case handTapFill = "hand.tap.fill"
         case characterBookClosedFill = "character.book.closed.fill"
+        case arrowTriangle2Circlepath = "arrow.triangle.2.circlepath"
     }
     
     enum Asset: String {

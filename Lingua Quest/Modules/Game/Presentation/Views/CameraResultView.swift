@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CameraResultView: View {
     @State var viewModel: CameraResultViewModel
+    @State private var showSkipDialog = false
+    @State private var showNotEnoughCoinsDialog = false
     
     var body: some View {
         ZStack {
@@ -18,15 +20,17 @@ struct CameraResultView: View {
                 switch viewModel.state {
                 case .loading:
                     loadingView
-                case .success:
+                case .match:
                     successView
-                case .failure:
+                case .notMatch:
                     failureView
+                case .error(let message):
+                    errorView(message)
                 }
             }
             .animation(.spring(response: 0.55, dampingFraction: 0.82), value: viewModel.state)
             
-            if viewModel.state == .success {
+            if viewModel.state == .match {
                 ConfettiView()
                     .ignoresSafeArea()
                     .allowsHitTesting(false)
@@ -34,6 +38,35 @@ struct CameraResultView: View {
             }
         }
         .navigationBarHidden(true)
+        .appDialog(isPresented: $showNotEnoughCoinsDialog) {
+            NotEnoughCoinsDialog(
+                title: L10n.Game.notEnoughCoinsTitle,
+                subtitle: L10n.Game.notEnoughCoinsSubtitle,
+                missingCoins: AppConstants.Common.changeWordCost
+            ) {
+                showNotEnoughCoinsDialog = false
+                // Handle get more coins (e.g. navigate to store)
+            }
+        }
+        .appDialog(isPresented: $showSkipDialog) {
+            CostActionDialog(
+                title: L10n.Game.skipWordTitle,
+                subtitle: L10n.Game.skipWordSubtitle(AppConstants.Common.changeWordCost),
+                cost: AppConstants.Common.changeWordCost,
+                mascotImage: .skip,
+                primaryButtonText: L10n.Game.changeWord,
+                primaryButtonIcon: .arrowTriangle2Circlepath,
+                primaryAction: {
+                    showSkipDialog = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        showNotEnoughCoinsDialog = true
+                    }
+                },
+                cancelAction: {
+                    showSkipDialog = false
+                }
+            )
+        }
     }
     
     private var loadingView: some View {
@@ -42,6 +75,37 @@ struct CameraResultView: View {
             title: L10n.Game.analyzing,
             subtitle: L10n.Game.analyzingSubtitle
         )
+    }
+    
+    private func errorView(_ message: String) -> some View {
+        DialogCardContainer(mascotImage: .weakPasswordBird) {
+            VStack(spacing: 24) {
+                Text(L10n.Common.error)
+                    .appTextStyle(.displayMedium, color: .appBrandBrown)
+                
+                Text(message)
+                    .appTextStyle(.body, color: .appTextSecondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 16)
+                
+                VStack(spacing: 16) {
+                    CustomButton(
+                        type: .primary,
+                        text: L10n.Game.retryCamera,
+                        action: viewModel.onRetryTapped,
+                        leading: Image(systemIcon: .arrowLeft)
+                    )
+                    
+                    OutlineButton(
+                        text: L10n.Game.changeWord,
+                        action: { showSkipDialog = true }
+                    )
+                }
+            }
+            .padding(.top, 16)
+        }
+        .padding(.horizontal, 24)
+        .transition(.scale.combined(with: .opacity))
     }
     
     private var failureView: some View {
@@ -84,7 +148,7 @@ struct CameraResultView: View {
                         
                         OutlineButton(
                             text: L10n.Game.changeWord,
-                            action: viewModel.onChangeWordTapped
+                            action: { showSkipDialog = true }
                         )
                     }
                 }

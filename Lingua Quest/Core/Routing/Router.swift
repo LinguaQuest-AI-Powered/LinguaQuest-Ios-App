@@ -14,6 +14,7 @@ protocol RouterProtocol: AnyObject {
     func pushAndReplace(_ route: AppRoute)
     func pushAndRemoveAll(_ route: AppRoute)
     func pop()
+    func pop(count: Int)
     func popToRoot()
     func present(_ sheet: AppSheet)
     func dismissSheet()
@@ -40,6 +41,13 @@ final class Router: RouterProtocol {
     }
     
     func pop() { guard !path.isEmpty else { return }; path.removeLast() }
+    
+    func pop(count: Int) {
+        let itemsToRemove = min(count, path.count)
+        guard itemsToRemove > 0 else { return }
+        path.removeLast(itemsToRemove)
+    }
+    
     func popToRoot() { path.removeLast(path.count) }
     func present(_ sheet: AppSheet) { presentedSheet = sheet }
     func dismissSheet() { presentedSheet = nil }

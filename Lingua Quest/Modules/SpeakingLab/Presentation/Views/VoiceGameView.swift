@@ -223,21 +223,32 @@ struct VoiceGameView: View {
         }
         .navigationBarHidden(true)
         .appDialog(isPresented: $showSkipDialog) {
-            SkipDialog(
-                skip: {
+            CostActionDialog(
+                title: L10n.Game.skipWordTitle,
+                subtitle: L10n.Game.skipWordSubtitle(AppConstants.Common.changeWordCost),
+                cost: AppConstants.Common.changeWordCost,
+                mascotImage: .skip,
+                primaryButtonText: L10n.Game.changeWord,
+                primaryButtonIcon: .arrowTriangle2Circlepath,
+                primaryAction: {
                     showSkipDialog = false
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         showNotEnoughCoinsDialog = true
                     }
                 },
-                cancel: {
+                cancelAction: {
                     showSkipDialog = false
                 }
             )
         }
         .appDialog(isPresented: $showNotEnoughCoinsDialog) {
-            NotEnoughCoinsDialog(missingCoins: 25) {
+            NotEnoughCoinsDialog(
+                title: L10n.Game.notEnoughCoinsTitle,
+                subtitle: L10n.Game.notEnoughCoinsSubtitle,
+                missingCoins: AppConstants.Common.changeWordCost
+            ) {
                 showNotEnoughCoinsDialog = false
+                // Go to store or ads
             }
         }
         .onAppear {
@@ -245,5 +256,3 @@ struct VoiceGameView: View {
         }
     }
 }
-
-
