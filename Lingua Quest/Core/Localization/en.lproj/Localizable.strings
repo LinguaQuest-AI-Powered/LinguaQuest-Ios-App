@@ -127,6 +127,7 @@
 "game.need_hint_title" = "Need a hint?";
 "game.hint.reveal_first_letter" = "Reveal first letter";
 "game.hint.show_category_clue" = "Show category clue";
+"game.hint.get_hint" = "Get a hint";
 "game.hint.use" = "Use Hint";
 "game.hint.reveal_first_letter_mock" = "Starts with 'A'";
 "game.hint.show_category_clue_mock" = "It's a type of fruit";

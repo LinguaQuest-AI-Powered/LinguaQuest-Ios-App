@@ -182,12 +182,25 @@ struct CameraTaskQuestView: View {
     }
 }
 
+class MockStatsService: StatsServiceProtocol {
+    var coins: Int = 1250
+    var xp: Int = 100
+    var streakDays: Int = 5
+    func fetchStats() async throws {}
+    func addCoins(_ amount: Int) async throws {}
+    func deductCoins(_ amount: Int) async throws {}
+    func addXP(_ amount: Int) async throws {}
+    func adjustWallet(coinsDelta: Int, xpDelta: Int) async throws {}
+    func syncBalances(coins: Int, xp: Int, streakDays: Int?) {}
+    func resetAll() {}
+}
+
 #Preview("LightTheme") {
-    CameraTaskQuestView(viewModel: CameraTaskQuestViewModel(router: Router()))
+    CameraTaskQuestView(viewModel: CameraTaskQuestViewModel(router: Router(), statsService: MockStatsService()))
 }
 
 #Preview("DarkTheme") {
-    CameraTaskQuestView(viewModel: CameraTaskQuestViewModel(router: Router()))
+    CameraTaskQuestView(viewModel: CameraTaskQuestViewModel(router: Router(), statsService: MockStatsService()))
         .preferredColorScheme(.dark)
 }
 

@@ -155,6 +155,7 @@ enum L10n {
         static var needHintTitle: String { localized("game.need_hint_title") }
         static var hintRevealFirstLetter: String { localized("game.hint.reveal_first_letter") }
         static var hintShowCategoryClue: String { localized("game.hint.show_category_clue") }
+        static var hintGetHint: String { localized("game.hint.get_hint") }
         static var useHint: String { localized("game.hint.use") }
         static var hintRevealFirstLetterMock: String { localized("game.hint.reveal_first_letter_mock") }
         static var hintShowCategoryClueMock: String { localized("game.hint.show_category_clue_mock") }

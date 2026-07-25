@@ -34,7 +34,8 @@ final class GameAssembly: Assembly {
         
         container.register(CameraTaskQuestViewModel.self) { resolver in
             let router = resolver.resolve(RouterProtocol.self)!
-            return CameraTaskQuestViewModel(router: router)
+            let statsService = resolver.resolve(StatsServiceProtocol.self)!
+            return CameraTaskQuestViewModel(router: router, statsService: statsService)
         }
         
         container.register(CameraCaptureViewModel.self) { (resolver, targetWord: String) in

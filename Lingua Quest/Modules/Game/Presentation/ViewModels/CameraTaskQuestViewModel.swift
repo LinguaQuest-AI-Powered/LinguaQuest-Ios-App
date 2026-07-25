@@ -14,14 +14,20 @@ import AVFoundation
 class CameraTaskQuestViewModel {
     private let router: RouterProtocol
     
+    private let statsService: StatsServiceProtocol
+    
     var levelId: Int
     var targetWord: String
-    var coins: Int
-    init(router: RouterProtocol, levelId: Int = 3, targetWord: String = "PAN", coins: Int = 1250) {
+    
+    var coins: Int {
+        statsService.coins
+    }
+    
+    init(router: RouterProtocol, statsService: StatsServiceProtocol, levelId: Int = 3, targetWord: String = "PAN") {
         self.router = router
+        self.statsService = statsService
         self.levelId = levelId
         self.targetWord = targetWord
-        self.coins = coins
     }
     
     func openCamera() {

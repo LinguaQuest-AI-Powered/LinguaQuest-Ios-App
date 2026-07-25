@@ -126,6 +126,7 @@
 "game.need_hint_title" = "تحتاج مساعدة؟";
 "game.hint.reveal_first_letter" = "إظهار أول حرف";
 "game.hint.show_category_clue" = "عرض تلميح الصنف";
+"game.hint.get_hint" = "الحصول على تلميح";
 "game.hint.use" = "استخدام التلميح";
 "game.hint.reveal_first_letter_mock" = "يبدأ بحرف 'A'";
 "game.hint.show_category_clue_mock" = "إنه نوع من الفاكهة";

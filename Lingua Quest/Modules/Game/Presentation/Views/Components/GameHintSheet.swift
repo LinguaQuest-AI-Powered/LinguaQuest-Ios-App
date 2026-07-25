@@ -17,23 +17,7 @@ struct GameHintSheet: View {
         VStack(spacing: 20) {
             // Header
             HStack {
-                // Coins
-                HStack(spacing: 6) {
-                    Image(systemIcon: .dollarsignCircleFill)
-                        .foregroundColor(.appBrandPrimary)
-                    Text("\(coins)")
-                        .appTextStyle(.bodyBold, color: .appTextPrimary)
-                }
-                .padding(.horizontal, 12)
-                .padding(.vertical, 8)
-                .background(
-                    Capsule()
-                        .fill(Color.appSurfaceCard)
-                )
-                .overlay(
-                    Capsule()
-                        .stroke(Color.appBorderCool, lineWidth: 1)
-                )
+                // Coins removed
                 
                 Spacer()
                 
@@ -62,27 +46,13 @@ struct GameHintSheet: View {
             // Options
             VStack(spacing: 16) {
                 hintOptionCard(
-                    iconText: "Aa",
+                    iconText: "?",
                     iconSystemName: nil,
-                    title: L10n.Game.hintRevealFirstLetter,
-                    cost: 25,
+                    title: L10n.Game.hintGetHint,
+                    cost: AppConstants.Common.hintCost,
                     action: {
-                        if coins >= 25 {
-                            onSelectHint(L10n.Game.hintRevealFirstLetterMock)
-                        } else {
-                            onNotEnoughCoins()
-                        }
-                    }
-                )
-                
-                hintOptionCard(
-                    iconText: nil,
-                    iconSystemName: "info.circle",
-                    title: L10n.Game.hintShowCategoryClue,
-                    cost: 50,
-                    action: {
-                        if coins >= 50 {
-                            onSelectHint(L10n.Game.hintShowCategoryClueMock)
+                        if coins >= AppConstants.Common.hintCost {
+                            onSelectHint("HINT") // The actual hint logic will call API and show the hint
                         } else {
                             onNotEnoughCoins()
                         }
