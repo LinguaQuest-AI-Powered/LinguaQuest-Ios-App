@@ -19,39 +19,95 @@ struct BossLevelView: View {
         ZStack {
             Color.appBackgroundWarm.ignoresSafeArea()
 
-            VStack(spacing: 0) {
-                headerBar
-                    .padding(.top, 8)
-
-                Spacer()
-
-                if viewModel.isSessionStarted {
-                    activeSessionContent
-                } else {
-                    initialContent
+            switch viewModel.viewState {
+            case .loading:
+                ProgressView("Loading Scenario...")
+            
+            case .result(let result):
+                BossResultView(result: result, onCloseTapped: { viewModel.onCloseTapped() })
+                
+            case .evaluating:
+                VStack(spacing: 24) {
+                    ProgressView()
+                        .scaleEffect(2.0)
+                    Text("Lingo is evaluating your performance...")
+                        .appTextStyle(.headingMedium, color: .appTextHeading)
                 }
-
-                Spacer()
-
-                bottomActionButton
+                
+            case .lobby(let scenario):
+                VStack(spacing: 0) {
+                    headerBar
+                        .padding(.top, 8)
+                    Spacer()
+                    lobbyContent(scenario: scenario)
+                    Spacer()
+                    CustomButton(
+                        type: .primary,
+                        text: "Start Challenge",
+                        action: { viewModel.startChallenge() },
+                        status: .enable
+                    )
                     .padding(.horizontal, 24)
                     .padding(.bottom, 24)
+                }
+                
+            case .active:
+                VStack(spacing: 0) {
+                    headerBar
+                        .padding(.top, 8)
+                    Spacer()
+                    activeSessionContent
+                    Spacer()
+                    BossLevelControlsView(
+                        isHoldingMic: viewModel.isHoldingMic,
+                        isAISpeaking: viewModel.sessionState.isAISpeaking,
+                        onMicPress: { viewModel.startSpeaking() },
+                        onMicRelease: { viewModel.stopSpeaking() },
+                        onEndCall: { viewModel.endChallenge() }
+                    )
+                    .padding(.horizontal, 24)
+                    .padding(.bottom, 24)
+                }
+                
+            case .error:
+                VStack {
+                    Text("An error occurred.")
+                    CustomButton(type: .secendry, text: "Go Back", action: { viewModel.onCloseTapped() }, status: .enable)
+                }
             }
         }
         .navigationBarHidden(true)
         .onAppear { viewModel.onAppear() }
         .onDisappear { viewModel.onDisappear() }
-        .alert("Microphone Access Required",
-               isPresented: .constant(viewModel.errorMessage != nil)) {
-            Button("Open Settings") {
-                if let url = URL(string: UIApplication.openSettingsURLString) {
-                    UIApplication.shared.open(url)
+        .alert(
+            isMicError ? "Microphone Access Required" : "Error",
+            isPresented: Binding(
+                   get: { if case .error = viewModel.viewState { return true }; return false },
+                   set: { _ in }
+            )
+        ) {
+            if isMicError {
+                Button("Open Settings") {
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(url)
+                    }
                 }
+                Button("Cancel", role: .cancel) { viewModel.onCloseTapped() }
+            } else {
+                Button("OK") { viewModel.onCloseTapped() }
             }
-            Button("Cancel", role: .cancel) {}
         } message: {
-            Text(viewModel.errorMessage ?? "")
+            if case .error(let msg) = viewModel.viewState {
+                Text(msg)
+            }
         }
+    }
+
+    private var isMicError: Bool {
+        if case .error(let msg) = viewModel.viewState {
+            return msg.lowercased().contains("microphone") || msg.lowercased().contains("permission") || msg.lowercased().contains("audio")
+        }
+        return false
     }
 
     // MARK: - Header
@@ -70,9 +126,9 @@ struct BossLevelView: View {
         .frame(height: 64)
     }
 
-    // MARK: - Initial content (before session starts)
+    // MARK: - Lobby Content
 
-    private var initialContent: some View {
+    private func lobbyContent(scenario: BossScenario) -> some View {
         VStack(spacing: 32) {
             ZStack {
                 Circle()
@@ -88,12 +144,20 @@ struct BossLevelView: View {
                     .foregroundColor(Color.appBrandBrownDark)
             }
 
-            Text(viewModel.descriptionText)
-                .font(.system(size: 16, weight: .regular))
-                .foregroundColor(Color.appTextSlate)
-                .lineSpacing(4)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 28)
+            VStack(spacing: 12) {
+                Text(scenario.bossName)
+                    .appTextStyle(.headingLarge, color: .appTextHeading)
+                
+                Text(scenario.objective)
+                    .appTextStyle(.bodyLarge, color: .appTextPrimary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 28)
+                
+                Text("Hold the mic button to speak. Release to listen.")
+                    .font(.system(size: 14, weight: .medium))
+                    .foregroundColor(Color.appBrandPrimary)
+                    .padding(.top, 8)
+            }
         }
     }
 
@@ -102,10 +166,10 @@ struct BossLevelView: View {
     private var activeSessionContent: some View {
         VStack(spacing: 24) {
             BossLevelVisualizerView(
-                isAISpeaking: viewModel.state.isAISpeaking,
-                isUserSpeaking: viewModel.state.isUserSpeaking,
-                aiAudioLevel: viewModel.state.aiAudioLevel,
-                userAudioLevel: viewModel.state.userAudioLevel
+                isAISpeaking: viewModel.sessionState.isAISpeaking,
+                isUserSpeaking: viewModel.sessionState.isUserSpeaking,
+                aiAudioLevel: viewModel.sessionState.aiAudioLevel,
+                userAudioLevel: viewModel.sessionState.userAudioLevel
             )
 
             BossLevelTranscriptView(
@@ -114,29 +178,6 @@ struct BossLevelView: View {
             )
             .frame(maxHeight: 220)
             .padding(.horizontal, 20)
-        }
-    }
-
-    // MARK: - Bottom action area
-
-    private var bottomActionButton: some View {
-        Group {
-            if viewModel.isSessionStarted {
-                BossLevelControlsView(
-                    isHoldingMic: viewModel.isHoldingMic,
-                    isAISpeaking: viewModel.state.isAISpeaking,
-                    onMicPress: { viewModel.startSpeaking() },
-                    onMicRelease: { viewModel.stopSpeaking() },
-                    onEndCall: { viewModel.endChallenge() }
-                )
-            } else {
-                CustomButton(
-                    type: .primary,
-                    text: "Start Challenge",
-                    action: { viewModel.startChallenge() },
-                    status: .enable
-                )
-            }
         }
     }
 }

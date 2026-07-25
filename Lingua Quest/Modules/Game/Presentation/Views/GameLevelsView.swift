@@ -215,7 +215,21 @@ struct GameLevelsView: View {
         }
         .overlay(alignment: .bottomTrailing) {
             Button {
-                router.push(.bossLevel(scenarioTitle: worldName))
+                let scenarioId: String
+                let name = worldName.lowercased()
+                //TODO: Change this later
+                if name.contains("kitchen") || name.contains("market") {
+                    scenarioId = "scenario_market_01"
+                } else if name.contains("cafe") || name.contains("city") {
+                    scenarioId = "scenario_cafe_01"
+                } else if name.contains("school") {
+                    scenarioId = "scenario_school_01"
+                } else if name.contains("airport") || name.contains("taxi") {
+                    scenarioId = "scenario_taxi_01"
+                } else {
+                    scenarioId = "scenario_apartment_01"
+                }
+                router.push(.bossLevel(scenarioTitle: scenarioId))
             } label: {
                 HStack(spacing: 8) {
                     Image(systemName: "mic.fill")

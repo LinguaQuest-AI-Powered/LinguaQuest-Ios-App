@@ -13,6 +13,7 @@ final class BossLevelRepositoryImpl: BossLevelRepositoryProtocol {
     private let liveService: LiveRoleplayService
     private let audioRecorder: AudioRecorder
     private let audioPlayer: AudioPlayer
+    private let evaluationService: GeminiEvaluationService
 
     private var state = BossLevelSessionState()
     private var recordingTask: Task<Void, Never>?
@@ -29,11 +30,13 @@ final class BossLevelRepositoryImpl: BossLevelRepositoryProtocol {
     init(
         liveService: LiveRoleplayService = LiveRoleplayService(),
         audioRecorder: AudioRecorder = AudioRecorder(),
-        audioPlayer: AudioPlayer = AudioPlayer()
+        audioPlayer: AudioPlayer = AudioPlayer(),
+        evaluationService: GeminiEvaluationService = GeminiEvaluationService()
     ) {
         self.liveService = liveService
         self.audioRecorder = audioRecorder
         self.audioPlayer = audioPlayer
+        self.evaluationService = evaluationService
         setupCallbacks()
     }
 
@@ -174,6 +177,11 @@ final class BossLevelRepositoryImpl: BossLevelRepositoryProtocol {
         }
         
         notifyStateChanged()
+    }
+    
+    func evaluateStage(scenario: BossScenario, transcript: String) async throws -> BossEvaluationResult {
+        let prompt = PromptFactory.createBossEvaluationPrompt(scenario: scenario, transcript: transcript)
+        return try await evaluationService.evaluateTranscript(prompt: prompt)
     }
 
     // MARK: - Service Event Handling

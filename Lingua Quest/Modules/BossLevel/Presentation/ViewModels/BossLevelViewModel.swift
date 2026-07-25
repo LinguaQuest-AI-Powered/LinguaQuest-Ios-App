@@ -8,39 +8,52 @@
 import SwiftUI
 import Observation
 
+enum BossLevelViewState {
+    case loading
+    case lobby(BossScenario)
+    case active
+    case evaluating
+    case result(BossEvaluationResult)
+    case error(String)
+}
+
 @MainActor
 @Observable
 final class BossLevelViewModel {
-    private(set) var state = BossLevelSessionState()
+    private(set) var viewState: BossLevelViewState = .loading
+    private(set) var sessionState = BossLevelSessionState()
     private(set) var messages: [RoleplayMessage] = []
-    private(set) var isSessionStarted: Bool = false
-    private(set) var errorMessage: String? = nil
+    
     /// True while the user is physically holding the mic button.
     private(set) var isHoldingMic: Bool = false
 
-    let scenarioTitle: String
-
-    var descriptionText: String {
-        "Hold the mic button to speak with Lingo. Release to send and wait for a reply."
-    }
-
+    private let scenarioId: String
+    private var scenario: BossScenario?
+    
+    private let scenarioRepository: ScenarioRepositoryProtocol
     private let repository: BossLevelRepositoryProtocol
     private let startSessionUseCase: StartBossLevelSessionUseCaseProtocol
     private let stopSessionUseCase: StopBossLevelSessionUseCaseProtocol
+    private let evaluateStageUseCase: EvaluateBossStageUseCaseProtocol
     private let router: RouterProtocol
+    
     private var stateListenTask: Task<Void, Never>?
 
     init(
-        scenarioTitle: String = "Boss Level",
+        scenarioId: String,
+        scenarioRepository: ScenarioRepositoryProtocol,
         repository: BossLevelRepositoryProtocol,
         startSessionUseCase: StartBossLevelSessionUseCaseProtocol,
         stopSessionUseCase: StopBossLevelSessionUseCaseProtocol,
+        evaluateStageUseCase: EvaluateBossStageUseCaseProtocol,
         router: RouterProtocol
     ) {
-        self.scenarioTitle = scenarioTitle
+        self.scenarioId = scenarioId
+        self.scenarioRepository = scenarioRepository
         self.repository = repository
         self.startSessionUseCase = startSessionUseCase
         self.stopSessionUseCase = stopSessionUseCase
+        self.evaluateStageUseCase = evaluateStageUseCase
         self.router = router
     }
 
@@ -48,6 +61,7 @@ final class BossLevelViewModel {
 
     func onAppear() {
         startListeningToRepository()
+        loadScenario()
     }
 
     func onDisappear() {
@@ -55,35 +69,54 @@ final class BossLevelViewModel {
         stateListenTask = nil
         Task { await stopSessionUseCase.execute() }
     }
+    
+    private func loadScenario() {
+        Task {
+            do {
+                viewState = .loading
+                scenario = try await scenarioRepository.getScenario(id: scenarioId)
+                if let scenario = scenario {
+                    viewState = .lobby(scenario)
+                }
+            } catch {
+                viewState = .error("Failed to load scenario: \(error.localizedDescription)")
+            }
+        }
+    }
 
     // MARK: - Session
 
     func startChallenge() {
-        isSessionStarted = true
-        errorMessage = nil
+        guard let scenario = scenario else { return }
+        viewState = .active
+        messages.removeAll()
+        
         Task {
-            let prompt = """
-            You are Lingo, a friendly AI language guide in LinguaQuest.
-            The user will press and hold a button while speaking to you.
-            Keep your replies concise (1–3 sentences), warm, and natural — like a real conversation.
-            Never use markdown or emoji.
-            """
+            let prompt = PromptFactory.createLiveSessionPrompt(scenario: scenario)
             do {
                 print("🎯 [ViewModel] startChallenge() — calling startSession…")
                 try await startSessionUseCase.execute(systemInstruction: prompt)
-                print("🎯 [ViewModel] startSession() returned successfully")
             } catch {
-                print("🎯 [ViewModel] startSession() FAILED: \(error.localizedDescription)")
-                isSessionStarted = false
-                errorMessage = error.localizedDescription
+                viewState = .error(error.localizedDescription)
             }
         }
     }
 
     func endChallenge() {
+        guard let scenario = scenario else { return }
         isHoldingMic = false
-        isSessionStarted = false
-        Task { await stopSessionUseCase.execute() }
+        viewState = .evaluating
+        
+        Task {
+            await stopSessionUseCase.execute()
+            do {
+                let transcript = messages.map { "\($0.sender): \($0.text)" }.joined(separator: "\n")
+                let result = try await evaluateStageUseCase.execute(scenario: scenario, transcript: transcript)
+                viewState = .result(result)
+            } catch {
+                viewState = .error("Evaluation failed: \(error.localizedDescription)")
+            }
+        }
     }
 
     func onCloseTapped() {
@@ -95,20 +128,16 @@ final class BossLevelViewModel {
 
     // MARK: - Hold-to-Talk
 
-    /// Called when the user presses down the mic button.
     func startSpeaking() {
-        guard isSessionStarted, !isHoldingMic else { return }
+        guard case .active = viewState, !isHoldingMic else { return }
         isHoldingMic = true
         repository.startSpeaking()
-        print("🎯 [ViewModel] startSpeaking()")
     }
 
-    /// Called when the user releases the mic button.
     func stopSpeaking() {
         guard isHoldingMic else { return }
         isHoldingMic = false
         repository.stopSpeaking()
-        print("🎯 [ViewModel] stopSpeaking()")
     }
 
     // MARK: - Event Handling
@@ -125,12 +154,13 @@ final class BossLevelViewModel {
     private func handleEvent(_ event: BossLevelEvent) {
         switch event {
         case .stateChanged(let newState):
-            self.state = newState
+            self.sessionState = newState
         case .messageReceived(let message):
-            print("🎯 [ViewModel] Message from \(message.sender): \(message.text.prefix(80))")
             self.messages.append(message)
         case .error(let error):
-            print("🎯 [ViewModel] ERROR: \(error.localizedDescription)")
+            if case .active = self.viewState {
+                self.viewState = .error(error.localizedDescription)
+            }
         }
     }
 }

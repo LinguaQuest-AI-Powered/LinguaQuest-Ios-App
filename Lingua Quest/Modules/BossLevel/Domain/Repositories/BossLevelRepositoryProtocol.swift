@@ -20,4 +20,5 @@ protocol BossLevelRepositoryProtocol: AnyObject {
     func stopSession() async
     func startSpeaking()
     func stopSpeaking()
+    func evaluateStage(scenario: BossScenario, transcript: String) async throws -> BossEvaluationResult
 }
