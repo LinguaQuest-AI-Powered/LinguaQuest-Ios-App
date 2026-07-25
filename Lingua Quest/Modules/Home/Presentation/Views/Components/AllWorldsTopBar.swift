@@ -11,15 +11,14 @@ struct AllWorldsTopBar: View {
     var onBackTapped: () -> Void
     
     var body: some View {
-        ZStack {
-            Text(L10n.Components.appName)
-                .appTextStyle(.headingMediumBold, color: .appBrandBrownDark)
-            
-            HStack {
-                CustomBackButton(action: onBackTapped)
-                Spacer()
-            }
+        HStack {
+            CustomBackButton(action: onBackTapped)
+            Spacer()
         }
+        .overlay(
+            Text(L10n.Components.appName)
+                .appTextStyle(.headingMediumBold, color: .appTextHeading)
+        )
         .padding(.horizontal, 20)
         .frame(height: 56)
     }
