@@ -23,7 +23,7 @@ final class SettingsViewModel {
     }
     
     // MARK: - User Data
-    var userName: String = "Explorer Alex"
+    var userName: String = L10n.Settings.explorerName(AppConstants.Common.defaultUserName)
     
     // MARK: - App Experience Toggles
     var appLanguageCode: String = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en" {

@@ -163,9 +163,17 @@ struct HomeView: View {
             }
             
             Task {
-                await viewModel.loadHomeData()
-                await viewModel.dailyRewardViewModel.loadDailyReward()
-                await viewModel.languageViewModel.loadMyLanguages()
+                if viewModel.homeData == nil {
+                    await viewModel.loadHomeData()
+                }
+                
+                if viewModel.dailyRewardViewModel.reward == nil {
+                    await viewModel.dailyRewardViewModel.loadDailyReward()
+                }
+                
+                if viewModel.languageViewModel.myLanguages.isEmpty {
+                    await viewModel.languageViewModel.loadMyLanguages()
+                }
             }
         }
         .appDialog(isPresented: $showDailyRewardDialog) {

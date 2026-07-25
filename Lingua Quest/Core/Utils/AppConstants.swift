@@ -28,6 +28,7 @@ enum AppConstants {
 
     }
     enum Common {
+        static let defaultUserName = "Alex"
         static let targetLanguageValue = "ar"
         static let noOfWorldGeneratedInAiLockScreen = 5
         static let fixedCoinBalance = 15000000

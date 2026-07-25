@@ -83,17 +83,29 @@ struct AllWorldsSkeletonView: View {
                 
                 HStack(spacing: 12) {
                     ForEach(0..<4, id: \.self) { _ in
-                        Capsule()
-                            .fill(Color.appSurfaceCard)
-                            .frame(width: 70, height: 36)
+                        FilterChip(
+                            title: "Medium",
+                            dotColor: .appBrandPrimary,
+                            isSelected: false,
+                            action: {}
+                        )
                     }
                 }
                 
                 LazyVGrid(columns: columns, spacing: 16) {
                     ForEach(0..<6, id: \.self) { _ in
-                        RoundedRectangle(cornerRadius: 24)
-                            .fill(Color.appSurfaceCard)
-                            .frame(height: 220)
+                        WorldCardView(item: WorldUIModel(
+                            id: "dummy",
+                            title: "Dummy World",
+                            uiImage: .kitchen,
+                            difficulty: .medium,
+                            uiDifficultyLabel: "Medium",
+                            uiBadgeColor: .appAccentOrange,
+                            progress: 0.5,
+                            isCompleted: false,
+                            isLocked: false,
+                            unlockLevel: nil
+                        ))
                     }
                 }
             }

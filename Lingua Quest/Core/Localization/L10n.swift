@@ -287,6 +287,7 @@ enum L10n {
     enum Settings {
         static var title: String { localized("settings.title") }
         static var subtitle: String { localized("settings.subtitle") }
+        static func explorerName(_ name: String) -> String { String(format: localized("settings.explorer_name"), name) }
         static var accountJourney: String { localized("settings.account_journey") }
         static var editProfile: String { localized("settings.edit_profile") }
         static var learningLanguage: String { localized("settings.learning_language") }
