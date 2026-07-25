@@ -159,8 +159,20 @@ final class BossLevelRepositoryImpl: BossLevelRepositoryProtocol {
         guard isSpeaking else { return }
         isSpeaking = false
         state.isUserSpeaking = false
-        print("🎙 [Repo] stopSpeaking — sending turnComplete")
-        liveService.sendClientTurnComplete()
+        print("🎙 [Repo] stopSpeaking — sending silence tail for VAD")
+        
+        // Send ~1s of silence (16kHz × 2 bytes × 1.0s = 32000 bytes of zeros)
+        // so the native audio model's VAD detects end-of-speech and responds.
+        let silenceDuration: Double = 1.0
+        let silenceBytes = Int(16_000 * 2 * silenceDuration)
+        let silenceData = Data(count: silenceBytes)
+        // Send in smaller chunks to mimic natural audio flow
+        let chunkSize = 3200
+        for offset in stride(from: 0, to: silenceBytes, by: chunkSize) {
+            let end = min(offset + chunkSize, silenceBytes)
+            liveService.sendAudioChunk(silenceData[offset..<end])
+        }
+        
         notifyStateChanged()
     }
 
