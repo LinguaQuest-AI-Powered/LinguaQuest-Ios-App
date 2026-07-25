@@ -13,7 +13,7 @@ import Foundation
 final class LoginViewModel {
     // MARK: - Dependencies
     private let router: RouterProtocol
-    private var userPreferences: UserPreferencesProtocol
+    private var userPreferences: UserPreferences
     private let loginUseCase: LoginUseCaseProtocol
     private let getProfileUseCase: GetProfileUseCaseProtocol
     private let oauthSignInHandler: OAuthSignInHandlerProtocol
@@ -28,7 +28,7 @@ final class LoginViewModel {
     // MARK: - Init
     init(
         router: RouterProtocol,
-        userPreferences: UserPreferencesProtocol,
+        userPreferences: UserPreferences,
         loginUseCase: LoginUseCaseProtocol,
         getProfileUseCase: GetProfileUseCaseProtocol,
         oauthSignInHandler: OAuthSignInHandlerProtocol
@@ -59,6 +59,7 @@ final class LoginViewModel {
             switch result {
             case .success(let data):
                 userPreferences.isLoggedIn = true
+                userPreferences.email = email
                 do {
                     let profile = try await getProfileUseCase.execute()
                     userPreferences.needsProfileCompletion = profile.currentLanguageCode.isEmpty
@@ -130,18 +131,7 @@ extension LoginViewModel {
             func dismissSheet() {}
         }
         
-        class MockUserPreferences: UserPreferencesProtocol {
-            var isOnboardingCompleted: Bool = true
-            var isLoggedIn: Bool = false
-            var needsProfileCompletion: Bool = false
-            var spokenLanguageCode: String? = "ar"
-            var learningLanguageCode: String? = "en"
-            var userLevel: String? = "beginner"
-            var isDarkMode: Bool = false
-            var appLanguage: String = "en"
-            var coinBalance: Int = 0
-            var isLockScreenVocabularyEnabled: Bool = false
-        }
+
         
         class MockLoginUseCase: LoginUseCaseProtocol {
             func execute(email: String, password: String) async -> Result<(session: AuthSessionEntity, user: UserEntity), AuthError> {
@@ -162,7 +152,7 @@ extension LoginViewModel {
         
         return LoginViewModel(
             router: MockRouter(),
-            userPreferences: MockUserPreferences(),
+            userPreferences: UserPreferences(),
             loginUseCase: MockLoginUseCase(),
             getProfileUseCase: MockGetProfileUseCase(),
             oauthSignInHandler: MockOAuthSignInHandler()

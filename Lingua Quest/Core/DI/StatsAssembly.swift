@@ -14,7 +14,7 @@ final class StatsAssembly: Assembly {
             return StatsRemoteDataSource(apiClient: apiClient)
         }
 
-        container.register(StatsServiceProtocol.self) { resolver in
+        container.register(StatsService.self) { resolver in
             let remoteDataSource = resolver.resolve(StatsRemoteDataSourceProtocol.self)!
             let userPreferences = resolver.resolve(UserPreferencesProtocol.self)!
             return StatsService(
@@ -22,5 +22,9 @@ final class StatsAssembly: Assembly {
                 userPreferences: userPreferences
             )
         }.inObjectScope(.container)
+        
+        container.register(StatsServiceProtocol.self) { resolver in
+            resolver.resolve(StatsService.self)!
+        }
     }
 }

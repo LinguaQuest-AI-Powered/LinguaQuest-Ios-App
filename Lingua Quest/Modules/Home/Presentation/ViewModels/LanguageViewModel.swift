@@ -15,6 +15,7 @@ final class LanguageViewModel {
     private let getAvailableLanguagesUseCase: GetAvailableLanguagesUseCase
     private let switchActiveLanguageUseCase: SwitchActiveLanguageUseCase
     private let addLanguagesUseCase: AddLanguagesUseCase
+    private var userPreferences: UserPreferences
     
     // Callbacks
     var onLanguageSwitched: (() -> Void)?
@@ -39,12 +40,14 @@ final class LanguageViewModel {
         getMyLanguagesUseCase: GetMyLanguagesUseCase,
         getAvailableLanguagesUseCase: GetAvailableLanguagesUseCase,
         switchActiveLanguageUseCase: SwitchActiveLanguageUseCase,
-        addLanguagesUseCase: AddLanguagesUseCase
+        addLanguagesUseCase: AddLanguagesUseCase,
+        userPreferences: UserPreferences
     ) {
         self.getMyLanguagesUseCase = getMyLanguagesUseCase
         self.getAvailableLanguagesUseCase = getAvailableLanguagesUseCase
         self.switchActiveLanguageUseCase = switchActiveLanguageUseCase
         self.addLanguagesUseCase = addLanguagesUseCase
+        self.userPreferences = userPreferences
     }
     
     func loadMyLanguages(forceRefresh: Bool = false) async {
@@ -96,6 +99,13 @@ final class LanguageViewModel {
                 )
             }
             selectedLanguageId = languageId
+            
+            // Sync to UserPreferences
+            if let active = activeLanguage {
+                userPreferences.learningLanguageCode = active.code
+                userPreferences.targetLanguageName = active.name
+            }
+            
             onLanguageSwitched?()
         } catch {
             errorMessage = error.localizedDescription

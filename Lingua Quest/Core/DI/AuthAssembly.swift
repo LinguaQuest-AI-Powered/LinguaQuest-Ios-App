@@ -81,7 +81,7 @@ final class AuthAssembly: Assembly {
                 googleSignInService: resolver.resolve(GoogleSignInServiceProtocol.self)!,
                 appleSignInService: resolver.resolve(AppleSignInServiceProtocol.self)!,
                 firebaseLoginUseCase: resolver.resolve(FirebaseLoginUseCaseProtocol.self)!,
-                userPreferences: resolver.resolve(UserPreferencesProtocol.self)!
+                userPreferences: resolver.resolve(UserPreferences.self)!
             )
         }
 
@@ -89,7 +89,7 @@ final class AuthAssembly: Assembly {
         container.register(ProfileCompletionViewModel.self) { resolver in
             ProfileCompletionViewModel(
                 router: resolver.resolve(RouterProtocol.self)!,
-                userPreferences: resolver.resolve(UserPreferencesProtocol.self)!,
+                userPreferences: resolver.resolve(UserPreferences.self)!,
                 getAvailableLanguagesUseCase: resolver.resolve(GetAvailableLanguagesUseCase.self)!,
                 completeProfileUseCase: resolver.resolve(CompleteProfileUseCaseProtocol.self)!
             )
@@ -98,7 +98,7 @@ final class AuthAssembly: Assembly {
         container.register(LoginViewModel.self) { resolver in
             LoginViewModel(
                 router: resolver.resolve(RouterProtocol.self)!,
-                userPreferences: resolver.resolve(UserPreferencesProtocol.self)!,
+                userPreferences: resolver.resolve(UserPreferences.self)!,
                 loginUseCase: resolver.resolve(LoginUseCaseProtocol.self)!,
                 getProfileUseCase: resolver.resolve(GetProfileUseCaseProtocol.self)!,
                 oauthSignInHandler: resolver.resolve(OAuthSignInHandlerProtocol.self)!
@@ -108,7 +108,7 @@ final class AuthAssembly: Assembly {
         container.register(SignUpViewModel.self) { resolver in
             SignUpViewModel(
                 router: resolver.resolve(RouterProtocol.self)!,
-                userPreferences: resolver.resolve(UserPreferencesProtocol.self)!,
+                userPreferences: resolver.resolve(UserPreferences.self)!,
                 registerUseCase: resolver.resolve(RegisterUseCaseProtocol.self)!,
                 oauthSignInHandler: resolver.resolve(OAuthSignInHandlerProtocol.self)!
             )
