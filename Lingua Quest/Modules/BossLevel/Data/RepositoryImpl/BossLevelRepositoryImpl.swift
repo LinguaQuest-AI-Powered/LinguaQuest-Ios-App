@@ -20,11 +20,11 @@ final class BossLevelRepositoryImpl: BossLevelRepositoryProtocol {
     /// Hold-to-Talk flag: only forward PCM chunks while true.
     private var isSpeaking = false
 
-    lazy var stateStream: AsyncStream<BossLevelEvent> = {
+    var stateStream: AsyncStream<BossLevelEvent> {
         AsyncStream { [weak self] continuation in
             self?.stateContinuation = continuation
         }
-    }()
+    }
 
     init(
         liveService: LiveRoleplayService = LiveRoleplayService(),
