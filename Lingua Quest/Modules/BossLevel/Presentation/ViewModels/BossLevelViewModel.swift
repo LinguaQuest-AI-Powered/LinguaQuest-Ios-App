@@ -35,6 +35,7 @@ final class BossLevelViewModel {
     private(set) var isHoldingMic: Bool = false
     
     private var isAITurnActive: Bool = false
+    private var canAppendToUserBubble: Bool = false
 
     private let scenarioId: String
     private(set) var scenario: BossScenario?
@@ -103,6 +104,7 @@ final class BossLevelViewModel {
         viewState = .active
         messages.removeAll()
         isAITurnActive = false
+        canAppendToUserBubble = false
         timeRemaining = 120
         startTimer()
         
@@ -183,6 +185,7 @@ final class BossLevelViewModel {
         guard case .active = viewState, !isHoldingMic else { return }
         isHoldingMic = true
         isAITurnActive = false
+        canAppendToUserBubble = false
         repository.startSpeaking()
     }
 
@@ -209,8 +212,19 @@ final class BossLevelViewModel {
             self.sessionState = newState
         case .messageReceived(let message):
             self.isAITurnActive = false
-            self.messages.append(message)
+            if self.canAppendToUserBubble, let lastIndex = self.messages.indices.last, self.messages[lastIndex].sender == .user {
+                let existing = self.messages[lastIndex].text
+                if existing.hasSuffix(" ") || message.text.hasPrefix(" ") {
+                    self.messages[lastIndex].text += message.text
+                } else {
+                    self.messages[lastIndex].text += " " + message.text
+                }
+            } else {
+                self.canAppendToUserBubble = true
+                self.messages.append(message)
+            }
         case .aiTranscriptChunk(let chunk):
+            self.canAppendToUserBubble = false
             if self.isAITurnActive, let lastIndex = self.messages.indices.last, self.messages[lastIndex].sender == .ai {
                 self.messages[lastIndex].text += chunk
             } else {
@@ -219,6 +233,7 @@ final class BossLevelViewModel {
             }
         case .turnCompleted:
             self.isAITurnActive = false
+            self.canAppendToUserBubble = false
         case .error(let error):
             if case .active = self.viewState {
                 self.viewState = .error(error.localizedDescription)
