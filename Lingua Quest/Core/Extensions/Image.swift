@@ -73,6 +73,8 @@ extension Image {
         case pauseFill = "pause.fill"
         case trash = "trash"
         case checkmarkCircle = "checkmark.circle"
+        case xmarkSealFill = "xmark.seal.fill"
+        case starCircle = "star.circle"
         
         // Added for Edit Profile
         case person = "person"
