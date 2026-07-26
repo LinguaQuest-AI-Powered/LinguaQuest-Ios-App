@@ -367,7 +367,8 @@
 "boss_level.objective_failed" = "Objective Failed";
 "boss_level.fluency_score" = "Fluency Score: %d%%";
 "boss_level.result_finish" = "Finish";
-"boss_level.evaluating" = "Lingo is evaluating your performance...";
+"boss_level.evaluating" = "Evaluating...";
+"boss_level.evaluating_subtitle" = "The AI is analyzing your conversation to calculate your score.";
 "boss_level.result_victory" = "Victory!";
 "boss_level.result_stage_failed" = "Stage Failed";
 "boss_level.result_try_again" = "Try Again";

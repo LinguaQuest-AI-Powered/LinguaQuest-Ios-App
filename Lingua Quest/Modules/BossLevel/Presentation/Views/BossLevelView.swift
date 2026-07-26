@@ -23,7 +23,7 @@ struct BossLevelView: View {
                 BossResultView(result: result, onCloseTapped: { viewModel.onCloseTapped() })
 
             case .evaluating:
-                LoadingView()
+                BossLevelEvaluatingView()
 
             case .lobby(let scenario):
                 VStack(spacing: 0) {
