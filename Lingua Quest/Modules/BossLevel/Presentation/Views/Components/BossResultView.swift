@@ -17,7 +17,7 @@ struct BossResultView: View {
                     mascotImage: result.task_completed ? .perfect : .weakPasswordBird,
                     customMascotSize: CGSize(width: 180, height: 180)
                 ) {
-                    VStack(spacing: 20) {
+                    VStack(spacing: 32) {
                         // Title
                         Text(result.task_completed
                              ? L10n.BossLevel.resultVictory
@@ -35,6 +35,14 @@ struct BossResultView: View {
                             .lineLimit(nil)
                             .fixedSize(horizontal: false, vertical: true)
                             .padding(.horizontal, 8)
+
+                        if result.task_completed {
+                            HStack(spacing: 16) {
+                                RewardBadge(type: .xp, value: L10n.Game.xpPoints(150), size: .large)
+                                RewardBadge(type: .coin, value: L10n.Game.coinsValue(50), size: .large)
+                            }
+                            .padding(.top, 4)
+                        }
 
                         CustomButton(
                             type: .custom(
