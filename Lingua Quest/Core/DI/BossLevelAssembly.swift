@@ -60,5 +60,12 @@ final class BossLevelAssembly: Assembly {
                 router: r.resolve(RouterProtocol.self)!
             )
         }
+        
+        container.register(RoleplayScenariosViewModel.self) { r in
+            RoleplayScenariosViewModel(
+                scenarioRepository: r.resolve(ScenarioRepositoryProtocol.self)!,
+                router: r.resolve(RouterProtocol.self)!
+            )
+        }
     }
 }
