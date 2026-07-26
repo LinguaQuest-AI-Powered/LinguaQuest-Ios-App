@@ -25,6 +25,9 @@ enum PromptFactory {
     }
     
     static func createBossEvaluationPrompt(scenario: BossScenario, transcript: String) -> String {
+        let appLangCode = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en"
+        let feedbackLang = appLangCode == "ar" ? "Arabic" : "English"
+        
         return """
         You are an expert language evaluator. Review the following conversation transcript between a User and a Persona.
         
@@ -41,8 +44,10 @@ enum PromptFactory {
         {
             "task_completed": boolean,
             "fluency_score": integer between 0 and 100,
-            "feedback_message": "string providing short, constructive feedback on their performance"
+            "feedback_message": "string providing short, constructive feedback on their performance in \(feedbackLang)"
         }
+        
+        CRITICAL RULE: The "feedback_message" field MUST be written in \(feedbackLang). Do NOT write the feedback in English if \(feedbackLang) is requested.
         """
     }
 }
