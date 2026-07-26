@@ -368,3 +368,6 @@
 "boss_level.fluency_score" = "Fluency Score: %d%%";
 "boss_level.result_finish" = "Finish";
 "boss_level.evaluating" = "Lingo is evaluating your performance...";
+"boss_level.result_victory" = "Victory!";
+"boss_level.result_stage_failed" = "Stage Failed";
+"boss_level.result_try_again" = "Try Again";

@@ -449,6 +449,9 @@ enum L10n {
         static func fluencyScore(_ score: Int) -> String { String(format: localized("boss_level.fluency_score"), score) }
         static var resultFinish: String { localized("boss_level.result_finish") }
         static var evaluating: String { localized("boss_level.evaluating") }
+        static var resultVictory: String { localized("boss_level.result_victory") }
+        static var resultStageFailed: String { localized("boss_level.result_stage_failed") }
+        static var resultTryAgain: String { localized("boss_level.result_try_again") }
     }
 
 

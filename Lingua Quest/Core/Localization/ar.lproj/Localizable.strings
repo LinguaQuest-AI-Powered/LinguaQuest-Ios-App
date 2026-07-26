@@ -369,3 +369,6 @@
 "boss_level.fluency_score" = "درجة الطلاقة: %d%%";
 "boss_level.result_finish" = "إنهاء";
 "boss_level.evaluating" = "لينغو يقيّم أداءك...";
+"boss_level.result_victory" = "انتصار!";
+"boss_level.result_stage_failed" = "فشلت المرحلة";
+"boss_level.result_try_again" = "حاول مجددًا";
