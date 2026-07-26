@@ -103,6 +103,7 @@ extension Image {
         case emptyGalleryBird = "empty_gallery_bird"
         case leaderBoardBird = "leader_board_bird"
         case achivementBird = "achivement_bird"
+        case loadingBird = "loading_bird"
         case star = "star"
         case star2 = "star2"
         case ball = "ball"
@@ -142,6 +143,7 @@ extension Image {
         case skip = "Skip"
         case perfect = "perfect"
         case micBird = "Mic"
+       
     }
     
     init(icon: Icon) {
