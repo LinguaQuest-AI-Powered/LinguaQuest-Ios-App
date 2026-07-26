@@ -49,7 +49,7 @@ final class GeminiEvaluationService {
     }
     
     func evaluateTranscript(prompt: String) async throws -> BossEvaluationResult {
-        let apiKey = AppConfig.aiKey
+        let apiKey = AppConfig.geminiKey
         guard !apiKey.isEmpty else {
             throw NSError(domain: "GeminiEvaluationService", code: -1, userInfo: [NSLocalizedDescriptionKey: "API key is missing."])
         }

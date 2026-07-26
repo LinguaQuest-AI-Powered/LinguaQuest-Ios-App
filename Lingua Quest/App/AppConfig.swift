@@ -49,6 +49,13 @@ enum AppConfig {
         string(for: .aiKey).trimmingCharacters(in: .whitespacesAndNewlines)
     }
     
+    static var geminiKey: String {
+        if let value = Bundle.main.object(forInfoDictionaryKey: Key.geminiKey.rawValue) as? String, !value.isEmpty {
+            return value.trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+        return aiKey
+    }
+    
     static var aiBaseURL: URL {
         let host = string(for: .aiBaseURL).trimmingCharacters(in: .whitespacesAndNewlines)
         let urlString = host.hasPrefix("http") ? host : "https://" + host
@@ -62,6 +69,7 @@ enum AppConfig {
         case apiBaseURL = "API_BASE_URL"
         case aiKey = "AI_KEY"
         case aiBaseURL = "AI_BASE_URL"
+        case geminiKey = "GEMINI_KEY"
     }
     
     private static func string(for key: Key) -> String {

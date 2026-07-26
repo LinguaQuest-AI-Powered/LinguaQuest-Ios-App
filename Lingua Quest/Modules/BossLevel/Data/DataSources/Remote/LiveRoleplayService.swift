@@ -46,7 +46,7 @@ final class LiveRoleplayService: NSObject, URLSessionWebSocketDelegate {
         isSetupComplete = false
         pendingChunks.removeAll()
 
-        let apiKey = AppConfig.aiKey
+        let apiKey = AppConfig.geminiKey
         guard !apiKey.isEmpty else {
             print("🚀 [LiveRoleplay] ❌ API key is empty")
             onEvent?(.error(NSError(domain: "LiveRoleplayService", code: -3,
