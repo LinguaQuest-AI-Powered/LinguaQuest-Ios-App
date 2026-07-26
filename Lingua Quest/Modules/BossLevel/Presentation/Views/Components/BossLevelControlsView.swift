@@ -1,9 +1,4 @@
-//
-//  BossLevelControlsView.swift
-//  Lingua Quest
-//
-//  Created by taqieallah on 24/07/2026.
-//
+
 
 import SwiftUI
 
@@ -16,10 +11,10 @@ struct BossLevelControlsView: View {
 
     var body: some View {
         VStack(spacing: 24) {
-            // Hold-to-Talk mic button
+            
             micButton
 
-            // End phase pill button
+           
             endCallButton
         }
         .padding(.horizontal, 24)
@@ -31,7 +26,7 @@ struct BossLevelControlsView: View {
     private var micButton: some View {
         VStack(spacing: 12) {
             ZStack {
-                // Outer pulse ring — visible only while holding
+               
                 if isHoldingMic {
                     Circle()
                         .stroke(Color.appAccentOrange.opacity(0.35), lineWidth: 6)
@@ -49,9 +44,9 @@ struct BossLevelControlsView: View {
                         radius: 8, x: 0, y: 4
                     )
 
-                Image(systemName: isHoldingMic ? "mic.fill" : "mic.fill")
+                Image(systemIcon: .micFill)
                     .font(.system(size: 32, weight: .medium))
-                    .foregroundColor(isHoldingMic ? .white : Color.appTextSecondary.opacity(0.7))
+                    .foregroundColor(isHoldingMic ? .appTextOnPrimary : Color.appTextSecondary.opacity(0.7))
             }
             .animation(.spring(response: 0.25, dampingFraction: 0.7), value: isHoldingMic)
 
@@ -59,8 +54,7 @@ struct BossLevelControlsView: View {
                 .appTextStyle(.captionMedium, color: .appTextSecondary)
                 .animation(.easeInOut(duration: 0.15), value: isHoldingMic)
         }
-        // DragGesture(minimumDistance: 0) fires onChanged on press-down
-        // and onEnded on release — reliable on both simulator and device.
+        
         .gesture(
             DragGesture(minimumDistance: 0)
                 .onChanged { _ in
@@ -70,7 +64,7 @@ struct BossLevelControlsView: View {
                     if isHoldingMic { onMicRelease() }
                 }
         )
-        // Disable while AI is speaking so the user can't interrupt mid-playback.
+        
         .opacity(isAISpeaking ? 0.4 : 1.0)
         .allowsHitTesting(!isAISpeaking)
     }
@@ -79,8 +73,8 @@ struct BossLevelControlsView: View {
 
     private var endCallButton: some View {
         CustomButton(
-            type: .custom(textColor: .appTextHeading, buttonColor: .appAccentStreakRed, shadowColor: .appBrandBrownDark),
-            text: L10n.BossLevel.endPhase,
+            type: .custom(textColor: .appTextOnPrimary, buttonColor: .appAccentStreakRed, shadowColor: .appBrandBrownDark),
+            text: L10n.BossLevel.finishStage,
             action: onEndCall,
             status: .enable
         )

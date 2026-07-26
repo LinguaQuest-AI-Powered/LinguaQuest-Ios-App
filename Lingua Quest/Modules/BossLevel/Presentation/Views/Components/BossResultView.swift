@@ -1,9 +1,4 @@
-//
-//  BossResultView.swift
-//  Lingua Quest
-//
-//  Created by taqieallah on 25/07/2026.
-//
+
 
 import SwiftUI
 
@@ -15,18 +10,18 @@ struct BossResultView: View {
         VStack(spacing: 32) {
             Spacer()
             
-            Image(systemName: result.task_completed ? "star.fill" : "xmark.seal.fill")
+            Image(systemIcon: result.task_completed ? .starFill : .xmarkSealFill)
                 .font(.system(size: 80))
-                .foregroundColor(result.task_completed ? .yellow : .red)
+                .foregroundColor(result.task_completed ? .appGlowGold : .appAccentRed)
                 .padding()
                 .background(Circle().fill(Color.appSurfaceCard))
                 .shadow(radius: 10)
             
-            Text(result.task_completed ? "Objective Complete!" : "Objective Failed")
+            Text(result.task_completed ? L10n.BossLevel.objectiveComplete : L10n.BossLevel.objectiveFailed)
                 .appTextStyle(.headingLarge, color: result.task_completed ? .appSemanticSuccess : .appSemanticError)
             
             VStack(spacing: 8) {
-                Text("Fluency Score: \(result.fluency_score)%")
+                Text(L10n.BossLevel.fluencyScore(result.fluency_score))
                     .appTextStyle(.headingMedium, color: .appTextHeading)
                 
                 Text(result.feedback_message)
@@ -40,7 +35,7 @@ struct BossResultView: View {
             
             Spacer()
             
-            CustomButton(type: .primary, text: "Finish", action: onCloseTapped, status: .enable)
+            CustomButton(type: .primary, text: L10n.BossLevel.resultFinish, action: onCloseTapped, status: .enable)
                 .padding(.horizontal, 24)
                 .padding(.bottom, 40)
         }

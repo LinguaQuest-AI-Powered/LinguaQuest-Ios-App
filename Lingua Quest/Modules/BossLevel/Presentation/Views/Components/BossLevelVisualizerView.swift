@@ -1,9 +1,3 @@
-//
-//  BossLevelVisualizerView.swift
-//  Lingua Quest
-//
-//  Created by taqieallah on 24/07/2026.
-//
 
 import SwiftUI
 
@@ -18,7 +12,7 @@ struct BossLevelVisualizerView: View {
     var body: some View {
         VStack(spacing: 24) {
             ZStack {
-                // Pulsing Halo Outer Rings
+               
                 Circle()
                     .fill(Color.appGlowTeal.opacity(0.15))
                     .frame(width: 180, height: 180)
@@ -30,7 +24,7 @@ struct BossLevelVisualizerView: View {
                     .frame(width: 140, height: 140)
                     .scaleEffect(isUserSpeaking ? (1.0 + CGFloat(userAudioLevel) * 0.5) : 1.0)
                 
-                // Mascot Circle Container
+                
                 Circle()
                     .fill(Color.appHeaderBirdCircleBg)
                     .frame(width: 110, height: 110)
@@ -40,8 +34,8 @@ struct BossLevelVisualizerView: View {
                     )
                     .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
                 
-                // Lingo Mascot Icon / Symbol
-                Image(systemName: "bird.fill")
+                
+                Image(systemIcon: .birdFill)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 54, height: 54)
@@ -53,11 +47,11 @@ struct BossLevelVisualizerView: View {
                 pulseScale = 1.2
             }
             
-            // Audio Waveform Bar Visualizer
+           
             HStack(spacing: 5) {
                 ForEach(0..<12, id: \.self) { index in
                     let level = isAISpeaking ? aiAudioLevel : (isUserSpeaking ? userAudioLevel : 0.05)
-                    // Use a deterministic multiplier per bar index instead of random
+                   
                     let multipliers: [Float] = [0.6, 0.9, 0.7, 1.0, 0.8, 0.5, 1.0, 0.75, 0.9, 0.55, 0.85, 0.65]
                     let barHeight = max(8, CGFloat(level) * 60.0 * CGFloat(multipliers[index]))
                     RoundedRectangle(cornerRadius: 3)

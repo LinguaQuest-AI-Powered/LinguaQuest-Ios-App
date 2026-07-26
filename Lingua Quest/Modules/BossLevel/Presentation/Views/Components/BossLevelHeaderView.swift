@@ -1,9 +1,4 @@
-//
-//  BossLevelHeaderView.swift
-//  Lingua Quest
-//
-//  Created by taqieallah on 24/07/2026.
-//
+
 
 import SwiftUI
 
@@ -47,7 +42,7 @@ struct BossLevelHeaderView: View {
     
     private var statusColor: Color {
         switch status {
-        case .disconnected: return .gray
+        case .disconnected: return .appTextSecondary
         case .connecting: return Color.appBrandPrimary
         case .connected: return Color.appSemanticSuccess
         case .error: return Color.appAccentRed
