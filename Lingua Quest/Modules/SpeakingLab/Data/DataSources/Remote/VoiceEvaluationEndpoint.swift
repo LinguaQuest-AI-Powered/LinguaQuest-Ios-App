@@ -40,7 +40,7 @@ struct VoiceEvaluationEndpoint: AIEndpoint {
         
         Compare what they said to the Target Sentence.
         1. Identify correctly spoken words and incorrectly spoken (or missing/extra) words.
-        2. Provide a score out of 100 based on accuracy.
+        2. Provide a score out of 10 based on accuracy.
         3. Give a short, encouraging piece of advice (max 2 sentences) in \(feedbackLang).
         
         CRITICAL RULE 1: The "advice" field MUST be written in \(feedbackLang). Do NOT write the advice in English if \(feedbackLang) is requested.
@@ -48,7 +48,7 @@ struct VoiceEvaluationEndpoint: AIEndpoint {
         
         Respond STRICTLY in the following JSON format (no markdown, no backticks, just raw JSON):
         {
-            "rating": <integer score between 0 and 100>,
+            "rating": <integer score between 0 and 10>,
             "correct_words": [<array of correctly spoken words as strings>],
             "wrong_words": [<array of incorrectly spoken or missing words as strings>],
             "advice": "<a short, encouraging tip for improvement in \(feedbackLang)>"
