@@ -113,11 +113,15 @@ final class ProfileAssembly: Assembly {
             let sessionManager = resolver.resolve(SessionManagerProtocol.self)!
             let statsService = resolver.resolve(StatsService.self)!
             let activateUseCase = resolver.resolve(ActivateLockScreenVocabularyUseCaseProtocol.self)
+            let languageViewModel = resolver.resolve(LanguageViewModel.self)!
+            let userPreferences = resolver.resolve(UserPreferences.self)!
             return SettingsViewModel(
                 router: router, 
                 sessionManager: sessionManager,
                 statsService: statsService,
-                activateLockScreenVocabularyUseCase: activateUseCase
+                activateLockScreenVocabularyUseCase: activateUseCase,
+                languageViewModel: languageViewModel,
+                userPreferences: userPreferences
             )
         }
     }

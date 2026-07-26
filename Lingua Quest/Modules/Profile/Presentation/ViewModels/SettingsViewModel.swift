@@ -8,6 +8,7 @@
 import Foundation
 import Observation
 
+@MainActor
 @Observable
 final class SettingsViewModel {
     
@@ -16,17 +17,23 @@ final class SettingsViewModel {
     private let sessionManager: SessionManagerProtocol
     private let statsService: StatsService
     private let activateLockScreenVocabularyUseCase: ActivateLockScreenVocabularyUseCaseProtocol?
+    let languageViewModel: LanguageViewModel
+    private let userPreferences: UserPreferences
 
     init(
         router: RouterProtocol,
         sessionManager: SessionManagerProtocol,
         statsService: StatsService,
-        activateLockScreenVocabularyUseCase: ActivateLockScreenVocabularyUseCaseProtocol? = nil
+        activateLockScreenVocabularyUseCase: ActivateLockScreenVocabularyUseCaseProtocol? = nil,
+        languageViewModel: LanguageViewModel,
+        userPreferences: UserPreferences
     ) {
         self.router = router
         self.sessionManager = sessionManager
         self.statsService = statsService
         self.activateLockScreenVocabularyUseCase = activateLockScreenVocabularyUseCase
+        self.languageViewModel = languageViewModel
+        self.userPreferences = userPreferences
     }
     
     // MARK: - User Data
@@ -96,7 +103,12 @@ final class SettingsViewModel {
     var toastSubtitle: String? = nil
     
     // MARK: - Account & Journey Data
-    var learningLanguage: String = "English"
+    var learningLanguage: String {
+        if let active = languageViewModel.activeLanguage {
+            return active.name
+        }
+        return userPreferences.targetLanguageName ?? "English"
+    }
     
     // MARK: - Intentions (Methods)
     
