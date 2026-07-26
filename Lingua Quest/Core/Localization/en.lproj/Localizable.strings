@@ -17,6 +17,9 @@
 "common.cancel" = "Cancel";
 "common.ok" = "OK";
 "common.loading" = "Loading...";
+"common.error_occurred" = "An error occurred.";
+"common.go_back" = "Go Back";
+"common.open_settings" = "Open Settings";
 
 "auth.email_placeholder" = "Email address";
 "auth.password_placeholder" = "Password";
@@ -326,6 +329,51 @@
 
 "common.error" = "Error";
 
+// Boss Level Voice AI
+"boss_level.title" = "Boss Challenge";
+"boss_level.status_connecting" = "Connecting to Lingo...";
+"boss_level.status_connected" = "Connected";
+"boss_level.status_disconnected" = "Disconnected";
+"boss_level.status_speaking" = "Lingo Speaking...";
+"boss_level.status_listening" = "Listening to you...";
+"boss_level.status_error" = "Connection Error";
+"boss_level.tap_to_talk" = "Tap to talk";
+"boss_level.hold_to_speak" = "Hold to Speak";
+"boss_level.release_to_send" = "Release to Send";
+"boss_level.mute_mic" = "Mute Mic";
+"boss_level.unmute_mic" = "Unmute Mic";
+"boss_level.end_session" = "End Call";
+"boss_level.live_transcript" = "Live Conversation";
+"boss_level.lingo_persona" = "Lingo AI Guide";
+"boss_level.connection_error" = "Unable to connect to Voice AI. Please check your network.";
+"boss_level.phase" = "Boss Phase";
+"boss_level.meet_boss" = "Meet %@";
+"boss_level.your_goal" = "Your Goal";
+"boss_level.read_carefully" = "(Read carefully in your native language before starting)";
+"boss_level.start_roleplay" = "Start Roleplay";
+"boss_level.objective_prefix" = "Objective: %@";
+"boss_level.end_phase" = "End Phase";
+"boss_level.timeout_feedback" = "Time's up! You didn't complete the task in time. Try again and respond faster.";
+"boss_level.interactive_roleplays" = "Interactive Roleplays";
+"boss_level.interactive_scenarios" = "Interactive Scenarios";
+"boss_level.roleplay_tag" = "Roleplay";
+"boss_level.browse_roleplays" = "Browse Roleplays";
+"boss_level.finish_stage" = "Finish Stage";
+"boss_level.finish_stage_title" = "Finish Stage?";
+"boss_level.finish_stage_subtitle" = "Are you ready to end the conversation and receive your evaluation?";
+"boss_level.yes_evaluate" = "Yes, Evaluate!";
+"boss_level.keep_talking" = "Keep Talking";
+"boss_level.your_objective" = "Your Objective";
+"boss_level.objective_title" = "Objective";
+"boss_level.objective_complete" = "Objective Complete!";
+"boss_level.objective_failed" = "Objective Failed";
+"boss_level.fluency_score" = "Fluency Score: %d%%";
+"boss_level.result_finish" = "Finish";
+"boss_level.evaluating" = "Evaluating...";
+"boss_level.evaluating_subtitle" = "The AI is analyzing your conversation to calculate your score.";
+"boss_level.result_victory" = "Victory!";
+"boss_level.result_stage_failed" = "Stage Failed";
+"boss_level.result_try_again" = "Try Again";
 "gallery.my_journal" = "My Journal";
 "gallery.categories.words" = "Words";
 "lock_screen_vocab.toggle_label" = "AI Lock Screen Vocabulary";

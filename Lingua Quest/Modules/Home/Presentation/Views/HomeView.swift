@@ -69,11 +69,6 @@ struct HomeView: View {
                             )
                                 .padding(.horizontal, 20)
                                 
-                            VoicePracticeCardView(completed: voiceCompleted, total: voiceTotal, action: { router.push(.voiceGame) })
-                                .padding(.horizontal, 20)
-                                .offset(y: isAnimated ? 0 : 30)
-                                .opacity(isAnimated ? 1 : 0)
-                                .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.15), value: isAnimated)
 
                             Group {
                                 SectionHeaderView(
@@ -104,9 +99,21 @@ struct HomeView: View {
                                     .padding(.vertical, 4)
                                 }
                             }
-                            .offset(y: isAnimated ? 0 : 30)
-                            .opacity(isAnimated ? 1 : 0)
-                            .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.3), value: isAnimated)
+                            .offset(y: animateItems ? 0 : 30)
+                            .opacity(animateItems ? 1 : 0)
+                            .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.1), value: animateItems)
+
+                            VoicePracticeCardView(completed: voiceCompleted, total: voiceTotal, action: { router.push(.voiceGame) })
+                                .padding(.horizontal, 20)
+                                .offset(y: isAnimated ? 0 : 30)
+                                .opacity(isAnimated ? 1 : 0)
+                                .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.15), value: isAnimated)
+
+                            RoleplayCardView(action: { router.push(.roleplayScenarios) })
+                                .padding(.horizontal, 20)
+                                .offset(y: animateItems ? 0 : 30)
+                                .opacity(animateItems ? 1 : 0)
+                                .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.3), value: animateItems)
 
                             Color.clear.frame(height: 100)
                         }

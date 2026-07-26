@@ -8,6 +8,16 @@
 import Foundation
 
 enum AppConstants {
+
+    enum BossLevel {
+        static let sessionDurationSeconds = 120
+        static let silenceDurationSeconds: Double = 1.0
+        static let silenceSampleRate = 16_000
+        static let silenceBytesPerSample = 2
+        static let silenceChunkSize = 3_200
+        static let fluencyScoreFormat = "%d%%"
+    }
+
     enum UserDefaultsKeys {
         static let isOnboardingCompleted = "isOnboardingCompleted"
         static let isLoggedIn = "isLoggedIn"

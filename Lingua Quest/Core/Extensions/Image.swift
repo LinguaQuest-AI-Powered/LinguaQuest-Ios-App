@@ -74,6 +74,8 @@ extension Image {
         case pauseFill = "pause.fill"
         case trash = "trash"
         case checkmarkCircle = "checkmark.circle"
+        case xmarkSealFill = "xmark.seal.fill"
+        case starCircle = "star.circle"
         
         // Added for Edit Profile
         case person = "person"
@@ -105,6 +107,7 @@ extension Image {
         case myCaptureBird = "my_capture_bird"
         case leaderBoardBird = "leader_board_bird"
         case achivementBird = "achivement_bird"
+        case loadingBird = "loading_bird"
         case star = "star"
         case star2 = "star2"
         case ball = "ball"

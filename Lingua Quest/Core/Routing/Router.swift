@@ -115,6 +115,12 @@ final class Router: RouterProtocol {
         case .editProfile:
             let viewModel = Resolver.shared.resolve(EditProfileViewModel.self)
             EditProfileView(viewModel: viewModel)
+        case .bossLevel(let scenarioTitle):
+            let viewModel = Resolver.shared.resolve(BossLevelViewModel.self, argument: scenarioTitle)
+            BossLevelView(viewModel: viewModel)
+        case .roleplayScenarios:
+            let viewModel = Resolver.shared.resolve(RoleplayScenariosViewModel.self)
+            RoleplayScenariosView(viewModel: viewModel)
         }
     }
 }

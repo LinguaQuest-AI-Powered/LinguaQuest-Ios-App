@@ -83,4 +83,6 @@ extension Color {
     // MARK: - Shimmer Colors
     static let appShimmerBase = Color("TokenShimmerBase")
     static let appShimmerHighlight = Color("TokenShimmerHighlight")
+    
+    static let appBossBanner = Color("TokenBossBanner")
 }

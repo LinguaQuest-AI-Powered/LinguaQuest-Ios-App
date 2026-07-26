@@ -27,6 +27,9 @@ enum L10n {
         static var ok: String { localized("common.ok") }
         static var loading: String { localized("common.loading") }
         static var error: String { localized("common.error") }
+        static var errorOccurred: String { localized("common.error_occurred") }
+        static var goBack: String { localized("common.go_back") }
+        static var openSettings: String { localized("common.open_settings") }
     }
 
     enum Auth {
@@ -426,6 +429,54 @@ enum L10n {
         static var loadingSentences: String { localized("speaking_lab.loading_sentences") }
         static var failedToLoad: String { localized("speaking_lab.failed_to_load") }
     }
+
+    enum BossLevel {
+        static var title: String { localized("boss_level.title") }
+        static var statusConnecting: String { localized("boss_level.status_connecting") }
+        static var statusConnected: String { localized("boss_level.status_connected") }
+        static var statusDisconnected: String { localized("boss_level.status_disconnected") }
+        static var statusSpeaking: String { localized("boss_level.status_speaking") }
+        static var statusListening: String { localized("boss_level.status_listening") }
+        static var statusError: String { localized("boss_level.status_error") }
+        static var tapToTalk: String { localized("boss_level.tap_to_talk") }
+        static var holdToSpeak: String { localized("boss_level.hold_to_speak") }
+        static var releaseToSend: String { localized("boss_level.release_to_send") }
+        static var muteMic: String { localized("boss_level.mute_mic") }
+        static var unmuteMic: String { localized("boss_level.unmute_mic") }
+        static var endSession: String { localized("boss_level.end_session") }
+        static var liveTranscript: String { localized("boss_level.live_transcript") }
+        static var lingoPersona: String { localized("boss_level.lingo_persona") }
+        static var connectionError: String { localized("boss_level.connection_error") }
+        static var phase: String { localized("boss_level.phase") }
+        static func meetBoss(_ name: String) -> String { String(format: localized("boss_level.meet_boss"), name) }
+        static var yourGoal: String { localized("boss_level.your_goal") }
+        static var readCarefully: String { localized("boss_level.read_carefully") }
+        static var startRoleplay: String { localized("boss_level.start_roleplay") }
+        static func objectivePrefix(_ obj: String) -> String { String(format: localized("boss_level.objective_prefix"), obj) }
+        static var endPhase: String { localized("boss_level.end_phase") }
+        static var timeoutFeedback: String { localized("boss_level.timeout_feedback") }
+        static var interactiveRoleplays: String { localized("boss_level.interactive_roleplays") }
+        static var interactiveScenarios: String { localized("boss_level.interactive_scenarios") }
+        static var roleplayTag: String { localized("boss_level.roleplay_tag") }
+        static var browseRoleplays: String { localized("boss_level.browse_roleplays") }
+        static var finishStage: String { localized("boss_level.finish_stage") }
+        static var finishStageTitle: String { localized("boss_level.finish_stage_title") }
+        static var finishStageSubtitle: String { localized("boss_level.finish_stage_subtitle") }
+        static var yesEvaluate: String { localized("boss_level.yes_evaluate") }
+        static var keepTalking: String { localized("boss_level.keep_talking") }
+        static var yourObjective: String { localized("boss_level.your_objective") }
+        static var objectiveTitle: String { localized("boss_level.objective_title") }
+        static var objectiveComplete: String { localized("boss_level.objective_complete") }
+        static var objectiveFailed: String { localized("boss_level.objective_failed") }
+        static func fluencyScore(_ score: Int) -> String { String(format: localized("boss_level.fluency_score"), score) }
+        static var resultFinish: String { localized("boss_level.result_finish") }
+        static var evaluating: String { localized("boss_level.evaluating") }
+        static var evaluatingSubtitle: String { localized("boss_level.evaluating_subtitle") }
+        static var resultVictory: String { localized("boss_level.result_victory") }
+        static var resultStageFailed: String { localized("boss_level.result_stage_failed") }
+        static var resultTryAgain: String { localized("boss_level.result_try_again") }
+    }
+
 
     private static func localized(_ key: String) -> String {
         let appLanguage = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en"
