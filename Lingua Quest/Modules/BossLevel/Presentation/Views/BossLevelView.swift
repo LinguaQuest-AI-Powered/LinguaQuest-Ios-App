@@ -17,18 +17,13 @@ struct BossLevelView: View {
 
             switch viewModel.viewState {
             case .loading:
-                ProgressView(L10n.Common.loading)
+                LoadingView()
 
             case .result(let result):
                 BossResultView(result: result, onCloseTapped: { viewModel.onCloseTapped() })
 
             case .evaluating:
-                VStack(spacing: 24) {
-                    ProgressView()
-                        .scaleEffect(2.0)
-                    Text(L10n.BossLevel.evaluating)
-                        .appTextStyle(.headingMedium, color: .appTextHeading)
-                }
+                LoadingView()
 
             case .lobby(let scenario):
                 VStack(spacing: 0) {
