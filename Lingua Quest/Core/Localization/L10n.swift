@@ -27,6 +27,9 @@ enum L10n {
         static var ok: String { localized("common.ok") }
         static var loading: String { localized("common.loading") }
         static var error: String { localized("common.error") }
+        static var errorOccurred: String { localized("common.error_occurred") }
+        static var goBack: String { localized("common.go_back") }
+        static var openSettings: String { localized("common.open_settings") }
     }
 
     enum Auth {
@@ -430,6 +433,22 @@ enum L10n {
         static func objectivePrefix(_ obj: String) -> String { String(format: localized("boss_level.objective_prefix"), obj) }
         static var endPhase: String { localized("boss_level.end_phase") }
         static var timeoutFeedback: String { localized("boss_level.timeout_feedback") }
+        static var interactiveRoleplays: String { localized("boss_level.interactive_roleplays") }
+        static var interactiveScenarios: String { localized("boss_level.interactive_scenarios") }
+        static var roleplayTag: String { localized("boss_level.roleplay_tag") }
+        static var browseRoleplays: String { localized("boss_level.browse_roleplays") }
+        static var finishStage: String { localized("boss_level.finish_stage") }
+        static var finishStageTitle: String { localized("boss_level.finish_stage_title") }
+        static var finishStageSubtitle: String { localized("boss_level.finish_stage_subtitle") }
+        static var yesEvaluate: String { localized("boss_level.yes_evaluate") }
+        static var keepTalking: String { localized("boss_level.keep_talking") }
+        static var yourObjective: String { localized("boss_level.your_objective") }
+        static var objectiveTitle: String { localized("boss_level.objective_title") }
+        static var objectiveComplete: String { localized("boss_level.objective_complete") }
+        static var objectiveFailed: String { localized("boss_level.objective_failed") }
+        static func fluencyScore(_ score: Int) -> String { String(format: localized("boss_level.fluency_score"), score) }
+        static var resultFinish: String { localized("boss_level.result_finish") }
+        static var evaluating: String { localized("boss_level.evaluating") }
     }
 
 

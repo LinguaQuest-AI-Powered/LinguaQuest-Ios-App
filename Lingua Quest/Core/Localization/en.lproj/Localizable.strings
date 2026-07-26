@@ -17,6 +17,9 @@
 "common.cancel" = "Cancel";
 "common.ok" = "OK";
 "common.loading" = "Loading...";
+"common.error_occurred" = "An error occurred.";
+"common.go_back" = "Go Back";
+"common.open_settings" = "Open Settings";
 
 "auth.email_placeholder" = "Email address";
 "auth.password_placeholder" = "Password";
@@ -349,3 +352,19 @@
 "boss_level.objective_prefix" = "Objective: %@";
 "boss_level.end_phase" = "End Phase";
 "boss_level.timeout_feedback" = "Time's up! You didn't complete the task in time. Try again and respond faster.";
+"boss_level.interactive_roleplays" = "Interactive Roleplays";
+"boss_level.interactive_scenarios" = "Interactive Scenarios";
+"boss_level.roleplay_tag" = "Roleplay";
+"boss_level.browse_roleplays" = "Browse Roleplays";
+"boss_level.finish_stage" = "Finish Stage";
+"boss_level.finish_stage_title" = "Finish Stage?";
+"boss_level.finish_stage_subtitle" = "Are you ready to end the conversation and receive your evaluation?";
+"boss_level.yes_evaluate" = "Yes, Evaluate!";
+"boss_level.keep_talking" = "Keep Talking";
+"boss_level.your_objective" = "Your Objective";
+"boss_level.objective_title" = "Objective";
+"boss_level.objective_complete" = "Objective Complete!";
+"boss_level.objective_failed" = "Objective Failed";
+"boss_level.fluency_score" = "Fluency Score: %d%%";
+"boss_level.result_finish" = "Finish";
+"boss_level.evaluating" = "Lingo is evaluating your performance...";
