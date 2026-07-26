@@ -9,8 +9,8 @@ import Foundation
 
 final class ScenarioLocalDataSource {
     func loadScenarios() throws -> [BossScenario] {
-        let languageCode = Locale.current.language.languageCode?.identifier ?? "en"
-        let fileName = languageCode == "ar" ? "scenarios_ar" : "scenarios_en"
+        let appLanguage = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en"
+        let fileName = appLanguage == "ar" ? "scenarios_ar" : "scenarios_en"
         
         guard let url = Bundle.main.url(forResource: fileName, withExtension: "json") else {
             throw NSError(domain: "ScenarioLocalDataSource", code: 404, userInfo: [NSLocalizedDescriptionKey: "Scenarios file not found: \(fileName).json"])
