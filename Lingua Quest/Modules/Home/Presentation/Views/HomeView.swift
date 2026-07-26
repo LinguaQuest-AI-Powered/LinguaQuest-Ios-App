@@ -65,11 +65,6 @@ struct HomeView: View {
                             )
                                 .padding(.horizontal, 20)
                                 
-                            VoicePracticeCardView(completed: voiceCompleted, total: voiceTotal, action: { router.push(.voiceGame) })
-                                .padding(.horizontal, 20)
-                                .offset(y: animateItems ? 0 : 30)
-                                .opacity(animateItems ? 1 : 0)
-                                .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.15), value: animateItems)
 
                             Group {
                                 SectionHeaderView(
@@ -102,7 +97,19 @@ struct HomeView: View {
                             }
                             .offset(y: animateItems ? 0 : 30)
                             .opacity(animateItems ? 1 : 0)
-                            .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.3), value: animateItems)
+                            .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.1), value: animateItems)
+
+                            VoicePracticeCardView(completed: voiceCompleted, total: voiceTotal, action: { router.push(.voiceGame) })
+                                .padding(.horizontal, 20)
+                                .offset(y: animateItems ? 0 : 30)
+                                .opacity(animateItems ? 1 : 0)
+                                .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.2), value: animateItems)
+
+                            RoleplayCardView(action: { router.push(.roleplayScenarios) })
+                                .padding(.horizontal, 20)
+                                .offset(y: animateItems ? 0 : 30)
+                                .opacity(animateItems ? 1 : 0)
+                                .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.3), value: animateItems)
 
                             Color.clear.frame(height: 100)
                         }
