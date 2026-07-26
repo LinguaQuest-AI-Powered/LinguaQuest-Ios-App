@@ -56,6 +56,9 @@ final class AudioRecorder {
             }
             // Downmix stereo → mono automatically
             converter.downmix = true
+            // Optimize audio conversion quality (high-fidelity resampling)
+            converter.sampleRateConverterQuality = AVAudioQuality.max.rawValue
+            converter.sampleRateConverterAlgorithm = AVSampleRateConverterAlgorithm_Mastering
             self.converter = converter
 
             inputNode.removeTap(onBus: 0)
