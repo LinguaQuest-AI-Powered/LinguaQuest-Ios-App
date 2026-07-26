@@ -18,6 +18,9 @@
 "common.cancel" = "إلغاء";
 "common.ok" = "حسنًا";
 "common.loading" = "جاري التحميل...";
+"common.error_occurred" = "حدث خطأ ما.";
+"common.go_back" = "رجوع";
+"common.open_settings" = "فتح الإعدادات";
 
 "auth.email_placeholder" = "البريد الإلكتروني";
 "auth.password_placeholder" = "كلمة المرور";
@@ -326,6 +329,51 @@
 "settings.select_reminder_time" = "اختر وقت التذكير";
 
 "common.error" = "خطأ";
+
+"boss_level.title" = "تحدي الزعيم";
+"boss_level.status_connecting" = "جاري الاتصال بـ لينجو...";
+"boss_level.status_connected" = "متصل";
+"boss_level.status_disconnected" = "غير متصل";
+"boss_level.status_speaking" = "لينجو يتحدث...";
+"boss_level.status_listening" = "يستمع إليك...";
+"boss_level.status_error" = "خطأ في الاتصال";
+"boss_level.tap_to_talk" = "انقر للتحدث";
+"boss_level.hold_to_speak" = "اضغط مع الاستمرار للتحدث";
+"boss_level.release_to_send" = "ارفع إصبعك للإرسال";
+"boss_level.mute_mic" = "كتم الصوت";
+"boss_level.unmute_mic" = "تشغيل الميكروفون";
+"boss_level.end_session" = "إنهاء المكالمة";
+"boss_level.live_transcript" = "المحادثة المباشرة";
+"boss_level.lingo_persona" = "مرشد الذكاء الاصطناعي لينجو";
+"boss_level.connection_error" = "تعذر الاتصال بالمحادثة الصوتية. يرجى التحقق من الشبكة.";
+"boss_level.phase" = "مرحلة الزعيم";
+"boss_level.meet_boss" = "قابل %@";
+"boss_level.your_goal" = "هدفك";
+"boss_level.read_carefully" = "(اقرأ بعناية بلغتك الأم قبل البدء)";
+"boss_level.start_roleplay" = "بدء تبادل الأدوار";
+"boss_level.objective_prefix" = "الهدف: %@";
+"boss_level.end_phase" = "إنهاء المرحلة";
+"boss_level.timeout_feedback" = "انتهى الوقت! لم تتمكن من إتمام المهمة في الوقت المحدد. حاول مرة أخرى وأسرع في الإجابة.";
+"boss_level.interactive_roleplays" = "سيناريوهات تفاعلية";
+"boss_level.interactive_scenarios" = "سيناريوهات تفاعلية";
+"boss_level.roleplay_tag" = "تمثيل أدوار";
+"boss_level.browse_roleplays" = "تصفح السيناريوهات";
+"boss_level.finish_stage" = "إنهاء المرحلة";
+"boss_level.finish_stage_title" = "إنهاء المرحلة؟";
+"boss_level.finish_stage_subtitle" = "هل أنت مستعد لإنهاء المحادثة والحصول على تقييمك؟";
+"boss_level.yes_evaluate" = "نعم، قيّم الآن!";
+"boss_level.keep_talking" = "متابعة الحديث";
+"boss_level.your_objective" = "هدفك";
+"boss_level.objective_title" = "الهدف";
+"boss_level.objective_complete" = "اكتملت المهمة!";
+"boss_level.objective_failed" = "فشلت المهمة";
+"boss_level.fluency_score" = "درجة الطلاقة: %d%%";
+"boss_level.result_finish" = "إنهاء";
+"boss_level.evaluating" = "جاري التقييم...";
+"boss_level.evaluating_subtitle" = "يقوم الذكاء الاصطناعي بتحليل محادثتك لحساب نتيجتك.";
+"boss_level.result_victory" = "انتصار!";
+"boss_level.result_stage_failed" = "فشلت المرحلة";
+"boss_level.result_try_again" = "حاول مجددًا";
 
 "gallery.my_journal" = "مجلتي";
 "gallery.categories.words" = "كلمات";
