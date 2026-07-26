@@ -61,6 +61,7 @@ struct SettingsRowChevron: View {
         Image(systemIcon: .rightChevron)
             .font(.system(size: 14, weight: .bold))
             .foregroundColor(.appBorderBrown)
+            .flipsForRightToLeftLayoutDirection(true)
     }
 }
 

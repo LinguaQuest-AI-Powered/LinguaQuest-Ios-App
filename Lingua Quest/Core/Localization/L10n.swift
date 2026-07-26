@@ -183,7 +183,11 @@ enum L10n {
     }
     
     enum Gallery {
+        static var myJournal: String { localized("gallery.my_journal") }
         static var myCaptures: String { localized("gallery.my_captures") }
+        static var capturesTab: String { localized("gallery.tab.captures") }
+        static var wordsTab: String { localized("gallery.tab.words") }
+        static var filterAll: String { localized("gallery.filter.all") }
         static func objectsCollected(_ count: Int) -> String {
             String(format: localized("gallery.objects_collected"), count)
         }
@@ -191,12 +195,17 @@ enum L10n {
         static var addNew: String { localized("gallery.add_new") }
         static var noCapturesYet: String { localized("gallery.no_captures_yet") }
         static var noCapturesSubtitle: String { localized("gallery.no_captures_subtitle") }
+        static var emptyFilterWordsTitle: String { localized("gallery.empty.filter.words.title") }
+        static var emptyFilterWordsSubtitle: String { localized("gallery.empty.filter.words.subtitle") }
+        static var emptyFilterItemsTitle: String { localized("gallery.empty.filter.items.title") }
+        static var emptyFilterItemsSubtitle: String { localized("gallery.empty.filter.items.subtitle") }
         
         enum Categories {
             static var allItems: String { localized("gallery.categories.all_items") }
             static var kitchen: String { localized("gallery.categories.kitchen") }
             static var park: String { localized("gallery.categories.park") }
             static var street: String { localized("gallery.categories.street") }
+            static var words: String { localized("gallery.categories.words") }
         }
     }
 
@@ -281,6 +290,7 @@ enum L10n {
     enum Settings {
         static var title: String { localized("settings.title") }
         static var subtitle: String { localized("settings.subtitle") }
+        static func explorerName(_ name: String) -> String { String(format: localized("settings.explorer_name"), name) }
         static var accountJourney: String { localized("settings.account_journey") }
         static var editProfile: String { localized("settings.edit_profile") }
         static var learningLanguage: String { localized("settings.learning_language") }
@@ -312,9 +322,20 @@ enum L10n {
         static var selectReminderTime: String { localized("settings.select_reminder_time") }
     }
     
+    enum LockScreenVocabulary {
+        static var toggleLabel: String { localized("lock_screen_vocab.toggle_label") }
+        static var activationTitle: String { localized("lock_screen_vocab.activation_title") }
+        static var activationSubtitle: String { localized("lock_screen_vocab.activation_subtitle") }
+        static var activateAction: String { localized("lock_screen_vocab.activate_action") }
+        static var activatedToast: String { localized("lock_screen_vocab.activated_toast") }
+        static var disabledToast: String { localized("lock_screen_vocab.disabled_toast") }
+        static var tapToOpenAndListen: String { localized("lock_screen_vocab.tap_to_open_and_listen") }
+    }
+    
     enum WordInsight {
         static var title: String { localized("word_insight.title") }
         static var sentenceLabel: String { localized("word_insight.sentence_label") }
+        static var exampleLabel: String { localized("word_insight.example") }
         static var translationLabel: String { localized("word_insight.translation_label") }
         static var memoryLabel: String { localized("word_insight.memory_label") }
         static var funFactLabel: String { localized("word_insight.fun_fact_label") }

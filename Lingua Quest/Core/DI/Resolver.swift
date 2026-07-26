@@ -16,6 +16,7 @@ final class Resolver {
         registerAssemblies()
         wireCircularDependencies()
         _ = container.resolve(SessionManagerProtocol.self) // force-instantiate to start listening for .sessionExpired
+        _ = container.resolve(StatsServiceProtocol.self) // force-instantiate singleton service
     }
 
     private func registerAssemblies() {
@@ -25,7 +26,10 @@ final class Resolver {
                 AuthAssembly(), OnboardingAssembly(), GameAssembly(), GalleryAssembly(),
                 ProfileAssembly(), HomeAssembly(),
                 SpeakingLabAssembly(), BossLevelAssembly(),
-                SessionAssembly()
+                SessionAssembly(),
+                StatsAssembly(),
+               
+                LockScreenVocabularyAssembly()
             ],
             container: container
         )

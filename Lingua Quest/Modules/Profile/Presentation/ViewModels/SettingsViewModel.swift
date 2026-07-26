@@ -8,20 +8,36 @@
 import Foundation
 import Observation
 
+@MainActor
 @Observable
 final class SettingsViewModel {
     
     // MARK: - Dependencies
     private let router: RouterProtocol
     private let sessionManager: SessionManagerProtocol
+    private let statsService: StatsService
+    private let activateLockScreenVocabularyUseCase: ActivateLockScreenVocabularyUseCaseProtocol?
+    let languageViewModel: LanguageViewModel
+    private let userPreferences: UserPreferences
 
-    init(router: RouterProtocol, sessionManager: SessionManagerProtocol) {
+    init(
+        router: RouterProtocol,
+        sessionManager: SessionManagerProtocol,
+        statsService: StatsService,
+        activateLockScreenVocabularyUseCase: ActivateLockScreenVocabularyUseCaseProtocol? = nil,
+        languageViewModel: LanguageViewModel,
+        userPreferences: UserPreferences
+    ) {
         self.router = router
         self.sessionManager = sessionManager
+        self.statsService = statsService
+        self.activateLockScreenVocabularyUseCase = activateLockScreenVocabularyUseCase
+        self.languageViewModel = languageViewModel
+        self.userPreferences = userPreferences
     }
     
     // MARK: - User Data
-    var userName: String = "Explorer Alex"
+    var userName: String = L10n.Settings.explorerName(AppConstants.Common.defaultUserName)
     
     // MARK: - App Experience Toggles
     var appLanguageCode: String = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en" {
@@ -45,6 +61,18 @@ final class SettingsViewModel {
         }
     }
     var soundEffectsEnabled: Bool = true
+    
+    var isLockScreenVocabularyEnabled: Bool = UserDefaults.standard.bool(forKey: AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled) {
+        didSet {
+            handleLockScreenVocabularyToggle()
+        }
+    }
+    
+    // MARK: - Lock Screen Vocabulary State
+    var showActivationDialog: Bool = false
+    var activationState: ActivationState = .idle
+    var showNotEnoughCoins: Bool = false
+    var missingCoins: Int = 0
     
     // MARK: - Daily Reminder Toggles
     var dailyReminderEnabled: Bool = UserDefaults.standard.bool(forKey: AppConstants.UserDefaultsKeys.dailyReminderEnabled) {
@@ -75,7 +103,12 @@ final class SettingsViewModel {
     var toastSubtitle: String? = nil
     
     // MARK: - Account & Journey Data
-    var learningLanguage: String = "English"
+    var learningLanguage: String {
+        if let active = languageViewModel.activeLanguage {
+            return active.name
+        }
+        return userPreferences.targetLanguageName ?? "English"
+    }
     
     // MARK: - Intentions (Methods)
     
@@ -102,6 +135,57 @@ final class SettingsViewModel {
         } else {
             LocalNotificationManager.shared.cancelDailyReminder()
             showToast(title: "Notifications", subtitle: L10n.Settings.notificationsPausedToast, type: .info)
+        }
+    }
+    
+    private func handleLockScreenVocabularyToggle() {
+        let isSavedAsEnabled = UserDefaults.standard.bool(forKey: AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled)
+        
+        if isLockScreenVocabularyEnabled && !isSavedAsEnabled {
+            // Revert state temporarily until confirmed
+            isLockScreenVocabularyEnabled = false
+            showActivationDialog = true
+        } else if !isLockScreenVocabularyEnabled && isSavedAsEnabled {
+            // User disabled it
+            UserDefaults.standard.set(false, forKey: AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled)
+            showToast(title: L10n.LockScreenVocabulary.toggleLabel, subtitle: L10n.LockScreenVocabulary.disabledToast, type: .info)
+        }
+    }
+    
+    func confirmActivation() {
+        guard let activateLockScreenVocabularyUseCase = activateLockScreenVocabularyUseCase else { return }
+        
+        let currentBalance = statsService.coins
+        let cost = AppConstants.Common.unlockVocabularyCost
+        
+        if currentBalance >= cost {
+            activationState = .loading
+            Task {
+                let result = await activateLockScreenVocabularyUseCase.execute()
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success:
+                        self.activationState = .success
+                        UserDefaults.standard.set(true, forKey: AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled)
+                        self.isLockScreenVocabularyEnabled = true
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            self.showActivationDialog = false
+                            self.activationState = .idle
+                        }
+                    case .failure:
+                        self.activationState = .failure
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            self.showActivationDialog = false
+                            self.activationState = .idle
+                        }
+                    }
+                }
+            }
+        } else {
+            self.missingCoins = cost - currentBalance
+            self.showNotEnoughCoins = true
         }
     }
     

@@ -48,8 +48,9 @@ final class HomeAssembly: Assembly {
         container.register(DailyRewardViewModel.self) { resolver in
             let getDailyRewardUseCase = resolver.resolve(GetDailyRewardUseCase.self)!
             let claimDailyRewardUseCase = resolver.resolve(ClaimDailyRewardUseCase.self)!
-            return DailyRewardViewModel(getDailyRewardUseCase: getDailyRewardUseCase, claimDailyRewardUseCase: claimDailyRewardUseCase)
-        }
+            let statsService = resolver.resolve(StatsService.self)!
+            return DailyRewardViewModel(getDailyRewardUseCase: getDailyRewardUseCase, claimDailyRewardUseCase: claimDailyRewardUseCase, statsService: statsService)
+        }.inObjectScope(.container)
         
         container.register(GetMyLanguagesUseCase.self) { resolver in
             let repository = resolver.resolve(HomeRepositoryProtocol.self)!
@@ -76,28 +77,32 @@ final class HomeAssembly: Assembly {
             let getAvailable = resolver.resolve(GetAvailableLanguagesUseCase.self)!
             let switchActive = resolver.resolve(SwitchActiveLanguageUseCase.self)!
             let addLangs = resolver.resolve(AddLanguagesUseCase.self)!
+            let userPreferences = resolver.resolve(UserPreferences.self)!
             return LanguageViewModel(
                 getMyLanguagesUseCase: getMy,
                 getAvailableLanguagesUseCase: getAvailable,
                 switchActiveLanguageUseCase: switchActive,
-                addLanguagesUseCase: addLangs
+                addLanguagesUseCase: addLangs,
+                userPreferences: userPreferences
             )
-        }
+        }.inObjectScope(.container)
         
         container.register(HomeViewModel.self) { resolver in
             let getHomeDataUseCase = resolver.resolve(GetHomeDataUseCaseProtocol.self)!
             let getHomeWorldsUseCase = resolver.resolve(GetHomeWorldsUseCaseProtocol.self)!
             let dailyRewardViewModel = resolver.resolve(DailyRewardViewModel.self)!
             let languageViewModel = resolver.resolve(LanguageViewModel.self)!
+            let statsService = resolver.resolve(StatsService.self)!
             let router = resolver.resolve(RouterProtocol.self)!
             return HomeViewModel(
                 getHomeDataUseCase: getHomeDataUseCase,
                 getHomeWorldsUseCase: getHomeWorldsUseCase,
                 dailyRewardViewModel: dailyRewardViewModel,
                 languageViewModel: languageViewModel,
+                statsService: statsService,
                 router: router
             )
-        }
+        }.inObjectScope(.container)
         
         container.register(AllWorldsViewModel.self) { resolver in
             let router = resolver.resolve(RouterProtocol.self)!

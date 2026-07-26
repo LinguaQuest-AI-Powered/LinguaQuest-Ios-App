@@ -56,14 +56,14 @@ struct EditProfileAvatarSection: View {
                 } label: {
                     ZStack {
                         Circle()
-                            .fill(Color.appTextHeading)
+                            .fill(Color.appBrandPrimary)
                             .frame(width: 32, height: 32)
 
                         Image(systemIcon: .pencil)
                             .foregroundColor(.white)
                             .font(.system(size: 16, weight: .bold))
                     }
-                    .overlay(Circle().stroke(Color.white, lineWidth: 2))
+                    .overlay(Circle().stroke(Color.appBackgroundWarm, lineWidth: 2))
                 }
                 .disabled(isUploading)
                 .offset(x: -4, y: -4)

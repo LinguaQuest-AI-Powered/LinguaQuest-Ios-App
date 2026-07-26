@@ -14,6 +14,7 @@ final class HomeViewModel {
     private let getHomeDataUseCase: GetHomeDataUseCaseProtocol
     private let getHomeWorldsUseCase: GetHomeWorldsUseCaseProtocol
     private let router: RouterProtocol
+    let statsService: StatsService
     
     var homeData: HomeData?
     var fetchedWorlds: [ExploreWorld] = []
@@ -32,12 +33,14 @@ final class HomeViewModel {
         getHomeWorldsUseCase: GetHomeWorldsUseCaseProtocol,
         dailyRewardViewModel: DailyRewardViewModel,
         languageViewModel: LanguageViewModel,
+        statsService: StatsService,
         router: RouterProtocol
     ) {
         self.getHomeDataUseCase = getHomeDataUseCase
         self.getHomeWorldsUseCase = getHomeWorldsUseCase
         self.dailyRewardViewModel = dailyRewardViewModel
         self.languageViewModel = languageViewModel
+        self.statsService = statsService
         self.router = router
         
         // Listen for language switches to refresh home data
@@ -48,11 +51,14 @@ final class HomeViewModel {
         }
     }
     
+    private var hasLoadedInitialData = false
+
     func loadHomeData(forceRefresh: Bool = false) async {
-        if homeData == nil || forceRefresh {
+        if (!hasLoadedInitialData && homeData == nil) || forceRefresh {
             isLoading = true
         }
         
+        hasLoadedInitialData = true
         errorMessage = nil
         
         if languageViewModel.myLanguages.isEmpty || forceRefresh {
@@ -65,7 +71,9 @@ final class HomeViewModel {
         async let worldsTask = getHomeWorldsUseCase.execute(languageId: currentLangId, difficulty: "EASY")
         
         do {
-            homeData = try await homeDataTask
+            let data = try await homeDataTask
+            homeData = data
+            statsService.syncBalances(coins: data.coins, xp: data.xp, streakDays: data.streakDays)
         } catch {
             print("Failed to fetch home data: \(error)")
             errorMessage = error.localizedDescription

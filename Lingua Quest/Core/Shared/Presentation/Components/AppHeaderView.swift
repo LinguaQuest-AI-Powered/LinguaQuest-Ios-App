@@ -20,7 +20,7 @@ struct AppHeaderView: View {
             mascotAvatar
             
             Text(L10n.Components.appName)
-                .appTextStyle(.bodyLargeBold, color: .appBrandBrown)
+                .appTextStyle(.bodyLargeBold, color: .appTextHeading)
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
             
@@ -72,20 +72,45 @@ struct AppHeaderView: View {
     
     private var mascotAvatar: some View {
         ZStack {
+            // Glow layer
             Circle()
-                .fill(Color.appHeaderBirdCircleBg)
-                .frame(width: 52, height: 52)
-                .shadow(color: Color.appBrandPrimary.opacity(colorScheme == .dark ? 0.22 : 0.3), radius: 12, x: 0, y: 6)
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            Color.appBrandPrimary.opacity(colorScheme == .dark ? 0.35 : 0.25),
+                            Color.appAccentGold.opacity(colorScheme == .dark ? 0.15 : 0.1)
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .frame(width: 48, height: 48)
             
+            // Container surface
             Circle()
-                .stroke(Color.appSurfaceCard.opacity(0.9), lineWidth: 3)
-                .frame(width: 52, height: 52)
+                .fill(Color.appSurfaceCard)
+                .frame(width: 44, height: 44)
+                .overlay(
+                    Circle()
+                        .stroke(
+                            LinearGradient(
+                                colors: [
+                                    Color.appBrandPrimary.opacity(0.8),
+                                    Color.appAccentGold.opacity(0.6)
+                                ],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ),
+                            lineWidth: 2
+                        )
+                )
+                .shadow(color: Color.black.opacity(colorScheme == .dark ? 0.25 : 0.08), radius: 6, x: 0, y: 3)
             
-            Image(asset: .appBarBird)
+            Image(asset: .bird)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 40, height: 40)
-                .scaleEffect(mascotPulse ? 1.05 : 0.96)
+                .frame(width: 32, height: 32)
+                .scaleEffect(mascotPulse ? 1.05 : 0.95)
                 .rotationEffect(.degrees(mascotPulse ? 2 : -2))
         }
     }

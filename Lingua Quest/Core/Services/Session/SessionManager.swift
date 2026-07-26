@@ -19,17 +19,20 @@ final class SessionManager: SessionManagerProtocol {
     private let router: RouterProtocol
     private let tokenStorage: SecureTokenStorageProtocol
     private var userPreferences: UserPreferencesProtocol
+    private let statsService: StatsServiceProtocol
     private let logoutUseCase: LogoutUseCaseProtocol
 
     init(
         router: RouterProtocol,
         tokenStorage: SecureTokenStorageProtocol,
         userPreferences: UserPreferencesProtocol,
+        statsService: StatsServiceProtocol,
         logoutUseCase: LogoutUseCaseProtocol
     ) {
         self.router = router
         self.tokenStorage = tokenStorage
         self.userPreferences = userPreferences
+        self.statsService = statsService
         self.logoutUseCase = logoutUseCase
 
         NotificationCenter.default.addObserver(
@@ -53,8 +56,8 @@ final class SessionManager: SessionManagerProtocol {
     @MainActor
     private func endLocalSession() async {
         tokenStorage.clearSession()
-        userPreferences.isLoggedIn = false
-        userPreferences.needsProfileCompletion = false
+        userPreferences.resetAll()
+        statsService.resetAll()
         router.popToRoot()
     }
 }

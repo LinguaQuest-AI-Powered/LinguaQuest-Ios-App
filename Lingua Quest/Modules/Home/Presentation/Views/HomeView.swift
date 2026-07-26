@@ -28,17 +28,21 @@ struct HomeView: View {
     
     @State private var animateItems: Bool = false
     
+    private var isAnimated: Bool {
+        animateItems || viewModel.homeData != nil
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             AppHeaderView(
-                starCount: viewModel.homeData?.xp ?? 0,
-                coinCount: viewModel.homeData?.coins ?? 0
+                starCount: viewModel.statsService.xp,
+                coinCount: viewModel.statsService.coins
             )
 
             ZStack(alignment: .bottomTrailing) {
                 
                 ScrollView(showsIndicators: false) {
-                    if viewModel.isLoading {
+                    if viewModel.isLoading && viewModel.homeData == nil {
                         HomeSkeletonView()
                             .padding(.top, 12)
                     } else {
@@ -49,9 +53,9 @@ struct HomeView: View {
                                     showDailyRewardDialog = true
                                 }
                                 .padding(.horizontal, 20)
-                                .offset(y: animateItems ? 0 : 30)
-                                .opacity(animateItems ? 1 : 0)
-                                .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.0), value: animateItems)
+                                .offset(y: isAnimated ? 0 : 30)
+                                .opacity(isAnimated ? 1 : 0)
+                                .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.0), value: isAnimated)
                                 .transition(.move(edge: .top).combined(with: .opacity))
                             }
 
@@ -65,6 +69,11 @@ struct HomeView: View {
                             )
                                 .padding(.horizontal, 20)
                                 
+                            VoicePracticeCardView(completed: voiceCompleted, total: voiceTotal, action: { router.push(.voiceGame) })
+                                .padding(.horizontal, 20)
+                                .offset(y: isAnimated ? 0 : 30)
+                                .opacity(isAnimated ? 1 : 0)
+                                .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.15), value: isAnimated)
 
                             Group {
                                 SectionHeaderView(
@@ -140,9 +149,9 @@ struct HomeView: View {
                 .buttonStyle(HomeScaleButtonStyle())
                 .padding(.trailing, 20)
                 .padding(.bottom, 100)
-                .offset(y: animateItems ? 0 : 50)
-                .opacity(animateItems ? 1 : 0)
-                .animation(.spring(response: 0.5, dampingFraction: 0.7).delay(0.6), value: animateItems)
+                .offset(y: isAnimated ? 0 : 50)
+                .opacity(isAnimated ? 1 : 0)
+                .animation(.spring(response: 0.5, dampingFraction: 0.7).delay(0.6), value: isAnimated)
             }
         }
         .background(
@@ -150,8 +159,12 @@ struct HomeView: View {
                 .ignoresSafeArea()
         )
         .onAppear {
-            withAnimation {
+            if viewModel.homeData != nil {
                 animateItems = true
+            } else {
+                withAnimation {
+                    animateItems = true
+                }
             }
             
             loadVoiceProgress()
@@ -162,9 +175,17 @@ struct HomeView: View {
             }
             
             Task {
-                await viewModel.loadHomeData()
-                await viewModel.dailyRewardViewModel.loadDailyReward()
-                await viewModel.languageViewModel.loadMyLanguages()
+                if viewModel.homeData == nil {
+                    await viewModel.loadHomeData()
+                }
+                
+                if viewModel.dailyRewardViewModel.reward == nil {
+                    await viewModel.dailyRewardViewModel.loadDailyReward()
+                }
+                
+                if viewModel.languageViewModel.myLanguages.isEmpty {
+                    await viewModel.languageViewModel.loadMyLanguages()
+                }
             }
         }
         .appDialog(isPresented: $showDailyRewardDialog) {

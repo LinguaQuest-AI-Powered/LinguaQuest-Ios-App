@@ -13,6 +13,7 @@ enum ProfileEndpoint {
         var method: HTTPMethod { .get }
         var body: EmptyBody? { nil }
         var requiresAuth: Bool { true }
+        var cachePolicy: CachePolicy { .returnCacheDataElseLoad }
     }
     
     struct CompleteProfile: Endpoint {
@@ -96,12 +97,14 @@ enum ProfileEndpoint {
         var queryItems: [URLQueryItem]? {
             [URLQueryItem(name: "status", value: status)]
         }
+        var cachePolicy: CachePolicy { .returnCacheDataElseLoad }
     }
     
     struct GetWeeklyReward: Endpoint {
         var path: String { "/achievements/weekly-reward" }
         var method: HTTPMethod { .get }
         var body: EmptyBody? { nil }
+        var cachePolicy: CachePolicy { .returnCacheDataElseLoad }
     }
     
     struct ClaimWeeklyReward: Endpoint {
@@ -128,6 +131,7 @@ enum ProfileEndpoint {
                 URLQueryItem(name: "limit", value: "\(limit)")
             ]
         }
+        var cachePolicy: CachePolicy { .returnCacheDataElseLoad }
     }
 }
 

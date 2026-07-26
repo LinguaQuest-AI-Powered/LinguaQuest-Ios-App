@@ -13,7 +13,7 @@ import Observation
 final class SignUpViewModel {
     // MARK: - Dependencies
     private let router: RouterProtocol
-    private let userPreferences: UserPreferencesProtocol
+    private let userPreferences: UserPreferences
     private let registerUseCase: RegisterUseCaseProtocol
     private let oauthSignInHandler: OAuthSignInHandlerProtocol
 
@@ -30,7 +30,7 @@ final class SignUpViewModel {
     // MARK: - Init
     init(
         router: RouterProtocol,
-        userPreferences: UserPreferencesProtocol,
+        userPreferences: UserPreferences,
         registerUseCase: RegisterUseCaseProtocol,
         oauthSignInHandler: OAuthSignInHandlerProtocol
     ) {
@@ -158,16 +158,7 @@ extension SignUpViewModel {
             func dismissSheet() {}
         }
         
-        class MockUserPreferences: UserPreferencesProtocol {
-            var isOnboardingCompleted: Bool = true
-            var isLoggedIn: Bool = false
-            var needsProfileCompletion: Bool = false
-            var spokenLanguageCode: String? = "ar"
-            var learningLanguageCode: String? = "en"
-            var userLevel: String? = "beginner"
-            var isDarkMode: Bool = false
-            var appLanguage: String = "en"
-        }
+
         
         class MockRegisterUseCase: RegisterUseCaseProtocol {
             func execute(email: String, username: String, password: String, nativeLanguage: String, targetLanguage: String) async -> Result<RegisteredAccountEntity, AuthError> {
@@ -182,7 +173,7 @@ extension SignUpViewModel {
         
         return SignUpViewModel(
             router: MockRouter(),
-            userPreferences: MockUserPreferences(),
+            userPreferences: UserPreferences(),
             registerUseCase: MockRegisterUseCase(),
             oauthSignInHandler: MockOAuthSignInHandler()
         )

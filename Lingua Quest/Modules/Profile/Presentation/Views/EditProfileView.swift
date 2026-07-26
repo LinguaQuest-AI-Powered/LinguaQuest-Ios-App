@@ -16,24 +16,22 @@ struct EditProfileView: View {
             VStack(spacing: 0) {
                 // MARK: - Navigation Bar
                 HStack {
-                    CustomBackButton {
-                        dismiss()
-                    }
-
+                    CustomBackButton { dismiss() }
                     Spacer()
-
-                    Text(L10n.EditProfile.title)
-                        .appTextStyle(.headingLarge, color: .appBrandBrownDark)
-
-                    Spacer()
-
-                    Circle()
-                        .fill(Color.clear)
-                        .frame(width: 44, height: 44)
                 }
-                .padding(.horizontal, 24)
-                .padding(.top, 16)
-                .padding(.bottom, 24)
+                .overlay(
+                    Text(L10n.EditProfile.title)
+                        .appTextStyle(.headingLarge, color: .appTextHeading)
+                )
+                .padding(.horizontal, 20)
+                .frame(height: 64)
+                .background(Color.clear)
+                .overlay(
+                    Rectangle()
+                        .frame(height: 1)
+                        .foregroundColor(Color.appBorderBrown),
+                    alignment: .bottom
+                )
 
                 // MARK: - Content
                 ScrollView {

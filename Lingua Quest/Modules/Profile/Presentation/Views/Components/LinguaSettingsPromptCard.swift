@@ -48,6 +48,7 @@ struct LinguaSettingsPromptCard: View {
                     Image(systemName: "chevron.right")
                         .font(.system(size: 14, weight: .bold))
                         .foregroundColor(.appBrandBrown)
+                        .flipsForRightToLeftLayoutDirection(true)
                 }
             }
             .padding(16)

@@ -24,7 +24,7 @@ struct WindowOverlayModifier<OverlayContent: View>: ViewModifier {
     }
 
     private func showOverlay() {
-        guard overlayWindow == nil, let windowScene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene else { return }
+        guard overlayWindow == nil, let windowScene = UIApplication.shared.connectedScenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene else { return }
         
         let window = UIWindow(windowScene: windowScene)
         window.backgroundColor = .clear

@@ -43,6 +43,7 @@ struct SettingsContentView: View {
                             notificationsEnabled: $viewModel.notificationsEnabled,
                             darkModeEnabled: $viewModel.darkModeEnabled,
                             soundEffectsEnabled: $viewModel.soundEffectsEnabled,
+                            isLockScreenVocabularyEnabled: $viewModel.isLockScreenVocabularyEnabled,
                             onAppLanguageTapped: onAppLanguageTapped,
                             onHelpTapped: onHelpTapped,
                             onAboutTapped: onAboutTapped

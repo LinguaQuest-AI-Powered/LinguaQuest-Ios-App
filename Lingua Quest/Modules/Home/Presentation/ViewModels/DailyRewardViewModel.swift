@@ -22,11 +22,13 @@ final class DailyRewardViewModel {
     // MARK: - UseCases
     private let getDailyRewardUseCase: GetDailyRewardUseCase
     private let claimDailyRewardUseCase: ClaimDailyRewardUseCase
+    private let statsService: StatsService
     
     // MARK: - Init
-    init(getDailyRewardUseCase: GetDailyRewardUseCase, claimDailyRewardUseCase: ClaimDailyRewardUseCase) {
+    init(getDailyRewardUseCase: GetDailyRewardUseCase, claimDailyRewardUseCase: ClaimDailyRewardUseCase, statsService: StatsService) {
         self.getDailyRewardUseCase = getDailyRewardUseCase
         self.claimDailyRewardUseCase = claimDailyRewardUseCase
+        self.statsService = statsService
     }
     
     // MARK: - UI Model
@@ -90,6 +92,11 @@ final class DailyRewardViewModel {
                     streakDays: claimResult.newStreakDays
                 )
             }
+            statsService.syncBalances(
+                coins: claimResult.newCoinsBalance,
+                xp: claimResult.newXpBalance,
+                streakDays: claimResult.newStreakDays
+            )
         } catch {
             print("Failed to claim daily reward: \(error)")
             errorMessage = error.localizedDescription

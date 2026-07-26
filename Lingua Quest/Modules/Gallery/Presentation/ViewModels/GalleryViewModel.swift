@@ -13,14 +13,43 @@ import Observation
 class GalleryViewModel {
     private let getCapturedItemsUseCase: GetCapturedItemsUseCase
     private let saveCapturedItemUseCase: SaveCapturedItemUseCase
+    private let getSavedVocabularyWordsUseCase: GetSavedVocabularyWordsUseCaseProtocol?
+    private let speechSynthesizer: SpeechSynthesizerProtocol?
     private let router: RouterProtocol
     private let userPreferences: UserPreferencesProtocol
     
     var items: [CapturedItem] = []
+    var vocabularyWords: [VocabularyWordEntity] = []
     
-    init(getCapturedItemsUseCase: GetCapturedItemsUseCase, saveCapturedItemUseCase: SaveCapturedItemUseCase, router: RouterProtocol, userPreferences: UserPreferencesProtocol) {
+    var selectedDifficultyFilter: String? = nil
+    
+    var isLockScreenVocabularyEnabled: Bool {
+        userPreferences.isLockScreenVocabularyEnabled
+    }
+    
+    var filteredVocabularyWords: [VocabularyWordEntity] {
+        vocabularyWords.filter { word in
+            let added = word.isAddedToJournal
+            if let filter = selectedDifficultyFilter {
+                return added && word.difficulty.lowercased() == filter.lowercased()
+            }
+            return added
+        }
+    }
+    
+    var selectedVocabularyWord: VocabularyWordEntity? = nil
+    var showVocabularyDialog: Bool = false
+    
+    init(getCapturedItemsUseCase: GetCapturedItemsUseCase,
+         saveCapturedItemUseCase: SaveCapturedItemUseCase,
+         getSavedVocabularyWordsUseCase: GetSavedVocabularyWordsUseCaseProtocol? = nil,
+         speechSynthesizer: SpeechSynthesizerProtocol? = nil,
+         router: RouterProtocol,
+         userPreferences: UserPreferencesProtocol) {
         self.getCapturedItemsUseCase = getCapturedItemsUseCase
         self.saveCapturedItemUseCase = saveCapturedItemUseCase
+        self.getSavedVocabularyWordsUseCase = getSavedVocabularyWordsUseCase
+        self.speechSynthesizer = speechSynthesizer
         self.router = router
         self.userPreferences = userPreferences
     }
@@ -41,37 +70,29 @@ class GalleryViewModel {
         router.push(.wordInsight(word: word))
     }
     
+    func onVocabularyWordTapped(_ word: VocabularyWordEntity) {
+        selectedVocabularyWord = word
+        showVocabularyDialog = true
+    }
+    
+    func onSpeakTapped(_ word: VocabularyWordEntity) {
+        speechSynthesizer?.speak(text: word.word, languageCode: word.targetLanguage)
+    }
+    
     func loadItems() {
         Task {
             do {
                 let fetchedItems = try await getCapturedItemsUseCase.execute()
                 self.items = fetchedItems
+                
+                if let getSavedVocabularyWordsUseCase = getSavedVocabularyWordsUseCase {
+                    let fetchedWords = try await getSavedVocabularyWordsUseCase.execute()
+                    self.vocabularyWords = fetchedWords
+                }
             } catch {
                 print("Error loading captured items: \(error)")
             }
         }
     }
     
-    // TEMPORARY DEBUG METHOD: Used to test SwiftData without wiring to the Game module
-    func saveMockItem() {
-        Task {
-            let mockItem = CapturedItem(
-                id: UUID(),
-                englishName: "Mock Apple",
-                translatedName: "La Manzana Mock",
-                category: "DEBUG",
-                imageData: nil, // Add logic to test real data if needed
-                isCorrect: true,
-                timestamp: Date(),
-                image: "apple"
-            )
-            
-            do {
-                try await saveCapturedItemUseCase.execute(item: mockItem)
-                loadItems() // Reload to see the new item
-            } catch {
-                print("Error saving mock item: \(error)")
-            }
-        }
-    }
 }

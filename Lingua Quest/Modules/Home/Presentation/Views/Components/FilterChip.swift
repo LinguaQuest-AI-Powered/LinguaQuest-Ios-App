@@ -20,13 +20,13 @@ struct FilterChip: View {
                     Circle().fill(dotColor).frame(width: 8, height: 8)
                 }
                 Text(title)
-                    .appTextStyle(.captionBold, color: isSelected ? .white : .appBrandBrown)
+                    .appTextStyle(.captionBold, color: isSelected ? .white : .appTextHeading)
             }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 8)
-            .background(Capsule().fill(isSelected ? Color.appBrandPrimary : Color.white))
+            .padding(.horizontal, 18)
+            .padding(.vertical, 10)
+            .background(Capsule().fill(isSelected ? Color.appBrandPrimary : Color.appSurfaceCard))
             .overlay(
-                Capsule().stroke(isSelected ? Color.appBrandPrimary : Color.appBorderLight, lineWidth: 2)
+                Capsule().stroke(isSelected ? Color.appBrandPrimary : Color.appBorderLight.opacity(0.5), lineWidth: 1.5)
             )
         }
         .buttonStyle(.plain)

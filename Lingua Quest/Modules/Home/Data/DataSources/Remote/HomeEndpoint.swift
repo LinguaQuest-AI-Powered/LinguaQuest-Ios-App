@@ -12,6 +12,7 @@ enum HomeEndpoint {
         var body: EmptyBody?
         var path: String { "/home" }
         var method: HTTPMethod { .get }
+        var cachePolicy: CachePolicy { .returnCacheDataElseLoad }
     }
     
     struct GetWorlds: Endpoint {
@@ -30,12 +31,14 @@ enum HomeEndpoint {
             }
             return items
         }
+        var cachePolicy: CachePolicy { .returnCacheDataElseLoad }
     }
     
     struct GetDailyReward: Endpoint {
         var body: EmptyBody?
         var path: String { "/daily-reward" }
         var method: HTTPMethod { .get }
+        var cachePolicy: CachePolicy { .returnCacheDataElseLoad }
     }
     
     struct ClaimDailyReward: Endpoint {

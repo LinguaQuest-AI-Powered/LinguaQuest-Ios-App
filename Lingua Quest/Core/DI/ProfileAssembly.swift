@@ -54,14 +54,16 @@ final class ProfileAssembly: Assembly {
         
         container.register(ProfileViewModel.self) { resolver in
             let router = resolver.resolve(RouterProtocol.self)!
-            let getProfileUseCase = resolver.resolve(GetProfileUseCaseProtocol.self)!
-            let uploadProfilePhotoUseCase = resolver.resolve(UploadProfilePhotoUseCaseProtocol.self)!
+            let getProfile = resolver.resolve(GetProfileUseCaseProtocol.self)
+            let uploadPhoto = resolver.resolve(UploadProfilePhotoUseCaseProtocol.self)
+            let statsService = resolver.resolve(StatsService.self)!
             return ProfileViewModel(
                 router: router,
-                getProfileUseCase: getProfileUseCase,
-                uploadProfilePhotoUseCase: uploadProfilePhotoUseCase
+                getProfileUseCase: getProfile,
+                uploadProfilePhotoUseCase: uploadPhoto,
+                statsService: statsService
             )
-        }
+        }.inObjectScope(.container)
         
         // MARK: - Achievements
         container.register(GetAchievementsUseCaseProtocol.self) { resolver in
@@ -109,7 +111,18 @@ final class ProfileAssembly: Assembly {
         container.register(SettingsViewModel.self) { resolver in
             let router = resolver.resolve(RouterProtocol.self)!
             let sessionManager = resolver.resolve(SessionManagerProtocol.self)!
-            return SettingsViewModel(router: router, sessionManager: sessionManager)
+            let statsService = resolver.resolve(StatsService.self)!
+            let activateUseCase = resolver.resolve(ActivateLockScreenVocabularyUseCaseProtocol.self)
+            let languageViewModel = resolver.resolve(LanguageViewModel.self)!
+            let userPreferences = resolver.resolve(UserPreferences.self)!
+            return SettingsViewModel(
+                router: router, 
+                sessionManager: sessionManager,
+                statsService: statsService,
+                activateLockScreenVocabularyUseCase: activateUseCase,
+                languageViewModel: languageViewModel,
+                userPreferences: userPreferences
+            )
         }
     }
 }

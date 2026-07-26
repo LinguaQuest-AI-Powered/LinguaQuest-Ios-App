@@ -19,7 +19,7 @@ final class SwiftDataManager {
     
     private init() {
         do {
-            container = try ModelContainer(for: CapturedItemEntity.self)
+            container = try ModelContainer(for: CapturedItemEntity.self, VocabularyWordSwiftDataEntity.self)
         } catch {
             fatalError("Failed to initialize SwiftData container: \(error)")
         }
