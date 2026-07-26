@@ -13,6 +13,8 @@ struct SettingsView: View {
     @State private var showLanguagePicker = false
     @State private var showLogoutConfirm = false
     @State private var showRepeatPicker = false
+    @State private var showMyLanguagesSheet = false
+    @State private var showAddLanguageScreen = false
     
     // MARK: - Body
     var body: some View {
@@ -25,7 +27,7 @@ struct SettingsView: View {
                 viewModel.onEditProfileTapped()
             },
             onLearningLanguageTapped: {
-                // Navigate to Language Picker
+                showMyLanguagesSheet = true
             },
             onAppLanguageTapped: {
                 showLanguagePicker = true
@@ -102,6 +104,23 @@ struct SettingsView: View {
                     viewModel.isLockScreenVocabularyEnabled = false
                 }
             )
+        }
+        .customBottomSheet(isPresented: $showMyLanguagesSheet, initialDetent: .custom(ratio: 0.7)) {
+            MyLanguagesBottomSheet(
+                languageViewModel: viewModel.languageViewModel,
+                isPresented: $showMyLanguagesSheet,
+                onAddNewLanguage: {
+                    showAddLanguageScreen = true
+                }
+            )
+        }
+        .fullScreenCover(isPresented: $showAddLanguageScreen) {
+            AddLanguageView(languageViewModel: viewModel.languageViewModel)
+        }
+        .onAppear {
+            Task {
+                await viewModel.languageViewModel.loadMyLanguages()
+            }
         }
     }
 }
