@@ -213,46 +213,6 @@ struct GameLevelsView: View {
                 .padding(.top, -100)
             )
         }
-        .overlay(alignment: .bottomTrailing) {
-            Button {
-                let scenarioId: String
-                let name = worldName.lowercased()
-                //TODO: Change this later
-                if name.contains("kitchen") || name.contains("market") {
-                    scenarioId = "scenario_market_01"
-                } else if name.contains("cafe") || name.contains("city") {
-                    scenarioId = "scenario_cafe_01"
-                } else if name.contains("school") {
-                    scenarioId = "scenario_school_01"
-                } else if name.contains("airport") || name.contains("taxi") {
-                    scenarioId = "scenario_taxi_01"
-                } else {
-                    scenarioId = "scenario_apartment_01"
-                }
-                router.push(.bossLevel(scenarioTitle: scenarioId))
-            } label: {
-                HStack(spacing: 8) {
-                    Image(systemName: "mic.fill")
-                        .font(.system(size: 18, weight: .bold))
-                    Text(L10n.BossLevel.title)
-                        .font(.system(size: 14, weight: .bold, design: .rounded))
-                }
-                .foregroundColor(.white)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 12)
-                .background(
-                    LinearGradient(
-                        colors: [Color.appBrandPrimary, Color.appGlowTeal],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-                .cornerRadius(30)
-                .shadow(color: Color.black.opacity(0.3), radius: 8, x: 0, y: 4)
-            }
-            .padding(.trailing, 20)
-            .padding(.bottom, 24)
-        }
         .navigationBarHidden(true)
         .onAppear {
             withAnimation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.15)) {
