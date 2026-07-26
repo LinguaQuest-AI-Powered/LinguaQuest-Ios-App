@@ -26,3 +26,25 @@ enum NetworkError: Error, LocalizedError {
         }
     }
 }
+
+struct APIErrorDetail: Decodable {
+    let errorCode: Int?
+    let errorKey: String?
+    let errorMessage: String?
+}
+
+struct APIErrorResponse: Decodable {
+    let success: Bool?
+    let error: APIErrorDetail?
+}
+
+extension NetworkError {
+    var apiErrorMessage: String? {
+        if case .serverError(_, let data) = self,
+           let data = data,
+           let response = try? JSONDecoder().decode(APIErrorResponse.self, from: data) {
+            return response.error?.errorMessage
+        }
+        return nil
+    }
+}

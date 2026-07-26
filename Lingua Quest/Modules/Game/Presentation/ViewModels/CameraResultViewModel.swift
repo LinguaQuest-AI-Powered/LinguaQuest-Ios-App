@@ -18,8 +18,14 @@ enum CameraResultState: Equatable {
 @Observable
 @MainActor
 final class CameraResultViewModel {
+    let worldId: Int
+    let levelId: Int
     let targetWord: String
     var state: CameraResultState = .loading
+    
+    var coins: Int {
+        statsService.coins
+    }
     
     // For successful states
     var xpPoints: Int = 0
@@ -29,54 +35,67 @@ final class CameraResultViewModel {
     
     let imageData: Data?
     private let saveUseCase: SaveCapturedItemUseCase
+    private let verifyUseCase: VerifyImageUseCase
+    private let changeWordUseCase: ChangeWordUseCase
+    private let statsService: StatsServiceProtocol
     private let router: RouterProtocol
     
-    init(targetWord: String, imageData: Data?, saveUseCase: SaveCapturedItemUseCase, router: RouterProtocol) {
+    init(worldId: Int, levelId: Int, targetWord: String, imageData: Data?, saveUseCase: SaveCapturedItemUseCase, verifyUseCase: VerifyImageUseCase, changeWordUseCase: ChangeWordUseCase, statsService: StatsServiceProtocol, router: RouterProtocol) {
+        self.worldId = worldId
+        self.levelId = levelId
         self.targetWord = targetWord
         self.imageData = imageData
         self.saveUseCase = saveUseCase
+        self.verifyUseCase = verifyUseCase
+        self.changeWordUseCase = changeWordUseCase
+        self.statsService = statsService
         self.router = router
         
-        simulateAPI()
+        verifyImage()
     }
     
-    private func simulateAPI() {
+    private func verifyImage() {
+        guard let data = imageData else {
+            self.state = .error(message: "No image data available.")
+            return
+        }
+        
         Task {
-            // Simulate processing time
-            try? await Task.sleep(nanoseconds: 2_000_000_000)
-            
-            // Randomly succeed, fail (notMatch), or API error for testing/demonstration
-            let rand = Int.random(in: 0...2)
-            
-            if rand == 0 {
-                self.xpPoints = 50
-                self.coinsEarned = 10
-                self.currentLevelIndex = 4
-                self.currentLevelProgress = 0.85
-                self.state = .match
-            } else if rand == 1 {
-                self.state = .notMatch
-            } else {
-                self.state = .error(message: "Validation error - one or more fields are missing or malformed")
-            }
-            
-            // Save the captured item if matched
-            if case .match = self.state {
-                let item = CapturedItem(
-                    id: UUID(),
-                    englishName: self.targetWord,
-                    translatedName: self.targetWord,
-                    category: "GAME",
-                    imageData: self.imageData,
-                    isCorrect: true,
-                    timestamp: Date()
-                )
+            do {
+                let entity = try await verifyUseCase.execute(worldId: worldId, levelId: levelId, imageData: data)
                 
-                do {
-                    try await saveUseCase.execute(item: item)
-                } catch {
-                    print("Failed to save capture: \(error)")
+                if entity.isMatch {
+                    self.xpPoints = entity.xpEarned ?? 0
+                    self.coinsEarned = entity.coinsEarned ?? 0
+                    self.currentLevelIndex = entity.level ?? self.levelId
+                    self.currentLevelProgress = entity.levelProgressPercentage ?? 0.0
+                    
+                    self.statsService.syncBalances(coins: self.statsService.coins + self.coinsEarned, xp: self.statsService.xp + self.xpPoints, streakDays: nil)
+                    
+                    self.state = .match
+                    
+                    // Save the captured item locally
+                    let item = CapturedItem(
+                        id: UUID(),
+                        englishName: self.targetWord,
+                        translatedName: self.targetWord,
+                        category: "GAME",
+                        imageData: self.imageData,
+                        isCorrect: true,
+                        timestamp: Date()
+                    )
+                    try? await saveUseCase.execute(item: item)
+                } else {
+                    self.state = .notMatch
                 }
+            } catch let error as NetworkError {
+                if let message = error.apiErrorMessage {
+                    self.state = .error(message: message)
+                } else {
+                    self.state = .error(message: error.localizedDescription)
+                }
+            } catch {
+                self.state = .error(message: error.localizedDescription)
             }
         }
     }
@@ -86,8 +105,24 @@ final class CameraResultViewModel {
     }
     
     func onChangeWordTapped() {
-        // Go back to CameraTaskQuestView (pop result and capture views)
-        router.pop(count: 2)
+        state = .loading
+        Task {
+            do {
+                let entity = try await changeWordUseCase.execute(worldId: worldId, levelId: levelId)
+                self.statsService.syncBalances(coins: entity.coins, xp: self.statsService.xp, streakDays: nil)
+                // We got the new word. We should pop back to QuestView, but to update the word, we use replacement push as planned.
+                router.popToRoot()
+                router.push(.cameraQuestTask(worldId: worldId, levelId: levelId, targetWord: entity.targetWord))
+            } catch let error as NetworkError {
+                if let message = error.apiErrorMessage {
+                    self.state = .error(message: message)
+                } else {
+                    self.state = .error(message: error.localizedDescription)
+                }
+            } catch {
+                self.state = .error(message: error.localizedDescription)
+            }
+        }
     }
     
     func onNextLevelTapped() {

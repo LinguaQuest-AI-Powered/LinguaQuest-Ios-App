@@ -14,10 +14,19 @@ class GameLevelsViewModel {
     var levels: [GameLevel] = []
     var isLoading: Bool = true
     
-    private let getGameLevelsUseCase: GetGameLevelsUseCase
+    // Alert state
+    var showError: Bool = false
+    var errorMessage: String = ""
+    var isStartingLevel: Bool = false
     
-    init(getGameLevelsUseCase: GetGameLevelsUseCase) {
+    private let getGameLevelsUseCase: GetGameLevelsUseCase
+    private let startLevelUseCase: StartLevelUseCase
+    private let router: RouterProtocol
+    
+    init(getGameLevelsUseCase: GetGameLevelsUseCase, startLevelUseCase: StartLevelUseCase, router: RouterProtocol) {
         self.getGameLevelsUseCase = getGameLevelsUseCase
+        self.startLevelUseCase = startLevelUseCase
+        self.router = router
     }
     
     func fetchLevels(worldId: Int, languageId: Int) async {
@@ -32,5 +41,28 @@ class GameLevelsViewModel {
             print("Error fetching levels: \(error)")
         }
         isLoading = false
+    }
+    
+    func onLevelTapped(worldId: Int, level: GameLevel) {
+        guard level.status != .locked else { return }
+        
+        isStartingLevel = true
+        Task {
+            do {
+                let entity = try await startLevelUseCase.execute(worldId: worldId, levelId: level.id)
+                router.push(.cameraQuestTask(worldId: worldId, levelId: level.id, targetWord: entity.targetWord))
+            } catch let error as NetworkError {
+                if let message = error.apiErrorMessage {
+                    self.errorMessage = message
+                } else {
+                    self.errorMessage = error.localizedDescription
+                }
+                self.showError = true
+            } catch {
+                self.errorMessage = error.localizedDescription
+                self.showError = true
+            }
+            isStartingLevel = false
+        }
     }
 }

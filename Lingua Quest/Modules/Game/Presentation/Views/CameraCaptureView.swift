@@ -58,14 +58,6 @@ struct CameraCaptureView: View {
                         actionButton(icon: .cameraRotateFill) {
                             viewModel.onFlipCameraTapped()
                         }
-                        
-                        actionButton(icon: .dollarsignCircleFill) {
-                            // Coin / Hint action
-                        }
-                        
-                        actionButton(icon: .lightbulbFill) {
-                            // Idea action
-                        }
                     }
                 }
                 .padding(.horizontal, 20)

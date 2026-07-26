@@ -20,10 +20,10 @@ enum AppRoute: Hashable {
     case verifyPasswordResetOtp(email: String)
     case resetPassword(resetToken: String)
     case gameLevels(worldId: Int, worldName: String, languageId: Int)
-    case cameraQuestTask
+    case cameraQuestTask(worldId: Int, levelId: Int, targetWord: String)
     case voiceGame
-    case cameraCapture(targetWord: String)
-    case cameraResult(targetWord: String, imageData: Data?)
+    case cameraCapture(worldId: Int, levelId: Int, targetWord: String)
+    case cameraResult(worldId: Int, levelId: Int, targetWord: String, imageData: Data?)
     case voiceGameResult(audioData: Data, sentence: VoiceSentence)
     case leaderboard(languageId: Int)
     case achievements

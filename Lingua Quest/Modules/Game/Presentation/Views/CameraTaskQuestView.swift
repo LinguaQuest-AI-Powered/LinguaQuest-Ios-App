@@ -52,7 +52,7 @@ struct CameraTaskQuestView: View {
                 DialogCardContainer(
                     mascotImage: .loginBird,
                     speechBubbleText: {
-                        if let hint = appliedHint {
+                        if let hint = viewModel.hintText {
                             return hint
                         } else if showHintBubble {
                             return L10n.Game.tapForHelp
@@ -126,21 +126,36 @@ struct CameraTaskQuestView: View {
         .onAppear {
             // Automatically show the tap for help bubble after 0.2 seconds
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                if !showHintBubble && appliedHint == nil {
+                if !showHintBubble && viewModel.hintText == nil {
                     withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
                         showHintBubble = true
                     }
                 }
             }
         }
+        .overlay {
+            if viewModel.isLoading {
+                Color.black.opacity(0.3)
+                    .ignoresSafeArea()
+                ProgressView()
+                    .scaleEffect(1.5)
+                    .tint(.white)
+            }
+        }
+        .alert(isPresented: $viewModel.showError) {
+            Alert(
+                title: Text(L10n.Common.error),
+                message: Text(viewModel.errorMessage),
+                dismissButton: .default(Text(L10n.Common.ok))
+            )
+        }
         .customBottomSheet(isPresented: $showHintSheet, initialDetent: .custom(ratio: 0.7)) {
             GameHintSheet(
                 coins: viewModel.coins,
                 onClose: { showHintSheet = false },
-                onSelectHint: {
-                    hintText in
-                    appliedHint = hintText
+                onSelectHint: { _ in
                     showHintSheet = false
+                    viewModel.onHintSelected()
                 },
                 onNotEnoughCoins: {
                     showHintSheet = false
@@ -170,8 +185,12 @@ struct CameraTaskQuestView: View {
                 primaryButtonIcon: .arrowTriangle2Circlepath,
                 primaryAction: {
                     showSkipDialog = false
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        showNotEnoughCoinsDialog = true
+                    if viewModel.coins >= AppConstants.Common.changeWordCost {
+                        viewModel.onChangeWordTapped()
+                    } else {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            showNotEnoughCoinsDialog = true
+                        }
                     }
                 },
                 cancelAction: {
@@ -196,11 +215,14 @@ class MockStatsService: StatsServiceProtocol {
 }
 
 #Preview("LightTheme") {
-    CameraTaskQuestView(viewModel: CameraTaskQuestViewModel(router: Router(), statsService: MockStatsService()))
+    // Requires Mock dependencies for previews
+    // CameraTaskQuestView(viewModel: CameraTaskQuestViewModel(...))
+    Text("Preview temporarily disabled due to complex dependencies")
 }
 
 #Preview("DarkTheme") {
-    CameraTaskQuestView(viewModel: CameraTaskQuestViewModel(router: Router(), statsService: MockStatsService()))
+    // CameraTaskQuestView(viewModel: CameraTaskQuestViewModel(...))
+    Text("Preview temporarily disabled due to complex dependencies")
         .preferredColorScheme(.dark)
 }
 

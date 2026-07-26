@@ -58,8 +58,12 @@ struct CameraResultView: View {
                 primaryButtonIcon: .arrowTriangle2Circlepath,
                 primaryAction: {
                     showSkipDialog = false
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        showNotEnoughCoinsDialog = true
+                    if viewModel.coins >= AppConstants.Common.changeWordCost {
+                        viewModel.onChangeWordTapped()
+                    } else {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            showNotEnoughCoinsDialog = true
+                        }
                     }
                 },
                 cancelAction: {

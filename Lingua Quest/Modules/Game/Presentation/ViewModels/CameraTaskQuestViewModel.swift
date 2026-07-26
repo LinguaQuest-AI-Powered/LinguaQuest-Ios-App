@@ -16,30 +16,87 @@ class CameraTaskQuestViewModel {
     
     private let statsService: StatsServiceProtocol
     
+    var worldId: Int
     var levelId: Int
     var targetWord: String
+    
+    var isLoading: Bool = false
+    var showError: Bool = false
+    var errorMessage: String = ""
+    var hintText: String? = nil
     
     var coins: Int {
         statsService.coins
     }
     
-    init(router: RouterProtocol, statsService: StatsServiceProtocol, levelId: Int = 3, targetWord: String = "PAN") {
+    private let getHintUseCase: GetHintUseCase
+    private let changeWordUseCase: ChangeWordUseCase
+    
+    init(router: RouterProtocol, statsService: StatsServiceProtocol, getHintUseCase: GetHintUseCase, changeWordUseCase: ChangeWordUseCase, worldId: Int = 1, levelId: Int = 3, targetWord: String = "PAN") {
         self.router = router
         self.statsService = statsService
+        self.getHintUseCase = getHintUseCase
+        self.changeWordUseCase = changeWordUseCase
+        self.worldId = worldId
         self.levelId = levelId
         self.targetWord = targetWord
+    }
+    
+    func onHintSelected() {
+        isLoading = true
+        Task {
+            do {
+                let entity = try await getHintUseCase.execute(worldId: worldId, levelId: levelId)
+                self.hintText = entity.hint
+                self.statsService.syncBalances(coins: entity.remainingCoins, xp: self.statsService.xp, streakDays: nil)
+            } catch let error as NetworkError {
+                if let message = error.apiErrorMessage {
+                    self.errorMessage = message
+                } else {
+                    self.errorMessage = error.localizedDescription
+                }
+                self.showError = true
+            } catch {
+                self.errorMessage = error.localizedDescription
+                self.showError = true
+            }
+            isLoading = false
+        }
+    }
+    
+    func onChangeWordTapped() {
+        isLoading = true
+        Task {
+            do {
+                let entity = try await changeWordUseCase.execute(worldId: worldId, levelId: levelId)
+                self.targetWord = entity.targetWord
+                // For change word, API returns the new coin balance in response
+                self.statsService.syncBalances(coins: entity.coins, xp: self.statsService.xp, streakDays: nil)
+            } catch let error as NetworkError {
+                if let message = error.apiErrorMessage {
+                    self.errorMessage = message
+                } else {
+                    self.errorMessage = error.localizedDescription
+                }
+                self.showError = true
+            } catch {
+                self.errorMessage = error.localizedDescription
+                self.showError = true
+            }
+            isLoading = false
+        }
     }
     
     func openCamera() {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:
-            router.push(.cameraCapture(targetWord: targetWord))
+            router.push(.cameraCapture(worldId: worldId, levelId: levelId, targetWord: targetWord))
         case .notDetermined:
             AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
                 DispatchQueue.main.async {
                     if granted {
                         guard let self = self else { return }
-                        self.router.push(.cameraCapture(targetWord: self.targetWord))
+                        self.router.push(.cameraCapture(worldId: self.worldId, levelId: self.levelId, targetWord: self.targetWord))
                     }
                 }
             }

@@ -64,4 +64,18 @@ final class Resolver {
         }
         return service
     }
+    
+    func resolve<T, Arg1, Arg2, Arg3>(_ type: T.Type, arguments arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3) -> T {
+        guard let service = container.resolve(type, arguments: arg1, arg2, arg3) else {
+            fatalError("Failed to resolve type: \(type) with arguments: \(arg1), \(arg2), \(arg3)")
+        }
+        return service
+    }
+    
+    func resolve<T, Arg1, Arg2, Arg3, Arg4>(_ type: T.Type, arguments arg1: Arg1, _ arg2: Arg2, _ arg3: Arg3, _ arg4: Arg4) -> T {
+        guard let service = container.resolve(type, arguments: arg1, arg2, arg3, arg4) else {
+            fatalError("Failed to resolve type: \(type) with arguments: \(arg1), \(arg2), \(arg3), \(arg4)")
+        }
+        return service
+    }
 }

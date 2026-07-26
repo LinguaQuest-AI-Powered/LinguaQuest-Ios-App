@@ -12,11 +12,15 @@ import UIKit
 @Observable
 @MainActor
 final class CameraCaptureViewModel {
+    let worldId: Int
+    let levelId: Int
     let targetWord: String
     let cameraManager: CameraManager
     private let router: RouterProtocol
     
-    init(targetWord: String, router: RouterProtocol) {
+    init(worldId: Int, levelId: Int, targetWord: String, router: RouterProtocol) {
+        self.worldId = worldId
+        self.levelId = levelId
         self.targetWord = targetWord
         self.router = router
         self.cameraManager = CameraManager()
@@ -39,6 +43,6 @@ final class CameraCaptureViewModel {
         // Mock capture for debugging: Stop camera and push result view
         cameraManager.stopSession()
         let imageData = cameraManager.capturedImage?.jpegData(compressionQuality: 0.8)
-        router.push(.cameraResult(targetWord: targetWord, imageData: imageData))
+        router.push(.cameraResult(worldId: worldId, levelId: levelId, targetWord: targetWord, imageData: imageData))
     }
 }

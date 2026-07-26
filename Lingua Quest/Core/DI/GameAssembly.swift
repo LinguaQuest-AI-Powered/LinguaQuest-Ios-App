@@ -27,26 +27,71 @@ final class GameAssembly: Assembly {
             return GetGameLevelsUseCase(repository: repo)
         }
         
+        container.register(StartLevelUseCase.self) { resolver in
+            let repo = resolver.resolve(GameRepositoryProtocol.self)!
+            return StartLevelUseCase(repository: repo)
+        }
+        
+        container.register(ChangeWordUseCase.self) { resolver in
+            let repo = resolver.resolve(GameRepositoryProtocol.self)!
+            return ChangeWordUseCase(repository: repo)
+        }
+        
+        container.register(VerifyImageUseCase.self) { resolver in
+            let repo = resolver.resolve(GameRepositoryProtocol.self)!
+            return VerifyImageUseCase(repository: repo)
+        }
+        
+        container.register(GetHintUseCase.self) { resolver in
+            let repo = resolver.resolve(GameRepositoryProtocol.self)!
+            return GetHintUseCase(repository: repo)
+        }
+        
         container.register(GameLevelsViewModel.self) { resolver in
             let useCase = resolver.resolve(GetGameLevelsUseCase.self)!
-            return GameLevelsViewModel(getGameLevelsUseCase: useCase)
+            let startLevelUseCase = resolver.resolve(StartLevelUseCase.self)!
+            let router = resolver.resolve(RouterProtocol.self)!
+            return GameLevelsViewModel(getGameLevelsUseCase: useCase, startLevelUseCase: startLevelUseCase, router: router)
         }
         
-        container.register(CameraTaskQuestViewModel.self) { resolver in
+        container.register(CameraTaskQuestViewModel.self) { (resolver, worldId: Int, levelId: Int, targetWord: String) in
             let router = resolver.resolve(RouterProtocol.self)!
             let statsService = resolver.resolve(StatsServiceProtocol.self)!
-            return CameraTaskQuestViewModel(router: router, statsService: statsService)
+            let hintUseCase = resolver.resolve(GetHintUseCase.self)!
+            let changeWordUseCase = resolver.resolve(ChangeWordUseCase.self)!
+            return CameraTaskQuestViewModel(
+                router: router,
+                statsService: statsService,
+                getHintUseCase: hintUseCase,
+                changeWordUseCase: changeWordUseCase,
+                worldId: worldId,
+                levelId: levelId,
+                targetWord: targetWord
+            )
         }
         
-        container.register(CameraCaptureViewModel.self) { (resolver, targetWord: String) in
+        container.register(CameraCaptureViewModel.self) { (resolver, worldId: Int, levelId: Int, targetWord: String) in
             let router = resolver.resolve(RouterProtocol.self)!
-            return CameraCaptureViewModel(targetWord: targetWord, router: router)
+            return CameraCaptureViewModel(worldId: worldId, levelId: levelId, targetWord: targetWord, router: router)
         }
         
-        container.register(CameraResultViewModel.self) { (resolver, targetWord: String, imageData: Data?) in
+        container.register(CameraResultViewModel.self) { (resolver, worldId: Int, levelId: Int, targetWord: String, imageData: Data?) in
             let router = resolver.resolve(RouterProtocol.self)!
             let saveUseCase = resolver.resolve(SaveCapturedItemUseCase.self)!
-            return CameraResultViewModel(targetWord: targetWord, imageData: imageData, saveUseCase: saveUseCase, router: router)
+            let verifyUseCase = resolver.resolve(VerifyImageUseCase.self)!
+            let changeWordUseCase = resolver.resolve(ChangeWordUseCase.self)!
+            let statsService = resolver.resolve(StatsServiceProtocol.self)!
+            return CameraResultViewModel(
+                worldId: worldId,
+                levelId: levelId,
+                targetWord: targetWord,
+                imageData: imageData,
+                saveUseCase: saveUseCase,
+                verifyUseCase: verifyUseCase,
+                changeWordUseCase: changeWordUseCase,
+                statsService: statsService,
+                router: router
+            )
         }
     }
 }

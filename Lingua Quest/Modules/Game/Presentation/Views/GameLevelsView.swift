@@ -86,7 +86,7 @@ struct GameLevelsView: View {
                                     let xPos = RoadMath.xPosition(for: yPos, in: w)
                                     
                                     Button {
-                                        router.push(.cameraQuestTask)
+                                        viewModel.onLevelTapped(worldId: worldId, level: level)
                                     } label: {
                                         LevelNodeView(level: level)
                                     }
@@ -185,18 +185,15 @@ struct GameLevelsView: View {
                     .scaleEffect(titleOpacity)
                 
                 Spacer()
-                
+            }
+            .overlay(
                 Text(worldName)
                     .font(.system(size: 22, weight: .bold, design: .rounded))
                     .foregroundColor(.white)
                     .shadow(color: .black.opacity(0.5), radius: 4, x: 0, y: 2)
                     .opacity(titleOpacity)
                     .scaleEffect(titleOpacity == 0 ? 0.8 : 1.0)
-                
-                Spacer()
-                
-                Color.clear.frame(width: 40, height: 40)
-            }
+            )
             .padding(.horizontal, 24)
             .padding(.top, 8)
             .padding(.bottom, 20)
@@ -218,6 +215,22 @@ struct GameLevelsView: View {
             withAnimation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.15)) {
                 titleOpacity = 1
             }
+        }
+        .overlay {
+            if viewModel.isStartingLevel {
+                Color.black.opacity(0.3)
+                    .ignoresSafeArea()
+                ProgressView()
+                    .scaleEffect(1.5)
+                    .tint(.white)
+            }
+        }
+        .alert(isPresented: $viewModel.showError) {
+            Alert(
+                title: Text(L10n.Common.error),
+                message: Text(viewModel.errorMessage),
+                dismissButton: .default(Text(L10n.Common.ok))
+            )
         }
     }
 }
