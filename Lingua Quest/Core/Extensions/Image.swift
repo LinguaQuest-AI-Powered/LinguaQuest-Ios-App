@@ -147,6 +147,7 @@ extension Image {
         case perfect = "perfect"
         case micBird = "Mic"
         case emptyGallary = "emptyGallary"
+        case noInternet  = "noInternet"
     }
     
     init(icon: Icon) {

@@ -60,7 +60,7 @@ class VoiceEvaluationRepositoryImpl: VoiceEvaluationRepositoryProtocol {
         
         // Step 2: Transcribe audio locally using Apple Speech Recognition
         // Use the proper locale since that's the target language
-        let speechCode = SpeechLocaleMapper.mapToSpeechCode(languageCode)
+        let speechCode = AppLanguage.speechCode(for: languageCode)
         let locale = Locale(identifier: speechCode)
         let spokenText: String
         do {

@@ -65,7 +65,7 @@ class VoiceGameViewModel {
     func playTargetSentence() {
         // Determine language code for speech synthesis from the sentence
         let languageCode = currentSentence?.language ?? "en"
-        let speechCode = SpeechLocaleMapper.mapToSpeechCode(languageCode)
+        let speechCode = AppLanguage.speechCode(for: languageCode)
         
         isPlayingAudio = true
         speechService.onFinishSpeaking = { [weak self] in
