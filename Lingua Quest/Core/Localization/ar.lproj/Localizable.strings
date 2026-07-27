@@ -402,3 +402,23 @@
 "home.feature_ai_chat" = "محادثة بالذكاء الاصطناعي";
 "home.feature_speaking" = "ممارسة التحدث";
 "home.practice_and_learn" = "ممارسة وتعلم";
+
+"about.title" = "عن التطبيق";
+"about.app_name" = "لينجوا كويست";
+"about.subtitle" = "مغامرتك اللغوية المدعومة بالذكاء الاصطناعي";
+"about.mission_title" = "مهمتنا";
+"about.mission_description" = "يحول لينجوا كويست تعلم اللغات إلى رحلة شيقة ومثيرة. نحن نجمع بين مهام الألعاب، ومحادثات الذكاء الاصطناعي التفاعلية، واستكشاف العالم الحقيقي لمساعدتك على إتقان لغات جديدة بثقة وسهولة.";
+"about.features_title" = "لماذا لينجوا كويست؟";
+"about.feature_ai_title" = "مختبر التحدث بالذكاء الاصطناعي";
+"about.feature_ai_desc" = "تدرب على النطق الصحيح مع تقييم ذكي ومحادثات صوتية تفاعلية.";
+"about.feature_camera_title" = "مهام المفردات بالكاميرا";
+"about.feature_camera_desc" = "اكتشف وتعلم كلمات جديدة من خلال التقاط صور للعناصر والمقتنيات في محيطك.";
+"about.feature_game_title" = "نظام تقدم ممتع";
+"about.feature_game_desc" = "اكسب نقاط الخبرة، واجمع العملات، وتجاوز مستويات الزعماء، ونافس في لوحات الصدارة العالمية.";
+"about.community_title" = "انضم إلى مجتمعنا";
+"about.rate_app" = "قيّمنا على متجر التطبيقات";
+"about.website" = "الموقع الرسمي";
+"about.privacy_policy" = "سياسة الخصوصية";
+"about.terms_of_service" = "شروط الخدمة";
+"about.copyright" = "© 2026 فريق لينجوا كويست. جميع الحقوق محفوظة.";
+"about.made_with_love" = "صُنع بـ ❤️ لمستكشفي اللغات حول العالم.";

@@ -131,6 +131,12 @@ final class ProfileAssembly: Assembly {
                 lockScreenSettingsRemoteDataSource: lockScreenDS
             )
         }
+        
+        container.register(AboutViewModel.self) { resolver in
+            let router = resolver.resolve(RouterProtocol.self)!
+            return AboutViewModel(router: router)
+        }
     }
 }
+
 

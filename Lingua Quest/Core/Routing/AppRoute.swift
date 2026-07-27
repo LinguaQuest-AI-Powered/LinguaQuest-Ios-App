@@ -33,6 +33,7 @@ enum AppRoute: Hashable {
     case bossLevel(scenarioTitle: String)
     case roleplayScenarios
     case appLanguageSelection
+    case about
 }
 
 enum AppSheet: String, Identifiable {

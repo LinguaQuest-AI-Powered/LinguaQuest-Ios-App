@@ -400,3 +400,23 @@
 "home.feature_ai_chat" = "AI Chat";
 "home.feature_speaking" = "Speaking";
 "home.practice_and_learn" = "Practice & Learn";
+
+"about.title" = "About App";
+"about.app_name" = "Lingua Quest";
+"about.subtitle" = "Your AI-Powered Language Adventure";
+"about.mission_title" = "Our Mission";
+"about.mission_description" = "Lingua Quest transforms language learning into an exhilarating journey. We combine gamified quests, interactive AI roleplays, and real-world exploration to help you master new languages naturally and confidently.";
+"about.features_title" = "Why Lingua Quest?";
+"about.feature_ai_title" = "AI-Powered Speaking Lab";
+"about.feature_ai_desc" = "Practice pronunciation with intelligent feedback and dynamic conversational roleplays.";
+"about.feature_camera_title" = "Camera Vocabulary Quests";
+"about.feature_camera_desc" = "Discover and learn new words by capturing real-world objects in your surroundings.";
+"about.feature_game_title" = "Gamified Progression";
+"about.feature_game_desc" = "Earn XP, collect coins, conquer boss levels, and compete on global leaderboards.";
+"about.community_title" = "Join Our Community";
+"about.rate_app" = "Rate on App Store";
+"about.website" = "Official Website";
+"about.privacy_policy" = "Privacy Policy";
+"about.terms_of_service" = "Terms of Service";
+"about.copyright" = "© 2026 Lingua Quest Team. All rights reserved.";
+"about.made_with_love" = "Made with ❤️ for language explorers around the globe.";

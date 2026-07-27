@@ -87,6 +87,12 @@ extension Image {
         case handTapFill = "hand.tap.fill"
         case characterBookClosedFill = "character.book.closed.fill"
         case arrowTriangle2Circlepath = "arrow.triangle.2.circlepath"
+        
+        // Added for About Screen
+        case heartFill = "heart.fill"
+        case shieldFill = "shield.fill"
+        case docTextFill = "doc.text.fill"
+        case arrowUpRight = "arrow.up.right"
     }
     
     enum Asset: String {
