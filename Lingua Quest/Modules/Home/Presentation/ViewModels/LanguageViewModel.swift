@@ -63,6 +63,12 @@ final class LanguageViewModel {
             if selectedLanguageId == nil {
                 selectedLanguageId = activeLanguage?.id
             }
+            
+            // Sync to UserPreferences on initial load
+            if let active = activeLanguage {
+                userPreferences.learningLanguageCode = active.code
+                userPreferences.targetLanguageName = active.name
+            }
         } catch {
             errorMessage = error.localizedDescription
             print("Failed to load my languages: \(error)")

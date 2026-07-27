@@ -392,3 +392,6 @@
 "gallery.empty.filter.words.subtitle" = "No words found for this filter.";
 "gallery.empty.filter.items.title" = "No Items";
 "gallery.empty.filter.items.subtitle" = "No items found for this section.";
+
+"game.not_enough_coins.current_balance" = "Current Balance";
+"game.not_enough_coins.missing_balance" = "Missing Coins";

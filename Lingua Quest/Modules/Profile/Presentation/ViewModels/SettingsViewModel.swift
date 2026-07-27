@@ -19,6 +19,7 @@ final class SettingsViewModel {
     private let activateLockScreenVocabularyUseCase: ActivateLockScreenVocabularyUseCaseProtocol?
     let languageViewModel: LanguageViewModel
     private let userPreferences: UserPreferences
+    private let lockScreenSettingsRemoteDataSource: LockScreenSettingsRemoteDataSourceProtocol?
 
     init(
         router: RouterProtocol,
@@ -26,7 +27,8 @@ final class SettingsViewModel {
         statsService: StatsService,
         activateLockScreenVocabularyUseCase: ActivateLockScreenVocabularyUseCaseProtocol? = nil,
         languageViewModel: LanguageViewModel,
-        userPreferences: UserPreferences
+        userPreferences: UserPreferences,
+        lockScreenSettingsRemoteDataSource: LockScreenSettingsRemoteDataSourceProtocol? = nil
     ) {
         self.router = router
         self.sessionManager = sessionManager
@@ -34,6 +36,7 @@ final class SettingsViewModel {
         self.activateLockScreenVocabularyUseCase = activateLockScreenVocabularyUseCase
         self.languageViewModel = languageViewModel
         self.userPreferences = userPreferences
+        self.lockScreenSettingsRemoteDataSource = lockScreenSettingsRemoteDataSource
     }
     
     // MARK: - User Data
@@ -73,6 +76,7 @@ final class SettingsViewModel {
     var activationState: ActivationState = .idle
     var showNotEnoughCoins: Bool = false
     var missingCoins: Int = 0
+    var currentCoins: Int = 0
     
     // MARK: - Daily Reminder Toggles
     var dailyReminderEnabled: Bool = UserDefaults.standard.bool(forKey: AppConstants.UserDefaultsKeys.dailyReminderEnabled) {
@@ -142,9 +146,34 @@ final class SettingsViewModel {
         let isSavedAsEnabled = UserDefaults.standard.bool(forKey: AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled)
         
         if isLockScreenVocabularyEnabled && !isSavedAsEnabled {
-            // Revert state temporarily until confirmed
+            // Temporarily revert UI toggle until logic completes
             isLockScreenVocabularyEnabled = false
-            showActivationDialog = true
+            
+            guard let userId = userPreferences.userId,
+                  let remoteDS = lockScreenSettingsRemoteDataSource else {
+                showActivationDialog = true
+                return
+            }
+            
+            activationState = .checking
+            Task {
+                do {
+                    let unlocked = try await remoteDS.isUnlocked(userId: userId)
+                    await MainActor.run {
+                        self.activationState = .idle
+                        if unlocked {
+                            self.activateWithoutPayment()
+                        } else {
+                            self.showActivationDialog = true
+                        }
+                    }
+                } catch {
+                    await MainActor.run {
+                        self.activationState = .idle
+                        self.showActivationDialog = true
+                    }
+                }
+            }
         } else if !isLockScreenVocabularyEnabled && isSavedAsEnabled {
             // User disabled it
             UserDefaults.standard.set(false, forKey: AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled)
@@ -152,40 +181,88 @@ final class SettingsViewModel {
         }
     }
     
+    private func activateWithoutPayment() {
+        guard let activateLockScreenVocabularyUseCase = activateLockScreenVocabularyUseCase else { return }
+        
+        Task {
+            let result = await activateLockScreenVocabularyUseCase.execute()
+            await MainActor.run {
+                switch result {
+                case .success:
+                    UserDefaults.standard.set(true, forKey: AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled)
+                    self.isLockScreenVocabularyEnabled = true
+                    self.showToast(title: L10n.LockScreenVocabulary.toggleLabel, subtitle: L10n.LockScreenVocabulary.activatedToast, type: .success)
+                case .failure:
+                    self.isLockScreenVocabularyEnabled = false
+                    self.showToast(title: L10n.Common.error, type: .error)
+                }
+            }
+        }
+    }
+    
     func confirmActivation() {
         guard let activateLockScreenVocabularyUseCase = activateLockScreenVocabularyUseCase else { return }
         
-        let currentBalance = statsService.coins
         let cost = AppConstants.Common.unlockVocabularyCost
+        activationState = .loading
         
-        if currentBalance >= cost {
-            activationState = .loading
-            Task {
-                let result = await activateLockScreenVocabularyUseCase.execute()
-                DispatchQueue.main.async {
-                    switch result {
-                    case .success:
-                        self.activationState = .success
-                        UserDefaults.standard.set(true, forKey: AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled)
-                        self.isLockScreenVocabularyEnabled = true
-                        
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                            self.showActivationDialog = false
-                            self.activationState = .idle
+        Task {
+            do {
+                // Fetch the latest wallet balance from API
+                try await statsService.fetchStats()
+                let currentBalance = statsService.coins
+                
+                if currentBalance >= cost {
+                    // 1. Deduct Coins via API
+                    try await statsService.deductCoins(cost)
+                    
+                    // 2. Mark as unlocked in Firestore
+                    if let userId = userPreferences.userId,
+                       let remoteDS = lockScreenSettingsRemoteDataSource {
+                        try await remoteDS.setUnlocked(userId: userId)
+                    }
+                    
+                    // 3. Activate Use Case
+                    let result = await activateLockScreenVocabularyUseCase.execute()
+                    await MainActor.run {
+                        switch result {
+                        case .success:
+                            self.activationState = .success
+                            UserDefaults.standard.set(true, forKey: AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled)
+                            self.isLockScreenVocabularyEnabled = true
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                self.showActivationDialog = false
+                                self.activationState = .idle
+                            }
+                        case .failure:
+                            self.activationState = .failure
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                self.showActivationDialog = false
+                                self.activationState = .idle
+                            }
                         }
-                    case .failure:
-                        self.activationState = .failure
-                        
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                            self.showActivationDialog = false
-                            self.activationState = .idle
-                        }
+                    }
+                } else {
+                    await MainActor.run {
+                        self.currentCoins = currentBalance
+                        self.missingCoins = cost - currentBalance
+                        self.showActivationDialog = false // Hide payment dialog
+                        self.showNotEnoughCoins = true
+                        self.activationState = .idle
+                    }
+                }
+            } catch {
+                await MainActor.run {
+                    self.activationState = .failure
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        self.showActivationDialog = false
+                        self.activationState = .idle
+                        self.showToast(title: L10n.Common.error, subtitle: error.localizedDescription, type: .error)
                     }
                 }
             }
-        } else {
-            self.missingCoins = cost - currentBalance
-            self.showNotEnoughCoins = true
         }
     }
     

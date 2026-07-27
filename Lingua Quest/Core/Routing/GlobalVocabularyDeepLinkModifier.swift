@@ -15,6 +15,8 @@ struct GlobalVocabularyDeepLinkModifier: ViewModifier {
         content
             .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("VocabularyNotificationTapped"))) { notification in
                 if let wordId = notification.userInfo?["wordId"] as? UUID {
+                    let router = Resolver.shared.resolve(RouterProtocol.self)
+                    router.popToRoot()
                     fetchAndShowWord(wordId: wordId)
                 }
             }

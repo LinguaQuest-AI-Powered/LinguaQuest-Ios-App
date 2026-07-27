@@ -9,6 +9,7 @@ import SwiftUI
 
 enum ActivationState {
     case idle
+    case checking
     case loading
     case success
     case failure
@@ -26,7 +27,7 @@ struct ActivationConfirmDialog: View {
                 switch viewModel.activationState {
                 case .idle:
                     idleView
-                case .loading:
+                case .checking, .loading:
                     loadingView
                 case .success:
                     successView
@@ -39,9 +40,9 @@ struct ActivationConfirmDialog: View {
     
     private var mascotForState: Image.Asset {
         switch viewModel.activationState {
-        case .idle, .loading: return .bird
-        case .success: return .resetPasswordBird
-        case .failure: return .resetPasswordBird // Or some other sad mascot if exists
+        case .idle, .checking, .loading: return .skip
+        case .success: return .strongPasswordBird
+        case .failure: return .weakPasswordBird 
         }
     }
     
@@ -51,6 +52,7 @@ struct ActivationConfirmDialog: View {
             VStack(spacing: 8) {
                 Text(L10n.LockScreenVocabulary.activationTitle)
                     .appTextStyle(.headingMedium, color: .appTextHeading)
+                    .multilineTextAlignment(.center)
                 
                 Text(L10n.LockScreenVocabulary.activationSubtitle)
                     .appTextStyle(.bodyMedium, color: .appTextSecondary)

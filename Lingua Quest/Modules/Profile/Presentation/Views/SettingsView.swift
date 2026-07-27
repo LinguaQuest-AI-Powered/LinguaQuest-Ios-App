@@ -46,6 +46,7 @@ struct SettingsView: View {
             }
         )
         .navigationBarHidden(true)
+        .authLoadingOverlay(isLoading: viewModel.activationState == .checking)
         .appToast(
             isPresented: $viewModel.showToast,
             type: viewModel.toastType,
@@ -101,6 +102,7 @@ struct SettingsView: View {
                 title: L10n.Game.notEnoughCoinsTitle,
                 subtitle: L10n.Game.notEnoughCoinsSubtitle,
                 missingCoins: viewModel.missingCoins,
+                currentCoins: viewModel.currentCoins,
                 action: {
                     viewModel.showNotEnoughCoins = false
                     viewModel.isLockScreenVocabularyEnabled = false

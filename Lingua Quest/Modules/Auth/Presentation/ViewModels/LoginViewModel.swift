@@ -64,6 +64,10 @@ final class LoginViewModel {
                 do {
                     let profile = try await getProfileUseCase.execute()
                     userPreferences.needsProfileCompletion = profile.currentLanguageCode.isEmpty
+                    if !profile.currentLanguageCode.isEmpty {
+                        userPreferences.learningLanguageCode = profile.currentLanguageCode
+                        userPreferences.targetLanguageName = profile.currentLanguageName
+                    }
                 } catch {
                     // Fallback
                     let user = data.user

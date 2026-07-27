@@ -107,6 +107,10 @@ final class ProfileAssembly: Assembly {
             return LeaderboardViewModel(router: router, getLeaderboardUseCase: getLeaderboardUseCase, languageId: languageId)
         }
         
+        container.register(LockScreenSettingsRemoteDataSourceProtocol.self) { _ in
+            LockScreenSettingsRemoteDataSource()
+        }
+        
         // MARK: - Settings
         container.register(SettingsViewModel.self) { resolver in
             let router = resolver.resolve(RouterProtocol.self)!
@@ -115,13 +119,16 @@ final class ProfileAssembly: Assembly {
             let activateUseCase = resolver.resolve(ActivateLockScreenVocabularyUseCaseProtocol.self)
             let languageViewModel = resolver.resolve(LanguageViewModel.self)!
             let userPreferences = resolver.resolve(UserPreferences.self)!
+            let lockScreenDS = resolver.resolve(LockScreenSettingsRemoteDataSourceProtocol.self)
+            
             return SettingsViewModel(
                 router: router, 
                 sessionManager: sessionManager,
                 statsService: statsService,
                 activateLockScreenVocabularyUseCase: activateUseCase,
                 languageViewModel: languageViewModel,
-                userPreferences: userPreferences
+                userPreferences: userPreferences,
+                lockScreenSettingsRemoteDataSource: lockScreenDS
             )
         }
     }

@@ -394,3 +394,6 @@
 "gallery.empty.filter.words.subtitle" = "لم يتم العثور على أي كلمات تناسب هذا الفلتر.";
 "gallery.empty.filter.items.title" = "لا توجد عناصر";
 "gallery.empty.filter.items.subtitle" = "لم يتم العثور على أي عناصر في هذا القسم.";
+
+"game.not_enough_coins.current_balance" = "الرصيد الحالي";
+"game.not_enough_coins.missing_balance" = "الرصيد الناقص";

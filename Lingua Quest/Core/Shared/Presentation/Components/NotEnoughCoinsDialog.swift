@@ -11,6 +11,7 @@ struct NotEnoughCoinsDialog: View {
     let title: String
     let subtitle: String
     let missingCoins: Int
+    var currentCoins: Int? = nil
     let action: () -> Void
     
     var body: some View {
@@ -28,7 +29,24 @@ struct NotEnoughCoinsDialog: View {
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 16)
                 
-                RewardBadge(type: .coin, value: "-\(missingCoins)", size: .normal)
+                if let currentCoins = currentCoins {
+                    HStack(spacing: 32) {
+                        VStack(spacing: 8) {
+                            Text(L10n.Game.currentBalance)
+                                .appTextStyle(.bodyMedium, color: .appTextSecondary)
+                            RewardBadge(type: .coin, value: "\(currentCoins)", size: .normal)
+                        }
+                        
+                        VStack(spacing: 8) {
+                            Text(L10n.Game.missingBalance)
+                                .appTextStyle(.bodyMedium, color: .appTextSecondary)
+                            RewardBadge(type: .coin, value: "\(missingCoins)", size: .normal)
+                        }
+                    }
+                    .padding(.top, 8)
+                } else {
+                    RewardBadge(type: .coin, value: "\(missingCoins)", size: .normal)
+                }
                 
                 CustomButton(
                     type: .custom(textColor: .appTextOnPrimary, buttonColor: .appAccentOrange, shadowColor: .appBrandBrown),
