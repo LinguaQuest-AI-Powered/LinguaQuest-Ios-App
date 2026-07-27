@@ -10,10 +10,12 @@ import Foundation
 struct OnboardingUiState {
     var currentStep: OnboardingStep = .welcome
     var selectedLevel: UserLevel?
-    var selectedSpokenLanguage: Language?
-    var selectedLearningLanguage: Language?
+    var selectedSpokenLanguage: AppLanguage?
+    var selectedLearningLanguage: AvailableLanguage?
     
-    var availableLanguages: [Language] = Language.allGlobalLanguages
+    var nativeLanguages: [AppLanguage] = AppLanguage.allCases
+    var targetLanguages: [AvailableLanguage] = []
+    var isLoadingTargetLanguages: Bool = false
     
     var canContinueFromLanguage: Bool {
         selectedSpokenLanguage != nil && selectedLearningLanguage != nil

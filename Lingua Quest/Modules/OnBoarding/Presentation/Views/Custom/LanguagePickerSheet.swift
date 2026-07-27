@@ -7,18 +7,20 @@
 
 import SwiftUI
 
-struct LanguagePickerSheet: View {
-    let languages: [Language]
-    let onSelect: (Language) -> Void
+struct LanguagePickerSheet<T: Identifiable & Equatable>: View {
+    let languages: [T]
+    let namePath: (T) -> String
+    let flagPath: (T) -> String
+    let onSelect: (T) -> Void
     @Binding var isPresented: Bool
     @State private var searchText = ""
     @State private var animateItems = false
 
-    var filteredLanguages: [Language] {
+    var filteredLanguages: [T] {
         if searchText.isEmpty {
             return languages
         }
-        return languages.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+        return languages.filter { namePath($0).localizedCaseInsensitiveContains(searchText) }
     }
 
     var body: some View {
@@ -73,11 +75,11 @@ struct LanguagePickerSheet: View {
                             }
                         } label: {
                             HStack(spacing: 12) {
-                                Text(language.flag)
+                                Text(flagPath(language))
                                     .appTextStyle(.displaySmall)
                                     .frame(width: 32, height: 32)
 
-                                Text(language.name)
+                                Text(namePath(language))
                                     .appTextStyle(.bodyLarge, color: .appTextPrimary)
 
                                 Spacer()

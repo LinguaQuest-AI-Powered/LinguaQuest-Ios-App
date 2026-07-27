@@ -9,8 +9,8 @@ import SwiftUI
 
 struct LanguageStepView: View {
     let state: OnboardingUiState
-    let onSelectSpokenLanguage: (Language) -> Void
-    let onSelectLearningLanguage: (Language) -> Void
+    let onSelectSpokenLanguage: (AppLanguage) -> Void
+    let onSelectLearningLanguage: (AvailableLanguage) -> Void
     let onContinue: () -> Void
     var onBack: (() -> Void)? = nil
 
@@ -39,7 +39,8 @@ struct LanguageStepView: View {
                 LanguageSelectorButton(
                     title: L10n.Onboarding.languageSelectorISpeak,
                     placeholder: L10n.Onboarding.languageSelectorPlaceholder,
-                    selectedLanguage: state.selectedSpokenLanguage,
+                    selectedName: state.selectedSpokenLanguage?.name,
+                    selectedFlag: state.selectedSpokenLanguage?.flag,
                     action: {
                         showSpokenLanguageSheet = true
                     }
@@ -48,7 +49,8 @@ struct LanguageStepView: View {
                 LanguageSelectorButton(
                     title: L10n.Onboarding.languageStepIWantToLearn,
                     placeholder: L10n.Onboarding.languageSelectorPlaceholder,
-                    selectedLanguage: state.selectedLearningLanguage,
+                    selectedName: state.selectedLearningLanguage?.name,
+                    selectedFlag: state.selectedLearningLanguage?.flagEmoji,
                     action: {
                         showLearningLanguageSheet = true
                     }
@@ -75,17 +77,41 @@ struct LanguageStepView: View {
         }
         .customBottomSheet(isPresented: $showSpokenLanguageSheet) {
             LanguagePickerSheet(
-                languages: state.availableLanguages,
+                languages: state.nativeLanguages,
+                namePath: { $0.name },
+                flagPath: { $0.flag },
                 onSelect: onSelectSpokenLanguage,
                 isPresented: $showSpokenLanguageSheet
             )
         }
         .customBottomSheet(isPresented: $showLearningLanguageSheet) {
-            LanguagePickerSheet(
-                languages: state.availableLanguages,
-                onSelect: onSelectLearningLanguage,
-                isPresented: $showLearningLanguageSheet
-            )
+            Group {
+                if state.isLoadingTargetLanguages {
+                    VStack {
+                        Spacer()
+                        ProgressView()
+                            .tint(.appBrandPrimary)
+                        Spacer()
+                    }
+                    .frame(height: 300)
+                } else if state.targetLanguages.isEmpty {
+                    VStack {
+                        Spacer()
+                        Text(L10n.Common.error)
+                            .appTextStyle(.bodyLarge, color: .appTextSecondary)
+                        Spacer()
+                    }
+                    .frame(height: 300)
+                } else {
+                    LanguagePickerSheet(
+                        languages: state.targetLanguages,
+                        namePath: { $0.name },
+                        flagPath: { $0.flagEmoji },
+                        onSelect: onSelectLearningLanguage,
+                        isPresented: $showLearningLanguageSheet
+                    )
+                }
+            }
         }
         .navigationBarBackButtonHidden(true)
         .toolbar {

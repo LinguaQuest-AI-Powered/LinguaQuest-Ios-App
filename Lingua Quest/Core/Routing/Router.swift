@@ -121,6 +121,9 @@ final class Router: RouterProtocol {
         case .roleplayScenarios:
             let viewModel = Resolver.shared.resolve(RoleplayScenariosViewModel.self)
             RoleplayScenariosView(viewModel: viewModel)
+        case .appLanguageSelection:
+            let viewModel = Resolver.shared.resolve(SettingsViewModel.self)
+            AppLanguageSelectionView(viewModel: viewModel)
         }
     }
 }

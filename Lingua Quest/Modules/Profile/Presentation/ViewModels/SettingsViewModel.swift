@@ -46,11 +46,18 @@ final class SettingsViewModel {
     var appLanguageCode: String = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en" {
         didSet {
             UserDefaults.standard.set(appLanguageCode, forKey: AppConstants.UserDefaultsKeys.appLanguage)
-            appLanguage = appLanguageCode == "ar" ? "Arabic" : "English"
+            appLanguage = AppLanguage(rawValue: appLanguageCode)?.name ?? "English"
         }
     }
     
-    var appLanguage: String = (UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en") == "ar" ? "Arabic" : "English"
+    func refreshAppLanguage() {
+        let savedCode = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en"
+        if savedCode != appLanguageCode {
+            self.appLanguageCode = savedCode
+        }
+    }
+    
+    var appLanguage: String = AppLanguage(rawValue: UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en")?.name ?? "English"
     var notificationsEnabled: Bool = UserDefaults.standard.bool(forKey: AppConstants.UserDefaultsKeys.notificationsEnabled) {
         didSet {
             UserDefaults.standard.set(notificationsEnabled, forKey: AppConstants.UserDefaultsKeys.notificationsEnabled)
@@ -304,6 +311,10 @@ final class SettingsViewModel {
     
     func onEditProfileTapped() {
         router.push(.editProfile)
+    }
+    
+    func onAppLanguageTapped() {
+        router.push(.appLanguageSelection)
     }
     
     func logOut() {

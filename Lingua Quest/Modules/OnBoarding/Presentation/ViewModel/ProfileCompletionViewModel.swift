@@ -32,6 +32,25 @@ final class ProfileCompletionViewModel {
         self.completeProfileUseCase = completeProfileUseCase
         // Skip welcome step, go straight to language selection
         self.state.currentStep = .language
+        fetchTargetLanguages()
+    }
+
+    private func fetchTargetLanguages() {
+        guard state.targetLanguages.isEmpty else { return }
+        state.isLoadingTargetLanguages = true
+        Task {
+            do {
+                let languages = try await getAvailableLanguagesUseCase.execute()
+                await MainActor.run {
+                    self.state.targetLanguages = languages
+                    self.state.isLoadingTargetLanguages = false
+                }
+            } catch {
+                await MainActor.run {
+                    self.state.isLoadingTargetLanguages = false
+                }
+            }
+        }
     }
 
     func onBackTapped() {
@@ -47,11 +66,11 @@ final class ProfileCompletionViewModel {
         }
     }
 
-    func onSpokenLanguageSelected(_ language: Language) {
+    func onSpokenLanguageSelected(_ language: AppLanguage) {
         state.selectedSpokenLanguage = language
     }
 
-    func onLearningLanguageSelected(_ language: Language) {
+    func onLearningLanguageSelected(_ language: AvailableLanguage) {
         state.selectedLearningLanguage = language
     }
 

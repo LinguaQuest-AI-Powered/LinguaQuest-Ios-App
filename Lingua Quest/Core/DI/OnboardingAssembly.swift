@@ -12,7 +12,9 @@ final class OnboardingAssembly: Assembly {
         container.register(OnboardingViewModel.self) { resolver in
             let router = resolver.resolve(RouterProtocol.self)!
             let userPreferences = resolver.resolve(UserPreferencesProtocol.self)!
-            return OnboardingViewModel(router: router, userPreferences: userPreferences)
+            let homeRepository = resolver.resolve(HomeRepositoryProtocol.self)!
+            let getAvailableLanguagesUseCase = GetAvailableLanguagesUseCase(repository: homeRepository)
+            return OnboardingViewModel(router: router, userPreferences: userPreferences, getAvailableLanguagesUseCase: getAvailableLanguagesUseCase)
         }
     }
 }

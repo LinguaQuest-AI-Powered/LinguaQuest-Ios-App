@@ -10,7 +10,6 @@ import SwiftUI
 struct SettingsView: View {
     // MARK: - Properties
     @State var viewModel: SettingsViewModel
-    @State private var showLanguagePicker = false
     @State private var showLogoutConfirm = false
     @State private var showRepeatPicker = false
     @State private var showMyLanguagesSheet = false
@@ -30,7 +29,7 @@ struct SettingsView: View {
                 showMyLanguagesSheet = true
             },
             onAppLanguageTapped: {
-                showLanguagePicker = true
+                viewModel.onAppLanguageTapped()
             },
             onHelpTapped: {
                 // Navigate to Help & Support
@@ -59,21 +58,7 @@ struct SettingsView: View {
                 onSave: { showRepeatPicker = false }
             )
         }
-        .appDialog(isPresented: $showLanguagePicker) {
-            LanguageSelectDialog(
-                onSelectEnglish: {
-                    viewModel.appLanguageCode = "en"
-                    showLanguagePicker = false
-                },
-                onSelectArabic: {
-                    viewModel.appLanguageCode = "ar"
-                    showLanguagePicker = false
-                },
-                onCancel: {
-                    showLanguagePicker = false
-                }
-            )
-        }
+
         .appDialog(isPresented: $showLogoutConfirm) {
             LogoutConfirmDialog(
                 onConfirm: {
@@ -122,6 +107,7 @@ struct SettingsView: View {
             AddLanguageView(languageViewModel: viewModel.languageViewModel)
         }
         .onAppear {
+            viewModel.refreshAppLanguage()
             Task {
                 await viewModel.languageViewModel.loadMyLanguages()
             }

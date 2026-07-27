@@ -10,11 +10,12 @@ import SwiftUI
 struct LanguageSelectorButton: View {
     let title: String
     let placeholder: String
-    let selectedLanguage: Language?
+    let selectedName: String?
+    let selectedFlag: String?
     let action: () -> Void
 
     private var isSelected: Bool {
-        selectedLanguage != nil
+        selectedName != nil
     }
 
     var body: some View {
@@ -24,12 +25,12 @@ struct LanguageSelectorButton: View {
                     .appTextStyle(.micro, color: .appTextSecondary.opacity(0.8))
 
                 HStack(spacing: 12) {
-                    if let selectedLanguage {
-                        Text(selectedLanguage.flag)
+                    if let name = selectedName, let flag = selectedFlag {
+                        Text(flag)
                             .font(.system(size: 20))
                             .frame(width: 20, height: 20)
 
-                        Text(selectedLanguage.name)
+                        Text(name)
                             .appTextStyle(.bodyLargeMedium, color: .appTextPrimary)
                     } else {
                         Text(placeholder)
@@ -69,14 +70,16 @@ struct ScaleButtonStyle: ButtonStyle {
         LanguageSelectorButton(
             title: "I SPEAK...",
             placeholder: "Select language",
-            selectedLanguage: nil,
+            selectedName: nil,
+            selectedFlag: nil,
             action: {}
         )
         
         LanguageSelectorButton(
             title: "I WANT TO LEARN...",
             placeholder: "Select language",
-            selectedLanguage: Language(code: "en", name: "English", flag: "🇬🇧"),
+            selectedName: "English",
+            selectedFlag: "🇬🇧",
             action: {}
         )
     }
