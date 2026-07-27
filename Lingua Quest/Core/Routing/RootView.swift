@@ -14,6 +14,7 @@ struct RootView: View {
     @AppStorage(AppConstants.UserDefaultsKeys.needsProfileCompletion) private var needsProfileCompletion = false
     @AppStorage(AppConstants.UserDefaultsKeys.isDarkMode) private var isDarkMode = false
     @AppStorage(AppConstants.UserDefaultsKeys.appLanguage) private var appLanguage = "en"
+    @State private var networkMonitor = NetworkMonitor.shared
     
     var body: some View {
         NavigationStack(path: $router.path) {
@@ -43,5 +44,27 @@ struct RootView: View {
         .environment(\.locale, Locale(identifier: appLanguage))
         .environment(\.layoutDirection, appLanguage == "ar" ? .rightToLeft : .leftToRight)
         .globalVocabularyDeepLink()
+        .appDialog(isPresented: .init(
+            get: { !networkMonitor.isConnected },
+            set: { _ in }
+        )) {
+            DialogCardContainer(
+                showMascot: true,
+                mascotImage: .noInternet,
+                speechBubbleText: L10n.Network.noConnection,
+                onMascotTap: nil
+            ) {
+                VStack(spacing: 8) {
+                    Text(L10n.Network.offlineTitle)
+                        .appTextStyle(.headingLarge, color: .appTextHeading)
+                        .multilineTextAlignment(.center)
+                    
+                    Text(L10n.Network.offlineSubtitle)
+                        .appTextStyle(.bodyMedium, color: .appTextSecondary)
+                        .multilineTextAlignment(.center)
+                }
+                .padding(.top, 10)
+            }
+        }
     }
 }

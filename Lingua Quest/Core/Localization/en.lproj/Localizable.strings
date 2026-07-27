@@ -395,3 +395,5 @@
 
 "game.not_enough_coins.current_balance" = "Current Balance";
 "game.not_enough_coins.missing_balance" = "Missing Coins";
+"network.error.offline_title" = "You are offline";
+"network.error.offline_subtitle" = "Please check your internet connection and try again.";

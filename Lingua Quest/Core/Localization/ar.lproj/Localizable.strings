@@ -397,3 +397,5 @@
 
 "game.not_enough_coins.current_balance" = "الرصيد الحالي";
 "game.not_enough_coins.missing_balance" = "الرصيد الناقص";
+"network.error.offline_title" = "أنت غير متصل بالإنترنت";
+"network.error.offline_subtitle" = "يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.";

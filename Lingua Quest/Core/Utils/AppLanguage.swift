@@ -53,7 +53,7 @@ enum AppLanguage: String, CaseIterable, Identifiable {
         return flagString
     }
     
-    /// Maps a language code to a BCP-47 speech code supported by AVSpeechSynthesizer
+   
     static func speechCode(for code: String) -> String {
         let normalizedCode = code.lowercased()
         
