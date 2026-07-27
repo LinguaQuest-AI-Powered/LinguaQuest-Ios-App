@@ -29,7 +29,8 @@ final class LockScreenVocabularyAssembly: Assembly {
         
         container.register(GetSavedVocabularyWordsUseCaseProtocol.self) { resolver in
             let repository = resolver.resolve(VocabularyRepositoryProtocol.self)!
-            return GetSavedVocabularyWordsUseCase(repository: repository)
+            let prefs = resolver.resolve(UserPreferencesProtocol.self)!
+            return GetSavedVocabularyWordsUseCase(repository: repository, userPreferences: prefs)
         }
         
         container.register(MarkVocabularyWordAsShownUseCaseProtocol.self) { resolver in
@@ -44,10 +45,12 @@ final class LockScreenVocabularyAssembly: Assembly {
         
         container.register(ActivateLockScreenVocabularyUseCaseProtocol.self) { resolver in
             let generateWords = resolver.resolve(GenerateVocabularyWordsUseCaseProtocol.self)!
+            let getSavedWords = resolver.resolve(GetSavedVocabularyWordsUseCaseProtocol.self)!
             let scheduleNotification = resolver.resolve(ScheduleVocabularyNotificationUseCaseProtocol.self)!
             let userPreferences = resolver.resolve(UserPreferencesProtocol.self)!
             return ActivateLockScreenVocabularyUseCase(
                 generateVocabularyWordsUseCase: generateWords,
+                getSavedVocabularyWordsUseCase: getSavedWords,
                 scheduleVocabularyNotificationUseCase: scheduleNotification,
                 userPreferences: userPreferences
             )

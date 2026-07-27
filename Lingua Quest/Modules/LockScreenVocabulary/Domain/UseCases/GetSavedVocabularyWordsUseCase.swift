@@ -13,12 +13,16 @@ protocol GetSavedVocabularyWordsUseCaseProtocol {
 
 final class GetSavedVocabularyWordsUseCase: GetSavedVocabularyWordsUseCaseProtocol {
     private let repository: VocabularyRepositoryProtocol
+    private let userPreferences: UserPreferencesProtocol
     
-    init(repository: VocabularyRepositoryProtocol) {
+    init(repository: VocabularyRepositoryProtocol, userPreferences: UserPreferencesProtocol) {
         self.repository = repository
+        self.userPreferences = userPreferences
     }
     
     func execute() async throws -> [VocabularyWordEntity] {
-        try await repository.fetchSavedWords()
+        let words = try await repository.fetchSavedWords()
+        let currentLang = userPreferences.targetLanguageName ?? "English"
+        return words.filter { $0.targetLanguage == currentLang }
     }
 }

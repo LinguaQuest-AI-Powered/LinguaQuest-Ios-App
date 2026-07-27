@@ -48,22 +48,26 @@ final class SpeakingLabAssembly: Assembly {
         // Use Cases
         container.register(GetDailyVoiceSentencesUseCase.self) { resolver in
             let repo = resolver.resolve(VoiceEvaluationRepositoryProtocol.self)!
-            return GetDailyVoiceSentencesUseCase(repository: repo)
+            let prefs = resolver.resolve(UserPreferencesProtocol.self)!
+            return GetDailyVoiceSentencesUseCase(repository: repo, userPreferences: prefs)
         }
         
         container.register(EvaluateVoiceUseCase.self) { resolver in
             let repo = resolver.resolve(VoiceEvaluationRepositoryProtocol.self)!
-            return EvaluateVoiceUseCase(repository: repo)
+            let prefs = resolver.resolve(UserPreferencesProtocol.self)!
+            return EvaluateVoiceUseCase(repository: repo, userPreferences: prefs)
         }
         
         container.register(SaveVoiceProgressUseCase.self) { resolver in
             let repo = resolver.resolve(VoiceEvaluationRepositoryProtocol.self)!
-            return SaveVoiceProgressUseCase(repository: repo)
+            let prefs = resolver.resolve(UserPreferencesProtocol.self)!
+            return SaveVoiceProgressUseCase(repository: repo, userPreferences: prefs)
         }
         
         container.register(GetVoiceProgressUseCase.self) { resolver in
             let repo = resolver.resolve(VoiceEvaluationRepositoryProtocol.self)!
-            return GetVoiceProgressUseCase(repository: repo)
+            let prefs = resolver.resolve(UserPreferencesProtocol.self)!
+            return GetVoiceProgressUseCase(repository: repo, userPreferences: prefs)
         }
         
         // Services

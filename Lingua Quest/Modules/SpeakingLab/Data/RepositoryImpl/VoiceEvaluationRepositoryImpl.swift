@@ -30,32 +30,32 @@ class VoiceEvaluationRepositoryImpl: VoiceEvaluationRepositoryProtocol {
         self.speechRecognitionService = speechRecognitionService
     }
     
-    func getDailySentences() async throws -> [VoiceSentence] {
+    func getDailySentences(languageName: String, languageCode: String) async throws -> [VoiceSentence] {
         // Check Firestore for today's sentences
-        if let cachedDTOs = try await progressDataSource.getTodaySentences(deviceId: deviceId) {
+        if let cachedDTOs = try await progressDataSource.getTodaySentences(deviceId: deviceId, languageCode: languageCode) {
             let sentences: [VoiceSentence] = cachedDTOs.map { $0.toEntity() }
             return sentences
         }
         
         // Generate new sentences via AI
-        let language = "German"
-        let generatedDTOs = try await generatorDataSource.generateSentences(language: language, count: 5)
+        let generatedDTOs = try await generatorDataSource.generateSentences(language: languageName, count: 5)
         
         // Save to Firestore
-        try await progressDataSource.saveDailySentences(deviceId: deviceId, sentences: generatedDTOs)
+        try await progressDataSource.saveDailySentences(deviceId: deviceId, languageCode: languageCode, sentences: generatedDTOs)
         
         let sentences: [VoiceSentence] = generatedDTOs.map { $0.toEntity() }
         return sentences
     }
     
-    func evaluateAudio(audioData: Data, targetText: String) async throws -> VoiceEvaluationResult {
+    func evaluateAudio(audioData: Data, targetText: String, languageCode: String) async throws -> VoiceEvaluationResult {
         // Step 1: Save audio to a temp file for SFSpeechRecognizer
         let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("eval_recording.m4a")
         try audioData.write(to: tempURL)
         
         // Step 2: Transcribe audio locally using Apple Speech Recognition
-        // Use German locale since that's the target language
-        let locale = Locale(identifier: "de-DE")
+        // Use the proper locale since that's the target language
+        let speechCode = SpeechLocaleMapper.mapToSpeechCode(languageCode)
+        let locale = Locale(identifier: speechCode)
         let spokenText: String
         do {
             spokenText = try await speechRecognitionService.transcribeAudio(at: tempURL, locale: locale)
@@ -89,11 +89,11 @@ class VoiceEvaluationRepositoryImpl: VoiceEvaluationRepositoryProtocol {
         )
     }
     
-    func markSentenceCompleted(sentenceId: String) async throws {
-        try await progressDataSource.markSentenceCompleted(deviceId: deviceId, sentenceId: sentenceId)
+    func markSentenceCompleted(sentenceId: String, languageCode: String) async throws {
+        try await progressDataSource.markSentenceCompleted(deviceId: deviceId, languageCode: languageCode, sentenceId: sentenceId)
     }
     
-    func getProgress() async throws -> (completed: Int, total: Int) {
-        return try await progressDataSource.getProgress(deviceId: deviceId)
+    func getProgress(languageCode: String) async throws -> (completed: Int, total: Int) {
+        return try await progressDataSource.getProgress(deviceId: deviceId, languageCode: languageCode)
     }
 }

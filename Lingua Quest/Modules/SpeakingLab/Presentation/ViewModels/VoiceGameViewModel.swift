@@ -57,8 +57,8 @@ class VoiceGameViewModel {
     
     func playTargetSentence() {
         // Determine language code for speech synthesis from the sentence
-        let languageCode = currentSentence?.language ?? "de"
-        let speechCode = mapToSpeechCode(languageCode)
+        let languageCode = currentSentence?.language ?? "en"
+        let speechCode = SpeechLocaleMapper.mapToSpeechCode(languageCode)
         
         isPlayingAudio = true
         speechService.onFinishSpeaking = { [weak self] in
@@ -72,19 +72,6 @@ class VoiceGameViewModel {
     var currentSentence: VoiceSentence? {
         guard currentSentenceIndex < dailySentences.count else { return nil }
         return dailySentences[currentSentenceIndex]
-    }
-    
-    private func mapToSpeechCode(_ code: String) -> String {
-        // Map simple language names/codes to BCP-47 for AVSpeechSynthesizer
-        switch code.lowercased() {
-        case "de", "german": return "de-DE"
-        case "es", "spanish": return "es-ES"
-        case "fr", "french": return "fr-FR"
-        case "en", "english": return "en-US"
-        case "ja", "japanese": return "ja-JP"
-        case "ar", "arabic": return "ar-SA"
-        default: return "de-DE"
-        }
     }
     
     private func loadSentences() async {

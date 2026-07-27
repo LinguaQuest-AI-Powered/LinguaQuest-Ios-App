@@ -9,10 +9,10 @@ import Foundation
 import FirebaseFirestore
 
 protocol VoiceProgressRemoteDataSourceProtocol {
-    func getTodaySentences(deviceId: String) async throws -> [VoiceSentenceDTO]?
-    func saveDailySentences(deviceId: String, sentences: [VoiceSentenceDTO]) async throws
-    func markSentenceCompleted(deviceId: String, sentenceId: String) async throws
-    func getProgress(deviceId: String) async throws -> (completed: Int, total: Int)
+    func getTodaySentences(deviceId: String, languageCode: String) async throws -> [VoiceSentenceDTO]?
+    func saveDailySentences(deviceId: String, languageCode: String, sentences: [VoiceSentenceDTO]) async throws
+    func markSentenceCompleted(deviceId: String, languageCode: String, sentenceId: String) async throws
+    func getProgress(deviceId: String, languageCode: String) async throws -> (completed: Int, total: Int)
 }
 
 class VoiceProgressRemoteDataSource: VoiceProgressRemoteDataSourceProtocol {
@@ -24,13 +24,13 @@ class VoiceProgressRemoteDataSource: VoiceProgressRemoteDataSourceProtocol {
         return formatter.string(from: Date())
     }
     
-    private func dailyDocRef(deviceId: String) -> DocumentReference {
+    private func dailyDocRef(deviceId: String, languageCode: String) -> DocumentReference {
         db.collection("users").document(deviceId)
-            .collection("voice_daily").document(todayDateId)
+            .collection("voice_daily_\(languageCode)").document(todayDateId)
     }
     
-    func getTodaySentences(deviceId: String) async throws -> [VoiceSentenceDTO]? {
-        let docRef = dailyDocRef(deviceId: deviceId)
+    func getTodaySentences(deviceId: String, languageCode: String) async throws -> [VoiceSentenceDTO]? {
+        let docRef = dailyDocRef(deviceId: deviceId, languageCode: languageCode)
         let snapshot = try await docRef.getDocument()
         
         guard snapshot.exists, let data = snapshot.data(),
@@ -45,8 +45,8 @@ class VoiceProgressRemoteDataSource: VoiceProgressRemoteDataSourceProtocol {
         return sentences.isEmpty ? nil : sentences
     }
     
-    func saveDailySentences(deviceId: String, sentences: [VoiceSentenceDTO]) async throws {
-        let docRef = dailyDocRef(deviceId: deviceId)
+    func saveDailySentences(deviceId: String, languageCode: String, sentences: [VoiceSentenceDTO]) async throws {
+        let docRef = dailyDocRef(deviceId: deviceId, languageCode: languageCode)
         
         let sentenceDicts = sentences.map { $0.toDictionary() }
         
@@ -57,8 +57,8 @@ class VoiceProgressRemoteDataSource: VoiceProgressRemoteDataSourceProtocol {
         ])
     }
     
-    func markSentenceCompleted(deviceId: String, sentenceId: String) async throws {
-        let docRef = dailyDocRef(deviceId: deviceId)
+    func markSentenceCompleted(deviceId: String, languageCode: String, sentenceId: String) async throws {
+        let docRef = dailyDocRef(deviceId: deviceId, languageCode: languageCode)
         
         try await docRef.updateData([
             "completed_sentence_ids": FieldValue.arrayUnion([sentenceId]),
@@ -66,8 +66,8 @@ class VoiceProgressRemoteDataSource: VoiceProgressRemoteDataSourceProtocol {
         ])
     }
     
-    func getProgress(deviceId: String) async throws -> (completed: Int, total: Int) {
-        let docRef = dailyDocRef(deviceId: deviceId)
+    func getProgress(deviceId: String, languageCode: String) async throws -> (completed: Int, total: Int) {
+        let docRef = dailyDocRef(deviceId: deviceId, languageCode: languageCode)
         let snapshot = try await docRef.getDocument()
         
         guard snapshot.exists, let data = snapshot.data() else {

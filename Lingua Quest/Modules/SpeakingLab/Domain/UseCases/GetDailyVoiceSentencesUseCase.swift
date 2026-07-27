@@ -9,12 +9,16 @@ import Foundation
 
 class GetDailyVoiceSentencesUseCase {
     private let repository: VoiceEvaluationRepositoryProtocol
+    private let userPreferences: UserPreferencesProtocol
     
-    init(repository: VoiceEvaluationRepositoryProtocol) {
+    init(repository: VoiceEvaluationRepositoryProtocol, userPreferences: UserPreferencesProtocol) {
         self.repository = repository
+        self.userPreferences = userPreferences
     }
     
     func execute() async throws -> [VoiceSentence] {
-        return try await repository.getDailySentences()
+        let langName = userPreferences.targetLanguageName ?? "English"
+        let langCode = userPreferences.learningLanguageCode ?? "en"
+        return try await repository.getDailySentences(languageName: langName, languageCode: langCode)
     }
 }

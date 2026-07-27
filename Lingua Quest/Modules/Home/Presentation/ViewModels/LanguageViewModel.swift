@@ -15,6 +15,7 @@ final class LanguageViewModel {
     private let getAvailableLanguagesUseCase: GetAvailableLanguagesUseCase
     private let switchActiveLanguageUseCase: SwitchActiveLanguageUseCase
     private let addLanguagesUseCase: AddLanguagesUseCase
+    private let activateLockScreenVocabularyUseCase: ActivateLockScreenVocabularyUseCaseProtocol
     private var userPreferences: UserPreferences
     
     // Callbacks
@@ -41,12 +42,14 @@ final class LanguageViewModel {
         getAvailableLanguagesUseCase: GetAvailableLanguagesUseCase,
         switchActiveLanguageUseCase: SwitchActiveLanguageUseCase,
         addLanguagesUseCase: AddLanguagesUseCase,
+        activateLockScreenVocabularyUseCase: ActivateLockScreenVocabularyUseCaseProtocol,
         userPreferences: UserPreferences
     ) {
         self.getMyLanguagesUseCase = getMyLanguagesUseCase
         self.getAvailableLanguagesUseCase = getAvailableLanguagesUseCase
         self.switchActiveLanguageUseCase = switchActiveLanguageUseCase
         self.addLanguagesUseCase = addLanguagesUseCase
+        self.activateLockScreenVocabularyUseCase = activateLockScreenVocabularyUseCase
         self.userPreferences = userPreferences
     }
     
@@ -104,6 +107,12 @@ final class LanguageViewModel {
             if let active = activeLanguage {
                 userPreferences.learningLanguageCode = active.code
                 userPreferences.targetLanguageName = active.name
+                
+                if userPreferences.isLockScreenVocabularyEnabled {
+                    Task {
+                        _ = await activateLockScreenVocabularyUseCase.execute()
+                    }
+                }
             }
             
             onLanguageSwitched?()

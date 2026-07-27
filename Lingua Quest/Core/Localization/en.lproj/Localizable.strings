@@ -376,12 +376,12 @@
 "boss_level.result_try_again" = "Try Again";
 "gallery.my_journal" = "My Journal";
 "gallery.categories.words" = "Words";
-"lock_screen_vocab.toggle_label" = "AI Lock Screen Vocabulary";
-"lock_screen_vocab.activation_title" = "Unlock AI Vocabulary";
+"lock_screen_vocab.toggle_label" = "Lock Screen Vocabulary";
+"lock_screen_vocab.activation_title" = "Unlock Lock Screen Vocabulary";
 "lock_screen_vocab.activation_subtitle" = "Get a new vocabulary word on your lock screen every time you close the app.";
 "lock_screen_vocab.activate_action" = "Unlock for 1,500";
-"lock_screen_vocab.activated_toast" = "AI Vocabulary enabled!";
-"lock_screen_vocab.disabled_toast" = "AI Vocabulary disabled.";
+"lock_screen_vocab.activated_toast" = "Lock Screen Vocabulary enabled!";
+"lock_screen_vocab.disabled_toast" = "Lock Screen Vocabulary disabled.";
 
 "lock_screen_vocab.tap_to_open_and_listen" = "Tap to open & listen";
 "word_insight.example" = "Example:";

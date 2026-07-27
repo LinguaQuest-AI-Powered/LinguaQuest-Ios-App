@@ -78,11 +78,13 @@ final class HomeAssembly: Assembly {
             let switchActive = resolver.resolve(SwitchActiveLanguageUseCase.self)!
             let addLangs = resolver.resolve(AddLanguagesUseCase.self)!
             let userPreferences = resolver.resolve(UserPreferences.self)!
+            let activateLockScreenVocabularyUseCase = resolver.resolve(ActivateLockScreenVocabularyUseCaseProtocol.self)!
             return LanguageViewModel(
                 getMyLanguagesUseCase: getMy,
                 getAvailableLanguagesUseCase: getAvailable,
                 switchActiveLanguageUseCase: switchActive,
                 addLanguagesUseCase: addLangs,
+                activateLockScreenVocabularyUseCase: activateLockScreenVocabularyUseCase,
                 userPreferences: userPreferences
             )
         }.inObjectScope(.container)
