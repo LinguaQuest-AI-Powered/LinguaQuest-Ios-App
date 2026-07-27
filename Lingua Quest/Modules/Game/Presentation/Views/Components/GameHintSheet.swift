@@ -14,34 +14,32 @@ struct GameHintSheet: View {
     let onNotEnoughCoins: () -> Void
     
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 16) {
             // Header
             HStack {
-                // Coins removed
-                
                 Spacer()
                 
                 // Close Button
                 Button(action: onClose) {
                     Image(systemIcon: .xmark)
                         .appTextStyle(.bodyBold, color: .appBrandPrimary)
-                        .frame(width: 36, height: 36)
+                        .frame(width: 32, height: 32)
                         .background(Color.appBrandPrimary.opacity(0.15))
                         .clipShape(Circle())
                 }
             }
             .padding(.horizontal, 24)
-            .padding(.top, 8)
+            .padding(.top, 16)
             
             // Mascot
             Image(asset: .birdIdea)
                 .resizable()
                 .scaledToFit()
-                .frame(height: 180)
+                .frame(height: 140)
             
             // Title
             Text(L10n.Game.needHintTitle)
-                .appTextStyle(.displaySmall, color: .appBrandPrimary)
+                .appTextStyle(.headingLarge, color: .appBrandPrimary)
             
             // Options
             VStack(spacing: 16) {

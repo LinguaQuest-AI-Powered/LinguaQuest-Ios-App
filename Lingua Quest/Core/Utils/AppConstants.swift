@@ -46,7 +46,7 @@ enum AppConstants {
         static let defaultUserName = "Alex"
         static let unlockVocabularyCost = 1500
         static let changeWordCost = 50
-        static let hintCost = 10
+        static let hintCost = 30
         static let noOfWordsForLockScreenVocabulary = 5
     }
 } 

@@ -22,6 +22,11 @@ class VoiceGameViewModel {
     private let evaluateUseCase: EvaluateVoiceUseCase
     private let audioService: AudioRecorderServiceProtocol
     private let speechService: SpeechSynthesizerProtocol
+    private let statsService: StatsServiceProtocol
+    
+    var coins: Int {
+        statsService.coins
+    }
     
     var recordingState: VoiceRecordingState = .idle
     var targetSentence: String = ""
@@ -40,11 +45,13 @@ class VoiceGameViewModel {
     var recordingFileURL: URL?
     
     init(router: RouterProtocol,
+         statsService: StatsServiceProtocol,
          getSentencesUseCase: GetDailyVoiceSentencesUseCase,
          evaluateUseCase: EvaluateVoiceUseCase,
          audioService: AudioRecorderServiceProtocol,
          speechService: SpeechSynthesizerProtocol) {
         self.router = router
+        self.statsService = statsService
         self.getSentencesUseCase = getSentencesUseCase
         self.evaluateUseCase = evaluateUseCase
         self.audioService = audioService

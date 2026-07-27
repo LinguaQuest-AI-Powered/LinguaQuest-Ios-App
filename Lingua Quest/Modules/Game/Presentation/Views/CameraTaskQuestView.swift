@@ -69,7 +69,11 @@ struct CameraTaskQuestView: View {
                         HStack(spacing: 16) {
                             Text(viewModel.targetWord)
                                 .appTextStyle(.displayLarge, color: .appTextSecondary)
-                                .frame(maxWidth: .infinity, maxHeight: 80)
+                                .minimumScaleFactor(0.4)
+                                .lineLimit(2)
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal, 8)
+                                .frame(maxWidth: .infinity, minHeight: 80)
                                 .background(Color.appSurfaceCard)
                                 .clipShape(RoundedRectangle(cornerRadius: 16))
                                 .overlay(
@@ -149,7 +153,7 @@ struct CameraTaskQuestView: View {
                 dismissButton: .default(Text(L10n.Common.ok))
             )
         }
-        .customBottomSheet(isPresented: $showHintSheet, initialDetent: .custom(ratio: 0.7)) {
+        .customBottomSheet(isPresented: $showHintSheet, initialDetent: .custom(ratio: 0.52)) {
             GameHintSheet(
                 coins: viewModel.coins,
                 onClose: { showHintSheet = false },

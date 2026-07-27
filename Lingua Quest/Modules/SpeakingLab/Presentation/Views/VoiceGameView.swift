@@ -36,8 +36,8 @@ struct VoiceGameView: View {
                     
                     Spacer()
                     
-                    // Coin Counter (mock value)
-                    RewardBadge(type: .coin, value: "1,200", size: .small)
+                    // Coin Counter
+                    RewardBadge(type: .coin, value: "\(viewModel.coins)", size: .small)
                 }
                 .overlay(
                     Text(L10n.SpeakingLab.voicePractice)

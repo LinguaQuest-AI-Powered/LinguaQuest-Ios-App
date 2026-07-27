@@ -84,9 +84,11 @@ final class SpeakingLabAssembly: Assembly {
             let evaluateUseCase = resolver.resolve(EvaluateVoiceUseCase.self)!
             let audioService = resolver.resolve(AudioRecorderServiceProtocol.self)!
             let speechService = resolver.resolve(SpeechSynthesizerProtocol.self)!
+            let statsService = resolver.resolve(StatsServiceProtocol.self)!
             
             return VoiceGameViewModel(
                 router: router,
+                statsService: statsService,
                 getSentencesUseCase: getSentencesUseCase,
                 evaluateUseCase: evaluateUseCase,
                 audioService: audioService,
