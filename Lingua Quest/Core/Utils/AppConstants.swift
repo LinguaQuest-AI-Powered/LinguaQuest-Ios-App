@@ -44,7 +44,6 @@ enum AppConstants {
     }
     enum Common {
         static let defaultUserName = "Alex"
-        static let targetLanguageValue = "ar"
         static let unlockVocabularyCost = 0
         static let changeWordCost = 50
         static let hintCost = 10

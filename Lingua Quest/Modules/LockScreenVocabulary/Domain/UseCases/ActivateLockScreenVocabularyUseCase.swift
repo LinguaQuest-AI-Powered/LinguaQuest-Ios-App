@@ -30,7 +30,10 @@ final class ActivateLockScreenVocabularyUseCase: ActivateLockScreenVocabularyUse
         // 2. Persist flag
         userPreferences.isLockScreenVocabularyEnabled = true
         
-        let targetLang = userPreferences.targetLanguageName ?? "English"
+        let targetCode = userPreferences.learningLanguageCode ?? "en"
+        let englishLocale = Locale(identifier: "en_US")
+        let targetLang = englishLocale.localizedString(forLanguageCode: targetCode)?.capitalized ?? targetCode
+        
         do {
             let existingWords = try await getSavedVocabularyWordsUseCase.execute()
             let unshownWords = existingWords.filter { !$0.isShownOnLockScreen }

@@ -22,7 +22,9 @@ final class GetSavedVocabularyWordsUseCase: GetSavedVocabularyWordsUseCaseProtoc
     
     func execute() async throws -> [VocabularyWordEntity] {
         let words = try await repository.fetchSavedWords()
-        let currentLang = userPreferences.targetLanguageName ?? "English"
+        let targetCode = userPreferences.learningLanguageCode ?? "en"
+        let englishLocale = Locale(identifier: "en_US")
+        let currentLang = englishLocale.localizedString(forLanguageCode: targetCode)?.capitalized ?? targetCode
         return words.filter { $0.targetLanguage == currentLang }
     }
 }

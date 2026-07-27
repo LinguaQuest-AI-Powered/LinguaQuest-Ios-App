@@ -59,6 +59,7 @@ final class LoginViewModel {
             switch result {
             case .success(let data):
                 userPreferences.isLoggedIn = true
+                userPreferences.userId = data.user.id
                 userPreferences.email = email
                 do {
                     let profile = try await getProfileUseCase.execute()

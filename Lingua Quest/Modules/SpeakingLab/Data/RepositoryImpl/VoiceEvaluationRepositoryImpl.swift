@@ -13,26 +13,32 @@ class VoiceEvaluationRepositoryImpl: VoiceEvaluationRepositoryProtocol {
     private let progressDataSource: VoiceProgressRemoteDataSourceProtocol
     private let generatorDataSource: VoiceSentenceGeneratorDataSourceProtocol
     private let speechRecognitionService: SpeechRecognitionServiceProtocol
+    private let userPreferences: UserPreferencesProtocol
     
-    private var deviceId: String {
-        UIDevice.current.identifierForVendor?.uuidString ?? "unknown_device"
+    private var userId: String {
+        if let id = userPreferences.userId {
+            return String(id)
+        }
+        return UIDevice.current.identifierForVendor?.uuidString ?? "unknown_device"
     }
     
     init(
         evaluationDataSource: VoiceEvaluationRemoteDataSourceProtocol,
         progressDataSource: VoiceProgressRemoteDataSourceProtocol,
         generatorDataSource: VoiceSentenceGeneratorDataSourceProtocol,
-        speechRecognitionService: SpeechRecognitionServiceProtocol
+        speechRecognitionService: SpeechRecognitionServiceProtocol,
+        userPreferences: UserPreferencesProtocol
     ) {
         self.evaluationDataSource = evaluationDataSource
         self.progressDataSource = progressDataSource
         self.generatorDataSource = generatorDataSource
         self.speechRecognitionService = speechRecognitionService
+        self.userPreferences = userPreferences
     }
     
     func getDailySentences(languageName: String, languageCode: String) async throws -> [VoiceSentence] {
         // Check Firestore for today's sentences
-        if let cachedDTOs = try await progressDataSource.getTodaySentences(deviceId: deviceId, languageCode: languageCode) {
+        if let cachedDTOs = try await progressDataSource.getTodaySentences(userId: userId, languageCode: languageCode) {
             let sentences: [VoiceSentence] = cachedDTOs.map { $0.toEntity() }
             return sentences
         }
@@ -41,7 +47,7 @@ class VoiceEvaluationRepositoryImpl: VoiceEvaluationRepositoryProtocol {
         let generatedDTOs = try await generatorDataSource.generateSentences(language: languageName, count: 5)
         
         // Save to Firestore
-        try await progressDataSource.saveDailySentences(deviceId: deviceId, languageCode: languageCode, sentences: generatedDTOs)
+        try await progressDataSource.saveDailySentences(userId: userId, languageCode: languageCode, sentences: generatedDTOs)
         
         let sentences: [VoiceSentence] = generatedDTOs.map { $0.toEntity() }
         return sentences
@@ -90,10 +96,10 @@ class VoiceEvaluationRepositoryImpl: VoiceEvaluationRepositoryProtocol {
     }
     
     func markSentenceCompleted(sentenceId: String, languageCode: String) async throws {
-        try await progressDataSource.markSentenceCompleted(deviceId: deviceId, languageCode: languageCode, sentenceId: sentenceId)
+        try await progressDataSource.markSentenceCompleted(userId: userId, languageCode: languageCode, sentenceId: sentenceId)
     }
     
     func getProgress(languageCode: String) async throws -> (completed: Int, total: Int) {
-        return try await progressDataSource.getProgress(deviceId: deviceId, languageCode: languageCode)
+        return try await progressDataSource.getProgress(userId: userId, languageCode: languageCode)
     }
 }

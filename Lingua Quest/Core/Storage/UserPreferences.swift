@@ -10,6 +10,7 @@ import SwiftUI
 import Observation
 
 protocol UserPreferencesProtocol: AnyObject {
+    var userId: Int? { get set }
     var isOnboardingCompleted: Bool { get set }
     var isLoggedIn: Bool { get set }
     var needsProfileCompletion: Bool { get set }
@@ -37,6 +38,16 @@ protocol UserPreferencesProtocol: AnyObject {
 @Observable
 final class UserPreferences: UserPreferencesProtocol {
     @ObservationIgnored private let defaults = UserDefaults.standard
+    
+    var userId: Int? {
+        didSet {
+            if let id = userId {
+                defaults.set(id, forKey: "userId")
+            } else {
+                defaults.removeObject(forKey: "userId")
+            }
+        }
+    }
     
     var isOnboardingCompleted: Bool {
         didSet { defaults.set(isOnboardingCompleted, forKey: AppConstants.UserDefaultsKeys.isOnboardingCompleted) }
@@ -99,6 +110,11 @@ final class UserPreferences: UserPreferencesProtocol {
     }
     
     init() {
+        if defaults.object(forKey: "userId") != nil {
+            self.userId = defaults.integer(forKey: "userId")
+        } else {
+            self.userId = nil
+        }
         self.isOnboardingCompleted = defaults.bool(forKey: AppConstants.UserDefaultsKeys.isOnboardingCompleted)
         self.spokenLanguageCode = defaults.string(forKey: AppConstants.UserDefaultsKeys.spokenLanguageCode)
         self.learningLanguageCode = defaults.string(forKey: AppConstants.UserDefaultsKeys.learningLanguageCode)
@@ -117,6 +133,7 @@ final class UserPreferences: UserPreferencesProtocol {
     }
     
     func resetAll() {
+        userId = nil
         isOnboardingCompleted = false
         isLoggedIn = false
         needsProfileCompletion = false
@@ -148,7 +165,8 @@ final class UserPreferences: UserPreferencesProtocol {
             AppConstants.UserDefaultsKeys.userEmail,
             AppConstants.UserDefaultsKeys.nativeLanguageName,
             AppConstants.UserDefaultsKeys.targetLanguageName,
-            AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled
+            AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled,
+            "userId"
         ]
         
         for key in keysToRemove {

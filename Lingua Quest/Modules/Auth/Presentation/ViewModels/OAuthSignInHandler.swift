@@ -52,8 +52,9 @@ final class OAuthSignInHandler: OAuthSignInHandlerProtocol {
             let result = await firebaseLoginUseCase.execute(idToken: idToken)
 
             switch result {
-            case .success(let (_, _, profileComplete)):
+            case .success(let (_, user, profileComplete)):
                 userPreferences.isLoggedIn = true
+                userPreferences.userId = user.id
                 if !profileComplete {
                     userPreferences.needsProfileCompletion = true
                 } else {

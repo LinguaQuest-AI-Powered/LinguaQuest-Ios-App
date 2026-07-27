@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 
+@MainActor
 final class VocabularyRepositoryImpl: VocabularyRepositoryProtocol {
     private let remoteDataSource: VocabularyRemoteDataSourceProtocol
     private let modelContext: ModelContext
