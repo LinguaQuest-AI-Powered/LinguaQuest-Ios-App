@@ -229,6 +229,9 @@ enum L10n {
         }
         static var continueLessonTitle: String { localized("home.continue_lesson") }
         static var continueButton: String { localized("home.continue") }
+        static var featureAiChat: String { localized("home.feature_ai_chat") }
+        static var featureSpeaking: String { localized("home.feature_speaking") }
+        static var practiceAndLearn: String { localized("home.practice_and_learn") }
         static var lessonApple: String { localized("home.lesson.apple") }
         static var lessonAppleDesc: String { localized("home.noun_la_pomme") }
         static var kitchenWorld: String { localized("home.kitchen_world") }

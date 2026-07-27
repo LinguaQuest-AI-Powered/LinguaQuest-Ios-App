@@ -397,3 +397,6 @@
 "game.not_enough_coins.missing_balance" = "Missing Coins";
 "network.error.offline_title" = "You are offline";
 "network.error.offline_subtitle" = "Please check your internet connection and try again.";
+"home.feature_ai_chat" = "AI Chat";
+"home.feature_speaking" = "Speaking";
+"home.practice_and_learn" = "Practice & Learn";

@@ -38,6 +38,9 @@ struct HomeView: View {
                 starCount: viewModel.statsService.xp,
                 coinCount: viewModel.statsService.coins
             )
+            .offset(y: isAnimated ? 0 : -20)
+            .opacity(isAnimated ? 1 : 0)
+            .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.0), value: isAnimated)
 
             ZStack(alignment: .bottomTrailing) {
                 
@@ -67,7 +70,10 @@ struct HomeView: View {
                                 streakDays: viewModel.homeData?.streakDays ?? 0,
                                 progressWidth: CGFloat(viewModel.languageViewModel.activeLanguage?.progressPercent ?? 0) * 1.65
                             )
-                                .padding(.horizontal, 20)
+                            .padding(.horizontal, 20)
+                            .offset(y: isAnimated ? 0 : 30)
+                            .opacity(isAnimated ? 1 : 0)
+                            .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.05), value: isAnimated)
                                 
 
                             Group {
@@ -103,16 +109,24 @@ struct HomeView: View {
                             .opacity(animateItems ? 1 : 0)
                             .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.1), value: animateItems)
 
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack(spacing: 16) {
-                                    VoicePracticeCardView(completed: voiceCompleted, total: voiceTotal, action: { router.push(.voiceGame) })
-                                        .frame(width: 300)
-                                    
-                                    RoleplayCardView(action: { router.push(.roleplayScenarios) })
-                                        .frame(width: 300)
+                            Group {
+                                Text(L10n.Home.practiceAndLearn)
+                                    .font(AppTextStyle.displaySmall.font)
+                                    .foregroundColor(Color.appTextHeading)
+                                    .padding(.horizontal, 20)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 16) {
+                                        VoicePracticeCardView(completed: voiceCompleted, total: voiceTotal, action: { router.push(.voiceGame) })
+                                            .frame(width: 204)
+                                        
+                                        RoleplayCardView(action: { router.push(.roleplayScenarios) })
+                                            .frame(width: 204)
+                                    }
+                                    .padding(.horizontal, 20)
+                                    .padding(.vertical, 4)
                                 }
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 4)
                             }
                             .offset(y: isAnimated ? 0 : 30)
                             .opacity(isAnimated ? 1 : 0)
@@ -318,9 +332,9 @@ struct HomeSkeletonView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 16) {
                     VoicePracticeCardView(completed: 0, total: 5, action: {})
-                        .frame(width: 300)
+                        .frame(width: 204)
                     RoleplayCardView(action: {})
-                        .frame(width: 300)
+                        .frame(width: 204)
                 }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 4)
