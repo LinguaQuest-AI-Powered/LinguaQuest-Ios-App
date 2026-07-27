@@ -103,17 +103,20 @@ struct HomeView: View {
                             .opacity(animateItems ? 1 : 0)
                             .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.1), value: animateItems)
 
-                            VoicePracticeCardView(completed: voiceCompleted, total: voiceTotal, action: { router.push(.voiceGame) })
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack(spacing: 16) {
+                                    VoicePracticeCardView(completed: voiceCompleted, total: voiceTotal, action: { router.push(.voiceGame) })
+                                        .frame(width: 300)
+                                    
+                                    RoleplayCardView(action: { router.push(.roleplayScenarios) })
+                                        .frame(width: 300)
+                                }
                                 .padding(.horizontal, 20)
-                                .offset(y: isAnimated ? 0 : 30)
-                                .opacity(isAnimated ? 1 : 0)
-                                .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.15), value: isAnimated)
-
-                            RoleplayCardView(action: { router.push(.roleplayScenarios) })
-                                .padding(.horizontal, 20)
-                                .offset(y: animateItems ? 0 : 30)
-                                .opacity(animateItems ? 1 : 0)
-                                .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.3), value: animateItems)
+                                .padding(.vertical, 4)
+                            }
+                            .offset(y: isAnimated ? 0 : 30)
+                            .opacity(isAnimated ? 1 : 0)
+                            .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.2), value: isAnimated)
 
                             Color.clear.frame(height: 100)
                         }
@@ -312,8 +315,16 @@ struct HomeSkeletonView: View {
             )
             .padding(.horizontal, 20)
             
-            VoicePracticeCardView(completed: 0, total: 5, action: {})
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 16) {
+                    VoicePracticeCardView(completed: 0, total: 5, action: {})
+                        .frame(width: 300)
+                    RoleplayCardView(action: {})
+                        .frame(width: 300)
+                }
                 .padding(.horizontal, 20)
+                .padding(.vertical, 4)
+            }
 
             Color.clear.frame(height: 100)
         }
