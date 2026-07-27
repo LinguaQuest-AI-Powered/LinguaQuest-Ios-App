@@ -97,7 +97,6 @@ struct HomeRepositoryImpl: HomeRepositoryProtocol {
                     id: cached[i].id,
                     name: cached[i].name,
                     code: cached[i].code,
-                    imageUrl: cached[i].imageUrl,
                     level: cached[i].level,
                     isActive: cached[i].id == languageId,
                     progressPercent: cached[i].progressPercent

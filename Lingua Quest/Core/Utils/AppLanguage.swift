@@ -90,3 +90,18 @@ extension String {
         return AppLanguage.getFlagEmoji(for: self)
     }
 }
+
+extension AppLanguage {
+    static let targetLanguages: [AvailableLanguage] = [
+        AvailableLanguage(id: 10, name: "Arabic", code: "ar", isAdded: true),
+        AvailableLanguage(id: 8, name: "Chinese", code: "zh", isAdded: true),
+        AvailableLanguage(id: 1, name: "English", code: "en", isAdded: true),
+        AvailableLanguage(id: 3, name: "French", code: "fr", isAdded: false),
+        AvailableLanguage(id: 4, name: "German", code: "de", isAdded: true),
+        AvailableLanguage(id: 5, name: "Italian", code: "it", isAdded: true),
+        AvailableLanguage(id: 7, name: "Japanese", code: "ja", isAdded: true),
+        AvailableLanguage(id: 9, name: "Korean", code: "ko", isAdded: false),
+        AvailableLanguage(id: 6, name: "Portuguese", code: "pt", isAdded: false),
+        AvailableLanguage(id: 2, name: "Spanish", code: "es", isAdded: false)
+    ]
+}

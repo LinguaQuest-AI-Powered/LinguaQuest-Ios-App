@@ -101,7 +101,6 @@ final class LanguageViewModel {
                     id: myLanguages[i].id,
                     name: myLanguages[i].name,
                     code: myLanguages[i].code,
-                    imageUrl: myLanguages[i].imageUrl,
                     level: myLanguages[i].level,
                     isActive: myLanguages[i].id == languageId,
                     progressPercent: myLanguages[i].progressPercent

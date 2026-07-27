@@ -14,17 +14,14 @@ final class OnboardingViewModel {
     private(set) var state = OnboardingUiState()
     private var userPreferences: UserPreferencesProtocol
     private let router: RouterProtocol
-    private let getAvailableLanguagesUseCase: GetAvailableLanguagesUseCase
 
-    init(router: RouterProtocol, userPreferences: UserPreferencesProtocol, getAvailableLanguagesUseCase: GetAvailableLanguagesUseCase) {
+    init(router: RouterProtocol, userPreferences: UserPreferencesProtocol) {
         self.router = router
         self.userPreferences = userPreferences
-        self.getAvailableLanguagesUseCase = getAvailableLanguagesUseCase
     }
 
     func onGetStartedTapped() {
         state.currentStep = .language
-        fetchTargetLanguages()
     }
 
     func onBackTapped() {
@@ -44,25 +41,6 @@ final class OnboardingViewModel {
 
     func onLearningLanguageSelected(_ language: AvailableLanguage) {
         state.selectedLearningLanguage = language
-    }
-
-    private func fetchTargetLanguages() {
-        guard state.targetLanguages.isEmpty else { return }
-        state.isLoadingTargetLanguages = true
-        Task {
-            do {
-                let languages = try await getAvailableLanguagesUseCase.execute()
-                await MainActor.run {
-                    self.state.targetLanguages = languages
-                    self.state.isLoadingTargetLanguages = false
-                }
-            } catch {
-                await MainActor.run {
-                    self.state.isLoadingTargetLanguages = false
-                    // Handle error if necessary
-                }
-            }
-        }
     }
 
     func onLanguageContinueTapped() {

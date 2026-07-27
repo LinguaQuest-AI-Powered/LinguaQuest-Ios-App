@@ -14,7 +14,7 @@ struct OnboardingUiState {
     var selectedLearningLanguage: AvailableLanguage?
     
     var nativeLanguages: [AppLanguage] = AppLanguage.allCases
-    var targetLanguages: [AvailableLanguage] = []
+    var targetLanguages: [AvailableLanguage] = AppLanguage.targetLanguages
     var isLoadingTargetLanguages: Bool = false
     
     var canContinueFromLanguage: Bool {

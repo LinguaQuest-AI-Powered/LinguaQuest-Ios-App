@@ -23,7 +23,6 @@ struct ActiveLanguageDTO: Decodable {
     let id: Int?
     let name: String?
     let code: String?
-    let imageUrl: String?
     let level: Int?
     let levelProgressPercent: Int?
     let exploreWorlds: [ExploreWorldDTO]?
@@ -89,7 +88,6 @@ extension HomeResponseDTO {
                 id: activeLanguage.id ?? 1,
                 name: activeLanguage.name ?? "Unknown",
                 code: activeLanguage.code ?? "EN",
-                imageUrl: activeLanguage.imageUrl ?? "",
                 level: activeLanguage.level ?? 1,
                 levelProgressPercent: activeLanguage.levelProgressPercent ?? 0,
                 exploreWorlds: activeLanguage.exploreWorlds?.map { $0.toDomain() } ?? []
