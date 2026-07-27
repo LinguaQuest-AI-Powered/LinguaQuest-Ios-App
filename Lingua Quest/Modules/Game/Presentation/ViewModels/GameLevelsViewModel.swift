@@ -50,7 +50,7 @@ class GameLevelsViewModel {
         Task {
             do {
                 let entity = try await startLevelUseCase.execute(worldId: worldId, levelId: level.id)
-                router.push(.cameraQuestTask(worldId: worldId, levelId: level.id, targetWord: entity.targetWord))
+                router.push(.cameraQuestTask(worldId: worldId, levelId: level.id, levelOrder: level.order, targetWord: entity.targetWord))
             } catch let error as NetworkError {
                 if let message = error.apiErrorMessage {
                     self.errorMessage = message

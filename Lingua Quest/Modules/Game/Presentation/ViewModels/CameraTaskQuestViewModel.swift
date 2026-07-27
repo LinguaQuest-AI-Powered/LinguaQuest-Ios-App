@@ -18,6 +18,7 @@ class CameraTaskQuestViewModel {
     
     var worldId: Int
     var levelId: Int
+    var levelOrder: Int
     var targetWord: String
     
     var isLoading: Bool = false
@@ -32,13 +33,14 @@ class CameraTaskQuestViewModel {
     private let getHintUseCase: GetHintUseCase
     private let changeWordUseCase: ChangeWordUseCase
     
-    init(router: RouterProtocol, statsService: StatsServiceProtocol, getHintUseCase: GetHintUseCase, changeWordUseCase: ChangeWordUseCase, worldId: Int = 1, levelId: Int = 3, targetWord: String = "PAN") {
+    init(router: RouterProtocol, statsService: StatsServiceProtocol, getHintUseCase: GetHintUseCase, changeWordUseCase: ChangeWordUseCase, worldId: Int = 1, levelId: Int = 3, levelOrder: Int = 1, targetWord: String = "PAN") {
         self.router = router
         self.statsService = statsService
         self.getHintUseCase = getHintUseCase
         self.changeWordUseCase = changeWordUseCase
         self.worldId = worldId
         self.levelId = levelId
+        self.levelOrder = levelOrder
         self.targetWord = targetWord
     }
     
@@ -90,13 +92,13 @@ class CameraTaskQuestViewModel {
     func openCamera() {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
         case .authorized:
-            router.push(.cameraCapture(worldId: worldId, levelId: levelId, targetWord: targetWord))
+            router.push(.cameraCapture(worldId: worldId, levelId: levelId, levelOrder: levelOrder, targetWord: targetWord))
         case .notDetermined:
             AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
                 DispatchQueue.main.async {
                     if granted {
                         guard let self = self else { return }
-                        self.router.push(.cameraCapture(worldId: self.worldId, levelId: self.levelId, targetWord: self.targetWord))
+                        self.router.push(.cameraCapture(worldId: self.worldId, levelId: self.levelId, levelOrder: self.levelOrder, targetWord: self.targetWord))
                     }
                 }
             }

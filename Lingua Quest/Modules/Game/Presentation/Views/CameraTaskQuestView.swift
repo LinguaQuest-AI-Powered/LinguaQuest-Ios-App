@@ -32,7 +32,7 @@ struct CameraTaskQuestView: View {
                     RewardBadge(type: .coin, value: "\(viewModel.coins)", size: .small)
                 }
                 .overlay(
-                    Text(L10n.Game.levelTitle(viewModel.levelId))
+                    Text(L10n.Game.levelTitle(viewModel.levelOrder))
                         .appTextStyle(.headingLarge, color: .appTextHeading)
                 )
                 .padding(.horizontal, 20)

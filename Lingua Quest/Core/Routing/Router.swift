@@ -85,14 +85,14 @@ final class Router: RouterProtocol {
         case .gameLevels(let worldId, let worldName, let languageId):
             let viewModel = Resolver.shared.resolve(GameLevelsViewModel.self)
             GameLevelsView(viewModel: viewModel, worldName: worldName, worldId: worldId, languageId: languageId)
-        case .cameraQuestTask(let worldId, let levelId, let targetWord):
-            let viewModel = Resolver.shared.resolve(CameraTaskQuestViewModel.self, arguments: worldId, levelId, targetWord)
+        case .cameraQuestTask(let worldId, let levelId, let levelOrder, let targetWord):
+            let viewModel = Resolver.shared.resolve(CameraTaskQuestViewModel.self, arguments: worldId, levelId, levelOrder, targetWord)
             CameraTaskQuestView(viewModel: viewModel)
-        case .cameraCapture(let worldId, let levelId, let targetWord):
-            let viewModel = Resolver.shared.resolve(CameraCaptureViewModel.self, arguments: worldId, levelId, targetWord)
+        case .cameraCapture(let worldId, let levelId, let levelOrder, let targetWord):
+            let viewModel = Resolver.shared.resolve(CameraCaptureViewModel.self, arguments: worldId, levelId, levelOrder, targetWord)
             CameraCaptureView(viewModel: viewModel)
-        case .cameraResult(let worldId, let levelId, let targetWord, let imageData):
-            let viewModel = Resolver.shared.resolve(CameraResultViewModel.self, arguments: worldId, levelId, targetWord, imageData)
+        case .cameraResult(let worldId, let levelId, let levelOrder, let targetWord, let imageData):
+            let viewModel = Resolver.shared.resolve(CameraResultViewModel.self, arguments: worldId, levelId, levelOrder, targetWord, imageData)
             CameraResultView(viewModel: viewModel)
         case .voiceGame:
             let viewModel = Resolver.shared.resolve(VoiceGameViewModel.self)

@@ -72,7 +72,7 @@ struct LevelNodeView: View {
                             .frame(width: 58, height: 58)
                     )
                     .overlay(
-                        Text("\(level.id)")
+                        Text("\(level.order)")
                             .font(.system(size: 24, weight: .black, design: .rounded))
                             .foregroundColor(.white)
                             .shadow(color: .black.opacity(0.3), radius: 1, x: 0, y: 1)
@@ -152,7 +152,7 @@ struct LevelNodeView: View {
                         .frame(width: 65, height: 65)
                 )
                 .overlay(
-                    Text("\(level.id)")
+                    Text("\(level.order)")
                         .font(.system(size: 28, weight: .black, design: .rounded))
                         .foregroundColor(.white)
                         .shadow(color: .black.opacity(0.3), radius: 1, x: 0, y: 1)

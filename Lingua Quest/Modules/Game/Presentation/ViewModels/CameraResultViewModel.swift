@@ -20,6 +20,7 @@ enum CameraResultState: Equatable {
 final class CameraResultViewModel {
     let worldId: Int
     let levelId: Int
+    let levelOrder: Int
     let targetWord: String
     var state: CameraResultState = .loading
     
@@ -40,9 +41,10 @@ final class CameraResultViewModel {
     private let statsService: StatsServiceProtocol
     private let router: RouterProtocol
     
-    init(worldId: Int, levelId: Int, targetWord: String, imageData: Data?, saveUseCase: SaveCapturedItemUseCase, verifyUseCase: VerifyImageUseCase, changeWordUseCase: ChangeWordUseCase, statsService: StatsServiceProtocol, router: RouterProtocol) {
+    init(worldId: Int, levelId: Int, levelOrder: Int, targetWord: String, imageData: Data?, saveUseCase: SaveCapturedItemUseCase, verifyUseCase: VerifyImageUseCase, changeWordUseCase: ChangeWordUseCase, statsService: StatsServiceProtocol, router: RouterProtocol) {
         self.worldId = worldId
         self.levelId = levelId
+        self.levelOrder = levelOrder
         self.targetWord = targetWord
         self.imageData = imageData
         self.saveUseCase = saveUseCase
@@ -112,7 +114,7 @@ final class CameraResultViewModel {
                 self.statsService.syncBalances(coins: entity.coins, xp: self.statsService.xp, streakDays: nil)
                 // We got the new word. We should pop back to QuestView, but to update the word, we use replacement push as planned.
                 router.popToRoot()
-                router.push(.cameraQuestTask(worldId: worldId, levelId: levelId, targetWord: entity.targetWord))
+                router.push(.cameraQuestTask(worldId: worldId, levelId: levelId, levelOrder: levelOrder, targetWord: entity.targetWord))
             } catch let error as NetworkError {
                 if let message = error.apiErrorMessage {
                     self.state = .error(message: message)
