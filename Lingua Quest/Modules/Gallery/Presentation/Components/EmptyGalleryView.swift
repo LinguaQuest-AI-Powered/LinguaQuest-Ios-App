@@ -7,34 +7,11 @@ import SwiftUI
 
 struct EmptyGalleryView: View {
     @State private var isFloating = false
-    var showAddButton: Bool = true
     var title: String? = nil
     var subtitle: String? = nil
     
     var body: some View {
         VStack(spacing: 0) {
-            if showAddButton {
-                HStack {
-                    Button(action: {
-                    }) {
-                        HStack(spacing: 8) {
-                            Image(systemIcon: .photoBadgePlus)
-                                .font(.system(size: 14, weight: .bold))
-                            Text(L10n.Gallery.addNew)
-                                .font(.system(size: 16, weight: .medium, design: .rounded))
-                        }
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 10)
-                        .background(Color.appAccentOrange)
-                        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                    }
-                    Spacer()
-                }
-                .padding(.horizontal, 20)
-                .padding(.top, 10)
-            }
-            
             Spacer(minLength: 40)
             
             ZStack {

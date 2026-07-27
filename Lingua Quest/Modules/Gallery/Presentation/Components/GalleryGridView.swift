@@ -38,7 +38,7 @@ struct GalleryGridView: View {
             
             if filteredItems.isEmpty {
                 EmptyGalleryView(
-                    showAddButton: false,
+                 
                     title: L10n.Gallery.emptyFilterItemsTitle,
                     subtitle: L10n.Gallery.emptyFilterItemsSubtitle
                 )

@@ -21,7 +21,7 @@ protocol StatsServiceProtocol: AnyObject {
     func adjustWallet(coinsDelta: Int, xpDelta: Int) async throws
 
     // Local-only updates (for when another endpoint returns new balances)
-    func syncBalances(coins: Int, xp: Int, streakDays: Int?)
+    func syncBalances(coins: Int?, xp: Int?, streakDays: Int?)
     
     // Clear state
     func resetAll()
@@ -94,9 +94,9 @@ final class StatsService: StatsServiceProtocol {
         }
     }
     
-    func syncBalances(coins: Int, xp: Int, streakDays: Int? = nil) {
-        self.coins = coins
-        self.xp = xp
+    func syncBalances(coins: Int?, xp: Int?, streakDays: Int? = nil) {
+        if let coins = coins { self.coins = coins }
+        if let xp = xp { self.xp = xp }
         if let streakDays = streakDays {
             self.streakDays = streakDays
         }

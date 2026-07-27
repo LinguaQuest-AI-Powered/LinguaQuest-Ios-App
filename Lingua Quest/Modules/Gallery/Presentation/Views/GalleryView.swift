@@ -121,7 +121,6 @@ struct GalleryView: View {
                     
                     if viewModel.filteredVocabularyWords.isEmpty {
                         EmptyGalleryView(
-                            showAddButton: false,
                             title: L10n.Gallery.emptyFilterWordsTitle,
                             subtitle: L10n.Gallery.emptyFilterWordsSubtitle
                         )

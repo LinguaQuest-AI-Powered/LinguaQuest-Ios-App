@@ -81,8 +81,8 @@ struct DailyRewardClaimDataDTO: Decodable {
 extension HomeResponseDTO {
     func toDomain() -> HomeData {
         return HomeData(
-            xp: data.xp ?? 0,
-            coins: data.coins ?? 0,
+            xp: data.xp,
+            coins: data.coins,
             streakDays: data.streakDays ?? 0,
             activeLanguage: ActiveLanguage(
                 id: activeLanguage.id ?? 1,

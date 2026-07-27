@@ -69,6 +69,7 @@ final class HomeViewModel {
         
         async let homeDataTask = getHomeDataUseCase.execute()
         async let worldsTask = getHomeWorldsUseCase.execute(languageId: currentLangId, difficulty: "EASY")
+        async let statsTask = statsService.fetchStats()
         
         do {
             let data = try await homeDataTask
@@ -83,6 +84,12 @@ final class HomeViewModel {
             fetchedWorlds = try await worldsTask
         } catch {
             print("Failed to fetch worlds: \(error)")
+        }
+        
+        do {
+            try await statsTask
+        } catch {
+            print("Failed to fetch stats on home: \(error)")
         }
         isLoading = false
     }

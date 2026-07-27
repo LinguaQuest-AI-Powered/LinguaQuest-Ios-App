@@ -96,6 +96,7 @@ class GalleryViewModel {
             } catch {
                 print("Error loading captured items: \(error)")
             }
+            try? await statsService.fetchStats()
         }
     }
     

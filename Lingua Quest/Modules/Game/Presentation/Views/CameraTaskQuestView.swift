@@ -214,7 +214,7 @@ class MockStatsService: StatsServiceProtocol {
     func deductCoins(_ amount: Int) async throws {}
     func addXP(_ amount: Int) async throws {}
     func adjustWallet(coinsDelta: Int, xpDelta: Int) async throws {}
-    func syncBalances(coins: Int, xp: Int, streakDays: Int?) {}
+    func syncBalances(coins: Int?, xp: Int?, streakDays: Int?) {}
     func resetAll() {}
 }
 

@@ -8,12 +8,12 @@
 import Foundation
 
 struct HomeData: Equatable {
-    let xp: Int
-    let coins: Int
+    let xp: Int?
+    let coins: Int?
     let streakDays: Int
     let activeLanguage: ActiveLanguage
     
-    init(xp: Int, coins: Int, streakDays: Int, activeLanguage: ActiveLanguage) {
+    init(xp: Int?, coins: Int?, streakDays: Int, activeLanguage: ActiveLanguage) {
         self.xp = xp
         self.coins = coins
         self.streakDays = streakDays
