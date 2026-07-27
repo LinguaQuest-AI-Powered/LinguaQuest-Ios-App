@@ -38,7 +38,6 @@ struct MyTargetLanguageDTO: Decodable {
     let id: Int
     let name: String
     let code: String
-    let imageUrl: String
     let level: Int
     let isActive: Bool
     let progressPercent: Int
@@ -48,7 +47,6 @@ struct AvailableLanguageDTO: Decodable {
     let id: Int
     let name: String
     let code: String
-    let imageUrl: String
     let isAdded: Bool
 }
 
@@ -59,7 +57,6 @@ extension MyTargetLanguageDTO {
             id: id,
             name: name,
             code: code,
-            imageUrl: imageUrl,
             level: level,
             isActive: isActive,
             progressPercent: progressPercent
@@ -73,7 +70,6 @@ extension AvailableLanguageDTO {
             id: id,
             name: name,
             code: code,
-            imageUrl: imageUrl,
             isAdded: isAdded
         )
     }

@@ -12,7 +12,7 @@ struct VoiceFailureView: View {
     
     var body: some View {
         VStack(spacing: -16) {
-            SpeechBubbleView(text: L10n.SpeakingLab.feedbackNeedsWork, isAnimated: true, animationDelay: 0.5)
+            SpeechBubbleView(text: viewModel.advice.isEmpty ? L10n.SpeakingLab.feedbackNeedsWork : viewModel.advice, isAnimated: true, animationDelay: 0.5)
                 .padding(.horizontal, 40)
             
             DialogCardContainer(mascotImage: .weakPasswordBird) {

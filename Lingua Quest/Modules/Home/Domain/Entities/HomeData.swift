@@ -25,16 +25,14 @@ struct ActiveLanguage: Equatable {
     let id: Int
     let name: String
     let code: String
-    let imageUrl: String
     let level: Int
     let levelProgressPercent: Int
     let exploreWorlds: [ExploreWorld]
     
-    init(id: Int, name: String, code: String, imageUrl: String, level: Int, levelProgressPercent: Int, exploreWorlds: [ExploreWorld]) {
+    init(id: Int, name: String, code: String, level: Int, levelProgressPercent: Int, exploreWorlds: [ExploreWorld]) {
         self.id = id
         self.name = name
         self.code = code
-        self.imageUrl = imageUrl
         self.level = level
         self.levelProgressPercent = levelProgressPercent
         self.exploreWorlds = exploreWorlds

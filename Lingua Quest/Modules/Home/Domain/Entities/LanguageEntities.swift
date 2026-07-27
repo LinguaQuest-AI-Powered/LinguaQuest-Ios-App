@@ -11,7 +11,6 @@ struct MyTargetLanguage: Identifiable, Equatable {
     let id: Int
     let name: String
     let code: String
-    let imageUrl: String
     let level: Int
     let isActive: Bool
     let progressPercent: Int
@@ -25,7 +24,6 @@ struct AvailableLanguage: Identifiable, Equatable {
     let id: Int
     let name: String
     let code: String
-    let imageUrl: String
     let isAdded: Bool
     
     var flagEmoji: String {
