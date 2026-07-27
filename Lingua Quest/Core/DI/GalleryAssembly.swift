@@ -33,7 +33,8 @@ final class GalleryAssembly: Assembly {
                 getSavedVocabularyWordsUseCase: r.resolve(GetSavedVocabularyWordsUseCaseProtocol.self),
                 speechSynthesizer: r.resolve(SpeechSynthesizerProtocol.self),
                 router: r.resolve(RouterProtocol.self)!,
-                userPreferences: r.resolve(UserPreferencesProtocol.self)!
+                userPreferences: r.resolve(UserPreferencesProtocol.self)!,
+                statsService: r.resolve(StatsService.self)!
             )
         }.inObjectScope(.container)
         

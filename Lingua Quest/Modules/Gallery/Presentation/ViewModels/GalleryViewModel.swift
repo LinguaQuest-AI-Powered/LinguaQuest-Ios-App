@@ -17,6 +17,7 @@ class GalleryViewModel {
     private let speechSynthesizer: SpeechSynthesizerProtocol?
     private let router: RouterProtocol
     private let userPreferences: UserPreferencesProtocol
+    let statsService: StatsService
     
     var items: [CapturedItem] = []
     var vocabularyWords: [VocabularyWordEntity] = []
@@ -45,13 +46,16 @@ class GalleryViewModel {
          getSavedVocabularyWordsUseCase: GetSavedVocabularyWordsUseCaseProtocol? = nil,
          speechSynthesizer: SpeechSynthesizerProtocol? = nil,
          router: RouterProtocol,
-         userPreferences: UserPreferencesProtocol) {
+         userPreferences: UserPreferencesProtocol,
+         statsService: StatsService
+    ) {
         self.getCapturedItemsUseCase = getCapturedItemsUseCase
         self.saveCapturedItemUseCase = saveCapturedItemUseCase
         self.getSavedVocabularyWordsUseCase = getSavedVocabularyWordsUseCase
         self.speechSynthesizer = speechSynthesizer
         self.router = router
         self.userPreferences = userPreferences
+        self.statsService = statsService
     }
     
     func onWordTapped(_ item: CapturedItem) {

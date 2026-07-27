@@ -590,6 +590,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PH46ZSPS4C;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WordWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WordWidget;
@@ -619,6 +620,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PH46ZSPS4C;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WordWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = WordWidget;
@@ -644,7 +646,7 @@
 		1529B3873006410600CCD74A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = 1529B3683006410300CCD74A /* Lingua Quest */;
-			baseConfigurationReferenceRelativePath = App/Config.xcconfig;
+			baseConfigurationReferenceRelativePath = App/Resources/Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -710,7 +712,7 @@
 		1529B3883006410600CCD74A /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = 1529B3683006410300CCD74A /* Lingua Quest */;
-			baseConfigurationReferenceRelativePath = App/Config.xcconfig;
+			baseConfigurationReferenceRelativePath = App/Resources/Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -769,13 +771,14 @@
 		1529B38A3006410600CCD74A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = 1529B3683006410300CCD74A /* Lingua Quest */;
-			baseConfigurationReferenceRelativePath = App/Config.xcconfig;
+			baseConfigurationReferenceRelativePath = App/Resources/Config.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Lingua Quest/Lingua Quest.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PH46ZSPS4C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Lingua-Quest-Info.plist";
@@ -808,13 +811,14 @@
 		1529B38B3006410600CCD74A /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = 1529B3683006410300CCD74A /* Lingua Quest */;
-			baseConfigurationReferenceRelativePath = App/Config.xcconfig;
+			baseConfigurationReferenceRelativePath = App/Resources/Config.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Lingua Quest/Lingua Quest.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PH46ZSPS4C;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Lingua-Quest-Info.plist";
@@ -847,7 +851,7 @@
 		1529B38D3006410600CCD74A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = 1529B3683006410300CCD74A /* Lingua Quest */;
-			baseConfigurationReferenceRelativePath = App/Config.xcconfig;
+			baseConfigurationReferenceRelativePath = App/Resources/Config.xcconfig;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -870,7 +874,7 @@
 		1529B38E3006410600CCD74A /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = 1529B3683006410300CCD74A /* Lingua Quest */;
-			baseConfigurationReferenceRelativePath = App/Config.xcconfig;
+			baseConfigurationReferenceRelativePath = App/Resources/Config.xcconfig;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -893,7 +897,7 @@
 		1529B3903006410600CCD74A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = 1529B3683006410300CCD74A /* Lingua Quest */;
-			baseConfigurationReferenceRelativePath = App/Config.xcconfig;
+			baseConfigurationReferenceRelativePath = App/Resources/Config.xcconfig;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -914,7 +918,7 @@
 		1529B3913006410600CCD74A /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = 1529B3683006410300CCD74A /* Lingua Quest */;
-			baseConfigurationReferenceRelativePath = App/Config.xcconfig;
+			baseConfigurationReferenceRelativePath = App/Resources/Config.xcconfig;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

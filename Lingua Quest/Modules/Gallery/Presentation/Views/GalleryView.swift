@@ -23,7 +23,10 @@ struct GalleryView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            AppHeaderView(starCount: 15000000, coinCount: 20000)
+            AppHeaderView(
+                starCount: viewModel.statsService.xp,
+                coinCount: viewModel.statsService.coins
+            )
             
 
             if viewModel.isLockScreenVocabularyEnabled {
