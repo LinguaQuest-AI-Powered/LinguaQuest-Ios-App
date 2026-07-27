@@ -22,6 +22,7 @@ final class VoiceGameResultViewModel {
     var words: [WordResult] = []
     var xpPoints: Int = 0
     var coinsEarned: Int = 0
+    var advice: String = ""
     
     private let router: RouterProtocol
     private let evaluateUseCase: EvaluateVoiceUseCase
@@ -74,6 +75,7 @@ final class VoiceGameResultViewModel {
         self.xpPoints = result.rating * 10
         self.coinsEarned = result.rating >= 7 ? 10 : 2
         self.state = result.rating >= 6 ? .success : .failure
+        self.advice = result.advice
         
         // Save progress only on success
         if result.rating >= 6 {

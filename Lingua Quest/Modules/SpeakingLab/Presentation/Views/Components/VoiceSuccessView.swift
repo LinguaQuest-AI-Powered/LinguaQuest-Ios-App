@@ -12,7 +12,7 @@ struct VoiceSuccessView: View {
     
     var body: some View {
         VStack(spacing: -16) {
-            SpeechBubbleView(text: L10n.SpeakingLab.feedbackGreatJob, isAnimated: true, animationDelay: 0.5)
+            SpeechBubbleView(text: viewModel.advice.isEmpty ? L10n.SpeakingLab.feedbackGreatJob : viewModel.advice, isAnimated: true, animationDelay: 0.5)
                 .padding(.horizontal, 40)
             
             DialogCardContainer(mascotImage: .perfect) {
