@@ -30,28 +30,4 @@ final class AboutViewModel {
     func onBackTapped() {
         router.pop()
     }
-    
-    func onRateAppTapped() {
-        if let url = URL(string: "https://apps.apple.com") {
-            UIApplication.shared.open(url)
-        }
-    }
-    
-    func onWebsiteTapped() {
-        if let url = URL(string: "https://linguaquest.ai") {
-            UIApplication.shared.open(url)
-        }
-    }
-    
-    func onPrivacyPolicyTapped() {
-        if let url = URL(string: "https://linguaquest.ai/privacy") {
-            UIApplication.shared.open(url)
-        }
-    }
-    
-    func onTermsOfServiceTapped() {
-        if let url = URL(string: "https://linguaquest.ai/terms") {
-            UIApplication.shared.open(url)
-        }
-    }
 }

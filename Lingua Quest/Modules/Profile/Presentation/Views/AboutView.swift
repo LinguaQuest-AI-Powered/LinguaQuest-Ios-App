@@ -33,12 +33,7 @@ struct AboutView: View {
                         
                         AboutFeatureSection()
                         
-                        AboutCommunitySection(
-                            onRateAppTapped: { viewModel.onRateAppTapped() },
-                            onWebsiteTapped: { viewModel.onWebsiteTapped() },
-                            onPrivacyPolicyTapped: { viewModel.onPrivacyPolicyTapped() },
-                            onTermsOfServiceTapped: { viewModel.onTermsOfServiceTapped() }
-                        )
+                        AboutCommunitySection()
                         
                         footerSection
                     }

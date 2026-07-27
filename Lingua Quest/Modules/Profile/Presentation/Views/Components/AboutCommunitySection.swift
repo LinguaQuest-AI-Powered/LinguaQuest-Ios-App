@@ -8,12 +8,6 @@
 import SwiftUI
 
 struct AboutCommunitySection: View {
-    // MARK: - Properties
-    var onRateAppTapped: () -> Void
-    var onWebsiteTapped: () -> Void
-    var onPrivacyPolicyTapped: () -> Void
-    var onTermsOfServiceTapped: () -> Void
-    
     // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -27,9 +21,8 @@ struct AboutCommunitySection: View {
                     title: L10n.About.rateApp,
                     showDivider: true
                 ) {
-                    externalLinkIcon
+                    EmptyView()
                 }
-                .onTapGesture(perform: onRateAppTapped)
                 
                 LinguaSettingsRow(
                     icon: .globe,
@@ -37,9 +30,8 @@ struct AboutCommunitySection: View {
                     title: L10n.About.website,
                     showDivider: true
                 ) {
-                    externalLinkIcon
+                    EmptyView()
                 }
-                .onTapGesture(perform: onWebsiteTapped)
                 
                 LinguaSettingsRow(
                     icon: .shieldFill,
@@ -47,9 +39,8 @@ struct AboutCommunitySection: View {
                     title: L10n.About.privacyPolicy,
                     showDivider: true
                 ) {
-                    externalLinkIcon
+                    EmptyView()
                 }
-                .onTapGesture(perform: onPrivacyPolicyTapped)
                 
                 LinguaSettingsRow(
                     icon: .docTextFill,
@@ -57,32 +48,18 @@ struct AboutCommunitySection: View {
                     title: L10n.About.termsOfService,
                     showDivider: false
                 ) {
-                    externalLinkIcon
+                    EmptyView()
                 }
-                .onTapGesture(perform: onTermsOfServiceTapped)
             }
             .background(Color.appSurfaceCard)
             .cornerRadius(20)
             .shadow(color: Color.appTextPrimary.opacity(0.05), radius: 20, x: 0, y: 6)
         }
     }
-    
-    // MARK: - Subviews
-    private var externalLinkIcon: some View {
-        Image(systemIcon: .arrowUpRight)
-            .font(.system(size: 14, weight: .bold))
-            .foregroundColor(.appBorderBrown)
-            .flipsForRightToLeftLayoutDirection(true)
-    }
 }
 
 #Preview {
-    AboutCommunitySection(
-        onRateAppTapped: {},
-        onWebsiteTapped: {},
-        onPrivacyPolicyTapped: {},
-        onTermsOfServiceTapped: {}
-    )
-    .padding()
-    .background(Color.appBackgroundWarm)
+    AboutCommunitySection()
+        .padding()
+        .background(Color.appBackgroundWarm)
 }
