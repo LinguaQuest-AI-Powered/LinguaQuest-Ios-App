@@ -144,6 +144,7 @@
 "game.result.next_level" = "Next Level";
 "game.result.analyzing" = "Analyzing...";
 "game.result.analyzing_subtitle" = "Looking closely at your photo...";
+"game.result.no_image_data" = "No image data available.";
 "game.result.xp_points" = "+%d XP";
 "game.result.coins_value" = "+%d $";
 "game.result.level_progress" = "Level %d Progress";

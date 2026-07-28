@@ -16,6 +16,7 @@ final class CameraManager: NSObject {
     var capturedImage: UIImage?
     var isFrontCamera = false
     
+    private var captureContinuation: CheckedContinuation<UIImage?, Never>?
     private let photoOutput = AVCapturePhotoOutput()
     private var videoDeviceInput: AVCaptureDeviceInput?
     
@@ -112,15 +113,19 @@ final class CameraManager: NSObject {
         session.commitConfiguration()
     }
     
-    func capturePhoto() {
-        let settings = AVCapturePhotoSettings()
-        if photoOutput.supportedFlashModes.contains(.on) && !isFrontCamera {
-            settings.flashMode = isFlashOn ? .on : .off
-        } else {
-            settings.flashMode = .off
+    func capturePhoto() async -> UIImage? {
+        return await withCheckedContinuation { continuation in
+            self.captureContinuation = continuation
+            
+            let settings = AVCapturePhotoSettings()
+            if photoOutput.supportedFlashModes.contains(.on) && !isFrontCamera {
+                settings.flashMode = isFlashOn ? .on : .off
+            } else {
+                settings.flashMode = .off
+            }
+            
+            photoOutput.capturePhoto(with: settings, delegate: self)
         }
-        
-        photoOutput.capturePhoto(with: settings, delegate: self)
     }
 }
 
@@ -131,7 +136,11 @@ extension CameraManager: AVCapturePhotoCaptureDelegate {
             return
         }
         
-        guard let data = photo.fileDataRepresentation(), let image = UIImage(data: data) else { return }
+        guard let data = photo.fileDataRepresentation(), let image = UIImage(data: data) else {
+            captureContinuation?.resume(returning: nil)
+            captureContinuation = nil
+            return
+        }
         
         DispatchQueue.main.async {
             // If it's front camera, flip the image horizontally
@@ -142,6 +151,8 @@ extension CameraManager: AVCapturePhotoCaptureDelegate {
             } else {
                 self.capturedImage = image
             }
+            self.captureContinuation?.resume(returning: self.capturedImage)
+            self.captureContinuation = nil
         }
     }
 }
