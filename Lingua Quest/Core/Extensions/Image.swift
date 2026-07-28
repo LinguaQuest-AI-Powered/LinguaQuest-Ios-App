@@ -82,6 +82,9 @@ extension Image {
         case squareAndPencil = "square.and.pencil"
         case infoCircle = "info.circle"
         case textformatAlt = "textformat.alt"
+        case wrenchAndScrewdriverFill = "wrench.and.screwdriver.fill"
+        case phoneFill = "phone.fill"
+        case mappinAndEllipse = "mappin.and.ellipse"
         
         // Added for Widget
         case handTapFill = "hand.tap.fill"

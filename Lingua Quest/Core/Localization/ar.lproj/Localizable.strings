@@ -422,3 +422,10 @@
 "about.terms_of_service" = "شروط الخدمة";
 "about.copyright" = "© 2026 فريق لينجوا كويست. جميع الحقوق محفوظة.";
 "about.made_with_love" = "صُنع بـ ❤️ لمستكشفي اللغات حول العالم.";
+
+// Help & Support
+"help_support.title" = "المساعدة والدعم";
+"help_support.contact_us" = "تواصل مع الدعم";
+"help_support.faq" = "الأسئلة الشائعة";
+"help_support.report_bug" = "الإبلاغ عن مشكلة";
+"help_support.community_forum" = "منتدى المجتمع";
