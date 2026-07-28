@@ -124,6 +124,9 @@ final class Router: RouterProtocol {
         case .appLanguageSelection:
             let viewModel = Resolver.shared.resolve(SettingsViewModel.self)
             AppLanguageSelectionView(viewModel: viewModel)
+        case .about:
+            let viewModel = Resolver.shared.resolve(AboutViewModel.self)
+            AboutView(viewModel: viewModel)
         }
     }
 }

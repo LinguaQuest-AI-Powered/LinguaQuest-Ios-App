@@ -35,7 +35,7 @@ struct SettingsView: View {
                 // Navigate to Help & Support
             },
             onAboutTapped: {
-                // Navigate to About App
+                viewModel.onAboutTapped()
             },
             onLogOutTapped: {
                 showLogoutConfirm = true

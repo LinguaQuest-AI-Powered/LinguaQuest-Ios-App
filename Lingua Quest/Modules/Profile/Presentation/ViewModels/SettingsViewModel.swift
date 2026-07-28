@@ -308,6 +308,10 @@ final class SettingsViewModel {
         router.push(.appLanguageSelection)
     }
     
+    func onAboutTapped() {
+        router.push(.about)
+    }
+    
     func logOut() {
         Task {
             await sessionManager.logout(allDevices: false)
@@ -318,3 +322,4 @@ final class SettingsViewModel {
         router.pop()
     }
 }
+

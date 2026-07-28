@@ -484,6 +484,27 @@ enum L10n {
         static var resultTryAgain: String { localized("boss_level.result_try_again") }
     }
 
+    enum About {
+        static var title: String { localized("about.title") }
+        static var appName: String { localized("about.app_name") }
+        static var subtitle: String { localized("about.subtitle") }
+        static var missionTitle: String { localized("about.mission_title") }
+        static var missionDescription: String { localized("about.mission_description") }
+        static var featuresTitle: String { localized("about.features_title") }
+        static var featureAiTitle: String { localized("about.feature_ai_title") }
+        static var featureAiDesc: String { localized("about.feature_ai_desc") }
+        static var featureCameraTitle: String { localized("about.feature_camera_title") }
+        static var featureCameraDesc: String { localized("about.feature_camera_desc") }
+        static var featureGameTitle: String { localized("about.feature_game_title") }
+        static var featureGameDesc: String { localized("about.feature_game_desc") }
+        static var communityTitle: String { localized("about.community_title") }
+        static var rateApp: String { localized("about.rate_app") }
+        static var website: String { localized("about.website") }
+        static var privacyPolicy: String { localized("about.privacy_policy") }
+        static var termsOfService: String { localized("about.terms_of_service") }
+        static var copyright: String { localized("about.copyright") }
+        static var madeWithLove: String { localized("about.made_with_love") }
+    }
 
     private static func localized(_ key: String) -> String {
         let appLanguage = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en"
