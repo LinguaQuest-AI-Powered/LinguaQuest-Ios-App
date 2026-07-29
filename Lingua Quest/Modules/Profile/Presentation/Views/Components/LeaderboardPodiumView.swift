@@ -125,14 +125,8 @@ struct PodiumCard: View {
             .padding(.top, type.avatarSize / 2)
             
             ZStack(alignment: .bottomTrailing) {
-                Image(.user2)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: type.avatarSize, height: type.avatarSize)
-                    .clipShape(Circle())
-                    .overlay(
-                        Circle().stroke(type.color, lineWidth: 4)
-                    )
+                LeaderboardAvatarImage(urlString: user.image, size: type.avatarSize)
+                    .overlay(Circle().stroke(type.color, lineWidth: 4))
                     .background(Circle().fill(Color.appSurfaceCardWarm))
                 
                 ZStack {

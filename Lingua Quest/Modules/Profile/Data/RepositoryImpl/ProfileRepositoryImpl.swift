@@ -157,7 +157,7 @@ final class ProfileRepositoryImpl: ProfileRepositoryProtocol {
                 id: "\(dto.userId)",
                 rank: dto.rank,
                 name: dto.username,
-                title: "Level \(dto.level)", // Provide a fallback title or map it appropriately
+                title: "Level \(dto.level)",
                 avatarImage: dto.photoUrl,
                 xp: dto.xp,
                 isCurrentUser: dto.isCurrentUser
@@ -166,11 +166,13 @@ final class ProfileRepositoryImpl: ProfileRepositoryProtocol {
         
         let topThree = data.topThree.map(mapUser)
         let entries = data.entries.map(mapUser)
+        let hasMore = entries.count >= limit
         
         return LeaderboardDataEntity(
             myRank: data.myRank,
             topThree: topThree,
-            entries: entries
+            entries: entries,
+            hasMore: hasMore
         )
     }
 }
