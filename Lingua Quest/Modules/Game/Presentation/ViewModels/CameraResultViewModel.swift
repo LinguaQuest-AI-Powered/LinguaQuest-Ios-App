@@ -19,6 +19,7 @@ enum CameraResultState: Equatable {
 @MainActor
 final class CameraResultViewModel {
     let worldId: Int
+    let worldName: String
     let levelId: Int
     let levelOrder: Int
     let targetWord: String
@@ -41,8 +42,9 @@ final class CameraResultViewModel {
     private let statsService: StatsServiceProtocol
     private let router: RouterProtocol
     
-    init(worldId: Int, levelId: Int, levelOrder: Int, targetWord: String, imageData: Data?, saveUseCase: SaveCapturedItemUseCase, verifyUseCase: VerifyImageUseCase, changeWordUseCase: ChangeWordUseCase, statsService: StatsServiceProtocol, router: RouterProtocol) {
+    init(worldId: Int, worldName: String, levelId: Int, levelOrder: Int, targetWord: String, imageData: Data?, saveUseCase: SaveCapturedItemUseCase, verifyUseCase: VerifyImageUseCase, changeWordUseCase: ChangeWordUseCase, statsService: StatsServiceProtocol, router: RouterProtocol) {
         self.worldId = worldId
+        self.worldName = worldName
         self.levelId = levelId
         self.levelOrder = levelOrder
         self.targetWord = targetWord
@@ -81,7 +83,7 @@ final class CameraResultViewModel {
                         id: UUID(),
                         englishName: self.targetWord,
                         translatedName: self.targetWord,
-                        category: "GAME",
+                        category: self.worldName.uppercased(),
                         imageData: self.imageData,
                         isCorrect: true,
                         timestamp: Date()
@@ -114,7 +116,7 @@ final class CameraResultViewModel {
                 self.statsService.syncBalances(coins: entity.coins, xp: self.statsService.xp, streakDays: nil)
                 // We got the new word. We should pop back to QuestView, but to update the word, we use replacement push as planned.
                 router.popToRoot()
-                router.push(.cameraQuestTask(worldId: worldId, levelId: levelId, levelOrder: levelOrder, targetWord: entity.targetWord))
+                router.push(.cameraQuestTask(worldId: worldId, worldName: worldName, levelId: levelId, levelOrder: levelOrder, targetWord: entity.targetWord))
             } catch let error as NetworkError {
                 if let message = error.apiErrorMessage {
                     self.state = .error(message: message)
