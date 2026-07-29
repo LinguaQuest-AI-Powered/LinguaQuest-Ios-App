@@ -21,8 +21,10 @@ final class VocabularyWordSwiftDataEntity {
     var isShownOnLockScreen: Bool = false
     var shownAt: Date?
     var isAddedToJournal: Bool = false
+    var userId: Int
     
-    init(id: UUID = UUID(), word: String, meaning: String, exampleSentence: String, difficulty: String, sourceLanguage: String, targetLanguage: String, createdAt: Date = Date(), isShownOnLockScreen: Bool = false, shownAt: Date? = nil, isAddedToJournal: Bool = false) {
+    
+    init(id: UUID = UUID(), word: String, meaning: String, exampleSentence: String, difficulty: String, sourceLanguage: String, targetLanguage: String, createdAt: Date = Date(), isShownOnLockScreen: Bool = false, shownAt: Date? = nil, isAddedToJournal: Bool = false, userId: Int = 0) {
         self.id = id
         self.word = word
         self.meaning = meaning
@@ -34,5 +36,6 @@ final class VocabularyWordSwiftDataEntity {
         self.isShownOnLockScreen = isShownOnLockScreen
         self.shownAt = shownAt
         self.isAddedToJournal = isAddedToJournal
+        self.userId = userId
     }
 }

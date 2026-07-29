@@ -10,14 +10,20 @@ import SwiftData
 
 class GalleryRepositoryImpl: GalleryRepositoryProtocol {
     private let remoteDataSource: WordInsightRemoteDataSourceProtocol
+    private let userPreferences: UserPreferencesProtocol
     
-    init(remoteDataSource: WordInsightRemoteDataSourceProtocol) {
+    init(remoteDataSource: WordInsightRemoteDataSourceProtocol, userPreferences: UserPreferencesProtocol) {
         self.remoteDataSource = remoteDataSource
+        self.userPreferences = userPreferences
     }
     
     func getCapturedItems() async throws -> [CapturedItem] {
         let modelContext = await MainActor.run { SwiftDataManager.shared.context }
-        let descriptor = FetchDescriptor<CapturedItemEntity>(sortBy: [SortDescriptor(\.timestamp, order: .reverse)])
+        let currentUserId = userPreferences.userId ?? 0
+        let descriptor = FetchDescriptor<CapturedItemEntity>(
+            predicate: #Predicate { $0.userId == currentUserId },
+            sortBy: [SortDescriptor(\.timestamp, order: .reverse)]
+        )
         let entities = try modelContext.fetch(descriptor)
         
         return entities.map { entity in
@@ -41,7 +47,8 @@ class GalleryRepositoryImpl: GalleryRepositoryProtocol {
             targetWord: item.translatedName, // Or whatever matches targetWord
             isCorrect: item.isCorrect,
             category: item.category,
-            timestamp: item.timestamp
+            timestamp: item.timestamp,
+            userId: userPreferences.userId ?? 0
         )
         
         try await MainActor.run {

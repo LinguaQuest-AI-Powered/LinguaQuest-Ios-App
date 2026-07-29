@@ -15,7 +15,8 @@ final class GalleryAssembly: Assembly {
         
         container.register(GalleryRepositoryProtocol.self) { resolver in
             let remoteDataSource = resolver.resolve(WordInsightRemoteDataSourceProtocol.self)!
-            return GalleryRepositoryImpl(remoteDataSource: remoteDataSource)
+            let userPreferences = resolver.resolve(UserPreferencesProtocol.self)!
+            return GalleryRepositoryImpl(remoteDataSource: remoteDataSource, userPreferences: userPreferences)
         }
         
         container.register(GetCapturedItemsUseCase.self) { r in
@@ -36,7 +37,7 @@ final class GalleryAssembly: Assembly {
                 userPreferences: r.resolve(UserPreferencesProtocol.self)!,
                 statsService: r.resolve(StatsService.self)!
             )
-        }.inObjectScope(.container)
+        }
         
         // MARK: - Word Insight
         container.register(SpeechSynthesizerProtocol.self) { _ in

@@ -138,12 +138,14 @@ final class WordInsightRemoteDataSource: WordInsightRemoteDataSourceProtocol {
         - Natural and fluent
         
         tip
+        - Written in \(word.targetLanguage).
         - Give one memorable memory hook.
         - Prefer sound association, funny image, mini-story, or word shape.
         - Don't simply describe the object.
         - Maximum 2 short sentences.
         
         fact
+        - Written in \(word.targetLanguage).
         - Give one genuinely interesting fact about the word, its origin, or the "\(word.category)" category.
         - Avoid obvious facts.
         - Maximum 2 short sentences.

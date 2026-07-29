@@ -63,7 +63,7 @@ final class ProfileAssembly: Assembly {
                 uploadProfilePhotoUseCase: uploadPhoto,
                 statsService: statsService
             )
-        }.inObjectScope(.container)
+        }
         
         // MARK: - Achievements
         container.register(GetAchievementsUseCaseProtocol.self) { resolver in

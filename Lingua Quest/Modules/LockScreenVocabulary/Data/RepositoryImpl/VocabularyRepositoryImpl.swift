@@ -12,14 +12,20 @@ import SwiftData
 final class VocabularyRepositoryImpl: VocabularyRepositoryProtocol {
     private let remoteDataSource: VocabularyRemoteDataSourceProtocol
     private let modelContext: ModelContext
+    private let userPreferences: UserPreferencesProtocol
     
-    init(remoteDataSource: VocabularyRemoteDataSourceProtocol) {
+    init(remoteDataSource: VocabularyRemoteDataSourceProtocol, userPreferences: UserPreferencesProtocol) {
         self.remoteDataSource = remoteDataSource
         self.modelContext = SwiftDataManager.shared.context
+        self.userPreferences = userPreferences
     }
     
     func fetchSavedWords() async throws -> [VocabularyWordEntity] {
-        let descriptor = FetchDescriptor<VocabularyWordSwiftDataEntity>(sortBy: [SortDescriptor(\.createdAt, order: .reverse)])
+        let currentUserId = userPreferences.userId ?? 0
+        let descriptor = FetchDescriptor<VocabularyWordSwiftDataEntity>(
+            predicate: #Predicate { $0.userId == currentUserId },
+            sortBy: [SortDescriptor(\.createdAt, order: .reverse)]
+        )
         let savedModels = try modelContext.fetch(descriptor)
         
         return savedModels.map { model in
@@ -55,7 +61,8 @@ final class VocabularyRepositoryImpl: VocabularyRepositoryProtocol {
                 targetLanguage: targetLanguage,
                 isShownOnLockScreen: false,
                 shownAt: nil,
-                isAddedToJournal: false
+                isAddedToJournal: false,
+                userId: userPreferences.userId ?? 0
             )
             // Save to SwiftData
             modelContext.insert(model)
@@ -82,7 +89,8 @@ final class VocabularyRepositoryImpl: VocabularyRepositoryProtocol {
     }
     
     func markWordAsShown(id: UUID) async throws {
-        let descriptor = FetchDescriptor<VocabularyWordSwiftDataEntity>(predicate: #Predicate { $0.id == id })
+        let currentUserId = userPreferences.userId ?? 0
+        let descriptor = FetchDescriptor<VocabularyWordSwiftDataEntity>(predicate: #Predicate { $0.id == id && $0.userId == currentUserId })
         let savedModels = try modelContext.fetch(descriptor)
         if let model = savedModels.first {
             model.isShownOnLockScreen = true
@@ -92,7 +100,8 @@ final class VocabularyRepositoryImpl: VocabularyRepositoryProtocol {
     }
     
     func markWordAsAddedToJournal(id: UUID) async throws {
-        let descriptor = FetchDescriptor<VocabularyWordSwiftDataEntity>(predicate: #Predicate { $0.id == id })
+        let currentUserId = userPreferences.userId ?? 0
+        let descriptor = FetchDescriptor<VocabularyWordSwiftDataEntity>(predicate: #Predicate { $0.id == id && $0.userId == currentUserId })
         let savedModels = try modelContext.fetch(descriptor)
         if let model = savedModels.first {
             model.isAddedToJournal = true

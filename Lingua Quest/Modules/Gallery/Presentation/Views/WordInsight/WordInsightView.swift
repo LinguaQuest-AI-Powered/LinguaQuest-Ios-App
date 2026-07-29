@@ -45,7 +45,8 @@ struct WordInsightView: View {
             router: Router(),
             getWordInsightUseCase: GetWordInsightUseCase(
                 repository: GalleryRepositoryImpl(
-                    remoteDataSource: WordInsightRemoteDataSource()
+                    remoteDataSource: WordInsightRemoteDataSource(),
+                    userPreferences: UserPreferences()
                 )
             ),
             speechSynthesizer: AVSpeechSynthesizerService()

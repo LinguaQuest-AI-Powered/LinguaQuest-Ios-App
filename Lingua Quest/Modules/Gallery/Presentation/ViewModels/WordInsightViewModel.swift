@@ -67,7 +67,7 @@ final class WordInsightViewModel {
                 emoji: "💡",
                 label: L10n.WordInsight.memoryLabel,
                 content: insight.memoryTip,
-                speechLanguage: word.sourceLanguage,
+                speechLanguage: word.targetLanguage,
                 accentColor: .appTextHeading,
                 backgroundColor: .appSurfaceCardMuted.opacity(0.5)
             ),
@@ -76,7 +76,7 @@ final class WordInsightViewModel {
                 emoji: "✨",
                 label: L10n.WordInsight.funFactLabel,
                 content: insight.funFact,
-                speechLanguage: word.sourceLanguage,
+                speechLanguage: word.targetLanguage,
                 accentColor: .appAccentTeal,
                 backgroundColor: .appAccentTeal.opacity(0.08)
             )
