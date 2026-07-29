@@ -67,8 +67,8 @@ struct HomeView: View {
                                 title: L10n.Home.currentlyLearning,
                                 languageName: viewModel.languageViewModel.activeLanguage?.name ?? L10n.Onboarding.languageSpanish,
                                 level: viewModel.languageViewModel.activeLanguage?.level ?? 1,
-                                streakDays: viewModel.homeData?.streakDays ?? 0,
-                                progressWidth: CGFloat(viewModel.languageViewModel.activeLanguage?.progressPercent ?? 0) * 1.65
+                                streakDays: viewModel.statsService.streakDays,
+                                progressPercent: CGFloat(viewModel.languageViewModel.activeLanguage?.progressPercent ?? 0)
                             )
                             .padding(.horizontal, 20)
                             .offset(y: isAnimated ? 0 : 30)
@@ -187,17 +187,10 @@ struct HomeView: View {
             }
             
             Task {
-                if viewModel.homeData == nil {
-                    await viewModel.loadHomeData()
-                }
-                
-                if viewModel.dailyRewardViewModel.reward == nil {
-                    await viewModel.dailyRewardViewModel.loadDailyReward()
-                }
-                
-                if viewModel.languageViewModel.myLanguages.isEmpty {
-                    await viewModel.languageViewModel.loadMyLanguages()
-                }
+                // Fetch latest data silently in the background when view appears
+                await viewModel.loadHomeData(forceRefresh: false)
+                await viewModel.dailyRewardViewModel.loadDailyReward()
+                await viewModel.languageViewModel.loadMyLanguages(forceRefresh: false)
             }
         }
         .appDialog(isPresented: $showDailyRewardDialog) {
@@ -294,7 +287,7 @@ struct HomeSkeletonView: View {
                 languageName: "Spanish",
                 level: 1,
                 streakDays: 0,
-                progressWidth: 100
+                progressPercent: 60
             )
             .padding(.horizontal, 20)
             

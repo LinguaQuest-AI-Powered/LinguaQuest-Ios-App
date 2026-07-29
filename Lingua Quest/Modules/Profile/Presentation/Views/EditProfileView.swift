@@ -46,8 +46,7 @@ struct EditProfileView: View {
                         .padding(.top, 16)
 
                         EditProfileFormSection(
-                            displayName: $viewModel.displayName,
-                            tagline: $viewModel.tagline
+                            displayName: $viewModel.displayName
                         )
 
                         if let error = viewModel.errorMessage {

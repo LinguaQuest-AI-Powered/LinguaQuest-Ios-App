@@ -11,6 +11,7 @@ struct LeaderboardDataEntity {
     let myRank: Int
     let topThree: [LeaderboardUserEntity]
     let entries: [LeaderboardUserEntity]
+    let hasMore: Bool
 }
 
 struct LeaderboardUserEntity {

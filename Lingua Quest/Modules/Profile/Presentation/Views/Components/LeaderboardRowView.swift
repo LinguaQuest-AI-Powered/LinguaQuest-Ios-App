@@ -9,22 +9,19 @@ import SwiftUI
 
 struct LeaderboardRowView: View {
     let user: LeaderboardUser
-    
+
     var body: some View {
         HStack(spacing: 16) {
+            // Rank
             Text("\(user.rank)")
                 .font(.system(size: 18, weight: .bold))
                 .foregroundColor(user.isCurrentUser ? Color.teal : Color.appTextHeading)
                 .frame(width: 36, alignment: .leading)
-            
+
+            // Avatar
             ZStack(alignment: .bottomTrailing) {
-                Image(.user1)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 48, height: 48)
-                    .clipShape(Circle())
-                    .background(Circle().fill(Color.gray.opacity(0.2)))
-                
+                LeaderboardAvatarImage(urlString: user.image, size: 48)
+
                 if user.isCurrentUser {
                     ZStack {
                         Circle()
@@ -37,19 +34,19 @@ struct LeaderboardRowView: View {
                     .offset(x: 2, y: 2)
                 }
             }
-            
+
             VStack(alignment: .leading, spacing: 2) {
                 Text(user.name)
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundColor(user.isCurrentUser ? Color.teal : Color.appTextHeading)
-                
+
                 Text(user.title)
                     .font(.system(size: 12, weight: .regular))
                     .foregroundColor(user.isCurrentUser ? Color.teal.opacity(0.8) : .gray)
             }
-            
+
             Spacer()
-            
+
             if user.isCurrentUser {
                 Text(L10n.Leaderboard.you)
                     .font(.system(size: 10, weight: .bold))
@@ -59,12 +56,12 @@ struct LeaderboardRowView: View {
                     .background(Color.teal.opacity(0.8))
                     .clipShape(Capsule())
             }
-            
+
             VStack(alignment: .trailing, spacing: 2) {
                 Text("\(user.xp)")
                     .font(.system(size: 16, weight: .bold))
                     .foregroundColor(user.isCurrentUser ? Color.teal : Color.appTextHeading)
-                
+
                 Text("XP")
                     .font(.system(size: 10, weight: .bold))
                     .foregroundColor(user.isCurrentUser ? Color.teal.opacity(0.8) : .gray)
@@ -81,10 +78,44 @@ struct LeaderboardRowView: View {
     }
 }
 
+// MARK: - Shared avatar image component
+struct LeaderboardAvatarImage: View {
+    let urlString: String
+    let size: CGFloat
+
+    var body: some View {
+        Group {
+            if !urlString.isEmpty, let url = URL(string: urlString) {
+                AsyncImage(url: url) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image.resizable().scaledToFill()
+                    case .failure, .empty:
+                        defaultAvatar
+                    @unknown default:
+                        defaultAvatar
+                    }
+                }
+            } else {
+                defaultAvatar
+            }
+        }
+        .frame(width: size, height: size)
+        .clipShape(Circle())
+        .background(Circle().fill(Color.gray.opacity(0.15)))
+    }
+
+    private var defaultAvatar: some View {
+        Image(.user1)
+            .resizable()
+            .scaledToFill()
+    }
+}
+
 #Preview {
     VStack {
-        LeaderboardRowView(user: LeaderboardUser(id: "98", rank: 98, name: "Ferdinand M.", title: "Novice", image: "user1", xp: 2900, avatarName: "beginner", isCurrentUser: false))
-        LeaderboardRowView(user: LeaderboardUser(id: "100", rank: 100, name: "Explorer Sam", title: "Adventurer", image: "user3", xp: 3150, avatarName: "intermediate", isCurrentUser: true))
+        LeaderboardRowView(user: LeaderboardUser(id: "98", rank: 98, name: "Ferdinand M.", title: "Novice", image: "", xp: 2900, avatarName: "beginner", isCurrentUser: false))
+        LeaderboardRowView(user: LeaderboardUser(id: "100", rank: 100, name: "Explorer Sam", title: "Adventurer", image: "https://example.com/avatar.jpg", xp: 3150, avatarName: "intermediate", isCurrentUser: true))
     }
     .padding()
 }

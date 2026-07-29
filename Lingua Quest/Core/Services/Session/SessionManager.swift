@@ -60,6 +60,11 @@ final class SessionManager: SessionManagerProtocol {
         userPreferences.resetAll()
         statsService.resetAll()
         
+        // Remove cached avatar
+        UserDefaults.standard.removeObject(forKey: AppConstants.UserDefaultsKeys.cachedAvatarUrl)
+        
+        NotificationCenter.default.post(name: .userDidLogout, object: nil)
+
         // Clear scheduled notifications
         LocalNotificationManager.shared.cancelDailyReminder()
         
