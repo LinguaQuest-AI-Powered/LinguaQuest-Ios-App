@@ -46,6 +46,7 @@ final class BossLevelViewModel {
     private let stopSessionUseCase: StopBossLevelSessionUseCaseProtocol
     private let evaluateStageUseCase: EvaluateBossStageUseCaseProtocol
     private let router: RouterProtocol
+    private let statsService: StatsServiceProtocol
     
     private var stateListenTask: Task<Void, Never>?
     private var timerTask: Task<Void, Never>?
@@ -57,7 +58,8 @@ final class BossLevelViewModel {
         startSessionUseCase: StartBossLevelSessionUseCaseProtocol,
         stopSessionUseCase: StopBossLevelSessionUseCaseProtocol,
         evaluateStageUseCase: EvaluateBossStageUseCaseProtocol,
-        router: RouterProtocol
+        router: RouterProtocol,
+        statsService: StatsServiceProtocol
     ) {
         self.scenarioId = scenarioId
         self.scenarioRepository = scenarioRepository
@@ -66,6 +68,7 @@ final class BossLevelViewModel {
         self.stopSessionUseCase = stopSessionUseCase
         self.evaluateStageUseCase = evaluateStageUseCase
         self.router = router
+        self.statsService = statsService
     }
 
     // MARK: - Lifecycle
@@ -131,6 +134,9 @@ final class BossLevelViewModel {
             do {
                 let transcript = messages.map { "\($0.sender): \($0.text)" }.joined(separator: "\n")
                 let result = try await evaluateStageUseCase.execute(scenario: scenario, transcript: transcript)
+                if result.task_completed {
+                    try? await statsService.adjustWallet(coinsDelta: 50, xpDelta: 150)
+                }
                 viewState = .result(result)
             } catch {
                 viewState = .error("Evaluation failed: \(error.localizedDescription)")
