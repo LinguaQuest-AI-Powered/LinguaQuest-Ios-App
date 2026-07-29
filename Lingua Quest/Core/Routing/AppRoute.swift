@@ -34,6 +34,7 @@ enum AppRoute: Hashable {
     case roleplayScenarios
     case appLanguageSelection
     case about
+    case helpAndSupport
 }
 
 enum AppSheet: String, Identifiable {

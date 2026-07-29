@@ -312,6 +312,10 @@ final class SettingsViewModel {
         router.push(.about)
     }
     
+    func onHelpTapped() {
+        router.push(.helpAndSupport)
+    }
+    
     func logOut() {
         Task {
             await sessionManager.logout(allDevices: false)

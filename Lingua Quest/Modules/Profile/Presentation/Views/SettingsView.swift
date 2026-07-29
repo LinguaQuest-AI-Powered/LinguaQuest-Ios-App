@@ -32,7 +32,7 @@ struct SettingsView: View {
                 viewModel.onAppLanguageTapped()
             },
             onHelpTapped: {
-                // Navigate to Help & Support
+                viewModel.onHelpTapped()
             },
             onAboutTapped: {
                 viewModel.onAboutTapped()
