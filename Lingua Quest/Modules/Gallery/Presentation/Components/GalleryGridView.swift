@@ -7,7 +7,11 @@ import SwiftUI
 
 struct GalleryGridView: View {
     @State private var selectedCategory: String = "All Items"
-    let allCategories = ["All Items", "KITCHEN", "PARK", "STREET"]
+    var allCategories: [String] {
+        let uniqueCategories = Set(items.map { $0.category.uppercased() })
+        return ["All Items"] + uniqueCategories.sorted()
+    }
+    
     let localizedTitles: [String: String] = [
         "All Items": L10n.Gallery.Categories.allItems,
         "KITCHEN": L10n.Gallery.Categories.kitchen,
