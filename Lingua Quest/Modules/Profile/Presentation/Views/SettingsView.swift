@@ -32,10 +32,10 @@ struct SettingsView: View {
                 viewModel.onAppLanguageTapped()
             },
             onHelpTapped: {
-                // Navigate to Help & Support
+                viewModel.onHelpTapped()
             },
             onAboutTapped: {
-                // Navigate to About App
+                viewModel.onAboutTapped()
             },
             onLogOutTapped: {
                 showLogoutConfirm = true

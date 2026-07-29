@@ -82,11 +82,20 @@ extension Image {
         case squareAndPencil = "square.and.pencil"
         case infoCircle = "info.circle"
         case textformatAlt = "textformat.alt"
+        case wrenchAndScrewdriverFill = "wrench.and.screwdriver.fill"
+        case phoneFill = "phone.fill"
+        case mappinAndEllipse = "mappin.and.ellipse"
         
         // Added for Widget
         case handTapFill = "hand.tap.fill"
         case characterBookClosedFill = "character.book.closed.fill"
         case arrowTriangle2Circlepath = "arrow.triangle.2.circlepath"
+        
+        // Added for About Screen
+        case heartFill = "heart.fill"
+        case shieldFill = "shield.fill"
+        case docTextFill = "doc.text.fill"
+        case arrowUpRight = "arrow.up.right"
     }
     
     enum Asset: String {

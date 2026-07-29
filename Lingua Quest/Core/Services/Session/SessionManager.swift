@@ -58,6 +58,12 @@ final class SessionManager: SessionManagerProtocol {
         tokenStorage.clearSession()
         userPreferences.resetAll()
         statsService.resetAll()
+        
+        // Remove cached avatar
+        UserDefaults.standard.removeObject(forKey: AppConstants.UserDefaultsKeys.cachedAvatarUrl)
+        
+        NotificationCenter.default.post(name: .userDidLogout, object: nil)
+        
         router.popToRoot()
     }
 }

@@ -13,14 +13,16 @@ import UIKit
 @MainActor
 final class CameraCaptureViewModel {
     let worldId: Int
+    let worldName: String
     let levelId: Int
     let levelOrder: Int
     let targetWord: String
     let cameraManager: CameraManager
     private let router: RouterProtocol
     
-    init(worldId: Int, levelId: Int, levelOrder: Int, targetWord: String, router: RouterProtocol) {
+    init(worldId: Int, worldName: String, levelId: Int, levelOrder: Int, targetWord: String, router: RouterProtocol) {
         self.worldId = worldId
+        self.worldName = worldName
         self.levelId = levelId
         self.levelOrder = levelOrder
         self.targetWord = targetWord
@@ -42,9 +44,15 @@ final class CameraCaptureViewModel {
     }
     
     func onCaptureTapped() {
-        // Mock capture for debugging: Stop camera and push result view
-        cameraManager.stopSession()
-        let imageData = cameraManager.capturedImage?.jpegData(compressionQuality: 0.8)
-        router.push(.cameraResult(worldId: worldId, levelId: levelId, levelOrder: levelOrder, targetWord: targetWord, imageData: imageData))
+        Task {
+            if let image = await cameraManager.capturePhoto() {
+                cameraManager.stopSession()
+                let imageData = image.jpegData(compressionQuality: 0.8)
+                router.push(.cameraResult(worldId: worldId, worldName: worldName, levelId: levelId, levelOrder: levelOrder, targetWord: targetWord, imageData: imageData))
+            } else {
+                cameraManager.stopSession()
+                router.push(.cameraResult(worldId: worldId, worldName: worldName, levelId: levelId, levelOrder: levelOrder, targetWord: targetWord, imageData: nil))
+            }
+        }
     }
 }

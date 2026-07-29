@@ -20,10 +20,10 @@ enum AppRoute: Hashable {
     case verifyPasswordResetOtp(email: String)
     case resetPassword(resetToken: String)
     case gameLevels(worldId: Int, worldName: String, languageId: Int)
-    case cameraQuestTask(worldId: Int, levelId: Int, levelOrder: Int, targetWord: String)
+    case cameraQuestTask(worldId: Int, worldName: String, levelId: Int, levelOrder: Int, targetWord: String)
     case voiceGame
-    case cameraCapture(worldId: Int, levelId: Int, levelOrder: Int, targetWord: String)
-    case cameraResult(worldId: Int, levelId: Int, levelOrder: Int, targetWord: String, imageData: Data?)
+    case cameraCapture(worldId: Int, worldName: String, levelId: Int, levelOrder: Int, targetWord: String)
+    case cameraResult(worldId: Int, worldName: String, levelId: Int, levelOrder: Int, targetWord: String, imageData: Data?)
     case voiceGameResult(audioData: Data, sentence: VoiceSentence)
     case leaderboard(languageId: Int)
     case achievements
@@ -33,6 +33,8 @@ enum AppRoute: Hashable {
     case bossLevel(scenarioTitle: String)
     case roleplayScenarios
     case appLanguageSelection
+    case about
+    case helpAndSupport
 }
 
 enum AppSheet: String, Identifiable {

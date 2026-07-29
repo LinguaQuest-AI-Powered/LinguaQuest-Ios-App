@@ -86,7 +86,7 @@ struct GameLevelsView: View {
                                     let xPos = RoadMath.xPosition(for: yPos, in: w)
                                     
                                     Button {
-                                        viewModel.onLevelTapped(worldId: worldId, level: level)
+                                        viewModel.onLevelTapped(worldId: worldId, worldName: worldName, level: level)
                                     } label: {
                                         LevelNodeView(level: level)
                                     }

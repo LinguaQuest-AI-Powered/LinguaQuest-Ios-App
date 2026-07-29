@@ -54,7 +54,7 @@ final class GameAssembly: Assembly {
             return GameLevelsViewModel(getGameLevelsUseCase: useCase, startLevelUseCase: startLevelUseCase, router: router)
         }
         
-        container.register(CameraTaskQuestViewModel.self) { (resolver, worldId: Int, levelId: Int, levelOrder: Int, targetWord: String) in
+        container.register(CameraTaskQuestViewModel.self) { (resolver, worldId: Int, worldName: String, levelId: Int, levelOrder: Int, targetWord: String) in
             let router = resolver.resolve(RouterProtocol.self)!
             let statsService = resolver.resolve(StatsServiceProtocol.self)!
             let hintUseCase = resolver.resolve(GetHintUseCase.self)!
@@ -65,18 +65,19 @@ final class GameAssembly: Assembly {
                 getHintUseCase: hintUseCase,
                 changeWordUseCase: changeWordUseCase,
                 worldId: worldId,
+                worldName: worldName,
                 levelId: levelId,
                 levelOrder: levelOrder,
                 targetWord: targetWord
             )
         }
         
-        container.register(CameraCaptureViewModel.self) { (resolver, worldId: Int, levelId: Int, levelOrder: Int, targetWord: String) in
+        container.register(CameraCaptureViewModel.self) { (resolver, worldId: Int, worldName: String, levelId: Int, levelOrder: Int, targetWord: String) in
             let router = resolver.resolve(RouterProtocol.self)!
-            return CameraCaptureViewModel(worldId: worldId, levelId: levelId, levelOrder: levelOrder, targetWord: targetWord, router: router)
+            return CameraCaptureViewModel(worldId: worldId, worldName: worldName, levelId: levelId, levelOrder: levelOrder, targetWord: targetWord, router: router)
         }
         
-        container.register(CameraResultViewModel.self) { (resolver, worldId: Int, levelId: Int, levelOrder: Int, targetWord: String, imageData: Data?) in
+        container.register(CameraResultViewModel.self) { (resolver, worldId: Int, worldName: String, levelId: Int, levelOrder: Int, targetWord: String, imageData: Data?) in
             let router = resolver.resolve(RouterProtocol.self)!
             let saveUseCase = resolver.resolve(SaveCapturedItemUseCase.self)!
             let verifyUseCase = resolver.resolve(VerifyImageUseCase.self)!
@@ -84,6 +85,7 @@ final class GameAssembly: Assembly {
             let statsService = resolver.resolve(StatsServiceProtocol.self)!
             return CameraResultViewModel(
                 worldId: worldId,
+                worldName: worldName,
                 levelId: levelId,
                 levelOrder: levelOrder,
                 targetWord: targetWord,

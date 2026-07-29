@@ -19,6 +19,8 @@ final class DailyRewardViewModel {
     var isLoading: Bool = false
     var errorMessage: String?
     
+    private var logoutToken: NotificationToken?
+    
     // MARK: - UseCases
     private let getDailyRewardUseCase: GetDailyRewardUseCase
     private let claimDailyRewardUseCase: ClaimDailyRewardUseCase
@@ -29,6 +31,21 @@ final class DailyRewardViewModel {
         self.getDailyRewardUseCase = getDailyRewardUseCase
         self.claimDailyRewardUseCase = claimDailyRewardUseCase
         self.statsService = statsService
+        
+        let token = NotificationCenter.default.addObserver(
+            forName: .userDidLogout,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.handleLogout()
+        }
+        logoutToken = NotificationToken(token: token)
+    }
+    
+    private func handleLogout() {
+        reward = nil
+        isClaimed = false
+        errorMessage = nil
     }
     
     // MARK: - UI Model

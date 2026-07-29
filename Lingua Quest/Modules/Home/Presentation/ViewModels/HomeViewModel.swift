@@ -21,6 +21,8 @@ final class HomeViewModel {
     var isLoading = false
     var errorMessage: String?
     
+    private var logoutToken: NotificationToken?
+    
     var displayWorlds: [WorldUIModel] {
         return fetchedWorlds.map(WorldUIMapper.map)
     }
@@ -49,6 +51,22 @@ final class HomeViewModel {
                 await self?.loadHomeData(forceRefresh: true)
             }
         }
+        
+        let token = NotificationCenter.default.addObserver(
+            forName: .userDidLogout,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.handleLogout()
+        }
+        logoutToken = NotificationToken(token: token)
+    }
+    
+    private func handleLogout() {
+        hasLoadedInitialData = false
+        homeData = nil
+        fetchedWorlds = []
+        errorMessage = nil
     }
     
     private var hasLoadedInitialData = false

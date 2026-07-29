@@ -174,6 +174,7 @@ enum L10n {
         static var nextLevel: String { localized("game.result.next_level") }
         static var analyzing: String { localized("game.result.analyzing") }
         static var analyzingSubtitle: String { localized("game.result.analyzing_subtitle") }
+        static var noImageData: String { localized("game.result.no_image_data") }
         static func xpPoints(_ points: Int) -> String { String(format: localized("game.result.xp_points"), points) }
         static func coinsValue(_ points: Int) -> String { String(format: localized("game.result.coins_value"), points) }
         static func levelProgress(_ level: Int) -> String { String(format: localized("game.result.level_progress"), level) }
@@ -484,6 +485,35 @@ enum L10n {
         static var resultTryAgain: String { localized("boss_level.result_try_again") }
     }
 
+    enum About {
+        static var title: String { localized("about.title") }
+        static var appName: String { localized("about.app_name") }
+        static var subtitle: String { localized("about.subtitle") }
+        static var missionTitle: String { localized("about.mission_title") }
+        static var missionDescription: String { localized("about.mission_description") }
+        static var featuresTitle: String { localized("about.features_title") }
+        static var featureAiTitle: String { localized("about.feature_ai_title") }
+        static var featureAiDesc: String { localized("about.feature_ai_desc") }
+        static var featureCameraTitle: String { localized("about.feature_camera_title") }
+        static var featureCameraDesc: String { localized("about.feature_camera_desc") }
+        static var featureGameTitle: String { localized("about.feature_game_title") }
+        static var featureGameDesc: String { localized("about.feature_game_desc") }
+        static var communityTitle: String { localized("about.community_title") }
+        static var rateApp: String { localized("about.rate_app") }
+        static var website: String { localized("about.website") }
+        static var privacyPolicy: String { localized("about.privacy_policy") }
+        static var termsOfService: String { localized("about.terms_of_service") }
+        static var copyright: String { localized("about.copyright") }
+        static var madeWithLove: String { localized("about.made_with_love") }
+    }
+
+    enum HelpSupport {
+        static var title: String { localized("help_support.title") }
+        static var contactUs: String { localized("help_support.contact_us") }
+        static var faq: String { localized("help_support.faq") }
+        static var reportBug: String { localized("help_support.report_bug") }
+        static var communityForum: String { localized("help_support.community_forum") }
+    }
 
     private static func localized(_ key: String) -> String {
         let appLanguage = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en"
