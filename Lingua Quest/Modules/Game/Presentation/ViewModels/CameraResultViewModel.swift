@@ -70,7 +70,7 @@ final class CameraResultViewModel {
                     self.xpPoints = entity.xpEarned ?? 0
                     self.coinsEarned = entity.coinsEarned ?? 0
                     self.currentLevelIndex = entity.level ?? self.levelId
-                    self.currentLevelProgress = entity.levelProgressPercentage ?? 0.0
+                    self.currentLevelProgress = min(max((entity.levelProgressPercentage ?? 0.0) / 100.0, 0.0), 1.0)
                     
                     self.statsService.syncBalances(coins: self.statsService.coins + self.coinsEarned, xp: self.statsService.xp + self.xpPoints, streakDays: nil)
                     
