@@ -421,3 +421,10 @@
 "about.terms_of_service" = "Terms of Service";
 "about.copyright" = "© 2026 Lingua Quest Team. All rights reserved.";
 "about.made_with_love" = "Made with ❤️ for language explorers around the globe.";
+
+// Help & Support
+"help_support.title" = "Help & Support";
+"help_support.contact_us" = "Contact Support";
+"help_support.faq" = "Frequently Asked Questions";
+"help_support.report_bug" = "Report a Bug";
+"help_support.community_forum" = "Community Forum";

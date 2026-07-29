@@ -136,6 +136,11 @@ final class ProfileAssembly: Assembly {
             let router = resolver.resolve(RouterProtocol.self)!
             return AboutViewModel(router: router)
         }
+        
+        container.register(HelpAndSupportViewModel.self) { resolver in
+            let router = resolver.resolve(RouterProtocol.self)!
+            return HelpAndSupportViewModel(router: router)
+        }
     }
 }
 

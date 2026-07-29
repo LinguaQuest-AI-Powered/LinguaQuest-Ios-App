@@ -127,6 +127,9 @@ final class Router: RouterProtocol {
         case .about:
             let viewModel = Resolver.shared.resolve(AboutViewModel.self)
             AboutView(viewModel: viewModel)
+        case .helpAndSupport:
+            let viewModel = Resolver.shared.resolve(HelpAndSupportViewModel.self)
+            HelpAndSupportView(viewModel: viewModel)
         }
     }
 }

@@ -507,6 +507,14 @@ enum L10n {
         static var madeWithLove: String { localized("about.made_with_love") }
     }
 
+    enum HelpSupport {
+        static var title: String { localized("help_support.title") }
+        static var contactUs: String { localized("help_support.contact_us") }
+        static var faq: String { localized("help_support.faq") }
+        static var reportBug: String { localized("help_support.report_bug") }
+        static var communityForum: String { localized("help_support.community_forum") }
+    }
+
     private static func localized(_ key: String) -> String {
         let appLanguage = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en"
         if let path = Bundle.main.path(forResource: appLanguage, ofType: "lproj"),
