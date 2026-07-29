@@ -23,15 +23,15 @@ struct EditProfileAvatarSection: View {
                                     .resizable()
                                     .scaledToFill()
                             default:
-                                Image(asset: .bird)
+                                Image(.user1)
                                     .resizable()
-                                    .scaledToFit()
+                                    .scaledToFill()
                             }
                         }
                     } else {
-                        Image(asset: .bird)
+                        Image(.user1)
                             .resizable()
-                            .scaledToFit()
+                            .scaledToFill()
                     }
                 }
                 .frame(width: 120, height: 120)
