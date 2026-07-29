@@ -18,7 +18,8 @@ final class LockScreenVocabularyAssembly: Assembly {
         
         container.register(VocabularyRepositoryProtocol.self) { resolver in
             let remoteDataSource = resolver.resolve(VocabularyRemoteDataSourceProtocol.self)!
-            return VocabularyRepositoryImpl(remoteDataSource: remoteDataSource)
+            let userPreferences = resolver.resolve(UserPreferencesProtocol.self)!
+            return VocabularyRepositoryImpl(remoteDataSource: remoteDataSource, userPreferences: userPreferences)
         }.inObjectScope(.container)
         
         // MARK: - Domain Layer

@@ -17,8 +17,10 @@ final class CapturedItemEntity {
     var isCorrect: Bool
     var category: String
     var timestamp: Date
+    var userId: Int
     
-    init(id: UUID = UUID(), imageData: Data?, answer: String, targetWord: String, isCorrect: Bool, category: String, timestamp: Date = Date()) {
+    
+    init(id: UUID = UUID(), imageData: Data?, answer: String, targetWord: String, isCorrect: Bool, category: String, timestamp: Date = Date(), userId: Int = 0) {
         self.id = id
         self.imageData = imageData
         self.answer = answer
@@ -26,5 +28,6 @@ final class CapturedItemEntity {
         self.isCorrect = isCorrect
         self.category = category
         self.timestamp = timestamp
+        self.userId = userId
     }
 }

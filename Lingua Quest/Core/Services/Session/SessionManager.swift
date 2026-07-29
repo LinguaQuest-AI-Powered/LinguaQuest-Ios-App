@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ActivityKit
 
 protocol SessionManagerProtocol {
     /// User-initiated logout: calls the backend, then always clears local state and navigates to Login.
@@ -63,6 +64,16 @@ final class SessionManager: SessionManagerProtocol {
         UserDefaults.standard.removeObject(forKey: AppConstants.UserDefaultsKeys.cachedAvatarUrl)
         
         NotificationCenter.default.post(name: .userDidLogout, object: nil)
+
+        // Clear scheduled notifications
+        LocalNotificationManager.shared.cancelDailyReminder()
+        
+        // Teardown Live Activities
+        if #available(iOS 16.2, *) {
+            for activity in Activity<WordWidgetAttributes>.activities {
+                await activity.end(nil, dismissalPolicy: .immediate)
+            }
+        }
         
         router.popToRoot()
     }

@@ -164,8 +164,12 @@ final class UserPreferences: UserPreferencesProtocol {
             AppConstants.UserDefaultsKeys.streakDays,
             AppConstants.UserDefaultsKeys.userEmail,
             AppConstants.UserDefaultsKeys.nativeLanguageName,
-            AppConstants.UserDefaultsKeys.targetLanguageName,
             AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled,
+            AppConstants.UserDefaultsKeys.cachedAvatarUrl,
+            AppConstants.UserDefaultsKeys.notificationsEnabled,
+            AppConstants.UserDefaultsKeys.dailyReminderEnabled,
+            AppConstants.UserDefaultsKeys.reminderTime,
+            AppConstants.UserDefaultsKeys.reminderRepeatDays,
             "userId"
         ]
         

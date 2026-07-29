@@ -50,7 +50,7 @@ final class HomeAssembly: Assembly {
             let claimDailyRewardUseCase = resolver.resolve(ClaimDailyRewardUseCase.self)!
             let statsService = resolver.resolve(StatsService.self)!
             return DailyRewardViewModel(getDailyRewardUseCase: getDailyRewardUseCase, claimDailyRewardUseCase: claimDailyRewardUseCase, statsService: statsService)
-        }.inObjectScope(.container)
+        }
         
         container.register(GetMyLanguagesUseCase.self) { resolver in
             let repository = resolver.resolve(HomeRepositoryProtocol.self)!
@@ -87,7 +87,7 @@ final class HomeAssembly: Assembly {
                 activateLockScreenVocabularyUseCase: activateLockScreenVocabularyUseCase,
                 userPreferences: userPreferences
             )
-        }.inObjectScope(.container)
+        }
         
         container.register(HomeViewModel.self) { resolver in
             let getHomeDataUseCase = resolver.resolve(GetHomeDataUseCaseProtocol.self)!
@@ -104,7 +104,7 @@ final class HomeAssembly: Assembly {
                 statsService: statsService,
                 router: router
             )
-        }.inObjectScope(.container)
+        }
         
         container.register(AllWorldsViewModel.self) { resolver in
             let router = resolver.resolve(RouterProtocol.self)!
