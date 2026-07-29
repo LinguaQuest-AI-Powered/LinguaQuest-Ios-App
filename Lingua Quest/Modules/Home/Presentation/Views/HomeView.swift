@@ -68,7 +68,7 @@ struct HomeView: View {
                                 languageName: viewModel.languageViewModel.activeLanguage?.name ?? L10n.Onboarding.languageSpanish,
                                 level: viewModel.languageViewModel.activeLanguage?.level ?? 1,
                                 streakDays: viewModel.homeData?.streakDays ?? 0,
-                                progressWidth: CGFloat(viewModel.languageViewModel.activeLanguage?.progressPercent ?? 0) * 1.65
+                                progressPercent: CGFloat(viewModel.languageViewModel.activeLanguage?.progressPercent ?? 0)
                             )
                             .padding(.horizontal, 20)
                             .offset(y: isAnimated ? 0 : 30)
@@ -294,7 +294,7 @@ struct HomeSkeletonView: View {
                 languageName: "Spanish",
                 level: 1,
                 streakDays: 0,
-                progressWidth: 100
+                progressPercent: 60
             )
             .padding(.horizontal, 20)
             
