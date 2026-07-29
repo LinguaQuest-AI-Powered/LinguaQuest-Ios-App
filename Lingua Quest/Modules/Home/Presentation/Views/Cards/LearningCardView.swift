@@ -16,7 +16,7 @@ struct LearningCardView: View {
     let languageName: String
     let level: Int
     let streakDays: Int
-    let progressWidth: CGFloat
+    let progressPercent: CGFloat
     
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -55,22 +55,25 @@ struct LearningCardView: View {
                 }
             }
             
-            ZStack(alignment: .leading) {
-                Capsule()
-                    .fill(Color.appSecondaryProgressBar)
-                    .frame(height: 10)
-                
-                Capsule()
-                    .fill(
-                        LinearGradient(
-                            colors: [.appGlowTeal, .appProgressBar],
-                            startPoint: .leading,
-                            endPoint: .trailing
+            GeometryReader { geometry in
+                ZStack(alignment: .leading) {
+                    Capsule()
+                        .fill(Color.appSecondaryProgressBar)
+                        .frame(height: 10)
+                    
+                    Capsule()
+                        .fill(
+                            LinearGradient(
+                                colors: [.appGlowTeal, .appProgressBar],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
                         )
-                    )
-                    .frame(width: progressWidth, height: 10)
-                    .shadow(color: Color.appGlowTeal.opacity(colorScheme == .dark ? 0.32 : 0.18), radius: 8, x: 0, y: 0)
+                        .frame(width: geometry.size.width * min(max(progressPercent / 100.0, 0), 1.0), height: 10)
+                        .shadow(color: Color.appGlowTeal.opacity(colorScheme == .dark ? 0.32 : 0.18), radius: 8, x: 0, y: 0)
+                }
             }
+            .frame(height: 10)
         }
         .padding(18)
         .background(
@@ -93,6 +96,6 @@ struct LearningCardView: View {
         languageName: L10n.Onboarding.languageSpanish,
         level: 12,
         streakDays: 7,
-        progressWidth: 165
+        progressPercent: 75
     )
 }

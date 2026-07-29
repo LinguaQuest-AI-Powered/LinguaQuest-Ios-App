@@ -26,6 +26,18 @@ final class HomeLocalDataSource: HomeLocalDataSourceProtocol {
     var availableLanguages: [AvailableLanguage]?
     
     private var worldsCache: [String: [ExploreWorld]] = [:]
+    private var logoutToken: NotificationToken?
+    
+    init() {
+        let token = NotificationCenter.default.addObserver(
+            forName: .userDidLogout,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.clearCache()
+        }
+        logoutToken = NotificationToken(token: token)
+    }
     
     private func cacheKey(languageId: Int, difficulty: String?) -> String {
         return "\(languageId)_\(difficulty ?? "NONE")"

@@ -24,9 +24,10 @@ final class ProfileViewModel {
     var showCameraPicker: Bool = false
     var showGalleryPicker: Bool = false
     
+    private var logoutToken: NotificationToken?
+    
     // MARK: - Top App Bar Data
     var gems: String = "0"
-
     
     // MARK: - Header Data
     var userName: String = ""
@@ -58,6 +59,30 @@ final class ProfileViewModel {
         self.getProfileUseCase = getProfileUseCase
         self.uploadProfilePhotoUseCase = uploadProfilePhotoUseCase
         self.statsService = statsService
+        
+        let token = NotificationCenter.default.addObserver(
+            forName: .userDidLogout,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.handleLogout()
+        }
+        logoutToken = NotificationToken(token: token)
+    }
+    
+    private func handleLogout() {
+        userName = ""
+        level = 1
+        avatarImage = nil
+        worlds = "0"
+        currentLanguage = ""
+        journeyTitle = ""
+        languageLevel = ""
+        currentLanguageId = 0
+        currentLanguageXP = 0
+        targetLanguageXP = 0
+        achievements = []
+        topExplorers = []
     }
     
     // MARK: - Intentions (Methods)
