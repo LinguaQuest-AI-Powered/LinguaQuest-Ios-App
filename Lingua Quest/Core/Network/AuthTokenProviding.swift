@@ -20,4 +20,8 @@ extension Notification.Name {
     /// Posted when a refresh attempt fails and the session is truly over —
     /// RootView/Router should observe this and force navigation to Login.
     static let sessionExpired = Notification.Name("com.linguaquest.sessionExpired")
+    
+    /// Posted when the user explicitly logs out or the session ends,
+    /// so that local caches and view models can be cleared.
+    static let userDidLogout = Notification.Name("com.linguaquest.userDidLogout")
 }

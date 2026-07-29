@@ -33,6 +33,8 @@ final class LanguageViewModel {
     
     var errorMessage: String?
     
+    private var logoutToken: NotificationToken?
+    
     var activeLanguage: MyTargetLanguage? {
         myLanguages.first(where: { $0.isActive })
     }
@@ -51,6 +53,22 @@ final class LanguageViewModel {
         self.addLanguagesUseCase = addLanguagesUseCase
         self.activateLockScreenVocabularyUseCase = activateLockScreenVocabularyUseCase
         self.userPreferences = userPreferences
+        
+        let token = NotificationCenter.default.addObserver(
+            forName: .userDidLogout,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.handleLogout()
+        }
+        logoutToken = NotificationToken(token: token)
+    }
+    
+    private func handleLogout() {
+        myLanguages = []
+        availableLanguages = []
+        selectedLanguageId = nil
+        errorMessage = nil
     }
     
     func loadMyLanguages(forceRefresh: Bool = false) async {
