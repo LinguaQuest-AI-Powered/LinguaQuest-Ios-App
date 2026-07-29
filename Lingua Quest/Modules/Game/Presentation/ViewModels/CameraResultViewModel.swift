@@ -58,7 +58,7 @@ final class CameraResultViewModel {
     
     private func verifyImage() {
         guard let data = imageData else {
-            self.state = .error(message: "No image data available.")
+            self.state = .error(message: L10n.Game.noImageData)
             return
         }
         

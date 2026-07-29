@@ -174,6 +174,7 @@ enum L10n {
         static var nextLevel: String { localized("game.result.next_level") }
         static var analyzing: String { localized("game.result.analyzing") }
         static var analyzingSubtitle: String { localized("game.result.analyzing_subtitle") }
+        static var noImageData: String { localized("game.result.no_image_data") }
         static func xpPoints(_ points: Int) -> String { String(format: localized("game.result.xp_points"), points) }
         static func coinsValue(_ points: Int) -> String { String(format: localized("game.result.coins_value"), points) }
         static func levelProgress(_ level: Int) -> String { String(format: localized("game.result.level_progress"), level) }

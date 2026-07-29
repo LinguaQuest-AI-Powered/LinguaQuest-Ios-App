@@ -42,9 +42,15 @@ final class CameraCaptureViewModel {
     }
     
     func onCaptureTapped() {
-        // Mock capture for debugging: Stop camera and push result view
-        cameraManager.stopSession()
-        let imageData = cameraManager.capturedImage?.jpegData(compressionQuality: 0.8)
-        router.push(.cameraResult(worldId: worldId, levelId: levelId, levelOrder: levelOrder, targetWord: targetWord, imageData: imageData))
+        Task {
+            if let image = await cameraManager.capturePhoto() {
+                cameraManager.stopSession()
+                let imageData = image.jpegData(compressionQuality: 0.8)
+                router.push(.cameraResult(worldId: worldId, levelId: levelId, levelOrder: levelOrder, targetWord: targetWord, imageData: imageData))
+            } else {
+                cameraManager.stopSession()
+                router.push(.cameraResult(worldId: worldId, levelId: levelId, levelOrder: levelOrder, targetWord: targetWord, imageData: nil))
+            }
+        }
     }
 }
