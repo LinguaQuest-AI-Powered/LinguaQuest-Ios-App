@@ -15,9 +15,8 @@ struct VerifyEmailView: View {
         ZStack {
             Color.appBackgroundWarm.ignoresSafeArea()
             
-            VStack(spacing: 0) {
-                
                 ScrollView(showsIndicators: false) {
+                    Spacer().frame(height: 100)
                     DialogCardContainer(mascotImage: .verifyEmailBird) {
                         VStack(spacing: 24) {
                             
@@ -86,8 +85,8 @@ struct VerifyEmailView: View {
                         .animation(.easeInOut, value: viewModel.errorMessage)
                     }
                     .padding(.horizontal, 24)
+                    Spacer().frame(height: 100)
                 }
-            }
             
             VStack {
                 HStack {
