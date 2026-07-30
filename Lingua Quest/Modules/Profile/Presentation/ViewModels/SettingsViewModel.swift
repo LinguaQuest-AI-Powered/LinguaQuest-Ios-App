@@ -37,42 +37,51 @@ final class SettingsViewModel {
         self.languageViewModel = languageViewModel
         self.userPreferences = userPreferences
         self.lockScreenSettingsRemoteDataSource = lockScreenSettingsRemoteDataSource
+        
+        self.appLanguageCode = userPreferences.appLanguage
+        self.appLanguage = AppLanguage(rawValue: userPreferences.appLanguage)?.name ?? "English"
+        self.notificationsEnabled = userPreferences.notificationsEnabled
+        self.darkModeEnabled = userPreferences.isDarkMode
+        self.isLockScreenVocabularyEnabled = userPreferences.isLockScreenVocabularyEnabled
+        self.dailyReminderEnabled = userPreferences.dailyReminderEnabled
+        self.reminderTime = Date(timeIntervalSince1970: userPreferences.reminderTime)
+        self.reminderRepeatDays = userPreferences.reminderRepeatDays
     }
     
     // MARK: - User Data
     var userName: String = L10n.Settings.explorerName(AppConstants.Common.defaultUserName)
     
     // MARK: - App Experience Toggles
-    var appLanguageCode: String = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en" {
+    var appLanguageCode: String {
         didSet {
-            UserDefaults.standard.set(appLanguageCode, forKey: AppConstants.UserDefaultsKeys.appLanguage)
+            userPreferences.appLanguage = appLanguageCode
             appLanguage = AppLanguage(rawValue: appLanguageCode)?.name ?? "English"
         }
     }
     
     func refreshAppLanguage() {
-        let savedCode = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en"
+        let savedCode = userPreferences.appLanguage
         if savedCode != appLanguageCode {
             self.appLanguageCode = savedCode
         }
     }
     
-    var appLanguage: String = AppLanguage(rawValue: UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en")?.name ?? "English"
-    var notificationsEnabled: Bool = UserDefaults.standard.bool(forKey: AppConstants.UserDefaultsKeys.notificationsEnabled) {
+    var appLanguage: String
+    var notificationsEnabled: Bool {
         didSet {
-            UserDefaults.standard.set(notificationsEnabled, forKey: AppConstants.UserDefaultsKeys.notificationsEnabled)
+            userPreferences.notificationsEnabled = notificationsEnabled
             handleNotificationsToggle()
         }
     }
     
-    var darkModeEnabled: Bool = UserDefaults.standard.bool(forKey: AppConstants.UserDefaultsKeys.isDarkMode) {
+    var darkModeEnabled: Bool {
         didSet {
-            UserDefaults.standard.set(darkModeEnabled, forKey: AppConstants.UserDefaultsKeys.isDarkMode)
+            userPreferences.isDarkMode = darkModeEnabled
         }
     }
     var soundEffectsEnabled: Bool = true
     
-    var isLockScreenVocabularyEnabled: Bool = UserDefaults.standard.bool(forKey: AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled) {
+    var isLockScreenVocabularyEnabled: Bool {
         didSet {
             handleLockScreenVocabularyToggle()
         }
@@ -86,23 +95,23 @@ final class SettingsViewModel {
     var currentCoins: Int = 0
     
     // MARK: - Daily Reminder Toggles
-    var dailyReminderEnabled: Bool = UserDefaults.standard.bool(forKey: AppConstants.UserDefaultsKeys.dailyReminderEnabled) {
+    var dailyReminderEnabled: Bool {
         didSet {
-            UserDefaults.standard.set(dailyReminderEnabled, forKey: AppConstants.UserDefaultsKeys.dailyReminderEnabled)
+            userPreferences.dailyReminderEnabled = dailyReminderEnabled
             updateNotificationSchedule()
         }
     }
     
-    var reminderTime: Date = Date(timeIntervalSince1970: UserDefaults.standard.double(forKey: AppConstants.UserDefaultsKeys.reminderTime)) {
+    var reminderTime: Date {
         didSet {
-            UserDefaults.standard.set(reminderTime.timeIntervalSince1970, forKey: AppConstants.UserDefaultsKeys.reminderTime)
+            userPreferences.reminderTime = reminderTime.timeIntervalSince1970
             updateNotificationSchedule()
         }
     }
     
-    var reminderRepeatDays: [Int] = (UserDefaults.standard.array(forKey: AppConstants.UserDefaultsKeys.reminderRepeatDays) as? [Int]) ?? [1,2,3,4,5,6,7] {
+    var reminderRepeatDays: [Int] {
         didSet {
-            UserDefaults.standard.set(reminderRepeatDays, forKey: AppConstants.UserDefaultsKeys.reminderRepeatDays)
+            userPreferences.reminderRepeatDays = reminderRepeatDays
             updateNotificationSchedule()
         }
     }
@@ -151,7 +160,7 @@ final class SettingsViewModel {
     
     private func handleLockScreenVocabularyToggle() {
         Task { @MainActor in
-            let isSavedAsEnabled = UserDefaults.standard.bool(forKey: AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled)
+            let isSavedAsEnabled = self.userPreferences.isLockScreenVocabularyEnabled
             
             if self.isLockScreenVocabularyEnabled && !isSavedAsEnabled {
                 // Temporarily revert UI toggle until logic completes
@@ -178,7 +187,7 @@ final class SettingsViewModel {
                 }
             } else if !self.isLockScreenVocabularyEnabled && isSavedAsEnabled {
                 // User disabled it
-                UserDefaults.standard.set(false, forKey: AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled)
+                self.userPreferences.isLockScreenVocabularyEnabled = false
                 self.showToast(title: L10n.LockScreenVocabulary.toggleLabel, subtitle: L10n.LockScreenVocabulary.disabledToast, type: .info)
             }
         }
@@ -192,7 +201,7 @@ final class SettingsViewModel {
             await MainActor.run {
                 switch result {
                 case .success:
-                    UserDefaults.standard.set(true, forKey: AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled)
+                    self.userPreferences.isLockScreenVocabularyEnabled = true
                     self.isLockScreenVocabularyEnabled = true
                     self.showToast(title: L10n.LockScreenVocabulary.toggleLabel, subtitle: L10n.LockScreenVocabulary.activatedToast, type: .success)
                 case .failure:
@@ -230,7 +239,7 @@ final class SettingsViewModel {
                     await MainActor.run {
                         switch result {
                         case .success:
-                            UserDefaults.standard.set(true, forKey: AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled)
+                            self.userPreferences.isLockScreenVocabularyEnabled = true
                             self.isLockScreenVocabularyEnabled = true
                             self.showActivationDialog = false
                             self.activationState = .idle
