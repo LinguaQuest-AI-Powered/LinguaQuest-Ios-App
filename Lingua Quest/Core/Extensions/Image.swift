@@ -96,6 +96,12 @@ extension Image {
         case shieldFill = "shield.fill"
         case docTextFill = "doc.text.fill"
         case arrowUpRight = "arrow.up.right"
+        
+        // Added for Help and Support
+        case messageFill = "message.fill"
+        case ladybugFill = "ladybug.fill"
+        case bubbleLeftFill = "bubble.left.fill"
+        case textBubble = "text.bubble"
     }
     
     enum Asset: String {
@@ -117,6 +123,7 @@ extension Image {
         case leaderBoardBird = "leader_board_bird"
         case achivementBird = "achivement_bird"
         case loadingBird = "loading_bird"
+        case helpBird = "help_bird"
         case star = "star"
         case star2 = "star2"
         case ball = "ball"

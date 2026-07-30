@@ -513,6 +513,20 @@ enum L10n {
         static var faq: String { localized("help_support.faq") }
         static var reportBug: String { localized("help_support.report_bug") }
         static var communityForum: String { localized("help_support.community_forum") }
+        static var greeting: String { localized("help_support.greeting") }
+        static var stillNeedHelp: String { localized("help_support.still_need_help") }
+        static var replyTime: String { localized("help_support.reply_time") }
+        
+        enum FAQ {
+            static var q1: String { localized("help_support.faq.q1") }
+            static var a1: String { localized("help_support.faq.a1") }
+            static var q2: String { localized("help_support.faq.q2") }
+            static var a2: String { localized("help_support.faq.a2") }
+            static var q3: String { localized("help_support.faq.q3") }
+            static var a3: String { localized("help_support.faq.a3") }
+            static var q4: String { localized("help_support.faq.q4") }
+            static var a4: String { localized("help_support.faq.a4") }
+        }
     }
 
     private static func localized(_ key: String) -> String {

@@ -28,98 +28,130 @@ struct HelpAndSupportView: View {
             .frame(height: 64)
             .padding(.bottom, 20)
             
-            Spacer()
-            
             // Content
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 32) {
                     
-                    VStack(spacing: 0) {
-                        LinguaSettingsRow(
-                            icon: .questionmarkCircleFill,
-                            iconBgColor: .appAccentTeal,
-                            title: L10n.HelpSupport.faq,
-                            showDivider: true
-                        ) {
-                            SettingsRowChevron()
-                        }
+                    // Header Image & Bubble
+                    VStack(spacing: -12) {
+                        Text(L10n.HelpSupport.greeting)
+                            .appTextStyle(.bodyMedium, color: .appTextHeading)
+                            .padding(.horizontal, 24)
+                            .padding(.top, 16)
+                            .padding(.bottom, 24)
+                            .background(
+                                SpeechBubbleShape(cornerRadius: 20, tailSize: 12)
+                                    .fill(Color.appSurfaceCard)
+                            )
+                            .zIndex(1)
                         
-                        LinguaSettingsRow(
-                            icon: .exclamationmarkTriangleFill,
-                            iconBgColor: .appAccentRed,
-                            title: L10n.HelpSupport.reportBug,
-                            showDivider: true
-                        ) {
-                            SettingsRowChevron()
-                        }
+                        Image(asset: .helpBird)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 180, height: 180)
+                            .zIndex(0)
+                    }
+                    .padding(.top, 10)
+                    
+                    // FAQs Section
+                    VStack(alignment: .leading, spacing: 16) {
+                        Text(L10n.HelpSupport.faq)
+                            .appTextStyle(.headingMedium, color: .appTextHeading)
+                            .padding(.leading, 4)
                         
-                        LinguaSettingsRow(
-                            icon: .personCropCircleFill,
-                            iconBgColor: .appBrandPrimary,
-                            title: L10n.HelpSupport.communityForum,
-                            showDivider: false
-                        ) {
-                            SettingsRowChevron()
+                        VStack(spacing: 12) {
+                            FAQItemView(question: L10n.HelpSupport.FAQ.q1, answer: L10n.HelpSupport.FAQ.a1)
+                            FAQItemView(question: L10n.HelpSupport.FAQ.q2, answer: L10n.HelpSupport.FAQ.a2)
+                            FAQItemView(question: L10n.HelpSupport.FAQ.q3, answer: L10n.HelpSupport.FAQ.a3)
+                            FAQItemView(question: L10n.HelpSupport.FAQ.q4, answer: L10n.HelpSupport.FAQ.a4)
                         }
                     }
-                    .background(Color.appSurfaceCard)
-                    .cornerRadius(20)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(Color.appBorderBrown.opacity(0.3), lineWidth: 1)
-                    )
                     
-                    // Contact Info Section
+                    // Still Need Help Section
                     VStack(alignment: .leading, spacing: 16) {
-                        Text(L10n.HelpSupport.contactUs)
+                        Text(L10n.HelpSupport.stillNeedHelp)
                             .appTextStyle(.headingMedium, color: .appTextHeading)
-                            .padding(.leading, 8)
+                            .padding(.leading, 4)
                         
                         VStack(spacing: 0) {
                             LinguaSettingsRow(
-                                icon: .envelopeFill,
+                                icon: .textBubble,
                                 iconBgColor: .appAccentOrange,
-                                title: "Email",
+                                title: L10n.HelpSupport.contactUs,
                                 showDivider: true
                             ) {
-                                Text("support@linguaquest.com")
-                                    .appTextStyle(.bodyMedium, color: .appTextSecondary)
+                                SettingsRowChevron()
                             }
                             
                             LinguaSettingsRow(
-                                icon: .phoneFill,
-                                iconBgColor: .appAccentTeal,
-                                title: "Phone",
-                                showDivider: true
-                            ) {
-                                Text("+1 (555) 123-4567")
-                                    .appTextStyle(.bodyMedium, color: .appTextSecondary)
-                            }
-                            
-                            LinguaSettingsRow(
-                                icon: .mappinAndEllipse,
+                                icon: .ladybugFill,
                                 iconBgColor: .appAccentRed,
-                                title: "Address",
+                                title: L10n.HelpSupport.reportBug,
                                 showDivider: false
                             ) {
-                                Text("123 Lingua St, NY")
-                                    .appTextStyle(.bodyMedium, color: .appTextSecondary)
+                                SettingsRowChevron()
                             }
                         }
                         .background(Color.appSurfaceCard)
                         .cornerRadius(20)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(Color.appBorderBrown.opacity(0.3), lineWidth: 1)
-                        )
+                        .shadow(color: Color.appSemanticSuccess.opacity(0.08), radius: 24, x: 0, y: 8)
+                        
+                        Text(L10n.HelpSupport.replyTime)
+                            .appTextStyle(.body, color: .appTextSecondary)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding(.top, 8)
                     }
                 }
                 .padding(.horizontal, 20)
-                .padding(.top, 16)
+                .padding(.bottom, 40)
             }
-        
         }
-        .background(Color.appBackgroundPrimary.ignoresSafeArea())
+        .background(Color.appBackgroundWarm.ignoresSafeArea())
         .navigationBarHidden(true)
+    }
+}
+
+// MARK: - FAQ Item View
+struct FAQItemView: View {
+    let question: String
+    let answer: String
+    @State private var isExpanded = false
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Button(action: {
+                withAnimation(.spring()) {
+                    isExpanded.toggle()
+                }
+            }) {
+                HStack {
+                    Text(question)
+                        .appTextStyle(.bodyMedium, color: .appTextHeading)
+                        .multilineTextAlignment(.leading)
+                    
+                    Spacer()
+                    
+                    Image(systemIcon: .chevronDown)
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundColor(.appBorderBrown)
+                        .rotationEffect(.degrees(isExpanded ? 180 : 0))
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 16)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            
+            if isExpanded {
+                Text(answer)
+                    .appTextStyle(.body, color: .appTextSecondary)
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 16)
+                    .transition(.opacity)
+            }
+        }
+        .background(Color.appSurfaceCard)
+        .cornerRadius(20)
+        .shadow(color: Color.appSemanticSuccess.opacity(0.08), radius: 24, x: 0, y: 8)
     }
 }

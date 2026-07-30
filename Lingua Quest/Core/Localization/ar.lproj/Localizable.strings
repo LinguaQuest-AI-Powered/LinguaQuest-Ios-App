@@ -430,3 +430,16 @@
 "help_support.faq" = "الأسئلة الشائعة";
 "help_support.report_bug" = "الإبلاغ عن مشكلة";
 "help_support.community_forum" = "منتدى المجتمع";
+
+// --- New Help & Support Strings ---
+"help_support.greeting" = "كيف يمكنني مساعدتك\nاليوم؟";
+"help_support.still_need_help" = "هل ما زلت بحاجة للمساعدة؟";
+"help_support.reply_time" = "عادة ما يرد فريقنا خلال 24 ساعة";
+"help_support.faq.q1" = "كيف أربح العملات؟";
+"help_support.faq.a1" = "أكمل الدروس والتحديات لكسب العملات.";
+"help_support.faq.q2" = "كيف تعمل مفردات شاشة القفل؟";
+"help_support.faq.a2" = "اذهب إلى الإعدادات لتفعيل إشعارات شاشة القفل لتحديات الكلمات اليومية.";
+"help_support.faq.q3" = "هل يمكنني تغيير اللغة المستهدفة؟";
+"help_support.faq.a3" = "نعم، يمكنك تغيير لغتك المستهدفة في إعدادات الملف الشخصي.";
+"help_support.faq.q4" = "كيف أقوم بإعادة تعيين تقدمي؟";
+"help_support.faq.a4" = "يمكنك إعادة تعيين تقدمك في قائمة الإعدادات المتقدمة.";
