@@ -27,13 +27,15 @@ final class VoiceGameResultViewModel {
     private let router: RouterProtocol
     private let evaluateUseCase: EvaluateVoiceUseCase
     private let saveProgressUseCase: SaveVoiceProgressUseCase
+    private let statsService: StatsServiceProtocol
     private let audioData: Data
     private let sentence: VoiceSentence
     
-    init(router: RouterProtocol, evaluateUseCase: EvaluateVoiceUseCase, saveProgressUseCase: SaveVoiceProgressUseCase, audioData: Data, sentence: VoiceSentence) {
+    init(router: RouterProtocol, evaluateUseCase: EvaluateVoiceUseCase, saveProgressUseCase: SaveVoiceProgressUseCase, statsService: StatsServiceProtocol, audioData: Data, sentence: VoiceSentence) {
         self.router = router
         self.evaluateUseCase = evaluateUseCase
         self.saveProgressUseCase = saveProgressUseCase
+        self.statsService = statsService
         self.audioData = audioData
         self.sentence = sentence
         
@@ -77,16 +79,16 @@ final class VoiceGameResultViewModel {
         self.state = result.rating >= 6 ? .success : .failure
         self.advice = result.advice
         
-        // Save progress only on success
         if result.rating >= 6 {
             Task {
                 do {
                     try await saveProgressUseCase.execute(sentenceId: sentence.id)
+                    try await statsService.adjustWallet(coinsDelta: coinsEarned, xpDelta: xpPoints)
                     await MainActor.run {
                         NotificationCenter.default.post(name: .progressDidUpdate, object: nil)
                     }
                 } catch {
-                    print("Failed to save voice progress: \(error)")
+                    print("Failed to save voice progress or adjust wallet: \(error)")
                 }
             }
         }

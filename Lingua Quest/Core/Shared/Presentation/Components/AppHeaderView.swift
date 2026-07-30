@@ -26,9 +26,9 @@ struct AppHeaderView: View {
             
             Spacer(minLength: 8)
             
-            RewardBadge(type: .xp, value: formatValue(starCount), size: .normal)
+            RewardBadge(type: .xp, value: starCount.formattedStatsValue(), size: .normal)
                 .frame(minWidth: 88)
-            RewardBadge(type: .coin, value: formatValue(coinCount), size: .normal)
+            RewardBadge(type: .coin, value: coinCount.formattedStatsValue(), size: .normal)
                 .frame(minWidth: 88)
         }
         .padding(.horizontal, 18)
@@ -58,17 +58,7 @@ struct AppHeaderView: View {
         }
     }
     
-    private func formatValue(_ value: Int) -> String {
-        if value >= 1_000_000 {
-            let formatted = String(format: "%.1fM", Double(value) / 1_000_000)
-            return formatted.replacingOccurrences(of: ".0M", with: "M")
-        } else if value >= 1_000 {
-            let formatted = String(format: "%.1fk", Double(value) / 1_000)
-            return formatted.replacingOccurrences(of: ".0k", with: "k")
-        } else {
-            return "\(value)"
-        }
-    }
+
     
     private var mascotAvatar: some View {
         ZStack {

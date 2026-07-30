@@ -100,10 +100,12 @@ final class SpeakingLabAssembly: Assembly {
             let router = resolver.resolve(RouterProtocol.self)!
             let evaluateUseCase = resolver.resolve(EvaluateVoiceUseCase.self)!
             let saveProgressUseCase = resolver.resolve(SaveVoiceProgressUseCase.self)!
+            let statsService = resolver.resolve(StatsServiceProtocol.self)!
             return VoiceGameResultViewModel(
                 router: router,
                 evaluateUseCase: evaluateUseCase,
                 saveProgressUseCase: saveProgressUseCase,
+                statsService: statsService,
                 audioData: args.0,
                 sentence: args.1
             )
