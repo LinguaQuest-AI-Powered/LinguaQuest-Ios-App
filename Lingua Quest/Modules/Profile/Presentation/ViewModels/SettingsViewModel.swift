@@ -20,6 +20,7 @@ final class SettingsViewModel {
     let languageViewModel: LanguageViewModel
     private let userPreferences: UserPreferences
     private let lockScreenSettingsRemoteDataSource: LockScreenSettingsRemoteDataSourceProtocol?
+    private let changeNativeLanguageUseCase: ChangeNativeLanguageUseCaseProtocol?
 
     init(
         router: RouterProtocol,
@@ -28,7 +29,8 @@ final class SettingsViewModel {
         activateLockScreenVocabularyUseCase: ActivateLockScreenVocabularyUseCaseProtocol? = nil,
         languageViewModel: LanguageViewModel,
         userPreferences: UserPreferences,
-        lockScreenSettingsRemoteDataSource: LockScreenSettingsRemoteDataSourceProtocol? = nil
+        lockScreenSettingsRemoteDataSource: LockScreenSettingsRemoteDataSourceProtocol? = nil,
+        changeNativeLanguageUseCase: ChangeNativeLanguageUseCaseProtocol? = nil
     ) {
         self.router = router
         self.sessionManager = sessionManager
@@ -37,6 +39,7 @@ final class SettingsViewModel {
         self.languageViewModel = languageViewModel
         self.userPreferences = userPreferences
         self.lockScreenSettingsRemoteDataSource = lockScreenSettingsRemoteDataSource
+        self.changeNativeLanguageUseCase = changeNativeLanguageUseCase
     }
     
     // MARK: - User Data
@@ -47,6 +50,12 @@ final class SettingsViewModel {
         didSet {
             UserDefaults.standard.set(appLanguageCode, forKey: AppConstants.UserDefaultsKeys.appLanguage)
             appLanguage = AppLanguage(rawValue: appLanguageCode)?.name ?? "English"
+            if let useCase = changeNativeLanguageUseCase,
+               let languageId = AppLanguage.targetLanguages.first(where: { $0.code == appLanguageCode })?.id {
+                Task {
+                    try? await useCase.execute(languageId: languageId)
+                }
+            }
         }
     }
     

@@ -39,6 +39,16 @@ enum LanguageEndpoint {
             AddLanguageRequestDTO(languageIds: languageIds)
         }
     }
+    
+    struct ChangeNativeLanguage: Endpoint {
+        let languageId: Int
+        
+        var path: String { "/languages/native" }
+        var method: HTTPMethod { .patch }
+        var body: ChangeNativeLanguageRequestDTO? {
+            ChangeNativeLanguageRequestDTO(languageId: languageId)
+        }
+    }
 }
 
 struct SwitchLanguageRequestDTO: Encodable {
@@ -47,4 +57,8 @@ struct SwitchLanguageRequestDTO: Encodable {
 
 struct AddLanguageRequestDTO: Encodable {
     let languageIds: [Int]
+}
+
+struct ChangeNativeLanguageRequestDTO: Encodable {
+    let languageId: Int
 }

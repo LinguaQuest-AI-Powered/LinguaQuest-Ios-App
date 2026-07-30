@@ -72,6 +72,11 @@ final class HomeAssembly: Assembly {
             return AddLanguagesUseCase(repository: repository)
         }
         
+        container.register(ChangeNativeLanguageUseCaseProtocol.self) { resolver in
+            let repository = resolver.resolve(HomeRepositoryProtocol.self)!
+            return ChangeNativeLanguageUseCase(repository: repository)
+        }
+        
         container.register(LanguageViewModel.self) { resolver in
             let getMy = resolver.resolve(GetMyLanguagesUseCase.self)!
             let getAvailable = resolver.resolve(GetAvailableLanguagesUseCase.self)!

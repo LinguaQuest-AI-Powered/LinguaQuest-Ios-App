@@ -19,6 +19,14 @@ struct MyApp: App {
         AppCheck.setAppCheckProviderFactory(providerFactory)
         FirebaseApp.configure()
         _ = Resolver.shared
+        
+        // Initialize default app language based on device locale if not set
+        if UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) == nil {
+            let deviceCode = Locale.current.language.languageCode?.identifier ?? "en"
+            let isSupported = AppLanguage.allCases.contains(where: { $0.code.lowercased() == deviceCode.lowercased() })
+            let defaultCode = isSupported ? deviceCode.lowercased() : "en"
+            UserDefaults.standard.set(defaultCode, forKey: AppConstants.UserDefaultsKeys.appLanguage)
+        }
     }
 
     @Environment(\.scenePhase) private var scenePhase

@@ -37,6 +37,7 @@ final class OnboardingViewModel {
 
     func onSpokenLanguageSelected(_ language: AppLanguage) {
         state.selectedSpokenLanguage = language
+        UserDefaults.standard.set(language.code, forKey: AppConstants.UserDefaultsKeys.appLanguage)
     }
 
     func onLearningLanguageSelected(_ language: AvailableLanguage) {
