@@ -74,6 +74,7 @@ final class VerifyEmailViewModel {
     func resendCode() {
         guard timeRemaining == 0 else { return }
         errorMessage = nil
+        otpCode = ""
 
         Task {
             let result = await sendOtpUseCase.execute(email: email, purpose: .signup)

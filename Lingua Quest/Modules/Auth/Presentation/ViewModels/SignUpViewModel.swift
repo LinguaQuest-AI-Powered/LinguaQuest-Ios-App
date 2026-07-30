@@ -15,6 +15,7 @@ final class SignUpViewModel {
     private let router: RouterProtocol
     private let userPreferences: UserPreferences
     private let registerUseCase: RegisterUseCaseProtocol
+    private let sendOtpUseCase: SendOtpUseCaseProtocol
     private let oauthSignInHandler: OAuthSignInHandlerProtocol
 
     // MARK: - State
@@ -32,11 +33,13 @@ final class SignUpViewModel {
         router: RouterProtocol,
         userPreferences: UserPreferences,
         registerUseCase: RegisterUseCaseProtocol,
+        sendOtpUseCase: SendOtpUseCaseProtocol,
         oauthSignInHandler: OAuthSignInHandlerProtocol
     ) {
         self.router = router
         self.userPreferences = userPreferences
         self.registerUseCase = registerUseCase
+        self.sendOtpUseCase = sendOtpUseCase
         self.oauthSignInHandler = oauthSignInHandler
     }
 
@@ -134,7 +137,7 @@ final class SignUpViewModel {
 
         switch result {
         case .success:
-            // State is already updated in handler (isLoggedIn = true)
+            router.popToRoot()
             break
         case .failure(let message):
             errorMessage = message
@@ -166,6 +169,11 @@ extension SignUpViewModel {
                 return .failure(.invalidCredentials)
             }
         }
+        class MockSendOtpUseCase: SendOtpUseCaseProtocol {
+            func execute(email: String, purpose: OtpPurpose) async -> Result<Void, AuthError> {
+                return .success(())
+            }
+        }
         class MockOAuthSignInHandler: OAuthSignInHandlerProtocol {
             func handleSignIn(provider: OAuthProviderType) async -> OAuthSignInResult {
                 return .failure(message: "Mock failure")
@@ -176,6 +184,7 @@ extension SignUpViewModel {
             router: MockRouter(),
             userPreferences: UserPreferences(),
             registerUseCase: MockRegisterUseCase(),
+            sendOtpUseCase: MockSendOtpUseCase(),
             oauthSignInHandler: MockOAuthSignInHandler()
         )
     }
