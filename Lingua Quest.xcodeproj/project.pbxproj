@@ -585,6 +585,8 @@
 /* Begin XCBuildConfiguration section */
 		1510D5693013535B00688C5F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 1529B3683006410300CCD74A /* Lingua Quest */;
+			baseConfigurationReferenceRelativePath = App/Resources/Config.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -615,6 +617,8 @@
 		};
 		1510D56A3013535B00688C5F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 1529B3683006410300CCD74A /* Lingua Quest */;
+			baseConfigurationReferenceRelativePath = App/Resources/Config.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
