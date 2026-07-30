@@ -101,6 +101,7 @@ final class AuthAssembly: Assembly {
                 userPreferences: resolver.resolve(UserPreferences.self)!,
                 loginUseCase: resolver.resolve(LoginUseCaseProtocol.self)!,
                 getProfileUseCase: resolver.resolve(GetProfileUseCaseProtocol.self)!,
+                sendOtpUseCase: resolver.resolve(SendOtpUseCaseProtocol.self)!,
                 oauthSignInHandler: resolver.resolve(OAuthSignInHandlerProtocol.self)!
             )
         }
@@ -110,6 +111,7 @@ final class AuthAssembly: Assembly {
                 router: resolver.resolve(RouterProtocol.self)!,
                 userPreferences: resolver.resolve(UserPreferences.self)!,
                 registerUseCase: resolver.resolve(RegisterUseCaseProtocol.self)!,
+                sendOtpUseCase: resolver.resolve(SendOtpUseCaseProtocol.self)!,
                 oauthSignInHandler: resolver.resolve(OAuthSignInHandlerProtocol.self)!
             )
         }

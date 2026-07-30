@@ -104,12 +104,19 @@ extension AppleSignInService: ASAuthorizationControllerDelegate {
 }
 
 extension AppleSignInService: ASAuthorizationControllerPresentationContextProviding {
+    @MainActor
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         let scenes = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }
         let windowScene = scenes.first(where: { $0.activationState == .foregroundActive }) ?? scenes.first
         
-        if let windowScene = windowScene {
-            return windowScene.windows.first(where: \.isKeyWindow) ?? ASPresentationAnchor(windowScene: windowScene)
+        if let window = windowScene?.windows.first(where: { $0.isKeyWindow }) {
+            return window
+        }
+        if let window = UIApplication.shared.connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .flatMap({ $0.windows })
+            .first {
+            return window
         }
         return UIWindow()
     }

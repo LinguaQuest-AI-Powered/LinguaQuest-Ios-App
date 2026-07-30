@@ -13,9 +13,10 @@ import Foundation
 final class LoginViewModel {
     // MARK: - Dependencies
     private let router: RouterProtocol
-    private var userPreferences: UserPreferences
+    private let userPreferences: UserPreferences
     private let loginUseCase: LoginUseCaseProtocol
     private let getProfileUseCase: GetProfileUseCaseProtocol
+    private let sendOtpUseCase: SendOtpUseCaseProtocol
     private let oauthSignInHandler: OAuthSignInHandlerProtocol
 
     // MARK: - State
@@ -31,12 +32,14 @@ final class LoginViewModel {
         userPreferences: UserPreferences,
         loginUseCase: LoginUseCaseProtocol,
         getProfileUseCase: GetProfileUseCaseProtocol,
+        sendOtpUseCase: SendOtpUseCaseProtocol,
         oauthSignInHandler: OAuthSignInHandlerProtocol
     ) {
         self.router = router
         self.userPreferences = userPreferences
         self.loginUseCase = loginUseCase
         self.getProfileUseCase = getProfileUseCase
+        self.sendOtpUseCase = sendOtpUseCase
         self.oauthSignInHandler = oauthSignInHandler
     }
 
@@ -85,7 +88,18 @@ final class LoginViewModel {
                 isLoading = false
 
             case .failure(let error):
-                errorMessage = error.errorDescription
+                if error == .emailNotVerified {
+                    // Intercept and send OTP
+                    let otpResult = await sendOtpUseCase.execute(email: self.email, purpose: .signup)
+                    switch otpResult {
+                    case .success:
+                        router.push(.verifyEmail(email: self.email))
+                    case .failure(let otpError):
+                        errorMessage = otpError.errorDescription
+                    }
+                } else {
+                    errorMessage = error.errorDescription
+                }
                 isLoading = false
             }
         }
@@ -165,11 +179,18 @@ extension LoginViewModel {
             }
         }
         
+        class MockSendOtpUseCase: SendOtpUseCaseProtocol {
+            func execute(email: String, purpose: OtpPurpose) async -> Result<Void, AuthError> {
+                return .success(())
+            }
+        }
+        
         return LoginViewModel(
             router: MockRouter(),
             userPreferences: UserPreferences(),
             loginUseCase: MockLoginUseCase(),
             getProfileUseCase: MockGetProfileUseCase(),
+            sendOtpUseCase: MockSendOtpUseCase(),
             oauthSignInHandler: MockOAuthSignInHandler()
         )
     }
