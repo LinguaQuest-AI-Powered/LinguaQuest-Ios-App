@@ -225,6 +225,9 @@ struct HomeView: View {
         .fullScreenCover(isPresented: $showAddLanguageScreen) {
             AddLanguageView(languageViewModel: viewModel.languageViewModel)
         }
+        .onReceive(NotificationCenter.default.publisher(for: .progressDidUpdate)) { _ in
+            loadVoiceProgress()
+        }
     }
     
     private func loadVoiceProgress() {

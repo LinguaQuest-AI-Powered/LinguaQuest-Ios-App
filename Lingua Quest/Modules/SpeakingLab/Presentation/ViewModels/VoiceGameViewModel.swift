@@ -38,6 +38,7 @@ class VoiceGameViewModel {
     var isPlayingAudio: Bool = false
     var loadError: String?
     private var timer: Timer?
+    private var advanceToken: NotificationToken?
     
     var dailySentences: [VoiceSentence] = []
     var currentSentenceIndex: Int = 0
@@ -60,6 +61,15 @@ class VoiceGameViewModel {
         Task {
             await loadSentences()
         }
+        
+        let token = NotificationCenter.default.addObserver(
+            forName: .voiceGameDidAdvanceLevel,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.advanceToNextSentence()
+        }
+        advanceToken = NotificationToken(token: token)
     }
     
     func playTargetSentence() {
@@ -163,8 +173,18 @@ class VoiceGameViewModel {
         showReviewDialog = false
     }
     
+    private func advanceToNextSentence() {
+        if currentSentenceIndex < dailySentences.count - 1 {
+            currentSentenceIndex += 1
+            targetSentence = dailySentences[currentSentenceIndex].text
+            resetForRetry()
+        } else {
+            router.popToRoot()
+        }
+    }
+    
     func skip() {
-        // Advance to next sentence
+        advanceToNextSentence()
     }
     
     func goBack() {

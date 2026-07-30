@@ -22,6 +22,7 @@ final class HomeViewModel {
     var errorMessage: String?
     
     private var logoutToken: NotificationToken?
+    private var progressToken: NotificationToken?
     
     var displayWorlds: [WorldUIModel] {
         return fetchedWorlds.map(WorldUIMapper.map)
@@ -60,6 +61,17 @@ final class HomeViewModel {
             self?.handleLogout()
         }
         logoutToken = NotificationToken(token: token)
+        
+        let pToken = NotificationCenter.default.addObserver(
+            forName: .progressDidUpdate,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task {
+                await self?.loadHomeData(forceRefresh: true)
+            }
+        }
+        progressToken = NotificationToken(token: pToken)
     }
     
     private func handleLogout() {

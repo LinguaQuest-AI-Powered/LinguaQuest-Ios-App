@@ -82,6 +82,9 @@ final class VoiceGameResultViewModel {
             Task {
                 do {
                     try await saveProgressUseCase.execute(sentenceId: sentence.id)
+                    await MainActor.run {
+                        NotificationCenter.default.post(name: .progressDidUpdate, object: nil)
+                    }
                 } catch {
                     print("Failed to save voice progress: \(error)")
                 }
@@ -90,6 +93,7 @@ final class VoiceGameResultViewModel {
     }
     
     func skip() {
+        NotificationCenter.default.post(name: .voiceGameDidAdvanceLevel, object: nil)
         router.pop()
     }
     
