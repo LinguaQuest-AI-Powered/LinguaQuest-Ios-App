@@ -55,6 +55,7 @@ final class OAuthSignInHandler: OAuthSignInHandlerProtocol {
             case .success(let (_, user, profileComplete)):
                 userPreferences.isLoggedIn = true
                 userPreferences.userId = user.id
+                userPreferences.loadUserScopedPreferences(for: user.id)
                 if !profileComplete {
                     userPreferences.needsProfileCompletion = true
                 } else {

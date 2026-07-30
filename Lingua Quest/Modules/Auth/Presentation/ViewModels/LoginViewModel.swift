@@ -60,6 +60,7 @@ final class LoginViewModel {
             case .success(let data):
                 userPreferences.isLoggedIn = true
                 userPreferences.userId = data.user.id
+                userPreferences.loadUserScopedPreferences(for: data.user.id)
                 userPreferences.email = email
                 
                 // Set appLanguage based on backend nativeLanguage if available

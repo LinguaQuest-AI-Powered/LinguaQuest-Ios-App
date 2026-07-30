@@ -9,11 +9,10 @@ import SwiftUI
 
 struct RootView: View {
     @State private var router = Resolver.shared.resolve(Router.self)
+    @State private var userPreferences = Resolver.shared.resolve(UserPreferencesProtocol.self) as! UserPreferences
     @AppStorage(AppConstants.UserDefaultsKeys.isOnboardingCompleted) private var isOnboardingCompleted = false
     @AppStorage(AppConstants.UserDefaultsKeys.isLoggedIn) private var isLoggedIn = false
     @AppStorage(AppConstants.UserDefaultsKeys.needsProfileCompletion) private var needsProfileCompletion = false
-    @AppStorage(AppConstants.UserDefaultsKeys.isDarkMode) private var isDarkMode = false
-    @AppStorage(AppConstants.UserDefaultsKeys.appLanguage) private var appLanguage = "en"
     @State private var networkMonitor = NetworkMonitor.shared
     
     var body: some View {
@@ -33,16 +32,16 @@ struct RootView: View {
                 router.view(for: route)
             }
         }
-        .id(appLanguage)
+        .id(userPreferences.appLanguage)
         .sheet(item: $router.presentedSheet) { sheet in
             switch sheet {
             case .dummy: EmptyView()
             }
         }
         .environment(router)
-        .preferredColorScheme(isDarkMode ? .dark : .light)
-        .environment(\.locale, Locale(identifier: appLanguage))
-        .environment(\.layoutDirection, appLanguage == "ar" ? .rightToLeft : .leftToRight)
+        .preferredColorScheme(userPreferences.isDarkMode ? .dark : .light)
+        .environment(\.locale, Locale(identifier: userPreferences.appLanguage))
+        .environment(\.layoutDirection, userPreferences.appLanguage == "ar" ? .rightToLeft : .leftToRight)
         .globalVocabularyDeepLink()
         .appDialog(isPresented: .init(
             get: { !networkMonitor.isConnected },

@@ -34,7 +34,8 @@ class LockScreenVocabularyManager {
     }
     
     private func preloadVocabularyIfNeeded() {
-        let isEnabled = UserDefaults.standard.bool(forKey: AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled)
+        let userPrefs = Resolver.shared.resolve(UserPreferencesProtocol.self)
+        let isEnabled = userPrefs.isLockScreenVocabularyEnabled
         print("LiveActivity Debug: preloadVocabularyIfNeeded called. isEnabled = \(isEnabled)")
         guard isEnabled else { return }
         
@@ -42,9 +43,8 @@ class LockScreenVocabularyManager {
         Task {
             do {
                 var allWords = try await getSavedWords.execute()
-                print("LiveActivity Debug: Fetched \(allWords.count) total words from DB")
+        print("LiveActivity Debug: Fetched \(allWords.count) total words from DB")
                 
-                let userPrefs = Resolver.shared.resolve(UserPreferencesProtocol.self)
                 let targetCode = userPrefs.learningLanguageCode ?? "en"
                 let englishLocale = Locale(identifier: "en_US")
                 let targetLang = englishLocale.localizedString(forLanguageCode: targetCode)?.capitalized ?? targetCode
@@ -105,7 +105,8 @@ class LockScreenVocabularyManager {
     }
     
     private func scheduleVocabularyIfNeeded() {
-        let isEnabled = UserDefaults.standard.bool(forKey: AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled)
+        let userPrefs = Resolver.shared.resolve(UserPreferencesProtocol.self)
+        let isEnabled = userPrefs.isLockScreenVocabularyEnabled
         print("LiveActivity Debug: scheduleVocabularyIfNeeded called (on .inactive). isEnabled = \(isEnabled), preloadedWord = \(preloadedWord?.word ?? "nil")")
         guard isEnabled, let wordToDisplay = preloadedWord else {
             print("LiveActivity Debug: Aborting launch because isEnabled is false or preloadedWord is nil")
@@ -115,9 +116,8 @@ class LockScreenVocabularyManager {
         print("LiveActivity Debug: Launching Activity for word: \(wordToDisplay.word)")
         // 1. Launch Live Activity synchronously before app enters background
         if #available(iOS 16.2, *) {
-            let userPrefs = Resolver.shared.resolve(UserPreferencesProtocol.self)
             let targetCode = userPrefs.learningLanguageCode ?? "en"
-            let currentLanguageCode = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en"
+            let currentLanguageCode = userPrefs.appLanguage
             let targetLang = Locale(identifier: "en_US").localizedString(forLanguageCode: targetCode)?.capitalized ?? targetCode
             let localizedTargetLang = Locale(identifier: currentLanguageCode).localizedString(forLanguageCode: targetCode)?.capitalized ?? targetLang
             
@@ -129,7 +129,7 @@ class LockScreenVocabularyManager {
             default: localizedDifficulty = wordToDisplay.difficulty
             }
             
-            let isDarkMode = UserDefaults.standard.bool(forKey: AppConstants.UserDefaultsKeys.isDarkMode)
+            let isDarkMode = userPrefs.isDarkMode
             let isAppArabic = currentLanguageCode.contains("ar")
             
             let attributes = WordWidgetAttributes()

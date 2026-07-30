@@ -57,7 +57,7 @@ final class SessionManager: SessionManagerProtocol {
     @MainActor
     private func endLocalSession() async {
         tokenStorage.clearSession()
-        userPreferences.resetAll()
+        userPreferences.resetSessionState()
         statsService.resetAll()
         
         // Remove cached avatar

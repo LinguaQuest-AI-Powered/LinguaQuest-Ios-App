@@ -32,7 +32,14 @@ protocol UserPreferencesProtocol: AnyObject {
     
     var isLockScreenVocabularyEnabled: Bool { get set }
     
-    func resetAll()
+    // User-Scoped Settings (add these for SettingsViewModel to use)
+    var notificationsEnabled: Bool { get set }
+    var dailyReminderEnabled: Bool { get set }
+    var reminderTime: Double { get set }
+    var reminderRepeatDays: [Int] { get set }
+    
+    func resetSessionState()
+    func loadUserScopedPreferences(for userId: Int)
 }
 
 @Observable
@@ -47,6 +54,11 @@ final class UserPreferences: UserPreferencesProtocol {
                 defaults.removeObject(forKey: "userId")
             }
         }
+    }
+    
+    private func scopedKey(_ base: String) -> String {
+        guard let id = userId else { return base }
+        return "user_\(id)_\(base)"
     }
     
     var isOnboardingCompleted: Bool {
@@ -74,11 +86,11 @@ final class UserPreferences: UserPreferencesProtocol {
     }
     
     var isDarkMode: Bool {
-        didSet { defaults.set(isDarkMode, forKey: AppConstants.UserDefaultsKeys.isDarkMode) }
+        didSet { defaults.set(isDarkMode, forKey: scopedKey(AppConstants.UserDefaultsKeys.isDarkMode)) }
     }
     
     var appLanguage: String {
-        didSet { defaults.set(appLanguage, forKey: AppConstants.UserDefaultsKeys.appLanguage) }
+        didSet { defaults.set(appLanguage, forKey: scopedKey(AppConstants.UserDefaultsKeys.appLanguage)) }
     }
     
     var coinBalance: Int {
@@ -106,33 +118,83 @@ final class UserPreferences: UserPreferencesProtocol {
     }
     
     var isLockScreenVocabularyEnabled: Bool {
-        didSet { defaults.set(isLockScreenVocabularyEnabled, forKey: AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled) }
+        didSet { defaults.set(isLockScreenVocabularyEnabled, forKey: scopedKey(AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled)) }
+    }
+    
+    var notificationsEnabled: Bool {
+        didSet { defaults.set(notificationsEnabled, forKey: scopedKey(AppConstants.UserDefaultsKeys.notificationsEnabled)) }
+    }
+    
+    var dailyReminderEnabled: Bool {
+        didSet { defaults.set(dailyReminderEnabled, forKey: scopedKey(AppConstants.UserDefaultsKeys.dailyReminderEnabled)) }
+    }
+    
+    var reminderTime: Double {
+        didSet { defaults.set(reminderTime, forKey: scopedKey(AppConstants.UserDefaultsKeys.reminderTime)) }
+    }
+    
+    var reminderRepeatDays: [Int] {
+        didSet { defaults.set(reminderRepeatDays, forKey: scopedKey(AppConstants.UserDefaultsKeys.reminderRepeatDays)) }
     }
     
     init() {
+        let localUserId: Int?
         if defaults.object(forKey: "userId") != nil {
-            self.userId = defaults.integer(forKey: "userId")
+            localUserId = defaults.integer(forKey: "userId")
         } else {
-            self.userId = nil
+            localUserId = nil
         }
+        self.userId = localUserId
+        
         self.isOnboardingCompleted = defaults.bool(forKey: AppConstants.UserDefaultsKeys.isOnboardingCompleted)
         self.spokenLanguageCode = defaults.string(forKey: AppConstants.UserDefaultsKeys.spokenLanguageCode)
         self.learningLanguageCode = defaults.string(forKey: AppConstants.UserDefaultsKeys.learningLanguageCode)
         self.userLevel = defaults.string(forKey: AppConstants.UserDefaultsKeys.userLevel)
         self.isLoggedIn = defaults.bool(forKey: AppConstants.UserDefaultsKeys.isLoggedIn)
         self.needsProfileCompletion = defaults.bool(forKey: AppConstants.UserDefaultsKeys.needsProfileCompletion)
-        self.isDarkMode = defaults.bool(forKey: AppConstants.UserDefaultsKeys.isDarkMode)
-        self.appLanguage = defaults.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en"
         self.coinBalance = defaults.integer(forKey: AppConstants.UserDefaultsKeys.coinBalance)
         self.xpBalance = defaults.integer(forKey: AppConstants.UserDefaultsKeys.xpBalance)
         self.streakDays = defaults.integer(forKey: AppConstants.UserDefaultsKeys.streakDays)
         self.email = defaults.string(forKey: AppConstants.UserDefaultsKeys.userEmail)
         self.nativeLanguageName = defaults.string(forKey: AppConstants.UserDefaultsKeys.nativeLanguageName)
         self.targetLanguageName = defaults.string(forKey: AppConstants.UserDefaultsKeys.targetLanguageName)
-        self.isLockScreenVocabularyEnabled = defaults.bool(forKey: AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled)
+        
+        // Initialize user-scoped keys (uses localUserId)
+        let userIdPrefix = localUserId != nil ? "user_\(localUserId!)_" : ""
+        
+        let isLockScreenVocabularyEnabledKey = "\(userIdPrefix)\(AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled)"
+        self.isLockScreenVocabularyEnabled = defaults.bool(forKey: isLockScreenVocabularyEnabledKey)
+        let isDarkModeKey = "\(userIdPrefix)\(AppConstants.UserDefaultsKeys.isDarkMode)"
+        self.isDarkMode = defaults.bool(forKey: isDarkModeKey)
+        
+        let appLanguageKey = "\(userIdPrefix)\(AppConstants.UserDefaultsKeys.appLanguage)"
+        self.appLanguage = defaults.string(forKey: appLanguageKey) ?? "en"
+        
+        let notificationsEnabledKey = "\(userIdPrefix)\(AppConstants.UserDefaultsKeys.notificationsEnabled)"
+        self.notificationsEnabled = defaults.bool(forKey: notificationsEnabledKey)
+        
+        let dailyReminderEnabledKey = "\(userIdPrefix)\(AppConstants.UserDefaultsKeys.dailyReminderEnabled)"
+        self.dailyReminderEnabled = defaults.bool(forKey: dailyReminderEnabledKey)
+        
+        let reminderTimeKey = "\(userIdPrefix)\(AppConstants.UserDefaultsKeys.reminderTime)"
+        self.reminderTime = defaults.double(forKey: reminderTimeKey)
+        
+        let reminderRepeatDaysKey = "\(userIdPrefix)\(AppConstants.UserDefaultsKeys.reminderRepeatDays)"
+        self.reminderRepeatDays = (defaults.array(forKey: reminderRepeatDaysKey) as? [Int]) ?? [1,2,3,4,5,6,7]
     }
     
-    func resetAll() {
+    func loadUserScopedPreferences(for id: Int) {
+        self.userId = id // ensure the userId is set first
+        self.isDarkMode = defaults.bool(forKey: scopedKey(AppConstants.UserDefaultsKeys.isDarkMode))
+        self.isLockScreenVocabularyEnabled = defaults.bool(forKey: scopedKey(AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled))
+        self.appLanguage = defaults.string(forKey: scopedKey(AppConstants.UserDefaultsKeys.appLanguage)) ?? "en"
+        self.notificationsEnabled = defaults.bool(forKey: scopedKey(AppConstants.UserDefaultsKeys.notificationsEnabled))
+        self.dailyReminderEnabled = defaults.bool(forKey: scopedKey(AppConstants.UserDefaultsKeys.dailyReminderEnabled))
+        self.reminderTime = defaults.double(forKey: scopedKey(AppConstants.UserDefaultsKeys.reminderTime))
+        self.reminderRepeatDays = (defaults.array(forKey: scopedKey(AppConstants.UserDefaultsKeys.reminderRepeatDays)) as? [Int]) ?? [1,2,3,4,5,6,7]
+    }
+    
+    func resetSessionState() {
         userId = nil
         isOnboardingCompleted = false
         isLoggedIn = false
@@ -140,15 +202,21 @@ final class UserPreferences: UserPreferencesProtocol {
         spokenLanguageCode = nil
         learningLanguageCode = nil
         userLevel = nil
-        isDarkMode = false
-        appLanguage = "en"
         coinBalance = 0
         xpBalance = 0
         streakDays = 0
         email = nil
         nativeLanguageName = nil
         targetLanguageName = nil
+        
+        // Reset user-scoped properties in memory (doesn't wipe them from disk)
         isLockScreenVocabularyEnabled = false
+        isDarkMode = false
+        appLanguage = "en"
+        notificationsEnabled = false
+        dailyReminderEnabled = false
+        reminderTime = 0
+        reminderRepeatDays = [1,2,3,4,5,6,7]
         
         let keysToRemove = [
             AppConstants.UserDefaultsKeys.isOnboardingCompleted,
@@ -157,19 +225,13 @@ final class UserPreferences: UserPreferencesProtocol {
             AppConstants.UserDefaultsKeys.spokenLanguageCode,
             AppConstants.UserDefaultsKeys.learningLanguageCode,
             AppConstants.UserDefaultsKeys.userLevel,
-            AppConstants.UserDefaultsKeys.isDarkMode,
-            AppConstants.UserDefaultsKeys.appLanguage,
             AppConstants.UserDefaultsKeys.coinBalance,
             AppConstants.UserDefaultsKeys.xpBalance,
             AppConstants.UserDefaultsKeys.streakDays,
             AppConstants.UserDefaultsKeys.userEmail,
             AppConstants.UserDefaultsKeys.nativeLanguageName,
-            AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled,
+            AppConstants.UserDefaultsKeys.targetLanguageName,
             AppConstants.UserDefaultsKeys.cachedAvatarUrl,
-            AppConstants.UserDefaultsKeys.notificationsEnabled,
-            AppConstants.UserDefaultsKeys.dailyReminderEnabled,
-            AppConstants.UserDefaultsKeys.reminderTime,
-            AppConstants.UserDefaultsKeys.reminderRepeatDays,
             "userId"
         ]
         
