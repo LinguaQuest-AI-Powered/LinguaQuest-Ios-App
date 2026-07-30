@@ -10,7 +10,7 @@ import Foundation
 struct OnboardingUiState {
     var currentStep: OnboardingStep = .welcome
     var selectedLevel: UserLevel?
-    var selectedSpokenLanguage: AppLanguage?
+    var selectedSpokenLanguage: AppLanguage? = AppLanguage(rawValue: UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en")
     var selectedLearningLanguage: AvailableLanguage?
     
     var nativeLanguages: [AppLanguage] = AppLanguage.allCases

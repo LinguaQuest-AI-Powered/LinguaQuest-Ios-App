@@ -115,4 +115,8 @@ struct HomeRepositoryImpl: HomeRepositoryProtocol {
         localDataSource.availableLanguages = nil
         return domain
     }
+    
+    func changeNativeLanguage(languageId: Int) async throws {
+        try await remoteDataSource.changeNativeLanguage(languageId: languageId)
+    }
 }

@@ -12,6 +12,10 @@ struct MyLanguagesResponseDTO: Decodable {
     let data: MyLanguagesDataDTO
 }
 
+struct ChangeNativeLanguageResponseDTO: Decodable {
+    let success: Bool
+}
+
 struct MyLanguagesDataDTO: Decodable {
     let languages: [MyTargetLanguageDTO]
 }

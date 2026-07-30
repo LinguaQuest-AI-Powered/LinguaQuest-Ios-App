@@ -120,6 +120,7 @@ final class ProfileAssembly: Assembly {
             let languageViewModel = resolver.resolve(LanguageViewModel.self)!
             let userPreferences = resolver.resolve(UserPreferences.self)!
             let lockScreenDS = resolver.resolve(LockScreenSettingsRemoteDataSourceProtocol.self)
+            let changeNativeLanguageUseCase = resolver.resolve(ChangeNativeLanguageUseCaseProtocol.self)
             
             return SettingsViewModel(
                 router: router, 
@@ -128,7 +129,8 @@ final class ProfileAssembly: Assembly {
                 activateLockScreenVocabularyUseCase: activateUseCase,
                 languageViewModel: languageViewModel,
                 userPreferences: userPreferences,
-                lockScreenSettingsRemoteDataSource: lockScreenDS
+                lockScreenSettingsRemoteDataSource: lockScreenDS,
+                changeNativeLanguageUseCase: changeNativeLanguageUseCase
             )
         }
         

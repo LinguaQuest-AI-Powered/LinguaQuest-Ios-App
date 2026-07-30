@@ -62,6 +62,14 @@ final class LoginViewModel {
                 userPreferences.userId = data.user.id
                 userPreferences.loadUserScopedPreferences(for: data.user.id)
                 userPreferences.email = email
+                
+                // Set appLanguage based on backend nativeLanguage if available
+                if let nativeLangCode = data.user.nativeLanguage {
+                    if let mapped = AppLanguage.allCases.first(where: { $0.code.lowercased() == nativeLangCode.lowercased() || $0.name.lowercased() == nativeLangCode.lowercased() }) {
+                        UserDefaults.standard.set(mapped.code, forKey: AppConstants.UserDefaultsKeys.appLanguage)
+                    }
+                }
+                
                 do {
                     let profile = try await getProfileUseCase.execute()
                     userPreferences.needsProfileCompletion = profile.currentLanguageCode.isEmpty
