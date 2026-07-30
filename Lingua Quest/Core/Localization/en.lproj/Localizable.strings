@@ -428,3 +428,16 @@
 "help_support.faq" = "Frequently Asked Questions";
 "help_support.report_bug" = "Report a Bug";
 "help_support.community_forum" = "Community Forum";
+
+// --- New Help & Support Strings ---
+"help_support.greeting" = "How can I help you\ntoday?";
+"help_support.still_need_help" = "Still need help?";
+"help_support.reply_time" = "Our team usually replies within 24 hours";
+"help_support.faq.q1" = "How do I earn coins?";
+"help_support.faq.a1" = "Complete lessons and challenges to earn coins.";
+"help_support.faq.q2" = "How does Lock Screen Vocabulary work?";
+"help_support.faq.a2" = "Go to settings to enable lock screen notifications for daily word challenges.";
+"help_support.faq.q3" = "Can I change my target language?";
+"help_support.faq.a3" = "Yes, you can change your target language in the profile settings.";
+"help_support.faq.q4" = "How do I reset my progress?";
+"help_support.faq.a4" = "You can reset your progress in the advanced settings menu.";
