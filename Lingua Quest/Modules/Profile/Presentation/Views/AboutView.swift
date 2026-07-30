@@ -10,7 +10,6 @@ import SwiftUI
 struct AboutView: View {
     // MARK: - Properties
     @State var viewModel: AboutViewModel
-    @State private var isBouncing: Bool = false
     @State private var appearAnimation: Bool = false
     
     // MARK: - Body
@@ -22,7 +21,7 @@ struct AboutView: View {
                 appBar
                 
                 ScrollView(showsIndicators: false) {
-                    VStack(spacing: 28) {
+                    VStack(spacing: 24) {
                         heroSection
                             .opacity(appearAnimation ? 1 : 0)
                             .offset(y: appearAnimation ? 0 : 20)
@@ -31,14 +30,20 @@ struct AboutView: View {
                             .opacity(appearAnimation ? 1 : 0)
                             .offset(y: appearAnimation ? 0 : 25)
                         
-                        AboutFeatureSection()
+                        linksSection
+                            .opacity(appearAnimation ? 1 : 0)
+                            .offset(y: appearAnimation ? 0 : 30)
                         
-                        AboutCommunitySection()
+                        legalSection
+                            .opacity(appearAnimation ? 1 : 0)
+                            .offset(y: appearAnimation ? 0 : 35)
                         
                         footerSection
+                            .opacity(appearAnimation ? 1 : 0)
+                            .offset(y: appearAnimation ? 0 : 40)
                     }
                     .padding(.horizontal, 20)
-                    .padding(.top, 24)
+                    .padding(.top, 16)
                     .padding(.bottom, 48)
                 }
             }
@@ -47,9 +52,6 @@ struct AboutView: View {
         .onAppear {
             withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
                 appearAnimation = true
-            }
-            withAnimation(.easeInOut(duration: 2.2).repeatForever(autoreverses: true)) {
-                isBouncing = true
             }
         }
     }
@@ -67,94 +69,140 @@ struct AboutView: View {
         .padding(.horizontal, 20)
         .frame(height: 64)
         .background(Color.clear)
-        .overlay(
-            Rectangle()
-                .frame(height: 1)
-                .foregroundColor(Color.appBorderBrown),
-            alignment: .bottom
-        )
     }
     
     private var heroSection: some View {
-        VStack(spacing: 16) {
-            ZStack {
-                Circle()
-                    .fill(Color.appGlowOrange.opacity(0.5))
-                    .frame(width: 140, height: 140)
-                    .blur(radius: 16)
-                
-                Image(asset: .mascotSettings)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 120, height: 120)
-                    .offset(y: isBouncing ? -8 : 8)
-            }
-            .frame(height: 150)
+        VStack(spacing: 24) {
+            Image(asset: .loginBird)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 160, height: 160)
             
-            VStack(spacing: 6) {
-                Text(L10n.About.appName)
-                    .appTextStyle(.displayMedium, color: .appTextHeading)
-                
-                Text(viewModel.appVersion)
-                    .appTextStyle(.captionBold, color: .appBrandPrimary)
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 6)
-                    .background(
-                        Capsule()
-                            .fill(Color.appBrandPrimary.opacity(0.12))
-                    )
-                    .overlay(
-                        Capsule()
-                            .stroke(Color.appBrandPrimary.opacity(0.3), lineWidth: 1)
-                    )
-                
-                Text(L10n.About.subtitle)
-                    .appTextStyle(.bodyMedium, color: .appTextSecondary)
-                    .multilineTextAlignment(.center)
-                    .padding(.top, 4)
-            }
+            Text(L10n.About.appName)
+                .appTextStyle(.headingLarge, color: .appTextHeading)
         }
     }
     
     private var missionCard: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack(spacing: 8) {
-                Image(systemIcon: .sparkles)
-                    .font(.system(size: 18, weight: .bold))
-                    .foregroundColor(.appAccentOrange)
-                
-                Text(L10n.About.missionTitle)
-                    .appTextStyle(.bodyLargeBold, color: .appTextHeading)
+        Text(L10n.About.missionDescription)
+            .appTextStyle(.bodyMedium, color: .appTextSecondary)
+            .multilineTextAlignment(.center)
+            .lineSpacing(4)
+            .padding(24)
+            .frame(maxWidth: .infinity)
+            .background(Color.appSurfaceCard)
+            .cornerRadius(20)
+            .shadow(color: Color.appSemanticSuccess.opacity(0.08), radius: 24, x: 0, y: 8)
+    }
+    
+    private var linksSection: some View {
+        VStack(spacing: 12) {
+            LinguaSettingsRow(
+                icon: .starFill,
+                iconBgColor: .appBrandBrown,
+                title: L10n.About.rateApp,
+                showDivider: false
+            ) {
+                SettingsRowChevron()
             }
+            .background(Color.appSurfaceCard)
+            .cornerRadius(20)
+            .shadow(color: Color.appSemanticSuccess.opacity(0.08), radius: 24, x: 0, y: 8)
+            // Note: We don't have actions bound yet, but you'd add .onTapGesture here
             
-            Text(L10n.About.missionDescription)
-                .appTextStyle(.body, color: .appTextSecondary)
-                .lineSpacing(4)
+            LinguaSettingsRow(
+                icon: .cameraFill,
+                iconBgColor: .appSemanticSuccess,
+                title: L10n.About.instagram,
+                showDivider: false
+            ) {
+                SettingsRowChevron()
+            }
+            .background(Color.appSurfaceCard)
+            .cornerRadius(20)
+            .shadow(color: Color.appSemanticSuccess.opacity(0.08), radius: 24, x: 0, y: 8)
+            
+            LinguaSettingsRow(
+                icon: .globe,
+                iconBgColor: .appAccentGold,
+                title: L10n.About.website,
+                showDivider: false
+            ) {
+                SettingsRowChevron()
+            }
+            .background(Color.appSurfaceCard)
+            .cornerRadius(20)
+            .shadow(color: Color.appSemanticSuccess.opacity(0.08), radius: 24, x: 0, y: 8)
         }
-        .padding(20)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color.appSurfaceCardWarm)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 20)
-                .stroke(Color.appBorderBrown.opacity(0.8), lineWidth: 1)
-        )
-        .shadow(color: Color.appTextPrimary.opacity(0.04), radius: 14, x: 0, y: 4)
+    }
+    
+    private var legalSection: some View {
+        VStack(spacing: 0) {
+            // Terms of Service
+            HStack(spacing: 16) {
+                Image(systemIcon: .docTextFill)
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundColor(.appTextSecondary)
+                
+                Text(L10n.About.termsOfService)
+                    .appTextStyle(.bodyLargeMedium, color: .appTextHeading)
+                
+                Spacer()
+                SettingsRowChevron()
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 16)
+            
+            Divider().background(Color.appBorderBrown.opacity(0.5)).padding(.leading, 16)
+            
+            // Privacy Policy
+            HStack(spacing: 16) {
+                Image(systemIcon: .shieldFill)
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundColor(.appTextSecondary)
+                
+                Text(L10n.About.privacyPolicy)
+                    .appTextStyle(.bodyLargeMedium, color: .appTextHeading)
+                
+                Spacer()
+                SettingsRowChevron()
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 16)
+            
+            Divider().background(Color.appBorderBrown.opacity(0.5)).padding(.leading, 16)
+            
+            // Licenses & Credits
+            HStack(spacing: 16) {
+                Image(systemIcon: .infoCircleFill)
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundColor(.appTextSecondary)
+                
+                Text(L10n.About.licenses)
+                    .appTextStyle(.bodyLargeMedium, color: .appTextHeading)
+                
+                Spacer()
+                SettingsRowChevron()
+            }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 16)
+        }
+        .background(Color.appSurfaceCard)
+        .cornerRadius(20)
+        .shadow(color: Color.appSemanticSuccess.opacity(0.08), radius: 24, x: 0, y: 8)
     }
     
     private var footerSection: some View {
         VStack(spacing: 8) {
             Text(L10n.About.madeWithLove)
-                .appTextStyle(.captionBold, color: .appTextSecondary)
+                .appTextStyle(.captionMedium, color: .appTextSecondary)
                 .multilineTextAlignment(.center)
             
             Text(L10n.About.copyright)
                 .appTextStyle(.micro, color: .appTextSecondary.opacity(0.7))
                 .multilineTextAlignment(.center)
         }
-        .padding(.top, 12)
+        .padding(.top, 16)
     }
 }
 
