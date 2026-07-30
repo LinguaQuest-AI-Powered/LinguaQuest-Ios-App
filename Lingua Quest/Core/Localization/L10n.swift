@@ -500,9 +500,11 @@ enum L10n {
         static var featureGameDesc: String { localized("about.feature_game_desc") }
         static var communityTitle: String { localized("about.community_title") }
         static var rateApp: String { localized("about.rate_app") }
+        static var instagram: String { localized("about.instagram") }
         static var website: String { localized("about.website") }
         static var privacyPolicy: String { localized("about.privacy_policy") }
         static var termsOfService: String { localized("about.terms_of_service") }
+        static var licenses: String { localized("about.licenses") }
         static var copyright: String { localized("about.copyright") }
         static var madeWithLove: String { localized("about.made_with_love") }
     }
