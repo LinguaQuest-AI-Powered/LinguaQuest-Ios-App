@@ -445,3 +445,24 @@
 "help_support.faq.a3" = "نعم، يمكنك تغيير لغتك المستهدفة في إعدادات الملف الشخصي.";
 "help_support.faq.q4" = "كيف أقوم بإعادة تعيين تقدمي؟";
 "help_support.faq.a4" = "يمكنك إعادة تعيين تقدمك في قائمة الإعدادات المتقدمة.";
+
+// Mind Reader
+"mind_reader.title" = "قارئ الأفكار لينجو";
+"mind_reader.lobby_prompt" = "فكر في كلمة من الفئة المختارة!";
+"mind_reader.start_game" = "ابدأ اللعبة";
+"mind_reader.confirmation_question" = "هل لديك كلمة في ذهنك؟";
+"mind_reader.yes_lets_go" = "نعم، لنبدأ!";
+"mind_reader.translate_lifeline" = "ترجم";
+"mind_reader.answer.yes" = "نعم";
+"mind_reader.answer.no" = "لا";
+"mind_reader.answer.sometimes" = "أحياناً";
+"mind_reader.answer.probably_not" = "على الأرجح لا";
+"mind_reader.answer.dont_know" = "لا أعلم";
+"mind_reader.guess.got_it" = "نعم، لقد حزرتها!";
+"mind_reader.guess.wrong" = "لا، إجابة خاطئة!";
+"mind_reader.pop_quiz.title" = "رائع! اختر الترجمة الصحيحة للحصول على مكافأتك.";
+"mind_reader.give_up_prompt" = "استسلمت! ما الكلمة التي كنت تفكر فيها؟";
+"mind_reader.busted.contradiction" = "لقد قدمت إجابات متناقضة أثناء اللعب! لم يتم منح أي عملات.";
+"mind_reader.busted.quiz_failed" = "اخترت ترجمة غير صحيحة! 0 عملات.";
+"mind_reader.busted.invalid_selection" = "اختيار كلمة غير صالحة.";
+

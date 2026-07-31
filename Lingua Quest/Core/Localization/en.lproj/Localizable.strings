@@ -443,3 +443,24 @@
 "help_support.faq.a3" = "Yes, you can change your target language in the profile settings.";
 "help_support.faq.q4" = "How do I reset my progress?";
 "help_support.faq.a4" = "You can reset your progress in the advanced settings menu.";
+
+// Mind Reader
+"mind_reader.title" = "Lingo's Mind Reader";
+"mind_reader.lobby_prompt" = "Think of a word in your chosen category!";
+"mind_reader.start_game" = "Start Game";
+"mind_reader.confirmation_question" = "Do you have a word in mind?";
+"mind_reader.yes_lets_go" = "Yes, let's go!";
+"mind_reader.translate_lifeline" = "Translate";
+"mind_reader.answer.yes" = "Yes";
+"mind_reader.answer.no" = "No";
+"mind_reader.answer.sometimes" = "Sometimes";
+"mind_reader.answer.probably_not" = "Probably Not";
+"mind_reader.answer.dont_know" = "I Don't Know";
+"mind_reader.guess.got_it" = "Yes, you got it!";
+"mind_reader.guess.wrong" = "No, you're wrong!";
+"mind_reader.pop_quiz.title" = "Awesome! Tap the correct translation to claim your reward.";
+"mind_reader.give_up_prompt" = "I give up! What were you thinking of?";
+"mind_reader.busted.contradiction" = "You gave contradictory answers during gameplay! No coins awarded.";
+"mind_reader.busted.quiz_failed" = "Incorrect translation selected! 0 coins earned.";
+"mind_reader.busted.invalid_selection" = "Invalid word selection.";
+
