@@ -38,7 +38,7 @@ final class MindReaderIntroViewModel {
     
     func onYesLetsGoTapped() {
         showReadyDialog = false
-        // router.push(...) to actual game
+        router.push(.mindReaderGame)
     }
     
     func goBack() {

@@ -374,6 +374,8 @@
 "mind_reader.play_again" = "العب مرة أخرى";
 "mind_reader.tag" = "قارئ الأفكار";
 "mind_reader.play_game" = "العب الآن";
+"mind_reader.question_progress" = "السؤال %d من %d";
+"mind_reader.percent_complete" = "%d%% مكتمل";
 "mind_reader.subtitle" = "سأحاول تخمين الكلمة في 20 سؤالاً ... جهز عقلك!";
 "mind_reader.current_category" = "الفئة الحالية";
 "mind_reader.change" = "تغيير";

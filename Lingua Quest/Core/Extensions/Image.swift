@@ -166,6 +166,9 @@ extension Image {
         case micBird = "Mic"
         case emptyGallary = "emptyGallary"
         case noInternet  = "noInternet"
+        case mindBubbleBird = "mind_bubble_bird"
+        case mindSuccessBird = "mind_found_it_bird"
+        case mindThinkingBird = "mind_thinking_bird"
     }
     
     init(icon: Icon) {
