@@ -35,6 +35,8 @@ struct AppToastModifier: ViewModifier {
     let title: String
     let subtitle: String?
     let duration: TimeInterval
+    
+    @Environment(\.soundPlayer) private var soundPlayer
 
     func body(content: Content) -> some View {
         ZStack(alignment: .bottom) {
@@ -71,6 +73,7 @@ struct AppToastModifier: ViewModifier {
                     .padding(.bottom, 20)
                     .transition(.move(edge: .bottom).combined(with: .opacity))
                     .onAppear {
+                        soundPlayer.play(sound: .pop)
                         DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
                             withAnimation(.spring()) {
                                 isPresented = false
