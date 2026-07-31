@@ -49,7 +49,8 @@ final class HomeAssembly: Assembly {
             let getDailyRewardUseCase = resolver.resolve(GetDailyRewardUseCase.self)!
             let claimDailyRewardUseCase = resolver.resolve(ClaimDailyRewardUseCase.self)!
             let statsService = resolver.resolve(StatsService.self)!
-            return DailyRewardViewModel(getDailyRewardUseCase: getDailyRewardUseCase, claimDailyRewardUseCase: claimDailyRewardUseCase, statsService: statsService)
+            let soundPlayer = resolver.resolve(AppSoundPlayer.self)!
+            return DailyRewardViewModel(getDailyRewardUseCase: getDailyRewardUseCase, claimDailyRewardUseCase: claimDailyRewardUseCase, statsService: statsService, soundPlayer: soundPlayer)
         }
         
         container.register(GetMyLanguagesUseCase.self) { resolver in

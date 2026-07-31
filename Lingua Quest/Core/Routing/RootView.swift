@@ -39,6 +39,7 @@ struct RootView: View {
             }
         }
         .environment(router)
+        .environment(\.soundPlayer, Resolver.shared.resolve(AppSoundPlayer.self))
         .preferredColorScheme(userPreferences.isDarkMode ? .dark : .light)
         .environment(\.locale, Locale(identifier: userPreferences.appLanguage))
         .environment(\.layoutDirection, userPreferences.appLanguage == "ar" ? .rightToLeft : .leftToRight)
