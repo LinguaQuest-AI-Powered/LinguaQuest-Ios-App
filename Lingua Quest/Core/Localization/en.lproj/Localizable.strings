@@ -467,6 +467,7 @@
 "mind_reader.play_again" = "Play Again";
 "mind_reader.tag" = "MIND READER";
 "mind_reader.play_game" = "Play Game";
+"mind_reader.thinking_hard" = "Lingo is\nthinking hard...";
 "mind_reader.question_progress" = "Question %d of %d";
 "mind_reader.percent_complete" = "%d%% Complete";
 "mind_reader.subtitle" = "\"I'll try to guess it in 20 questions ... prepare your mind!\"";

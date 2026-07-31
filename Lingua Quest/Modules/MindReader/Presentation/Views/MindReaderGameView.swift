@@ -135,17 +135,78 @@ struct MindReaderGameView: View {
                     .zIndex(0)
                 }
             }
-            .navigationBarHidden(true)
-            // Disable interactions when processing
-            .disabled(viewModel.isProcessing)
-        }
-        
-        var birdImageForState: Image.Asset {
-            switch viewModel.birdState {
-            case .normal: return .mindThinkingBird
-            case .thinking: return .mindBubbleBird
-            case .pointing: return .mindSuccessBird
+            
+            if viewModel.isProcessing {
+                loadingOverlay
             }
+        }
+        .navigationBarHidden(true)
+        // Disable interactions when processing
+        .disabled(viewModel.isProcessing)
+    }
+    
+    private var loadingOverlay: some View {
+        ZStack {
+            Color.appBackgroundWarm.opacity(0.95).ignoresSafeArea()
+            
+            VStack(spacing: 32) {
+                // Mascot in Circle
+                Image(asset: .thinkingHardBird)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 140, height: 140)
+                    .padding(16)
+                    .background(Color.appSurfaceCard)
+                    .clipShape(Circle())
+                    .overlay(
+                        Circle().stroke(Color.white, lineWidth: 6)
+                    )
+                    .shadow(color: .black.opacity(0.1), radius: 10, y: 5)
+                
+                Text(L10n.MindReader.thinkingHard)
+                    .appTextStyle(.displayMedium, color: .appBrandBrownDark)
+                    .multilineTextAlignment(.center)
+            }
+            .padding(.horizontal, 40)
+            .padding(.vertical, 48)
+            .background(
+                RoundedRectangle(cornerRadius: 32)
+                    .fill(Color.appSurfaceCard)
+                    .overlay(
+                        ZStack {
+                            Circle()
+                                .fill(Color.appGlowTeal.opacity(0.15))
+                                .frame(width: 256, height: 256)
+                                .blur(radius: 32)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                                .offset(x: 94, y: -94)
+
+                            Circle()
+                                .fill(Color.appGlowGold.opacity(0.15))
+                                .frame(width: 256, height: 256)
+                                .blur(radius: 32)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
+                                .offset(x: -94, y: 94)
+                        }
+                        .clipShape(RoundedRectangle(cornerRadius: 32))
+                    )
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 32)
+                    .stroke(Color.appBorderCool.opacity(0.4), lineWidth: 2)
+            )
+            .shadow(color: .black.opacity(0.1), radius: 10, y: 10)
+            .padding(.horizontal, 40)
+        }
+        .transition(.opacity.combined(with: .scale(scale: 0.95)))
+        .zIndex(100)
+    }
+    
+    private var birdImageForState: Image.Asset {
+        switch viewModel.birdState {
+        case .normal: return .mindThinkingBird
+        case .thinking: return .mindBubbleBird
+        case .pointing: return .mindSuccessBird
         }
     }
 }
