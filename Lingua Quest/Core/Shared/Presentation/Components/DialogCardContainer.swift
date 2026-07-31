@@ -87,15 +87,18 @@ struct DialogCardContainer<Content: View>: View {
 
 private extension DialogCardContainer {
     var mascotView: some View {
-        Button {
-            onMascotTap?()
-        } label: {
-            Image(asset: mascotImage)
-                .resizable()
-                .scaledToFit()
-                .frame(width: mascotWidth, height: mascotHeight)
+        Group {
+            if let onMascotTap {
+                Button {
+                    onMascotTap()
+                } label: {
+                    mascotImageContent
+                }
+                .buttonStyle(.plain)
+            } else {
+                mascotImageContent
+            }
         }
-        .buttonStyle(.plain)
         .overlay(alignment: .top) {
             if let text = speechBubbleText {
                 SpeechBubbleView(text: text, isAnimated: speechBubbleAnimated, animationDelay: speechBubbleDelay)
@@ -104,6 +107,13 @@ private extension DialogCardContainer {
             }
         }
         .offset(y: -mascotOffset)
+    }
+
+    var mascotImageContent: some View {
+        Image(asset: mascotImage)
+            .resizable()
+            .scaledToFit()
+            .frame(width: mascotWidth, height: mascotHeight)
     }
 
     var cardBackground: some View {

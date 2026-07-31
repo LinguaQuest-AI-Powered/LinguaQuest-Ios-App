@@ -124,6 +124,7 @@ extension Image {
         case achivementBird = "achivement_bird"
         case loadingBird = "loading_bird"
         case helpBird = "help_bird"
+        case mindBird = "mind_bird"
         case star = "star"
         case star2 = "star2"
         case ball = "ball"
@@ -133,6 +134,7 @@ extension Image {
         case advanced = "advanced"
         case intermediate = "intermediate"
         case beginner = "beginner"
+        case kitchenLogo = "kitchenLogo"
         case gameLevelBackground = "GameLevelBackground"
         case homeBackground = "LinguaQuestHome"
         case english = "English"
@@ -164,6 +166,11 @@ extension Image {
         case micBird = "Mic"
         case emptyGallary = "emptyGallary"
         case noInternet  = "noInternet"
+        case mindBubbleBird = "mind_bubble_bird"
+        case mindSuccessBird = "mind_found_it_bird"
+        case mindThinkingBird = "mind_thinking_bird"
+        case thinkingHardBird = "thinking_hard_bird"
+        case guessBird = "guess_bird"
     }
     
     init(icon: Icon) {

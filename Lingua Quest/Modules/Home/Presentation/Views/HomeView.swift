@@ -123,6 +123,9 @@ struct HomeView: View {
                                         
                                         RoleplayCardView(action: { router.push(.roleplayScenarios) })
                                             .frame(width: 204)
+                                            
+                                        MindReaderHomeCardView(action: { router.push(.mindReaderIntro) })
+                                            .frame(width: 204)
                                     }
                                     .padding(.horizontal, 20)
                                     .padding(.vertical, 4)

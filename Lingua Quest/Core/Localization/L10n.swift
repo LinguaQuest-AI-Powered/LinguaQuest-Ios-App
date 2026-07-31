@@ -533,10 +533,20 @@ enum L10n {
 
     enum MindReader {
         static var title: String { localized("mind_reader.title") }
+        static var subtitle: String { localized("mind_reader.subtitle") }
         static var lobbyPrompt: String { localized("mind_reader.lobby_prompt") }
+        static var currentCategory: String { localized("mind_reader.current_category") }
         static var startGame: String { localized("mind_reader.start_game") }
+        static var change: String { localized("mind_reader.change") }
         static var confirmationQuestion: String { localized("mind_reader.confirmation_question") }
+        static func makeSureFitsWorld(_ world: String) -> String { String(format: localized("mind_reader.make_sure_fits_world"), world) }
+        static var notYet: String { localized("mind_reader.not_yet") }
         static var yesLetsGo: String { localized("mind_reader.yes_lets_go") }
+        static var mindReaderTag: String { localized("mind_reader.tag") }
+        static var playGame: String { localized("mind_reader.play_game") }
+        static var thinkingHard: String { localized("mind_reader.thinking_hard") }
+        static func questionProgress(current: Int, total: Int) -> String { String(format: localized("mind_reader.question_progress"), current, total) }
+        static func percentComplete(_ percent: Int) -> String { String(format: localized("mind_reader.percent_complete"), percent) }
         static var translateLifeline: String { localized("mind_reader.translate_lifeline") }
         static var answerYes: String { localized("mind_reader.answer.yes") }
         static var answerNo: String { localized("mind_reader.answer.no") }
@@ -545,6 +555,9 @@ enum L10n {
         static var answerDontKnow: String { localized("mind_reader.answer.dont_know") }
         static var guessGotIt: String { localized("mind_reader.guess.got_it") }
         static var guessWrong: String { localized("mind_reader.guess.wrong") }
+        static var guessThinkIts: String { localized("mind_reader.guess.think_its") }
+        static var guessNoWrong: String { localized("mind_reader.guess.no_wrong") }
+        static var guessYesGotIt: String { localized("mind_reader.guess.yes_got_it") }
         static var popQuizTitle: String { localized("mind_reader.pop_quiz.title") }
         static var giveUpPrompt: String { localized("mind_reader.give_up_prompt") }
         static var bustedContradiction: String { localized("mind_reader.busted.contradiction") }

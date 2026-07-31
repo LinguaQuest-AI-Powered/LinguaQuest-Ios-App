@@ -42,5 +42,23 @@ final class MindReaderAssembly: Assembly {
         container.register(ValidateHonestyUseCase.self) { _ in
             ValidateHonestyUseCase()
         }
+        
+        container.register(MindReaderIntroViewModel.self) { r in
+            let statsService = r.resolve(StatsService.self)!
+            let router = r.resolve(RouterProtocol.self)!
+            return MindReaderIntroViewModel(router: router, statsService: statsService)
+        }
+        
+        container.register(MindReaderGameViewModel.self) { r in
+            let statsService = r.resolve(StatsService.self)!
+            let router = r.resolve(RouterProtocol.self)!
+            return MindReaderGameViewModel(router: router, statsService: statsService)
+        }
+        
+        container.register(MindReaderGuessViewModel.self) { r in
+            let statsService = r.resolve(StatsService.self)!
+            let router = r.resolve(RouterProtocol.self)!
+            return MindReaderGuessViewModel(router: router, statsService: statsService)
+        }
     }
 }
