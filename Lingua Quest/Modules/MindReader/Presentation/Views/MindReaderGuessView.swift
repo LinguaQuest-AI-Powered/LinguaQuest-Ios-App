@@ -95,3 +95,12 @@ struct MindReaderGuessView: View {
         .navigationBarHidden(true)
     }
 }
+
+#Preview("LightTheme") {
+    MindReaderGuessView(viewModel: .preview)
+}
+
+#Preview("DarkTheme") {
+    MindReaderGuessView(viewModel: .preview)
+        .preferredColorScheme(.dark)
+}

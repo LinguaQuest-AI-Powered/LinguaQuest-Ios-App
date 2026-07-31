@@ -210,3 +210,12 @@ struct MindReaderGameView: View {
         }
     }
 }
+
+#Preview("LightTheme") {
+    MindReaderGameView(viewModel: .preview)
+}
+
+#Preview("DarkTheme") {
+    MindReaderGameView(viewModel: .preview)
+        .preferredColorScheme(.dark)
+}
