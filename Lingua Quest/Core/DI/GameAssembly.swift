@@ -74,7 +74,8 @@ final class GameAssembly: Assembly {
         
         container.register(CameraCaptureViewModel.self) { (resolver, worldId: Int, worldName: String, levelId: Int, levelOrder: Int, targetWord: String) in
             let router = resolver.resolve(RouterProtocol.self)!
-            return CameraCaptureViewModel(worldId: worldId, worldName: worldName, levelId: levelId, levelOrder: levelOrder, targetWord: targetWord, router: router)
+            let soundPlayer = resolver.resolve(AppSoundPlayer.self)!
+            return CameraCaptureViewModel(worldId: worldId, worldName: worldName, levelId: levelId, levelOrder: levelOrder, targetWord: targetWord, router: router, soundPlayer: soundPlayer)
         }
         
         container.register(CameraResultViewModel.self) { (resolver, worldId: Int, worldName: String, levelId: Int, levelOrder: Int, targetWord: String, imageData: Data?) in
@@ -94,7 +95,8 @@ final class GameAssembly: Assembly {
                 verifyUseCase: verifyUseCase,
                 changeWordUseCase: changeWordUseCase,
                 statsService: statsService,
-                router: router
+                router: router,
+                soundPlayer: resolver.resolve(AppSoundPlayer.self)!
             )
         }
     }

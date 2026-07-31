@@ -47,6 +47,7 @@ final class BossLevelViewModel {
     private let evaluateStageUseCase: EvaluateBossStageUseCaseProtocol
     private let router: RouterProtocol
     private let statsService: StatsServiceProtocol
+    private let soundPlayer: AppSoundPlayer
     
     private var stateListenTask: Task<Void, Never>?
     private var timerTask: Task<Void, Never>?
@@ -59,7 +60,8 @@ final class BossLevelViewModel {
         stopSessionUseCase: StopBossLevelSessionUseCaseProtocol,
         evaluateStageUseCase: EvaluateBossStageUseCaseProtocol,
         router: RouterProtocol,
-        statsService: StatsServiceProtocol
+        statsService: StatsServiceProtocol,
+        soundPlayer: AppSoundPlayer
     ) {
         self.scenarioId = scenarioId
         self.scenarioRepository = scenarioRepository
@@ -69,6 +71,7 @@ final class BossLevelViewModel {
         self.evaluateStageUseCase = evaluateStageUseCase
         self.router = router
         self.statsService = statsService
+        self.soundPlayer = soundPlayer
     }
 
     // MARK: - Lifecycle
@@ -137,8 +140,10 @@ final class BossLevelViewModel {
                 if result.task_completed {
                     try? await statsService.adjustWallet(coinsDelta: 50, xpDelta: 150)
                 }
+                soundPlayer.play(sound: result.task_completed ? .success : .fail)
                 viewState = .result(result)
             } catch {
+                soundPlayer.play(sound: .fail)
                 viewState = .error("Evaluation failed: \(error.localizedDescription)")
             }
         }
@@ -181,6 +186,7 @@ final class BossLevelViewModel {
                 fluency_score: 0,
                 feedback_message: L10n.BossLevel.timeoutFeedback
             )
+            soundPlayer.play(sound: .fail)
             viewState = .result(result)
         }
     }

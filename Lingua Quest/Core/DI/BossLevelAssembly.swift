@@ -46,7 +46,8 @@ final class BossLevelAssembly: Assembly {
                 stopSessionUseCase: r.resolve(StopBossLevelSessionUseCaseProtocol.self)!,
                 evaluateStageUseCase: r.resolve(EvaluateBossStageUseCaseProtocol.self)!,
                 router: r.resolve(RouterProtocol.self)!,
-                statsService: r.resolve(StatsServiceProtocol.self)!
+                statsService: r.resolve(StatsServiceProtocol.self)!,
+                soundPlayer: r.resolve(AppSoundPlayer.self)!
             )
         }
         
@@ -59,7 +60,8 @@ final class BossLevelAssembly: Assembly {
                 stopSessionUseCase: r.resolve(StopBossLevelSessionUseCaseProtocol.self)!,
                 evaluateStageUseCase: r.resolve(EvaluateBossStageUseCaseProtocol.self)!,
                 router: r.resolve(RouterProtocol.self)!,
-                statsService: r.resolve(StatsServiceProtocol.self)!
+                statsService: r.resolve(StatsServiceProtocol.self)!,
+                soundPlayer: r.resolve(AppSoundPlayer.self)!
             )
         }
         

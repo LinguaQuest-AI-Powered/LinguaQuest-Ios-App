@@ -41,8 +41,9 @@ final class CameraResultViewModel {
     private let changeWordUseCase: ChangeWordUseCase
     private let statsService: StatsServiceProtocol
     private let router: RouterProtocol
+    private let soundPlayer: AppSoundPlayer
     
-    init(worldId: Int, worldName: String, levelId: Int, levelOrder: Int, targetWord: String, imageData: Data?, saveUseCase: SaveCapturedItemUseCase, verifyUseCase: VerifyImageUseCase, changeWordUseCase: ChangeWordUseCase, statsService: StatsServiceProtocol, router: RouterProtocol) {
+    init(worldId: Int, worldName: String, levelId: Int, levelOrder: Int, targetWord: String, imageData: Data?, saveUseCase: SaveCapturedItemUseCase, verifyUseCase: VerifyImageUseCase, changeWordUseCase: ChangeWordUseCase, statsService: StatsServiceProtocol, router: RouterProtocol, soundPlayer: AppSoundPlayer) {
         self.worldId = worldId
         self.worldName = worldName
         self.levelId = levelId
@@ -54,6 +55,7 @@ final class CameraResultViewModel {
         self.changeWordUseCase = changeWordUseCase
         self.statsService = statsService
         self.router = router
+        self.soundPlayer = soundPlayer
         
         verifyImage()
     }
@@ -77,6 +79,7 @@ final class CameraResultViewModel {
                     self.statsService.syncBalances(coins: self.statsService.coins + self.coinsEarned, xp: self.statsService.xp + self.xpPoints, streakDays: nil)
                     
                     self.state = .match
+                    soundPlayer.play(sound: .success)
                     
                     // Save the captured item locally
                     let item = CapturedItem(
@@ -91,14 +94,17 @@ final class CameraResultViewModel {
                     try? await saveUseCase.execute(item: item)
                 } else {
                     self.state = .notMatch
+                    soundPlayer.play(sound: .fail)
                 }
             } catch let error as NetworkError {
+                soundPlayer.play(sound: .fail)
                 if let message = error.apiErrorMessage {
                     self.state = .error(message: message)
                 } else {
                     self.state = .error(message: error.localizedDescription)
                 }
             } catch {
+                soundPlayer.play(sound: .fail)
                 self.state = .error(message: error.localizedDescription)
             }
         }

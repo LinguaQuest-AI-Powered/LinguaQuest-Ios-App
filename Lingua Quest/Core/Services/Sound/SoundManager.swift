@@ -7,6 +7,7 @@
 
 import AVFoundation
 import Foundation
+import UIKit
 
 final class SoundManager: AppSoundPlayer {
     
@@ -49,10 +50,14 @@ final class SoundManager: AppSoundPlayer {
     func play(sound: AppSound) {
         guard userPreferences.isSoundEnabled else { return }
         
-        if let player = players[sound] {
-            if player.isPlaying {
-                player.currentTime = 0
-            } else {
+        DispatchQueue.main.async {
+            // Do not play ghost sounds in the background
+            guard UIApplication.shared.applicationState == .active else { return }
+            
+            if let player = self.players[sound] {
+                if player.isPlaying {
+                    player.currentTime = 0
+                }
                 player.play()
             }
         }
