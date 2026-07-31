@@ -33,6 +33,7 @@ struct CustomButton: View {
     var trailing: Image?
     var isLoading: Bool = false
     var disabledAction: (() -> Void)? = nil
+    var textStyle: AppTextStyle = .bodyLargeBold
     
     var backgroundColor: Color {
         if status == .enable {
@@ -98,7 +99,7 @@ struct CustomButton: View {
                     }
                     
                     Text(text)
-                        .appTextStyle(.bodyLargeBold, color: foregroundColor)
+                        .appTextStyle(textStyle, color: foregroundColor)
                     
                     if let trailing {
                         trailing

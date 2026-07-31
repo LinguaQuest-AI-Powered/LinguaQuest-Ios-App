@@ -127,6 +127,9 @@ final class Router: RouterProtocol {
         case .mindReaderGame:
             let viewModel = Resolver.shared.resolve(MindReaderGameViewModel.self)
             MindReaderGameView(viewModel: viewModel)
+        case .mindReaderGuess:
+            let viewModel = Resolver.shared.resolve(MindReaderGuessViewModel.self)
+            MindReaderGuessView(viewModel: viewModel)
         case .appLanguageSelection:
             let viewModel = Resolver.shared.resolve(SettingsViewModel.self)
             AppLanguageSelectionView(viewModel: viewModel)

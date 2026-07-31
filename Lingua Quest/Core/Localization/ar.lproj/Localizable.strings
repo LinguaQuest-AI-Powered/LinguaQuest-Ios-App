@@ -365,6 +365,9 @@
 "mind_reader.answer.dont_know" = "لا أعرف";
 "mind_reader.guess.got_it" = "عرفتها!";
 "mind_reader.guess.wrong" = "تخمين خاطئ!";
+"mind_reader.guess.think_its" = "أعتقد أنها...";
+"mind_reader.guess.no_wrong" = "لا، أنت مخطئ!";
+"mind_reader.guess.yes_got_it" = "نعم، لقد أصبت!";
 "mind_reader.pop_quiz.title" = "اختبار مفاجئ!";
 "mind_reader.give_up_prompt" = "هل تستسلم؟";
 "mind_reader.busted.contradiction" = "تناقض مكشوف!";

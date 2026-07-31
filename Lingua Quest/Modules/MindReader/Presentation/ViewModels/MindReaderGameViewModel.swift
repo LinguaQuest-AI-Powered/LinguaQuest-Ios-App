@@ -22,7 +22,7 @@ final class MindReaderGameViewModel {
     let statsService: StatsService
     
     // Progress Data
-    var currentQuestionIndex = 12
+    var currentQuestionIndex = 20
     var totalQuestions = 20
     var progressPercentage: Int {
         Int((Double(currentQuestionIndex) / Double(totalQuestions)) * 100)
@@ -58,9 +58,13 @@ final class MindReaderGameViewModel {
             // Advance question and go back to normal
             if currentQuestionIndex < totalQuestions {
                 currentQuestionIndex += 1
+                birdState = .normal
+                isProcessing = false
+            } else {
+                // If this is the last question or we are forcing the guess:
+                isProcessing = false
+                router.push(.mindReaderGuess)
             }
-            birdState = .normal
-            isProcessing = false
         }
     }
     

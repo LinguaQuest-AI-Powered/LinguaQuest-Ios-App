@@ -555,6 +555,9 @@ enum L10n {
         static var answerDontKnow: String { localized("mind_reader.answer.dont_know") }
         static var guessGotIt: String { localized("mind_reader.guess.got_it") }
         static var guessWrong: String { localized("mind_reader.guess.wrong") }
+        static var guessThinkIts: String { localized("mind_reader.guess.think_its") }
+        static var guessNoWrong: String { localized("mind_reader.guess.no_wrong") }
+        static var guessYesGotIt: String { localized("mind_reader.guess.yes_got_it") }
         static var popQuizTitle: String { localized("mind_reader.pop_quiz.title") }
         static var giveUpPrompt: String { localized("mind_reader.give_up_prompt") }
         static var bustedContradiction: String { localized("mind_reader.busted.contradiction") }

@@ -54,5 +54,11 @@ final class MindReaderAssembly: Assembly {
             let router = r.resolve(RouterProtocol.self)!
             return MindReaderGameViewModel(router: router, statsService: statsService)
         }
+        
+        container.register(MindReaderGuessViewModel.self) { r in
+            let statsService = r.resolve(StatsService.self)!
+            let router = r.resolve(RouterProtocol.self)!
+            return MindReaderGuessViewModel(router: router, statsService: statsService)
+        }
     }
 }

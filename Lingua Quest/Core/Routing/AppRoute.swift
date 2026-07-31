@@ -34,6 +34,7 @@ enum AppRoute: Hashable {
     case roleplayScenarios
     case mindReaderIntro
     case mindReaderGame
+    case mindReaderGuess
     case appLanguageSelection
     case about
     case helpAndSupport
