@@ -19,14 +19,16 @@ final class CameraCaptureViewModel {
     let targetWord: String
     let cameraManager: CameraManager
     private let router: RouterProtocol
+    private let soundPlayer: AppSoundPlayer
     
-    init(worldId: Int, worldName: String, levelId: Int, levelOrder: Int, targetWord: String, router: RouterProtocol) {
+    init(worldId: Int, worldName: String, levelId: Int, levelOrder: Int, targetWord: String, router: RouterProtocol, soundPlayer: AppSoundPlayer) {
         self.worldId = worldId
         self.worldName = worldName
         self.levelId = levelId
         self.levelOrder = levelOrder
         self.targetWord = targetWord
         self.router = router
+        self.soundPlayer = soundPlayer
         self.cameraManager = CameraManager()
     }
     
@@ -44,6 +46,7 @@ final class CameraCaptureViewModel {
     }
     
     func onCaptureTapped() {
+        soundPlayer.play(sound: .camera)
         Task {
             if let image = await cameraManager.capturePhoto() {
                 cameraManager.stopSession()

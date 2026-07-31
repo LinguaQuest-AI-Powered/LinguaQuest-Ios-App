@@ -28,14 +28,16 @@ final class VoiceGameResultViewModel {
     private let evaluateUseCase: EvaluateVoiceUseCase
     private let saveProgressUseCase: SaveVoiceProgressUseCase
     private let statsService: StatsServiceProtocol
+    private let soundPlayer: AppSoundPlayer
     private let audioData: Data
     private let sentence: VoiceSentence
     
-    init(router: RouterProtocol, evaluateUseCase: EvaluateVoiceUseCase, saveProgressUseCase: SaveVoiceProgressUseCase, statsService: StatsServiceProtocol, audioData: Data, sentence: VoiceSentence) {
+    init(router: RouterProtocol, evaluateUseCase: EvaluateVoiceUseCase, saveProgressUseCase: SaveVoiceProgressUseCase, statsService: StatsServiceProtocol, soundPlayer: AppSoundPlayer, audioData: Data, sentence: VoiceSentence) {
         self.router = router
         self.evaluateUseCase = evaluateUseCase
         self.saveProgressUseCase = saveProgressUseCase
         self.statsService = statsService
+        self.soundPlayer = soundPlayer
         self.audioData = audioData
         self.sentence = sentence
         
@@ -55,6 +57,7 @@ final class VoiceGameResultViewModel {
                 print("Evaluation failed: \(error)")
                 await MainActor.run {
                     state = .failure
+                    soundPlayer.play(sound: .fail)
                 }
             }
         }
@@ -78,6 +81,8 @@ final class VoiceGameResultViewModel {
         self.coinsEarned = result.rating >= 7 ? 10 : 2
         self.state = result.rating >= 6 ? .success : .failure
         self.advice = result.advice
+        
+        soundPlayer.play(sound: self.state == .success ? .success : .fail)
         
         if result.rating >= 6 {
             Task {

@@ -15,6 +15,7 @@ enum AppSound: String, CaseIterable {
     case coin = "sound_coin"
     case pop = "sound_pop"
     case switchSound = "switch_sound"
+    case addedMoney = "coin_added"
     
     var volume: Float {
         switch self {
@@ -25,6 +26,7 @@ enum AppSound: String, CaseIterable {
         case .coin: return 0.5
         case .pop: return 0.5
         case .switchSound: return 0.5
+        case .addedMoney: return 0.5
         }
     }
 }
