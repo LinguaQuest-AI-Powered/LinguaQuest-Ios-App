@@ -32,6 +32,7 @@ enum AppRoute: Hashable {
     case editProfile
     case bossLevel(scenarioTitle: String)
     case roleplayScenarios
+    case mindReaderIntro
     case appLanguageSelection
     case about
     case helpAndSupport

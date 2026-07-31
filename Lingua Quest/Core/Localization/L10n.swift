@@ -533,10 +533,17 @@ enum L10n {
 
     enum MindReader {
         static var title: String { localized("mind_reader.title") }
+        static var subtitle: String { localized("mind_reader.subtitle") }
         static var lobbyPrompt: String { localized("mind_reader.lobby_prompt") }
+        static var currentCategory: String { localized("mind_reader.current_category") }
         static var startGame: String { localized("mind_reader.start_game") }
+        static var change: String { localized("mind_reader.change") }
         static var confirmationQuestion: String { localized("mind_reader.confirmation_question") }
+        static func makeSureFitsWorld(_ world: String) -> String { String(format: localized("mind_reader.make_sure_fits_world"), world) }
+        static var notYet: String { localized("mind_reader.not_yet") }
         static var yesLetsGo: String { localized("mind_reader.yes_lets_go") }
+        static var mindReaderTag: String { localized("mind_reader.tag") }
+        static var playGame: String { localized("mind_reader.play_game") }
         static var translateLifeline: String { localized("mind_reader.translate_lifeline") }
         static var answerYes: String { localized("mind_reader.answer.yes") }
         static var answerNo: String { localized("mind_reader.answer.no") }
