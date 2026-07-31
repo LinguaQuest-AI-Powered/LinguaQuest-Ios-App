@@ -21,6 +21,7 @@ final class SettingsViewModel {
     private let userPreferences: UserPreferences
     private let lockScreenSettingsRemoteDataSource: LockScreenSettingsRemoteDataSourceProtocol?
     private let changeNativeLanguageUseCase: ChangeNativeLanguageUseCaseProtocol?
+    private let soundPlayer: AppSoundPlayer
 
     init(
         router: RouterProtocol,
@@ -30,7 +31,8 @@ final class SettingsViewModel {
         languageViewModel: LanguageViewModel,
         userPreferences: UserPreferences,
         lockScreenSettingsRemoteDataSource: LockScreenSettingsRemoteDataSourceProtocol? = nil,
-        changeNativeLanguageUseCase: ChangeNativeLanguageUseCaseProtocol? = nil
+        changeNativeLanguageUseCase: ChangeNativeLanguageUseCaseProtocol? = nil,
+        soundPlayer: AppSoundPlayer
     ) {
         self.router = router
         self.sessionManager = sessionManager
@@ -40,11 +42,13 @@ final class SettingsViewModel {
         self.userPreferences = userPreferences
         self.lockScreenSettingsRemoteDataSource = lockScreenSettingsRemoteDataSource
         self.changeNativeLanguageUseCase = changeNativeLanguageUseCase
+        self.soundPlayer = soundPlayer
         
         self.appLanguageCode = userPreferences.appLanguage
         self.appLanguage = AppLanguage(rawValue: userPreferences.appLanguage)?.name ?? "English"
         self.notificationsEnabled = userPreferences.notificationsEnabled
         self.darkModeEnabled = userPreferences.isDarkMode
+        self.soundEffectsEnabled = userPreferences.isSoundEnabled
         self.isLockScreenVocabularyEnabled = userPreferences.isLockScreenVocabularyEnabled
         self.dailyReminderEnabled = userPreferences.dailyReminderEnabled
         self.reminderTime = Date(timeIntervalSince1970: userPreferences.reminderTime)
@@ -88,7 +92,14 @@ final class SettingsViewModel {
             userPreferences.isDarkMode = darkModeEnabled
         }
     }
-    var soundEffectsEnabled: Bool = true
+    var soundEffectsEnabled: Bool {
+        didSet {
+            userPreferences.isSoundEnabled = soundEffectsEnabled
+            if soundEffectsEnabled {
+                soundPlayer.play(sound: .switchSound)
+            }
+        }
+    }
     
     var isLockScreenVocabularyEnabled: Bool {
         didSet {

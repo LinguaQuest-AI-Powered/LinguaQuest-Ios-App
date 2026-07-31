@@ -25,12 +25,14 @@ final class DailyRewardViewModel {
     private let getDailyRewardUseCase: GetDailyRewardUseCase
     private let claimDailyRewardUseCase: ClaimDailyRewardUseCase
     private let statsService: StatsService
+    private let soundPlayer: AppSoundPlayer
     
     // MARK: - Init
-    init(getDailyRewardUseCase: GetDailyRewardUseCase, claimDailyRewardUseCase: ClaimDailyRewardUseCase, statsService: StatsService) {
+    init(getDailyRewardUseCase: GetDailyRewardUseCase, claimDailyRewardUseCase: ClaimDailyRewardUseCase, statsService: StatsService, soundPlayer: AppSoundPlayer) {
         self.getDailyRewardUseCase = getDailyRewardUseCase
         self.claimDailyRewardUseCase = claimDailyRewardUseCase
         self.statsService = statsService
+        self.soundPlayer = soundPlayer
         
         let token = NotificationCenter.default.addObserver(
             forName: .userDidLogout,
@@ -97,6 +99,7 @@ final class DailyRewardViewModel {
         do {
             let claimResult = try await claimDailyRewardUseCase.execute()
             isClaimed = true
+            soundPlayer.play(sound: .dailyReward)
             // Update reward entity with new values from claim result if needed,
             // or we could just rely on the API returning claimedToday = true
             if let currentReward = reward {

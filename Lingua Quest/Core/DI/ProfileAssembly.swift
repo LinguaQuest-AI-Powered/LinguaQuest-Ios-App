@@ -121,6 +121,7 @@ final class ProfileAssembly: Assembly {
             let userPreferences = resolver.resolve(UserPreferences.self)!
             let lockScreenDS = resolver.resolve(LockScreenSettingsRemoteDataSourceProtocol.self)
             let changeNativeLanguageUseCase = resolver.resolve(ChangeNativeLanguageUseCaseProtocol.self)
+            let soundPlayer = resolver.resolve(AppSoundPlayer.self)!
             
             return SettingsViewModel(
                 router: router, 
@@ -130,7 +131,8 @@ final class ProfileAssembly: Assembly {
                 languageViewModel: languageViewModel,
                 userPreferences: userPreferences,
                 lockScreenSettingsRemoteDataSource: lockScreenDS,
-                changeNativeLanguageUseCase: changeNativeLanguageUseCase
+                changeNativeLanguageUseCase: changeNativeLanguageUseCase,
+                soundPlayer: soundPlayer
             )
         }
         
