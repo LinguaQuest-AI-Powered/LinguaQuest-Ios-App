@@ -464,3 +464,5 @@
 "mind_reader.busted.quiz_failed" = "Incorrect translation selected! 0 coins earned.";
 "mind_reader.busted.invalid_selection" = "Invalid word selection.";
 
+"help_support.faq.q4" = "How do I maintain my streak?";
+"help_support.faq.a4" = "Complete at least one lesson or challenge every day to keep your streak alive!";
