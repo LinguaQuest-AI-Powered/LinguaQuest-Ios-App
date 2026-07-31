@@ -31,6 +31,7 @@ protocol StatsServiceProtocol: AnyObject {
 final class StatsService: StatsServiceProtocol {
     private let remoteDataSource: StatsRemoteDataSourceProtocol
     private var userPreferences: UserPreferencesProtocol
+    private let soundPlayer: AppSoundPlayer
     
     var coins: Int {
         didSet { userPreferences.coinBalance = coins }
@@ -44,9 +45,10 @@ final class StatsService: StatsServiceProtocol {
         didSet { userPreferences.streakDays = streakDays }
     }
     
-    init(remoteDataSource: StatsRemoteDataSourceProtocol, userPreferences: UserPreferencesProtocol) {
+    init(remoteDataSource: StatsRemoteDataSourceProtocol, userPreferences: UserPreferencesProtocol, soundPlayer: AppSoundPlayer) {
         self.remoteDataSource = remoteDataSource
         self.userPreferences = userPreferences
+        self.soundPlayer = soundPlayer
         self.coins = userPreferences.coinBalance
         self.xp = userPreferences.xpBalance
         self.streakDays = userPreferences.streakDays
@@ -80,25 +82,46 @@ final class StatsService: StatsServiceProtocol {
     func adjustWallet(coinsDelta: Int, xpDelta: Int) async throws {
         let response = try await remoteDataSource.adjustWallet(coinsDelta: coinsDelta, xpDelta: xpDelta)
         await MainActor.run {
+            var coinsIncreased = false
+            var xpIncreased = false
+            
             if let newCoins = response.data.coins {
+                if newCoins > self.coins { coinsIncreased = true }
                 self.coins = newCoins
             } else {
+                if coinsDelta > 0 { coinsIncreased = true }
                 self.coins += coinsDelta
             }
             
             if let newXp = response.data.xp {
+                if newXp > self.xp { xpIncreased = true }
                 self.xp = newXp
             } else {
+                if xpDelta > 0 { xpIncreased = true }
                 self.xp += xpDelta
+            }
+            
+            if coinsIncreased || xpIncreased {
+                self.soundPlayer.play(sound: .addedMoney)
             }
         }
     }
     
     func syncBalances(coins: Int?, xp: Int?, streakDays: Int? = nil) {
-        if let coins = coins { self.coins = coins }
-        if let xp = xp { self.xp = xp }
+        var increased = false
+        if let coins = coins { 
+            if coins > self.coins { increased = true }
+            self.coins = coins 
+        }
+        if let xp = xp { 
+            if xp > self.xp { increased = true }
+            self.xp = xp 
+        }
         if let streakDays = streakDays {
             self.streakDays = streakDays
+        }
+        if increased {
+            self.soundPlayer.play(sound: .addedMoney)
         }
     }
     

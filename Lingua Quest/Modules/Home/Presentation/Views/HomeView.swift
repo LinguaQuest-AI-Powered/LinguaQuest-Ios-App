@@ -11,6 +11,7 @@ struct HomeView: View {
     @Bindable var viewModel: HomeViewModel
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(Router.self) private var router
+    @Environment(\.soundPlayer) private var soundPlayer
     @State private var hasClaimedDailyReward: Bool = false
     @State private var voiceCompleted: Int = 0
     @State private var voiceTotal: Int = 5
@@ -53,6 +54,7 @@ struct HomeView: View {
                             
                             if !viewModel.dailyRewardViewModel.isClaimed && viewModel.dailyRewardViewModel.reward != nil {
                                 DailyBonusCardView {
+                                    soundPlayer.play(sound: .dailyReward)
                                     showDailyRewardDialog = true
                                 }
                                 .padding(.horizontal, 20)

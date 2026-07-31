@@ -35,6 +35,8 @@ struct CustomButton: View {
     var disabledAction: (() -> Void)? = nil
     var textStyle: AppTextStyle = .bodyLargeBold
     
+    @Environment(\.soundPlayer) private var soundPlayer
+    
     var backgroundColor: Color {
         if status == .enable {
             switch type {
@@ -84,6 +86,9 @@ struct CustomButton: View {
     var body: some View {
         Button {
             if status == .enable && !isLoading {
+                if case .primary = type {
+                    soundPlayer.play(sound: .pop)
+                }
                 action()
             } else {
                 disabledAction?()

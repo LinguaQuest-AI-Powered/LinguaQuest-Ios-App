@@ -17,9 +17,11 @@ final class StatsAssembly: Assembly {
         container.register(StatsService.self) { resolver in
             let remoteDataSource = resolver.resolve(StatsRemoteDataSourceProtocol.self)!
             let userPreferences = resolver.resolve(UserPreferencesProtocol.self)!
+            let soundPlayer = resolver.resolve(AppSoundPlayer.self)!
             return StatsService(
                 remoteDataSource: remoteDataSource,
-                userPreferences: userPreferences
+                userPreferences: userPreferences,
+                soundPlayer: soundPlayer
             )
         }.inObjectScope(.container)
         

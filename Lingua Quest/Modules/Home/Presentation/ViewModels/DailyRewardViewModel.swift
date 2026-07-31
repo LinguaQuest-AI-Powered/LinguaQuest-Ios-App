@@ -99,7 +99,7 @@ final class DailyRewardViewModel {
         do {
             let claimResult = try await claimDailyRewardUseCase.execute()
             isClaimed = true
-            soundPlayer.play(sound: .dailyReward)
+            soundPlayer.play(sound: .coin)
             // Update reward entity with new values from claim result if needed,
             // or we could just rely on the API returning claimedToday = true
             if let currentReward = reward {
