@@ -531,6 +531,27 @@ enum L10n {
         }
     }
 
+    enum MindReader {
+        static var title: String { localized("mind_reader.title") }
+        static var lobbyPrompt: String { localized("mind_reader.lobby_prompt") }
+        static var startGame: String { localized("mind_reader.start_game") }
+        static var confirmationQuestion: String { localized("mind_reader.confirmation_question") }
+        static var yesLetsGo: String { localized("mind_reader.yes_lets_go") }
+        static var translateLifeline: String { localized("mind_reader.translate_lifeline") }
+        static var answerYes: String { localized("mind_reader.answer.yes") }
+        static var answerNo: String { localized("mind_reader.answer.no") }
+        static var answerSometimes: String { localized("mind_reader.answer.sometimes") }
+        static var answerProbablyNot: String { localized("mind_reader.answer.probably_not") }
+        static var answerDontKnow: String { localized("mind_reader.answer.dont_know") }
+        static var guessGotIt: String { localized("mind_reader.guess.got_it") }
+        static var guessWrong: String { localized("mind_reader.guess.wrong") }
+        static var popQuizTitle: String { localized("mind_reader.pop_quiz.title") }
+        static var giveUpPrompt: String { localized("mind_reader.give_up_prompt") }
+        static var bustedContradiction: String { localized("mind_reader.busted.contradiction") }
+        static var bustedQuizFailed: String { localized("mind_reader.busted.quiz_failed") }
+        static var bustedInvalidSelection: String { localized("mind_reader.busted.invalid_selection") }
+    }
+
     private static func localized(_ key: String) -> String {
         let appLanguage = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en"
         if let path = Bundle.main.path(forResource: appLanguage, ofType: "lproj"),

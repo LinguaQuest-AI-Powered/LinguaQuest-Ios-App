@@ -1,0 +1,166 @@
+{
+  "worlds": [
+    {
+      "id": "kitchen",
+      "name": "Kitchen",
+      "icon": "🍳",
+      "is_unlocked": true
+    },
+    {
+      "id": "nature",
+      "name": "Nature",
+      "icon": "🌿",
+      "is_unlocked": true
+    }
+  ],
+  "matrices": [
+    {
+      "world": {
+        "id": "kitchen",
+        "name": "Kitchen",
+        "icon": "🍳",
+        "is_unlocked": true
+      },
+      "words": [
+        {
+          "id": "w1",
+          "wordTargetLanguage": "Manzana",
+          "wordNativeLanguage": "Apple",
+          "emoji": "🍎",
+          "categoryId": "kitchen",
+          "audioUrl": null,
+          "attributeWeights": {
+            "is_red": 1.0,
+            "is_fruit": 1.0,
+            "is_sweet": 0.9,
+            "is_liquid": 0.0
+          }
+        },
+        {
+          "id": "w2",
+          "wordTargetLanguage": "Cuchillo",
+          "wordNativeLanguage": "Knife",
+          "emoji": "🔪",
+          "categoryId": "kitchen",
+          "audioUrl": null,
+          "attributeWeights": {
+            "is_red": 0.0,
+            "is_fruit": 0.0,
+            "is_sweet": 0.0,
+            "is_liquid": 0.0
+          }
+        },
+        {
+          "id": "w3",
+          "wordTargetLanguage": "Leche",
+          "wordNativeLanguage": "Milk",
+          "emoji": "🥛",
+          "categoryId": "kitchen",
+          "audioUrl": null,
+          "attributeWeights": {
+            "is_red": 0.0,
+            "is_fruit": 0.0,
+            "is_sweet": 0.3,
+            "is_liquid": 1.0
+          }
+        },
+        {
+          "id": "w4",
+          "wordTargetLanguage": "Fresa",
+          "wordNativeLanguage": "Strawberry",
+          "emoji": "🍓",
+          "categoryId": "kitchen",
+          "audioUrl": null,
+          "attributeWeights": {
+            "is_red": 1.0,
+            "is_fruit": 1.0,
+            "is_sweet": 1.0,
+            "is_liquid": 0.0
+          }
+        }
+      ],
+      "attributes": [
+        {
+          "id": "is_red",
+          "promptTargetLanguage": "¿Es de color rojo?",
+          "promptNativeLanguage": "Is it red?",
+          "audioUrl": null
+        },
+        {
+          "id": "is_fruit",
+          "promptTargetLanguage": "¿Es una fruta?",
+          "promptNativeLanguage": "Is it a fruit?",
+          "audioUrl": null
+        },
+        {
+          "id": "is_sweet",
+          "promptTargetLanguage": "¿Es dulce?",
+          "promptNativeLanguage": "Is it sweet?",
+          "audioUrl": null
+        },
+        {
+          "id": "is_liquid",
+          "promptTargetLanguage": "¿Es un líquido?",
+          "promptNativeLanguage": "Is it a liquid?",
+          "audioUrl": null
+        }
+      ]
+    },
+    {
+      "world": {
+        "id": "nature",
+        "name": "Nature",
+        "icon": "🌿",
+        "is_unlocked": true
+      },
+      "words": [
+        {
+          "id": "w5",
+          "wordTargetLanguage": "Árbol",
+          "wordNativeLanguage": "Tree",
+          "emoji": "🌳",
+          "categoryId": "nature",
+          "audioUrl": null,
+          "attributeWeights": {
+            "is_green": 1.0,
+            "is_animal": 0.0,
+            "can_fly": 0.0
+          }
+        },
+        {
+          "id": "w6",
+          "wordTargetLanguage": "Pájaro",
+          "wordNativeLanguage": "Bird",
+          "emoji": "🐦",
+          "categoryId": "nature",
+          "audioUrl": null,
+          "attributeWeights": {
+            "is_green": 0.2,
+            "is_animal": 1.0,
+            "can_fly": 1.0
+          }
+        }
+      ],
+      "attributes": [
+        {
+          "id": "is_green",
+          "promptTargetLanguage": "¿Es de color verde?",
+          "promptNativeLanguage": "Is it green?",
+          "audioUrl": null
+        },
+        {
+          "id": "is_animal",
+          "promptTargetLanguage": "¿Es un animal?",
+          "promptNativeLanguage": "Is it an animal?",
+          "audioUrl": null
+        },
+        {
+          "id": "can_fly",
+          "promptTargetLanguage": "¿Puede volar?",
+          "promptNativeLanguage": "Can it fly?",
+          "audioUrl": null
+        }
+      ]
+    }
+  ]
+}

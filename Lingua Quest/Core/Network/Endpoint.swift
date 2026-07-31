@@ -16,7 +16,7 @@ enum CachePolicy {
 }
 
 /// Used by endpoints that don't send a body (GET requests, etc.)
-struct EmptyBody: Encodable {}
+struct EmptyBody: Codable {}
 
 protocol Endpoint {
     associatedtype Body: Encodable = EmptyBody
