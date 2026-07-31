@@ -17,6 +17,7 @@ final class Resolver {
         wireCircularDependencies()
         _ = container.resolve(SessionManagerProtocol.self) // force-instantiate to start listening for .sessionExpired
         _ = container.resolve(StatsServiceProtocol.self) // force-instantiate singleton service
+        _ = container.resolve(AppSoundPlayer.self) // force-instantiate to preload sounds instantly
     }
 
     private func registerAssemblies() {
@@ -28,6 +29,7 @@ final class Resolver {
                 SpeakingLabAssembly(), BossLevelAssembly(),
                 SessionAssembly(),
                 StatsAssembly(),
+                SoundAssembly(),
                
                 LockScreenVocabularyAssembly()
             ],

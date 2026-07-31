@@ -33,6 +33,7 @@ protocol UserPreferencesProtocol: AnyObject {
     var isLockScreenVocabularyEnabled: Bool { get set }
     
     // User-Scoped Settings (add these for SettingsViewModel to use)
+    var isSoundEnabled: Bool { get set }
     var notificationsEnabled: Bool { get set }
     var dailyReminderEnabled: Bool { get set }
     var reminderTime: Double { get set }
@@ -121,6 +122,10 @@ final class UserPreferences: UserPreferencesProtocol {
         didSet { defaults.set(isLockScreenVocabularyEnabled, forKey: scopedKey(AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled)) }
     }
     
+    var isSoundEnabled: Bool {
+        didSet { defaults.set(isSoundEnabled, forKey: scopedKey(AppConstants.UserDefaultsKeys.isSoundEnabled)) }
+    }
+    
     var notificationsEnabled: Bool {
         didSet { defaults.set(notificationsEnabled, forKey: scopedKey(AppConstants.UserDefaultsKeys.notificationsEnabled)) }
     }
@@ -170,6 +175,9 @@ final class UserPreferences: UserPreferencesProtocol {
         let appLanguageKey = "\(userIdPrefix)\(AppConstants.UserDefaultsKeys.appLanguage)"
         self.appLanguage = defaults.string(forKey: appLanguageKey) ?? "en"
         
+        let isSoundEnabledKey = "\(userIdPrefix)\(AppConstants.UserDefaultsKeys.isSoundEnabled)"
+        self.isSoundEnabled = defaults.object(forKey: isSoundEnabledKey) as? Bool ?? true
+        
         let notificationsEnabledKey = "\(userIdPrefix)\(AppConstants.UserDefaultsKeys.notificationsEnabled)"
         self.notificationsEnabled = defaults.bool(forKey: notificationsEnabledKey)
         
@@ -186,6 +194,7 @@ final class UserPreferences: UserPreferencesProtocol {
     func loadUserScopedPreferences(for id: Int) {
         self.userId = id // ensure the userId is set first
         self.isDarkMode = defaults.bool(forKey: scopedKey(AppConstants.UserDefaultsKeys.isDarkMode))
+        self.isSoundEnabled = defaults.object(forKey: scopedKey(AppConstants.UserDefaultsKeys.isSoundEnabled)) as? Bool ?? true
         self.isLockScreenVocabularyEnabled = defaults.bool(forKey: scopedKey(AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled))
         self.appLanguage = defaults.string(forKey: scopedKey(AppConstants.UserDefaultsKeys.appLanguage)) ?? "en"
         self.notificationsEnabled = defaults.bool(forKey: scopedKey(AppConstants.UserDefaultsKeys.notificationsEnabled))
@@ -212,6 +221,7 @@ final class UserPreferences: UserPreferencesProtocol {
         // Reset user-scoped properties in memory (doesn't wipe them from disk)
         isLockScreenVocabularyEnabled = false
         isDarkMode = false
+        isSoundEnabled = true
         appLanguage = "en"
         notificationsEnabled = false
         dailyReminderEnabled = false
