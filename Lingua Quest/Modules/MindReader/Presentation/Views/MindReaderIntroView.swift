@@ -16,16 +16,11 @@ struct MindReaderIntroView: View {
             
             VStack(spacing: 0) {
                 // Header
-                HStack {
-                    CustomBackButton(action: { viewModel.goBack() })
-                    Spacer()
-                    HStack(spacing: 8) {
-                        RewardBadge(type: .xp, value: "\(viewModel.statsService.xp)", size: .small)
-                        RewardBadge(type: .coin, value: "\(viewModel.statsService.coins)", size: .small)
-                    }
-                }
-                .padding(.horizontal, 20)
-                .frame(height: 64)
+                MindReaderHeaderView(
+                    action: { viewModel.goBack() },
+                    xp: viewModel.statsService.xp,
+                    coins: viewModel.statsService.coins
+                )
                 
                 Spacer()
                 

@@ -16,16 +16,11 @@ struct MindReaderResultView: View {
             
             VStack(spacing: 0) {
                 // MARK: - Header
-                HStack {
-                    CustomBackButton(action: { viewModel.goBack() })
-                    Spacer()
-                    HStack(spacing: 8) {
-                        RewardBadge(type: .xp, value: "\(viewModel.statsService.xp)", size: .small)
-                        RewardBadge(type: .coin, value: "\(viewModel.statsService.coins)", size: .small)
-                    }
-                }
-                .padding(.horizontal, 20)
-                .frame(height: 64)
+                MindReaderHeaderView(
+                    action: { viewModel.goBack() },
+                    xp: viewModel.statsService.xp,
+                    coins: viewModel.statsService.coins
+                )
                 
                 Spacer()
                 
@@ -138,24 +133,11 @@ struct MindReaderResultView: View {
                                 )
                                 
                                 // Outline Button (Return to Home)
-                                Button(action: { viewModel.onBackToMenuTapped() }) {
-                                    HStack(spacing: 8) {
-                                        Image(systemIcon: .houseFill)
-                                            .font(.system(size: 16, weight: .bold))
-                                            .foregroundColor(.appAccentTeal)
-                                        
-                                        Text(L10n.MindReader.returnToHome)
-                                            .appTextStyle(.bodyLargeBold, color: .appAccentTeal)
-                                    }
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 56)
-                                    // Ensures the entire transparent area is clickable
-                                    .contentShape(Rectangle())
-                                }
-                                .background(
-                                    Capsule()
-                                        .stroke(Color.appAccentTeal, lineWidth: 2)
-                                        .shadow(color: .appAccentTeal, radius: 0, x: 0, y: 2)
+                                CustomButton(
+                                    type: .outline(textColor: .appAccentTeal, borderColor: .appAccentTeal),
+                                    text: L10n.MindReader.returnToHome,
+                                    action: { viewModel.onBackToMenuTapped() },
+                                    leading: Image(systemIcon: .houseFill)
                                 )
                                 .padding(.bottom, 4)
                             }
