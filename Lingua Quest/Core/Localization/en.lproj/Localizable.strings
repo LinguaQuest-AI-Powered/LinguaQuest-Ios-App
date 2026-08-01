@@ -478,6 +478,8 @@
 "mind_reader.change" = "Change";
 "mind_reader.make_sure_fits_world" = "Make sure it fits the %@ world!";
 "mind_reader.not_yet" = "Not yet";
+"mind_reader.translation_prompt" = "Awesome! Tap the\ncorrect translation\nto claim your reward.";
+"mind_reader.translate_this_word" = "Translate This Word";
 "mind_reader.busted.contradiction" = "You gave contradictory answers during gameplay! No coins awarded.";
 "mind_reader.busted.quiz_failed" = "Incorrect translation selected! 0 coins earned.";
 "mind_reader.busted.invalid_selection" = "Invalid word selection.";

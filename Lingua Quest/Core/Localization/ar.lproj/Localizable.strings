@@ -489,6 +489,8 @@
 "mind_reader.busted.contradiction" = "لقد قدمت إجابات متناقضة أثناء اللعب! لم يتم منح أي عملات.";
 "mind_reader.busted.quiz_failed" = "اخترت ترجمة غير صحيحة! 0 عملات.";
 "mind_reader.busted.invalid_selection" = "اختيار كلمة غير صالحة.";
+"mind_reader.translation_prompt" = "رائع! اضغط على\nالترجمة الصحيحة\nللحصول على مكافأتك.";
+"mind_reader.translate_this_word" = "ترجم هذه الكلمة";
 
 "help_support.faq.q4" = "كيف أحافظ على سلسلتي؟";
 "help_support.faq.a4" = "أكمل درسًا أو تحديًا واحدًا على الأقل كل يوم للحفاظ على سلسلة تعلمك نشطة!";

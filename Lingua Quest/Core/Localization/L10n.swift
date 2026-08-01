@@ -535,6 +535,8 @@ enum L10n {
         static var title: String { localized("mind_reader.title") }
         static var subtitle: String { localized("mind_reader.subtitle") }
         static var lobbyPrompt: String { localized("mind_reader.lobby_prompt") }
+        static var translationPrompt: String { localized("mind_reader.translation_prompt") }
+        static var translateThisWord: String { localized("mind_reader.translate_this_word") }
         static var currentCategory: String { localized("mind_reader.current_category") }
         static var startGame: String { localized("mind_reader.start_game") }
         static var change: String { localized("mind_reader.change") }
