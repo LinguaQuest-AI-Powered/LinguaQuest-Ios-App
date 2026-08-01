@@ -133,6 +133,7 @@ struct MindReaderFailureView: View {
             }
         }
         .navigationBarHidden(true)
+        .onAppear { viewModel.onAppear() }
     }
 }
 

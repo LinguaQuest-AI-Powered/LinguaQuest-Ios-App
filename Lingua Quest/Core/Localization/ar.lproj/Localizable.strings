@@ -355,6 +355,13 @@
 "boss_level.start_roleplay" = "بدء تبادل الأدوار";
 "boss_level.objective_prefix" = "الهدف: %@";
 "boss_level.end_phase" = "إنهاء المرحلة";
+"boss_level.timeout_feedback" = "انتهى الوقت! لم تكمل المهمة في الوقت المحدد. حاول مجددًا وأجب بشكل أسرع.";
+"boss_level.interactive_roleplays" = "محادثة بالذكاء الاصطناعي";
+"boss_level.interactive_scenarios" = "السيناريوهات التفاعلية";
+"boss_level.roleplay_tag" = "ممارسة التحدث";
+"boss_level.browse_roleplays" = "تصفح المحادثات التفاعلية";
+"boss_level.finish_stage" = "إنهاء المرحلة";
+"boss_level.finish_stage_title" = "إنهاء المرحلة؟";
 
 "mind_reader.yes_lets_go" = "نعم، لننطلق! ✓";
 "mind_reader.translate_lifeline" = "مساعدة الترجمة";

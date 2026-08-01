@@ -113,6 +113,7 @@ struct MindReaderIntroView: View {
                 }
             }
         }
+        .onAppear { viewModel.onAppear() }
     }
 }
 

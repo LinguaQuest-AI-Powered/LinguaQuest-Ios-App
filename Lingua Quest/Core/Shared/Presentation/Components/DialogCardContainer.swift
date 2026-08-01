@@ -33,6 +33,7 @@ struct DialogCardContainer<Content: View>: View {
     private let mascotImage: Image.Asset
     private let customMascotSize: CGSize?
     private let speechBubbleText: String?
+    private let customSpeechBubble: AnyView?
     private let speechBubbleAnimated: Bool
     private let speechBubbleDelay: Double
     private let onMascotTap: (() -> Void)?
@@ -43,6 +44,7 @@ struct DialogCardContainer<Content: View>: View {
         mascotImage: Image.Asset = .bird,
         customMascotSize: CGSize? = nil,
         speechBubbleText: String? = nil,
+        customSpeechBubble: AnyView? = nil,
         speechBubbleAnimated: Bool = true,
         speechBubbleDelay: Double = 0.5,
         onMascotTap: (() -> Void)? = nil,
@@ -52,6 +54,7 @@ struct DialogCardContainer<Content: View>: View {
         self.mascotImage = mascotImage
         self.customMascotSize = customMascotSize
         self.speechBubbleText = speechBubbleText
+        self.customSpeechBubble = customSpeechBubble
         self.speechBubbleAnimated = speechBubbleAnimated
         self.speechBubbleDelay = speechBubbleDelay
         self.onMascotTap = onMascotTap
@@ -61,25 +64,30 @@ struct DialogCardContainer<Content: View>: View {
     // MARK: - Body
 
     var body: some View {
-
-        VStack(spacing: 0) {
-            Spacer()
-                .frame(height: mascotTopSpacing)
-
-            content
-        }
-        .padding(.horizontal, horizontalPadding)
-        .padding(.bottom, bottomPadding)
-        .frame(maxWidth: .infinity)
-        .background(cardBackground)
-        .overlay(cardBorder)
-        .overlay(alignment: .top) {
-            if showMascot {
-                mascotView
+        VStack(spacing: 16) {
+            if let customBubble = customSpeechBubble {
+                customBubble
             }
+
+            VStack(spacing: 0) {
+                Spacer()
+                    .frame(height: mascotTopSpacing)
+
+                content
+            }
+            .padding(.horizontal, horizontalPadding)
+            .padding(.bottom, bottomPadding)
+            .frame(maxWidth: .infinity)
+            .background(cardBackground)
+            .overlay(cardBorder)
+            .overlay(alignment: .top) {
+                if showMascot {
+                    mascotView
+                }
+            }
+            .dialogCardShadow()
+            .padding(.top, showMascot ? (mascotOffset - 25) : 0)
         }
-        .dialogCardShadow()
-        .padding(.top, showMascot ? (mascotOffset + 10) : 0)
     }
 }
 
@@ -100,10 +108,10 @@ private extension DialogCardContainer {
             }
         }
         .overlay(alignment: .top) {
-            if let text = speechBubbleText {
+            if customSpeechBubble == nil, let text = speechBubbleText {
                 SpeechBubbleView(text: text, isAnimated: speechBubbleAnimated, animationDelay: speechBubbleDelay)
-                    .offset(y: -40)
                     .transition(.scale.combined(with: .opacity))
+                    .offset(y: -50)
             }
         }
         .offset(y: -mascotOffset)

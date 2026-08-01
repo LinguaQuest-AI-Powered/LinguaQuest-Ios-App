@@ -13,21 +13,67 @@ import Observation
 final class MindReaderResultViewModel {
     private let router: RouterProtocol
     let statsService: StatsService
+    private let coordinator: MindReaderGameCoordinator
     
-    // Example properties for rewards
-    let earnedXP: Int = 50
-    let earnedCoins: Int = 10
+    // MARK: - Computed Properties (from Coordinator)
     
-    init(router: RouterProtocol, statsService: StatsService) {
+    var earnedXP: Int {
+        if case .victory(_, let xpEarned, _) = coordinator.trapResult {
+            return xpEarned
+        }
+        return 0
+    }
+    
+    var earnedCoins: Int {
+        if case .victory(let coinsEarned, _, _) = coordinator.trapResult {
+            return coinsEarned
+        }
+        return 0
+    }
+    
+    var isStumpedBonus: Bool {
+        if case .victory(_, _, let isStumped) = coordinator.trapResult {
+            return isStumped
+        }
+        return false
+    }
+    
+    var hasAwarded = false
+    
+    init(
+        router: RouterProtocol,
+        statsService: StatsService,
+        coordinator: MindReaderGameCoordinator
+    ) {
         self.router = router
         self.statsService = statsService
+        self.coordinator = coordinator
+    }
+    
+    /// Awards coins and XP on first appear, saves game result
+    func onAppear() {
+        guard !hasAwarded else { return }
+        hasAwarded = true
+        
+        Task {
+            // Award coins and XP via StatsService
+            try? await statsService.adjustWallet(
+                coinsDelta: earnedCoins,
+                xpDelta: earnedXP
+            )
+            
+            // Save result to repository
+            await coordinator.saveResult()
+        }
     }
     
     func onPlayAgainTapped() {
+        coordinator.reset()
         router.pop(count: 4)
     }
     
     func onBackToMenuTapped() {
+        coordinator.reset()
         router.popToRoot()
     }
     
@@ -83,7 +129,22 @@ extension MindReaderResultViewModel {
             func resetSessionState() {}
             func loadUserScopedPreferences(for userId: Int) {}
         }
-        let statsService = StatsService(remoteDataSource: MockStatsRemote(), userPreferences: MockUserPrefs())
-        return MindReaderResultViewModel(router: MockRouter(), statsService: statsService)
+        class MockRepo: MindReaderRepositoryProtocol {
+            func getWorlds() async throws -> [MindReaderWorld] { [] }
+            func getMatrixForWorld(worldId: String) async throws -> (words: [MindReaderWord], attributes: [QuestionAttribute]) { ([], []) }
+            func saveGameResult(worldId: String, result: TrapValidationResult) async throws {}
+        }
+        class MockSoundPlayer: AppSoundPlayer {
+            func play(sound: AppSound) {}
+        }
+        let statsService = StatsService(remoteDataSource: MockStatsRemote(), userPreferences: MockUserPrefs(), soundPlayer: MockSoundPlayer())
+        let coordinator = MindReaderGameCoordinator(
+            initializeGameUseCase: InitializeGameUseCase(repository: MockRepo()),
+            calculateNextQuestionUseCase: CalculateNextQuestionUseCase(),
+            processUserAnswerUseCase: ProcessUserAnswerUseCase(),
+            validateHonestyUseCase: ValidateHonestyUseCase(),
+            repository: MockRepo()
+        )
+        return MindReaderResultViewModel(router: MockRouter(), statsService: statsService, coordinator: coordinator)
     }
 }

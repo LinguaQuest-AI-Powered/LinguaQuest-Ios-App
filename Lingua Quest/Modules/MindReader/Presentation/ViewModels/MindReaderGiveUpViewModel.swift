@@ -7,47 +7,56 @@
 
 import Foundation
 import Observation
-import SwiftUI
-
-// Mock Struct for the dropdown items
-struct GiveUpWordMock: Hashable {
-    let text: String
-    let icon: Image.SystemIcon
-}
 
 @MainActor
 @Observable
 final class MindReaderGiveUpViewModel {
     private let router: RouterProtocol
     let statsService: StatsService
+    private let coordinator: MindReaderGameCoordinator
     
-    let categoryName = "Kitchen"
+    // MARK: - Computed Properties (from Coordinator)
     
-    // Simulated list of words
-    let availableWords: [GiveUpWordMock] = [
-        GiveUpWordMock(text: "Spoon", icon: .sparkles), // Placeholder icons from your enum
-        GiveUpWordMock(text: "Oven", icon: .flameFill),
-        GiveUpWordMock(text: "Refrigerator", icon: .moonFill)
-    ]
-    
-    // State for the selected word
-    var selectedWord: GiveUpWordMock? = nil
-    
-    init(router: RouterProtocol, statsService: StatsService) {
-        self.router = router
-        self.statsService = statsService
+    var categoryName: String {
+        coordinator.gameState?.selectedWorld.name ?? "Kitchen"
     }
     
-    func selectWord(_ word: GiveUpWordMock) {
+    var availableWords: [MindReaderWord] {
+        coordinator.allWords
+    }
+    
+    // State for the selected word
+    var selectedWord: MindReaderWord? = nil
+    
+    init(
+        router: RouterProtocol,
+        statsService: StatsService,
+        coordinator: MindReaderGameCoordinator
+    ) {
+        self.router = router
+        self.statsService = statsService
+        self.coordinator = coordinator
+    }
+    
+    func selectWord(_ word: MindReaderWord) {
         selectedWord = word
     }
     
     func onSubmitTapped() {
-        guard selectedWord != nil else { return }
-        router.pop(count: 3)
+        guard let word = selectedWord else { return }
+        
+        let result = coordinator.validateGiveUp(selectedWordId: word.id)
+        
+        switch result {
+        case .victory:
+            router.push(.mindReaderResult)
+        case .busted:
+            router.push(.mindReaderFailure)
+        }
     }
     
     func onBackToMenuTapped() {
+        coordinator.reset()
         router.popToRoot()
     }
     
@@ -103,7 +112,22 @@ extension MindReaderGiveUpViewModel {
             func resetSessionState() {}
             func loadUserScopedPreferences(for userId: Int) {}
         }
-        let statsService = StatsService(remoteDataSource: MockStatsRemote(), userPreferences: MockUserPrefs())
-        return MindReaderGiveUpViewModel(router: MockRouter(), statsService: statsService)
+        class MockRepo: MindReaderRepositoryProtocol {
+            func getWorlds() async throws -> [MindReaderWorld] { [] }
+            func getMatrixForWorld(worldId: String) async throws -> (words: [MindReaderWord], attributes: [QuestionAttribute]) { ([], []) }
+            func saveGameResult(worldId: String, result: TrapValidationResult) async throws {}
+        }
+        class MockSoundPlayer: AppSoundPlayer {
+            func play(sound: AppSound) {}
+        }
+        let statsService = StatsService(remoteDataSource: MockStatsRemote(), userPreferences: MockUserPrefs(), soundPlayer: MockSoundPlayer())
+        let coordinator = MindReaderGameCoordinator(
+            initializeGameUseCase: InitializeGameUseCase(repository: MockRepo()),
+            calculateNextQuestionUseCase: CalculateNextQuestionUseCase(),
+            processUserAnswerUseCase: ProcessUserAnswerUseCase(),
+            validateHonestyUseCase: ValidateHonestyUseCase(),
+            repository: MockRepo()
+        )
+        return MindReaderGiveUpViewModel(router: MockRouter(), statsService: statsService, coordinator: coordinator)
     }
 }

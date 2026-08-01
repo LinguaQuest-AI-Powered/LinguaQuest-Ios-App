@@ -7,7 +7,6 @@
 
 import Foundation
 import Observation
-import Combine
 
 enum MindReaderBirdState {
     case normal
@@ -20,60 +19,108 @@ enum MindReaderBirdState {
 final class MindReaderGameViewModel {
     private let router: RouterProtocol
     let statsService: StatsService
+    private let coordinator: MindReaderGameCoordinator
     
-    // Progress Data
-    var currentQuestionIndex = 20
-    var totalQuestions = 20
+    // Translation lifeline cost
+    let translateCost = 5
+    
+    // Bird animation state
+    var birdState: MindReaderBirdState = .normal
+    
+    // Processing guard
+    var isProcessing = false
+    
+    // Translation lifeline state
+    var showTranslation = false
+    var insufficientCoinsAlert = false
+    var showTranslateConfirmDialog = false
+    var showNotEnoughCoinsDialog = false
+    
+    // MARK: - Computed Properties (from Coordinator)
+    
+    var questionText: String {
+        coordinator.currentQuestion?.promptTargetLanguage ?? ""
+    }
+    
+    var translationText: String {
+        coordinator.currentQuestion?.promptNativeLanguage ?? ""
+    }
+    
+    var currentQuestionIndex: Int {
+        coordinator.questionCount + 1
+    }
+    
+    var totalQuestions: Int {
+        max(coordinator.gameState?.availableAttributes.count ?? 20, coordinator.questionCount + 1)
+    }
+    
     var progressPercentage: Int {
         Int((Double(currentQuestionIndex) / Double(totalQuestions)) * 100)
     }
     
-    // Game Data
-    var questionText = "¿SE ENCUENTRA EN LA COCINA?"
-    var birdState: MindReaderBirdState = .normal
-    
-    // Disable buttons while processing
-    var isProcessing = false
-    
-    init(router: RouterProtocol, statsService: StatsService) {
-        self.router = router
-        self.statsService = statsService
+    var translateCostText: String {
+        "\(translateCost)"
     }
     
-    func onAnswerTapped(_ answer: String) {
+    init(
+        router: RouterProtocol,
+        statsService: StatsService,
+        coordinator: MindReaderGameCoordinator
+    ) {
+        self.router = router
+        self.statsService = statsService
+        self.coordinator = coordinator
+    }
+    
+    func onAnswerTapped(_ answer: AnswerState) {
         guard !isProcessing else { return }
         isProcessing = true
+        showTranslation = false
         
-        // Show thinking state
+        // Show thinking animation
         birdState = .thinking
         
         Task {
-            // Fake delay for thinking
-            try? await Task.sleep(nanoseconds: 1_500_000_000)
+            // Brief thinking delay for UX
+            try? await Task.sleep(nanoseconds: 800_000_000)
             
-            // Show pointing/success state (just as an example, logic will depend on actual engine)
-            birdState = .pointing
-            try? await Task.sleep(nanoseconds: 1_000_000_000)
+            let shouldGuess = coordinator.processAnswer(answer: answer)
             
-            // Advance question and go back to normal
-            if currentQuestionIndex < totalQuestions {
-                currentQuestionIndex += 1
-                birdState = .normal
-                isProcessing = false
-            } else {
-                // If this is the last question or we are forcing the guess:
+            if shouldGuess {
+                // Show pointing state before navigating
+                birdState = .pointing
+                try? await Task.sleep(nanoseconds: 600_000_000)
                 isProcessing = false
                 router.push(.mindReaderGuess)
+            } else {
+                birdState = .normal
+                isProcessing = false
             }
         }
     }
     
     func onTranslateTapped() {
-        // Translation logic
+        guard !showTranslation else { return }
+        
+        if statsService.coins < translateCost {
+            showNotEnoughCoinsDialog = true
+            return
+        }
+        
+        showTranslateConfirmDialog = true
+    }
+    
+    func confirmTranslation() {
+        Task {
+            try? await statsService.deductCoins(translateCost)
+            showTranslation = true
+            coordinator.translationRevealed = true
+            showTranslateConfirmDialog = false
+        }
     }
     
     func onListenTapped() {
-        // Text to speech logic
+        // Text-to-speech logic - future enhancement
     }
     
     func goBack() {
@@ -128,7 +175,28 @@ extension MindReaderGameViewModel {
             func resetSessionState() {}
             func loadUserScopedPreferences(for userId: Int) {}
         }
-        let statsService = StatsService(remoteDataSource: MockStatsRemote(), userPreferences: MockUserPrefs())
-        return MindReaderGameViewModel(router: MockRouter(), statsService: statsService)
+        class MockRepo: MindReaderRepositoryProtocol {
+            func getWorlds() async throws -> [MindReaderWorld] { [] }
+            func getMatrixForWorld(worldId: String) async throws -> (words: [MindReaderWord], attributes: [QuestionAttribute]) { ([], []) }
+            func saveGameResult(worldId: String, result: TrapValidationResult) async throws {}
+        }
+        class MockSoundPlayer: AppSoundPlayer {
+            func play(sound: AppSound) {}
+        }
+        let statsService = StatsService(remoteDataSource: MockStatsRemote(), userPreferences: MockUserPrefs(), soundPlayer: MockSoundPlayer())
+        let coordinator = MindReaderGameCoordinator(
+            initializeGameUseCase: InitializeGameUseCase(repository: MockRepo()),
+            calculateNextQuestionUseCase: CalculateNextQuestionUseCase(),
+            processUserAnswerUseCase: ProcessUserAnswerUseCase(),
+            validateHonestyUseCase: ValidateHonestyUseCase(),
+            repository: MockRepo()
+        )
+        
+        let viewModel = MindReaderGameViewModel(router: MockRouter(), statsService: statsService, coordinator: coordinator)
+        
+        coordinator.currentQuestion = QuestionAttribute(id: "1", promptTargetLanguage: "Is it an animal?", promptNativeLanguage: "هل هو حيوان؟")
+        coordinator.questionCount = 0
+        
+        return viewModel
     }
 }

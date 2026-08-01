@@ -51,11 +51,11 @@ struct MindReaderGiveUpView: View {
                                 .multilineTextAlignment(.center)
                                 .padding(.top, 16)
                             
-                            // MARK: - Simulated Dropdown List
+                            // MARK: - Word Selection List
                             VStack(spacing: 0) {
                                 // Dropdown Header
                                 HStack {
-                                    Text(viewModel.selectedWord?.text ?? L10n.MindReader.selectWord)
+                                    Text(viewModel.selectedWord?.wordNativeLanguage ?? L10n.MindReader.selectWord)
                                         .appTextStyle(.bodyLargeMedium, color: viewModel.selectedWord == nil ? .appTextSecondary : .appTextHeading)
                                     Spacer()
                                     Image(systemIcon: .chevronDown)
@@ -69,31 +69,30 @@ struct MindReaderGiveUpView: View {
                                 // Dropdown Options
                                 ScrollView(showsIndicators: false) {
                                     VStack(spacing: 0) {
-                                        ForEach(viewModel.availableWords, id: \.self) { word in
+                                        ForEach(viewModel.availableWords) { word in
                                             Button(action: {
                                                 withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                                                     viewModel.selectWord(word)
                                                 }
                                             }) {
                                                 HStack(spacing: 16) {
-                                                    // Item Icon
+                                                    // Word Emoji
                                                     ZStack {
                                                         Circle()
                                                             .fill(Color.appAccentTeal.opacity(0.15))
                                                             .frame(width: 40, height: 40)
                                                         
-                                                        Image(systemIcon: word.icon)
-                                                            .font(.system(size: 16))
-                                                            .foregroundColor(.appAccentTeal)
+                                                        Text(word.emoji)
+                                                            .font(.system(size: 20))
                                                     }
                                                     
-                                                    Text(word.text)
+                                                    Text(word.wordNativeLanguage)
                                                         .appTextStyle(.bodyLargeMedium, color: .appTextHeading)
                                                     
                                                     Spacer()
                                                     
                                                     // Selection Checkmark
-                                                    if viewModel.selectedWord == word {
+                                                    if viewModel.selectedWord?.id == word.id {
                                                         Image(systemIcon: .checkmark)
                                                             .foregroundColor(.appAccentTeal)
                                                             .font(.system(size: 16, weight: .bold))
@@ -101,20 +100,20 @@ struct MindReaderGiveUpView: View {
                                                 }
                                                 .padding(.horizontal, 20)
                                                 .padding(.vertical, 12)
-                                                .background(viewModel.selectedWord == word ? Color.appSurfaceCardWarm.opacity(0.5) : Color.clear)
+                                                .background(viewModel.selectedWord?.id == word.id ? Color.appSurfaceCardWarm.opacity(0.5) : Color.clear)
                                             }
                                             
                                             // Divider between items
-                                            if word != viewModel.availableWords.last {
+                                            if word.id != viewModel.availableWords.last?.id {
                                                 Divider()
                                                     .background(Color.appSurfaceCardWarm)
                                             }
                                         }
                                     }
                                 }
-                                .frame(maxHeight: 200) // Limits list height to match Figma's scroll area
+                                .frame(maxHeight: 200)
                             }
-                            .background(Color.appBorderLight) // #F2DFD1 Match
+                            .background(Color.appBorderLight)
                             .cornerRadius(24)
                             .padding(.horizontal, 16)
                             
@@ -126,7 +125,7 @@ struct MindReaderGiveUpView: View {
                                     text: L10n.MindReader.submit,
                                     action: { viewModel.onSubmitTapped() },
                                     status: viewModel.selectedWord == nil ? .disable : .enable,
-                                    trailing: Image(systemIcon: .arrowRight), // using arrowRight to mimic send/paperplane
+                                    trailing: Image(systemIcon: .arrowRight),
                                     textStyle: .bodyLargeBold
                                 )
                                 

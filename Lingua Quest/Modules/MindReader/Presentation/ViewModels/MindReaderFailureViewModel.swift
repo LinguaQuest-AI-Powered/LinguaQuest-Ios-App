@@ -13,20 +13,41 @@ import Observation
 final class MindReaderFailureViewModel {
     private let router: RouterProtocol
     let statsService: StatsService
+    private let coordinator: MindReaderGameCoordinator
     
-    // Dynamic failure reason to be shown in the bubble
-    let failureReason: String = L10n.MindReader.bustedDefaultReason
+    // MARK: - Computed Properties (from Coordinator)
     
-    init(router: RouterProtocol, statsService: StatsService) {
+    var failureReason: String {
+        if case .busted(let reason) = coordinator.trapResult {
+            return reason
+        }
+        return L10n.MindReader.bustedDefaultReason
+    }
+    
+    init(
+        router: RouterProtocol,
+        statsService: StatsService,
+        coordinator: MindReaderGameCoordinator
+    ) {
         self.router = router
         self.statsService = statsService
+        self.coordinator = coordinator
+    }
+    
+    func onAppear() {
+        // Save busted result
+        Task {
+            await coordinator.saveResult()
+        }
     }
     
     func onTryAgainTapped() {
+        coordinator.reset()
         router.pop(count: 4)
     }
     
     func onBackToMenuTapped() {
+        coordinator.reset()
         router.popToRoot()
     }
     
@@ -82,7 +103,22 @@ extension MindReaderFailureViewModel {
             func resetSessionState() {}
             func loadUserScopedPreferences(for userId: Int) {}
         }
-        let statsService = StatsService(remoteDataSource: MockStatsRemote(), userPreferences: MockUserPrefs())
-        return MindReaderFailureViewModel(router: MockRouter(), statsService: statsService)
+        class MockRepo: MindReaderRepositoryProtocol {
+            func getWorlds() async throws -> [MindReaderWorld] { [] }
+            func getMatrixForWorld(worldId: String) async throws -> (words: [MindReaderWord], attributes: [QuestionAttribute]) { ([], []) }
+            func saveGameResult(worldId: String, result: TrapValidationResult) async throws {}
+        }
+        class MockSoundPlayer: AppSoundPlayer {
+            func play(sound: AppSound) {}
+        }
+        let statsService = StatsService(remoteDataSource: MockStatsRemote(), userPreferences: MockUserPrefs(), soundPlayer: MockSoundPlayer())
+        let coordinator = MindReaderGameCoordinator(
+            initializeGameUseCase: InitializeGameUseCase(repository: MockRepo()),
+            calculateNextQuestionUseCase: CalculateNextQuestionUseCase(),
+            processUserAnswerUseCase: ProcessUserAnswerUseCase(),
+            validateHonestyUseCase: ValidateHonestyUseCase(),
+            repository: MockRepo()
+        )
+        return MindReaderFailureViewModel(router: MockRouter(), statsService: statsService, coordinator: coordinator)
     }
 }

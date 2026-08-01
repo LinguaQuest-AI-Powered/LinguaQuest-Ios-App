@@ -13,20 +13,35 @@ import Observation
 final class MindReaderTranslationViewModel {
     private let router: RouterProtocol
     let statsService: StatsService
+    private let coordinator: MindReaderGameCoordinator
     
-    // State
-    let wordToTranslate = "MANZANA"
-    let options = ["Orange", "Apple", "Banana"]
+    // MARK: - Computed Properties (from Coordinator)
     
-    init(router: RouterProtocol, statsService: StatsService) {
+    var wordToTranslate: String {
+        coordinator.popQuiz?.targetWord.wordTargetLanguage ?? ""
+    }
+    
+    var options: [String] {
+        coordinator.popQuiz?.options ?? []
+    }
+    
+    init(
+        router: RouterProtocol,
+        statsService: StatsService,
+        coordinator: MindReaderGameCoordinator
+    ) {
         self.router = router
         self.statsService = statsService
+        self.coordinator = coordinator
     }
     
     func onOptionTapped(_ option: String) {
-        if option == "Apple" {
+        let result = coordinator.validatePopQuiz(selectedOption: option)
+        
+        switch result {
+        case .victory:
             router.push(.mindReaderResult)
-        } else {
+        case .busted:
             router.push(.mindReaderFailure)
         }
     }
@@ -83,7 +98,22 @@ extension MindReaderTranslationViewModel {
             func resetSessionState() {}
             func loadUserScopedPreferences(for userId: Int) {}
         }
-        let statsService = StatsService(remoteDataSource: MockStatsRemote(), userPreferences: MockUserPrefs())
-        return MindReaderTranslationViewModel(router: MockRouter(), statsService: statsService)
+        class MockRepo: MindReaderRepositoryProtocol {
+            func getWorlds() async throws -> [MindReaderWorld] { [] }
+            func getMatrixForWorld(worldId: String) async throws -> (words: [MindReaderWord], attributes: [QuestionAttribute]) { ([], []) }
+            func saveGameResult(worldId: String, result: TrapValidationResult) async throws {}
+        }
+        class MockSoundPlayer: AppSoundPlayer {
+            func play(sound: AppSound) {}
+        }
+        let statsService = StatsService(remoteDataSource: MockStatsRemote(), userPreferences: MockUserPrefs(), soundPlayer: MockSoundPlayer())
+        let coordinator = MindReaderGameCoordinator(
+            initializeGameUseCase: InitializeGameUseCase(repository: MockRepo()),
+            calculateNextQuestionUseCase: CalculateNextQuestionUseCase(),
+            processUserAnswerUseCase: ProcessUserAnswerUseCase(),
+            validateHonestyUseCase: ValidateHonestyUseCase(),
+            repository: MockRepo()
+        )
+        return MindReaderTranslationViewModel(router: MockRouter(), statsService: statsService, coordinator: coordinator)
     }
 }

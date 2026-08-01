@@ -17,11 +17,18 @@ struct MindReaderHeaderView: View {
             CustomBackButton(action: action)
             Spacer()
             HStack(spacing: 8) {
-                RewardBadge(type: .xp, value: "\(xp)", size: .small)
-                RewardBadge(type: .coin, value: "\(coins)", size: .small)
+                RewardBadge(type: .xp, value: xp.formattedStatsValue(), size: .small)
+                RewardBadge(type: .coin, value: coins.formattedStatsValue(), size: .small)
             }
         }
         .padding(.horizontal, 20)
         .frame(height: 64)
+        .background(Color.clear)
+        .overlay(
+            Rectangle()
+                .frame(height: 1)
+                .foregroundColor(Color.appBorderBrown),
+            alignment: .bottom
+        )
     }
 }

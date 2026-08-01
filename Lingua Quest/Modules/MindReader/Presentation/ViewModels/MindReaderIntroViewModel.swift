@@ -7,21 +7,40 @@
 
 import Foundation
 import Observation
-import Combine
 
 @MainActor
 @Observable
 final class MindReaderIntroViewModel {
     private let router: RouterProtocol
     let statsService: StatsService
+    private let coordinator: MindReaderGameCoordinator
 
     var showReadyDialog = false
-    var currentCategoryName = "Kitchen"
+    var isLoadingGame = false
     
+    var currentCategoryName: String {
+        coordinator.availableWorlds.first?.name ?? "Kitchen"
+    }
     
-    init(router: RouterProtocol,statsService: StatsService) {
+    var selectedWorldId: String {
+        coordinator.availableWorlds.first?.id ?? "kitchen"
+    }
+    
+    init(
+        router: RouterProtocol,
+        statsService: StatsService,
+        coordinator: MindReaderGameCoordinator
+    ) {
         self.router = router
         self.statsService = statsService
+        self.coordinator = coordinator
+    }
+    
+    func onAppear() {
+        Task {
+            try? await statsService.fetchStats()
+            await coordinator.loadWorlds()
+        }
     }
     
     func onStartGameTapped() {
@@ -29,7 +48,7 @@ final class MindReaderIntroViewModel {
     }
     
     func onChangeCategoryTapped() {
-        // Handle change category
+        // Category change - future enhancement
     }
     
     func onNotYetTapped() {
@@ -38,7 +57,13 @@ final class MindReaderIntroViewModel {
     
     func onYesLetsGoTapped() {
         showReadyDialog = false
-        router.push(.mindReaderGame)
+        isLoadingGame = true
+        
+        Task {
+            await coordinator.initializeGame(worldId: selectedWorldId)
+            isLoadingGame = false
+            router.push(.mindReaderGame)
+        }
     }
     
     func goBack() {
@@ -93,7 +118,22 @@ extension MindReaderIntroViewModel {
             func resetSessionState() {}
             func loadUserScopedPreferences(for userId: Int) {}
         }
-        let statsService = StatsService(remoteDataSource: MockStatsRemote(), userPreferences: MockUserPrefs())
-        return MindReaderIntroViewModel(router: MockRouter(), statsService: statsService)
+        class MockRepo: MindReaderRepositoryProtocol {
+            func getWorlds() async throws -> [MindReaderWorld] { [] }
+            func getMatrixForWorld(worldId: String) async throws -> (words: [MindReaderWord], attributes: [QuestionAttribute]) { ([], []) }
+            func saveGameResult(worldId: String, result: TrapValidationResult) async throws {}
+        }
+        class MockSoundPlayer: AppSoundPlayer {
+            func play(sound: AppSound) {}
+        }
+        let statsService = StatsService(remoteDataSource: MockStatsRemote(), userPreferences: MockUserPrefs(), soundPlayer: MockSoundPlayer())
+        let coordinator = MindReaderGameCoordinator(
+            initializeGameUseCase: InitializeGameUseCase(repository: MockRepo()),
+            calculateNextQuestionUseCase: CalculateNextQuestionUseCase(),
+            processUserAnswerUseCase: ProcessUserAnswerUseCase(),
+            validateHonestyUseCase: ValidateHonestyUseCase(),
+            repository: MockRepo()
+        )
+        return MindReaderIntroViewModel(router: MockRouter(), statsService: statsService, coordinator: coordinator)
     }
 }

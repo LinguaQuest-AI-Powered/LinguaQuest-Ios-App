@@ -152,6 +152,7 @@ struct MindReaderResultView: View {
             }
         }
         .navigationBarHidden(true)
+        .onAppear { viewModel.onAppear() }
     }
 }
 

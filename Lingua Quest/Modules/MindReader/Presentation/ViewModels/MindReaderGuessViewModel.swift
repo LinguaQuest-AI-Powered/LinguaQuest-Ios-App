@@ -7,27 +7,40 @@
 
 import Foundation
 import Observation
-import Combine
 
 @MainActor
 @Observable
 final class MindReaderGuessViewModel {
     private let router: RouterProtocol
     let statsService: StatsService
+    private let coordinator: MindReaderGameCoordinator
     
-    var guessedWord = "MANZANA"
-    var guessedEmoji = "🍎"
+    // MARK: - Computed Properties (from Coordinator)
     
-    init(router: RouterProtocol, statsService: StatsService) {
+    var guessedWord: String {
+        coordinator.bestGuess?.wordTargetLanguage ?? ""
+    }
+    
+    var guessedEmoji: String {
+        coordinator.bestGuess?.emoji ?? "❓"
+    }
+    
+    init(
+        router: RouterProtocol,
+        statsService: StatsService,
+        coordinator: MindReaderGameCoordinator
+    ) {
         self.router = router
         self.statsService = statsService
+        self.coordinator = coordinator
     }
     
     func onListenTapped() {
-        // Text to speech logic
+        // Text-to-speech logic - future enhancement
     }
     
     func onYesGotItTapped() {
+        coordinator.generatePopQuiz()
         router.push(.mindReaderTranslation)
     }
     
@@ -87,7 +100,22 @@ extension MindReaderGuessViewModel {
             func resetSessionState() {}
             func loadUserScopedPreferences(for userId: Int) {}
         }
-        let statsService = StatsService(remoteDataSource: MockStatsRemote(), userPreferences: MockUserPrefs())
-        return MindReaderGuessViewModel(router: MockRouter(), statsService: statsService)
+        class MockRepo: MindReaderRepositoryProtocol {
+            func getWorlds() async throws -> [MindReaderWorld] { [] }
+            func getMatrixForWorld(worldId: String) async throws -> (words: [MindReaderWord], attributes: [QuestionAttribute]) { ([], []) }
+            func saveGameResult(worldId: String, result: TrapValidationResult) async throws {}
+        }
+        class MockSoundPlayer: AppSoundPlayer {
+            func play(sound: AppSound) {}
+        }
+        let statsService = StatsService(remoteDataSource: MockStatsRemote(), userPreferences: MockUserPrefs(), soundPlayer: MockSoundPlayer())
+        let coordinator = MindReaderGameCoordinator(
+            initializeGameUseCase: InitializeGameUseCase(repository: MockRepo()),
+            calculateNextQuestionUseCase: CalculateNextQuestionUseCase(),
+            processUserAnswerUseCase: ProcessUserAnswerUseCase(),
+            validateHonestyUseCase: ValidateHonestyUseCase(),
+            repository: MockRepo()
+        )
+        return MindReaderGuessViewModel(router: MockRouter(), statsService: statsService, coordinator: coordinator)
     }
 }
