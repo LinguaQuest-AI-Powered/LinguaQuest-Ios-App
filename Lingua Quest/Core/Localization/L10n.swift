@@ -537,6 +537,17 @@ enum L10n {
         static var lobbyPrompt: String { localized("mind_reader.lobby_prompt") }
         static var translationPrompt: String { localized("mind_reader.translation_prompt") }
         static var translateThisWord: String { localized("mind_reader.translate_this_word") }
+        
+        // Result View
+        static var legendarySkills: String { localized("mind_reader.result.legendary_skills") }
+        static var stumpedLingo: String { localized("mind_reader.result.stumped_lingo") }
+        static var experience: String { localized("mind_reader.result.experience") }
+        static var earnings: String { localized("mind_reader.result.earnings") }
+        static func earnedXP(_ amount: Int) -> String { String(format: localized("mind_reader.result.earned_xp"), amount) }
+        static func earnedCoins(_ amount: Int) -> String { String(format: localized("mind_reader.result.earned_coins"), amount) }
+        static var playAgain: String { localized("mind_reader.play_again") }
+        static var returnToHome: String { localized("mind_reader.result.return_home") }
+        
         static var currentCategory: String { localized("mind_reader.current_category") }
         static var startGame: String { localized("mind_reader.start_game") }
         static var change: String { localized("mind_reader.change") }

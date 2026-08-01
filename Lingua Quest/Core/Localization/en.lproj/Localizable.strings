@@ -480,6 +480,13 @@
 "mind_reader.not_yet" = "Not yet";
 "mind_reader.translation_prompt" = "Awesome! Tap the\ncorrect translation\nto claim your reward.";
 "mind_reader.translate_this_word" = "Translate This Word";
+"mind_reader.result.legendary_skills" = "Your language skills are legendary.";
+"mind_reader.result.stumped_lingo" = "You Stumped Lingo!";
+"mind_reader.result.experience" = "EXPERIENCE";
+"mind_reader.result.earnings" = "EARNINGS";
+"mind_reader.result.earned_xp" = "+%d XP";
+"mind_reader.result.earned_coins" = "+%d Coins";
+"mind_reader.result.return_home" = "Return to Home";
 "mind_reader.busted.contradiction" = "You gave contradictory answers during gameplay! No coins awarded.";
 "mind_reader.busted.quiz_failed" = "Incorrect translation selected! 0 coins earned.";
 "mind_reader.busted.invalid_selection" = "Invalid word selection.";
