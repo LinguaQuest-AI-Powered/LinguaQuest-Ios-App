@@ -60,7 +60,7 @@ struct DailyRewardDataDTO: Decodable {
     let cycleLength: Int
     let rewardCoins: Int
     let rewardXp: Int?
-    let streakDays: Int
+    let streakDays: Int?
 }
 
 struct DailyRewardClaimResponseDTO: Decodable {
@@ -73,7 +73,7 @@ struct DailyRewardClaimDataDTO: Decodable {
     let xpAwarded: Int?
     let newCoinsBalance: Int
     let newXpBalance: Int
-    let newStreakDays: Int
+    let newStreakDays: Int?
     let nextDay: Int
 }
 

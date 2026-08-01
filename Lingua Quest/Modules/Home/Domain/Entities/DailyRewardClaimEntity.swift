@@ -12,6 +12,6 @@ struct DailyRewardClaimEntity {
     let xpAwarded: Int?
     let newCoinsBalance: Int
     let newXpBalance: Int
-    let newStreakDays: Int
+    let newStreakDays: Int?
     let nextDay: Int
 }

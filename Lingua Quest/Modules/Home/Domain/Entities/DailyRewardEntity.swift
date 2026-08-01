@@ -13,5 +13,5 @@ struct DailyRewardEntity {
     let cycleLength: Int
     let rewardCoins: Int
     let rewardXp: Int?
-    let streakDays: Int
+    let streakDays: Int?
 }
