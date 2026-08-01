@@ -25,7 +25,8 @@ final class HomeViewModel {
     private var progressToken: NotificationToken?
     
     var displayWorlds: [WorldUIModel] {
-        return fetchedWorlds.map(WorldUIMapper.map)
+        let worldsToDisplay = fetchedWorlds.isEmpty ? (homeData?.activeLanguage.exploreWorlds ?? []) : fetchedWorlds
+        return worldsToDisplay.map(WorldUIMapper.map)
     }
     
     let dailyRewardViewModel: DailyRewardViewModel
