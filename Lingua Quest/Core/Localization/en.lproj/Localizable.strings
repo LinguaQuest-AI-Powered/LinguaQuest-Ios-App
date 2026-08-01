@@ -487,6 +487,11 @@
 "mind_reader.result.earned_xp" = "+%d XP";
 "mind_reader.result.earned_coins" = "+%d Coins";
 "mind_reader.result.return_home" = "Return to Home";
+"mind_reader.busted.title" = "BUSTED!";
+"mind_reader.busted.default_reason" = "YOU SAID IT WASN'T RED, BUT AN APPLE IS RED! NO COINS FOR YOU THIS TIME.";
+"mind_reader.busted.zero_xp" = "0 XP";
+"mind_reader.busted.zero_coins" = "0 Coins";
+"mind_reader.try_again" = "Try Again";
 "mind_reader.busted.contradiction" = "You gave contradictory answers during gameplay! No coins awarded.";
 "mind_reader.busted.quiz_failed" = "Incorrect translation selected! 0 coins earned.";
 "mind_reader.busted.invalid_selection" = "Invalid word selection.";

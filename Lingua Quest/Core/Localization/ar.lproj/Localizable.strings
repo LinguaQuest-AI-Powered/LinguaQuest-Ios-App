@@ -498,6 +498,11 @@
 "mind_reader.result.earned_xp" = "+%d خبرة";
 "mind_reader.result.earned_coins" = "+%d عملات";
 "mind_reader.result.return_home" = "العودة للرئيسية";
+"mind_reader.busted.title" = "كُشِفت!";
+"mind_reader.busted.default_reason" = "قلت أنه ليس أحمر، لكن التفاحة حمراء! لا توجد عملات لك هذه المرة.";
+"mind_reader.busted.zero_xp" = "0 خبرة";
+"mind_reader.busted.zero_coins" = "0 عملات";
+"mind_reader.try_again" = "حاول مرة أخرى";
 
 "help_support.faq.q4" = "كيف أحافظ على سلسلتي؟";
 "help_support.faq.a4" = "أكمل درسًا أو تحديًا واحدًا على الأقل كل يوم للحفاظ على سلسلة تعلمك نشطة!";

@@ -548,6 +548,12 @@ enum L10n {
         static var playAgain: String { localized("mind_reader.play_again") }
         static var returnToHome: String { localized("mind_reader.result.return_home") }
         
+        static var bustedTitle: String { localized("mind_reader.busted.title") }
+        static var bustedDefaultReason: String { localized("mind_reader.busted.default_reason") }
+        static var zeroXP: String { localized("mind_reader.busted.zero_xp") }
+        static var zeroCoins: String { localized("mind_reader.busted.zero_coins") }
+        static var tryAgain: String { localized("mind_reader.try_again") }
+        
         static var currentCategory: String { localized("mind_reader.current_category") }
         static var startGame: String { localized("mind_reader.start_game") }
         static var change: String { localized("mind_reader.change") }
