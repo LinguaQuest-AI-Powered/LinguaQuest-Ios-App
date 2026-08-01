@@ -91,7 +91,10 @@ final class UserPreferences: UserPreferencesProtocol {
     }
     
     var appLanguage: String {
-        didSet { defaults.set(appLanguage, forKey: scopedKey(AppConstants.UserDefaultsKeys.appLanguage)) }
+        didSet { 
+            defaults.set(appLanguage, forKey: scopedKey(AppConstants.UserDefaultsKeys.appLanguage))
+            defaults.set(appLanguage, forKey: AppConstants.UserDefaultsKeys.appLanguage)
+        }
     }
     
     var coinBalance: Int {

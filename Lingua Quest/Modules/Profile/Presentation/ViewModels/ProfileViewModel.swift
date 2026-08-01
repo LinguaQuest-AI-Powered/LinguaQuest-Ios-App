@@ -216,7 +216,7 @@ final class ProfileViewModel {
             id: entity.id,
             name: entity.name,
             uiRank: "\(entity.rank)",
-            uiXPAmount: L10n.Profile.explorerXP(entity.xp.formatted()),
+            uiXPAmount: L10n.Profile.explorerXP(entity.xp.formattedStatsValue()),
             avatarImage: entity.avatarImage,
             isTop: entity.rank == 1,
             isCurrentUser: entity.isCurrentUser
