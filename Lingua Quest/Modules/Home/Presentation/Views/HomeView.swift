@@ -52,18 +52,6 @@ struct HomeView: View {
                     } else {
                         VStack(alignment: .leading, spacing: 20) {
                             
-                            if !viewModel.dailyRewardViewModel.isClaimed && viewModel.dailyRewardViewModel.reward != nil {
-                                DailyBonusCardView {
-                                    soundPlayer.play(sound: .dailyReward)
-                                    showDailyRewardDialog = true
-                                }
-                                .padding(.horizontal, 20)
-                                .offset(y: isAnimated ? 0 : 30)
-                                .opacity(isAnimated ? 1 : 0)
-                                .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.0), value: isAnimated)
-                                .transition(.move(edge: .top).combined(with: .opacity))
-                            }
-
                             LearningCardView(
                                 flagEmoji: viewModel.languageViewModel.activeLanguage?.flagEmoji ?? "🇪🇸",
                                 title: L10n.Home.currentlyLearning,
@@ -142,6 +130,29 @@ struct HomeView: View {
                         .padding(.top, 12)
                     }
                 }
+
+                VStack {
+                    if isAnimated && !viewModel.dailyRewardViewModel.isClaimed && viewModel.dailyRewardViewModel.reward != nil {
+                        DailyBonusCardView {
+                            soundPlayer.play(sound: .dailyReward)
+                            showDailyRewardDialog = true
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.top, 16)
+                        .transition(
+                            .asymmetric(
+                                insertion: .move(edge: .top).combined(with: .opacity).combined(with: .scale(scale: 0.95)),
+                                removal: .move(edge: .top).combined(with: .opacity).combined(with: .scale(scale: 0.8))
+                            )
+                        )
+                    }
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity)
+                .animation(.spring(response: 0.7, dampingFraction: 0.75).delay(0.8), value: isAnimated)
+                .animation(.spring(response: 0.6, dampingFraction: 0.75), value: viewModel.dailyRewardViewModel.isClaimed)
+                .animation(.spring(response: 0.6, dampingFraction: 0.75), value: viewModel.dailyRewardViewModel.reward != nil)
+                .zIndex(1)
 
                 Button(action: { showMyLanguagesSheet = true }) {
                     Image(asset: .world)
