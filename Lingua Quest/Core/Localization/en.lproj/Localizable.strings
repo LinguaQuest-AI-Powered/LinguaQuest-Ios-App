@@ -492,6 +492,10 @@
 "mind_reader.busted.zero_xp" = "0 XP";
 "mind_reader.busted.zero_coins" = "0 Coins";
 "mind_reader.try_again" = "Try Again";
+"mind_reader.give_up.prompt" = "I GIVE UP! WHAT WERE\nYOU THINKING OF?";
+"mind_reader.give_up.category_vocabulary_title" = "%@\nVocabulary";
+"mind_reader.give_up.select_word" = "Select your word...";
+"mind_reader.submit" = "Submit";
 "mind_reader.busted.contradiction" = "You gave contradictory answers during gameplay! No coins awarded.";
 "mind_reader.busted.quiz_failed" = "Incorrect translation selected! 0 coins earned.";
 "mind_reader.busted.invalid_selection" = "Invalid word selection.";

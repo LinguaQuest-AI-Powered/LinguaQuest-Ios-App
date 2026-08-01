@@ -503,6 +503,10 @@
 "mind_reader.busted.zero_xp" = "0 خبرة";
 "mind_reader.busted.zero_coins" = "0 عملات";
 "mind_reader.try_again" = "حاول مرة أخرى";
+"mind_reader.give_up.prompt" = "أنا أستسلم! في ماذا\nكنت تفكر؟";
+"mind_reader.give_up.category_vocabulary_title" = "مفردات\n%@";
+"mind_reader.give_up.select_word" = "اختر كلمتك...";
+"mind_reader.submit" = "إرسال";
 
 "help_support.faq.q4" = "كيف أحافظ على سلسلتي؟";
 "help_support.faq.a4" = "أكمل درسًا أو تحديًا واحدًا على الأقل كل يوم للحفاظ على سلسلة تعلمك نشطة!";

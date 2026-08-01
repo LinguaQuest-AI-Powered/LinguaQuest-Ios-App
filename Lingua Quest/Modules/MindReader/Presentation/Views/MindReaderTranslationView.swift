@@ -40,8 +40,7 @@ struct MindReaderTranslationView: View {
                     
                     // Translation Challenge Card
                     DialogCardContainer(
-                        mascotImage: .mindThinkingBird
-                        // speechBubbleText is purposely omitted here to prevent overlap
+                        mascotImage: .mindTranslationBird
                     ) {
                         VStack(spacing: 24) {
                             

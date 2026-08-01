@@ -40,7 +40,7 @@ struct MindReaderResultView: View {
                     
                     // Result Card
                     DialogCardContainer(
-                        mascotImage: .mindSuccessBird,
+                        mascotImage: .mindStumpedBird,
                         customMascotSize: CGSize(width: 180, height: 180)
                     ) {
                         VStack(spacing: 24) {

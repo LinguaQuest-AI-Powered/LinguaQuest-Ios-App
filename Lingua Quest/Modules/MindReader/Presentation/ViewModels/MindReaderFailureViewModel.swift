@@ -23,13 +23,11 @@ final class MindReaderFailureViewModel {
     }
     
     func onTryAgainTapped() {
-        // Route back to the intro or restart the game
-        // router.pop(count: 2)
+        router.pop(count: 4)
     }
     
     func onBackToMenuTapped() {
-        // Route back to the main lobby/home
-        // router.popToRoot()
+        router.popToRoot()
     }
     
     func goBack() {

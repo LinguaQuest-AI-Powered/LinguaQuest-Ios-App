@@ -40,7 +40,7 @@ struct MindReaderFailureView: View {
 
                     // Result Card
                     DialogCardContainer(
-                        mascotImage: .thinkingHardBird,  // Assuming this is the closest asset, change if you have a specific busted bird
+                        mascotImage: .mindBustedBird, 
                         customMascotSize: CGSize(width: 180, height: 180)
                     ) {
                         VStack(spacing: 24) {

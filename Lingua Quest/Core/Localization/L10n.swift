@@ -554,6 +554,11 @@ enum L10n {
         static var zeroCoins: String { localized("mind_reader.busted.zero_coins") }
         static var tryAgain: String { localized("mind_reader.try_again") }
         
+        static var iGiveUpPrompt: String { localized("mind_reader.give_up.prompt") }
+        static func categoryVocabularyTitle(_ category: String) -> String { String(format: localized("mind_reader.give_up.category_vocabulary_title"), category) }
+        static var selectWord: String { localized("mind_reader.give_up.select_word") }
+        static var submit: String { localized("mind_reader.submit") }
+        
         static var currentCategory: String { localized("mind_reader.current_category") }
         static var startGame: String { localized("mind_reader.start_game") }
         static var change: String { localized("mind_reader.change") }

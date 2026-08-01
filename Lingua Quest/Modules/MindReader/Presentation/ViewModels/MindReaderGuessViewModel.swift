@@ -28,11 +28,11 @@ final class MindReaderGuessViewModel {
     }
     
     func onYesGotItTapped() {
-        // Handle win
+        router.push(.mindReaderTranslation)
     }
     
     func onNoWrongTapped() {
-        // Handle continue or lose
+        router.push(.mindReaderGiveUp)
     }
     
     func goBack() {
