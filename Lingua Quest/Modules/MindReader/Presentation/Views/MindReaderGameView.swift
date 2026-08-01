@@ -17,16 +17,11 @@ struct MindReaderGameView: View {
             VStack(spacing: 0) {
                 // Header
                 Spacer().frame(height: 48)
-                HStack {
-                    CustomBackButton(action: { viewModel.goBack() })
-                    Spacer()
-                    HStack(spacing: 8) {
-                        RewardBadge(type: .xp, value: "\(viewModel.statsService.xp)", size: .small)
-                        RewardBadge(type: .coin, value: "\(viewModel.statsService.coins)", size: .small)
-                    }
-                }
-                .padding(.horizontal, 20)
-                .frame(height: 64)
+                MindReaderHeaderView(
+                    action: { viewModel.goBack() },
+                    xp: viewModel.statsService.xp,
+                    coins: viewModel.statsService.coins
+                )
                 
                 // Progress Section
                 VStack(spacing: 12) {
@@ -209,4 +204,13 @@ struct MindReaderGameView: View {
         case .pointing: return .mindSuccessBird
         }
     }
+}
+
+#Preview("LightTheme") {
+    MindReaderGameView(viewModel: .preview)
+}
+
+#Preview("DarkTheme") {
+    MindReaderGameView(viewModel: .preview)
+        .preferredColorScheme(.dark)
 }

@@ -171,6 +171,10 @@ extension Image {
         case mindThinkingBird = "mind_thinking_bird"
         case thinkingHardBird = "thinking_hard_bird"
         case guessBird = "guess_bird"
+        case mindTranslationBird = "mind_translation_bird"
+        case mindStumpedBird = "mind_stumped_bird"
+        case mindBustedBird = "mind_busted_bird"
+        case mindGiveUpBird = "mind_giveup_bird"
     }
     
     init(icon: Icon) {

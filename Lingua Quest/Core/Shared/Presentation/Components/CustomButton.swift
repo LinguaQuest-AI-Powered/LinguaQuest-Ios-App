@@ -10,7 +10,8 @@ import SwiftUI
 enum ButtonType {
     case primary
     case secendry
-     case custom(textColor: Color, buttonColor: Color, shadowColor: Color = Color.black.opacity(0.3))
+    case custom(textColor: Color, buttonColor: Color, shadowColor: Color = Color.black.opacity(0.3))
+    case outline(textColor: Color, borderColor: Color)
 }
 
 enum ButtonStatus {
@@ -46,6 +47,8 @@ struct CustomButton: View {
                 return Color.appBorderLight
             case .custom(_, let buttonColor, _):
                 return buttonColor
+            case .outline:
+                return Color.clear
             }
         } else {
             return Color.appSurfaceCardMuted
@@ -60,6 +63,8 @@ struct CustomButton: View {
             case .secendry:
                 return Color.appTextSecondary
             case .custom(let textColor, _, _):
+                return textColor
+            case .outline(let textColor, _):
                 return textColor
             }
         } else {
@@ -77,6 +82,8 @@ struct CustomButton: View {
                 return Color.appBorderBrown
             case .custom(_, _, let customShadow):
                 return customShadow
+            case .outline(_, let borderColor):
+                return borderColor
             }
         } else {
             return Color.appBorderBrown
@@ -119,9 +126,17 @@ struct CustomButton: View {
         .foregroundColor(foregroundColor)
         // MARK: - The 3D Magic
         .background(
-            Capsule()
-                .fill(backgroundColor)
-                .shadow(color: shadowColor, radius: 0, x: 0, y: 4)
+            Group {
+                if case .outline(_, let borderColor) = type {
+                    Capsule()
+                        .stroke(borderColor, lineWidth: 2)
+                        .shadow(color: borderColor, radius: 0, x: 0, y: 2)
+                } else {
+                    Capsule()
+                        .fill(backgroundColor)
+                        .shadow(color: shadowColor, radius: 0, x: 0, y: 4)
+                }
+            }
         )
         .padding(.bottom, 4)
         .disabled((status == .disable || isLoading) && disabledAction == nil)

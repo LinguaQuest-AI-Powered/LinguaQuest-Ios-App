@@ -1,44 +1,34 @@
 //
-//  MindReaderIntroViewModel.swift
+//  MindReaderResultViewModel.swift
 //  Lingua Quest
 //
-//  Created by taqieallah on 31/07/2026.
+//  Created by Omar Khaled Jaafar on 31/07/2026.
 //
 
 import Foundation
 import Observation
-import Combine
 
 @MainActor
 @Observable
-final class MindReaderIntroViewModel {
+final class MindReaderResultViewModel {
     private let router: RouterProtocol
     let statsService: StatsService
-
-    var showReadyDialog = false
-    var currentCategoryName = "Kitchen"
     
+    // Example properties for rewards
+    let earnedXP: Int = 50
+    let earnedCoins: Int = 10
     
-    init(router: RouterProtocol,statsService: StatsService) {
+    init(router: RouterProtocol, statsService: StatsService) {
         self.router = router
         self.statsService = statsService
     }
     
-    func onStartGameTapped() {
-        showReadyDialog = true
+    func onPlayAgainTapped() {
+        router.pop(count: 4)
     }
     
-    func onChangeCategoryTapped() {
-        // Handle change category
-    }
-    
-    func onNotYetTapped() {
-        showReadyDialog = false
-    }
-    
-    func onYesLetsGoTapped() {
-        showReadyDialog = false
-        router.push(.mindReaderGame)
+    func onBackToMenuTapped() {
+        router.popToRoot()
     }
     
     func goBack() {
@@ -47,9 +37,9 @@ final class MindReaderIntroViewModel {
 }
 
 // MARK: - Preview Helper
-extension MindReaderIntroViewModel {
+extension MindReaderResultViewModel {
     @MainActor
-    static var preview: MindReaderIntroViewModel {
+    static var preview: MindReaderResultViewModel {
         class MockRouter: RouterProtocol {
             func push(_ route: AppRoute) {}
             func pushAndReplace(_ route: AppRoute) {}
@@ -62,10 +52,10 @@ extension MindReaderIntroViewModel {
         }
         class MockStatsRemote: StatsRemoteDataSourceProtocol {
             func getWallet() async throws -> WalletResponseDTO {
-                return WalletResponseDTO(success: true, data: WalletDataDTO(xp: 500, coins: 100))
+                return WalletResponseDTO(success: true, data: WalletDataDTO(xp: 550, coins: 110))
             }
             func adjustWallet(coinsDelta: Int, xpDelta: Int) async throws -> AdjustWalletResponseDTO {
-                return AdjustWalletResponseDTO(success: true, data: AdjustWalletDataDTO(xpDelta: xpDelta, coinsDelta: coinsDelta, xp: 500, coins: 100))
+                return AdjustWalletResponseDTO(success: true, data: AdjustWalletDataDTO(xpDelta: xpDelta, coinsDelta: coinsDelta, xp: 550, coins: 110))
             }
         }
         class MockUserPrefs: UserPreferencesProtocol {
@@ -78,8 +68,8 @@ extension MindReaderIntroViewModel {
             var userLevel: String? = "beginner"
             var isDarkMode: Bool = false
             var appLanguage: String = "en"
-            var coinBalance: Int = 100
-            var xpBalance: Int = 500
+            var coinBalance: Int = 110
+            var xpBalance: Int = 550
             var streakDays: Int = 5
             var email: String? = "test@test.com"
             var nativeLanguageName: String? = "English"
@@ -94,6 +84,6 @@ extension MindReaderIntroViewModel {
             func loadUserScopedPreferences(for userId: Int) {}
         }
         let statsService = StatsService(remoteDataSource: MockStatsRemote(), userPreferences: MockUserPrefs())
-        return MindReaderIntroViewModel(router: MockRouter(), statsService: statsService)
+        return MindReaderResultViewModel(router: MockRouter(), statsService: statsService)
     }
 }

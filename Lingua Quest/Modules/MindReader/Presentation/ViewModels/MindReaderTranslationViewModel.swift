@@ -1,44 +1,34 @@
 //
-//  MindReaderIntroViewModel.swift
+//  MindReaderTranslationViewModel.swift
 //  Lingua Quest
 //
-//  Created by taqieallah on 31/07/2026.
+//  Created by Omar Khaled Jaafar on 31/07/2026.
 //
 
 import Foundation
 import Observation
-import Combine
 
 @MainActor
 @Observable
-final class MindReaderIntroViewModel {
+final class MindReaderTranslationViewModel {
     private let router: RouterProtocol
     let statsService: StatsService
-
-    var showReadyDialog = false
-    var currentCategoryName = "Kitchen"
     
+    // State
+    let wordToTranslate = "MANZANA"
+    let options = ["Orange", "Apple", "Banana"]
     
-    init(router: RouterProtocol,statsService: StatsService) {
+    init(router: RouterProtocol, statsService: StatsService) {
         self.router = router
         self.statsService = statsService
     }
     
-    func onStartGameTapped() {
-        showReadyDialog = true
-    }
-    
-    func onChangeCategoryTapped() {
-        // Handle change category
-    }
-    
-    func onNotYetTapped() {
-        showReadyDialog = false
-    }
-    
-    func onYesLetsGoTapped() {
-        showReadyDialog = false
-        router.push(.mindReaderGame)
+    func onOptionTapped(_ option: String) {
+        if option == "Apple" {
+            router.push(.mindReaderResult)
+        } else {
+            router.push(.mindReaderFailure)
+        }
     }
     
     func goBack() {
@@ -47,9 +37,9 @@ final class MindReaderIntroViewModel {
 }
 
 // MARK: - Preview Helper
-extension MindReaderIntroViewModel {
+extension MindReaderTranslationViewModel {
     @MainActor
-    static var preview: MindReaderIntroViewModel {
+    static var preview: MindReaderTranslationViewModel {
         class MockRouter: RouterProtocol {
             func push(_ route: AppRoute) {}
             func pushAndReplace(_ route: AppRoute) {}
@@ -94,6 +84,6 @@ extension MindReaderIntroViewModel {
             func loadUserScopedPreferences(for userId: Int) {}
         }
         let statsService = StatsService(remoteDataSource: MockStatsRemote(), userPreferences: MockUserPrefs())
-        return MindReaderIntroViewModel(router: MockRouter(), statsService: statsService)
+        return MindReaderTranslationViewModel(router: MockRouter(), statsService: statsService)
     }
 }
