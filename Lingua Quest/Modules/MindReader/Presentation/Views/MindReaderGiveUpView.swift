@@ -92,6 +92,22 @@ struct MindReaderGiveUpView: View {
                 Spacer()
             }
         }
+        .overlay {
+            if viewModel.isProcessing {
+                ZStack {
+                    Color.appBackgroundWarm.opacity(0.95).ignoresSafeArea()
+                    
+                    SharedImageLoadingView(
+                        imageAsset: .thinkingHardBird,
+                        title: L10n.MindReader.thinkingHard,
+                        subtitle: L10n.MindReader.thinkingHardSubtitle
+                    )
+                }
+                .transition(.opacity.combined(with: .scale(scale: 0.95)))
+                .zIndex(100)
+            }
+        }
+        .animation(.easeInOut, value: viewModel.isProcessing)
         .navigationBarHidden(true)
     }
 }

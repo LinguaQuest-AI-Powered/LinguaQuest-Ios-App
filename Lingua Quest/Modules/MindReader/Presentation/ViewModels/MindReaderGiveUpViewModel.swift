@@ -33,12 +33,16 @@ final class MindReaderGiveUpViewModel {
         self.coordinator = coordinator
     }
     
+    var isProcessing: Bool = false
+    
     func onSubmitTapped() {
         let word = claimedWordInput.trimmingCharacters(in: .whitespaces)
         guard !word.isEmpty else { return }
         
+        isProcessing = true
         Task {
             let isHonest = await coordinator.validateGiveUp(claimedWord: word)
+            isProcessing = false
             if isHonest {
                 router.push(.mindReaderResult)
             } else {
