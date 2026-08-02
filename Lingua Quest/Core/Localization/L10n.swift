@@ -581,6 +581,7 @@ enum L10n {
         static var mindReaderTag: String { localized("mind_reader.tag") }
         static var playGame: String { localized("mind_reader.play_game") }
         static var thinkingHard: String { localized("mind_reader.thinking_hard") }
+        static var thinkingHardSubtitle: String { localized("mind_reader.thinking_hard_subtitle") }
         static func questionProgress(current: Int, total: Int) -> String { String(format: localized("mind_reader.question_progress"), current, total) }
         static func percentComplete(_ percent: Int) -> String { String(format: localized("mind_reader.percent_complete"), percent) }
         static var translateLifeline: String { localized("mind_reader.translate_lifeline") }

@@ -46,6 +46,7 @@ final class MindReaderFailureViewModel {
     }
     
     func goBack() {
-        router.pop()
+        coordinator.reset()
+        router.popToRoot()
     }
 }

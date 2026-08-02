@@ -80,30 +80,32 @@ final class StatsService: StatsServiceProtocol {
     }
     
     func adjustWallet(coinsDelta: Int, xpDelta: Int) async throws {
-        let response = try await remoteDataSource.adjustWallet(coinsDelta: coinsDelta, xpDelta: xpDelta)
+        // Optimistic UI Update
         await MainActor.run {
-            var coinsIncreased = false
-            var xpIncreased = false
-            
-            if let newCoins = response.data.coins {
-                if newCoins > self.coins { coinsIncreased = true }
-                self.coins = newCoins
-            } else {
-                if coinsDelta > 0 { coinsIncreased = true }
-                self.coins += coinsDelta
-            }
-            
-            if let newXp = response.data.xp {
-                if newXp > self.xp { xpIncreased = true }
-                self.xp = newXp
-            } else {
-                if xpDelta > 0 { xpIncreased = true }
-                self.xp += xpDelta
-            }
-            
-            if coinsIncreased || xpIncreased {
+            self.coins += coinsDelta
+            self.xp += xpDelta
+            if coinsDelta > 0 || xpDelta > 0 {
                 self.soundPlayer.play(sound: .addedMoney)
             }
+        }
+        
+        do {
+            let response = try await remoteDataSource.adjustWallet(coinsDelta: coinsDelta, xpDelta: xpDelta)
+            await MainActor.run {
+                if let newCoins = response.data.coins {
+                    self.coins = newCoins
+                }
+                if let newXp = response.data.xp {
+                    self.xp = newXp
+                }
+            }
+        } catch {
+            // Revert on failure
+            await MainActor.run {
+                self.coins -= coinsDelta
+                self.xp -= xpDelta
+            }
+            throw error
         }
     }
     

@@ -11,10 +11,12 @@ extension Int {
     func formattedStatsValue() -> String {
         let locale = Locale(identifier: "en_US")
         if self >= 1_000_000 {
-            let formatted = String(format: "%.1fM", locale: locale, Double(self) / 1_000_000)
+            let floored = floor((Double(self) / 1_000_000) * 10) / 10
+            let formatted = String(format: "%.1fM", locale: locale, floored)
             return formatted.replacingOccurrences(of: ".0M", with: "M")
         } else if self >= 1_000 {
-            let formatted = String(format: "%.1fk", locale: locale, Double(self) / 1_000)
+            let floored = floor((Double(self) / 1_000) * 10) / 10
+            let formatted = String(format: "%.1fk", locale: locale, floored)
             return formatted.replacingOccurrences(of: ".0k", with: "k")
         } else {
             return String(format: "%d", locale: locale, self)

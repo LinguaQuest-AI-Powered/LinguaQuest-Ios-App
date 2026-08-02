@@ -44,7 +44,12 @@ struct MindReaderNextStepEndpoint: AIEndpoint {
 
         (If historyPrompt is empty, this is the very first question.)
 
-        Your job: decide the SINGLE best next yes/no-style question to narrow down the word, the same way a human playing 20-questions would — pick the question that splits the remaining possibilities roughly in half. Never repeat a question already asked. If (and only if) you are reasonably confident after the conversation so far (or if the conversation has \(maxTurns) or more turns), STOP asking and make your best guess instead.
+        Your job: 
+        1. Analyze the conversation so far carefully. Every new question MUST be logical and strictly build upon the previous answers. Do not ask random questions.
+        2. Pick a yes/no-style question that splits the remaining possibilities roughly in half based on the user's previous answers.
+        3. Never repeat a question already asked.
+        4. If you are highly confident about the word before reaching \(maxTurns) questions, STOP asking immediately and make your best guess! You do NOT need to reach \(maxTurns) questions. \(maxTurns) is only a maximum limit.
+        5. If the conversation reaches \(maxTurns) turns, you MUST make a guess.
 
         Target language: \(targetLanguage)
         Native language: \(nativeLanguage)
@@ -52,6 +57,7 @@ struct MindReaderNextStepEndpoint: AIEndpoint {
         CRITICAL RULE 1: If asking a question, "questionTargetText" MUST be written ONLY in \(targetLanguage), and "questionNativeText" MUST be its accurate translation in \(nativeLanguage).
         CRITICAL RULE 2: Only set type to "guess" when you are actually naming a specific concrete word/object, never a category or vague guess.
         CRITICAL RULE 3: The guessed word must plausibly belong to the given category context.
+        CRITICAL RULE 4: The "guessEmoji" must be a highly relevant, expressive system emoji that directly represents the guessed object visually, not a generic symbol (e.g. 🍎 for apple, 📻 for radio).
 
         Respond STRICTLY in the following JSON format (no markdown, no backticks, just raw JSON):
         {
@@ -60,7 +66,7 @@ struct MindReaderNextStepEndpoint: AIEndpoint {
           "questionNativeText": "<string or null>",
           "guessWord": "<string or null, in target language>",
           "guessTranslation": "<string or null, in native language>",
-          "guessEmoji": "<single system emoji representing the word, or null>"
+          "guessEmoji": "<single system emoji accurately representing the word, or null>"
         }
         """
         

@@ -385,6 +385,7 @@
 "mind_reader.tag" = "قارئ الأفكار";
 "mind_reader.play_game" = "العب الآن";
 "mind_reader.thinking_hard" = "لينغو يفكر\nبعمق...";
+"mind_reader.thinking_hard_subtitle" = "يراجع إجاباتك السابقة ويحاول استنتاج الكلمة...";
 "mind_reader.question_progress" = "السؤال %d من %d";
 "mind_reader.percent_complete" = "%d%% مكتمل";
 "mind_reader.subtitle" = "سأحاول تخمين الكلمة في 20 سؤالاً ... جهز عقلك!";
@@ -533,3 +534,4 @@
 "mind_reader.category.animals" = "حيوانات";
 "mind_reader.loading_title" = "جاري الاتصال بقارئ الأفكار...";
 "mind_reader.loading_subtitle" = "جاري تجهيز الذكاء الاصطناعي لتخمين كلمتك.";
+"mind_reader.enter_your_word" = "أدخل الكلمة التي كنت تفكر بها...";

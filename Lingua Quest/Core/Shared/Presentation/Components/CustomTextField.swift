@@ -25,6 +25,7 @@ struct CustomTextField: View {
                     .foregroundColor(Color.appTextSecondary.opacity(0.5))
             )
             .appTextStyle(.body, color: .appTextSecondary)
+            .minimumScaleFactor(0.6)
             .autocapitalization(.none)
             .disableAutocorrection(true)
         }

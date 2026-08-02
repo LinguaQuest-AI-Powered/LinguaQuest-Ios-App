@@ -60,6 +60,7 @@ final class MindReaderResultViewModel {
     }
     
     func goBack() {
-        router.pop()
+        coordinator.reset()
+        router.popToRoot()
     }
 }

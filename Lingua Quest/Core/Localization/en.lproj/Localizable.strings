@@ -471,6 +471,7 @@
 "mind_reader.tag" = "MIND READER";
 "mind_reader.play_game" = "Play Game";
 "mind_reader.thinking_hard" = "Lingo is\nthinking hard...";
+"mind_reader.thinking_hard_subtitle" = "Reviewing your previous answers to guess the word...";
 "mind_reader.question_progress" = "Question %d of %d";
 "mind_reader.percent_complete" = "%d%% Complete";
 "mind_reader.subtitle" = "\"I'll try to guess it in 20 questions ... prepare your mind!\"";
@@ -520,3 +521,4 @@
 
 "mind_reader.loading_title" = "Connecting to MindReader...";
 "mind_reader.loading_subtitle" = "Preparing the AI to guess your word.";
+"mind_reader.enter_your_word" = "Enter the word you were thinking of...";

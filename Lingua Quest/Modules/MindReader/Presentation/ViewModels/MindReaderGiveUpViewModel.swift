@@ -53,6 +53,7 @@ final class MindReaderGiveUpViewModel {
     }
     
     func goBack() {
-        router.pop()
+        coordinator.reset()
+        router.popToRoot()
     }
 }
