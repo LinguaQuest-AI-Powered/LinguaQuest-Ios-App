@@ -513,3 +513,10 @@
 "mind_reader.what_was_your_word" = "What word were you thinking of?";
 "mind_reader.word_placeholder" = "Type your word here...";
 "mind_reader.victory_title" = "You Won!";
+
+"mind_reader.category.kitchen" = "Kitchen";
+"mind_reader.category.nature" = "Nature";
+"mind_reader.category.animals" = "Animals";
+
+"mind_reader.loading_title" = "Connecting to MindReader...";
+"mind_reader.loading_subtitle" = "Preparing the AI to guess your word.";

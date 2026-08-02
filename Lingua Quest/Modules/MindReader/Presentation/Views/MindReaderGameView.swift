@@ -139,23 +139,25 @@ struct MindReaderGameView: View {
             }
             
             HStack(spacing: 12) {
-                Button(action: { viewModel.onTranslateTapped() }) {
-                    HStack(spacing: 6) {
-                        Image(systemIcon: .globe)
-                            .font(.system(size: 14))
-                        Text(L10n.MindReader.translateLifeline)
-                            .font(AppTextStyle.captionMedium.font)
-                        
-                        // Coin cost badge
-                        RewardBadge(type: .coin, value: viewModel.translateCostText, size: .small)
+                if viewModel.canTranslate {
+                    Button(action: { viewModel.onTranslateTapped() }) {
+                        HStack(spacing: 6) {
+                            Image(systemIcon: .globe)
+                                .font(.system(size: 14))
+                            Text(L10n.MindReader.translateLifeline)
+                                .font(AppTextStyle.captionMedium.font)
+                            
+                            // Coin cost badge
+                            RewardBadge(type: .coin, value: viewModel.translateCostText, size: .small)
+                        }
+                        .foregroundColor(viewModel.showTranslation ? .appTextSecondary.opacity(0.5) : .appTextSecondary)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Color.appBackgroundWarm)
+                        .clipShape(Capsule())
                     }
-                    .foregroundColor(viewModel.showTranslation ? .appTextSecondary.opacity(0.5) : .appTextSecondary)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(Color.appBackgroundWarm)
-                    .clipShape(Capsule())
+                    .disabled(viewModel.showTranslation)
                 }
-                .disabled(viewModel.showTranslation)
                 
                 Button(action: { viewModel.onListenTapped() }) {
                     Image(systemIcon: .speakerWave2Fill)

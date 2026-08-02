@@ -9,7 +9,8 @@ import SwiftUI
 
 extension Color {
     // MARK: - Canonical Design Tokens
-    
+    static let appLoadingBackground = Color("loadingBackground")
+    static let appLoadingBorder = Color("loadingBorder")
     // Brand Colors
     static let appBrandPrimary = Color("TokenBrandPrimary")                        // Light & Dark #FF9F29
     static let appBrandBrown = Color("TokenBrandBrown")                            // Light #8A5100      Dark #D4944A

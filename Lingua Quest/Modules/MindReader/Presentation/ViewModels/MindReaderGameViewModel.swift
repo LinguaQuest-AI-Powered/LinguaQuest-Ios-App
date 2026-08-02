@@ -37,6 +37,13 @@ final class MindReaderGameViewModel {
     
     // MARK: - Computed Properties (from Coordinator)
     
+    var canTranslate: Bool {
+        let appLangCode = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en"
+        let nativeLanguage = appLangCode == "ar" ? "Arabic" : "English"
+        let targetLanguage = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.targetLanguageName) ?? "Spanish"
+        return nativeLanguage.lowercased() != targetLanguage.lowercased()
+    }
+    
     var questionText: String {
         coordinator.currentQuestionTarget ?? ""
     }

@@ -25,7 +25,8 @@ class MindReaderRepositoryImpl: MindReaderRepositoryProtocol {
             "\(turn.index). Q: \(turn.questionTargetText) -> A: \(turn.answer.rawValue)"
         }.joined(separator: "\n")
         
-        let nativeLanguage = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.nativeLanguageName) ?? "English"
+        let appLangCode = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en"
+        let nativeLanguage = appLangCode == "ar" ? "Arabic" : "English"
         let targetLanguage = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.targetLanguageName) ?? "Spanish"
 
         let dto = try await remoteDataSource.requestNextStep(
@@ -38,7 +39,8 @@ class MindReaderRepositoryImpl: MindReaderRepositoryProtocol {
     }
     
     func requestQuizChoices(category: GameCategory, correctWord: String) async throws -> [QuizChoice] {
-        let nativeLanguage = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.nativeLanguageName) ?? "English"
+        let appLangCode = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en"
+        let nativeLanguage = appLangCode == "ar" ? "Arabic" : "English"
         let targetLanguage = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.targetLanguageName) ?? "Spanish"
         
         let dtos = try await remoteDataSource.requestQuizChoices(

@@ -42,11 +42,8 @@ struct MindReaderIntroView: View {
                         
                         // Category Box
                         HStack(spacing: 16) {
-                            Image(asset: .kitchenLogo)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 32, height: 32)
-                                .foregroundColor(.appAccentOrange)
+                            Text(viewModel.currentCategoryEmoji)
+                                .font(.system(size: 32))
                             
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(L10n.MindReader.currentCategory)
@@ -82,6 +79,15 @@ struct MindReaderIntroView: View {
                 
                 Spacer()
             }
+            .opacity(viewModel.isLoadingGame ? 0 : 1)
+            
+            if viewModel.isLoadingGame {
+                SharedImageLoadingView(
+                    imageAsset: .mindLoading,
+                    title: L10n.MindReader.loadingTitle,
+                    subtitle: L10n.MindReader.loadingSubtitle
+                )
+            }
         }
         .navigationBarHidden(true)
         .appDialog(isPresented: $viewModel.showReadyDialog) {
@@ -114,6 +120,49 @@ struct MindReaderIntroView: View {
             }
         }
         .onAppear { viewModel.onAppear() }
+        .customBottomSheet(isPresented: $viewModel.showCategorySheet) {
+            VStack(spacing: 16) {
+                Text(L10n.MindReader.selectCategoryTitle)
+                    .appTextStyle(.headingMedium, color: .appTextHeading)
+                    .padding(.top, 16)
+                    .padding(.bottom, 8)
+                
+                ScrollView {
+                    VStack(spacing: 12) {
+                        ForEach(viewModel.availableCategories, id: \.id) { category in
+                            Button(action: {
+                                viewModel.selectCategory(category)
+                            }) {
+                                HStack(spacing: 16) {
+                                    Text(category.emoji)
+                                        .font(.system(size: 28))
+                                    
+                                    Text(L10n.MindReader.categoryName(for: category.key))
+                                        .appTextStyle(.bodyLargeBold, color: .appTextHeading)
+                                    
+                                    Spacer()
+                                    
+                                    if viewModel.selectedCategory?.id == category.id {
+                                        Image(systemIcon: .checkmarkCircleFill)
+                                            .foregroundColor(.appAccentTeal)
+                                            .font(.system(size: 24))
+                                    }
+                                }
+                                .padding()
+                                .background(Color.appBackgroundWarm)
+                                .cornerRadius(12)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(viewModel.selectedCategory?.id == category.id ? Color.appAccentTeal : Color.appBorderCool, lineWidth: 1.5)
+                                )
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 40)
+                }
+            }
+        }
     }
 }
 

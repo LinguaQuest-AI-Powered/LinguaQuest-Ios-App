@@ -16,10 +16,22 @@ final class MindReaderIntroViewModel {
     private let coordinator: MindReaderGameCoordinator
 
     var showReadyDialog = false
+    var showCategorySheet = false
     var isLoadingGame = false
     
+    var selectedCategory: GameCategory?
+    
     var currentCategoryName: String {
-        coordinator.availableCategories.first?.targetName ?? "Kitchen"
+        guard let key = selectedCategory?.key ?? coordinator.availableCategories.first?.key else { return "Unknown" }
+        return L10n.MindReader.categoryName(for: key)
+    }
+    
+    var currentCategoryEmoji: String {
+        selectedCategory?.emoji ?? coordinator.availableCategories.first?.emoji ?? "📦"
+    }
+    
+    var availableCategories: [GameCategory] {
+        coordinator.availableCategories
     }
     
     init(
@@ -36,6 +48,9 @@ final class MindReaderIntroViewModel {
         Task {
             try? await statsService.fetchStats()
             coordinator.loadCategories()
+            if selectedCategory == nil {
+                selectedCategory = coordinator.availableCategories.first
+            }
         }
     }
     
@@ -44,7 +59,12 @@ final class MindReaderIntroViewModel {
     }
     
     func onChangeCategoryTapped() {
-        // Category change - future enhancement
+        showCategorySheet = true
+    }
+    
+    func selectCategory(_ category: GameCategory) {
+        selectedCategory = category
+        showCategorySheet = false
     }
     
     func onNotYetTapped() {
@@ -52,7 +72,7 @@ final class MindReaderIntroViewModel {
     }
     
     func onYesLetsGoTapped() {
-        guard let category = coordinator.availableCategories.first else { return }
+        guard let category = selectedCategory ?? coordinator.availableCategories.first else { return }
         showReadyDialog = false
         isLoadingGame = true
         

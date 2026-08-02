@@ -599,6 +599,13 @@ enum L10n {
         static var bustedContradiction: String { localized("mind_reader.busted.contradiction") }
         static var bustedQuizFailed: String { localized("mind_reader.busted.quiz_failed") }
         static var bustedInvalidSelection: String { localized("mind_reader.busted.invalid_selection") }
+        
+        static func categoryName(for key: String) -> String {
+            return localized("mind_reader.category.\(key)")
+        }
+        
+        static var loadingTitle: String { localized("mind_reader.loading_title") }
+        static var loadingSubtitle: String { localized("mind_reader.loading_subtitle") }
     }
 
     private static func localized(_ key: String) -> String {

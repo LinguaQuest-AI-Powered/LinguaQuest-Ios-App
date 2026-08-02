@@ -105,6 +105,7 @@ extension Image {
     }
     
     enum Asset: String {
+        case mindLoading = "mindLoading"
         case appBackground = "app_background"
         case linquaQuest = "linguaQuest"
         case bird = "bird"

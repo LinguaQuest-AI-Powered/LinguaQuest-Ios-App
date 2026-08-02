@@ -528,3 +528,8 @@
 "mind_reader.what_was_your_word" = "ما الكلمة التي كنت تفكر فيها؟";
 "mind_reader.word_placeholder" = "اكتب كلمتك هنا...";
 "mind_reader.victory_title" = "لقد فزت!";
+"mind_reader.category.kitchen" = "مطبخ";
+"mind_reader.category.nature" = "طبيعة";
+"mind_reader.category.animals" = "حيوانات";
+"mind_reader.loading_title" = "جاري الاتصال بقارئ الأفكار...";
+"mind_reader.loading_subtitle" = "جاري تجهيز الذكاء الاصطناعي لتخمين كلمتك.";
