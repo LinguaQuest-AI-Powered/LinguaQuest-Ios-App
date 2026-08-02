@@ -137,11 +137,3 @@ struct MindReaderFailureView: View {
     }
 }
 
-#Preview("LightTheme") {
-    MindReaderFailureView(viewModel: .preview)
-}
-
-#Preview("DarkTheme") {
-    MindReaderFailureView(viewModel: .preview)
-        .preferredColorScheme(.dark)
-}

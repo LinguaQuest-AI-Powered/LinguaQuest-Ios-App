@@ -2,168 +2,192 @@
 //  MindReaderGameCoordinator.swift
 //  Lingua Quest
 //
-//  Created by siam on 01/08/2026.
+//  Created by siam on 02/08/2026.
 //
 
 import Foundation
 import Observation
 
-/// Shared game state holder that bridges domain use cases with the presentation layer.
+/// Shared game state holder that bridges AI use cases with the presentation layer.
 /// Registered as `.container` scope in DI so all MindReader ViewModels share the same instance.
 @MainActor
 @Observable
 final class MindReaderGameCoordinator {
-    private let initializeGameUseCase: InitializeGameUseCase
-    private let calculateNextQuestionUseCase: CalculateNextQuestionUseCase
-    private let processUserAnswerUseCase: ProcessUserAnswerUseCase
-    private let validateHonestyUseCase: ValidateHonestyUseCase
-    private let repository: MindReaderRepositoryProtocol
+    private let getCategoriesUseCase: GetCategoriesUseCase
+    private let requestNextGameStepUseCase: RequestNextGameStepUseCase
+    private let requestQuizChoicesUseCase: RequestQuizChoicesUseCase
+    private let verifyHonestyUseCase: VerifyHonestyUseCase
     
-    // MARK: - Game State
+    // MARK: - Shared State
     
-    var gameState: MindReaderGameState?
-    var currentQuestion: QuestionAttribute?
-    var bestGuess: MindReaderWord?
-    var popQuiz: PopQuizQuestion?
-    var trapResult: TrapValidationResult?
-    var allWords: [MindReaderWord] = []
-    var availableWorlds: [MindReaderWorld] = []
+    var availableCategories: [GameCategory] = []
+    var selectedCategory: GameCategory?
+    var history: [GameTurn] = []
     var questionCount: Int = 0
+    
+    var currentQuestionTarget: String?
+    var currentQuestionNative: String?
+    var bestGuess: (word: String, translation: String, emoji: String)?
+    var quizChoices: [QuizChoice] = []
+    
+    var coinsEarned: Int = 0
+    var xpEarned: Int = 0
+    var failureReason: String?
+    
     var isLoading: Bool = false
     var errorMessage: String?
-    
-    /// Shows the native translation after the user pays coins
     var translationRevealed: Bool = false
     
     init(
-        initializeGameUseCase: InitializeGameUseCase,
-        calculateNextQuestionUseCase: CalculateNextQuestionUseCase,
-        processUserAnswerUseCase: ProcessUserAnswerUseCase,
-        validateHonestyUseCase: ValidateHonestyUseCase,
-        repository: MindReaderRepositoryProtocol
+        getCategoriesUseCase: GetCategoriesUseCase,
+        requestNextGameStepUseCase: RequestNextGameStepUseCase,
+        requestQuizChoicesUseCase: RequestQuizChoicesUseCase,
+        verifyHonestyUseCase: VerifyHonestyUseCase
     ) {
-        self.initializeGameUseCase = initializeGameUseCase
-        self.calculateNextQuestionUseCase = calculateNextQuestionUseCase
-        self.processUserAnswerUseCase = processUserAnswerUseCase
-        self.validateHonestyUseCase = validateHonestyUseCase
-        self.repository = repository
+        self.getCategoriesUseCase = getCategoriesUseCase
+        self.requestNextGameStepUseCase = requestNextGameStepUseCase
+        self.requestQuizChoicesUseCase = requestQuizChoicesUseCase
+        self.verifyHonestyUseCase = verifyHonestyUseCase
     }
     
     // MARK: - Public API
     
-    /// Loads available worlds for category selection on the intro screen.
-    func loadWorlds() async {
-        do {
-            availableWorlds = try await repository.getWorlds()
-        } catch {
-            errorMessage = error.localizedDescription
-        }
+    func loadCategories() {
+        availableCategories = getCategoriesUseCase.execute()
     }
     
-    /// Initializes a new game for the given world.
-    func initializeGame(worldId: String) async {
+    func initializeGame(category: GameCategory) async {
+        selectedCategory = category
+        history = []
+        questionCount = 0
+        translationRevealed = false
+        
+        await requestNextStep()
+    }
+    
+    func requestNextStep() async {
+        guard let category = selectedCategory else { return }
         isLoading = true
         errorMessage = nil
         translationRevealed = false
         
         do {
-            let state = try await initializeGameUseCase.execute(worldId: worldId)
-            gameState = state
-            allWords = state.candidateWords
-            questionCount = 0
+            let decision = try await requestNextGameStepUseCase.execute(category: category, history: history)
             
-            // Calculate the first question
-            let result = calculateNextQuestionUseCase.execute(gameState: state)
-            currentQuestion = result.nextQuestion
-            bestGuess = result.bestGuess
+            switch decision {
+            case .question(let target, let native):
+                self.currentQuestionTarget = target
+                self.currentQuestionNative = native
+                self.bestGuess = nil
+            case .guess(let word, let translation, let emoji):
+                self.bestGuess = (word: word, translation: translation, emoji: emoji)
+                self.currentQuestionTarget = nil
+                self.currentQuestionNative = nil
+            }
+            
+            isLoading = false
         } catch {
             errorMessage = error.localizedDescription
+            isLoading = false
         }
-        
-        isLoading = false
     }
     
-    /// Processes the user's answer and calculates the next question or triggers the guess phase.
-    /// Returns `true` if the guess threshold has been reached.
-    func processAnswer(answer: AnswerState) -> Bool {
-        guard let state = gameState, let question = currentQuestion else { return false }
+    func processAnswer(answer: AnswerState) async -> Bool {
+        guard let category = selectedCategory, let target = currentQuestionTarget, let native = currentQuestionNative else { return false }
         
-        // Process the answer through the use case
-        let updatedState = processUserAnswerUseCase.execute(
-            gameState: state,
-            attributeId: question.id,
+        let turn = GameTurn(
+            index: history.count + 1,
+            questionTargetText: target,
+            questionNativeText: native,
             answer: answer
         )
-        gameState = updatedState
+        history.append(turn)
         questionCount += 1
+        
+        isLoading = true
+        errorMessage = nil
         translationRevealed = false
         
-        // Calculate next question
-        let result = calculateNextQuestionUseCase.execute(gameState: updatedState)
-        currentQuestion = result.nextQuestion
-        bestGuess = result.bestGuess
-        
-        return result.shouldTriggerGuessPhase
-    }
-    
-    /// Generates a pop quiz for the "Yes, you got it!" flow.
-    func generatePopQuiz() {
-        guard let guess = bestGuess else { return }
-        popQuiz = validateHonestyUseCase.generatePopQuiz(
-            guessedWord: guess,
-            allWords: allWords
-        )
-    }
-    
-    /// Validates the pop quiz answer. Returns the result.
-    func validatePopQuiz(selectedOption: String) -> TrapValidationResult {
-        guard let quiz = popQuiz, let state = gameState else {
-            let result = TrapValidationResult.busted(reason: L10n.MindReader.bustedQuizFailed)
-            trapResult = result
-            return result
+        do {
+            let decision = try await requestNextGameStepUseCase.execute(category: category, history: history)
+            isLoading = false
+            
+            switch decision {
+            case .question(let t, let n):
+                currentQuestionTarget = t
+                currentQuestionNative = n
+                return false
+            case .guess(let word, let translation, let emoji):
+                bestGuess = (word: word, translation: translation, emoji: emoji)
+                return true
+            }
+        } catch {
+            errorMessage = error.localizedDescription
+            isLoading = false
+            return false
         }
-        
-        let result = validateHonestyUseCase.validatePopQuiz(
-            selectedOption: selectedOption,
-            popQuiz: quiz,
-            answerHistory: state.answerHistory
-        )
-        trapResult = result
-        return result
     }
     
-    /// Validates the give-up / "No, you're wrong" flow (Akinator Trap).
-    func validateGiveUp(selectedWordId: String) -> TrapValidationResult {
-        guard let state = gameState else {
-            let result = TrapValidationResult.busted(reason: L10n.MindReader.bustedInvalidSelection)
-            trapResult = result
-            return result
+    func requestQuiz() async {
+        guard let category = selectedCategory, let guess = bestGuess else { return }
+        isLoading = true
+        errorMessage = nil
+        
+        do {
+            quizChoices = try await requestQuizChoicesUseCase.execute(category: category, correctWord: guess.word)
+            isLoading = false
+        } catch {
+            errorMessage = error.localizedDescription
+            isLoading = false
         }
+    }
+    
+    func validateQuiz(choice: QuizChoice) -> Bool {
+        if choice.isCorrect {
+            coinsEarned = 20
+            xpEarned = 50
+            return true
+        } else {
+            failureReason = L10n.MindReader.bustedQuizFailed
+            return false
+        }
+    }
+    
+    func validateGiveUp(claimedWord: String) async -> Bool {
+        guard let category = selectedCategory else { return false }
+        isLoading = true
+        errorMessage = nil
         
-        let result = validateHonestyUseCase.validateAkinatorTrap(
-            selectedWordId: selectedWordId,
-            allWords: allWords,
-            answerHistory: state.answerHistory
-        )
-        trapResult = result
-        return result
+        do {
+            let verdict = try await verifyHonestyUseCase.execute(category: category, history: history, claimedWord: claimedWord)
+            isLoading = false
+            
+            if verdict.isHonest {
+                coinsEarned = 10
+                xpEarned = 25
+                return true
+            } else {
+                failureReason = verdict.explanation
+                return false
+            }
+        } catch {
+            errorMessage = error.localizedDescription
+            isLoading = false
+            return false
+        }
     }
     
-    /// Saves the game result to the repository.
-    func saveResult() async {
-        guard let state = gameState, let result = trapResult else { return }
-        try? await repository.saveGameResult(worldId: state.selectedWorld.id, result: result)
-    }
-    
-    /// Resets all game state for a new round.
     func reset() {
-        gameState = nil
-        currentQuestion = nil
-        bestGuess = nil
-        popQuiz = nil
-        trapResult = nil
-        allWords = []
+        selectedCategory = nil
+        history = []
         questionCount = 0
+        currentQuestionTarget = nil
+        currentQuestionNative = nil
+        bestGuess = nil
+        quizChoices = []
+        coinsEarned = 0
+        xpEarned = 0
+        failureReason = nil
         isLoading = false
         errorMessage = nil
         translationRevealed = false

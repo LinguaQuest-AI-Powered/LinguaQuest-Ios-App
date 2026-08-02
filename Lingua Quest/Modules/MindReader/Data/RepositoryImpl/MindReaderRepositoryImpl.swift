@@ -1,124 +1,69 @@
-
+//
+//  MindReaderRepositoryImpl.swift
+//  Lingua Quest
+//
+//  Created by siam on 02/08/2026.
+//
 
 import Foundation
 
-final class MindReaderRepositoryImpl: MindReaderRepositoryProtocol {
-    private let localDataSource: MindReaderLocalDataSourceProtocol
-    private let remoteDataSource: MindReaderRemoteDataSourceProtocol?
-    
-    init(
-        localDataSource: MindReaderLocalDataSourceProtocol,
-        remoteDataSource: MindReaderRemoteDataSourceProtocol? = nil
-    ) {
+class MindReaderRepositoryImpl: MindReaderRepositoryProtocol {
+    private let localDataSource: MindReaderCategoriesLocalDataSourceProtocol
+    private let remoteDataSource: MindReaderRemoteDataSourceProtocol
+
+    init(localDataSource: MindReaderCategoriesLocalDataSourceProtocol, remoteDataSource: MindReaderRemoteDataSourceProtocol) {
         self.localDataSource = localDataSource
         self.remoteDataSource = remoteDataSource
     }
-    
-    func getWorlds() async throws -> [MindReaderWorld] {
-        if let remoteDS = remoteDataSource {
-            do {
-                let dtos = try await remoteDS.fetchWorlds()
-                let domainWorlds: [MindReaderWorld] = dtos.compactMap { dto in
-                    guard let id = dto.id, let name = dto.name else { return nil }
-                    return MindReaderWorld(
-                        id: id,
-                        name: name,
-                        icon: dto.icon ?? "🌐",
-                        isUnlocked: dto.isUnlocked ?? true
-                    )
-                }
-                if !domainWorlds.isEmpty {
-                    return domainWorlds
-                }
-            } catch {
-               
-            }
-        }
+
+    func fetchCategories() -> [GameCategory] {
+        return localDataSource.fetchCategories().map { $0.toDomain() }
+    }
+
+    func requestNextStep(category: GameCategory, history: [GameTurn]) async throws -> AIGameDecision {
+        let historyPrompt = history.map { turn in
+            "\(turn.index). Q: \(turn.questionTargetText) -> A: \(turn.answer.rawValue)"
+        }.joined(separator: "\n")
         
-        let response = try await localDataSource.loadWorldsResponse()
-        let localWorldDTOs: [MindReaderWorldDTO] = response.worlds ?? []
-        let domainWorlds: [MindReaderWorld] = localWorldDTOs.compactMap { dto in
-            guard let id = dto.id, let name = dto.name else { return nil }
-            return MindReaderWorld(
-                id: id,
-                name: name,
-                icon: dto.icon ?? "🌐",
-                isUnlocked: dto.isUnlocked ?? true
-            )
-        }
-        
-        return domainWorlds
+        let nativeLanguage = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.nativeLanguageName) ?? "English"
+        let targetLanguage = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.targetLanguageName) ?? "Spanish"
+
+        let dto = try await remoteDataSource.requestNextStep(
+            categoryContext: category.promptContext,
+            historyPrompt: historyPrompt,
+            targetLanguage: targetLanguage,
+            nativeLanguage: nativeLanguage
+        )
+        return try dto.toDomain()
     }
     
-    func getMatrixForWorld(worldId: String) async throws -> (words: [MindReaderWord], attributes: [QuestionAttribute]) {
-        if let remoteDS = remoteDataSource {
-            do {
-                let matrixDTO = try await remoteDS.fetchWorldMatrix(worldId: worldId)
-                return mapMatrixDTOToDomain(matrixDTO: matrixDTO, worldId: worldId)
-            } catch {
-                // Fallback to local data source
-            }
-        }
+    func requestQuizChoices(category: GameCategory, correctWord: String) async throws -> [QuizChoice] {
+        let nativeLanguage = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.nativeLanguageName) ?? "English"
+        let targetLanguage = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.targetLanguageName) ?? "Spanish"
         
-        let response = try await localDataSource.loadWorldsResponse()
-        let matrices: [MindReaderWorldMatrixDTO] = response.matrices ?? []
-        let targetMatrix = matrices.first(where: { $0.world?.id == worldId }) ?? matrices.first
-        
-        guard let matrix = targetMatrix else {
-            return (words: [], attributes: [])
-        }
-        
-        return mapMatrixDTOToDomain(matrixDTO: matrix, worldId: worldId)
+        let dtos = try await remoteDataSource.requestQuizChoices(
+            categoryContext: category.promptContext,
+            correctWord: correctWord,
+            nativeLanguage: nativeLanguage,
+            targetLanguage: targetLanguage
+        )
+        return dtos.map { $0.toDomain() }
     }
     
-    func saveGameResult(worldId: String, result: TrapValidationResult) async throws {
-        try await localDataSource.saveLocalResult(worldId: worldId, result: result)
-        if let remoteDS = remoteDataSource {
-            try? await remoteDS.submitResult(worldId: worldId, result: result)
-        }
-    }
-    
-    // MARK: - Private Mapper
-    
-    private func mapMatrixDTOToDomain(
-        matrixDTO: MindReaderWorldMatrixDTO,
-        worldId: String
-    ) -> (words: [MindReaderWord], attributes: [QuestionAttribute]) {
-        let rawWords: [MindReaderWordDTO] = matrixDTO.words ?? []
-        let domainWords: [MindReaderWord] = rawWords.compactMap { dto in
-            guard let id = dto.id,
-                  let targetLang = dto.wordTargetLanguage,
-                  let nativeLang = dto.wordNativeLanguage else {
-                return nil
-            }
-            return MindReaderWord(
-                id: id,
-                wordTargetLanguage: targetLang,
-                wordNativeLanguage: nativeLang,
-                emoji: dto.emoji ?? "❓",
-                categoryId: dto.categoryId ?? worldId,
-                audioUrl: dto.audioUrl,
-                attributeWeights: dto.attributeWeights ?? [:],
-                probability: 0.0
-            )
-        }
+    func verifyHonesty(category: GameCategory, history: [GameTurn], claimedWord: String) async throws -> HonestyVerdict {
+        let historyPrompt = history.map { turn in
+            "\(turn.index). Q: \(turn.questionTargetText) -> A: \(turn.answer.rawValue)"
+        }.joined(separator: "\n")
         
-        let rawAttributes: [QuestionAttributeDTO] = matrixDTO.attributes ?? []
-        let domainAttributes: [QuestionAttribute] = rawAttributes.compactMap { dto in
-            guard let id = dto.id,
-                  let promptTarget = dto.promptTargetLanguage,
-                  let promptNative = dto.promptNativeLanguage else {
-                return nil
-            }
-            return QuestionAttribute(
-                id: id,
-                promptTargetLanguage: promptTarget,
-                promptNativeLanguage: promptNative,
-                audioUrl: dto.audioUrl,
-                informationGain: 0.0
-            )
-        }
+        let appLangCode = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en"
+        let feedbackLanguage = appLangCode == "ar" ? "Arabic" : "English"
         
-        return (words: domainWords, attributes: domainAttributes)
+        let dto = try await remoteDataSource.verifyHonesty(
+            categoryContext: category.promptContext,
+            historyPrompt: historyPrompt,
+            claimedWord: claimedWord,
+            feedbackLanguage: feedbackLanguage
+        )
+        return dto.toDomain()
     }
 }

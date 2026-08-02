@@ -1,51 +1,86 @@
-
+//
+//  MindReaderRemoteDataSource.swift
+//  Lingua Quest
+//
+//  Created by siam on 02/08/2026.
+//
 
 import Foundation
 
-final class MindReaderRemoteDataSource: MindReaderRemoteDataSourceProtocol {
+class MindReaderRemoteDataSource: MindReaderRemoteDataSourceProtocol {
     private let apiClient: APIClientProtocol
     
     init(apiClient: APIClientProtocol) {
         self.apiClient = apiClient
     }
     
-    func fetchWorlds() async throws -> [MindReaderWorldDTO] {
-        let endpoint = MindReaderEndpoint.GetWorlds()
-        return try await apiClient.request(endpoint)
-    }
-    
-    func fetchWorldMatrix(worldId: String) async throws -> MindReaderWorldMatrixDTO {
-        let endpoint = MindReaderEndpoint.GetWorldMatrix(worldId: worldId)
-        return try await apiClient.request(endpoint)
-    }
-    
-    func submitResult(worldId: String, result: TrapValidationResult) async throws {
-        let isVictory: Bool
-        let coins: Int
-        let xp: Int
-        let reason: String?
+    private func extractAndDecode<T: Decodable>(_ rawText: String, type: T.Type) throws -> T {
+        var text = rawText
         
-        switch result {
-        case .victory(let coinsEarned, let xpEarned, _):
-            isVictory = true
-            coins = coinsEarned
-            xp = xpEarned
-            reason = nil
-        case .busted(let failureReason):
-            isVictory = false
-            coins = 0
-            xp = 0
-            reason = failureReason
+        // Extract JSON from markdown or introductory text
+        if let jsonStart = text.range(of: "```json\n"),
+           let jsonEnd = text.range(of: "\n```", range: jsonStart.upperBound..<text.endIndex) {
+            text = String(text[jsonStart.upperBound..<jsonEnd.lowerBound])
+        } else if let jsonStart = text.firstIndex(of: "{"),
+                  let jsonEnd = text.lastIndex(of: "}") {
+            text = String(text[jsonStart...jsonEnd])
+        } else if let jsonStart = text.firstIndex(of: "["),
+                  let jsonEnd = text.lastIndex(of: "]") {
+            text = String(text[jsonStart...jsonEnd])
         }
         
-        let endpoint = MindReaderEndpoint.SaveGameResult(
-            worldId: worldId,
-            isVictory: isVictory,
-            coinsEarned: coins,
-            xpEarned: xp,
-            reason: reason
-        )
+        text = text.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        let _: EmptyBody? = try await apiClient.request(endpoint)
+        guard let jsonData = text.data(using: .utf8), !jsonData.isEmpty else {
+            throw NSError(domain: "MindReader", code: 0, userInfo: [NSLocalizedDescriptionKey: "Empty or invalid response from model"])
+        }
+        
+        do {
+            return try JSONDecoder().decode(T.self, from: jsonData)
+        } catch {
+            print("JSON DECODING ERROR: \(error)")
+            print("Raw text was: \(text)")
+            throw error
+        }
+    }
+    
+    func requestNextStep(categoryContext: String, historyPrompt: String, targetLanguage: String, nativeLanguage: String) async throws -> AkinatorStepResponseDTO {
+        let endpoint = MindReaderNextStepEndpoint(categoryContext: categoryContext, historyPrompt: historyPrompt, targetLanguage: targetLanguage, nativeLanguage: nativeLanguage)
+        
+        let bedrockResponse: BedrockResponse
+        do {
+            bedrockResponse = try await apiClient.request(endpoint)
+        } catch {
+            throw NSError(domain: "MindReader", code: 0, userInfo: [NSLocalizedDescriptionKey: "API Error: \(error.localizedDescription)"])
+        }
+        
+        return try extractAndDecode(bedrockResponse.outputText, type: AkinatorStepResponseDTO.self)
+    }
+    
+    func requestQuizChoices(categoryContext: String, correctWord: String, nativeLanguage: String, targetLanguage: String) async throws -> [QuizChoiceDTO] {
+        let endpoint = MindReaderQuizEndpoint(categoryContext: categoryContext, correctWord: correctWord, nativeLanguage: nativeLanguage, targetLanguage: targetLanguage)
+        
+        let bedrockResponse: BedrockResponse
+        do {
+            bedrockResponse = try await apiClient.request(endpoint)
+        } catch {
+            throw NSError(domain: "MindReader", code: 0, userInfo: [NSLocalizedDescriptionKey: "API Error: \(error.localizedDescription)"])
+        }
+        
+        let wrapper = try extractAndDecode(bedrockResponse.outputText, type: QuizChoiceWrapperDTO.self)
+        return wrapper.choices
+    }
+    
+    func verifyHonesty(categoryContext: String, historyPrompt: String, claimedWord: String, feedbackLanguage: String) async throws -> HonestyResponseDTO {
+        let endpoint = MindReaderHonestyEndpoint(categoryContext: categoryContext, historyPrompt: historyPrompt, claimedWord: claimedWord, feedbackLanguage: feedbackLanguage)
+        
+        let bedrockResponse: BedrockResponse
+        do {
+            bedrockResponse = try await apiClient.request(endpoint)
+        } catch {
+            throw NSError(domain: "MindReader", code: 0, userInfo: [NSLocalizedDescriptionKey: "API Error: \(error.localizedDescription)"])
+        }
+        
+        return try extractAndDecode(bedrockResponse.outputText, type: HonestyResponseDTO.self)
     }
 }

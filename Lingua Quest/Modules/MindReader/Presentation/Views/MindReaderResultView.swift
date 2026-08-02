@@ -156,11 +156,3 @@ struct MindReaderResultView: View {
     }
 }
 
-#Preview("LightTheme") {
-    MindReaderResultView(viewModel: .preview)
-}
-
-#Preview("DarkTheme") {
-    MindReaderResultView(viewModel: .preview)
-        .preferredColorScheme(.dark)
-}

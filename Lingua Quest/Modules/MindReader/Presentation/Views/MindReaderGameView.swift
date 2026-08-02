@@ -110,7 +110,7 @@ struct MindReaderGameView: View {
                     CustomButton(type: .secendry, text: L10n.MindReader.answerNo, action: { viewModel.onAnswerTapped(.no) })
                     CustomButton(type: .secendry, text: L10n.MindReader.answerSometimes, action: { viewModel.onAnswerTapped(.sometimes) })
                     CustomButton(type: .secendry, text: L10n.MindReader.answerProbablyNot, action: { viewModel.onAnswerTapped(.probablyNot) })
-                    CustomButton(type: .secendry, text: L10n.MindReader.answerDontKnow, action: { viewModel.onAnswerTapped(.dontKnow) })
+                    CustomButton(type: .secendry, text: L10n.MindReader.answerDontKnow, action: { viewModel.onAnswerTapped(.unknown) })
                 }
             }
             .padding(.horizontal, 20)
@@ -250,11 +250,3 @@ struct MindReaderGameView: View {
     }
 }
 
-#Preview("LightTheme") {
-    MindReaderGameView(viewModel: .preview)
-}
-
-#Preview("DarkTheme") {
-    MindReaderGameView(viewModel: .preview)
-        .preferredColorScheme(.dark)
-}

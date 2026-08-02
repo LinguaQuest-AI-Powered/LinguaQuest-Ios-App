@@ -502,3 +502,14 @@
 
 "help_support.faq.q4" = "How do I maintain my streak?";
 "help_support.faq.a4" = "Complete at least one lesson or challenge every day to keep your streak alive!";
+
+"mind_reader.translate_dialog_title" = "Translate Word";
+"mind_reader.translate_dialog_message" = "Do you want to spend coins to see the translation?";
+"mind_reader.game_title" = "Lingo\'s Mind Reader";
+"mind_reader.ai_thinking" = "Lingo is thinking...";
+"mind_reader.select_category_title" = "Choose a category";
+"mind_reader.show_translation" = "Show Translation";
+"mind_reader.pop_quiz_subtitle" = "Which of these is the correct translation?";
+"mind_reader.what_was_your_word" = "What word were you thinking of?";
+"mind_reader.word_placeholder" = "Type your word here...";
+"mind_reader.victory_title" = "You Won!";

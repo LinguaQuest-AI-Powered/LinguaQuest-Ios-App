@@ -538,6 +538,18 @@ enum L10n {
         static var translationPrompt: String { localized("mind_reader.translation_prompt") }
         static var translateThisWord: String { localized("mind_reader.translate_this_word") }
         
+        static var translateDialogTitle: String { localized("mind_reader.translate_dialog_title") }
+        static var translateDialogMessage: String { localized("mind_reader.translate_dialog_message") }
+        static var gameTitle: String { localized("mind_reader.game_title") }
+        static var aiThinking: String { localized("mind_reader.ai_thinking") }
+        static var enterYourWord: String { localized("mind_reader.enter_your_word") }
+        static var selectCategoryTitle: String { localized("mind_reader.select_category_title") }
+        static var showTranslation: String { localized("mind_reader.show_translation") }
+        static var popQuizSubtitle: String { localized("mind_reader.pop_quiz_subtitle") }
+        static var whatWasYourWord: String { localized("mind_reader.what_was_your_word") }
+        static var wordPlaceholder: String { localized("mind_reader.word_placeholder") }
+        static var victoryTitle: String { localized("mind_reader.victory_title") }
+        
         // Result View
         static var legendarySkills: String { localized("mind_reader.result.legendary_skills") }
         static var stumpedLingo: String { localized("mind_reader.result.stumped_lingo") }

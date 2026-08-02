@@ -1,0 +1,26 @@
+[
+  {
+    "id": "kitchen",
+    "key": "kitchen",
+    "nativeName": "Kitchen",
+    "targetName": "Cocina",
+    "emoji": "🍳",
+    "promptContext": "Kitchen items: utensils, appliances, food, furniture found in a kitchen."
+  },
+  {
+    "id": "nature",
+    "key": "nature",
+    "nativeName": "Nature",
+    "targetName": "Naturaleza",
+    "emoji": "🌿",
+    "promptContext": "Nature items: plants, trees, natural landmarks, wild animals."
+  },
+  {
+    "id": "animals",
+    "key": "animals",
+    "nativeName": "Animals",
+    "targetName": "Animales",
+    "emoji": "🦁",
+    "promptContext": "Animals: mammals, birds, fish, reptiles, both wild and domestic."
+  }
+]

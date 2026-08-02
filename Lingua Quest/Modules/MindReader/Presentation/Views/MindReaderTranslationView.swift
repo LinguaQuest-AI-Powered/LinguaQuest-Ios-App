@@ -86,11 +86,3 @@ struct MindReaderTranslationView: View {
     }
 }
 
-#Preview("LightTheme") {
-    MindReaderTranslationView(viewModel: .preview)
-}
-
-#Preview("DarkTheme") {
-    MindReaderTranslationView(viewModel: .preview)
-        .preferredColorScheme(.dark)
-}

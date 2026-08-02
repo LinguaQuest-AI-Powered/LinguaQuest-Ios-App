@@ -1,9 +1,31 @@
-
+//
+//  MindReaderRemoteDataSourceProtocol.swift
+//  Lingua Quest
+//
+//  Created by siam on 02/08/2026.
+//
 
 import Foundation
 
-protocol MindReaderRemoteDataSourceProtocol: Sendable {
-    func fetchWorlds() async throws -> [MindReaderWorldDTO]
-    func fetchWorldMatrix(worldId: String) async throws -> MindReaderWorldMatrixDTO
-    func submitResult(worldId: String, result: TrapValidationResult) async throws
+protocol MindReaderRemoteDataSourceProtocol {
+    func requestNextStep(
+        categoryContext: String,
+        historyPrompt: String,
+        targetLanguage: String,
+        nativeLanguage: String
+    ) async throws -> AkinatorStepResponseDTO
+
+    func requestQuizChoices(
+        categoryContext: String,
+        correctWord: String,
+        nativeLanguage: String,
+        targetLanguage: String
+    ) async throws -> [QuizChoiceDTO]
+
+    func verifyHonesty(
+        categoryContext: String,
+        historyPrompt: String,
+        claimedWord: String,
+        feedbackLanguage: String
+    ) async throws -> HonestyResponseDTO
 }

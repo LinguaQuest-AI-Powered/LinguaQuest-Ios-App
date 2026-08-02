@@ -117,11 +117,3 @@ struct MindReaderIntroView: View {
     }
 }
 
-#Preview("LightTheme") {
-    MindReaderIntroView(viewModel: .preview)
-}
-
-#Preview("DarkTheme") {
-    MindReaderIntroView(viewModel: .preview)
-        .preferredColorScheme(.dark)
-}

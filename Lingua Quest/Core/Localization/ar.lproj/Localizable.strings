@@ -517,3 +517,14 @@
 
 "help_support.faq.q4" = "كيف أحافظ على سلسلتي؟";
 "help_support.faq.a4" = "أكمل درسًا أو تحديًا واحدًا على الأقل كل يوم للحفاظ على سلسلة تعلمك نشطة!";
+
+"mind_reader.translate_dialog_title" = "ترجمة الكلمة";
+"mind_reader.translate_dialog_message" = "هل تريد إنفاق العملات لرؤية الترجمة؟";
+"mind_reader.game_title" = "قراءة أفكار لينجو";
+"mind_reader.ai_thinking" = "لينجو يفكر...";
+"mind_reader.select_category_title" = "اختر فئة";
+"mind_reader.show_translation" = "إظهار الترجمة";
+"mind_reader.pop_quiz_subtitle" = "أي من هذه هي الترجمة الصحيحة؟";
+"mind_reader.what_was_your_word" = "ما الكلمة التي كنت تفكر فيها؟";
+"mind_reader.word_placeholder" = "اكتب كلمتك هنا...";
+"mind_reader.victory_title" = "لقد فزت!";

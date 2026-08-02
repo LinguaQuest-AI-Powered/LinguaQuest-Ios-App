@@ -91,11 +91,3 @@ struct MindReaderGuessView: View {
     }
 }
 
-#Preview("LightTheme") {
-    MindReaderGuessView(viewModel: .preview)
-}
-
-#Preview("DarkTheme") {
-    MindReaderGuessView(viewModel: .preview)
-        .preferredColorScheme(.dark)
-}

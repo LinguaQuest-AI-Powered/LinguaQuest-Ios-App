@@ -13,8 +13,8 @@ final class MindReaderAssembly: Assembly {
     func assemble(container: Container) {
         // MARK: - Data Sources
         
-        container.register(MindReaderLocalDataSourceProtocol.self) { _ in
-            MindReaderLocalDataSource()
+        container.register(MindReaderCategoriesLocalDataSourceProtocol.self) { _ in
+            MindReaderCategoriesLocalDataSource()
         }.inObjectScope(.container)
         
         container.register(MindReaderRemoteDataSourceProtocol.self) { r in
@@ -25,91 +25,100 @@ final class MindReaderAssembly: Assembly {
         // MARK: - Repository
         
         container.register(MindReaderRepositoryProtocol.self) { r in
-            let localDS = r.resolve(MindReaderLocalDataSourceProtocol.self)!
-            let remoteDS = r.resolve(MindReaderRemoteDataSourceProtocol.self)
+            let localDS = r.resolve(MindReaderCategoriesLocalDataSourceProtocol.self)!
+            let remoteDS = r.resolve(MindReaderRemoteDataSourceProtocol.self)!
             return MindReaderRepositoryImpl(localDataSource: localDS, remoteDataSource: remoteDS)
         }.inObjectScope(.container)
         
         // MARK: - Use Cases
         
-        container.register(InitializeGameUseCase.self) { r in
+        container.register(GetCategoriesUseCase.self) { r in
             let repo = r.resolve(MindReaderRepositoryProtocol.self)!
-            return InitializeGameUseCase(repository: repo)
+            return GetCategoriesUseCase(repository: repo)
         }
         
-        container.register(CalculateNextQuestionUseCase.self) { _ in
-            CalculateNextQuestionUseCase()
+        container.register(RequestNextGameStepUseCase.self) { r in
+            let repo = r.resolve(MindReaderRepositoryProtocol.self)!
+            return RequestNextGameStepUseCase(repository: repo)
         }
         
-        container.register(ProcessUserAnswerUseCase.self) { _ in
-            ProcessUserAnswerUseCase()
+        container.register(RequestQuizChoicesUseCase.self) { r in
+            let repo = r.resolve(MindReaderRepositoryProtocol.self)!
+            return RequestQuizChoicesUseCase(repository: repo)
         }
         
-        container.register(ValidateHonestyUseCase.self) { _ in
-            ValidateHonestyUseCase()
+        container.register(VerifyHonestyUseCase.self) { r in
+            let repo = r.resolve(MindReaderRepositoryProtocol.self)!
+            return VerifyHonestyUseCase(repository: repo)
         }
         
-        // MARK: - Game Coordinator (Shared across all MindReader screens)
+        // MARK: - Coordinator
         
         container.register(MindReaderGameCoordinator.self) { r in
             MindReaderGameCoordinator(
-                initializeGameUseCase: r.resolve(InitializeGameUseCase.self)!,
-                calculateNextQuestionUseCase: r.resolve(CalculateNextQuestionUseCase.self)!,
-                processUserAnswerUseCase: r.resolve(ProcessUserAnswerUseCase.self)!,
-                validateHonestyUseCase: r.resolve(ValidateHonestyUseCase.self)!,
-                repository: r.resolve(MindReaderRepositoryProtocol.self)!
+                getCategoriesUseCase: r.resolve(GetCategoriesUseCase.self)!,
+                requestNextGameStepUseCase: r.resolve(RequestNextGameStepUseCase.self)!,
+                requestQuizChoicesUseCase: r.resolve(RequestQuizChoicesUseCase.self)!,
+                verifyHonestyUseCase: r.resolve(VerifyHonestyUseCase.self)!
             )
         }.inObjectScope(.container)
         
         // MARK: - ViewModels
         
         container.register(MindReaderIntroViewModel.self) { r in
-            let statsService = r.resolve(StatsService.self)!
-            let router = r.resolve(RouterProtocol.self)!
-            let coordinator = r.resolve(MindReaderGameCoordinator.self)!
-            return MindReaderIntroViewModel(router: router, statsService: statsService, coordinator: coordinator)
+            MindReaderIntroViewModel(
+                router: r.resolve(RouterProtocol.self)!,
+                statsService: r.resolve(StatsService.self)!,
+                coordinator: r.resolve(MindReaderGameCoordinator.self)!
+            )
         }
         
         container.register(MindReaderGameViewModel.self) { r in
-            let statsService = r.resolve(StatsService.self)!
-            let router = r.resolve(RouterProtocol.self)!
-            let coordinator = r.resolve(MindReaderGameCoordinator.self)!
-            return MindReaderGameViewModel(router: router, statsService: statsService, coordinator: coordinator)
+            MindReaderGameViewModel(
+                router: r.resolve(RouterProtocol.self)!,
+                statsService: r.resolve(StatsService.self)!,
+                coordinator: r.resolve(MindReaderGameCoordinator.self)!
+            )
         }
         
         container.register(MindReaderGuessViewModel.self) { r in
-            let statsService = r.resolve(StatsService.self)!
-            let router = r.resolve(RouterProtocol.self)!
-            let coordinator = r.resolve(MindReaderGameCoordinator.self)!
-            return MindReaderGuessViewModel(router: router, statsService: statsService, coordinator: coordinator)
+            MindReaderGuessViewModel(
+                router: r.resolve(RouterProtocol.self)!,
+                statsService: r.resolve(StatsService.self)!,
+                coordinator: r.resolve(MindReaderGameCoordinator.self)!
+            )
         }
         
         container.register(MindReaderTranslationViewModel.self) { r in
-            let statsService = r.resolve(StatsService.self)!
-            let router = r.resolve(RouterProtocol.self)!
-            let coordinator = r.resolve(MindReaderGameCoordinator.self)!
-            return MindReaderTranslationViewModel(router: router, statsService: statsService, coordinator: coordinator)
+            MindReaderTranslationViewModel(
+                router: r.resolve(RouterProtocol.self)!,
+                statsService: r.resolve(StatsService.self)!,
+                coordinator: r.resolve(MindReaderGameCoordinator.self)!
+            )
         }
         
         container.register(MindReaderResultViewModel.self) { r in
-            let statsService = r.resolve(StatsService.self)!
-            let router = r.resolve(RouterProtocol.self)!
-            let coordinator = r.resolve(MindReaderGameCoordinator.self)!
-            return MindReaderResultViewModel(router: router, statsService: statsService, coordinator: coordinator)
+            MindReaderResultViewModel(
+                router: r.resolve(RouterProtocol.self)!,
+                statsService: r.resolve(StatsService.self)!,
+                coordinator: r.resolve(MindReaderGameCoordinator.self)!
+            )
         }
         
         container.register(MindReaderFailureViewModel.self) { r in
-            let statsService = r.resolve(StatsService.self)!
-            let router = r.resolve(RouterProtocol.self)!
-            let coordinator = r.resolve(MindReaderGameCoordinator.self)!
-            return MindReaderFailureViewModel(router: router, statsService: statsService, coordinator: coordinator)
+            MindReaderFailureViewModel(
+                router: r.resolve(RouterProtocol.self)!,
+                statsService: r.resolve(StatsService.self)!,
+                coordinator: r.resolve(MindReaderGameCoordinator.self)!
+            )
         }
         
         container.register(MindReaderGiveUpViewModel.self) { r in
-            let statsService = r.resolve(StatsService.self)!
-            let router = r.resolve(RouterProtocol.self)!
-            let coordinator = r.resolve(MindReaderGameCoordinator.self)!
-            return MindReaderGiveUpViewModel(router: router, statsService: statsService, coordinator: coordinator)
+            MindReaderGiveUpViewModel(
+                router: r.resolve(RouterProtocol.self)!,
+                statsService: r.resolve(StatsService.self)!,
+                coordinator: r.resolve(MindReaderGameCoordinator.self)!
+            )
         }
     }
 }
