@@ -274,6 +274,14 @@
 "edit_profile.camera" = "Camera";
 "edit_profile.gallery" = "Gallery";
 "edit_profile.uploading_photo" = "Uploading photo...";
+"edit_profile.tab_personal_info" = "Personal Info";
+"edit_profile.tab_security" = "Security";
+"edit_profile.change_password" = "Change Password";
+"edit_profile.old_password" = "Old Password";
+"edit_profile.old_password_placeholder" = "old password";
+"edit_profile.new_password" = "New Password";
+"edit_profile.new_password_placeholder" = "new password";
+"edit_profile.new_password_hint" = "Minimum 6 characters";
 
 // My Languages & Add Language
 "home.my_languages_title" = "My Languages";

@@ -398,6 +398,14 @@ enum L10n {
         static var camera: String { localized("edit_profile.camera") }
         static var gallery: String { localized("edit_profile.gallery") }
         static var uploadingPhoto: String { localized("edit_profile.uploading_photo") }
+        static var tabPersonalInfo: String { localized("edit_profile.tab_personal_info") }
+        static var tabSecurity: String { localized("edit_profile.tab_security") }
+        static var changePassword: String { localized("edit_profile.change_password") }
+        static var oldPassword: String { localized("edit_profile.old_password") }
+        static var oldPasswordPlaceholder: String { localized("edit_profile.old_password_placeholder") }
+        static var newPassword: String { localized("edit_profile.new_password") }
+        static var newPasswordPlaceholder: String { localized("edit_profile.new_password_placeholder") }
+        static var newPasswordHint: String { localized("edit_profile.new_password_hint") }
     }
 
 
