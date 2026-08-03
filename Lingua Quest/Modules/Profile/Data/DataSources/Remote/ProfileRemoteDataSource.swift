@@ -20,6 +20,7 @@ protocol ProfileRemoteDataSourceProtocol {
     
     // Leaderboard
     func fetchLeaderboard(scope: String, languageId: Int, page: Int, limit: Int) async throws -> LeaderboardResponseDTO
+    func changePassword(oldPassword: String, newPassword: String) async throws -> ChangePasswordResponseDTO
 }
 
 final class ProfileRemoteDataSource: ProfileRemoteDataSourceProtocol {
@@ -69,5 +70,9 @@ final class ProfileRemoteDataSource: ProfileRemoteDataSourceProtocol {
     // MARK: - Leaderboard
     func fetchLeaderboard(scope: String, languageId: Int, page: Int, limit: Int) async throws -> LeaderboardResponseDTO {
         return try await apiClient.request(ProfileEndpoint.GetLeaderboard(scope: scope, languageId: languageId, page: page, limit: limit))
+    }
+
+    func changePassword(oldPassword: String, newPassword: String) async throws -> ChangePasswordResponseDTO {
+        return try await apiClient.request(ProfileEndpoint.ChangePassword(oldPassword: oldPassword, newPassword: newPassword))
     }
 }
