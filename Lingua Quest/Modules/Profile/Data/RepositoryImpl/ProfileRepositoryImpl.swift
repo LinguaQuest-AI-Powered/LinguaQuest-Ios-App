@@ -175,5 +175,10 @@ final class ProfileRepositoryImpl: ProfileRepositoryProtocol {
             hasMore: hasMore
         )
     }
+
+    // MARK: - Password
+    func changePassword(oldPassword: String, newPassword: String) async throws {
+        _ = try await remoteDataSource.changePassword(oldPassword: oldPassword, newPassword: newPassword)
+    }
 }
 

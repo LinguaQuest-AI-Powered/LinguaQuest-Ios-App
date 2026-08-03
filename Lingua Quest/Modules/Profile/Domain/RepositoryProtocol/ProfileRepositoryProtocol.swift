@@ -20,5 +20,8 @@ protocol ProfileRepositoryProtocol {
     
     // Leaderboard
     func getLeaderboard(scope: String, languageId: Int, page: Int, limit: Int) async throws -> LeaderboardDataEntity
+
+    // Password
+    func changePassword(oldPassword: String, newPassword: String) async throws
 }
 
