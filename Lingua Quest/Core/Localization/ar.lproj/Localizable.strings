@@ -275,6 +275,14 @@
 "edit_profile.camera" = "الكاميرا";
 "edit_profile.gallery" = "معرض الصور";
 "edit_profile.uploading_photo" = "جاري رفع الصورة...";
+"edit_profile.tab_personal_info" = "المعلومات الشخصية";
+"edit_profile.tab_security" = "الأمان";
+"edit_profile.change_password" = "تغيير كلمة المرور";
+"edit_profile.old_password" = "كلمة المرور القديمة";
+"edit_profile.old_password_placeholder" = "كلمة المرور القديمة";
+"edit_profile.new_password" = "كلمة المرور الجديدة";
+"edit_profile.new_password_placeholder" = "كلمة المرور الجديدة";
+"edit_profile.new_password_hint" = "6 أحرف على الأقل";
 
 
 // My Languages & Add Language

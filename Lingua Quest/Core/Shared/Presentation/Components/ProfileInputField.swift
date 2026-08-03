@@ -10,54 +10,83 @@ struct ProfileInputField: View {
     let placeholder: String
     let icon: Image.SystemIcon
     let isMultiline: Bool
+    let isSecure: Bool
     @Binding var text: String
-    
-    init(title: String, placeholder: String, icon: Image.SystemIcon, isMultiline: Bool = false, text: Binding<String>) {
+
+    @State private var isRevealed: Bool = false
+
+    init(
+        title: String,
+        placeholder: String,
+        icon: Image.SystemIcon,
+        isMultiline: Bool = false,
+        isSecure: Bool = false,
+        text: Binding<String>
+    ) {
         self.title = title
         self.placeholder = placeholder
         self.icon = icon
         self.isMultiline = isMultiline
+        self.isSecure = isSecure
         self._text = text
     }
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
                 .appTextStyle(.body, color: .appIconBrown)
-            
+
             HStack(alignment: isMultiline ? .bottom : .center, spacing: 12) {
-                if isMultiline {
-                    TextField(
-                        "",
-                        text: $text,
-                        prompt: Text(placeholder)
-                            .foregroundColor(Color.appTextSecondary.opacity(0.5)),
-                        axis: .vertical
-                    )
-                    .lineLimit(4, reservesSpace: true)
-                    .appTextStyle(.body, color: .appTextHeading)
-                    .autocapitalization(.none)
-                    .disableAutocorrection(true)
-                } else {
-                    TextField(
-                        "",
-                        text: $text,
-                        prompt: Text(placeholder)
-                            .foregroundColor(Color.appTextSecondary.opacity(0.5))
-                    )
-                    .appTextStyle(.body, color: .appTextHeading)
-                    .autocapitalization(.none)
-                    .disableAutocorrection(true)
+                Group {
+                    if isSecure && !isRevealed {
+                        SecureField(
+                            "",
+                            text: $text,
+                            prompt: Text(placeholder)
+                                .foregroundColor(Color.appTextSecondary.opacity(0.5))
+                        )
+                    } else if isMultiline {
+                        TextField(
+                            "",
+                            text: $text,
+                            prompt: Text(placeholder)
+                                .foregroundColor(Color.appTextSecondary.opacity(0.5)),
+                            axis: .vertical
+                        )
+                        .lineLimit(4, reservesSpace: true)
+                    } else {
+                        TextField(
+                            "",
+                            text: $text,
+                            prompt: Text(placeholder)
+                                .foregroundColor(Color.appTextSecondary.opacity(0.5))
+                        )
+                    }
                 }
-                
-                Image(systemIcon: icon)
-                    .foregroundColor(.appBorderBrown)
-                    .font(.system(size: 20))
+                .appTextStyle(.body, color: .appTextHeading)
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+
+                // Trailing icon — toggle visibility for secure fields, static otherwise
+                if isSecure {
+                    Button {
+                        isRevealed.toggle()
+                    } label: {
+                        Image(systemName: isRevealed ? "eye" : "eye.slash")
+                            .foregroundColor(.appBorderBrown)
+                            .font(.system(size: 20))
+                    }
+                    .buttonStyle(.plain)
+                } else {
+                    Image(systemIcon: icon)
+                        .foregroundColor(.appBorderBrown)
+                        .font(.system(size: 20))
+                }
             }
             .padding(.horizontal, 16)
             .padding(.vertical, isMultiline ? 16 : 0)
             .frame(height: isMultiline ? nil : 56)
-            .background(Color.appSurfaceNavBar) // Light warm background
+            .background(Color.appSurfaceNavBar)
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
@@ -70,7 +99,7 @@ struct ProfileInputField: View {
 #Preview {
     ZStack {
         Color.appBackgroundWarm.ignoresSafeArea()
-        
+
         VStack(spacing: 24) {
             ProfileInputField(
                 title: "Display Name",
@@ -78,10 +107,18 @@ struct ProfileInputField: View {
                 icon: .person,
                 text: .constant("")
             )
-            
+
+            ProfileInputField(
+                title: "Password",
+                placeholder: "old password",
+                icon: .lockFill,
+                isSecure: true,
+                text: .constant("")
+            )
+
             ProfileInputField(
                 title: "Explorer's Tagline",
-                placeholder: "Mapping the wild frontiers of the French language, one word at a time!",
+                placeholder: "Mapping the wild frontiers...",
                 icon: .squareAndPencil,
                 isMultiline: true,
                 text: .constant("")

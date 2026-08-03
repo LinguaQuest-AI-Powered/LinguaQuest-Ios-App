@@ -1,5 +1,4 @@
 
-
 import Observation
 import SwiftUI
 
@@ -9,10 +8,13 @@ final class EditProfileViewModel {
     private let getProfileUseCase: GetProfileUseCaseProtocol
     private let updateProfileUseCase: UpdateProfileUseCaseProtocol
     private let uploadProfilePhotoUseCase: UploadProfilePhotoUseCaseProtocol
+    private let changePasswordUseCase: ChangePasswordUseCaseProtocol
+
+    // MARK: - Tab State
+    var selectedTab: EditProfileTab = .personalInfo
 
     // MARK: - Form State
     var displayName: String = ""
-    var tagline: String = ""
 
     // MARK: - Photo State
     var avatarImage: String? = nil
@@ -27,15 +29,24 @@ final class EditProfileViewModel {
     var errorMessage: String? = nil
     var saveSucceeded: Bool = false
 
+    // MARK: - Change Password State
+    var oldPassword: String = ""
+    var newPassword: String = ""
+    var isChangingPassword: Bool = false
+    var passwordErrorMessage: String? = nil
+    var passwordChangeSucceeded: Bool = false
+
     // MARK: - Init
     init(
         getProfileUseCase: GetProfileUseCaseProtocol,
         updateProfileUseCase: UpdateProfileUseCaseProtocol,
-        uploadProfilePhotoUseCase: UploadProfilePhotoUseCaseProtocol
+        uploadProfilePhotoUseCase: UploadProfilePhotoUseCaseProtocol,
+        changePasswordUseCase: ChangePasswordUseCaseProtocol
     ) {
         self.getProfileUseCase = getProfileUseCase
         self.updateProfileUseCase = updateProfileUseCase
         self.uploadProfilePhotoUseCase = uploadProfilePhotoUseCase
+        self.changePasswordUseCase = changePasswordUseCase
     }
 
     // MARK: - Load Profile
@@ -104,7 +115,7 @@ final class EditProfileViewModel {
         }
     }
 
-    // MARK: - Save Intention
+    // MARK: - Save Profile
 
     func saveChanges() {
         let trimmed = displayName.trimmingCharacters(in: .whitespaces)
@@ -123,12 +134,61 @@ final class EditProfileViewModel {
                 }
             } catch {
                 await MainActor.run {
-                    self.errorMessage = error.localizedDescription
+                    self.errorMessage = (error as? NetworkError)?.apiErrorMessage ?? error.localizedDescription
                     self.isSaving = false
+                }
+            }
+        }
+    }
+
+    // MARK: - Change Password
+
+    var canChangePassword: Bool {
+        !oldPassword.isEmpty && newPassword.count >= 6
+    }
+
+    var canSaveProfile: Bool {
+        !displayName.trimmingCharacters(in: .whitespaces).isEmpty
+    }
+
+    func changePassword() {
+        guard canChangePassword else { return }
+
+        isChangingPassword = true
+        passwordErrorMessage = nil
+
+        Task {
+            do {
+                try await changePasswordUseCase.execute(
+                    oldPassword: oldPassword,
+                    newPassword: newPassword
+                )
+                await MainActor.run {
+                    self.isChangingPassword = false
+                    self.passwordChangeSucceeded = true
+                    self.oldPassword = ""
+                    self.newPassword = ""
+                }
+            } catch {
+                await MainActor.run {
+                    self.passwordErrorMessage = (error as? NetworkError)?.apiErrorMessage ?? error.localizedDescription
+                    self.isChangingPassword = false
                 }
             }
         }
     }
 }
 
+// MARK: - Tab
 
+enum EditProfileTab: CaseIterable {
+    case personalInfo
+    case security
+
+    var title: String {
+        switch self {
+        case .personalInfo: return L10n.EditProfile.tabPersonalInfo
+        case .security:     return L10n.EditProfile.tabSecurity
+        }
+    }
+}

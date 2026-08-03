@@ -8,7 +8,8 @@ import SwiftUI
 struct EditProfileActionsSection: View {
     let onSave: () -> Void
     let onCancel: () -> Void
-    
+    var saveStatus: ButtonStatus = .enable
+
     var body: some View {
         VStack(spacing: 24) {
             HStack(alignment: .top, spacing: 8) {
@@ -16,20 +17,21 @@ struct EditProfileActionsSection: View {
                     .foregroundColor(.appTextSecondary)
                     .font(.system(size: 14))
                     .padding(.top, 2)
-                
+
                 Text(L10n.EditProfile.infoText)
                     .appTextStyle(.captionMedium, color: .appTextSecondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .padding(.horizontal, 8)
-            
+
             VStack(spacing: 16) {
                 CustomButton(
                     type: .primary,
                     text: L10n.EditProfile.saveChanges,
-                    action: onSave
+                    action: onSave,
+                    status: saveStatus
                 )
-                
+
                 Button {
                     onCancel()
                 } label: {

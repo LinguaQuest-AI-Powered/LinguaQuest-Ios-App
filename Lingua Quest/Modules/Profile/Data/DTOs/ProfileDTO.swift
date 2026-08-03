@@ -36,6 +36,21 @@ struct UploadPhotoDataDTO: Decodable {
     let photoUrl: String
 }
 
+// MARK: - Change Password
+struct ChangePasswordRequestDTO: Encodable {
+    let oldPassword: String
+    let newPassword: String
+}
+
+struct ChangePasswordResponseDTO: Decodable {
+    let success: Bool
+    let data: ChangePasswordDataDTO
+}
+
+struct ChangePasswordDataDTO: Decodable {
+    let status: String
+}
+
 
 struct ProfileDataDTO: Decodable {
     let id: Int
@@ -46,8 +61,25 @@ struct ProfileDataDTO: Decodable {
     let level: Int?
     let stats: ProfileStatsDTO?
     let currentLanguageJourney: ProfileJourneyDTO?
-    let achievementsSummary: ProfileAchievementsSummaryDTO?
-    let leaderboardSummary: ProfileLeaderboardSummaryDTO?
+    let achievements: [ProfileAchievementPreviewDTO]?
+    let leaderboard: [ProfileLeaderboardPreviewDTO]?
+
+    // Keep computed wrappers so the repository code doesn't need to change
+    var achievementsSummary: ProfileAchievementsSummaryDTO? {
+        guard let achievements else { return nil }
+        return ProfileAchievementsSummaryDTO(
+            earnedCount: achievements.filter { $0.status == "UNLOCKED" }.count,
+            totalCount: achievements.count,
+            preview: achievements
+        )
+    }
+
+    var leaderboardSummary: ProfileLeaderboardSummaryDTO? {
+        guard let leaderboard else { return nil }
+        // find current user's rank, fall back to 0
+        let myRank = leaderboard.first(where: { $0.isCurrentUser })?.rank ?? 0
+        return ProfileLeaderboardSummaryDTO(myRank: myRank, preview: leaderboard)
+    }
 }
 
 struct ProfileStatsDTO: Decodable {
@@ -67,7 +99,7 @@ struct ProfileJourneyDTO: Decodable {
     let nextMilestoneXp: Int
 }
 
-struct ProfileAchievementsSummaryDTO: Decodable {
+struct ProfileAchievementsSummaryDTO {
     let earnedCount: Int
     let totalCount: Int
     let preview: [ProfileAchievementPreviewDTO]
@@ -82,7 +114,7 @@ struct ProfileAchievementPreviewDTO: Decodable {
     let progressPercent: Int
 }
 
-struct ProfileLeaderboardSummaryDTO: Decodable {
+struct ProfileLeaderboardSummaryDTO {
     let myRank: Int
     let preview: [ProfileLeaderboardPreviewDTO]
 }
