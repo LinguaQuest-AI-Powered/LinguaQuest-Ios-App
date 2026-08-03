@@ -88,6 +88,18 @@ enum ProfileEndpoint {
         var requiresAuth: Bool { true }
     }
     
+    struct ChangePassword: Endpoint {
+        let oldPassword: String
+        let newPassword: String
+
+        var path: String { "/profile/password" }
+        var method: HTTPMethod { .patch }
+        var body: ChangePasswordRequestDTO? {
+            ChangePasswordRequestDTO(oldPassword: oldPassword, newPassword: newPassword)
+        }
+        var requiresAuth: Bool { true }
+    }
+
     // MARK: - Achievements
     struct GetAchievements: Endpoint {
         let status: String
