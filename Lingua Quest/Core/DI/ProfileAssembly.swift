@@ -40,15 +40,22 @@ final class ProfileAssembly: Assembly {
             let repository = resolver.resolve(ProfileRepositoryProtocol.self)!
             return UpdateProfileUseCase(repository: repository)
         }
-        
+
+        container.register(ChangePasswordUseCaseProtocol.self) { resolver in
+            let repository = resolver.resolve(ProfileRepositoryProtocol.self)!
+            return ChangePasswordUseCase(repository: repository)
+        }
+
         container.register(EditProfileViewModel.self) { resolver in
             let getProfileUseCase = resolver.resolve(GetProfileUseCaseProtocol.self)!
             let updateProfileUseCase = resolver.resolve(UpdateProfileUseCaseProtocol.self)!
             let uploadProfilePhotoUseCase = resolver.resolve(UploadProfilePhotoUseCaseProtocol.self)!
+            let changePasswordUseCase = resolver.resolve(ChangePasswordUseCaseProtocol.self)!
             return EditProfileViewModel(
                 getProfileUseCase: getProfileUseCase,
                 updateProfileUseCase: updateProfileUseCase,
-                uploadProfilePhotoUseCase: uploadProfilePhotoUseCase
+                uploadProfilePhotoUseCase: uploadProfilePhotoUseCase,
+                changePasswordUseCase: changePasswordUseCase
             )
         }
         
