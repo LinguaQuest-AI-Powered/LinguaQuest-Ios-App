@@ -116,6 +116,16 @@ struct HomeRepositoryImpl: HomeRepositoryProtocol {
         return domain
     }
     
+    func removeLanguages(languageIds: [Int]) async throws -> [MyTargetLanguage] {
+        let response = try await remoteDataSource.removeLanguages(languageIds: languageIds)
+        let domain = response.data.languages.map { $0.toDomain() }
+        // We removed languages, let's invalidate the cache
+        localDataSource.myLanguages = nil
+        localDataSource.availableLanguages = nil
+        localDataSource.homeData = nil // Progress may change
+        return domain
+    }
+    
     func changeNativeLanguage(languageId: Int) async throws {
         try await remoteDataSource.changeNativeLanguage(languageId: languageId)
     }

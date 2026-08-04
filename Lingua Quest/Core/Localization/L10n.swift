@@ -32,6 +32,7 @@ enum L10n {
         static var errorOccurred: String { localized("common.error_occurred") }
         static var goBack: String { localized("common.go_back") }
         static var openSettings: String { localized("common.open_settings") }
+        static var remove: String { localized("common.remove") }
     }
 
     enum Auth {
@@ -260,6 +261,10 @@ enum L10n {
         
         static var myLanguagesTitle: String { localized("home.my_languages_title") }
         static var addNewLanguage: String { localized("home.add_new_language") }
+        static var removeLanguageTitle: String { localized("home.remove_language_title") }
+        static var removeLanguageMessage: String { localized("home.remove_language_message") }
+        
+        static var aiChatTitle: String { localized("home.ai_chat_title") }
     }
     
     enum Profile {

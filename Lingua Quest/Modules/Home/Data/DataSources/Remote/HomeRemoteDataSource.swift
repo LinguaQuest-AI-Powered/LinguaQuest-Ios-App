@@ -17,6 +17,7 @@ protocol HomeRemoteDataSourceProtocol {
     func getAvailableLanguages() async throws -> AvailableLanguagesResponseDTO
     func switchActiveLanguage(languageId: Int) async throws -> SwitchActiveLanguageResponseDTO
     func addLanguages(languageIds: [Int]) async throws -> MyLanguagesResponseDTO
+    func removeLanguages(languageIds: [Int]) async throws -> MyLanguagesResponseDTO
     func changeNativeLanguage(languageId: Int) async throws
 }
 
@@ -64,6 +65,11 @@ struct HomeRemoteDataSource: HomeRemoteDataSourceProtocol {
     
     func addLanguages(languageIds: [Int]) async throws -> MyLanguagesResponseDTO {
         let endpoint = LanguageEndpoint.AddLanguage(languageIds: languageIds)
+        return try await apiClient.request(endpoint)
+    }
+    
+    func removeLanguages(languageIds: [Int]) async throws -> MyLanguagesResponseDTO {
+        let endpoint = LanguageEndpoint.RemoveLanguages(languageIds: languageIds)
         return try await apiClient.request(endpoint)
     }
     

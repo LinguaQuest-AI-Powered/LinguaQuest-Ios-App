@@ -54,3 +54,15 @@ struct AddLanguagesUseCase {
         return try await repository.addLanguages(languageIds: languageIds)
     }
 }
+
+struct RemoveLanguagesUseCase {
+    private let repository: HomeRepositoryProtocol
+    
+    init(repository: HomeRepositoryProtocol) {
+        self.repository = repository
+    }
+    
+    func execute(languageIds: [Int]) async throws -> [MyTargetLanguage] {
+        return try await repository.removeLanguages(languageIds: languageIds)
+    }
+}

@@ -78,11 +78,17 @@ final class HomeAssembly: Assembly {
             return ChangeNativeLanguageUseCase(repository: repository)
         }
         
+        container.register(RemoveLanguagesUseCase.self) { resolver in
+            let repository = resolver.resolve(HomeRepositoryProtocol.self)!
+            return RemoveLanguagesUseCase(repository: repository)
+        }
+        
         container.register(LanguageViewModel.self) { resolver in
             let getMy = resolver.resolve(GetMyLanguagesUseCase.self)!
             let getAvailable = resolver.resolve(GetAvailableLanguagesUseCase.self)!
             let switchActive = resolver.resolve(SwitchActiveLanguageUseCase.self)!
             let addLangs = resolver.resolve(AddLanguagesUseCase.self)!
+            let removeLangs = resolver.resolve(RemoveLanguagesUseCase.self)!
             let userPreferences = resolver.resolve(UserPreferences.self)!
             let activateLockScreenVocabularyUseCase = resolver.resolve(ActivateLockScreenVocabularyUseCaseProtocol.self)!
             return LanguageViewModel(
@@ -90,6 +96,7 @@ final class HomeAssembly: Assembly {
                 getAvailableLanguagesUseCase: getAvailable,
                 switchActiveLanguageUseCase: switchActive,
                 addLanguagesUseCase: addLangs,
+                removeLanguagesUseCase: removeLangs,
                 activateLockScreenVocabularyUseCase: activateLockScreenVocabularyUseCase,
                 userPreferences: userPreferences
             )

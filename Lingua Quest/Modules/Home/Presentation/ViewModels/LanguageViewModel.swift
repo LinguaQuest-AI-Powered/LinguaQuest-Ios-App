@@ -15,6 +15,7 @@ final class LanguageViewModel {
     private let getAvailableLanguagesUseCase: GetAvailableLanguagesUseCase
     private let switchActiveLanguageUseCase: SwitchActiveLanguageUseCase
     private let addLanguagesUseCase: AddLanguagesUseCase
+    private let removeLanguagesUseCase: RemoveLanguagesUseCase
     private let activateLockScreenVocabularyUseCase: ActivateLockScreenVocabularyUseCaseProtocol
     private var userPreferences: UserPreferences
     
@@ -30,6 +31,10 @@ final class LanguageViewModel {
     var isLoadingAvailableLanguages = false
     var isSwitchingLanguage = false
     var isAddingLanguages = false
+    var isRemovingLanguage = false
+    
+    var showRemoveConfirmation = false
+    var languageToRemove: MyTargetLanguage?
     
     var errorMessage: String?
     
@@ -44,6 +49,7 @@ final class LanguageViewModel {
         getAvailableLanguagesUseCase: GetAvailableLanguagesUseCase,
         switchActiveLanguageUseCase: SwitchActiveLanguageUseCase,
         addLanguagesUseCase: AddLanguagesUseCase,
+        removeLanguagesUseCase: RemoveLanguagesUseCase,
         activateLockScreenVocabularyUseCase: ActivateLockScreenVocabularyUseCaseProtocol,
         userPreferences: UserPreferences
     ) {
@@ -51,6 +57,7 @@ final class LanguageViewModel {
         self.getAvailableLanguagesUseCase = getAvailableLanguagesUseCase
         self.switchActiveLanguageUseCase = switchActiveLanguageUseCase
         self.addLanguagesUseCase = addLanguagesUseCase
+        self.removeLanguagesUseCase = removeLanguagesUseCase
         self.activateLockScreenVocabularyUseCase = activateLockScreenVocabularyUseCase
         self.userPreferences = userPreferences
         
@@ -159,5 +166,41 @@ final class LanguageViewModel {
             print("Failed to add languages: \(error)")
         }
         isAddingLanguages = false
+    }
+    
+    func canRemoveLanguage(_ language: MyTargetLanguage) -> Bool {
+        // Cannot remove if it's the only language left
+        guard myLanguages.count > 1 else { return false }
+        // Cannot remove the active language (must switch first)
+        guard !language.isActive else { return false }
+        return true
+    }
+    
+    func onRemoveLanguageTapped(language: MyTargetLanguage) {
+        guard canRemoveLanguage(language) else { return }
+        languageToRemove = language
+        showRemoveConfirmation = true
+    }
+    
+    func cancelRemoveLanguage() {
+        showRemoveConfirmation = false
+        languageToRemove = nil
+    }
+    
+    func confirmRemoveLanguage() async {
+        guard let language = languageToRemove else { return }
+        
+        isRemovingLanguage = true
+        errorMessage = nil
+        do {
+            _ = try await removeLanguagesUseCase.execute(languageIds: [language.id])
+            showRemoveConfirmation = false
+            languageToRemove = nil
+            await loadMyLanguages()
+        } catch {
+            errorMessage = error.localizedDescription
+            print("Failed to remove language: \(error)")
+        }
+        isRemovingLanguage = false
     }
 }

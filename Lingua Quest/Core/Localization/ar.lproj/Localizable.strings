@@ -21,6 +21,7 @@
 "common.error_occurred" = "حدث خطأ ما.";
 "common.go_back" = "رجوع";
 "common.open_settings" = "فتح الإعدادات";
+"common.remove" = "إزالة";
 
 "auth.email_placeholder" = "البريد الإلكتروني";
 "auth.password_placeholder" = "كلمة المرور";
@@ -288,6 +289,10 @@
 // My Languages & Add Language
 "home.my_languages_title" = "لغاتي";
 "home.add_new_language" = "إضافة لغة جديدة";
+"home.remove_language_title" = "إزالة اللغة";
+"home.remove_language_message" = "هل أنت متأكد أنك تريد إزالة %@؟ سيتم حفظ تقدمك إذا قررت تعلمها مرة أخرى.";
+
+"home.ai_chat_title" = "محادثة بالذكاء الاصطناعي";
 "add_language.title" = "إضافة لغات";
 "add_language.subtitle" = "اختر اللغات التي ترغب بتعلمها";
 "add_language.search_placeholder" = "ابحث عن اللغات...";
