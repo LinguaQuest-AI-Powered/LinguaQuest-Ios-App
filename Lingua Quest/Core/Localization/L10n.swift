@@ -515,6 +515,8 @@ enum L10n {
         static var licenses: String { localized("about.licenses") }
         static var copyright: String { localized("about.copyright") }
         static var madeWithLove: String { localized("about.made_with_love") }
+        static var licensesTitle: String { localized("about.licenses_title") }
+        static var licensesDescription: String { localized("about.licenses_description") }
     }
 
     enum HelpSupport {
@@ -526,6 +528,8 @@ enum L10n {
         static var greeting: String { localized("help_support.greeting") }
         static var stillNeedHelp: String { localized("help_support.still_need_help") }
         static var replyTime: String { localized("help_support.reply_time") }
+        static var bugReportSubject: String { localized("help_support.bug_report_subject") }
+        static var bugReportBody: String { localized("help_support.bug_report_body") }
         
         enum FAQ {
             static var q1: String { localized("help_support.faq.q1") }

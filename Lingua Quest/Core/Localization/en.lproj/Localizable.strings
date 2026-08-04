@@ -431,6 +431,8 @@
 "about.licenses" = "Licenses & Credits";
 "about.copyright" = "© 2026 LinguaQuest. All rights reserved.";
 "about.made_with_love" = "Made with 💛 by The Lingo Team";
+"about.licenses_title" = "Open Source Licenses";
+"about.licenses_description" = "LinguaQuest is built using various open source technologies. We are grateful to the community for their contributions.";
 
 // Help & Support
 "help_support.title" = "Help & Support";
@@ -442,7 +444,9 @@
 // --- New Help & Support Strings ---
 "help_support.greeting" = "How can I help you\ntoday?";
 "help_support.still_need_help" = "Still need help?";
-"help_support.reply_time" = "Our team usually replies within 24 hours";
+"help_support.reply_time" = "We'd love to hear your feedback!";
+"help_support.bug_report_subject" = "[Bug Report] LinguaQuest %@";
+"help_support.bug_report_body" = "Please describe the bug you encountered below:\n\n\n\n---\nApp Version: %@\nDevice: %@\niOS Version: %@";
 "help_support.faq.q1" = "How do I earn coins?";
 "help_support.faq.a1" = "Complete lessons and challenges to earn coins.";
 "help_support.faq.q2" = "How does Lock Screen Vocabulary work?";
