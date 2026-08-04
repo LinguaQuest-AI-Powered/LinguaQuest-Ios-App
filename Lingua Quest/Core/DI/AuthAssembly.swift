@@ -102,7 +102,8 @@ final class AuthAssembly: Assembly {
                 loginUseCase: resolver.resolve(LoginUseCaseProtocol.self)!,
                 getProfileUseCase: resolver.resolve(GetProfileUseCaseProtocol.self)!,
                 sendOtpUseCase: resolver.resolve(SendOtpUseCaseProtocol.self)!,
-                oauthSignInHandler: resolver.resolve(OAuthSignInHandlerProtocol.self)!
+                oauthSignInHandler: resolver.resolve(OAuthSignInHandlerProtocol.self)!,
+                registerDeviceUseCase: resolver.resolve(RegisterDeviceUseCaseProtocol.self)!
             )
         }
 

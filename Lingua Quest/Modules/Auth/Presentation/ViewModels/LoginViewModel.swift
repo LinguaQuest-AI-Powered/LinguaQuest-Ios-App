@@ -7,6 +7,7 @@
 
 import Observation
 import Foundation
+import FirebaseMessaging
 
 @Observable
 @MainActor
@@ -18,6 +19,7 @@ final class LoginViewModel {
     private let getProfileUseCase: GetProfileUseCaseProtocol
     private let sendOtpUseCase: SendOtpUseCaseProtocol
     private let oauthSignInHandler: OAuthSignInHandlerProtocol
+    private let registerDeviceUseCase: RegisterDeviceUseCaseProtocol
 
     // MARK: - State
     var email: String = ""
@@ -33,7 +35,8 @@ final class LoginViewModel {
         loginUseCase: LoginUseCaseProtocol,
         getProfileUseCase: GetProfileUseCaseProtocol,
         sendOtpUseCase: SendOtpUseCaseProtocol,
-        oauthSignInHandler: OAuthSignInHandlerProtocol
+        oauthSignInHandler: OAuthSignInHandlerProtocol,
+        registerDeviceUseCase: RegisterDeviceUseCaseProtocol
     ) {
         self.router = router
         self.userPreferences = userPreferences
@@ -41,6 +44,7 @@ final class LoginViewModel {
         self.getProfileUseCase = getProfileUseCase
         self.sendOtpUseCase = sendOtpUseCase
         self.oauthSignInHandler = oauthSignInHandler
+        self.registerDeviceUseCase = registerDeviceUseCase
     }
 
 
@@ -64,6 +68,19 @@ final class LoginViewModel {
                 userPreferences.isLoggedIn = true
                 userPreferences.userId = data.user.id
                 userPreferences.loadUserScopedPreferences(for: data.user.id)
+                
+                // Fetch FCM Token and send to backend
+                Messaging.messaging().token { token, error in
+                    if let error = error {
+                        print("Error fetching FCM registration token: \(error)")
+                    } else if let token = token {
+                        print("FCM Token after login success: \(token)")
+                        // Send FCM Token to backend
+                        Task {
+                            _ = await self.registerDeviceUseCase.execute(token: token)
+                        }
+                    }
+                }
                 userPreferences.email = email
                 
                 // Set appLanguage based on backend nativeLanguage if available
@@ -136,6 +153,17 @@ final class LoginViewModel {
         switch result {
         case .success:
             // State is already updated in handler (isLoggedIn = true, needsProfileCompletion set if needed)
+            Messaging.messaging().token { token, error in
+                if let error = error {
+                    print("Error fetching FCM registration token: \(error)")
+                } else if let token = token {
+                    print("FCM Token after OAuth login success: \(token)")
+                    // Send FCM Token to backend
+                    Task {
+                        _ = await self.registerDeviceUseCase.execute(token: token)
+                    }
+                }
+            }
             break
         case .failure(let message):
             errorMessage = message
@@ -185,13 +213,18 @@ extension LoginViewModel {
             }
         }
         
+        class MockRegisterDeviceUseCase: RegisterDeviceUseCaseProtocol {
+            func execute(token: String) async -> Result<Void, AuthError> { return .success(()) }
+        }
+        
         return LoginViewModel(
             router: MockRouter(),
             userPreferences: UserPreferences(),
             loginUseCase: MockLoginUseCase(),
             getProfileUseCase: MockGetProfileUseCase(),
             sendOtpUseCase: MockSendOtpUseCase(),
-            oauthSignInHandler: MockOAuthSignInHandler()
+            oauthSignInHandler: MockOAuthSignInHandler(),
+            registerDeviceUseCase: MockRegisterDeviceUseCase()
         )
     }
 }

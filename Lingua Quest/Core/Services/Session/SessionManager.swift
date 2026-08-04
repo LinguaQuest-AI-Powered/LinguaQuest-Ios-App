@@ -7,6 +7,7 @@
 
 import Foundation
 import ActivityKit
+import FirebaseMessaging
 
 protocol SessionManagerProtocol {
     /// User-initiated logout: calls the backend, then always clears local state and navigates to Login.
@@ -22,19 +23,22 @@ final class SessionManager: SessionManagerProtocol {
     private var userPreferences: UserPreferencesProtocol
     private let statsService: StatsServiceProtocol
     private let logoutUseCase: LogoutUseCaseProtocol
+    private let unregisterDeviceUseCase: UnregisterDeviceUseCaseProtocol
 
     init(
         router: RouterProtocol,
         tokenStorage: SecureTokenStorageProtocol,
         userPreferences: UserPreferencesProtocol,
         statsService: StatsServiceProtocol,
-        logoutUseCase: LogoutUseCaseProtocol
+        logoutUseCase: LogoutUseCaseProtocol,
+        unregisterDeviceUseCase: UnregisterDeviceUseCaseProtocol
     ) {
         self.router = router
         self.tokenStorage = tokenStorage
         self.userPreferences = userPreferences
         self.statsService = statsService
         self.logoutUseCase = logoutUseCase
+        self.unregisterDeviceUseCase = unregisterDeviceUseCase
 
         NotificationCenter.default.addObserver(
             self,
@@ -45,6 +49,11 @@ final class SessionManager: SessionManagerProtocol {
     }
 
     func logout(allDevices: Bool) async {
+        // Unregister FCM token before clearing session
+        if let token = try? await Messaging.messaging().token() {
+            _ = await unregisterDeviceUseCase.execute(token: token)
+        }
+        
         let refreshToken = tokenStorage.getRefreshToken() ?? ""
         _ = await logoutUseCase.execute(refreshToken: refreshToken, allDevices: allDevices)
         await endLocalSession()

@@ -15,7 +15,8 @@ final class SessionAssembly: Assembly {
                 tokenStorage: resolver.resolve(SecureTokenStorageProtocol.self)!,
                 userPreferences: resolver.resolve(UserPreferencesProtocol.self)!,
                 statsService: resolver.resolve(StatsServiceProtocol.self)!,
-                logoutUseCase: resolver.resolve(LogoutUseCaseProtocol.self)!
+                logoutUseCase: resolver.resolve(LogoutUseCaseProtocol.self)!,
+                unregisterDeviceUseCase: resolver.resolve(UnregisterDeviceUseCaseProtocol.self)!
             )
         }.inObjectScope(.container)
     }
