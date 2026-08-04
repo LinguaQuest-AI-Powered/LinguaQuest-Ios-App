@@ -465,6 +465,8 @@
 "about.licenses" = "التراخيص والاعتمادات";
 "about.copyright" = "© 2026 LinguaQuest. جميع الحقوق محفوظة.";
 "about.made_with_love" = "صُنع بـ 💛 بواسطة فريق Lingo";
+"about.licenses_title" = "تراخيص مفتوحة المصدر";
+"about.licenses_description" = "تم بناء LinguaQuest باستخدام العديد من التقنيات مفتوحة المصدر. نحن ممتنون للمجتمع على مساهماتهم.";
 
 // Help & Support
 "help_support.title" = "المساعدة والدعم";
@@ -476,7 +478,9 @@
 // --- New Help & Support Strings ---
 "help_support.greeting" = "كيف يمكنني مساعدتك\nاليوم؟";
 "help_support.still_need_help" = "هل ما زلت بحاجة للمساعدة؟";
-"help_support.reply_time" = "عادة ما يرد فريقنا خلال 24 ساعة";
+"help_support.reply_time" = "نود أن نسمع ملاحظاتك!";
+"help_support.bug_report_subject" = "[تقرير خطأ] LinguaQuest %@";
+"help_support.bug_report_body" = "يرجى وصف الخطأ الذي واجهته أدناه:\n\n\n\n---\nإصدار التطبيق: %@\nالجهاز: %@\nإصدار iOS: %@";
 "help_support.faq.q1" = "كيف أربح العملات؟";
 "help_support.faq.a1" = "أكمل الدروس والتحديات لكسب العملات.";
 "help_support.faq.q2" = "كيف تعمل مفردات شاشة القفل؟";

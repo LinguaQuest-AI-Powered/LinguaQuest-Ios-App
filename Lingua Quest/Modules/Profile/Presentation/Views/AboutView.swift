@@ -54,6 +54,50 @@ struct AboutView: View {
                 appearAnimation = true
             }
         }
+        .appDialog(isPresented: $viewModel.showLicensesDialog) {
+            DialogCardContainer(
+                showMascot: true,
+                mascotImage: .loginBird,
+                speechBubbleText: L10n.About.licenses
+            ) {
+                VStack(spacing: 16) {
+                    Text(L10n.About.licensesTitle)
+                        .appTextStyle(.headingMedium, color: .appTextHeading)
+                        .multilineTextAlignment(.center)
+                    
+                    Text(L10n.About.licensesDescription)
+                        .appTextStyle(.bodyMedium, color: .appTextSecondary)
+                        .multilineTextAlignment(.center)
+                    
+                    CustomButton(
+                        type: .primary,
+                        text: L10n.Common.ok,
+                        action: { viewModel.showLicensesDialog = false }
+                    )
+                    .padding(.top, 8)
+                }
+            }
+        }
+        .appDialog(isPresented: $viewModel.showComingSoonDialog) {
+            DialogCardContainer(
+                showMascot: true,
+                mascotImage: .loginBird,
+                speechBubbleText: "Coming Soon!"
+            ) {
+                VStack(spacing: 16) {
+                    Text("This page is under construction.")
+                        .appTextStyle(.bodyMedium, color: .appTextSecondary)
+                        .multilineTextAlignment(.center)
+                    
+                    CustomButton(
+                        type: .primary,
+                        text: L10n.Common.ok,
+                        action: { viewModel.showComingSoonDialog = false }
+                    )
+                    .padding(.top, 8)
+                }
+            }
+        }
     }
     
     // MARK: - Subviews
@@ -78,8 +122,13 @@ struct AboutView: View {
                 .scaledToFit()
                 .frame(width: 160, height: 160)
             
-            Text(L10n.About.appName)
-                .appTextStyle(.headingLarge, color: .appTextHeading)
+            VStack(spacing: 4) {
+                Text(L10n.About.appName)
+                    .appTextStyle(.headingLarge, color: .appTextHeading)
+                
+                Text(viewModel.appVersion)
+                    .appTextStyle(.bodyMedium, color: .appTextSecondary)
+            }
         }
     }
     
@@ -97,39 +146,47 @@ struct AboutView: View {
     
     private var linksSection: some View {
         VStack(spacing: 12) {
-            LinguaSettingsRow(
-                icon: .starFill,
-                iconBgColor: .appBrandBrown,
-                title: L10n.About.rateApp,
-                showDivider: false
-            ) {
-                SettingsRowChevron()
+            Button(action: { viewModel.onRateAppTapped() }) {
+                LinguaSettingsRow(
+                    icon: .starFill,
+                    iconBgColor: .appBrandBrown,
+                    title: L10n.About.rateApp,
+                    showDivider: false
+                ) {
+                    SettingsRowChevron()
+                }
             }
-            .background(Color.appSurfaceCard)
-            .cornerRadius(20)
-            .shadow(color: Color.appSemanticSuccess.opacity(0.08), radius: 24, x: 0, y: 8)
-            // Note: We don't have actions bound yet, but you'd add .onTapGesture here
-            
-            LinguaSettingsRow(
-                icon: .cameraFill,
-                iconBgColor: .appSemanticSuccess,
-                title: L10n.About.instagram,
-                showDivider: false
-            ) {
-                SettingsRowChevron()
-            }
+            .buttonStyle(.plain)
             .background(Color.appSurfaceCard)
             .cornerRadius(20)
             .shadow(color: Color.appSemanticSuccess.opacity(0.08), radius: 24, x: 0, y: 8)
             
-            LinguaSettingsRow(
-                icon: .globe,
-                iconBgColor: .appAccentGold,
-                title: L10n.About.website,
-                showDivider: false
-            ) {
-                SettingsRowChevron()
+            Button(action: { viewModel.onInstagramTapped() }) {
+                LinguaSettingsRow(
+                    icon: .cameraFill,
+                    iconBgColor: .appSemanticSuccess,
+                    title: L10n.About.instagram,
+                    showDivider: false
+                ) {
+                    SettingsRowChevron()
+                }
             }
+            .buttonStyle(.plain)
+            .background(Color.appSurfaceCard)
+            .cornerRadius(20)
+            .shadow(color: Color.appSemanticSuccess.opacity(0.08), radius: 24, x: 0, y: 8)
+            
+            Button(action: { viewModel.onWebsiteTapped() }) {
+                LinguaSettingsRow(
+                    icon: .globe,
+                    iconBgColor: .appAccentGold,
+                    title: L10n.About.website,
+                    showDivider: false
+                ) {
+                    SettingsRowChevron()
+                }
+            }
+            .buttonStyle(.plain)
             .background(Color.appSurfaceCard)
             .cornerRadius(20)
             .shadow(color: Color.appSemanticSuccess.opacity(0.08), radius: 24, x: 0, y: 8)
@@ -139,53 +196,65 @@ struct AboutView: View {
     private var legalSection: some View {
         VStack(spacing: 0) {
             // Terms of Service
-            HStack(spacing: 16) {
-                Image(systemIcon: .docTextFill)
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundColor(.appTextSecondary)
-                
-                Text(L10n.About.termsOfService)
-                    .appTextStyle(.bodyLargeMedium, color: .appTextHeading)
-                
-                Spacer()
-                SettingsRowChevron()
+            Button(action: { viewModel.onTermsTapped() }) {
+                HStack(spacing: 16) {
+                    Image(systemIcon: .docTextFill)
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(.appTextSecondary)
+                    
+                    Text(L10n.About.termsOfService)
+                        .appTextStyle(.bodyLargeMedium, color: .appTextHeading)
+                    
+                    Spacer()
+                    SettingsRowChevron()
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 16)
+                .contentShape(Rectangle())
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 16)
+            .buttonStyle(.plain)
             
             Divider().background(Color.appBorderBrown.opacity(0.5)).padding(.leading, 16)
             
             // Privacy Policy
-            HStack(spacing: 16) {
-                Image(systemIcon: .shieldFill)
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundColor(.appTextSecondary)
-                
-                Text(L10n.About.privacyPolicy)
-                    .appTextStyle(.bodyLargeMedium, color: .appTextHeading)
-                
-                Spacer()
-                SettingsRowChevron()
+            Button(action: { viewModel.onPrivacyTapped() }) {
+                HStack(spacing: 16) {
+                    Image(systemIcon: .shieldFill)
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(.appTextSecondary)
+                    
+                    Text(L10n.About.privacyPolicy)
+                        .appTextStyle(.bodyLargeMedium, color: .appTextHeading)
+                    
+                    Spacer()
+                    SettingsRowChevron()
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 16)
+                .contentShape(Rectangle())
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 16)
+            .buttonStyle(.plain)
             
             Divider().background(Color.appBorderBrown.opacity(0.5)).padding(.leading, 16)
             
             // Licenses & Credits
-            HStack(spacing: 16) {
-                Image(systemIcon: .infoCircleFill)
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundColor(.appTextSecondary)
-                
-                Text(L10n.About.licenses)
-                    .appTextStyle(.bodyLargeMedium, color: .appTextHeading)
-                
-                Spacer()
-                SettingsRowChevron()
+            Button(action: { viewModel.onLicensesTapped() }) {
+                HStack(spacing: 16) {
+                    Image(systemIcon: .infoCircleFill)
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(.appTextSecondary)
+                    
+                    Text(L10n.About.licenses)
+                        .appTextStyle(.bodyLargeMedium, color: .appTextHeading)
+                    
+                    Spacer()
+                    SettingsRowChevron()
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 16)
+                .contentShape(Rectangle())
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 16)
+            .buttonStyle(.plain)
         }
         .background(Color.appSurfaceCard)
         .cornerRadius(20)

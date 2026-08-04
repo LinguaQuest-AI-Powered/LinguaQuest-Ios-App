@@ -11,6 +11,7 @@ struct HelpAndSupportView: View {
     // MARK: - Properties
     @State var viewModel: HelpAndSupportViewModel
     @Environment(\.colorScheme) var colorScheme
+    @State private var appearAnimation: Bool = false
     
     // MARK: - Body
     var body: some View {
@@ -61,9 +62,17 @@ struct HelpAndSupportView: View {
                         
                         VStack(spacing: 12) {
                             FAQItemView(question: L10n.HelpSupport.FAQ.q1, answer: L10n.HelpSupport.FAQ.a1)
+                                .opacity(appearAnimation ? 1 : 0)
+                                .offset(y: appearAnimation ? 0 : 20)
                             FAQItemView(question: L10n.HelpSupport.FAQ.q2, answer: L10n.HelpSupport.FAQ.a2)
+                                .opacity(appearAnimation ? 1 : 0)
+                                .offset(y: appearAnimation ? 0 : 25)
                             FAQItemView(question: L10n.HelpSupport.FAQ.q3, answer: L10n.HelpSupport.FAQ.a3)
+                                .opacity(appearAnimation ? 1 : 0)
+                                .offset(y: appearAnimation ? 0 : 30)
                             FAQItemView(question: L10n.HelpSupport.FAQ.q4, answer: L10n.HelpSupport.FAQ.a4)
+                                .opacity(appearAnimation ? 1 : 0)
+                                .offset(y: appearAnimation ? 0 : 35)
                         }
                     }
                     
@@ -74,23 +83,29 @@ struct HelpAndSupportView: View {
                             .padding(.leading, 4)
                         
                         VStack(spacing: 0) {
-                            LinguaSettingsRow(
-                                icon: .textBubble,
-                                iconBgColor: .appAccentOrange,
-                                title: L10n.HelpSupport.contactUs,
-                                showDivider: true
-                            ) {
-                                SettingsRowChevron()
+                            Button(action: { viewModel.onContactUsTapped() }) {
+                                LinguaSettingsRow(
+                                    icon: .textBubble,
+                                    iconBgColor: .appAccentOrange,
+                                    title: L10n.HelpSupport.contactUs,
+                                    showDivider: true
+                                ) {
+                                    SettingsRowChevron()
+                                }
                             }
+                            .buttonStyle(.plain)
                             
-                            LinguaSettingsRow(
-                                icon: .ladybugFill,
-                                iconBgColor: .appAccentRed,
-                                title: L10n.HelpSupport.reportBug,
-                                showDivider: false
-                            ) {
-                                SettingsRowChevron()
+                            Button(action: { viewModel.onReportBugTapped() }) {
+                                LinguaSettingsRow(
+                                    icon: .ladybugFill,
+                                    iconBgColor: .appAccentRed,
+                                    title: L10n.HelpSupport.reportBug,
+                                    showDivider: false
+                                ) {
+                                    SettingsRowChevron()
+                                }
                             }
+                            .buttonStyle(.plain)
                         }
                         .background(Color.appSurfaceCard)
                         .cornerRadius(20)
@@ -101,6 +116,8 @@ struct HelpAndSupportView: View {
                             .frame(maxWidth: .infinity, alignment: .center)
                             .padding(.top, 8)
                     }
+                    .opacity(appearAnimation ? 1 : 0)
+                    .offset(y: appearAnimation ? 0 : 40)
                 }
                 .padding(.horizontal, 20)
                 .padding(.bottom, 40)
@@ -108,6 +125,31 @@ struct HelpAndSupportView: View {
         }
         .background(Color.appBackgroundWarm.ignoresSafeArea())
         .navigationBarHidden(true)
+        .onAppear {
+            withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                appearAnimation = true
+            }
+        }
+        .appDialog(isPresented: $viewModel.showEmailCopiedDialog) {
+            DialogCardContainer(
+                showMascot: true,
+                mascotImage: .helpBird,
+                speechBubbleText: "Copied!"
+            ) {
+                VStack(spacing: 16) {
+                    Text("Email address copied to clipboard.")
+                        .appTextStyle(.bodyMedium, color: .appTextSecondary)
+                        .multilineTextAlignment(.center)
+                    
+                    CustomButton(
+                        type: .primary,
+                        text: L10n.Common.ok,
+                        action: { viewModel.showEmailCopiedDialog = false }
+                    )
+                    .padding(.top, 8)
+                }
+            }
+        }
     }
 }
 
