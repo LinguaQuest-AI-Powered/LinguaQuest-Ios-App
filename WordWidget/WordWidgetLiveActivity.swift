@@ -18,13 +18,11 @@ struct WordWidgetLiveActivity: Widget {
                 // App Logo & Name Header
                 HStack {
                     HStack(spacing: 8) {
-                        Image(asset: .bird)
+                        Image("WidgetAppIcon")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 20, height: 20)
-                            .padding(4)
-                            .background(Color.white.opacity(0.1))
-                            .clipShape(Circle())
+                            .frame(width: 30, height: 30)
+                            .clipShape(RoundedRectangle(cornerRadius: 4))
                         
                         Text(context.state.localizedAppName)
                             .font(.subheadline)
