@@ -30,7 +30,7 @@ final class Resolver {
                 SessionAssembly(),
                 StatsAssembly(),
                 SoundAssembly(),
-               
+                NotificationsAssembly(),
                 LockScreenVocabularyAssembly()
             ],
             container: container

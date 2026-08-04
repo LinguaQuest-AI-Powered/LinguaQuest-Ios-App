@@ -10,6 +10,7 @@
 		1510D5543013535800688C5F /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1510D5533013535800688C5F /* WidgetKit.framework */; };
 		1510D5563013535800688C5F /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1510D5553013535800688C5F /* SwiftUI.framework */; };
 		1510D5673013535B00688C5F /* WordWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 1510D5523013535800688C5F /* WordWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		154C0A3D3021D64C00195DA1 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 154C0A3C3021D64C00195DA1 /* FirebaseMessaging */; };
 		15A61621300F74EC00F19795 /* FirebaseAILogic in Frameworks */ = {isa = PBXBuildFile; productRef = 15A61620300F74EC00F19795 /* FirebaseAILogic */; };
 		15A61623300F74EC00F19795 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 15A61622300F74EC00F19795 /* FirebaseFirestore */; };
 		33A0F053300C347200611A63 /* FirebaseAI in Frameworks */ = {isa = PBXBuildFile; productRef = 33A0F052300C347200611A63 /* FirebaseAI */; };
@@ -158,6 +159,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				154C0A3D3021D64C00195DA1 /* FirebaseMessaging in Frameworks */,
 				15A61621300F74EC00F19795 /* FirebaseAILogic in Frameworks */,
 				15A61623300F74EC00F19795 /* FirebaseFirestore in Frameworks */,
 				33AFF8B9300F37A3002F5017 /* GoogleSignInSwift in Frameworks */,
@@ -396,6 +398,7 @@
 				33AFF8B3300F3670002F5017 /* FirebaseAuth */,
 				33AFF8B6300F37A3002F5017 /* GoogleSignIn */,
 				33AFF8B8300F37A3002F5017 /* GoogleSignInSwift */,
+				154C0A3C3021D64C00195DA1 /* FirebaseMessaging */,
 			);
 			productName = "Lingua Quest";
 			productReference = 1529B3663006410300CCD74A /* Lingua Quest.app */;
@@ -788,8 +791,10 @@
 				INFOPLIST_FILE = "Lingua-Quest-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to scan items for the game quests.";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need access to your microphone so you can practice speaking and pronouncing sentences.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Lingua Quest needs your microphone to listen to your voice during conversations and pronunciation challenges.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to update your profile photo.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Lingua Quest uses speech recognition to evaluate your pronunciation.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -828,8 +833,10 @@
 				INFOPLIST_FILE = "Lingua-Quest-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to scan items for the game quests.";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need access to your microphone so you can practice speaking and pronouncing sentences.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Lingua Quest needs your microphone to listen to your voice during conversations and pronunciation challenges.";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to update your profile photo.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Lingua Quest uses speech recognition to evaluate your pronunciation.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -1018,6 +1025,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		154C0A3C3021D64C00195DA1 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 33A0F051300C347200611A63 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
 		15A61620300F74EC00F19795 /* FirebaseAILogic */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 33A0F051300C347200611A63 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
