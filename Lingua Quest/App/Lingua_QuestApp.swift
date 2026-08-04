@@ -14,10 +14,13 @@ import ActivityKit
 
 @main
 struct MyApp: App {
+ 
+    // Bind AppDelegate
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
     init() {
         let providerFactory = AppCheckDebugProviderFactory()
         AppCheck.setAppCheckProviderFactory(providerFactory)
-        FirebaseApp.configure()
         _ = Resolver.shared
         
         // Initialize default app language based on device locale if not set
