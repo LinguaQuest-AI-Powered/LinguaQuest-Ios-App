@@ -47,7 +47,7 @@ struct AddLanguageView: View {
             
             // Search Bar
             HStack {
-                Image(systemName: "magnifyingglass")
+                Image(systemIcon: .magnifyingglass)
                     .foregroundColor(Color.appBrandBrownDark)
                 TextField(L10n.AddLanguage.searchPlaceholder, text: $searchText)
                     .font(AppTextStyle.bodyLarge.font)
@@ -143,7 +143,7 @@ struct LanguageGridCell: View {
                             Circle()
                                 .fill(Color.appGlowTeal)
                                 .frame(width: 20, height: 20)
-                            Image(systemName: "checkmark")
+                            Image(systemIcon: .checkmark)
                                 .font(.system(size: 10, weight: .bold))
                                 .foregroundColor(.white)
                         } else {

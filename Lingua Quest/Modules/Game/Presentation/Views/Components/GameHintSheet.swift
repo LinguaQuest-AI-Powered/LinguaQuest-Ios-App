@@ -62,12 +62,12 @@ struct GameHintSheet: View {
         }
     }
     
-    private func hintOptionCard(iconText: String?, iconSystemName: String?, title: String, cost: Int, action: @escaping () -> Void) -> some View {
+    private func hintOptionCard(iconText: String?, iconSystemName: Image.SystemIcon?, title: String, cost: Int, action: @escaping () -> Void) -> some View {
         HStack(spacing: 16) {
             // Icon
             Group {
                 if let systemName = iconSystemName {
-                    Image(systemName: systemName)
+                    Image(systemIcon: systemName)
                         .font(.system(size: 24, weight: .semibold))
                 } else if let text = iconText {
                     Text(text)

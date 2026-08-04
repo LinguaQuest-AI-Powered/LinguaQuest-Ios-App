@@ -72,7 +72,7 @@ struct ProfileInputField: View {
                     Button {
                         isRevealed.toggle()
                     } label: {
-                        Image(systemName: isRevealed ? "eye" : "eye.slash")
+                        Image(systemIcon: isRevealed ? .eye : .eyeSlash)
                             .foregroundColor(.appBorderBrown)
                             .font(.system(size: 20))
                     }

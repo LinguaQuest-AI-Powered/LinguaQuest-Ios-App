@@ -45,6 +45,7 @@ struct DailyBonusCardView: View {
                     Image(systemIcon: .rightChevron)
                         .font(.system(size: 18, weight: .bold))
                         .foregroundColor(.white)
+                        .flipsForRightToLeftLayoutDirection(true)
                 }
             }
             .padding(.horizontal, 16)

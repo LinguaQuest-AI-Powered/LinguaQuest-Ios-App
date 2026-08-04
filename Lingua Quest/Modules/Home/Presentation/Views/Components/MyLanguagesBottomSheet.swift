@@ -27,7 +27,7 @@ struct MyLanguagesBottomSheet: View {
                 Spacer()
                 
                 Button(action: { isPresented = false }) {
-                    Image(systemName: "xmark")
+                    Image(systemIcon: .xmark)
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundColor(Color.appTextSecondary)
                 }
@@ -63,7 +63,7 @@ struct MyLanguagesBottomSheet: View {
                     isPresented = false
                     onAddNewLanguage()
                 },
-                leading: Image(systemName: "plus")
+                leading: Image(systemIcon: .plus)
             )
             .padding(.horizontal, 24)
             .padding(.top, 16)
@@ -108,7 +108,7 @@ struct LanguageItemRow: View {
                 
                 // Checkmark if selected
                 if isSelected {
-                    Image(systemName: "checkmark.circle.fill")
+                    Image(systemIcon: .checkmarkCircleFill)
                         .foregroundColor(Color.appSemanticSuccess)
                         .font(.system(size: 24))
                 }

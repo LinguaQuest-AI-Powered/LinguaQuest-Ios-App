@@ -195,7 +195,7 @@ struct CustomLoadingIndicator: View {
             type: .custom(textColor: .white, buttonColor: .appAccentTeal),
             text: "Custom Default Shadow",
             action: { print("Custom tapped") },
-            leading: Image(systemName: "star.fill")
+            leading: Image(systemIcon: .starFill)
         )
         
         CustomButton(

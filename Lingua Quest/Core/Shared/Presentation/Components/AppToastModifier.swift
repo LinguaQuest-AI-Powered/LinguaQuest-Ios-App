@@ -12,11 +12,11 @@ enum AppToastType {
     case info
     case error
     
-    var iconName: String {
+    var iconName: Image.SystemIcon {
         switch self {
-        case .success: return "checkmark.circle.fill"
-        case .info: return "info.circle.fill"
-        case .error: return "xmark.circle.fill"
+        case .success: return .checkmarkCircleFill
+        case .info: return .infoCircleFill
+        case .error: return .xmarkCircleFill
         }
     }
     
@@ -47,7 +47,7 @@ struct AppToastModifier: ViewModifier {
                     Spacer()
                     
                     HStack(alignment: .center, spacing: 16) {
-                        Image(systemName: type.iconName)
+                        Image(systemIcon: type.iconName)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 32, height: 32)

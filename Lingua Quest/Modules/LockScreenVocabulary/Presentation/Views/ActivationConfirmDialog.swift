@@ -65,7 +65,7 @@ struct ActivationConfirmDialog: View {
                     type: .primary,
                     text: L10n.LockScreenVocabulary.activateAction,
                     action: { onConfirm() },
-                    trailing: Image(systemName: "dollarsign.circle.fill")
+                    trailing: Image(systemIcon: .dollarsignCircleFill)
                 )
                 
                 CustomButton(
@@ -84,7 +84,7 @@ struct ActivationConfirmDialog: View {
     
     private var successView: some View {
         VStack(spacing: 16) {
-            Image(systemName: "checkmark.circle.fill")
+            Image(systemIcon: .checkmarkCircleFill)
                 .resizable()
                 .frame(width: 48, height: 48)
                 .foregroundColor(.green)
@@ -98,7 +98,7 @@ struct ActivationConfirmDialog: View {
     
     private var failureView: some View {
         VStack(spacing: 16) {
-            Image(systemName: "xmark.circle.fill")
+            Image(systemIcon: .xmarkCircleFill)
                 .resizable()
                 .frame(width: 48, height: 48)
                 .foregroundColor(.red)

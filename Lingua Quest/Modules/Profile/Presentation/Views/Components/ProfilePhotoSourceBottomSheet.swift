@@ -16,7 +16,7 @@ struct ProfilePhotoSourceBottomSheet: View {
             HStack(spacing: 16) {
                 SourceOptionCard(
                     title: L10n.EditProfile.camera,
-                    iconSystemName: "camera.fill",
+                    iconSystemName: .cameraFill,
                     backgroundColor: Color.appBrandPrimary.opacity(0.15),
                     accentColor: .appBrandBrownDark,
                     action: onCameraSelected
@@ -24,7 +24,7 @@ struct ProfilePhotoSourceBottomSheet: View {
 
                 SourceOptionCard(
                     title: L10n.EditProfile.gallery,
-                    iconSystemName: "photo.on.rectangle.fill",
+                    iconSystemName: .photoOnRectangleFill,
                     backgroundColor: Color.appAccentTeal.opacity(0.15),
                     accentColor: .appAccentTeal,
                     action: onGallerySelected
@@ -48,7 +48,7 @@ struct ProfilePhotoSourceBottomSheet: View {
 // MARK: - SourceOptionCard Component
 private struct SourceOptionCard: View {
     let title: String
-    let iconSystemName: String
+    let iconSystemName: Image.SystemIcon
     let backgroundColor: Color
     let accentColor: Color
     let action: () -> Void
@@ -63,7 +63,7 @@ private struct SourceOptionCard: View {
                         .fill(backgroundColor)
                         .frame(width: 60, height: 60)
 
-                    Image(systemName: iconSystemName)
+                    Image(systemIcon: iconSystemName)
                         .font(.system(size: 26, weight: .bold))
                         .foregroundColor(accentColor)
                 }

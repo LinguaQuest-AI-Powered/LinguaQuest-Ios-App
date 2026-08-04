@@ -102,6 +102,13 @@ extension Image {
         case ladybugFill = "ladybug.fill"
         case bubbleLeftFill = "bubble.left.fill"
         case textBubble = "text.bubble"
+        
+        // Added missing icons
+        case xmarkCircleFill = "xmark.circle.fill"
+        case photoOnRectangleFill = "photo.on.rectangle.fill"
+        case eye = "eye"
+        case eyeSlash = "eye.slash"
+        case plus = "plus"
     }
     
     enum Asset: String {

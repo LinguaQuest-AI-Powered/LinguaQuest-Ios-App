@@ -21,7 +21,7 @@ struct LinguaSettingsPromptCard: View {
                         .fill(Color.appBrandPrimary)
                         .shadow(color: .appBrandBrownDark, radius: 0, x: 0, y: 3)
                     
-                    Image(systemName: "slider.horizontal.3")
+                    Image(systemIcon: .sliderHorizontal3)
                         .font(.system(size: 20, weight: .bold))
                         .foregroundColor(.appTextOnPrimary)
                 }
@@ -45,7 +45,7 @@ struct LinguaSettingsPromptCard: View {
                         .fill(Color.appBackgroundWarm)
                         .frame(width: 32, height: 32)
                     
-                    Image(systemName: "chevron.right")
+                    Image(systemIcon: .rightChevron)
                         .font(.system(size: 14, weight: .bold))
                         .foregroundColor(.appBrandBrown)
                         .flipsForRightToLeftLayoutDirection(true)

@@ -18,7 +18,7 @@ struct VocabularyWordDetailDialog: View {
                 // Header (Speak + Difficulty)
                 HStack {
                     Button(action: onSpeakTapped) {
-                        Image(systemName: "speaker.wave.2.fill")
+                        Image(systemIcon: .speakerWave2Fill)
                             .foregroundColor(.appBrandPrimary)
                             .padding(12)
                             .background(Color.appBrandPrimary.opacity(0.1))

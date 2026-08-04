@@ -26,7 +26,7 @@ struct VocabularyWordCard: View {
                 Spacer()
                 
                 Button(action: onSpeakTapped) {
-                    Image(systemName: "speaker.wave.2.fill")
+                    Image(systemIcon: .speakerWave2Fill)
                         .foregroundColor(.appBrandPrimary)
                         .padding(8)
                         .background(Color.appBrandPrimary.opacity(0.1))

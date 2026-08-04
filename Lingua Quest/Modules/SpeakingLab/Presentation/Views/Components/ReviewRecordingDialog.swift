@@ -92,7 +92,7 @@ struct ReviewRecordingDialog: View {
                                 .fill(Color.appAccentOrange)
                                 .frame(width: 48, height: 48)
                                 .overlay(
-                                    Image(systemName: playerController.isPlaying ? "pause.fill" : "play.fill")
+                                    Image(systemIcon: playerController.isPlaying ? .pauseFill : .play)
                                         .foregroundColor(.white)
                                 )
                         }
