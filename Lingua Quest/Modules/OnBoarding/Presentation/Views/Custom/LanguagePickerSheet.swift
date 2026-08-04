@@ -86,6 +86,7 @@ struct LanguagePickerSheet<T: Identifiable & Equatable>: View {
 
                                 Image(systemIcon: .rightChevron)
                                     .appTextStyle(.captionMedium, color: .appTextSecondary.opacity(0.4))
+                                    .flipsForRightToLeftLayoutDirection(true)
                             }
                             .padding(.horizontal, 16)
                             .padding(.vertical, 12)

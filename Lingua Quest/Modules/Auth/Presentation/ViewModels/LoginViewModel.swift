@@ -85,8 +85,10 @@ final class LoginViewModel {
                 
                 // Set appLanguage based on backend nativeLanguage if available
                 if let nativeLangCode = data.user.nativeLanguage {
-                    if let mapped = AppLanguage.allCases.first(where: { $0.code.lowercased() == nativeLangCode.lowercased() || $0.name.lowercased() == nativeLangCode.lowercased() }) {
-                        UserDefaults.standard.set(mapped.code, forKey: AppConstants.UserDefaultsKeys.appLanguage)
+                    let lower = nativeLangCode.lowercased()
+                    if let availableLang = AppLanguage.targetLanguages.first(where: { $0.name.lowercased() == lower || $0.code.lowercased() == lower }),
+                       let mapped = AppLanguage.allCases.first(where: { $0.code == availableLang.code }) {
+                        self.userPreferences.appLanguage = mapped.code
                     }
                 }
                 

@@ -10,20 +10,44 @@ import ActivityKit
 
 @Observable
 class LockScreenVocabularyManager {
-    private var preloadedWord: VocabularyWordEntity?
-    
+    /// Tracks the word ID currently displayed on the Lock Screen to prevent duplicate launches.
+    private var currentlyDisplayedWordId: UUID?
+
+    /// Debounce handle so a rapid inactive→active→inactive "flicker" (common on iOS during
+    /// lock/unlock, Face ID overlays, etc.) doesn't trigger two separate schedule/replenish runs.
+    private var pendingPhaseTask: Task<Void, Never>?
+
+    /// Small delay to let the scenePhase settle before acting on it.
+    private let phaseDebounceNanoseconds: UInt64 = 400_000_000 // 0.4s
+
     init() {}
-    
+
     func handleScenePhaseChange(to newPhase: ScenePhase) {
-        if newPhase == .inactive {
-            scheduleVocabularyIfNeeded()
-        } else if newPhase == .active {
-            endVocabularyLiveActivity()
-            preloadVocabularyIfNeeded()
+        // Cancel any previously scheduled (not-yet-executed) work — if the phase
+        // is still bouncing, only the LAST stable phase should actually run.
+        pendingPhaseTask?.cancel()
+
+        pendingPhaseTask = Task {
+            do {
+                try await Task.sleep(nanoseconds: phaseDebounceNanoseconds)
+            } catch {
+                return // cancelled by a newer phase change, do nothing
+            }
+            guard !Task.isCancelled else { return }
+
+            if newPhase == .inactive {
+                await scheduleVocabularyIfNeeded()
+            } else if newPhase == .active {
+                endVocabularyLiveActivity()
+                await replenishWordsIfNeeded()
+            }
         }
     }
-    
+
+    // MARK: - On Active: End Activities & Replenish
+
     private func endVocabularyLiveActivity() {
+        currentlyDisplayedWordId = nil
         if #available(iOS 16.2, *) {
             Task {
                 for activity in Activity<WordWidgetAttributes>.activities {
@@ -32,148 +56,171 @@ class LockScreenVocabularyManager {
             }
         }
     }
-    
-    private func preloadVocabularyIfNeeded() {
+
+    /// Checks if all words for the current language have been shown.
+    /// If so, generates a new batch of words from AI.
+    private func replenishWordsIfNeeded() async {
         let userPrefs = Resolver.shared.resolve(UserPreferencesProtocol.self)
-        let isEnabled = userPrefs.isLockScreenVocabularyEnabled
-        print("LiveActivity Debug: preloadVocabularyIfNeeded called. isEnabled = \(isEnabled)")
-        guard isEnabled else { return }
-        
+        guard userPrefs.isLockScreenVocabularyEnabled else { return }
+
         let getSavedWords = Resolver.shared.resolve(GetSavedVocabularyWordsUseCaseProtocol.self)
-        Task {
-            do {
-                var allWords = try await getSavedWords.execute()
-        print("LiveActivity Debug: Fetched \(allWords.count) total words from DB")
-                
-                let targetCode = userPrefs.learningLanguageCode ?? "en"
-                let englishLocale = Locale(identifier: "en_US")
-                let targetLang = englishLocale.localizedString(forLanguageCode: targetCode)?.capitalized ?? targetCode
-                
-                allWords = allWords.filter { $0.targetLanguage == targetLang }
-                let unshownWords = allWords.filter { !$0.isShownOnLockScreen }.sorted { $0.createdAt < $1.createdAt }
-                print("LiveActivity Debug: TargetLang = \(targetLang), unshownWords count = \(unshownWords.count)")
-                
-                self.preloadedWord = unshownWords.first
-                print("LiveActivity Debug: preloadedWord set to \(self.preloadedWord?.word ?? "nil")")
-                
-                // Replenish if empty
-                if unshownWords.isEmpty {
-                    print("LiveActivity Debug: unshownWords is empty, triggering AI generation in background...")
-                    let excludeList = allWords.map { $0.word }
-                    let generateWords = Resolver.shared.resolve(GenerateVocabularyWordsUseCaseProtocol.self)
-                    
-                    var preloadBgTask: UIBackgroundTaskIdentifier = .invalid
-                    preloadBgTask = UIApplication.shared.beginBackgroundTask {
-                        UIApplication.shared.endBackgroundTask(preloadBgTask)
-                        preloadBgTask = .invalid
-                    }
-                    
-                    Task {
-                        defer {
-                            UIApplication.shared.endBackgroundTask(preloadBgTask)
-                            preloadBgTask = .invalid
-                        }
-                        
-                        do {
-                            _ = try await generateWords.execute(
-                                targetLanguage: targetLang, 
-                                count: AppConstants.Common.noOfWordsForLockScreenVocabulary, 
-                                excludeWords: excludeList
-                            )
-                            print("LiveActivity Debug: AI generation finished from preload.")
-                            
-                            // If we didn't have a word, let's try to fetch again after generation
-                            if self.preloadedWord == nil {
-                                let updatedWords = try await getSavedWords.execute()
-                                print("LiveActivity Debug: After generation, DB has \(updatedWords.count) total words.")
-                                
-                                let newWords = updatedWords.filter({ $0.targetLanguage == targetLang && !$0.isShownOnLockScreen }).sorted(by: { $0.createdAt < $1.createdAt })
-                                print("LiveActivity Debug: After generation, found \(newWords.count) new unshown words for \(targetLang).")
-                                
-                                self.preloadedWord = newWords.first
-                                print("LiveActivity Debug: preloadedWord dynamically updated after generation to \(self.preloadedWord?.word ?? "nil")")
-                            }
-                        } catch {
-                            print("LiveActivity Debug: ERROR generating words: \(error)")
-                        }
-                    }
-                }
-            } catch {
-                print("LiveActivity Debug: Failed to preload vocabulary: \(error)")
+
+        do {
+            let allWords = try await getSavedWords.execute()
+            let unshownWords = allWords.filter { !$0.isShownOnLockScreen }
+
+            print("LiveActivity Debug: replenish check — total: \(allWords.count), unshown: \(unshownWords.count)")
+
+            guard unshownWords.isEmpty else { return }
+
+            print("LiveActivity Debug: All words shown, generating new batch...")
+
+            let targetCode = userPrefs.learningLanguageCode ?? "en"
+            let targetLang = Locale(identifier: "en_US").localizedString(forLanguageCode: targetCode)?.capitalized ?? targetCode
+            let excludeList = allWords.map { $0.word }
+            let generateWords = Resolver.shared.resolve(GenerateVocabularyWordsUseCaseProtocol.self)
+
+            var bgTask: UIBackgroundTaskIdentifier = .invalid
+            bgTask = UIApplication.shared.beginBackgroundTask {
+                UIApplication.shared.endBackgroundTask(bgTask)
+                bgTask = .invalid
             }
+
+            defer {
+                UIApplication.shared.endBackgroundTask(bgTask)
+                bgTask = .invalid
+            }
+
+            _ = try await generateWords.execute(
+                targetLanguage: targetLang,
+                count: AppConstants.Common.noOfWordsForLockScreenVocabulary,
+                excludeWords: excludeList
+            )
+            print("LiveActivity Debug: New batch generated successfully.")
+        } catch {
+            print("LiveActivity Debug: Failed to replenish words: \(error)")
         }
     }
-    
-    private func scheduleVocabularyIfNeeded() {
+
+    // MARK: - On Inactive: Pick Word → Show → Mark
+
+    /// Atomic flow: fetch next unshown word → launch Live Activity → mark as shown + journal.
+    private func scheduleVocabularyIfNeeded() async {
         let userPrefs = Resolver.shared.resolve(UserPreferencesProtocol.self)
-        let isEnabled = userPrefs.isLockScreenVocabularyEnabled
-        print("LiveActivity Debug: scheduleVocabularyIfNeeded called (on .inactive). isEnabled = \(isEnabled), preloadedWord = \(preloadedWord?.word ?? "nil")")
-        guard isEnabled, let wordToDisplay = preloadedWord else {
-            print("LiveActivity Debug: Aborting launch because isEnabled is false or preloadedWord is nil")
-            return 
+        guard userPrefs.isLockScreenVocabularyEnabled else {
+            print("LiveActivity Debug: Lock screen vocabulary not enabled, skipping.")
+            return
         }
-        
-        print("LiveActivity Debug: Launching Activity for word: \(wordToDisplay.word)")
-        // 1. Launch Live Activity synchronously before app enters background
+
+        // Prevent duplicate launches for the same transition.
+        // Also cross-check against the system's own activity list, which is the real
+        // source of truth and can't be reset by a spurious phase flicker.
+        let hasSystemActivity: Bool
         if #available(iOS 16.2, *) {
-            let targetCode = userPrefs.learningLanguageCode ?? "en"
-            let currentLanguageCode = userPrefs.appLanguage
-            let targetLang = Locale(identifier: "en_US").localizedString(forLanguageCode: targetCode)?.capitalized ?? targetCode
-            let localizedTargetLang = Locale(identifier: currentLanguageCode).localizedString(forLanguageCode: targetCode)?.capitalized ?? targetLang
-            
-            let localizedDifficulty: String
-            switch wordToDisplay.difficulty.lowercased() {
-            case "easy": localizedDifficulty = L10n.Home.difficultyEasy
-            case "medium": localizedDifficulty = L10n.Home.difficultyMedium
-            case "hard": localizedDifficulty = L10n.Home.difficultyHard
-            default: localizedDifficulty = wordToDisplay.difficulty
-            }
-            
-            let isDarkMode = userPrefs.isDarkMode
-            let isAppArabic = currentLanguageCode.contains("ar")
-            
-            let attributes = WordWidgetAttributes()
-            let state = WordWidgetAttributes.ContentState(
-                wordId: wordToDisplay.id.uuidString,
-                word: wordToDisplay.word,
-                meaning: wordToDisplay.meaning,
-                difficulty: wordToDisplay.difficulty,
-                targetLanguage: wordToDisplay.targetLanguage,
-                localizedAppName: L10n.Components.appName,
-                localizedTapToOpen: L10n.LockScreenVocabulary.tapToOpenAndListen,
-                localizedDifficulty: localizedDifficulty,
-                localizedTargetLanguage: localizedTargetLang,
-                isDarkMode: isDarkMode,
-                isAppArabic: isAppArabic
-            )
-            do {
-                _ = try Activity.request(attributes: attributes, contentState: state, pushType: nil)
-            } catch {
-                print("Failed to request Live Activity: \(error)")
-            }
+            hasSystemActivity = !Activity<WordWidgetAttributes>.activities.isEmpty
+        } else {
+            hasSystemActivity = false
         }
-        
-        // 2. Perform DB update and AI Generation in background task
+
+        guard currentlyDisplayedWordId == nil, !hasSystemActivity else {
+            print("LiveActivity Debug: Word already displayed this session, skipping.")
+            return
+        }
+
+        let getSavedWords = Resolver.shared.resolve(GetSavedVocabularyWordsUseCaseProtocol.self)
+        let markWordAsShown = Resolver.shared.resolve(MarkVocabularyWordAsShownUseCaseProtocol.self)
+        let markWordAsAddedToJournal = Resolver.shared.resolve(MarkWordAsAddedToJournalUseCaseProtocol.self)
+
+        // Begin a background task to ensure DB operations complete
         var bgTask: UIBackgroundTaskIdentifier = .invalid
         bgTask = UIApplication.shared.beginBackgroundTask {
             UIApplication.shared.endBackgroundTask(bgTask)
             bgTask = .invalid
         }
-        
-        let markWordAsShown = Resolver.shared.resolve(MarkVocabularyWordAsShownUseCaseProtocol.self)
-        let pickedWordId = wordToDisplay.id
-        
-        Task {
-            defer {
-                UIApplication.shared.endBackgroundTask(bgTask)
-                bgTask = .invalid
+
+        defer {
+            UIApplication.shared.endBackgroundTask(bgTask)
+            bgTask = .invalid
+        }
+
+        do {
+            // 1. Fetch the next unshown word
+            let allWords = try await getSavedWords.execute()
+            let unshownWords = allWords
+                .filter { !$0.isShownOnLockScreen }
+                .sorted { $0.createdAt < $1.createdAt }
+
+            guard let wordToDisplay = unshownWords.first else {
+                print("LiveActivity Debug: No unshown words available, skipping launch.")
+                return
             }
-            do {
-                try await markWordAsShown.execute(id: pickedWordId)
-                print("LiveActivity Debug: Marked word as shown in background task")
-            } catch {
-                print("LiveActivity Debug: Failed background DB operations for Live Activity: \(error)")
+
+            // Re-check cancellation/guard after the await above — another debounced
+            // task could theoretically have run in between.
+            guard currentlyDisplayedWordId == nil else {
+                print("LiveActivity Debug: Word already displayed (post-fetch check), skipping.")
+                return
             }
+
+            print("LiveActivity Debug: Picked word: \(wordToDisplay.word)")
+
+            // 2. Track this word BEFORE any awaits that follow, to close the race window.
+            currentlyDisplayedWordId = wordToDisplay.id
+
+            // 3. Mark as shown + journal
+            try await markWordAsShown.execute(id: wordToDisplay.id)
+            try await markWordAsAddedToJournal.execute(id: wordToDisplay.id)
+            print("LiveActivity Debug: Marked '\(wordToDisplay.word)' as shown and added to journal.")
+
+            // 4. Launch the Live Activity
+            if #available(iOS 16.2, *) {
+                launchLiveActivity(for: wordToDisplay, userPrefs: userPrefs)
+            }
+        } catch {
+            print("LiveActivity Debug: Failed to schedule vocabulary: \(error)")
+        }
+    }
+
+    // MARK: - Live Activity Launch
+
+    @available(iOS 16.2, *)
+    private func launchLiveActivity(for word: VocabularyWordEntity, userPrefs: UserPreferencesProtocol) {
+        let targetCode = userPrefs.learningLanguageCode ?? "en"
+        let currentLanguageCode = userPrefs.appLanguage
+        let targetLang = Locale(identifier: "en_US").localizedString(forLanguageCode: targetCode)?.capitalized ?? targetCode
+        let localizedTargetLang = Locale(identifier: currentLanguageCode).localizedString(forLanguageCode: targetCode)?.capitalized ?? targetLang
+
+        let localizedDifficulty: String
+        switch word.difficulty.lowercased() {
+        case "easy": localizedDifficulty = L10n.Home.difficultyEasy
+        case "medium": localizedDifficulty = L10n.Home.difficultyMedium
+        case "hard": localizedDifficulty = L10n.Home.difficultyHard
+        default: localizedDifficulty = word.difficulty
+        }
+
+        let isDarkMode = userPrefs.isDarkMode
+        let isAppArabic = currentLanguageCode.contains("ar")
+
+        let attributes = WordWidgetAttributes()
+        let state = WordWidgetAttributes.ContentState(
+            wordId: word.id.uuidString,
+            word: word.word,
+            meaning: word.meaning,
+            difficulty: word.difficulty,
+            targetLanguage: word.targetLanguage,
+            localizedAppName: L10n.Components.appName,
+            localizedTapToOpen: L10n.LockScreenVocabulary.tapToOpenAndListen,
+            localizedDifficulty: localizedDifficulty,
+            localizedTargetLanguage: localizedTargetLang,
+            isDarkMode: isDarkMode,
+            isAppArabic: isAppArabic
+        )
+
+        do {
+            _ = try Activity.request(attributes: attributes, contentState: state, pushType: nil)
+            print("LiveActivity Debug: Live Activity launched for '\(word.word)'")
+        } catch {
+            print("LiveActivity Debug: Failed to request Live Activity: \(error)")
         }
     }
 }

@@ -61,6 +61,15 @@ final class OAuthSignInHandler: OAuthSignInHandlerProtocol {
                 } else {
                     userPreferences.needsProfileCompletion = false
                 }
+                
+                if let nativeLangCode = user.nativeLanguage {
+                    let lower = nativeLangCode.lowercased()
+                    if let availableLang = AppLanguage.targetLanguages.first(where: { $0.name.lowercased() == lower || $0.code.lowercased() == lower }),
+                       let mapped = AppLanguage.allCases.first(where: { $0.code == availableLang.code }) {
+                        userPreferences.appLanguage = mapped.code
+                    }
+                }
+                
                 return .success
 
             case .failure(let error):

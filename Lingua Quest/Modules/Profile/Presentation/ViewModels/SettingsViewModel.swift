@@ -195,10 +195,10 @@ final class SettingsViewModel {
                 self.activationState = .checking
                 do {
                     let unlocked = try await remoteDS.isUnlocked(userId: userId)
-                    self.activationState = .idle
                     if unlocked {
                         self.activateWithoutPayment()
                     } else {
+                        self.activationState = .idle
                         self.showActivationDialog = true
                     }
                 } catch {
@@ -214,11 +214,15 @@ final class SettingsViewModel {
     }
     
     private func activateWithoutPayment() {
-        guard let activateLockScreenVocabularyUseCase = activateLockScreenVocabularyUseCase else { return }
+        guard let activateLockScreenVocabularyUseCase = activateLockScreenVocabularyUseCase else {
+            self.activationState = .idle
+            return
+        }
         
         Task {
             let result = await activateLockScreenVocabularyUseCase.execute()
             await MainActor.run {
+                self.activationState = .idle
                 switch result {
                 case .success:
                     self.userPreferences.isLockScreenVocabularyEnabled = true

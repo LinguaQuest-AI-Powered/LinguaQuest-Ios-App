@@ -11,6 +11,7 @@ struct GalleryView: View {
     @State var viewModel: GalleryViewModel
     @State private var selectedTab: Int = 0
     @Namespace private var tabNamespace
+    @Environment(\.scenePhase) private var scenePhase
     
     // For Word Filters
     let wordCategories = ["All", "easy", "medium", "hard"]
@@ -171,6 +172,11 @@ struct GalleryView: View {
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("VocabularyNotificationTapped"))) { _ in
             selectedTab = 1
             viewModel.loadItems()
+        }
+        .onChange(of: scenePhase) { oldPhase, newPhase in
+            if newPhase == .active {
+                viewModel.loadItems()
+            }
         }
     }
 }

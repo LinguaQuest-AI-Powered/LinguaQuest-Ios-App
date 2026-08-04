@@ -14,27 +14,25 @@ struct CategoryFilterView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {
                 ForEach(categories, id: \.self) { category in
-                    Button(action: {
-                        selectedCategory = category
-                    }) {
-                        Text(localizedTitles[category] ?? category)
-                            .font(.system(size: 14, weight: .bold, design: .rounded))
-                            .foregroundColor(selectedCategory == category ? Color.appTextSelectedBrown : Color.appTextUnselectedBrown)
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 10)
-                            .background(
-                                Capsule()
-                                    .fill(selectedCategory == category ? Color.appAccentOrange : Color.appSurfaceCardWarm)
-                            )
-                            .overlay(
-                                Capsule()
-                                    .stroke(Color.white.opacity(0.5), lineWidth: 1)
-                            )
-                    }
+                    FilterChip(
+                        title: localizedTitles[category] ?? category,
+                        dotColor: dotColor(for: category),
+                        isSelected: selectedCategory == category,
+                        action: { selectedCategory = category }
+                    )
                 }
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 10)
+        }
+    }
+    
+    private func dotColor(for category: String) -> Color? {
+        switch category.lowercased() {
+        case "easy": return .appSemanticSuccess
+        case "medium": return .appAccentOrange
+        case "hard": return .appAccentStreakRed
+        default: return nil
         }
     }
 }
