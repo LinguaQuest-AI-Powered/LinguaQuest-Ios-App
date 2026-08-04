@@ -40,6 +40,16 @@ enum LanguageEndpoint {
         }
     }
     
+    struct RemoveLanguages: Endpoint {
+        let languageIds: [Int]
+        
+        var path: String { "/languages" }
+        var method: HTTPMethod { .delete }
+        var body: RemoveLanguagesRequestDTO? {
+            RemoveLanguagesRequestDTO(languageIds: languageIds)
+        }
+    }
+    
     struct ChangeNativeLanguage: Endpoint {
         let languageId: Int
         
@@ -61,4 +71,8 @@ struct AddLanguageRequestDTO: Encodable {
 
 struct ChangeNativeLanguageRequestDTO: Encodable {
     let languageId: Int
+}
+
+struct RemoveLanguagesRequestDTO: Encodable {
+    let languageIds: [Int]
 }

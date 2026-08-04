@@ -17,5 +17,6 @@ protocol HomeRepositoryProtocol {
     func getAvailableLanguages() async throws -> [AvailableLanguage]
     func switchActiveLanguage(languageId: Int) async throws -> MyTargetLanguage
     func addLanguages(languageIds: [Int]) async throws -> [MyTargetLanguage]
+    func removeLanguages(languageIds: [Int]) async throws -> [MyTargetLanguage]
     func changeNativeLanguage(languageId: Int) async throws
 }

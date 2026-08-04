@@ -20,6 +20,7 @@
 "common.error_occurred" = "An error occurred.";
 "common.go_back" = "Go Back";
 "common.open_settings" = "Open Settings";
+"common.remove" = "Remove";
 
 "auth.email_placeholder" = "Email address";
 "auth.password_placeholder" = "Password";
@@ -286,6 +287,8 @@
 // My Languages & Add Language
 "home.my_languages_title" = "My Languages";
 "home.add_new_language" = "Add New Language";
+"home.remove_language_title" = "Remove Language";
+"home.remove_language_message" = "Are you sure you want to remove %@? Your progress will be saved if you decide to learn it again.";
 "add_language.title" = "Add languages";
 "add_language.subtitle" = "Select the languages you'd like to learn";
 "add_language.search_placeholder" = "Search languages...";

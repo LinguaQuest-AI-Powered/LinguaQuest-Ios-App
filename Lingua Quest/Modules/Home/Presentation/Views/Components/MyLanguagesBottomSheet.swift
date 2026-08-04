@@ -43,11 +43,15 @@ struct MyLanguagesBottomSheet: View {
                         LanguageItemRow(
                             item: item,
                             isSelected: languageViewModel.selectedLanguageId == item.id,
+                            canRemove: languageViewModel.canRemoveLanguage(item),
                             action: {
                                 Task {
                                     await languageViewModel.switchActiveLanguage(to: item.id)
                                     isPresented = false
                                 }
+                            },
+                            onRemove: {
+                                languageViewModel.onRemoveLanguageTapped(language: item)
                             }
                         )
                     }
@@ -69,13 +73,49 @@ struct MyLanguagesBottomSheet: View {
             .padding(.top, 16)
             .padding(.bottom, 40)
         }
+        .appDialog(isPresented: $languageViewModel.showRemoveConfirmation) {
+            DialogCardContainer(
+                showMascot: true,
+                mascotImage: .loginBird, // using login bird or any available bird
+                speechBubbleText: L10n.Home.removeLanguageTitle
+            ) {
+                VStack(spacing: 16) {
+                    Text(String(format: L10n.Home.removeLanguageMessage, languageViewModel.languageToRemove?.name ?? ""))
+                        .appTextStyle(.bodyMedium, color: .appTextSecondary)
+                        .multilineTextAlignment(.center)
+                    
+                    HStack(spacing: 16) {
+                        CustomButton(
+                            type: .secendry,
+                            text: L10n.Common.cancel,
+                            action: { languageViewModel.cancelRemoveLanguage() },
+                            status: languageViewModel.isRemovingLanguage ? .disable : .enable
+                        )
+                        
+                        CustomButton(
+                            type: .custom(textColor: .white, buttonColor: .appSemanticError, shadowColor: .appBrandBrownDark),
+                            text: L10n.Common.remove,
+                            action: {
+                                Task {
+                                    await languageViewModel.confirmRemoveLanguage()
+                                }
+                            },
+                            isLoading: languageViewModel.isRemovingLanguage
+                        )
+                    }
+                    .padding(.top, 8)
+                }
+            }
+        }
     }
 }
 
 struct LanguageItemRow: View {
     let item: MyTargetLanguage
     let isSelected: Bool
+    let canRemove: Bool
     let action: () -> Void
+    let onRemove: () -> Void
     
     var body: some View {
         Button(action: action) {
@@ -111,6 +151,13 @@ struct LanguageItemRow: View {
                     Image(systemIcon: .checkmarkCircleFill)
                         .foregroundColor(Color.appSemanticSuccess)
                         .font(.system(size: 24))
+                } else if canRemove {
+                    Button(action: onRemove) {
+                        Image(systemIcon: .trash)
+                            .foregroundColor(Color.appSemanticError)
+                            .font(.system(size: 20))
+                    }
+                    .padding(.leading, 8)
                 }
             }
             .padding(.horizontal, 16)
