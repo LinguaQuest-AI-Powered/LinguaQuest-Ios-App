@@ -44,6 +44,11 @@ struct RootView: View {
         .environment(\.locale, Locale(identifier: userPreferences.appLanguage))
         .environment(\.layoutDirection, userPreferences.appLanguage == "ar" ? .rightToLeft : .leftToRight)
         .globalVocabularyDeepLink()
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("PushNotificationTapped"))) { _ in
+            if isLoggedIn {
+                router.push(.notifications)
+            }
+        }
         .appDialog(isPresented: .init(
             get: { !networkMonitor.isConnected },
             set: { _ in }

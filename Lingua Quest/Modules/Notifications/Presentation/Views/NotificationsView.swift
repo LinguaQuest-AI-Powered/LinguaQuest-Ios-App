@@ -33,7 +33,6 @@ struct NotificationsView: View {
                 await viewModel.loadInitialData()
             }
         }
-        // Custom background for the whole screen
         .navigationBarHidden(true)
     }
     
@@ -154,7 +153,7 @@ struct NotificationsView: View {
         }
     }
     
-    private var emptyState: some View {
+var emptyState: some View {
         VStack(spacing: 24) {
             Spacer()
             
@@ -193,12 +192,12 @@ struct NotificationsView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
-    private var shimmerSkeleton: some View {
+var shimmerSkeleton: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 12) {
                 ForEach(0..<7, id: \.self) { index in
                     NotificationSkeletonCell()
-                        // Small staggered animation delay for a premium feel
+                     
                         .opacity(1.0 - Double(index) * 0.1)
                         .scaleEffect(0.98 + (0.02 * Double(7 - index) / 7))
                 }
@@ -210,48 +209,4 @@ struct NotificationsView: View {
     }
 }
 
-struct NotificationSkeletonCell: View {
-    var body: some View {
-        HStack(alignment: .top, spacing: 16) {
-            // Icon Placeholder
-            Circle()
-                .fill(Color.appSurfaceCardMuted.opacity(0.5))
-                .frame(width: 48, height: 48)
-            
-            // Content Placeholder
-            VStack(alignment: .leading, spacing: 10) {
-                Capsule()
-                    .fill(Color.appSurfaceCardMuted.opacity(0.5))
-                    .frame(width: 140, height: 16)
-                
-                VStack(alignment: .leading, spacing: 6) {
-                    Capsule()
-                        .fill(Color.appSurfaceCardMuted.opacity(0.5))
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 12)
-                    
-                    Capsule()
-                        .fill(Color.appSurfaceCardMuted.opacity(0.5))
-                        .frame(width: 200, height: 12)
-                }
-                
-                Capsule()
-                    .fill(Color.appSurfaceCardMuted.opacity(0.5))
-                    .frame(width: 80, height: 10)
-                    .padding(.top, 4)
-            }
-            
-            Spacer(minLength: 8)
-        }
-        .padding(16)
-        .background(
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .fill(Color.appSurfaceCard)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .stroke(Color.appBorderLight.opacity(0.5), lineWidth: 1)
-        )
-        .shimmer()
-    }
-}
+

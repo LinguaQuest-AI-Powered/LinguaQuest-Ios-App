@@ -68,7 +68,12 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
             let userInfo = response.notification.request.content.userInfo
             print("User tapped notification with info: \(userInfo)")
             
-            // You can add navigation code here based on the notification content
+            // Post notification to allow SwiftUI components like RootView to handle routing
+            NotificationCenter.default.post(
+                name: NSNotification.Name("PushNotificationTapped"),
+                object: nil,
+                userInfo: userInfo
+            )
             
             completionHandler()
         }
