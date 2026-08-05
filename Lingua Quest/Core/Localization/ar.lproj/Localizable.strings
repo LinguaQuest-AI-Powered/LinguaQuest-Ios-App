@@ -552,3 +552,15 @@
 "mind_reader.loading_title" = "جاري الاتصال بقارئ الأفكار...";
 "mind_reader.loading_subtitle" = "جاري تجهيز الذكاء الاصطناعي لتخمين كلمتك.";
 "mind_reader.enter_your_word" = "أدخل الكلمة التي كنت تفكر بها...";
+
+// Notifications
+"notifications.title" = "الإشعارات";
+"notifications.empty.title" = "لا توجد إشعارات";
+"notifications.empty.subtitle" = "ليس لديك إشعارات جديدة في الوقت الحالي. سنعلمك عند وجود تحديث!";
+"notifications.clear_all" = "مسح الكل";
+"notifications.delete" = "حذف";
+"notifications.mark_as_read" = "تحديد كمقروء";
+"notifications.time.just_now" = "الآن";
+"notifications.time.minutes_ago" = "منذ %d دقائق";
+"notifications.time.hours_ago" = "منذ %d ساعات";
+"notifications.time.days_ago" = "منذ %d أيام";

@@ -626,6 +626,20 @@ enum L10n {
         static var loadingSubtitle: String { localized("mind_reader.loading_subtitle") }
     }
 
+    enum Notifications {
+        static var title: String { localized("notifications.title") }
+        static var emptyTitle: String { localized("notifications.empty.title") }
+        static var emptySubtitle: String { localized("notifications.empty.subtitle") }
+        static var clearAll: String { localized("notifications.clear_all") }
+        static var delete: String { localized("notifications.delete") }
+        static var markAsRead: String { localized("notifications.mark_as_read") }
+        
+        static var justNow: String { localized("notifications.time.just_now") }
+        static func minutesAgo(_ count: Int) -> String { String(format: localized("notifications.time.minutes_ago"), count) }
+        static func hoursAgo(_ count: Int) -> String { String(format: localized("notifications.time.hours_ago"), count) }
+        static func daysAgo(_ count: Int) -> String { String(format: localized("notifications.time.days_ago"), count) }
+    }
+
     private static func localized(_ key: String) -> String {
         let appLanguage = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en"
         if let path = Bundle.main.path(forResource: appLanguage, ofType: "lproj"),

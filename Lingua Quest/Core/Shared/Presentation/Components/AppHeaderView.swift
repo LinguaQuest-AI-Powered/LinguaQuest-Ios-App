@@ -13,23 +13,42 @@ struct AppHeaderView: View {
     
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(Router.self) private var router
     @State private var mascotPulse = false
+    @State private var unreadCount = 0
     
     var body: some View {
         HStack(spacing: 10) {
             mascotAvatar
             
-            Text(L10n.Components.appName)
-                .appTextStyle(.bodyLargeBold, color: .appTextHeading)
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
-            
+
             Spacer(minLength: 8)
             
             RewardBadge(type: .xp, value: starCount.formattedStatsValue(), size: .normal)
-                .frame(minWidth: 88)
+                .fixedSize(horizontal: true, vertical: false)
             RewardBadge(type: .coin, value: coinCount.formattedStatsValue(), size: .normal)
-                .frame(minWidth: 88)
+                .fixedSize(horizontal: true, vertical: false)
+            
+            Button(action: {
+                router.push(.notifications)
+            }) {
+                ZStack(alignment: .topTrailing) {
+                    Image(systemIcon: .bell)
+                        .font(.system(size: 24))
+                        .foregroundColor(.appTextHeading)
+                    
+                    if unreadCount > 0 {
+                        Circle()
+                            .fill(Color.appSemanticError)
+                            .frame(width: 10, height: 10)
+                            .offset(x: 2, y: -2)
+                            .overlay(
+                                Circle().stroke(Color.appSurfaceNavBar, lineWidth: 2)
+                            )
+                    }
+                }
+            }
+            .padding(.leading, 4)
         }
         .padding(.horizontal, 18)
         .padding(.top, 8)
@@ -54,6 +73,13 @@ struct AppHeaderView: View {
             guard !reduceMotion else { return }
             withAnimation(.easeInOut(duration: 1.7).repeatForever(autoreverses: true)) {
                 mascotPulse = true
+            }
+            
+            Task {
+                let useCase = Resolver.shared.resolve(GetUnreadNotificationsCountUseCaseProtocol.self)
+                if case .success(let count) = await useCase.execute() {
+                    unreadCount = count
+                }
             }
         }
     }

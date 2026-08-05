@@ -42,6 +42,7 @@ enum AppRoute: Hashable {
     case appLanguageSelection
     case about
     case helpAndSupport
+    case notifications
 }
 
 enum AppSheet: String, Identifiable {

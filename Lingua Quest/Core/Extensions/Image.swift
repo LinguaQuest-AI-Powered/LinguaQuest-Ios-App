@@ -109,6 +109,7 @@ extension Image {
         case eye = "eye"
         case eyeSlash = "eye.slash"
         case plus = "plus"
+        case bell = "bell"
     }
     
     enum Asset: String {

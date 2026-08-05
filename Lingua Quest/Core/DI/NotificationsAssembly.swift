@@ -50,5 +50,16 @@ final class NotificationsAssembly: Assembly {
         container.register(DeleteNotificationUseCaseProtocol.self) { resolver in
             DeleteNotificationUseCase(repository: resolver.resolve(NotificationsRepositoryProtocol.self)!)
         }
+        
+        // MARK: - ViewModels
+        container.register(NotificationsViewModel.self) { resolver in
+            NotificationsViewModel(
+                getNotificationsUseCase: resolver.resolve(GetNotificationsUseCaseProtocol.self)!,
+                getUnreadCountUseCase: resolver.resolve(GetUnreadNotificationsCountUseCaseProtocol.self)!,
+                markReadUseCase: resolver.resolve(MarkNotificationReadUseCaseProtocol.self)!,
+                deleteUseCase: resolver.resolve(DeleteNotificationUseCaseProtocol.self)!,
+                deleteAllUseCase: resolver.resolve(DeleteAllNotificationsUseCaseProtocol.self)!
+            )
+        }
     }
 }
