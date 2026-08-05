@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NotificationCell: View {
     let notification: NotificationEntity
+    var onDelete: () -> Void
     
     var body: some View {
         HStack(alignment: .top, spacing: 16) {
@@ -16,46 +17,67 @@ struct NotificationCell: View {
             ZStack {
                 Circle()
                     .fill(iconBackgroundColor)
-                    .frame(width: 48, height: 48)
+                    .frame(width: 56, height: 56)
+                    // 3D effect on icon
+                    .shadow(color: iconBackgroundColor.opacity(0.6), radius: 0, x: 0, y: 4)
                 
                 Image(systemIcon: iconForType)
-                    .font(.system(size: 24))
+                    .font(.system(size: 26))
                     .foregroundColor(.white)
             }
             
             // Content
             VStack(alignment: .leading, spacing: 6) {
-                Text(notification.title)
-                    .appTextStyle(.bodyBold, color: .appTextHeading)
+                HStack(alignment: .top) {
+                    Text(notification.title)
+                        .appTextStyle(.bodyBold, color: .appTextHeading)
+                        .lineLimit(2)
+                    
+                    Spacer()
+                    
+                    Button(action: onDelete) {
+                        Image(systemIcon: .xmark)
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundColor(.appTextSecondary.opacity(0.6))
+                            .padding(6)
+                            .background(Circle().fill(Color.appSurfaceCardMuted.opacity(0.5)))
+                    }
+                }
                 
                 Text(notification.body)
                     .appTextStyle(.caption, color: .appTextSecondary)
                     .lineLimit(3)
+                    .padding(.trailing, 8)
                 
-                Text(timeAgoDisplay())
-                    .appTextStyle(.captionMedium, color: .appTextSecondary.opacity(0.7))
-                    .padding(.top, 2)
-            }
-            
-            Spacer(minLength: 8)
-            
-            // Unread Indicator
-            if !notification.isRead {
-                Circle()
-                    .fill(Color.appSemanticError)
-                    .frame(width: 10, height: 10)
-                    .padding(.top, 4)
+                HStack {
+                    Text(timeAgoDisplay())
+                        .appTextStyle(.microBold, color: .appTextSecondary.opacity(0.7))
+                    
+                    Spacer()
+                    
+                    if !notification.isRead {
+                        Circle()
+                            .fill(Color.appBrandPrimary)
+                            .frame(width: 12, height: 12)
+                            .shadow(color: Color.appBrandPrimary.opacity(0.5), radius: 0, x: 0, y: 2)
+                    }
+                }
+                .padding(.top, 4)
             }
         }
-        .padding(16)
+        .padding(20)
         .background(
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .fill(notification.isRead ? Color.appSurfaceCard : Color.appBrandPrimary.opacity(0.08))
+            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                .fill(notification.isRead ? Color.appSurfaceCard : Color.appBrandPrimary.opacity(0.1))
+                // Hard 3D shadow for game aesthetic
+                .shadow(color: notification.isRead ? Color.appBorderLight : Color.appBrandPrimary.opacity(0.35), radius: 0, x: 0, y: 6)
         )
         .overlay(
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .stroke(notification.isRead ? Color.appBorderLight : Color.appBrandPrimary.opacity(0.3), lineWidth: 1)
+            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                .stroke(notification.isRead ? Color.appBorderLight : Color.appBrandPrimary.opacity(0.6), lineWidth: 2)
         )
+        .padding(.horizontal, 4) // prevent shadow clipping
+        .padding(.bottom, 6)     // prevent shadow clipping
         .contentShape(Rectangle())
     }
     

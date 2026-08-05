@@ -41,10 +41,8 @@ struct AppHeaderView: View {
                         Circle()
                             .fill(Color.appSemanticError)
                             .frame(width: 10, height: 10)
-                            .offset(x: 2, y: -2)
-                            .overlay(
-                                Circle().stroke(Color.appSurfaceNavBar, lineWidth: 2)
-                            )
+                            .background(Circle().fill(Color.appBackgroundWarm).frame(width: 14, height: 14))
+                            .offset(x: -2, y: -2)
                     }
                 }
             }

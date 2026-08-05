@@ -541,9 +541,11 @@
 // Notifications
 "notifications.title" = "Notifications";
 "notifications.empty.title" = "No Notifications";
-"notifications.empty.subtitle" = "You have no new notifications at this time. We will notify you when there's an update!";
+"notifications.empty.subtitle" = "You don't have any notifications right now. Check back later!";
 "notifications.clear_all" = "Clear All";
 "notifications.delete" = "Delete";
+"notifications.delete_confirm_title" = "Delete Notification?";
+"notifications.delete_confirm_message" = "Are you sure you want to delete this notification?";
 "notifications.mark_as_read" = "Mark as Read";
 "notifications.time.just_now" = "Just now";
 "notifications.time.minutes_ago" = "%d minutes ago";

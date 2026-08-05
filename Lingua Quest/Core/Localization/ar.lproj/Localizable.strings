@@ -556,10 +556,12 @@
 // Notifications
 "notifications.title" = "الإشعارات";
 "notifications.empty.title" = "لا توجد إشعارات";
-"notifications.empty.subtitle" = "ليس لديك إشعارات جديدة في الوقت الحالي. سنعلمك عند وجود تحديث!";
+"notifications.empty.subtitle" = "لا توجد إشعارات حالياً. تحقق في وقت لاحق!";
 "notifications.clear_all" = "مسح الكل";
 "notifications.delete" = "حذف";
-"notifications.mark_as_read" = "تحديد كمقروء";
+"notifications.delete_confirm_title" = "حذف الإشعار؟";
+"notifications.delete_confirm_message" = "هل أنت متأكد من رغبتك في حذف هذا الإشعار؟";
+"notifications.mark_as_read" = "مقروء";
 "notifications.time.just_now" = "الآن";
 "notifications.time.minutes_ago" = "منذ %d دقائق";
 "notifications.time.hours_ago" = "منذ %d ساعات";

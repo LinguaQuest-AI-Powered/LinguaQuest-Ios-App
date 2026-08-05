@@ -11,6 +11,8 @@ struct NotificationsView: View {
     @Bindable var viewModel: NotificationsViewModel
     @Environment(Router.self) private var router
     @Environment(\.colorScheme) private var colorScheme
+    @State private var showDeleteDialog = false
+    @State private var notificationToDelete: NotificationEntity?
     
     var body: some View {
         VStack(spacing: 0) {
@@ -70,24 +72,26 @@ struct NotificationsView: View {
     }
     
     private var notificationsList: some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             LazyVStack(spacing: 12) {
                 ForEach(viewModel.notifications) { notification in
-                    NotificationCell(notification: notification)
-                        .onTapGesture {
-                            Task {
-                                await viewModel.markAsRead(notification)
-                            }
+                    NotificationCell(notification: notification, onDelete: {
+                        notificationToDelete = notification
+                        showDeleteDialog = true
+                    })
+                    .onTapGesture {
+                        Task {
+                            await viewModel.markAsRead(notification)
                         }
-                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                            Button(role: .destructive) {
-                                Task {
-                                    await viewModel.deleteNotification(notification)
-                                }
-                            } label: {
-                                Label(L10n.Notifications.delete, systemImage: "trash")
-                            }
+                    }
+                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                        Button(role: .destructive) {
+                            notificationToDelete = notification
+                            showDeleteDialog = true
+                        } label: {
+                            Label(L10n.Notifications.delete, systemImage: "trash")
                         }
+                    }
                         .onAppear {
                             if notification == viewModel.notifications.last {
                                 Task {
@@ -108,6 +112,45 @@ struct NotificationsView: View {
         }
         .refreshable {
             await viewModel.loadInitialData()
+        }
+        .appDialog(isPresented: $showDeleteDialog) {
+            DialogCardContainer(mascotImage: .deleteNotifications) {
+                VStack(spacing: 24) {
+                
+                    VStack(spacing: 8) {
+                        Text(L10n.Notifications.deleteConfirmTitle)
+                            .appTextStyle(.headingMediumBold, color: .appTextHeading)
+                            .multilineTextAlignment(.center)
+                        
+                        Text(L10n.Notifications.deleteConfirmMessage)
+                            .appTextStyle(.body, color: .appTextSecondary)
+                            .multilineTextAlignment(.center)
+                    }
+                    
+                    VStack(spacing: 12) {
+                        CustomButton(
+                            type: .custom(textColor: .white, buttonColor: .appSemanticError),
+                            text: L10n.Notifications.delete,
+                            action: {
+                                if let notification = notificationToDelete {
+                                    Task {
+                                        await viewModel.deleteNotification(notification)
+                                    }
+                                }
+                                showDeleteDialog = false
+                            }
+                        )
+                        
+                        CustomButton(
+                            type: .secendry,
+                            text: L10n.Common.cancel,
+                            action: {
+                                showDeleteDialog = false
+                            }
+                        )
+                    }
+                }
+            }
         }
     }
     
