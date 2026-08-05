@@ -31,12 +31,12 @@ struct MindReaderGuessView: View {
                 ) {
                     VStack(spacing: 24) {
                         Text(L10n.MindReader.guessThinkIts)
-                            .appTextStyle(.displayLarge, color: .appBrandBrownDark)
+                            .dialogTitleStyle()
                             .padding(.top, 16)
                         
                         HStack(spacing: 12) {
                             Text(viewModel.guessedWord)
-                                .appTextStyle(.displayMedium, color: .appBrandBrownDark)
+                                .dialogTitleStyle()
                                 .padding(.horizontal, 24)
                                 .padding(.vertical, 16)
                                 .background(Color.appSurfaceCardMuted)
@@ -62,7 +62,7 @@ struct MindReaderGuessView: View {
                             .padding(.bottom, 24)
                         
                         Text(L10n.MindReader.confirmationQuestion)
-                            .appTextStyle(.bodyLarge, color: .appTextSecondary)
+                            .dialogSubtitleStyle()
                         
                         HStack(spacing: 12) {
                             CustomButton(

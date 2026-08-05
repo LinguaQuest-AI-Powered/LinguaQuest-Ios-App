@@ -13,17 +13,23 @@ struct SectionHeader: View {
     let actionTitle: String
     let onActionTapped: () -> Void
     
-    // MARK: - Body
     var body: some View {
         HStack {
             Text(title)
-                .appTextStyle(.headingMediumBold, color: .appTextHeading)
+                .appTextStyle(.displaySmall, color: .appTextHeading)
             
             Spacer()
             
             Button(action: onActionTapped) {
-                Text(actionTitle)
-                    .appTextStyle(.captionBold, color: .appBrandBrown)
+                HStack(spacing: 4) {
+                    Text(actionTitle)
+                        .appTextStyle(.bodyBold, color: .appTextHeading)
+                    
+                    Image(systemIcon: .rightChevron)
+                        .font(AppTextStyle.captionMedium.font)
+                        .foregroundColor(.appTextHeading)
+                        .flipsForRightToLeftLayoutDirection(true)
+                }
             }
         }
     }

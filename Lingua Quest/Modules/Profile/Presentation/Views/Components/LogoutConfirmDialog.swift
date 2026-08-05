@@ -14,10 +14,10 @@ struct LogoutConfirmDialog: View {
             VStack(spacing: 20) {
                 VStack(spacing: 8) {
                     Text(L10n.Settings.logOut)
-                        .appTextStyle(.displayMedium, color: .appBrandBrown)
+                        .dialogTitleStyle()
                     
                     Text(L10n.Settings.logOutConfirmation)
-                        .appTextStyle(.body, color: .appTextSecondary)
+                        .dialogSubtitleStyle()
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 16)
                 }

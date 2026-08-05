@@ -31,13 +31,13 @@ struct SharedEvaluatingView: View {
                 
                 VStack(spacing: 12) {
                     Text(title)
-                        .appTextStyle(.displayMedium, color: .appBrandBrown)
+                        .dialogTitleStyle()
                         .scaleEffect(isAnalyzingPulsing ? 1.05 : 0.95)
                         .opacity(isAnalyzingPulsing ? 1.0 : 0.7)
                         .animation(.easeInOut(duration: 1.0).repeatForever(autoreverses: true), value: isAnalyzingPulsing)
                     
                     Text(subtitle)
-                        .appTextStyle(.body, color: .appTextSecondary)
+                        .dialogSubtitleStyle()
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 16)
                 }

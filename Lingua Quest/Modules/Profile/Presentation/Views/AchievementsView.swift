@@ -43,17 +43,13 @@ struct AchievementsView: View {
                         viewModel.onBackTapped()
                     })
                     Spacer()
-                    
+                }
+                .overlay(
                     Text(L10n.Achievements.title)
                         .appTextStyle(.headingLarge, color: .appTextHeading)
-                    
-                    Spacer()
-          
-                    Color.clear.frame(width: 44, height: 44)
-                }
+                )
                 .padding(.horizontal, 20)
-                .padding(.top, 16)
-                .padding(.bottom, 24)
+                .frame(height: 64)
                 
                 Divider()
                     .background(Color.appBorderBrown)
@@ -81,18 +77,16 @@ struct AchievementsView: View {
                         }
                         .padding(.vertical, 24)
                         .frame(maxWidth: .infinity)
-                        .background(
-                            RoundedRectangle(cornerRadius: 16)
-                                .fill(LinearGradient(
-                                    colors: [Color.appSurfaceCardWarm, Color.appSurfaceCard],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                ))
-                                .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y: 2)
-                        )
+                        .background(Color.appSurfaceCard)
+                        .cornerRadius(24)
                         .overlay(
-                            RoundedRectangle(cornerRadius: 16)
-                                .stroke(Color.appBorderBrown, lineWidth: 0.5)
+                            RoundedRectangle(cornerRadius: 24)
+                                .stroke(Color.appBorderBrown, lineWidth: 1)
+                        )
+                        .background(
+                            RoundedRectangle(cornerRadius: 24)
+                                .fill(Color.appBorderBrown.opacity(0.4))
+                                .offset(y: 6)
                         )
                         .padding(.horizontal, 20)
                         .padding(.top, 24)
@@ -105,8 +99,8 @@ struct AchievementsView: View {
                             segmentButton(title: L10n.Achievements.filterEarned, index: 1)
                             segmentButton(title: L10n.Achievements.filterLocked, index: 2)
                         }
-                        .frame(height: 44)
-                        .background(Color.appSurfaceCardWarm)
+                        .frame(height: 48)
+                        .background(Color.appSurfaceCard)
                         .clipShape(Capsule())
                         .overlay(
                             Capsule().stroke(Color.appBorderBrown, lineWidth: 1)
@@ -117,8 +111,8 @@ struct AchievementsView: View {
                         
                         // Grid
                         if viewModel.isLoading {
-                            ProgressView()
-                                .padding(.top, 40)
+                            AchievementsSkeletonView()
+                                .shimmer()
                         } else {
                             LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
                                 ForEach(filteredAchievements) { achievement in
@@ -204,7 +198,7 @@ struct AchievementsView: View {
                 .appTextStyle(.bodyBold, color: selectedTab == index ? .white : .appTextPrimary)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(
-                    selectedTab == index ? Color.appTealGreen : Color.clear
+                    selectedTab == index ? Color.appAccentTeal : Color.clear
                 )
                 .clipShape(Capsule())
                 .padding(4)
@@ -280,11 +274,59 @@ struct AchievementGridItem: View {
         .padding(.horizontal, 8)
         .frame(maxWidth: .infinity)
         .background(Color.appSurfaceCard)
-        .cornerRadius(12)
+        .cornerRadius(16)
         .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(Color.appBorderBrown, lineWidth: 0.5)
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color.appBorderBrown, lineWidth: 1)
         )
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color.appBorderBrown.opacity(0.4))
+                .offset(y: 4)
+        )
+    }
+}
+
+struct AchievementsSkeletonView: View {
+    var body: some View {
+        LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
+            ForEach(0..<6, id: \.self) { index in
+                VStack(spacing: 12) {
+                    Circle()
+                        .fill(Color.appSurfaceCardMuted.opacity(0.5))
+                        .frame(width: 60, height: 60)
+                    
+                    VStack(spacing: 8) {
+                        Capsule()
+                            .fill(Color.appSurfaceCardMuted.opacity(0.5))
+                            .frame(height: 16)
+                            .padding(.horizontal, 12)
+                        
+                        Capsule()
+                            .fill(Color.appSurfaceCardMuted.opacity(0.5))
+                            .frame(width: 60, height: 16)
+                    }
+                }
+                .padding(.vertical, 16)
+                .padding(.horizontal, 8)
+                .frame(maxWidth: .infinity)
+                .background(Color.appSurfaceCard)
+                .cornerRadius(16)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(Color.appBorderLight, lineWidth: 0)
+                )
+                .background(
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(Color.appBorderBrown.opacity(0.4))
+                        .offset(y: 4)
+                )
+                .opacity(1.0 - Double(index) * 0.1)
+            }
+        }
+        .padding(.horizontal, 20)
+        .padding(.bottom, 24)
+        .padding(.top, 16)
     }
 }
 

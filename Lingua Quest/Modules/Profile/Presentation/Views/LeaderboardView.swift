@@ -19,23 +19,25 @@ struct LeaderboardView: View {
                 LeaderboardHeaderView(viewModel: viewModel)
 
                 if !viewModel.isLoading {
-                    if !viewModel.topUsers.isEmpty {
-                        LeaderboardPodiumView(topUsers: viewModel.topUsers)
-                    }
-
                     ScrollViewReader { proxy in
                         ScrollView(showsIndicators: false) {
-                            LeaderboardListView(
-                                users: viewModel.otherUsers,
-                                isLoadingPreviousPage: viewModel.isLoadingPreviousPage,
-                                isLoadingMore: viewModel.isLoadingNextPage,
-                                onReachTop: { user in
-                                    viewModel.loadPreviousPageIfNeeded(currentItem: user)
-                                },
-                                onReachBottom: { user in
-                                    viewModel.loadNextPageIfNeeded(currentItem: user)
+                            VStack(spacing: 0) {
+                                if !viewModel.topUsers.isEmpty {
+                                    LeaderboardPodiumView(topUsers: viewModel.topUsers)
                                 }
-                            )
+                                
+                                LeaderboardListView(
+                                    users: viewModel.otherUsers,
+                                    isLoadingPreviousPage: viewModel.isLoadingPreviousPage,
+                                    isLoadingMore: viewModel.isLoadingNextPage,
+                                    onReachTop: { user in
+                                        viewModel.loadPreviousPageIfNeeded(currentItem: user)
+                                    },
+                                    onReachBottom: { user in
+                                        viewModel.loadNextPageIfNeeded(currentItem: user)
+                                    }
+                                )
+                            }
                         }
                         .onChange(of: viewModel.scrollToUserId) { _, targetId in
                             guard let targetId else { return }

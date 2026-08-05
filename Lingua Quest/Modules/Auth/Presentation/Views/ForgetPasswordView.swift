@@ -22,11 +22,11 @@ struct ForgetPasswordView: View {
                             
                             VStack(spacing: 16) {
                                 Text(L10n.Auth.forgetPassword)
-                                    .appTextStyle(.displayLarge, color: .appTextSecondary)
+                                    .dialogTitleStyle()
                                     .multilineTextAlignment(.center)
                                 
                                 Text(L10n.Auth.forgetPasswordDesc)
-                                    .appTextStyle(.body, color: .appTextSecondary)
+                                    .dialogSubtitleStyle()
                                     .opacity(0.8)
                                     .multilineTextAlignment(.center)
                                     .padding(.horizontal, 8)

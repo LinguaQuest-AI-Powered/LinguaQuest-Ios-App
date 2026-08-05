@@ -40,11 +40,11 @@ struct VocabularyWordDetailDialog: View {
                 // Words
                 VStack(spacing: 8) {
                     Text(word.word)
-                        .appTextStyle(.headingLarge, color: .appTextHeading)
+                        .dialogTitleStyle()
                         .multilineTextAlignment(.center)
                     
                     Text(word.meaning)
-                        .appTextStyle(.headingMedium, color: .appTextSecondary)
+                        .dialogTitleStyle()
                         .multilineTextAlignment(.center)
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -52,10 +52,10 @@ struct VocabularyWordDetailDialog: View {
                 // Example Sentence
                 VStack(spacing: 8) {
                     Text(L10n.WordInsight.exampleLabel)
-                        .appTextStyle(.bodyBold, color: .appTextSecondary)
+                        .dialogSubtitleStyle()
                     
                     Text(word.exampleSentence)
-                        .appTextStyle(.bodyLarge, color: .appTextHeading)
+                        .dialogSubtitleStyle()
                         .multilineTextAlignment(.center)
                         .fixedSize(horizontal: false, vertical: true)
                 }

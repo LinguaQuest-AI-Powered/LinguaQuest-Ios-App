@@ -22,10 +22,10 @@ struct NotEnoughCoinsDialog: View {
         ) {
             VStack(spacing: 16) {
                 Text(title)
-                    .appTextStyle(.displayMedium, color: .appBrandBrown)
+                    .dialogTitleStyle()
                 
                 Text(subtitle)
-                    .appTextStyle(.bodyMedium, color: .appTextSecondary)
+                    .dialogSubtitleStyle()
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 16)
                 
@@ -33,13 +33,13 @@ struct NotEnoughCoinsDialog: View {
                     HStack(spacing: 32) {
                         VStack(spacing: 8) {
                             Text(L10n.Game.currentBalance)
-                                .appTextStyle(.bodyMedium, color: .appTextSecondary)
+                                .dialogSubtitleStyle()
                             RewardBadge(type: .coin, value: "\(currentCoins)", size: .normal)
                         }
                         
                         VStack(spacing: 8) {
                             Text(L10n.Game.missingBalance)
-                                .appTextStyle(.bodyMedium, color: .appTextSecondary)
+                                .dialogSubtitleStyle()
                             RewardBadge(type: .coin, value: "\(missingCoins)", size: .normal)
                         }
                     }

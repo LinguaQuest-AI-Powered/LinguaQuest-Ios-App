@@ -85,10 +85,10 @@ struct CameraResultView: View {
         DialogCardContainer(mascotImage: .weakPasswordBird) {
             VStack(spacing: 24) {
                 Text(L10n.Common.error)
-                    .appTextStyle(.displayMedium, color: .appBrandBrown)
+                    .dialogTitleStyle()
                 
                 Text(message)
-                    .appTextStyle(.body, color: .appTextSecondary)
+                    .dialogSubtitleStyle()
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 16)
                 

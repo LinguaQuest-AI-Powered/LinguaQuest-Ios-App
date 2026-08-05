@@ -28,10 +28,10 @@ struct CostActionDialog: View {
             VStack(spacing: 20) {
                 VStack(spacing: 8) {
                     Text(title)
-                        .appTextStyle(.displayMedium, color: .appBrandBrown)
+                        .dialogTitleStyle()
                     
                     Text(subtitle)
-                        .appTextStyle(.body, color: .appTextSecondary)
+                        .dialogSubtitleStyle()
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 16)
                 }

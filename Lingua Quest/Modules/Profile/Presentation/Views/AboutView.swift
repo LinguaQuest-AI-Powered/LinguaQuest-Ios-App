@@ -62,11 +62,11 @@ struct AboutView: View {
             ) {
                 VStack(spacing: 16) {
                     Text(L10n.About.licensesTitle)
-                        .appTextStyle(.headingMedium, color: .appTextHeading)
+                        .dialogTitleStyle()
                         .multilineTextAlignment(.center)
                     
                     Text(L10n.About.licensesDescription)
-                        .appTextStyle(.bodyMedium, color: .appTextSecondary)
+                        .dialogSubtitleStyle()
                         .multilineTextAlignment(.center)
                     
                     CustomButton(

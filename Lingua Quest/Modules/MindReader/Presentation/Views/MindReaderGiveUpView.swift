@@ -47,7 +47,7 @@ struct MindReaderGiveUpView: View {
                             
                             // Title
                             Text(L10n.MindReader.categoryVocabularyTitle(viewModel.categoryName))
-                                .appTextStyle(.displayLarge, color: .appBrandBrownDark)
+                                .dialogTitleStyle()
                                 .multilineTextAlignment(.center)
                                 .padding(.top, 16)
                             

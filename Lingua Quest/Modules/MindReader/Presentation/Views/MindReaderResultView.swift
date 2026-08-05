@@ -47,7 +47,7 @@ struct MindReaderResultView: View {
                             
                             // Title
                             Text(L10n.MindReader.stumpedLingo)
-                                .appTextStyle(.displayLarge, color: .appBrandBrownDark)
+                                .dialogTitleStyle()
                                 .padding(.top, 16)
                             
                             // MARK: - Rewards Grid
@@ -78,7 +78,7 @@ struct MindReaderResultView: View {
                                         .appTextStyle(.captionMedium, color: .appTextSecondary)
                                     
                                     Text(L10n.MindReader.earnedXP(viewModel.earnedXP))
-                                        .appTextStyle(.headingMedium, color: .appTextHeading)
+                                        .dialogTitleStyle()
                                 }
                                 .padding(.vertical, 20)
                                 .frame(maxWidth: .infinity)
@@ -111,7 +111,7 @@ struct MindReaderResultView: View {
                                         .appTextStyle(.captionMedium, color: .appTextSecondary)
                                     
                                     Text(L10n.MindReader.earnedCoins(viewModel.earnedCoins))
-                                        .appTextStyle(.headingMedium, color: .appTextHeading)
+                                        .dialogTitleStyle()
                                 }
                                 .padding(.vertical, 20)
                                 .frame(maxWidth: .infinity)

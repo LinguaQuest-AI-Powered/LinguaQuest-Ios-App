@@ -222,3 +222,17 @@ private extension View {
         .padding(.horizontal, 24)
     }
 }
+
+// MARK: - Dialog Text Modifiers
+
+public extension View {
+    /// Standardized title style for texts inside DialogCardContainer
+    func dialogTitleStyle() -> some View {
+        self.appTextStyle(.displayLarge, color: .appBrandBrown)
+    }
+
+    /// Standardized subtitle/message style for texts inside DialogCardContainer
+    func dialogSubtitleStyle() -> some View {
+        self.appTextStyle(.bodyMedium, color: .appTextSecondary)
+    }
+}

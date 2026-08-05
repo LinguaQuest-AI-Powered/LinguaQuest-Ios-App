@@ -86,47 +86,41 @@ struct AppHeaderView: View {
     
     private var mascotAvatar: some View {
         ZStack {
-            // Glow layer
+            // Outer subtle glow for premium feel
             Circle()
-                .fill(
-                    LinearGradient(
-                        colors: [
-                            Color.appBrandPrimary.opacity(colorScheme == .dark ? 0.35 : 0.25),
-                            Color.appAccentGold.opacity(colorScheme == .dark ? 0.15 : 0.1)
-                        ],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-                .frame(width: 48, height: 48)
+                .fill(Color.appBrandPrimary.opacity(colorScheme == .dark ? 0.3 : 0.15))
+                .frame(width: 54, height: 54)
+                .blur(radius: 6)
             
             // Container surface
             Circle()
                 .fill(Color.appSurfaceCard)
-                .frame(width: 44, height: 44)
-                .overlay(
-                    Circle()
-                        .stroke(
-                            LinearGradient(
-                                colors: [
-                                    Color.appBrandPrimary.opacity(0.8),
-                                    Color.appAccentGold.opacity(0.6)
-                                ],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            ),
-                            lineWidth: 2
-                        )
-                )
-                .shadow(color: Color.black.opacity(colorScheme == .dark ? 0.25 : 0.08), radius: 6, x: 0, y: 3)
+                .frame(width: 46, height: 46)
+                .shadow(color: Color.black.opacity(colorScheme == .dark ? 0.4 : 0.08), radius: 4, x: 0, y: 2)
             
+            // Elegant gradient border
+            Circle()
+                .stroke(
+                    LinearGradient(
+                        colors: [.appBrandPrimary, .appAccentOrange],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: 2.5
+                )
+                .frame(width: 46, height: 46)
+            
+            // Mascot Image
             Image(asset: .bird)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 32, height: 32)
+                .frame(width: 34, height: 34)
+                .offset(y: 2)
                 .scaleEffect(mascotPulse ? 1.05 : 0.95)
                 .rotationEffect(.degrees(mascotPulse ? 2 : -2))
         }
+        .frame(width: 54, height: 54)
+        .fixedSize() // Prevents shrinking across different tabs
     }
     
     private var headerBackground: some View {

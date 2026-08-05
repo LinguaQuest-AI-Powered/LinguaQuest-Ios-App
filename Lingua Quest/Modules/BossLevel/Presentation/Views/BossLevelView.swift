@@ -158,11 +158,11 @@ struct BossLevelView: View {
         ) {
             VStack(spacing: 16) {
                 Text(L10n.BossLevel.phase)
-                    .appTextStyle(.headingLarge, color: .appAccentOrange)
+                    .dialogTitleStyle()
 
                 VStack(spacing: 8) {
                     Text(L10n.BossLevel.meetBoss(scenario.bossName))
-                        .appTextStyle(.headingMediumBold, color: .appTextHeading)
+                        .dialogTitleStyle()
 
                     Text(scenario.roleDescription)
                         .appTextStyle(.caption, color: .appTextSecondary)
@@ -175,10 +175,10 @@ struct BossLevelView: View {
                 // Goal Box
                 VStack(spacing: 12) {
                     Text(L10n.BossLevel.yourObjective)
-                        .appTextStyle(.headingMedium, color: .appAccentOrange)
+                        .dialogTitleStyle()
 
                     Text(scenario.objective)
-                        .appTextStyle(.bodyLargeBold, color: .appTextHeading)
+                        .dialogSubtitleStyle()
                         .multilineTextAlignment(.center)
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)

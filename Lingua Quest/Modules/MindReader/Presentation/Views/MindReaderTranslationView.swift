@@ -46,12 +46,12 @@ struct MindReaderTranslationView: View {
                             
                             // Title
                             Text(L10n.MindReader.translateThisWord)
-                                .appTextStyle(.displayLarge, color: .appBrandBrownDark)
+                                .dialogTitleStyle()
                                 .padding(.top, 16)
                             
                             // Word to Translate
                             Text(viewModel.wordToTranslate)
-                                .appTextStyle(.displayMedium, color: .appBrandBrownDark)
+                                .dialogTitleStyle()
                                 .padding(.horizontal, 24)
                                 .padding(.vertical, 16)
                                 .background(Color.appSurfaceCardMuted)

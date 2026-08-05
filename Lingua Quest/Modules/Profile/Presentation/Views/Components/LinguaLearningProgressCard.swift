@@ -34,12 +34,12 @@ struct LinguaLearningProgressCard: View {
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color.appSurfaceCardMuted)
-                .shadow(color: .appBorderBrown, radius: 0, x: 0, y: 4)
+                .fill(Color.appSurfaceCard)
+                .shadow(color: Color.appBorderBrown.opacity(0.4), radius: 0, x: 0, y: 4)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 16)
-                .strokeBorder(Color.appBorderBrown, lineWidth: 2)
+                .strokeBorder(Color.appBorderBrown, lineWidth: 1)
         )
     }
 }

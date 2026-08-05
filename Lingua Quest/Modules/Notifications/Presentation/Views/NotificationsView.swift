@@ -46,9 +46,8 @@ struct NotificationsView: View {
             
             if !viewModel.notifications.isEmpty {
                 Button(action: {
-                    Task {
-                        await viewModel.deleteAll()
-                    }
+                    notificationToDelete = nil
+                    showDeleteDialog = true
                 }) {
                     Text(L10n.Notifications.clearAll)
                         .appTextStyle(.bodyBold, color: .appBrandPrimary)
@@ -117,12 +116,12 @@ struct NotificationsView: View {
                 VStack(spacing: 24) {
                 
                     VStack(spacing: 8) {
-                        Text(L10n.Notifications.deleteConfirmTitle)
-                            .appTextStyle(.headingMediumBold, color: .appTextHeading)
+                        Text(notificationToDelete == nil ? L10n.Notifications.deleteAllConfirmTitle : L10n.Notifications.deleteConfirmTitle)
+                            .dialogTitleStyle()
                             .multilineTextAlignment(.center)
                         
-                        Text(L10n.Notifications.deleteConfirmMessage)
-                            .appTextStyle(.body, color: .appTextSecondary)
+                        Text(notificationToDelete == nil ? L10n.Notifications.deleteAllConfirmMessage : L10n.Notifications.deleteConfirmMessage)
+                            .dialogSubtitleStyle()
                             .multilineTextAlignment(.center)
                     }
                     
@@ -134,6 +133,10 @@ struct NotificationsView: View {
                                 if let notification = notificationToDelete {
                                     Task {
                                         await viewModel.deleteNotification(notification)
+                                    }
+                                } else {
+                                    Task {
+                                        await viewModel.deleteAll()
                                     }
                                 }
                                 showDeleteDialog = false

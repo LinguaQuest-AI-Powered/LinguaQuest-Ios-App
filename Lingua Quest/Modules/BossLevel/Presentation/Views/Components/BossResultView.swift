@@ -22,15 +22,14 @@ struct BossResultView: View {
                         Text(result.task_completed
                              ? L10n.BossLevel.resultVictory
                              : L10n.BossLevel.resultStageFailed)
-                            .appTextStyle(.headingLarge,
-                                          color: result.task_completed ? .appSemanticSuccess : .appAccentRed)
+                            .dialogTitleStyle()
                             .multilineTextAlignment(.center)
 
                         Text("\(result.fluency_score)%")
-                            .appTextStyle(.headingLarge, color: .appTextHeading)
+                            .dialogTitleStyle()
 
                         Text(result.feedback_message)
-                            .appTextStyle(.bodyMedium, color: .appTextSecondary)
+                            .dialogSubtitleStyle()
                             .multilineTextAlignment(.center)
                             .lineLimit(nil)
                             .fixedSize(horizontal: false, vertical: true)

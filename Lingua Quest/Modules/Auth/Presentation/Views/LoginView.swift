@@ -21,10 +21,10 @@ struct LoginView: View {
                         
                         VStack(spacing: 8) {
                             Text(L10n.Auth.welcomeBack)
-                                .appTextStyle(.displayLarge, color: .appTextSecondary)
+                                .dialogTitleStyle()
                             
                             Text(L10n.Auth.readyToContinue)
-                                .appTextStyle(.body, color: .appTextSecondary)
+                                .dialogSubtitleStyle()
                                 .opacity(0.8)
                         }
                         
@@ -49,7 +49,7 @@ struct LoginView: View {
                                 viewModel.forgotPassword()
                             }) {
                                 Text(L10n.Auth.forgotPassword)
-                                    .appTextStyle(.bodyBold, color: .appSemanticSuccess)
+                                    .dialogSubtitleStyle()
                             }
                             Spacer()
                         }
@@ -69,7 +69,7 @@ struct LoginView: View {
                                 .frame(height: 1)
                             
                             Text(L10n.Auth.orContinueWith)
-                                .appTextStyle(.body, color: .appTextSecondary)
+                                .dialogSubtitleStyle()
                                 .opacity(0.6)
                                 .layoutPriority(1)
                                 .fixedSize(horizontal: true, vertical: false)
@@ -96,13 +96,13 @@ struct LoginView: View {
                         
                         HStack(spacing: 4) {
                             Text(L10n.Auth.newHere)
-                                .appTextStyle(.body, color: .appTextSecondary)
+                                .dialogSubtitleStyle()
                             
                             Button(action: {
                                 viewModel.navigateToSignUp()
                             }) {
                                 Text(L10n.Auth.signUp)
-                                    .appTextStyle(.bodyBold, color: .appTextSecondary)
+                                    .dialogSubtitleStyle()
                             }
                         }
                         .padding(.bottom, 8)

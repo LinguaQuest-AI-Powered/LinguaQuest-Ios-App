@@ -22,11 +22,11 @@ struct VerifyPasswordResetOtpView: View {
 
                             VStack(spacing: 16) {
                                 Text(L10n.Auth.verifyResetCodeTitle)
-                                    .appTextStyle(.displayLarge, color: .appTextSecondary)
+                                    .dialogTitleStyle()
                                     .multilineTextAlignment(.center)
 
                                 Text(L10n.Auth.verifyResetCodeDesc)
-                                    .appTextStyle(.body, color: .appTextSecondary)
+                                    .dialogSubtitleStyle()
                                     .opacity(0.8)
                                     .multilineTextAlignment(.center)
                                     .padding(.horizontal, 8)
@@ -60,7 +60,7 @@ struct VerifyPasswordResetOtpView: View {
                                     Image(systemIcon: .timer)
                                         .foregroundColor(.appTextSecondary)
                                     Text(String(format: "00:%02d", viewModel.timeRemaining))
-                                        .appTextStyle(.body, color: .appTextSecondary)
+                                        .dialogSubtitleStyle()
                                 }
 
                                 Button(action: {
@@ -70,7 +70,7 @@ struct VerifyPasswordResetOtpView: View {
                                     }
                                 }) {
                                     Text(L10n.Auth.resendCode)
-                                        .appTextStyle(.bodyBold, color: .appSemanticSuccess)
+                                        .dialogSubtitleStyle()
                                         .opacity(viewModel.timeRemaining == 0 ? 1.0 : 0.5)
                                 }
                                 .disabled(viewModel.timeRemaining > 0)

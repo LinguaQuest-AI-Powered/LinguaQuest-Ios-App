@@ -560,7 +560,9 @@
 "notifications.clear_all" = "مسح الكل";
 "notifications.delete" = "حذف";
 "notifications.delete_confirm_title" = "حذف الإشعار؟";
-"notifications.delete_confirm_message" = "هل أنت متأكد من رغبتك في حذف هذا الإشعار؟";
+"notifications.delete_confirm_message" = "هل أنت متأكد أنك تريد حذف هذا الإشعار؟";
+"notifications.delete_all_confirm_title" = "حذف جميع الإشعارات؟";
+"notifications.delete_all_confirm_message" = "هل أنت متأكد أنك تريد حذف جميع الإشعارات؟ لا يمكن التراجع عن هذا الإجراء.";
 "notifications.mark_as_read" = "مقروء";
 "notifications.time.just_now" = "الآن";
 "notifications.time.minutes_ago" = "منذ %d دقائق";

@@ -22,11 +22,11 @@ struct ResetPasswordView: View {
                             
                             VStack(spacing: 8) {
                                 Text(L10n.Auth.newPasswordTitle)
-                                    .appTextStyle(.displayLarge, color: .appTextSecondary)
+                                    .dialogTitleStyle()
                                     .multilineTextAlignment(.center)
                                 
                                 Text(L10n.Auth.newPasswordDesc)
-                                    .appTextStyle(.body, color: .appTextSecondary)
+                                    .dialogSubtitleStyle()
                                     .opacity(0.8)
                                     .multilineTextAlignment(.center)
                                     .padding(.horizontal, 8)
@@ -34,7 +34,7 @@ struct ResetPasswordView: View {
                             
                             VStack(alignment: .leading, spacing: 8) {
                                 Text(L10n.Auth.newPasswordLabel)
-                                    .appTextStyle(.bodyBold, color: .appTextPrimary)
+                                    .dialogSubtitleStyle()
                                 
                                 CustomSecureField(
                                     icon: .keyFill,
@@ -64,7 +64,7 @@ struct ResetPasswordView: View {
                             
                             VStack(alignment: .leading, spacing: 8) {
                                 Text(L10n.Auth.confirmNewPasswordLabel)
-                                    .appTextStyle(.bodyBold, color: .appTextPrimary)
+                                    .dialogSubtitleStyle()
                                 
                                 CustomSecureField(
                                     icon: .lockFill,

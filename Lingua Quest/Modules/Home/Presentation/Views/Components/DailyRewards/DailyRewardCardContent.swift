@@ -45,11 +45,11 @@ struct DailyRewardCardContent: View {
     private var header: some View {
         VStack(spacing: 8) {
             Text(L10n.Home.dailyRewardTitle)
-                .appTextStyle(.displaySmall, color: .appBrandBrown)
+                .dialogTitleStyle()
                 .multilineTextAlignment(.center)
             
             Text(L10n.Home.dailyRewardSubtitle)
-                .appTextStyle(.bodyMedium, color: .appTextSecondary)
+                .dialogSubtitleStyle()
                 .multilineTextAlignment(.center)
         }
     }

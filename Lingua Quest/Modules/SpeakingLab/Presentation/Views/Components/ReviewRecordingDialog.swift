@@ -75,10 +75,10 @@ struct ReviewRecordingDialog: View {
                     // Titles
                     VStack(spacing: 8) {
                         Text(L10n.SpeakingLab.reviewRecording)
-                            .appTextStyle(.headingMedium, color: .appTextHeading)
+                            .dialogTitleStyle()
                         
                         Text(L10n.SpeakingLab.reviewRecordingSubtitle)
-                            .appTextStyle(.bodyMedium, color: .appTextSecondary)
+                            .dialogSubtitleStyle()
                             .multilineTextAlignment(.center)
                             .padding(.horizontal, 16)
                     }

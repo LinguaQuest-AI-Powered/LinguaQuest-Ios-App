@@ -138,7 +138,7 @@ struct HelpAndSupportView: View {
             ) {
                 VStack(spacing: 16) {
                     Text("Email address copied to clipboard.")
-                        .appTextStyle(.bodyMedium, color: .appTextSecondary)
+                        .dialogSubtitleStyle()
                         .multilineTextAlignment(.center)
                     
                     CustomButton(

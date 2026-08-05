@@ -81,7 +81,7 @@ struct MyLanguagesBottomSheet: View {
             ) {
                 VStack(spacing: 16) {
                     Text(String(format: L10n.Home.removeLanguageMessage, languageViewModel.languageToRemove?.name ?? ""))
-                        .appTextStyle(.bodyMedium, color: .appTextSecondary)
+                        .dialogSubtitleStyle()
                         .multilineTextAlignment(.center)
                     
                     HStack(spacing: 16) {

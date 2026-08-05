@@ -634,6 +634,8 @@ enum L10n {
         static var delete: String { localized("notifications.delete") }
         static var deleteConfirmTitle: String { localized("notifications.delete_confirm_title") }
         static var deleteConfirmMessage: String { localized("notifications.delete_confirm_message") }
+        static var deleteAllConfirmTitle: String { localized("notifications.delete_all_confirm_title") }
+        static var deleteAllConfirmMessage: String { localized("notifications.delete_all_confirm_message") }
         static var markAsRead: String { localized("notifications.mark_as_read") }
         
         static var justNow: String { localized("notifications.time.just_now") }

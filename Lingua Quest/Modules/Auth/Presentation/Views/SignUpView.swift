@@ -20,11 +20,11 @@ struct SignUpView: View {
                         
                         VStack(spacing: 8) {
                             Text(L10n.Auth.createYourAccount)
-                                .appTextStyle(.displayLarge, color: .appTextSecondary)
+                                .dialogTitleStyle()
                                 .multilineTextAlignment(.center)
                             
                             Text(L10n.Auth.createAccountDescription)
-                                .appTextStyle(.body, color: .appTextSecondary)
+                                .dialogSubtitleStyle()
                                 .opacity(0.8)
                                 .multilineTextAlignment(.center)
                         }
@@ -74,7 +74,7 @@ struct SignUpView: View {
                                 .frame(height: 1)
                             
                             Text(L10n.Auth.orContinueWith)
-                                .appTextStyle(.body, color: .appTextSecondary)
+                                .dialogSubtitleStyle()
                                 .opacity(0.6)
                                 .layoutPriority(1)
                                 .fixedSize(horizontal: true, vertical: false)
@@ -101,13 +101,13 @@ struct SignUpView: View {
                         
                         HStack(spacing: 4) {
                             Text(L10n.Auth.alreadyHaveAccount)
-                                .appTextStyle(.body, color: .appTextSecondary)
+                                .dialogSubtitleStyle()
                             
                             Button(action: {
                                 viewModel.navigateToLogin()
                             }) {
                                 Text(L10n.Auth.logIn)
-                                    .appTextStyle(.bodyBold, color: .appTextSecondary)
+                                    .dialogSubtitleStyle()
                             }
                         }
                         .padding(.bottom, 8)

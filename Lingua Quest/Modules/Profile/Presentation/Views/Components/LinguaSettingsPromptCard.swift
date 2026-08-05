@@ -55,11 +55,11 @@ struct LinguaSettingsPromptCard: View {
             .background(
                 RoundedRectangle(cornerRadius: 20)
                     .fill(Color.appSurfaceCard)
-                    .shadow(color: Color.appSemanticSuccess.opacity(0.08), radius: 16, x: 0, y: 8)
+                    .shadow(color: Color.appBorderBrown.opacity(0.4), radius: 0, x: 0, y: 4)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 20)
-                    .strokeBorder(Color.appBorderLight, lineWidth: 1)
+                    .strokeBorder(Color.appBorderBrown, lineWidth: 1)
             )
         }
         .buttonStyle(PlainButtonStyle())

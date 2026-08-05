@@ -22,11 +22,11 @@ struct VerifyEmailView: View {
                             
                             VStack(spacing: 16) {
                                 Text(L10n.Auth.verifyYourEmail)
-                                    .appTextStyle(.displayLarge, color: .appTextSecondary)
+                                    .dialogTitleStyle()
                                     .multilineTextAlignment(.center)
                                 
                                 Text(L10n.Auth.verifyEmailDesc)
-                                    .appTextStyle(.body, color: .appTextSecondary)
+                                    .dialogSubtitleStyle()
                                     .opacity(0.8)
                                     .multilineTextAlignment(.center)
                                     .padding(.horizontal, 8)
@@ -58,7 +58,7 @@ struct VerifyEmailView: View {
                                     Image(systemIcon: .timer)
                                         .foregroundColor(.appTextSecondary)
                                     Text(String(format: "00:%02d", viewModel.timeRemaining))
-                                        .appTextStyle(.body, color: .appTextSecondary)
+                                        .dialogSubtitleStyle()
                                 }
                                 
                                 Button(action: {
@@ -68,7 +68,7 @@ struct VerifyEmailView: View {
                                     }
                                 }) {
                                     Text(L10n.Auth.resendCode)
-                                        .appTextStyle(.bodyBold, color: .appSemanticSuccess)
+                                        .dialogSubtitleStyle()
                                         .opacity(viewModel.timeRemaining == 0 ? 1.0 : 0.5)
                                 }
                                 .disabled(viewModel.timeRemaining > 0)

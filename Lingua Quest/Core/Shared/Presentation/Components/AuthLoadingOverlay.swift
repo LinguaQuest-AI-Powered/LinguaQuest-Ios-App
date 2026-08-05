@@ -60,7 +60,7 @@ struct AuthLoadingOverlay: ViewModifier {
 
                         VStack(spacing: 16) {
                             Text(L10n.Common.loading)
-                                .appTextStyle(.headingLarge, color: .appTextPrimary)
+                                .dialogTitleStyle()
 
                             ProgressView()
                                 .tint(.appAccentOrange)

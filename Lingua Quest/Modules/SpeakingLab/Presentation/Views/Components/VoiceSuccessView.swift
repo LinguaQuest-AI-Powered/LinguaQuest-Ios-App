@@ -18,7 +18,7 @@ struct VoiceSuccessView: View {
             DialogCardContainer(mascotImage: .perfect) {
                 VStack(spacing: 24) {
                     Text(L10n.Game.perfect)
-                    .appTextStyle(.displayMedium, color: .appBrandBrown)
+                    .dialogTitleStyle()
                 
                 ScoreCircleView(rating: viewModel.rating)
                 

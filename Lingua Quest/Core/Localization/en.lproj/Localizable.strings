@@ -546,6 +546,8 @@
 "notifications.delete" = "Delete";
 "notifications.delete_confirm_title" = "Delete Notification?";
 "notifications.delete_confirm_message" = "Are you sure you want to delete this notification?";
+"notifications.delete_all_confirm_title" = "Delete All Notifications?";
+"notifications.delete_all_confirm_message" = "Are you sure you want to delete all notifications? This action cannot be undone.";
 "notifications.mark_as_read" = "Mark as Read";
 "notifications.time.just_now" = "Just now";
 "notifications.time.minutes_ago" = "%d minutes ago";

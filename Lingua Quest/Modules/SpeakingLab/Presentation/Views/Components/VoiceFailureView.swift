@@ -18,7 +18,7 @@ struct VoiceFailureView: View {
             DialogCardContainer(mascotImage: .weakPasswordBird) {
                 VStack(spacing: 24) {
                     Text(L10n.Game.notQuite)
-                    .appTextStyle(.displayMedium, color: .appBrandBrown)
+                    .dialogTitleStyle()
                 
                 ScoreCircleView(rating: viewModel.rating)
                 

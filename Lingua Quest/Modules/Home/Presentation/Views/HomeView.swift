@@ -287,8 +287,9 @@ struct SectionHeaderView: View {
                 HStack(spacing: 4) {
                     Text(actionTitle)
                         .font(AppTextStyle.bodyBold.font)
-                    Image(systemIcon: .chevronDown)
+                    Image(systemIcon: .rightChevron)
                         .font(AppTextStyle.captionMedium.font)
+                        .flipsForRightToLeftLayoutDirection(true)
                 }
                 .foregroundColor(Color.appTextHeading)
             }

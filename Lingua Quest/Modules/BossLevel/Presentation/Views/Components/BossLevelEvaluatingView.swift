@@ -26,7 +26,7 @@ struct BossLevelEvaluatingView: View {
                     VStack(spacing: 36) {
                         // Title
                         Text(L10n.BossLevel.evaluating)
-                            .appTextStyle(.headingLarge, color: .appTextHeading)
+                            .dialogTitleStyle()
                             .multilineTextAlignment(.center)
                             .padding(.top, 16)
                             .opacity(animateContent ? 1 : 0)
@@ -50,7 +50,7 @@ struct BossLevelEvaluatingView: View {
 
                         // Subtitle
                         Text(L10n.BossLevel.evaluatingSubtitle)
-                            .appTextStyle(.bodyMedium, color: .appTextSecondary)
+                            .dialogSubtitleStyle()
                             .multilineTextAlignment(.center)
                             .lineLimit(nil)
                             .fixedSize(horizontal: false, vertical: true)

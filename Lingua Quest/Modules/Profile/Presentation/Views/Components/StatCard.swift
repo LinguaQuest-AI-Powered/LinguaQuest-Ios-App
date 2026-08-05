@@ -32,8 +32,8 @@ struct StatCard: View {
         .padding(.vertical, 20)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(Color.appSurfaceCardWarm)
-                .shadow(color: .appBorderBrown, radius: 0, x: 0, y: 4)
+                .fill(Color.appSurfaceCard)
+                .shadow(color: Color.appBorderBrown.opacity(0.4), radius: 0, x: 0, y: 4)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 12)

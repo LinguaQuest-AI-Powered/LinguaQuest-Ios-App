@@ -61,11 +61,11 @@ struct RootView: View {
             ) {
                 VStack(spacing: 8) {
                     Text(L10n.Network.offlineTitle)
-                        .appTextStyle(.headingLarge, color: .appTextHeading)
+                        .dialogTitleStyle()
                         .multilineTextAlignment(.center)
                     
                     Text(L10n.Network.offlineSubtitle)
-                        .appTextStyle(.bodyMedium, color: .appTextSecondary)
+                        .dialogSubtitleStyle()
                         .multilineTextAlignment(.center)
                 }
                 .padding(.top, 10)
