@@ -202,10 +202,18 @@ struct MindReaderGameView: View {
     }
     
     private var birdImageForState: Image.Asset {
-        switch viewModel.birdState {
-        case .normal: return .mindThinkingBird
-        case .thinking: return .mindBubbleBird
-        case .pointing: return .mindSuccessBird
+        if viewModel.birdState == .thinking {
+            return .mindBubbleBird
+        } else if viewModel.birdState == .pointing {
+            return .mindSuccessBird
+        }
+        
+        if viewModel.progressPercentage < 34 {
+            return .mindThinkingBird
+        } else if viewModel.progressPercentage < 67 {
+            return .mindBubbleBird
+        } else {
+            return .mindSuccessBird
         }
     }
 }
