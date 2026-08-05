@@ -65,6 +65,7 @@ final class LoginViewModel {
 
             switch result {
             case .success(let data):
+                print("✅ Access Token (Email Login): \(data.session.accessToken)")
                 userPreferences.isLoggedIn = true
                 userPreferences.userId = data.user.id
                 userPreferences.loadUserScopedPreferences(for: data.user.id)

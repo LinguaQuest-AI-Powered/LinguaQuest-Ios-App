@@ -52,7 +52,8 @@ final class OAuthSignInHandler: OAuthSignInHandlerProtocol {
             let result = await firebaseLoginUseCase.execute(idToken: idToken)
 
             switch result {
-            case .success(let (_, user, profileComplete)):
+            case .success(let (session, user, profileComplete)):
+                print("✅ Access Token (OAuth Login): \(session.accessToken)")
                 userPreferences.isLoggedIn = true
                 userPreferences.userId = user.id
                 userPreferences.loadUserScopedPreferences(for: user.id)
