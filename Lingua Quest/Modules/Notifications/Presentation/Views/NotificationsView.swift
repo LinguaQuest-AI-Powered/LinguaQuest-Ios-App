@@ -153,7 +153,7 @@ struct NotificationsView: View {
         }
     }
     
-var emptyState: some View {
+private var emptyState: some View {
         VStack(spacing: 24) {
             Spacer()
             
@@ -192,7 +192,7 @@ var emptyState: some View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
-var shimmerSkeleton: some View {
+private var shimmerSkeleton: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 12) {
                 ForEach(0..<7, id: \.self) { index in

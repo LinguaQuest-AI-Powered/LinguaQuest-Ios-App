@@ -100,28 +100,30 @@ struct PodiumCard: View {
                     .frame(height: type.avatarSize / 2 + 12)
                 
                 Text("#\(user.rank)")
-                    .font(.system(size: 20, weight: .bold))
-                    .foregroundColor(Color.appTextHeading)
+                    .appTextStyle(.headingMediumBold, color: type.color)
                 
                 Text(user.name)
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundColor(Color.appTextHeading)
+                    .appTextStyle(.captionBold, color: .appTextHeading)
                     .lineLimit(1)
                 
                 Text("\(user.xp) XP")
-                    .font(.system(size: 12, weight: .medium))
-                    .foregroundColor(.gray)
+                    .appTextStyle(.microBold, color: .appTextSecondary)
                 
                 Spacer(minLength: 0)
             }
             .frame(width: type == .gold ? 120 : 100, height: type.height)
-            .background(Color.appSurfaceCardWarm)
+            .background(Color.appSurfaceCard)
             .cornerRadius(16)
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
-                    .stroke(type.color.opacity(type == .gold ? 1 : 0), lineWidth: type == .gold ? 2 : 0)
+                    .stroke(type.color, lineWidth: type == .gold ? 2 : 1)
             )
-            .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y: 5)
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(type.color.opacity(0.3))
+                    .offset(y: 6)
+            )
+            .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
             .padding(.top, type.avatarSize / 2)
             
             ZStack(alignment: .bottomTrailing) {

@@ -39,26 +39,16 @@ struct AchievementsView: View {
             VStack(spacing: 0) {
                 // Top Bar
                 HStack {
-                    Button(action: {
+                   CustomBackButton(action: {
                         viewModel.onBackTapped()
-                    }) {
-                        Circle()
-                            .fill(Color.appSurfaceCardMuted)
-                            .frame(width: 44, height: 44)
-                            .overlay(
-                                Image(systemIcon: .chevronLeft)
-                                    .foregroundColor(.appBrandPrimary)
-                            )
-                    }
-                    
+                    })
                     Spacer()
                     
                     Text(L10n.Achievements.title)
                         .appTextStyle(.headingLarge, color: .appTextHeading)
                     
                     Spacer()
-                    
-                    // Invisible view for balancing
+          
                     Color.clear.frame(width: 44, height: 44)
                 }
                 .padding(.horizontal, 20)

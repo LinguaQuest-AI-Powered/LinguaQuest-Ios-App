@@ -21,15 +21,11 @@ struct LeaderboardHeaderView: View {
             })
             
             Spacer()
-            
+        }
+        .overlay(
             Text(L10n.Leaderboard.title)
                 .appTextStyle(.headingLarge, color: .appTextHeading)
-            
-            Spacer()
-            Circle()
-                .fill(Color.clear)
-                .frame(width: 44, height: 44)
-        }
+        )
         .padding(.horizontal, 20)
         .frame(height: 64)
         .background(Color.clear)

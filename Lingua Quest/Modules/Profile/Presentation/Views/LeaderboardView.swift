@@ -54,9 +54,11 @@ struct LeaderboardView: View {
             .opacity(isAnimating ? 1 : 0)
 
             if viewModel.isLoading {
-                LoadingView()
+                LeaderboardSkeletonView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.appBackgroundWarm.ignoresSafeArea())
+                    .shimmer()
+                    .transition(.opacity.combined(with: .move(edge: .bottom)))
             }
 
             if let error = viewModel.errorMessage {
@@ -86,6 +88,69 @@ struct LeaderboardView: View {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             withAnimation(.easeInOut(duration: 0.4)) {
                 proxy.scrollTo(targetId, anchor: .center)
+            }
+        }
+    }
+}
+
+struct LeaderboardSkeletonView: View {
+    var body: some View {
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 32) {
+                // Podium Fake
+                HStack(alignment: .bottom, spacing: 12) {
+                    // Rank 2
+                    VStack(spacing: -30) {
+                        Circle().fill(Color.appSurfaceCardMuted.opacity(0.5)).frame(width: 60, height: 60).zIndex(1)
+                        RoundedRectangle(cornerRadius: 16).fill(Color.appSurfaceCardMuted.opacity(0.5)).frame(width: 100, height: 130)
+                    }
+                    // Rank 1
+                    VStack(spacing: -40) {
+                        Circle().fill(Color.appSurfaceCardMuted.opacity(0.5)).frame(width: 80, height: 80).zIndex(1)
+                        RoundedRectangle(cornerRadius: 16).fill(Color.appSurfaceCardMuted.opacity(0.5)).frame(width: 120, height: 160)
+                    }
+                    // Rank 3
+                    VStack(spacing: -30) {
+                        Circle().fill(Color.appSurfaceCardMuted.opacity(0.5)).frame(width: 60, height: 60).zIndex(1)
+                        RoundedRectangle(cornerRadius: 16).fill(Color.appSurfaceCardMuted.opacity(0.5)).frame(width: 100, height: 130)
+                    }
+                }
+                .padding(.top, 40)
+                .padding(.horizontal)
+                
+                // List Fake
+                VStack(spacing: 12) {
+                    ForEach(0..<5, id: \.self) { index in
+                        HStack(spacing: 16) {
+                            Capsule().fill(Color.appSurfaceCardMuted.opacity(0.5)).frame(width: 20, height: 20) // Rank
+                            Circle().fill(Color.appSurfaceCardMuted.opacity(0.5)).frame(width: 48, height: 48) // Avatar
+                            VStack(alignment: .leading, spacing: 8) {
+                                Capsule().fill(Color.appSurfaceCardMuted.opacity(0.5)).frame(width: 120, height: 16)
+                                Capsule().fill(Color.appSurfaceCardMuted.opacity(0.5)).frame(width: 60, height: 12)
+                            }
+                            Spacer()
+                            Capsule().fill(Color.appSurfaceCardMuted.opacity(0.5)).frame(width: 50, height: 16)
+                        }
+                        .padding(.vertical, 16)
+                        .padding(.horizontal, 16)
+                        .background(Color.appSurfaceCard) // Card background
+                        .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                                .stroke(Color.appBorderLight, lineWidth: 0)
+                        )
+                        .background(
+                            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                                .fill(Color.appBrandBrown.opacity(0.15))
+                                .offset(y: 6) // Thicker bottom border effect
+                        )
+                        .padding(.bottom, 6)
+                        .opacity(1.0 - Double(index) * 0.15)
+                    }
+                }
+                .padding(.horizontal, 20)
+                
+                Spacer()
             }
         }
     }

@@ -29,7 +29,14 @@ struct LeaderboardListView: View {
             }
 
             ForEach(Array(users.enumerated()), id: \.element.id) { index, user in
-                LeaderboardRowView(user: user)
+                LeaderboardRow(
+                    rank: "\(user.rank)",
+                    name: user.name,
+                    xpAmount: "\(user.xp) XP",
+                    avatarImage: user.image.isEmpty ? nil : user.image,
+                    isTop: user.rank <= 3,
+                    isCurrentUser: user.isCurrentUser
+                )
                     .id(user.id)
                     .opacity(appear ? 1 : 0)
                     .offset(x: appear ? 0 : 50)

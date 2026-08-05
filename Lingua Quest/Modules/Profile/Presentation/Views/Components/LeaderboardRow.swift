@@ -63,30 +63,33 @@ struct LeaderboardRow: View {
         }
         .padding(.vertical, 16)
         .padding(.horizontal, 16)
-        .background(Color.white) // Card background
+        .background(Color.appSurfaceCard) // Card background
         .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
         // The bottom shadow/border effect from the screenshot
         .overlay(
             RoundedRectangle(cornerRadius: 24, style: .continuous)
-                .stroke(isCurrentUser ? Color.appAccentTeal : Color.appBorderLight, lineWidth: 0)
+                .stroke(isCurrentUser ? Color.appAccentTeal : Color.appBorderBrown, lineWidth: 1)
         )
         .background(
             RoundedRectangle(cornerRadius: 24, style: .continuous)
-                .fill(isCurrentUser ? Color.appAccentTeal : Color.appBrandBrown.opacity(0.15))
+                .fill(isCurrentUser ? Color.appAccentTeal : Color.appBorderBrown.opacity(0.4))
                 .offset(y: 6) // Thicker bottom border effect
         )
         // Floating YOU badge above the row
         .overlay(alignment: .topTrailing) {
             if isCurrentUser {
-                Text("YOU")
+                Text(L10n.Leaderboard.you)
                     .appTextStyle(.microBold, color: .white)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 4)
                     .background(Color.appAccentTeal)
                     .clipShape(Capsule())
-                    .offset(x: -24, y: -10) // Floats on the top border
+                    .offset(y: -12) // Floats on the top border
+                    .padding(.trailing, 24)
             }
         }
+        .padding(.top, isCurrentUser ? 12 : 0) // Prevent overlapping with the cell above
+        .padding(.bottom, 6) // Give space for the bottom offset
     }
 }
 
