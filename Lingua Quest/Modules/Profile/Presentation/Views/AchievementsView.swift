@@ -12,6 +12,7 @@ struct AchievementsView: View {
     
     @State private var isAnimating = false
     @State private var selectedTab: Int = 0 // 0 = ALL, 1 = EARNED, 2 = LOCKED
+    @State private var selectedAchievement: FullAchievementUIModel? = nil
     
     var statusString: String {
         switch selectedTab {
@@ -116,7 +117,12 @@ struct AchievementsView: View {
                         } else {
                             LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
                                 ForEach(filteredAchievements) { achievement in
-                                    AchievementGridItem(achievement: achievement)
+                                    Button(action: {
+                                        selectedAchievement = achievement
+                                    }) {
+                                        AchievementGridItem(achievement: achievement)
+                                    }
+                                    .buttonStyle(.plain)
                                 }
                             }
                             .padding(.horizontal, 20)
@@ -180,6 +186,26 @@ struct AchievementsView: View {
                 dismissButton: .default(Text("Awesome"))
             )
         }
+        .customBottomSheet(isPresented: Binding(
+            get: { selectedAchievement != nil },
+            set: { if !$0 { selectedAchievement = nil } }
+        ), initialDetent: .custom(ratio: 0.68)) {
+            if let achievement = selectedAchievement {
+                AchievementDetailSheet(
+                    title: achievement.title,
+                    subtitle: achievement.subtitle,
+                    iconUrl: achievement.iconUrl,
+                    status: achievement.status,
+                    progressPercent: achievement.progressPercent,
+                    xpReward: achievement.xpReward,
+                    coinsReward: achievement.coinsReward,
+                    earnedAt: achievement.earnedAt,
+                    onClose: {
+                        selectedAchievement = nil
+                    }
+                )
+            }
+        }
         .onAppear {
             isAnimating = true
             Task {
@@ -222,7 +248,7 @@ struct AchievementGridItem: View {
     
     var body: some View {
         VStack(spacing: 12) {
-            ZStack {
+            ZStack(alignment: .bottomTrailing) {
                 Circle()
                     .fill(achievement.uiBgColor)
                     .frame(width: 60, height: 60)
@@ -237,47 +263,60 @@ struct AchievementGridItem: View {
                                 .scaledToFit()
                                 .frame(width: 32, height: 32)
                         case .failure:
-                            Image(systemIcon: .starFill)
+                            Image(systemIcon: achievement.isEarned ? .starFill : .lockFill)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 24, height: 24)
-                                .foregroundColor(.appBrandBrown)
+                                .foregroundColor(achievement.isEarned ? .appBrandBrown : .appTextSecondary)
                         @unknown default:
                             EmptyView()
                         }
                     }
                 } else {
-                    Image(systemIcon: .starFill)
+                    Image(systemIcon: achievement.isEarned ? .starFill : .lockFill)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 24, height: 24)
-                        .foregroundColor(.appBrandBrown)
+                        .foregroundColor(achievement.isEarned ? .appBrandBrown : .appTextSecondary)
+                }
+                
+                if !achievement.isEarned {
+                    ZStack {
+                        Circle()
+                            .fill(Color.appSurfaceCard)
+                            .frame(width: 22, height: 22)
+                        
+                        Image(systemIcon: .lockFill)
+                            .font(.system(size: 11, weight: .bold))
+                            .foregroundColor(.appTextSecondary)
+                    }
+                    .offset(x: 2, y: 2)
                 }
             }
             
             VStack(spacing: 4) {
                 Text(achievement.title)
-                    .appTextStyle(.bodyBold, color: .appTextHeading)
+                    .appTextStyle(.bodyBold, color: achievement.isEarned ? .appTextHeading : .appTextSecondary)
                     .multilineTextAlignment(.center)
                     .lineLimit(1)
                 
-                Text(achievement.isEarned ? "EARNED" : "\(achievement.progressPercent)%")
+                Text(achievement.isEarned ? "COMPLETED" : "\(achievement.progressPercent)%")
                     .font(.system(size: 10, weight: .bold))
                     .foregroundColor(achievement.isEarned ? Color.appBadgeTealText : .appTextSecondary)
-                    .padding(.horizontal, 12)
+                    .padding(.horizontal, 10)
                     .padding(.vertical, 4)
-                    .background(achievement.isEarned ? Color.appBadgeTealBg : Color.appBorderLight)
+                    .background(achievement.isEarned ? Color.appBadgeTealBg : Color.appSurfaceCardMuted)
                     .clipShape(Capsule())
             }
         }
         .padding(.vertical, 16)
         .padding(.horizontal, 8)
         .frame(maxWidth: .infinity)
-        .background(Color.appSurfaceCard)
+        .background(achievement.isEarned ? Color.appSurfaceCard : Color.appSurfaceCardMuted.opacity(0.6))
         .cornerRadius(16)
         .overlay(
             RoundedRectangle(cornerRadius: 16)
-                .stroke(Color.appBorderBrown, lineWidth: 1)
+                .stroke(achievement.isEarned ? Color.appBorderBrown : Color.appBorderBrown.opacity(0.3), lineWidth: 1)
         )
         .background(
             RoundedRectangle(cornerRadius: 16)

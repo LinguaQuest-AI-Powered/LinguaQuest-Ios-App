@@ -14,12 +14,15 @@ struct FullAchievementUIModel: Identifiable {
     let iconUrl: String?
     let status: AchievementStatus
     let progressPercent: Int
+    let xpReward: Int
+    let coinsReward: Int
+    let earnedAt: String?
     
     var uiBgColor: Color {
-        return status == .earned ? .appSurfaceCardWarm : .appSurfaceCardMuted
+        return isEarned ? .appSurfaceCardWarm : .appSurfaceCardMuted
     }
     
     var isEarned: Bool {
-        return status == .earned
+        return status.isEarned
     }
 }

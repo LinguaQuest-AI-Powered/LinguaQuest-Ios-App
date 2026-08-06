@@ -21,12 +21,30 @@ final class ProfileRepositoryImpl: ProfileRepositoryProtocol {
         let data = response.data
         
         let achievements: [AchievementEntity] = data.achievementsSummary?.preview.map { dto in
-            let type: AchievementType = dto.name.contains("Wild Explorer") ? .wildExplorer : .perfectWeek
+            let type: AchievementType
+            if dto.name.contains("Wild Explorer") {
+                type = .wildExplorer
+            } else if dto.name.contains("Perfect Week") {
+                type = .perfectWeek
+            } else {
+                type = .generic
+            }
+            var fullIconUrl: String? = nil
+            if let path = dto.iconUrl {
+                fullIconUrl = AppConfig.baseURL.appendingPathComponent(path.hasPrefix("/") ? String(path.dropFirst()) : path).absoluteString
+            }
+            let status = AchievementStatus(rawValue: dto.status) ?? .unknown
             return AchievementEntity(
                 id: "\(dto.id)",
                 title: dto.name,
                 subtitle: dto.description,
-                type: type
+                type: type,
+                iconUrl: fullIconUrl,
+                status: status,
+                progressPercent: dto.progressPercent,
+                xpReward: dto.xpReward ?? dto.rewardXp ?? 60,
+                coinsReward: dto.coinsReward ?? dto.rewardCoins ?? 25,
+                earnedAt: dto.earnedAt ?? dto.earnedDate
             )
         } ?? []
         
@@ -113,9 +131,12 @@ final class ProfileRepositoryImpl: ProfileRepositoryProtocol {
                     title: dto.name,
                     subtitle: dto.description,
                     iconUrl: fullIconUrl,
-                status: AchievementStatus(rawValue: dto.status) ?? .unknown,
-                progressPercent: dto.progressPercent
-            )
+                    status: AchievementStatus(rawValue: dto.status) ?? .unknown,
+                    progressPercent: dto.progressPercent,
+                    xpReward: dto.xpReward ?? dto.rewardXp ?? 60,
+                    coinsReward: dto.coinsReward ?? dto.rewardCoins ?? 25,
+                    earnedAt: dto.earnedAt ?? dto.earnedDate
+                )
         }
         
         return AchievementsDataEntity(

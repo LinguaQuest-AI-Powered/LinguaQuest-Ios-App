@@ -10,9 +10,10 @@ import SwiftUI
 struct AchievementsSection: View {
     let achievements: [AchievementUIModel]
     var onViewAllTapped: () -> Void
+    var onAchievementTapped: ((AchievementUIModel) -> Void)? = nil
     
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 12) {
             
             SectionHeader(
                 title: L10n.Profile.achievementsTitle,
@@ -22,17 +23,23 @@ struct AchievementsSection: View {
             .padding(.horizontal, 20)
             
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 16) {
+                HStack(spacing: 12) {
                     ForEach(achievements) { achievement in
-                        AchievementCard(
-                            title: achievement.title,
-                            subtitle: achievement.subtitle,
-                            icon: achievement.uiIcon
-                        )
+                        Button(action: {
+                            onAchievementTapped?(achievement)
+                        }) {
+                            AchievementCard(
+                                title: achievement.title,
+                                subtitle: achievement.subtitle,
+                                icon: achievement.uiIcon,
+                                isEarned: achievement.isEarned
+                            )
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
                 .padding(.horizontal, 20)
-                .padding(.bottom, 16)
+                .padding(.vertical, 4)
             }
         }
     }
@@ -47,7 +54,13 @@ struct AchievementsSection: View {
             subtitle: "Complete 10 lessons in...",
             uiIcon: .trophyFill,
             uiIconColor: .appBrandBrown,
-            uiBgColor: .appSurfaceCardWarm
+            uiBgColor: .appSurfaceCardWarm,
+            iconUrl: nil,
+            status: .earned,
+            progressPercent: 100,
+            xpReward: 50,
+            coinsReward: 20,
+            earnedAt: "2026-07-18"
         ),
         AchievementUIModel(
             id: "2",
@@ -55,7 +68,13 @@ struct AchievementsSection: View {
             subtitle: "Complete 10 lessons in...",
             uiIcon: .starFill,
             uiIconColor: .appAccentTeal,
-            uiBgColor: .white
+            uiBgColor: .white,
+            iconUrl: nil,
+            status: .inProgress,
+            progressPercent: 60,
+            xpReward: 100,
+            coinsReward: 50,
+            earnedAt: nil
         )
     ]
     

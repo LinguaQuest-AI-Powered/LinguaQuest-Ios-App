@@ -84,11 +84,11 @@ struct LeaderboardRow: View {
                     .padding(.vertical, 4)
                     .background(Color.appAccentTeal)
                     .clipShape(Capsule())
-                    .offset(y: -12) // Floats on the top border
+                    .offset(y: -10) // Floats on the top border
                     .padding(.trailing, 24)
             }
         }
-        .padding(.top, isCurrentUser ? 12 : 0) // Prevent overlapping with the cell above
+        .padding(.top, isCurrentUser ? 2 : 0) // Balanced space for floating badge
         .padding(.bottom, 6) // Give space for the bottom offset
     }
 }

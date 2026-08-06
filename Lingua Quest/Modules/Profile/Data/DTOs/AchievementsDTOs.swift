@@ -26,6 +26,12 @@ struct FullAchievementDTO: Decodable {
     let iconUrl: String?
     let status: String
     let progressPercent: Int
+    let xpReward: Int?
+    let rewardXp: Int?
+    let coinsReward: Int?
+    let rewardCoins: Int?
+    let earnedAt: String?
+    let earnedDate: String?
 }
 
 struct WeeklyRewardResponseDTO: Decodable {

@@ -74,7 +74,10 @@ final class AchievementsViewModel {
                     subtitle: entity.subtitle,
                     iconUrl: entity.iconUrl,
                     status: entity.status,
-                    progressPercent: entity.progressPercent
+                    progressPercent: entity.progressPercent,
+                    xpReward: entity.xpReward,
+                    coinsReward: entity.coinsReward,
+                    earnedAt: entity.earnedAt
                 )
             }
         } catch {

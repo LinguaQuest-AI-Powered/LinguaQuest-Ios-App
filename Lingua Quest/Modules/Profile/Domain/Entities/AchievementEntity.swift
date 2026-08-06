@@ -12,9 +12,16 @@ struct AchievementEntity: Identifiable {
     let title: String
     let subtitle: String
     let type: AchievementType
+    let iconUrl: String?
+    let status: AchievementStatus
+    let progressPercent: Int
+    let xpReward: Int
+    let coinsReward: Int
+    let earnedAt: String?
 }
 
 enum AchievementType: String {
     case wildExplorer
     case perfectWeek
+    case generic
 }
