@@ -158,6 +158,7 @@ enum L10n {
         static var find: String { localized("game.find") }
         static var openCamera: String { localized("game.open_camera") }
         static var skip: String { localized("game.skip") }
+        static var noAvailableLevels: String { localized("game.no_available_levels") }
         static var needHintTitle: String { localized("game.need_hint_title") }
         static var hintRevealFirstLetter: String { localized("game.hint.reveal_first_letter") }
         static var hintShowCategoryClue: String { localized("game.hint.show_category_clue") }
