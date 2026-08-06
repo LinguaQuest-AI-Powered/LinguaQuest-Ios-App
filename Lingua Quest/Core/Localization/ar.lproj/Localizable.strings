@@ -134,6 +134,7 @@
 "game.hint.use" = "استخدام التلميح";
 "game.hint.reveal_first_letter_mock" = "يبدأ بحرف 'A'";
 "game.hint.show_category_clue_mock" = "إنه نوع من الفاكهة";
+"game.no_available_levels" = "لا يوجد مستوى متاح للمتابعة حالياً.";
 "game.result.not_quite" = "ليس تماماً!";
 "game.result.didnt_see_item" = "لم أستطع رؤية %@ بوضوح هناك.";
 "game.result.make_sure_lit" = "تأكد من أن العنصر مضاء جيداً!";

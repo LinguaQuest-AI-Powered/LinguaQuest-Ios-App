@@ -135,6 +135,7 @@
 "game.hint.use" = "Use Hint";
 "game.hint.reveal_first_letter_mock" = "Starts with 'A'";
 "game.hint.show_category_clue_mock" = "It's a type of fruit";
+"game.no_available_levels" = "No available level to continue.";
 "game.result.not_quite" = "Not Quite!";
 "game.result.didnt_see_item" = "I didn't quite see a %@ there.";
 "game.result.make_sure_lit" = "Make sure the object is well lit!";

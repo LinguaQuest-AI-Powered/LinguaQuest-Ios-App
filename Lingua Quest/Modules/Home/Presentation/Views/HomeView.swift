@@ -69,7 +69,9 @@ struct HomeView: View {
                                 completed: 3,
                                 total: 5,
                                 action: {
-                                    // TODO: Navigate to Object Detection Feature
+                                    Task {
+                                        await viewModel.onObjectDetectionTapped()
+                                    }
                                 }
                             )
                             .padding(.horizontal, 20)
@@ -252,6 +254,13 @@ struct HomeView: View {
         }
         .fullScreenCover(isPresented: $showAddLanguageScreen) {
             AddLanguageView(languageViewModel: viewModel.languageViewModel)
+        }
+        .alert(isPresented: $viewModel.showErrorAlert) {
+            Alert(
+                title: Text(L10n.Common.error),
+                message: Text(viewModel.errorMessage ?? L10n.Network.unknown),
+                dismissButton: .default(Text(L10n.Common.ok))
+            )
         }
         .onReceive(NotificationCenter.default.publisher(for: .progressDidUpdate)) { _ in
             loadVoiceProgress()

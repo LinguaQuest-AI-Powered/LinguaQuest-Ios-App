@@ -8,6 +8,7 @@
 import Foundation
 
 protocol GameRemoteDataSourceProtocol {
+    func getContinueLevel() async throws -> ContinueLevelResponseDTO
     func getLevels(worldId: Int, languageId: Int) async throws -> GameLevelsResponseDTO
     func startLevel(worldId: Int, levelId: Int) async throws -> StartLevelResponseDTO
     func changeWord(worldId: Int, levelId: Int) async throws -> ChangeWordResponseDTO
@@ -20,6 +21,11 @@ struct GameRemoteDataSource: GameRemoteDataSourceProtocol {
     
     init(apiClient: APIClientProtocol) {
         self.apiClient = apiClient
+    }
+    
+    func getContinueLevel() async throws -> ContinueLevelResponseDTO {
+        let endpoint = GameEndpoint.ContinueLevel()
+        return try await apiClient.request(endpoint)
     }
     
     func getLevels(worldId: Int, languageId: Int) async throws -> GameLevelsResponseDTO {

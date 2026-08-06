@@ -13,12 +13,16 @@ import Observation
 final class HomeViewModel {
     private let getHomeDataUseCase: GetHomeDataUseCaseProtocol
     private let getHomeWorldsUseCase: GetHomeWorldsUseCaseProtocol
+    private let getContinueLevelUseCase: GetContinueLevelUseCaseProtocol
+    private let startLevelUseCase: StartLevelUseCase
     private let router: RouterProtocol
     let statsService: StatsService
     
     var homeData: HomeData?
     var fetchedWorlds: [ExploreWorld] = []
     var isLoading = false
+    var isContinueLevelLoading = false
+    var showErrorAlert = false
     var errorMessage: String?
     
     private var logoutToken: NotificationToken?
@@ -35,6 +39,8 @@ final class HomeViewModel {
     init(
         getHomeDataUseCase: GetHomeDataUseCaseProtocol,
         getHomeWorldsUseCase: GetHomeWorldsUseCaseProtocol,
+        getContinueLevelUseCase: GetContinueLevelUseCaseProtocol,
+        startLevelUseCase: StartLevelUseCase,
         dailyRewardViewModel: DailyRewardViewModel,
         languageViewModel: LanguageViewModel,
         statsService: StatsService,
@@ -42,6 +48,8 @@ final class HomeViewModel {
     ) {
         self.getHomeDataUseCase = getHomeDataUseCase
         self.getHomeWorldsUseCase = getHomeWorldsUseCase
+        self.getContinueLevelUseCase = getContinueLevelUseCase
+        self.startLevelUseCase = startLevelUseCase
         self.dailyRewardViewModel = dailyRewardViewModel
         self.languageViewModel = languageViewModel
         self.statsService = statsService
@@ -131,5 +139,45 @@ final class HomeViewModel {
     
     func navigateToGameLevels(worldId: Int, worldName: String, languageId: Int) {
         router.push(.gameLevels(worldId: worldId, worldName: worldName, languageId: languageId))
+    }
+    
+    func onObjectDetectionTapped() async {
+        guard !isContinueLevelLoading else { return }
+        isContinueLevelLoading = true
+        defer { isContinueLevelLoading = false }
+        
+        do {
+            guard let continueLevel = try await getContinueLevelUseCase.execute() else {
+                self.errorMessage = L10n.Game.noAvailableLevels
+                self.showErrorAlert = true
+                return
+            }
+            
+            let targetWord: String
+            if let word = continueLevel.word, !word.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                targetWord = word
+            } else {
+                let startEntity = try await startLevelUseCase.execute(worldId: continueLevel.worldId, levelId: continueLevel.levelId)
+                targetWord = startEntity.targetWord
+            }
+            
+            router.push(.cameraQuestTask(
+                worldId: continueLevel.worldId,
+                worldName: continueLevel.worldName,
+                levelId: continueLevel.levelId,
+                levelOrder: continueLevel.levelOrder,
+                targetWord: targetWord
+            ))
+        } catch let error as NetworkError {
+            if let message = error.apiErrorMessage {
+                self.errorMessage = message
+            } else {
+                self.errorMessage = error.localizedDescription
+            }
+            self.showErrorAlert = true
+        } catch {
+            self.errorMessage = error.localizedDescription
+            self.showErrorAlert = true
+        }
     }
 }

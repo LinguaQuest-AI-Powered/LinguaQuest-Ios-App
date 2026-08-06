@@ -1,9 +1,4 @@
-//
-//  HomeAssembly.swift
-//  Lingua Quest
-//
-//  Created by TaqieAllah on 20/07/2026.
-//
+
 
 import Swinject
 
@@ -105,6 +100,8 @@ final class HomeAssembly: Assembly {
         container.register(HomeViewModel.self) { resolver in
             let getHomeDataUseCase = resolver.resolve(GetHomeDataUseCaseProtocol.self)!
             let getHomeWorldsUseCase = resolver.resolve(GetHomeWorldsUseCaseProtocol.self)!
+            let getContinueLevelUseCase = resolver.resolve(GetContinueLevelUseCaseProtocol.self)!
+            let startLevelUseCase = resolver.resolve(StartLevelUseCase.self)!
             let dailyRewardViewModel = resolver.resolve(DailyRewardViewModel.self)!
             let languageViewModel = resolver.resolve(LanguageViewModel.self)!
             let statsService = resolver.resolve(StatsService.self)!
@@ -112,6 +109,8 @@ final class HomeAssembly: Assembly {
             return HomeViewModel(
                 getHomeDataUseCase: getHomeDataUseCase,
                 getHomeWorldsUseCase: getHomeWorldsUseCase,
+                getContinueLevelUseCase: getContinueLevelUseCase,
+                startLevelUseCase: startLevelUseCase,
                 dailyRewardViewModel: dailyRewardViewModel,
                 languageViewModel: languageViewModel,
                 statsService: statsService,

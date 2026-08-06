@@ -7,6 +7,14 @@
 
 import Foundation
 
+struct ContinueLevelEntity {
+    let worldId: Int
+    let worldName: String
+    let levelId: Int
+    let levelOrder: Int
+    let word: String?
+}
+
 struct StartLevelEntity {
     let targetWord: String
 }

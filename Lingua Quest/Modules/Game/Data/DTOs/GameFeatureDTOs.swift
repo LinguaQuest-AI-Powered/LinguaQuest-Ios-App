@@ -7,6 +7,19 @@
 
 import Foundation
 
+struct ContinueLevelResponseDTO: Codable {
+    let success: Bool
+    let data: ContinueLevelDataDTO?
+}
+
+struct ContinueLevelDataDTO: Codable {
+    let worldId: Int
+    let worldName: String
+    let levelId: Int
+    let levelOrder: Int
+    let word: String?
+}
+
 struct StartLevelResponseDTO: Codable {
     let success: Bool
     let data: StartLevelDataDTO

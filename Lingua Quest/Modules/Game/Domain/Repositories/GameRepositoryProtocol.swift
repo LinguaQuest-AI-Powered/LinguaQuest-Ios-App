@@ -8,6 +8,7 @@
 import Foundation
 
 protocol GameRepositoryProtocol {
+    func getContinueLevel() async throws -> ContinueLevelEntity?
     func getLevels(worldId: Int, languageId: Int) async throws -> [GameLevel]
     func startLevel(worldId: Int, levelId: Int) async throws -> StartLevelEntity
     func changeWord(worldId: Int, levelId: Int) async throws -> ChangeWordEntity

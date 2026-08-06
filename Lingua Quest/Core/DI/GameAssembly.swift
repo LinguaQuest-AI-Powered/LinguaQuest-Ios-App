@@ -27,6 +27,11 @@ final class GameAssembly: Assembly {
             return GetGameLevelsUseCase(repository: repo)
         }
         
+        container.register(GetContinueLevelUseCaseProtocol.self) { resolver in
+            let repo = resolver.resolve(GameRepositoryProtocol.self)!
+            return GetContinueLevelUseCase(repository: repo)
+        }
+        
         container.register(StartLevelUseCase.self) { resolver in
             let repo = resolver.resolve(GameRepositoryProtocol.self)!
             return StartLevelUseCase(repository: repo)
