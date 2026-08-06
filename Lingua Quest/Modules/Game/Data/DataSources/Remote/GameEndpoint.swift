@@ -8,6 +8,13 @@
 import Foundation
 
 enum GameEndpoint {
+    struct ContinueLevel: Endpoint {
+        var body: EmptyBody?
+        
+        var path: String { "/worlds/continue-level" }
+        var method: HTTPMethod { .get }
+    }
+    
     struct Levels: Endpoint {
         var body: EmptyBody?
         
