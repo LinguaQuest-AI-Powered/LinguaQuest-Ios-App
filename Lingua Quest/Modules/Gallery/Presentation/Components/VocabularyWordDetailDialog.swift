@@ -44,7 +44,7 @@ struct VocabularyWordDetailDialog: View {
                         .multilineTextAlignment(.center)
                     
                     Text(word.meaning)
-                        .dialogTitleStyle()
+                        .dialogSecondaryTitleStyle()
                         .multilineTextAlignment(.center)
                         .fixedSize(horizontal: false, vertical: true)
                 }

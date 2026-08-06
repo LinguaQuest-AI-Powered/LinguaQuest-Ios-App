@@ -231,6 +231,11 @@ public extension View {
         self.appTextStyle(.displayLarge, color: .appBrandBrown)
     }
 
+    /// Secondary title style for secondary headers inside DialogCardContainer
+    func dialogSecondaryTitleStyle() -> some View {
+        self.appTextStyle(.headingMedium, color: .appBrandBrown)
+    }
+
     /// Standardized subtitle/message style for texts inside DialogCardContainer
     func dialogSubtitleStyle() -> some View {
         self.appTextStyle(.bodyMedium, color: .appTextSecondary)
