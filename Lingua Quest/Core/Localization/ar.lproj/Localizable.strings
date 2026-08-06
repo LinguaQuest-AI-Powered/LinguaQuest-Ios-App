@@ -182,7 +182,9 @@
 "daily_reward.coins_format" = "+%d عملة";
 "daily_reward.day_format" = "اليوم %d";
 "home.unlock_at_level" = "تفتح عند المستوى %d";
-
+"home.object_detection_title" = "التقط صورة وتعلم كلمة جديدة!";
+"home.object_detection_subtitle" = "وجّه الكاميرا على أي شيء حواليك واكتشف اسمه";
+"home.object_detection_progress" = "%d/%d اليوم";
 
 
 "profile.title" = "لينجوا كويست";

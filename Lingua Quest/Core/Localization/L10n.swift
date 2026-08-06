@@ -265,6 +265,12 @@ enum L10n {
         static var removeLanguageMessage: String { localized("home.remove_language_message") }
         
         static var aiChatTitle: String { localized("home.ai_chat_title") }
+        
+        static var objectDetectionTitle: String { localized("home.object_detection_title") }
+        static var objectDetectionSubtitle: String { localized("home.object_detection_subtitle") }
+        static func objectDetectionProgress(completed: Int, total: Int) -> String {
+            String(format: localized("home.object_detection_progress"), completed, total)
+        }
     }
     
     enum Profile {

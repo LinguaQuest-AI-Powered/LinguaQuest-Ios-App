@@ -65,6 +65,18 @@ struct HomeView: View {
                             .opacity(isAnimated ? 1 : 0)
                             .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.05), value: isAnimated)
                                 
+                            ObjectDetectionCardView(
+                                completed: 3,
+                                total: 5,
+                                action: {
+                                    // TODO: Navigate to Object Detection Feature
+                                }
+                            )
+                            .padding(.horizontal, 20)
+                            .offset(y: isAnimated ? 0 : 30)
+                            .opacity(isAnimated ? 1 : 0)
+                            .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.08), value: isAnimated)
+
 
                             Group {
                                 SectionHeaderView(
@@ -308,6 +320,13 @@ struct HomeSkeletonView: View {
                 level: 1,
                 streakDays: 0,
                 progressPercent: 60
+            )
+            .padding(.horizontal, 20)
+            
+            ObjectDetectionCardView(
+                completed: 0,
+                total: 5,
+                action: {}
             )
             .padding(.horizontal, 20)
             

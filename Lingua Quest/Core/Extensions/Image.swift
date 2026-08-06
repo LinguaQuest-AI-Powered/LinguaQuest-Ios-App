@@ -110,9 +110,11 @@ extension Image {
         case eyeSlash = "eye.slash"
         case plus = "plus"
         case bell = "bell"
+        case camera = "camera"
     }
     
     enum Asset: String {
+        case heroSection = "heroSection"
         case mindLoading = "mindLoading"
         case deleteNotifications = "deleteNotifications"
         case appBackground = "app_background"

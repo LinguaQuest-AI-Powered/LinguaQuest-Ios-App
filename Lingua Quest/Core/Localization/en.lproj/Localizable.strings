@@ -183,6 +183,9 @@
 "daily_reward.coins_format" = "+%d Coins";
 "daily_reward.day_format" = "Day %d";
 "home.unlock_at_level" = "Unlock at Level %d";
+"home.object_detection_title" = "Take a picture and learn a new word!";
+"home.object_detection_subtitle" = "Point the camera at anything around you and discover its name";
+"home.object_detection_progress" = "%d/%d Today";
 
 "profile.title" = "LinguaQuest";
 "profile.user_level" = "LEVEL %d";
