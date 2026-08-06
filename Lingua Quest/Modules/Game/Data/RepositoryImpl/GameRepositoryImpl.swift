@@ -14,6 +14,18 @@ struct GameRepositoryImpl: GameRepositoryProtocol {
         self.remoteDataSource = remoteDataSource
     }
     
+    func getContinueLevel() async throws -> ContinueLevelEntity? {
+        let response = try await remoteDataSource.getContinueLevel()
+        guard let data = response.data else { return nil }
+        return ContinueLevelEntity(
+            worldId: data.worldId,
+            worldName: data.worldName,
+            levelId: data.levelId,
+            levelOrder: data.levelOrder,
+            word: data.word
+        )
+    }
+    
     func getLevels(worldId: Int, languageId: Int) async throws -> [GameLevel] {
         let response = try await remoteDataSource.getLevels(worldId: worldId, languageId: languageId)
         return response.data.levels.map { dto in
