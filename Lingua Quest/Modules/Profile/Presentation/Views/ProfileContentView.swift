@@ -36,6 +36,7 @@ struct ProfileContentView: View {
     var onViewAllAchievements: () -> Void
     var onViewAllExplorers: () -> Void
     var onSettingsTapped: () -> Void
+    var onAchievementTapped: ((AchievementUIModel) -> Void)? = nil
     
     @State private var animateItems: Bool = false
     
@@ -46,7 +47,7 @@ struct ProfileContentView: View {
             AppHeaderView(starCount: rawXP, coinCount: rawCoins)
             
             ScrollView(showsIndicators: false) {
-                VStack(spacing: 24) {
+                VStack(spacing: 16) {
                     ProfileHeader(
                         userName: userName,
                         userLevel: userLevel,
@@ -54,7 +55,7 @@ struct ProfileContentView: View {
                         onEditTapped: onEditProfile
                     )
 
-                    .padding(.top, 24)
+                    .padding(.top, 16)
                     .offset(y: animateItems ? 0 : 30)
                     .opacity(animateItems ? 1 : 0)
                     .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.0), value: animateItems)
@@ -90,7 +91,8 @@ struct ProfileContentView: View {
                     
                     AchievementsSection(
                         achievements: achievements,
-                        onViewAllTapped: onViewAllAchievements
+                        onViewAllTapped: onViewAllAchievements,
+                        onAchievementTapped: onAchievementTapped
                     )
                     .offset(y: animateItems ? 0 : 30)
                     .opacity(animateItems ? 1 : 0)
@@ -101,12 +103,12 @@ struct ProfileContentView: View {
                         onViewAllExplorers: onViewAllExplorers
                     )
                     .padding(.horizontal, 20)
-                    .padding(.bottom, 24)
+                    .padding(.bottom, 12)
                     .offset(y: animateItems ? 0 : 30)
                     .opacity(animateItems ? 1 : 0)
                     .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.6), value: animateItems)
                 }
-                .padding(.bottom, 80)
+                .padding(.bottom, 40)
             }
         }
         .background(
