@@ -17,8 +17,8 @@ struct LevelNodeView: View {
     var body: some View {
         ZStack {
             switch level.status {
-            case .completed(let stars):
-                completedNode(stars: stars)
+            case .completed(_):
+                completedNode()
                 
             case .unlocked:
                 unlockedNode
@@ -31,7 +31,7 @@ struct LevelNodeView: View {
     
     // MARK: - Completed Level
     
-    private func completedNode(stars: Int) -> some View {
+    private func completedNode() -> some View {
         VStack(spacing: -4) {
             ZStack {
                 // Outer glow ring
@@ -90,9 +90,6 @@ struct LevelNodeView: View {
                     )
                     .shadow(color: Color.appSemanticSuccess.opacity(0.4), radius: 8, x: 0, y: 4)
             }
-            
-            StarsRatingView(stars: stars)
-                .offset(y: -2)
         }
     }
     
