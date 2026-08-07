@@ -61,7 +61,11 @@ enum PromptFactory {
         {
             "task_completed": boolean,
             "fluency_score": integer between 0 and 100,
-            "feedback_message": "string providing short, constructive feedback on their performance in \(feedbackLang)"
+            "grammar_score": integer between 0 and 100,
+            "vocabulary_score": integer between 0 and 100,
+            "feedback_message": "string providing short, constructive feedback on their performance in \(feedbackLang)",
+            "what_went_well": ["array of strings listing what the user did well in \(feedbackLang)"],
+            "areas_to_improve": ["array of strings listing areas where the user can improve in \(feedbackLang)"]
         }
         
         CRITICAL RULE: The "feedback_message" field MUST be written in \(feedbackLang). Do NOT write the feedback in English if \(feedbackLang) is requested.

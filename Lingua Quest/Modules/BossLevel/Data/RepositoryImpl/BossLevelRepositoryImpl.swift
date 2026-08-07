@@ -61,7 +61,8 @@ final class BossLevelRepositoryImpl: BossLevelRepositoryProtocol {
         audioPlayer.onAudioLevelChanged = { [weak self] level in
             guard let self else { return }
             self.state.aiAudioLevel = level
-            self.state.isAISpeaking = level > 0.05
+            // We no longer toggle isAISpeaking here to prevent rapid UI flickering.
+            // isAISpeaking is now managed by handleServiceEvent.
             self.notifyStateChanged()
         }
 
@@ -200,9 +201,17 @@ final class BossLevelRepositoryImpl: BossLevelRepositoryProtocol {
             stateContinuation?.yield(.messageReceived(RoleplayMessage(sender: .user, text: text)))
 
         case .aiTranscriptChunk(let chunk):
+            if !state.isAISpeaking {
+                state.isAISpeaking = true
+                notifyStateChanged()
+            }
             stateContinuation?.yield(.aiTranscriptChunk(chunk))
 
         case .audioPart(let data):
+            if !state.isAISpeaking {
+                state.isAISpeaking = true
+                notifyStateChanged()
+            }
             audioPlayer.playChunk(data)
 
         case .turnCompleted:

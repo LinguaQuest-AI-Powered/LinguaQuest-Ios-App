@@ -10,14 +10,14 @@ struct BossLevelControlsView: View {
     let onEndCall: () -> Void
 
     var body: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: 12) {
             
             micButton
 
-           
             endCallButton
         }
         .padding(.horizontal, 24)
+        .padding(.top, 16)
         .padding(.bottom, 12)
     }
 
@@ -73,7 +73,7 @@ struct BossLevelControlsView: View {
 
     private var endCallButton: some View {
         CustomButton(
-            type: .custom(textColor: .appTextOnPrimary, buttonColor: .appAccentStreakRed, shadowColor: .appBrandBrownDark),
+            type: .primary,
             text: L10n.BossLevel.finishStage,
             action: onEndCall,
             status: .enable

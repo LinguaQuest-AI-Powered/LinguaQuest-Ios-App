@@ -15,22 +15,20 @@ struct BossLevelTranscriptView: View {
                             .id(message.id)
                     }
                 }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 8)
             }
             .onChange(of: messages.count) { _, _ in
-                if let lastId = messages.last?.id {
-                    withAnimation(.easeOut(duration: 0.25)) {
-                        proxy.scrollTo(lastId, anchor: .bottom)
-                    }
-                }
+                scrollToBottom(proxy: proxy)
             }
             .onChange(of: messages.last?.text) { _, _ in
-                if let lastId = messages.last?.id {
-                    withAnimation(.easeOut(duration: 0.25)) {
-                        proxy.scrollTo(lastId, anchor: .bottom)
-                    }
-                }
+                scrollToBottom(proxy: proxy)
+            }
+        }
+    }
+    
+    private func scrollToBottom(proxy: ScrollViewProxy) {
+        if let lastId = messages.last?.id {
+            withAnimation(.easeOut(duration: 0.25)) {
+                proxy.scrollTo(lastId, anchor: .bottom)
             }
         }
     }

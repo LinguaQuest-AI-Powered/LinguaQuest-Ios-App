@@ -137,8 +137,8 @@ final class BossLevelViewModel {
             do {
                 let transcript = messages.map { "\($0.sender): \($0.text)" }.joined(separator: "\n")
                 let result = try await evaluateStageUseCase.execute(scenario: scenario, transcript: transcript)
-                if result.task_completed {
-                    try? await statsService.adjustWallet(coinsDelta: 50, xpDelta: 150)
+                if result.task_completed, let reward = result.reward {
+                    try? await statsService.adjustWallet(coinsDelta: reward.coins, xpDelta: reward.xp)
                 }
                 soundPlayer.play(sound: result.task_completed ? .success : .fail)
                 viewState = .result(result)
@@ -184,7 +184,11 @@ final class BossLevelViewModel {
             let result = BossEvaluationResult(
                 task_completed: false,
                 fluency_score: 0,
-                feedback_message: L10n.BossLevel.timeoutFeedback
+                grammar_score: 0,
+                vocabulary_score: 0,
+                feedback_message: L10n.BossLevel.timeoutFeedback,
+                what_went_well: [],
+                areas_to_improve: []
             )
             soundPlayer.play(sound: .fail)
             viewState = .result(result)
