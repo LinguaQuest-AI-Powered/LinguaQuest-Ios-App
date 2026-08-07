@@ -255,7 +255,11 @@ struct BossLevelView: View {
     // MARK: - Finish Stage Dialog Content
 
     private var finishConfirmationDialogContent: some View {
-        DialogCardContainer(showMascot: false) {
+        DialogCardContainer(
+            showMascot: true,
+            mascotImage: .resetPasswordBird,
+            customMascotSize: CGSize(width: 200, height: 200)
+        ) {
             VStack(spacing: 20) {
                 Text(L10n.BossLevel.finishStageTitle)
                     .appTextStyle(.headingLarge, color: .appTextHeading)
