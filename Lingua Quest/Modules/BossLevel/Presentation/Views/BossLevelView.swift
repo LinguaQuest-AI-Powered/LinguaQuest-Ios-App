@@ -54,7 +54,7 @@ struct BossLevelView: View {
                 VStack(spacing: 16) {
                     Text(L10n.Common.errorOccurred)
                         .appTextStyle(.body, color: .appTextSecondary)
-                    CustomButton(type: .secendry, text: L10n.Common.goBack, action: { viewModel.onCloseTapped() }, status: .enable)
+                    CustomButton(type: .primary, text: L10n.Common.goBack, action: { viewModel.onCloseTapped() }, status: .enable)
                         .frame(width: 140)
                 }
             }
@@ -132,19 +132,27 @@ struct BossLevelView: View {
         VStack(spacing: 8) {
             if let objective = viewModel.scenario?.objective {
                 Text(L10n.BossLevel.objectivePrefix(objective))
-                    .appTextStyle(.body, color: .white)
+                    .appTextStyle(.bodyLargeBold, color: .appTextHeading)
                     .multilineTextAlignment(.center)
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
             }
             Text(viewModel.formattedTimeRemaining)
-                .appTextStyle(.headingLarge, color: .white)
+                .appTextStyle(.headingLarge, color: .appTextHeading)
         }
         .padding(.horizontal, 20)
-        .padding(.vertical, 16)
+        .padding(.top, 16)
+        .padding(.bottom, 24)
         .frame(maxWidth: .infinity)
-        .background(Color.appBossBanner)
-        .cornerRadius(16)
+        .background(
+            SpeechBubbleShape(cornerRadius: 16, tailSize: 8)
+                .fill(Color.appSurfaceCard)
+                .shadow(color: Color.appBorderBrown.opacity(0.2), radius: 6, x: 0, y: 3)
+        )
+        .overlay(
+            SpeechBubbleShape(cornerRadius: 16, tailSize: 8)
+                .stroke(Color.appBorderBrown, lineWidth: 1.5)
+        )
         .padding(.horizontal, 20)
     }
 
