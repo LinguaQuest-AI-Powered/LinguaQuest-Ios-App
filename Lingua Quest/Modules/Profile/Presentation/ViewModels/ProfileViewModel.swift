@@ -194,11 +194,15 @@ final class ProfileViewModel {
         case .wildExplorer:
             uiIcon = .trophyFill
             uiIconColor = .appBrandBrown
-            uiBgColor = .appSurfaceCardWarm
+            uiBgColor = entity.status.isEarned ? .appSurfaceCardWarm : .appSurfaceCardMuted
         case .perfectWeek:
             uiIcon = .starFill
             uiIconColor = .appAccentTeal
-            uiBgColor = .white
+            uiBgColor = entity.status.isEarned ? .white : .appSurfaceCardMuted
+        case .generic:
+            uiIcon = .starFill
+            uiIconColor = .appBrandBrown
+            uiBgColor = entity.status.isEarned ? .appSurfaceCardWarm : .appSurfaceCardMuted
         }
         
         return AchievementUIModel(
@@ -207,7 +211,13 @@ final class ProfileViewModel {
             subtitle: entity.subtitle,
             uiIcon: uiIcon,
             uiIconColor: uiIconColor,
-            uiBgColor: uiBgColor
+            uiBgColor: uiBgColor,
+            iconUrl: entity.iconUrl,
+            status: entity.status,
+            progressPercent: entity.progressPercent,
+            xpReward: entity.xpReward,
+            coinsReward: entity.coinsReward,
+            earnedAt: entity.earnedAt
         )
     }
     
