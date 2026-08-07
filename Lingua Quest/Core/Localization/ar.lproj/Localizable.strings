@@ -359,6 +359,7 @@
 "boss_level.status_listening" = "يستمع إليك...";
 "boss_level.status_error" = "خطأ في الاتصال";
 "boss_level.tap_to_talk" = "انقر للتحدث";
+"boss_level.ai_is_thinking" = "الذكاء الاصطناعي يفكر...";
 "boss_level.hold_to_speak" = "اضغط مع الاستمرار للتحدث";
 "boss_level.release_to_send" = "ارفع إصبعك للإرسال";
 "boss_level.mute_mic" = "كتم الصوت";

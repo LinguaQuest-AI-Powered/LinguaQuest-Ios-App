@@ -10,14 +10,14 @@ struct BossLevelControlsView: View {
     let onEndCall: () -> Void
 
     var body: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: 12) {
             
             micButton
 
-           
             endCallButton
         }
         .padding(.horizontal, 24)
+        .padding(.top, 16)
         .padding(.bottom, 12)
     }
 

@@ -357,6 +357,7 @@
 "boss_level.status_listening" = "Listening to you...";
 "boss_level.status_error" = "Connection Error";
 "boss_level.tap_to_talk" = "Tap to talk";
+"boss_level.ai_is_thinking" = "AI is thinking...";
 "boss_level.hold_to_speak" = "Hold to Speak";
 "boss_level.release_to_send" = "Release to Send";
 "boss_level.mute_mic" = "Mute Mic";

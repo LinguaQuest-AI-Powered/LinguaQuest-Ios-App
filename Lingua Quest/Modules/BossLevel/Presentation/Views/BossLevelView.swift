@@ -38,9 +38,9 @@ struct BossLevelView: View {
                 VStack(spacing: 0) {
                     headerBar(onBack: { showFinishDialog = true })
                         .padding(.top, 8)
-                    Spacer()
                     activeSessionContent
-                    Spacer()
+                        .frame(maxHeight: .infinity)
+                    
                     BossLevelControlsView(
                         isHoldingMic: viewModel.isHoldingMic,
                         isAISpeaking: viewModel.sessionState.isAISpeaking,
@@ -97,6 +97,16 @@ struct BossLevelView: View {
         return false
     }
 
+    private var mascotImageForState: Image.Asset {
+        if viewModel.isHoldingMic {
+            return .micBird
+        } else if viewModel.sessionState.isAISpeaking {
+            return .resetPasswordBird
+        } else {
+            return .bird
+        }
+    }
+
     // MARK: - Header Bar
 
     private func headerBar(onBack: @escaping () -> Void) -> some View {
@@ -129,20 +139,20 @@ struct BossLevelView: View {
     }
 
     private var activeObjective: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 4) {
             if let objective = viewModel.scenario?.objective {
                 Text(L10n.BossLevel.objectivePrefix(objective))
-                    .appTextStyle(.bodyLargeBold, color: .appTextHeading)
+                    .appTextStyle(.bodySemibold, color: .appTextHeading)
                     .multilineTextAlignment(.center)
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
             }
             Text(viewModel.formattedTimeRemaining)
-                .appTextStyle(.headingLarge, color: .appTextHeading)
+                .appTextStyle(.bodyLargeBold, color: .appTextHeading)
         }
         .padding(.horizontal, 20)
-        .padding(.top, 16)
-        .padding(.bottom, 24)
+        .padding(.top, 10)
+        .padding(.bottom, 10)
         .frame(maxWidth: .infinity)
         .background(
             SpeechBubbleShape(cornerRadius: 16, tailSize: 8)
@@ -156,7 +166,7 @@ struct BossLevelView: View {
         .padding(.horizontal, 20)
     }
 
-    // MARK: - Lobby Content (Image 3)
+    // MARK: - Lobby Content
 
     private func lobbyContent(scenario: BossScenario) -> some View {
         DialogCardContainer(
@@ -219,29 +229,30 @@ struct BossLevelView: View {
         .padding(.bottom, 20)
     }
 
-    // MARK: - Active Session Content (Image 4)
+    // MARK: - Active Session Content
 
     private var activeSessionContent: some View {
         VStack(spacing: 16) {
             activeObjective
 
-            Image(asset: .micBird)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 120, height: 120)
-                .scaleEffect(viewModel.sessionState.isAISpeaking ? 1.06 : 1.0)
-                .animation(.easeInOut(duration: 0.6).repeatForever(autoreverses: true), value: viewModel.sessionState.isAISpeaking)
-
-            BossLevelTranscriptView(
-                messages: viewModel.messages,
-                onTapToTalk: { }
-            )
-
-            Spacer(minLength: 10)
+            DialogCardContainer(
+                showMascot: true,
+                mascotImage: mascotImageForState,
+                customMascotSize: CGSize(width: 120, height: 120)
+            ) {
+                BossLevelTranscriptView(
+                    messages: viewModel.messages,
+                    onTapToTalk: { }
+                )
+                .frame(maxHeight: .infinity)
+            }
+            .padding(.horizontal, 24)
+            .animation(.easeInOut(duration: 0.3), value: mascotImageForState)
         }
+        .padding(.top, 8)
     }
 
-    // MARK: - Finish Stage Dialog Content (Image 5)
+    // MARK: - Finish Stage Dialog Content
 
     private var finishConfirmationDialogContent: some View {
         DialogCardContainer(showMascot: false) {

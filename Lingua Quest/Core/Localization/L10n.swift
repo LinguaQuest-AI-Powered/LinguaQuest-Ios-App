@@ -472,6 +472,7 @@ enum L10n {
         static var statusListening: String { localized("boss_level.status_listening") }
         static var statusError: String { localized("boss_level.status_error") }
         static var tapToTalk: String { localized("boss_level.tap_to_talk") }
+        static var aiIsThinking: String { localized("boss_level.ai_is_thinking") }
         static var holdToSpeak: String { localized("boss_level.hold_to_speak") }
         static var releaseToSend: String { localized("boss_level.release_to_send") }
         static var muteMic: String { localized("boss_level.mute_mic") }
