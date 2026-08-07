@@ -109,9 +109,20 @@ struct LoginView: View {
                     }
                 }
                 .padding(.horizontal, 24)
+                .padding(.vertical, 32)
+            }
+            
+            if viewModel.isLoading {
+                Color.black.opacity(0.4)
+                    .ignoresSafeArea()
+                
+                SharedImageLoadingView(
+                    imageAsset: .loadingBird,
+                    title: L10n.Common.loading,
+                    subtitle: ""
+                )
             }
         }
-        .authLoadingOverlay(isLoading: viewModel.isLoading)
         .alert(
             L10n.Common.error,
             isPresented: Binding(

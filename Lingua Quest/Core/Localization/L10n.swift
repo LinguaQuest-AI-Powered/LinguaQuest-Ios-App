@@ -78,6 +78,8 @@ enum L10n {
         static var appleLabel: String { localized("auth.apple_label") }
         static var verifyResetCodeTitle: String { localized("auth_verify_reset_code_title") }
         static var verifyResetCodeDesc: String { localized("auth_verify_reset_code_desc") }
+        static var otpSentTitle: String { localized("auth.otp_sent_title") }
+        static var otpSentDesc: String { localized("auth.otp_sent_desc") }
         
         enum Error {
             static var invalidCredentials: String { localized("auth_error_invalid_credentials") }

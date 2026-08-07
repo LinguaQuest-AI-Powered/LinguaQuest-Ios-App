@@ -114,6 +114,8 @@ struct SignUpView: View {
                     }
                 }
                 .padding(.horizontal, 24)
+                .padding(.bottom, 32)
+                .padding(.top, 64)
             }
             VStack {
                 HStack {
@@ -123,9 +125,19 @@ struct SignUpView: View {
                 .padding(.horizontal, 24)
                 Spacer()
             }
+            
+            if viewModel.isLoading {
+                Color.black.opacity(0.4)
+                    .ignoresSafeArea()
+                
+                SharedImageLoadingView(
+                    imageAsset: .loadingBird,
+                    title: L10n.Common.loading,
+                    subtitle: ""
+                )
+            }
         }
         .navigationBarBackButtonHidden(true)
-        .authLoadingOverlay(isLoading: viewModel.isLoading)
         .alert(
             L10n.Common.error,
             isPresented: Binding(

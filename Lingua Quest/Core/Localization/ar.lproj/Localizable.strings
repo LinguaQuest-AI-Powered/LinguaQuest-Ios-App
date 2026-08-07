@@ -574,3 +574,5 @@
 "notifications.time.minutes_ago" = "منذ %d دقائق";
 "notifications.time.hours_ago" = "منذ %d ساعات";
 "notifications.time.days_ago" = "منذ %d أيام";
+"auth.otp_sent_title" = "تم إرسال الرمز";
+"auth.otp_sent_desc" = "تم إرسال رمز تحقق جديد إلى بريدك الإلكتروني بنجاح.";
