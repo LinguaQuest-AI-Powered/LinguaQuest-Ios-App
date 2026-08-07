@@ -15,6 +15,7 @@ struct MyLanguagesBottomSheet: View {
     @Bindable var languageViewModel: LanguageViewModel
     @Binding var isPresented: Bool
     var onAddNewLanguage: () -> Void
+    @State private var isEditing: Bool = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -26,10 +27,27 @@ struct MyLanguagesBottomSheet: View {
                 
                 Spacer()
                 
+                Button(action: {
+                    withAnimation {
+                        isEditing.toggle()
+                    }
+                }) {
+                    Image(systemIcon: isEditing ? .checkmark : .pencil)
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(Color.appBrandPrimary)
+                        .frame(width: 40, height: 40)
+                        .background(Color.appBrandPrimary.opacity(0.15))
+                        .clipShape(Circle())
+                }
+                .padding(.trailing, 12)
+                
                 Button(action: { isPresented = false }) {
                     Image(systemIcon: .xmark)
-                        .font(.system(size: 16, weight: .semibold))
+                        .font(.system(size: 20, weight: .bold))
                         .foregroundColor(Color.appTextSecondary)
+                        .frame(width: 40, height: 40)
+                        .background(Color.appTextSecondary.opacity(0.15))
+                        .clipShape(Circle())
                 }
             }
             .padding(.horizontal, 24)
@@ -44,6 +62,7 @@ struct MyLanguagesBottomSheet: View {
                             item: item,
                             isSelected: languageViewModel.selectedLanguageId == item.id,
                             canRemove: languageViewModel.canRemoveLanguage(item),
+                            isEditing: isEditing,
                             action: {
                                 Task {
                                     await languageViewModel.switchActiveLanguage(to: item.id)
@@ -76,7 +95,7 @@ struct MyLanguagesBottomSheet: View {
         .appDialog(isPresented: $languageViewModel.showRemoveConfirmation) {
             DialogCardContainer(
                 showMascot: true,
-                mascotImage: .loginBird, // using login bird or any available bird
+                mascotImage: .removeLanguage, // using login bird or any available bird
                 speechBubbleText: L10n.Home.removeLanguageTitle
             ) {
                 VStack(spacing: 16) {
@@ -114,11 +133,16 @@ struct LanguageItemRow: View {
     let item: MyTargetLanguage
     let isSelected: Bool
     let canRemove: Bool
+    let isEditing: Bool
     let action: () -> Void
     let onRemove: () -> Void
     
     var body: some View {
-        Button(action: action) {
+        Button(action: {
+            if !isEditing {
+                action()
+            }
+        }) {
             HStack(spacing: 16) {
                 // Flag inside circle
                 ZStack {
@@ -139,25 +163,28 @@ struct LanguageItemRow: View {
                         .font(AppTextStyle.bodyBold.font)
                         .foregroundColor(Color.appTextHeading)
                     
-                    Text("Level \(item.level)")
+                    Text(L10n.Home.level(item.level))
                         .font(AppTextStyle.captionMedium.font)
                         .foregroundColor(Color.appTextSecondary)
                 }
                 
                 Spacer()
                 
-                // Checkmark if selected
-                if isSelected {
+                // Checkmark if selected or Trash if editing
+                if isEditing {
+                    if canRemove {
+                        Button(action: onRemove) {
+                            Image(systemIcon: .trash)
+                                .foregroundColor(Color.appSemanticError)
+                                .font(.system(size: 20))
+                                .padding(8) // increase touch area
+                        }
+                        .padding(.leading, 8)
+                    }
+                } else if isSelected {
                     Image(systemIcon: .checkmarkCircleFill)
                         .foregroundColor(Color.appSemanticSuccess)
                         .font(.system(size: 24))
-                } else if canRemove {
-                    Button(action: onRemove) {
-                        Image(systemIcon: .trash)
-                            .foregroundColor(Color.appSemanticError)
-                            .font(.system(size: 20))
-                    }
-                    .padding(.leading, 8)
                 }
             }
             .padding(.horizontal, 16)
@@ -173,22 +200,3 @@ struct LanguageItemRow: View {
         }
     }
 }
-
-// #Preview {
-//     ZStack(alignment: .bottom) {
-//         Color.black.opacity(0.5).ignoresSafeArea()
-//         
-//         CustomBottomSheet(isPresented: .constant(true), initialDetent: .medium) {
-//             MyLanguagesBottomSheet(
-//                 languageViewModel: LanguageViewModel(
-//                     getMyLanguagesUseCase: GetMyLanguagesUseCase(repository: HomeRepositoryImpl(remoteDataSource: HomeRemoteDataSource(apiClient: APIClient()))),
-//                     getAvailableLanguagesUseCase: GetAvailableLanguagesUseCase(repository: HomeRepositoryImpl(remoteDataSource: HomeRemoteDataSource(apiClient: APIClient()))),
-//                     switchActiveLanguageUseCase: SwitchActiveLanguageUseCase(repository: HomeRepositoryImpl(remoteDataSource: HomeRemoteDataSource(apiClient: APIClient()))),
-//                     addLanguagesUseCase: AddLanguagesUseCase(repository: HomeRepositoryImpl(remoteDataSource: HomeRemoteDataSource(apiClient: APIClient())))
-//                 ),
-//                 isPresented: .constant(true),
-//                 onAddNewLanguage: {}
-//             )
-//         }
-//     }
-// }

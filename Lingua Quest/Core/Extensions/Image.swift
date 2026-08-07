@@ -115,6 +115,7 @@ extension Image {
     
     enum Asset: String {
         case heroSection = "heroSection"
+        case removeLanguage = "removeLanguage"
         case mindLoading = "mindLoading"
         case deleteNotifications = "deleteNotifications"
         case appBackground = "app_background"
