@@ -109,6 +109,7 @@ struct LoginView: View {
                     }
                 }
                 .padding(.horizontal, 24)
+                .padding(.vertical, 32)
             }
         }
         .authLoadingOverlay(isLoading: viewModel.isLoading)

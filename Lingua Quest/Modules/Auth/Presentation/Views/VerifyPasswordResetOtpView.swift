@@ -15,80 +15,87 @@ struct VerifyPasswordResetOtpView: View {
         ZStack {
             Color.appBackgroundWarm.ignoresSafeArea()
 
+            GeometryReader { geometry in
                 ScrollView(showsIndicators: false) {
-                    Spacer().frame(height: 100)
-                    DialogCardContainer(mascotImage: .verifyEmailBird) {
-                        VStack(spacing: 24) {
+                    VStack(spacing: 0) {
+                        Spacer(minLength: 80)
+                        
+                        DialogCardContainer(mascotImage: .verifyEmailBird) {
+                            VStack(spacing: 24) {
 
-                            VStack(spacing: 16) {
-                                Text(L10n.Auth.verifyResetCodeTitle)
-                                    .dialogTitleStyle()
-                                    .multilineTextAlignment(.center)
+                                VStack(spacing: 16) {
+                                    Text(L10n.Auth.verifyResetCodeTitle)
+                                        .dialogTitleStyle()
+                                        .multilineTextAlignment(.center)
 
-                                Text(L10n.Auth.verifyResetCodeDesc)
-                                    .dialogSubtitleStyle()
-                                    .opacity(0.8)
-                                    .multilineTextAlignment(.center)
-                                    .padding(.horizontal, 8)
-                            }
-
-                            ZStack {
-                                HStack(spacing: 16) {
-                                    ForEach(0..<4, id: \.self) { index in
-                                        otpCircle(index: index)
-                                    }
+                                    Text(L10n.Auth.verifyResetCodeDesc)
+                                        .dialogSubtitleStyle()
+                                        .opacity(0.8)
+                                        .multilineTextAlignment(.center)
+                                        .padding(.horizontal, 8)
                                 }
 
-                                TextField("", text: $viewModel.otpCode)
-                                    .keyboardType(.numberPad)
-                                    .textContentType(.oneTimeCode)
-                                    .focused($isKeyboardShowing)
-                                    .foregroundColor(.clear)
-                                    .accentColor(.clear)
-                                    .onChange(of: viewModel.otpCode) { _, newValue in
-                                        if newValue.count > 4 {
-                                            viewModel.otpCode = String(newValue.prefix(4))
+                                ZStack {
+                                    HStack(spacing: 16) {
+                                        ForEach(0..<4, id: \.self) { index in
+                                            otpCircle(index: index)
                                         }
                                     }
-                            }
-                            .padding(.top, 8)
-                            
-                            // Removed inline error message
 
-                            VStack(spacing: 8) {
-                                HStack(spacing: 4) {
-                                    Image(systemIcon: .timer)
-                                        .foregroundColor(.appTextSecondary)
-                                    Text(String(format: "00:%02d", viewModel.timeRemaining))
-                                        .dialogSubtitleStyle()
+                                    TextField("", text: $viewModel.otpCode)
+                                        .keyboardType(.numberPad)
+                                        .textContentType(.oneTimeCode)
+                                        .focused($isKeyboardShowing)
+                                        .foregroundColor(.clear)
+                                        .accentColor(.clear)
+                                        .onChange(of: viewModel.otpCode) { _, newValue in
+                                            if newValue.count > 4 {
+                                                viewModel.otpCode = String(newValue.prefix(4))
+                                            }
+                                        }
                                 }
+                                .padding(.top, 8)
+                                
+                                // Removed inline error message
 
-                                Button(action: {
-                                    if viewModel.timeRemaining == 0 {
-                                        viewModel.resendCode()
-                                        isKeyboardShowing = true
+                                VStack(spacing: 8) {
+                                    HStack(spacing: 4) {
+                                        Image(systemIcon: .timer)
+                                            .foregroundColor(.appTextSecondary)
+                                        Text(String(format: "00:%02d", viewModel.timeRemaining))
+                                            .dialogSubtitleStyle()
                                     }
-                                }) {
-                                    Text(L10n.Auth.resendCode)
-                                        .dialogSubtitleStyle()
-                                        .opacity(viewModel.timeRemaining == 0 ? 1.0 : 0.5)
-                                }
-                                .disabled(viewModel.timeRemaining > 0)
-                            }
 
-                            CustomButton(
-                                type: .custom(textColor: .appTextSelectedBrown, buttonColor: .appAccentOrange, shadowColor: .appBrandBrown),
-                                text: L10n.Auth.verify,
-                                action: { viewModel.verifyCode() },
-                                trailing: Image(systemIcon: .checkmarkCircleFill),
-                                isLoading: false
-                            )
+                                    Button(action: {
+                                        if viewModel.timeRemaining == 0 {
+                                            viewModel.resendCode()
+                                            isKeyboardShowing = true
+                                        }
+                                    }) {
+                                        Text(L10n.Auth.resendCode)
+                                            .dialogSubtitleStyle()
+                                            .opacity(viewModel.timeRemaining == 0 ? 1.0 : 0.5)
+                                    }
+                                    .disabled(viewModel.timeRemaining > 0)
+                                }
+
+                                CustomButton(
+                                    type: .custom(textColor: .appTextSelectedBrown, buttonColor: .appAccentOrange, shadowColor: .appBrandBrown),
+                                    text: L10n.Auth.verify,
+                                    action: { viewModel.verifyCode() },
+                                    trailing: Image(systemIcon: .checkmarkCircleFill),
+                                    isLoading: false
+                                )
+                            }
+                            .animation(.easeInOut, value: viewModel.errorMessage)
                         }
-                        .animation(.easeInOut, value: viewModel.errorMessage)
+                        .padding(.horizontal, 24)
+                        
+                        Spacer(minLength: 40)
                     }
-                    .padding(.horizontal, 24)
-                    Spacer().frame(height: 100)
+                    .frame(minHeight: geometry.size.height)
                 }
+            }
 
             VStack {
                 HStack {

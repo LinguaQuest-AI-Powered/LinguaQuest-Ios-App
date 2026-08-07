@@ -15,81 +15,90 @@ struct ResetPasswordView: View {
             Color.appBackgroundWarm.ignoresSafeArea()
             
             VStack(spacing: 0) {
-                
-                ScrollView(showsIndicators: false) {
-                    DialogCardContainer(mascotImage: currentMascotImage) {
-                        VStack(spacing: 24) {
+                GeometryReader { geometry in
+                    ScrollView(showsIndicators: false) {
+                        VStack(spacing: 0) {
                             
-                            VStack(spacing: 8) {
-                                Text(L10n.Auth.newPasswordTitle)
-                                    .dialogTitleStyle()
-                                    .multilineTextAlignment(.center)
-                                
-                                Text(L10n.Auth.newPasswordDesc)
-                                    .dialogSubtitleStyle()
-                                    .opacity(0.8)
-                                    .multilineTextAlignment(.center)
-                                    .padding(.horizontal, 8)
-                            }
+                            Spacer(minLength: 80)
                             
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text(L10n.Auth.newPasswordLabel)
-                                    .dialogSubtitleStyle()
-                                
-                                CustomSecureField(
-                                    icon: .keyFill,
-                                    placeholder: L10n.Auth.newPasswordPlaceholder,
-                                    text: $viewModel.newPassword,
-                                    isVisible: $viewModel.isNewPasswordVisible
-                                )
-                                
-                                Text(L10n.Auth.passwordStrength)
-                                    .appTextStyle(.caption, color: .appTextSecondary)
-                                    .padding(.top, 4)
-                                
-                                GeometryReader { geometry in
-                                    ZStack(alignment: .leading) {
-                                        Capsule()
-                                            .fill(Color.appBackgroundPrimary)
-                                            .frame(height: 8)
+                            DialogCardContainer(mascotImage: currentMascotImage) {
+                                VStack(spacing: 24) {
+                                    
+                                    VStack(spacing: 8) {
+                                        Text(L10n.Auth.newPasswordTitle)
+                                            .dialogTitleStyle()
+                                            .multilineTextAlignment(.center)
                                         
-                                        Capsule()
-                                            .fill(passwordStrengthColor(for: viewModel.passwordStrengthProgress))
-                                            .frame(width: max(0, geometry.size.width * viewModel.passwordStrengthProgress), height: 8)
-                                            .animation(.easeInOut, value: viewModel.passwordStrengthProgress)
+                                        Text(L10n.Auth.newPasswordDesc)
+                                            .dialogSubtitleStyle()
+                                            .opacity(0.8)
+                                            .multilineTextAlignment(.center)
+                                            .padding(.horizontal, 8)
                                     }
+                                    
+                                    VStack(alignment: .leading, spacing: 8) {
+                                        Text(L10n.Auth.newPasswordLabel)
+                                            .dialogSubtitleStyle()
+                                        
+                                        CustomSecureField(
+                                            icon: .keyFill,
+                                            placeholder: L10n.Auth.newPasswordPlaceholder,
+                                            text: $viewModel.newPassword,
+                                            isVisible: $viewModel.isNewPasswordVisible
+                                        )
+                                        
+                                        Text(L10n.Auth.passwordStrength)
+                                            .appTextStyle(.caption, color: .appTextSecondary)
+                                            .padding(.top, 4)
+                                        
+                                        GeometryReader { geometry in
+                                            ZStack(alignment: .leading) {
+                                                Capsule()
+                                                    .fill(Color.appBackgroundPrimary)
+                                                    .frame(height: 8)
+                                                
+                                                Capsule()
+                                                    .fill(passwordStrengthColor(for: viewModel.passwordStrengthProgress))
+                                                    .frame(width: max(0, geometry.size.width * viewModel.passwordStrengthProgress), height: 8)
+                                                    .animation(.easeInOut, value: viewModel.passwordStrengthProgress)
+                                            }
+                                        }
+                                        .frame(height: 8)
+                                    }
+                                    
+                                    VStack(alignment: .leading, spacing: 8) {
+                                        Text(L10n.Auth.confirmNewPasswordLabel)
+                                            .dialogSubtitleStyle()
+                                        
+                                        CustomSecureField(
+                                            icon: .lockFill,
+                                            placeholder: L10n.Auth.confirmNewPasswordPlaceholder,
+                                            text: $viewModel.confirmNewPassword,
+                                            isVisible: $viewModel.isConfirmNewPasswordVisible
+                                        )
+                                    }
+                                    
+                                    // Removed inline error message
+                                    
+                                    CustomButton(
+                                        type: .custom(textColor: .appTextSelectedBrown, buttonColor: .appAccentOrange, shadowColor: .appBrandBrown),
+                                        text: L10n.Auth.resetPassword,
+                                        action: {
+                                            viewModel.resetPassword()
+                                        },
+                                        trailing: Image(systemIcon: .arrowRight),
+                                        isLoading: false
+                                    )
+                                    .padding(.top, 8)
                                 }
-                                .frame(height: 8)
+                                .animation(.easeInOut, value: viewModel.errorMessage)
                             }
+                            .padding(.horizontal, 24)
                             
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text(L10n.Auth.confirmNewPasswordLabel)
-                                    .dialogSubtitleStyle()
-                                
-                                CustomSecureField(
-                                    icon: .lockFill,
-                                    placeholder: L10n.Auth.confirmNewPasswordPlaceholder,
-                                    text: $viewModel.confirmNewPassword,
-                                    isVisible: $viewModel.isConfirmNewPasswordVisible
-                                )
-                            }
-                            
-                            // Removed inline error message
-                            
-                            CustomButton(
-                                type: .custom(textColor: .appTextSelectedBrown, buttonColor: .appAccentOrange, shadowColor: .appBrandBrown),
-                                text: L10n.Auth.resetPassword,
-                                action: {
-                                    viewModel.resetPassword()
-                                },
-                                trailing: Image(systemIcon: .arrowRight),
-                                isLoading: false
-                            )
-                            .padding(.top, 8)
+                            Spacer(minLength: 40)
                         }
-                        .animation(.easeInOut, value: viewModel.errorMessage)
+                        .frame(minHeight: geometry.size.height)
                     }
-                    .padding(.horizontal, 24)
                 }
             }
             

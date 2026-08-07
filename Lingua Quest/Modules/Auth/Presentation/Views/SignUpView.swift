@@ -114,6 +114,7 @@ struct SignUpView: View {
                     }
                 }
                 .padding(.horizontal, 24)
+                .padding(.vertical, 32)
             }
             VStack {
                 HStack {

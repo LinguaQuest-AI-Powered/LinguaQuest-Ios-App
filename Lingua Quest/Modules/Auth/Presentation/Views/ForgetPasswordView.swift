@@ -14,43 +14,50 @@ struct ForgetPasswordView: View {
         ZStack {
             Color.appBackgroundWarm.ignoresSafeArea()
             
-            VStack(spacing: 0) {
-                
+            GeometryReader { geometry in
                 ScrollView(showsIndicators: false) {
-                    DialogCardContainer(mascotImage: .forgetPasswordBird) {
-                        VStack(spacing: 24) {
-                            
-                            VStack(spacing: 16) {
-                                Text(L10n.Auth.forgetPassword)
-                                    .dialogTitleStyle()
-                                    .multilineTextAlignment(.center)
+                    VStack(spacing: 0) {
+                        
+                        Spacer(minLength: 80)
+                        
+                        DialogCardContainer(mascotImage: .forgetPasswordBird) {
+                            VStack(spacing: 24) {
                                 
-                                Text(L10n.Auth.forgetPasswordDesc)
-                                    .dialogSubtitleStyle()
-                                    .opacity(0.8)
-                                    .multilineTextAlignment(.center)
-                                    .padding(.horizontal, 8)
+                                VStack(spacing: 16) {
+                                    Text(L10n.Auth.forgetPassword)
+                                        .dialogTitleStyle()
+                                        .multilineTextAlignment(.center)
+                                    
+                                    Text(L10n.Auth.forgetPasswordDesc)
+                                        .dialogSubtitleStyle()
+                                        .opacity(0.8)
+                                        .multilineTextAlignment(.center)
+                                        .padding(.horizontal, 8)
+                                }
+                                
+                                CustomTextField(
+                                    icon: .envelopeFill,
+                                    placeholder: L10n.Auth.enterEmail,
+                                    text: $viewModel.email
+                                )
+                                .padding(.top, 8)
+                                
+                                // Removed inline error message
+                                CustomButton(
+                                    type: .custom(textColor: .appTextSelectedBrown, buttonColor: .appAccentOrange, shadowColor: .appBrandBrown),
+                                    text: L10n.Auth.sendResetLink,
+                                    action: { viewModel.sendResetLink() },
+                                    trailing: Image(systemIcon: .arrowRight),
+                                    isLoading: false
+                                )
                             }
-                            
-                            CustomTextField(
-                                icon: .envelopeFill,
-                                placeholder: L10n.Auth.enterEmail,
-                                text: $viewModel.email
-                            )
-                            .padding(.top, 8)
-                            
-                            // Removed inline error message
-                            CustomButton(
-                                type: .custom(textColor: .appTextSelectedBrown, buttonColor: .appAccentOrange, shadowColor: .appBrandBrown),
-                                text: L10n.Auth.sendResetLink,
-                                action: { viewModel.sendResetLink() },
-                                trailing: Image(systemIcon: .arrowRight),
-                                isLoading: false
-                            )
+                            .animation(.easeInOut, value: viewModel.errorMessage)
                         }
-                        .animation(.easeInOut, value: viewModel.errorMessage)
+                        .padding(.horizontal, 24)
+                        
+                        Spacer(minLength: 40)
                     }
-                    .padding(.horizontal, 24)
+                    .frame(minHeight: geometry.size.height)
                 }
             }
             
