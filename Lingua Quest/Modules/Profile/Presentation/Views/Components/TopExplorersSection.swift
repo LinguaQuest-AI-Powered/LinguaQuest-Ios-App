@@ -14,7 +14,7 @@ struct TopExplorersSection: View {
     
     // MARK: - Body
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 12) {
             
             // Section Header
             SectionHeader(
@@ -24,7 +24,7 @@ struct TopExplorersSection: View {
             )
             
             // Leaderboard List
-            VStack(spacing: 16) { // Space between individual cards
+            VStack(spacing: 10) { // Space between individual cards
                 ForEach(Array(explorers.enumerated()), id: \.element.id) { index, explorer in
                     
                     LeaderboardRow(
