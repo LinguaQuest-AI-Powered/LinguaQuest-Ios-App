@@ -133,6 +133,12 @@ struct VerifyPasswordResetOtpView: View {
                 Text(errorMessage)
             }
         }
+        .appToast(
+            isPresented: $viewModel.showToast,
+            type: viewModel.toastType,
+            title: viewModel.toastTitle,
+            subtitle: viewModel.toastSubtitle
+        )
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 isKeyboardShowing = true
