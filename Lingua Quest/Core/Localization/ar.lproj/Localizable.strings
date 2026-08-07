@@ -186,6 +186,9 @@
 "home.object_detection_title" = "التقط صورة وتعلم كلمة جديدة!";
 "home.object_detection_subtitle" = "وجّه الكاميرا على أي شيء حواليك واكتشف اسمه";
 "home.object_detection_progress" = "%d/%d اليوم";
+"home.current_quest" = "المهمة الحالية";
+"home.find_and_capture" = "ابحث والتقط";
+"home.level_progress" = "%d من %d";
 
 
 "profile.title" = "لينجوا كويست";

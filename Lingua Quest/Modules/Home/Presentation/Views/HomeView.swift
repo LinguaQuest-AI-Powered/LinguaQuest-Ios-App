@@ -65,19 +65,25 @@ struct HomeView: View {
                             .opacity(isAnimated ? 1 : 0)
                             .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.05), value: isAnimated)
                                 
-                            ObjectDetectionCardView(
-                                completed: 3,
-                                total: 5,
-                                action: {
-                                    Task {
-                                        await viewModel.onObjectDetectionTapped()
+                            if let continueLevel = viewModel.continueLevel {
+                                ObjectDetectionCardView(
+                                    worldName: continueLevel.worldName,
+                                    targetWord: continueLevel.word,
+                                    levelOrder: continueLevel.levelOrder ?? 1,
+                                    totalLevels: viewModel.homeData?.activeLanguage.exploreWorlds
+                                        .first(where: { $0.id == continueLevel.worldId })?.totalLevels ?? 10,
+                                    isLoading: viewModel.isContinueLevelLoading,
+                                    action: {
+                                        Task {
+                                            await viewModel.onObjectDetectionTapped()
+                                        }
                                     }
-                                }
-                            )
-                            .padding(.horizontal, 20)
-                            .offset(y: isAnimated ? 0 : 30)
-                            .opacity(isAnimated ? 1 : 0)
-                            .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.08), value: isAnimated)
+                                )
+                                .padding(.horizontal, 20)
+                                .offset(y: isAnimated ? 0 : 30)
+                                .opacity(isAnimated ? 1 : 0)
+                                .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.08), value: isAnimated)
+                            }
 
 
                             Group {
@@ -333,8 +339,10 @@ struct HomeSkeletonView: View {
             .padding(.horizontal, 20)
             
             ObjectDetectionCardView(
-                completed: 0,
-                total: 5,
+                worldName: nil,
+                targetWord: nil,
+                levelOrder: 1,
+                totalLevels: 10,
                 action: {}
             )
             .padding(.horizontal, 20)
