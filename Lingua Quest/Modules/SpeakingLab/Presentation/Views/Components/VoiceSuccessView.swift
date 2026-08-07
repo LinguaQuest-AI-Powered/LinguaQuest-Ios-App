@@ -11,11 +11,18 @@ struct VoiceSuccessView: View {
     @Bindable var viewModel: VoiceGameResultViewModel
     
     var body: some View {
-        VStack(spacing: -16) {
-            SpeechBubbleView(text: viewModel.advice.isEmpty ? L10n.SpeakingLab.feedbackGreatJob : viewModel.advice, isAnimated: true, animationDelay: 0.5)
-                .padding(.horizontal, 40)
-            
-            DialogCardContainer(mascotImage: .perfect) {
+        DialogCardContainer(
+            mascotImage: .perfect,
+            customSpeechBubble: AnyView(
+                SpeechBubbleView(
+                    text: viewModel.advice.isEmpty ? L10n.SpeakingLab.feedbackGreatJob : viewModel.advice,
+                    isAnimated: true,
+                    animationDelay: 0.5
+                )
+                .padding(.horizontal, 24)
+                .padding(.bottom, 20)
+            )
+        ) {
                 VStack(spacing: 24) {
                     Text(L10n.Game.perfect)
                     .dialogTitleStyle()
@@ -53,6 +60,5 @@ struct VoiceSuccessView: View {
         }
         .padding(.horizontal, 24)
         .transition(.scale.combined(with: .opacity))
-        }
     }
 }
