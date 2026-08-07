@@ -357,6 +357,7 @@
 "boss_level.status_listening" = "Listening to you...";
 "boss_level.status_error" = "Connection Error";
 "boss_level.tap_to_talk" = "Tap to talk";
+"boss_level.ai_is_thinking" = "AI is thinking...";
 "boss_level.hold_to_speak" = "Hold to Speak";
 "boss_level.release_to_send" = "Release to Send";
 "boss_level.mute_mic" = "Mute Mic";
@@ -560,5 +561,14 @@
 "notifications.time.minutes_ago" = "%d minutes ago";
 "notifications.time.hours_ago" = "%d hours ago";
 "notifications.time.days_ago" = "%d days ago";
+
+"boss_level.outstanding" = "Outstanding!";
+"boss_level.needs_work" = "Needs Work";
+"boss_level.overall_fluency" = "Overall\nFluency";
+"boss_level.grammar" = "Grammar";
+"boss_level.vocabulary" = "Vocabulary";
+"boss_level.what_went_well" = "What went well";
+"boss_level.areas_to_improve" = "Areas to improve";
+
 "auth.otp_sent_title" = "Code Sent";
 "auth.otp_sent_desc" = "A new OTP code has been sent to your email successfully.";

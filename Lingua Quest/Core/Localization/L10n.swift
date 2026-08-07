@@ -474,6 +474,7 @@ enum L10n {
         static var statusListening: String { localized("boss_level.status_listening") }
         static var statusError: String { localized("boss_level.status_error") }
         static var tapToTalk: String { localized("boss_level.tap_to_talk") }
+        static var aiIsThinking: String { localized("boss_level.ai_is_thinking") }
         static var holdToSpeak: String { localized("boss_level.hold_to_speak") }
         static var releaseToSend: String { localized("boss_level.release_to_send") }
         static var muteMic: String { localized("boss_level.mute_mic") }
@@ -510,6 +511,13 @@ enum L10n {
         static var resultVictory: String { localized("boss_level.result_victory") }
         static var resultStageFailed: String { localized("boss_level.result_stage_failed") }
         static var resultTryAgain: String { localized("boss_level.result_try_again") }
+        static var outstanding: String { localized("boss_level.outstanding") }
+        static var needsWork: String { localized("boss_level.needs_work") }
+        static var overallFluency: String { localized("boss_level.overall_fluency") }
+        static var grammar: String { localized("boss_level.grammar") }
+        static var vocabulary: String { localized("boss_level.vocabulary") }
+        static var whatWentWell: String { localized("boss_level.what_went_well") }
+        static var areasToImprove: String { localized("boss_level.areas_to_improve") }
     }
 
     enum About {
