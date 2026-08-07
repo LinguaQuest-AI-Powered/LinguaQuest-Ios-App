@@ -14,14 +14,21 @@ struct FullAchievementEntity: Identifiable, Equatable {
     let iconUrl: String?
     let status: AchievementStatus
     let progressPercent: Int
+    let xpReward: Int
+    let coinsReward: Int
+    let earnedAt: String?
 }
 
 enum AchievementStatus: String, Equatable {
     case earned = "EARNED"
     case locked = "LOCKED"
-    
-    // Fallback if parsing fails or unexpected status
+    case unlocked = "UNLOCKED"
+    case inProgress = "IN_PROGRESS"
     case unknown = "UNKNOWN"
+    
+    var isEarned: Bool {
+        return self == .earned || self == .unlocked
+    }
 }
 
 struct AchievementsDataEntity: Equatable {
