@@ -103,9 +103,19 @@ struct VerifyEmailView: View {
                 .padding(.horizontal, 24)
                 Spacer()
             }
+            
+            if viewModel.isLoading {
+                Color.black.opacity(0.4)
+                    .ignoresSafeArea()
+                
+                SharedImageLoadingView(
+                    imageAsset: .loadingBird,
+                    title: L10n.Common.loading,
+                    subtitle: ""
+                )
+            }
         }
         .navigationBarBackButtonHidden(true)
-        .authLoadingOverlay(isLoading: viewModel.isLoading)
         .alert(
             L10n.Common.error,
             isPresented: Binding(
