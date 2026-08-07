@@ -20,6 +20,7 @@ final class HomeViewModel {
     
     var homeData: HomeData?
     var fetchedWorlds: [ExploreWorld] = []
+    var continueLevel: ContinueLevelEntity?
     var isLoading = false
     var isContinueLevelLoading = false
     var showErrorAlert = false
@@ -87,6 +88,7 @@ final class HomeViewModel {
         hasLoadedInitialData = false
         homeData = nil
         fetchedWorlds = []
+        continueLevel = nil
         errorMessage = nil
     }
     
@@ -109,6 +111,7 @@ final class HomeViewModel {
         async let homeDataTask = getHomeDataUseCase.execute()
         async let worldsTask = getHomeWorldsUseCase.execute(languageId: currentLangId, difficulty: "EASY")
         async let statsTask = statsService.fetchStats()
+        async let continueLevelTask: ContinueLevelEntity? = try? getContinueLevelUseCase.execute()
         
         do {
             let data = try await homeDataTask
@@ -130,6 +133,9 @@ final class HomeViewModel {
         } catch {
             print("Failed to fetch stats on home: \(error)")
         }
+        
+        continueLevel = await continueLevelTask
+        
         isLoading = false
     }
     

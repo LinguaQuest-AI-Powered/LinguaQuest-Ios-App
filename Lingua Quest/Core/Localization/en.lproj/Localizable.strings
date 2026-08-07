@@ -187,6 +187,9 @@
 "home.object_detection_title" = "Take a picture and learn a new word!";
 "home.object_detection_subtitle" = "Point the camera at anything around you and discover its name";
 "home.object_detection_progress" = "%d/%d Today";
+"home.current_quest" = "CURRENT QUEST";
+"home.find_and_capture" = "Find & capture";
+"home.level_progress" = "%d of %d";
 
 "profile.title" = "LinguaQuest";
 "profile.user_level" = "LEVEL %d";

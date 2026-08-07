@@ -274,6 +274,11 @@ enum L10n {
         static func objectDetectionProgress(completed: Int, total: Int) -> String {
             String(format: localized("home.object_detection_progress"), completed, total)
         }
+        static var currentQuest: String { localized("home.current_quest") }
+        static var findAndCapture: String { localized("home.find_and_capture") }
+        static func levelProgress(current: Int, total: Int) -> String {
+            String(format: localized("home.level_progress"), current, total)
+        }
     }
     
     enum Profile {
