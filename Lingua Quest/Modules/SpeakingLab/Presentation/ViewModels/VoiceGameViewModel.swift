@@ -40,6 +40,9 @@ class VoiceGameViewModel {
     private var timer: Timer?
     private var advanceToken: NotificationToken?
     
+    var showSkipDialog: Bool = false
+    var showNotEnoughCoinsDialog: Bool = false
+    
     var dailySentences: [VoiceSentence] = []
     var currentSentenceIndex: Int = 0
     var audioData: Data?
@@ -180,6 +183,22 @@ class VoiceGameViewModel {
             resetForRetry()
         } else {
             router.popToRoot()
+        }
+    }
+    
+    func onSkipTapped() {
+        if coins < AppConstants.Common.changeWordCost {
+            showNotEnoughCoinsDialog = true
+        } else {
+            showSkipDialog = true
+        }
+    }
+    
+    func confirmSkip() {
+        Task {
+            try? await statsService.deductCoins(AppConstants.Common.changeWordCost)
+            showSkipDialog = false
+            advanceToNextSentence()
         }
     }
     
