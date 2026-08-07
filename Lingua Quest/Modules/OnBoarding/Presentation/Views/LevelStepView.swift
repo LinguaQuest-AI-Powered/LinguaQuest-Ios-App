@@ -16,6 +16,15 @@ struct LevelStepView: View {
     
     var body: some View {
         VStack(spacing: 0) {
+            if let onBack {
+                HStack {
+                    CustomBackButton(action: onBack)
+                    Spacer()
+                }
+                .padding(.horizontal, 24)
+                .padding(.bottom, 16)
+            }
+            
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 20) {
                     Image(asset: .bird3)
@@ -75,13 +84,6 @@ struct LevelStepView: View {
             Text(L10n.Onboarding.alertLevelMessage)
         }
         .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                if let onBack {
-                    CustomBackButton(action: onBack)
-                }
-            }
-        }
     }
 }
 

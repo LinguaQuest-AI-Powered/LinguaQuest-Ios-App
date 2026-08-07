@@ -19,7 +19,17 @@ struct LanguageStepView: View {
     @State private var showAlert = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 24) {
+        VStack(alignment: .leading, spacing: 0) {
+            if let onBack {
+                HStack {
+                    CustomBackButton(action: onBack)
+                    Spacer()
+                }
+                .padding(.horizontal, 24)
+                .padding(.bottom, 16)
+            }
+            
+            VStack(alignment: .leading, spacing: 24) {
             LoopedVideoPlayerView(videoAsset: .welcome)
                 .frame(height: 250)
                 .clipShape(RoundedRectangle(cornerRadius: 32, style: .continuous))
@@ -67,8 +77,10 @@ struct LanguageStepView: View {
                 trailing: Image(systemIcon: .arrowRight),
                 disabledAction: { showAlert = true }
             )
+            }
+            .padding(.horizontal, 24)
+            .padding(.bottom, 24)
         }
-        .padding(24)
         .background(Color.appBackgroundWarm.ignoresSafeArea())
         .alert(L10n.Onboarding.alertErrorTitle, isPresented: $showAlert) {
             Button(L10n.Common.ok, role: .cancel) { }
@@ -114,13 +126,6 @@ struct LanguageStepView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                if let onBack {
-                    CustomBackButton(action: onBack)
-                }
-            }
-        }
     }
 }
 
