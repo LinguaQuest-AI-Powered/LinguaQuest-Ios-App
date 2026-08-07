@@ -10,6 +10,7 @@ import SwiftUI
 struct ProfileView: View {
     @Environment(Router.self) private var router
     @State var viewModel: ProfileViewModel
+    @State private var selectedAchievement: AchievementUIModel? = nil
     
     var body: some View {
         ZStack {
@@ -57,6 +58,9 @@ struct ProfileView: View {
                         },
                         onSettingsTapped: {
                             viewModel.navigateToSettings()
+                        },
+                        onAchievementTapped: { achievement in
+                            selectedAchievement = achievement
                         }
                     )
                 }
@@ -78,6 +82,26 @@ struct ProfileView: View {
                 .background(Color.appSurfaceCard)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
                 .shadow(radius: 10)
+            }
+        }
+        .customBottomSheet(isPresented: Binding(
+            get: { selectedAchievement != nil },
+            set: { if !$0 { selectedAchievement = nil } }
+        ), initialDetent: .custom(ratio: 0.68)) {
+            if let achievement = selectedAchievement {
+                AchievementDetailSheet(
+                    title: achievement.title,
+                    subtitle: achievement.subtitle,
+                    iconUrl: achievement.iconUrl,
+                    status: achievement.status,
+                    progressPercent: achievement.progressPercent,
+                    xpReward: achievement.xpReward,
+                    coinsReward: achievement.coinsReward,
+                    earnedAt: achievement.earnedAt,
+                    onClose: {
+                        selectedAchievement = nil
+                    }
+                )
             }
         }
         .customBottomSheet(isPresented: $viewModel.showPhotoSourcePicker, initialDetent: .custom(ratio: 0.38)) {
