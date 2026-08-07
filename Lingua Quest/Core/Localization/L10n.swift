@@ -509,6 +509,13 @@ enum L10n {
         static var resultVictory: String { localized("boss_level.result_victory") }
         static var resultStageFailed: String { localized("boss_level.result_stage_failed") }
         static var resultTryAgain: String { localized("boss_level.result_try_again") }
+        static var outstanding: String { localized("boss_level.outstanding") }
+        static var needsWork: String { localized("boss_level.needs_work") }
+        static var overallFluency: String { localized("boss_level.overall_fluency") }
+        static var grammar: String { localized("boss_level.grammar") }
+        static var vocabulary: String { localized("boss_level.vocabulary") }
+        static var whatWentWell: String { localized("boss_level.what_went_well") }
+        static var areasToImprove: String { localized("boss_level.areas_to_improve") }
     }
 
     enum About {

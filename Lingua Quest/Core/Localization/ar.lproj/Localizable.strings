@@ -575,3 +575,11 @@
 "notifications.time.minutes_ago" = "منذ %d دقائق";
 "notifications.time.hours_ago" = "منذ %d ساعات";
 "notifications.time.days_ago" = "منذ %d أيام";
+
+"boss_level.outstanding" = "مذهل!";
+"boss_level.needs_work" = "يحتاج إلى عمل";
+"boss_level.overall_fluency" = "الطلاقة\nالعامة";
+"boss_level.grammar" = "القواعد";
+"boss_level.vocabulary" = "المفردات";
+"boss_level.what_went_well" = "ما سار بشكل جيد";
+"boss_level.areas_to_improve" = "مجالات للتحسين";
