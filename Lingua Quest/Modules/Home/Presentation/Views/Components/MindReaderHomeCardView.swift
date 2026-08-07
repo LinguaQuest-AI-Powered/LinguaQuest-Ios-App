@@ -8,7 +8,12 @@
 import SwiftUI
 
 struct MindReaderHomeCardView: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    
     var action: () -> Void
+    
+    @State private var shimmerOffset: CGFloat = -200
+    @State private var buttonGlow = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -61,8 +66,29 @@ struct MindReaderHomeCardView: View {
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 12)
-                .background(Color.appAccentOrange)
+                .background(
+                    ZStack {
+                        Capsule()
+                            .fill(Color.appAccentOrange)
+                        
+                        Capsule()
+                            .fill(
+                                LinearGradient(
+                                    colors: [.clear, .white.opacity(0.2), .clear],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                            .offset(x: shimmerOffset)
+                            .mask(Capsule())
+                    }
+                )
                 .clipShape(Capsule())
+                .shadow(
+                    color: Color.appAccentOrange.opacity(buttonGlow ? 0.45 : 0.2),
+                    radius: buttonGlow ? 14 : 8,
+                    x: 0, y: 4
+                )
             }
         }
         .padding(12)
@@ -75,5 +101,18 @@ struct MindReaderHomeCardView: View {
                 .stroke(Color.appBorderLight.opacity(0.8), lineWidth: 1)
         )
         .shadow(color: Color.black.opacity(0.05), radius: 10, x: 0, y: 4)
+        .onAppear { startAnimations() }
+    }
+    
+    private func startAnimations() {
+        guard !reduceMotion else { return }
+        
+        withAnimation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true).delay(0.3)) {
+            buttonGlow = true
+        }
+        
+        withAnimation(.linear(duration: 2.0).repeatForever(autoreverses: false).delay(1.0)) {
+            shimmerOffset = 400
+        }
     }
 }
