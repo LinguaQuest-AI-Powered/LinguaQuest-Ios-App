@@ -208,14 +208,16 @@ struct VoiceGameView: View {
                     }
                 }
                 
-                if viewModel.showReviewDialog, let fileURL = viewModel.recordingFileURL {
+
+            }
+            .navigationBarHidden(true)
+            .appDialog(isPresented: $viewModel.showReviewDialog) {
+                if let fileURL = viewModel.recordingFileURL {
                     ReviewRecordingDialog(
                         recordingURL: fileURL,
                         audioDuration: viewModel.recordingDuration,
                         onDiscard: {
-                            withAnimation {
-                                viewModel.discardRecording()
-                            }
+                            viewModel.discardRecording()
                         },
                         onProcess: {
                             viewModel.processRecording()
@@ -223,7 +225,6 @@ struct VoiceGameView: View {
                     )
                 }
             }
-            .navigationBarHidden(true)
             .appDialog(isPresented: $viewModel.showSkipDialog) {
                 CostActionDialog(
                     title: L10n.Game.skipWordTitle,

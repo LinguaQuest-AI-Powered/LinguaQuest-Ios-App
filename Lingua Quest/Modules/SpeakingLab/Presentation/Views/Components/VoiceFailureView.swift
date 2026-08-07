@@ -11,11 +11,18 @@ struct VoiceFailureView: View {
     @Bindable var viewModel: VoiceGameResultViewModel
     
     var body: some View {
-        VStack(spacing: -16) {
-            SpeechBubbleView(text: viewModel.advice.isEmpty ? L10n.SpeakingLab.feedbackNeedsWork : viewModel.advice, isAnimated: true, animationDelay: 0.5)
-                .padding(.horizontal, 40)
-            
-            DialogCardContainer(mascotImage: .weakPasswordBird) {
+        DialogCardContainer(
+            mascotImage: .weakPasswordBird,
+            customSpeechBubble: AnyView(
+                SpeechBubbleView(
+                    text: viewModel.advice.isEmpty ? L10n.SpeakingLab.feedbackNeedsWork : viewModel.advice,
+                    isAnimated: true,
+                    animationDelay: 0.5
+                )
+                .padding(.horizontal, 24)
+                .padding(.bottom, 20)
+            )
+        ) {
                 VStack(spacing: 24) {
                     Text(L10n.Game.notQuite)
                     .dialogTitleStyle()
@@ -48,6 +55,5 @@ struct VoiceFailureView: View {
         }
         .padding(.horizontal, 24)
         .transition(.scale.combined(with: .opacity))
-        }
     }
 }
