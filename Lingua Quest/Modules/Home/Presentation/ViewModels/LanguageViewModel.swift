@@ -105,7 +105,9 @@ final class LanguageViewModel {
         isLoadingAvailableLanguages = true
         errorMessage = nil
         do {
-            availableLanguages = try await getAvailableLanguagesUseCase.execute()
+            let allAvailable = try await getAvailableLanguagesUseCase.execute()
+            let myLanguageCodes = Set(myLanguages.map { $0.code })
+            availableLanguages = allAvailable.filter { !myLanguageCodes.contains($0.code) }
         } catch {
             errorMessage = error.localizedDescription
             print("Failed to load available languages: \(error)")
