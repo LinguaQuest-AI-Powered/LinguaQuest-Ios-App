@@ -18,31 +18,34 @@ struct AddLanguageView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            // Custom Header
+            // App Bar
             HStack {
-                CustomBackButton {
-                    dismiss()
-                }
+                CustomBackButton(action: { dismiss() })
                 
                 Spacer()
                 
-                Text(L10n.AddLanguage.title)
-                    .font(AppTextStyle.headingMedium.font)
-                    .foregroundColor(Color.appTextHeading)
-                
-                Spacer()
-                
-                // Invisible placeholder to balance the back button
-                Color.clear.frame(width: 40, height: 40)
+                // Invisible view for balancing
+                Color.clear.frame(width: 44, height: 44)
             }
-            .padding(.horizontal, 24)
-            .padding(.top, 16)
-            .padding(.bottom, 16)
+            .overlay(
+                Text(L10n.AddLanguage.title)
+                    .appTextStyle(.headingLarge, color: .appTextHeading)
+            )
+            .padding(.horizontal, 20)
+            .frame(height: 64)
+            .background(Color.clear)
+            .overlay(
+                Rectangle()
+                    .frame(height: 1)
+                    .foregroundColor(Color.appBorderBrown),
+                alignment: .bottom
+            )
             
             // Subtitle
             Text(L10n.AddLanguage.subtitle)
                 .font(AppTextStyle.bodyLarge.font)
                 .foregroundColor(Color.appTextSecondary)
+                .padding(.top, 16)
                 .padding(.bottom, 16)
             
             // Search Bar
