@@ -30,6 +30,12 @@ final class VerifyPasswordResetOtpViewModel {
     var timeRemaining: Int = 60
     var isLoading: Bool = false
     var errorMessage: String? = nil
+    
+    // Toast State
+    var showToast: Bool = false
+    var toastType: AppToastType = .success
+    var toastTitle: String = ""
+    var toastSubtitle: String? = nil
 
     private var countdownTask: Task<Void, Never>?
     private let otpLength = 4
@@ -80,14 +86,23 @@ final class VerifyPasswordResetOtpViewModel {
         guard timeRemaining == 0 else { return }
         errorMessage = nil
         otpCode = ""
+        isLoading = true
 
         Task {
             let result = await sendOtpUseCase.execute(email: email, purpose: .passwordReset)
+            isLoading = false
             switch result {
             case .success:
                 startCountdown()
+                toastType = .success
+                toastTitle = L10n.Auth.otpSentTitle
+                toastSubtitle = L10n.Auth.otpSentDesc
+                showToast = true
             case .failure(let error):
-                errorMessage = error.errorDescription
+                toastType = .error
+                toastTitle = L10n.Common.error
+                toastSubtitle = error.errorDescription
+                showToast = true
             }
         }
     }

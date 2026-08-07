@@ -58,14 +58,6 @@ struct ReviewRecordingDialog: View {
     @StateObject private var playerController = AudioPlayerController()
     
     var body: some View {
-        ZStack {
-            // Background Blur
-            Rectangle()
-                .fill(.ultraThinMaterial)
-                .ignoresSafeArea()
-            
-            Color.black.opacity(0.6)
-                .ignoresSafeArea()
             
             DialogCardContainer(
                 mascotImage: .resetPasswordBird,
@@ -155,8 +147,6 @@ struct ReviewRecordingDialog: View {
                     }
                 }
             }
-            .padding(.horizontal, 24)
-        }
         .onDisappear {
             playerController.stop()
         }

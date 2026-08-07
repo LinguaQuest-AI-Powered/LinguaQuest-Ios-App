@@ -583,3 +583,5 @@
 "boss_level.vocabulary" = "المفردات";
 "boss_level.what_went_well" = "ما سار بشكل جيد";
 "boss_level.areas_to_improve" = "مجالات للتحسين";
+"auth.otp_sent_title" = "تم إرسال الرمز";
+"auth.otp_sent_desc" = "تم إرسال رمز تحقق جديد إلى بريدك الإلكتروني بنجاح.";

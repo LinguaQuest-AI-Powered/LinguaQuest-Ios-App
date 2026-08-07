@@ -569,3 +569,6 @@
 "boss_level.vocabulary" = "Vocabulary";
 "boss_level.what_went_well" = "What went well";
 "boss_level.areas_to_improve" = "Areas to improve";
+
+"auth.otp_sent_title" = "Code Sent";
+"auth.otp_sent_desc" = "A new OTP code has been sent to your email successfully.";
