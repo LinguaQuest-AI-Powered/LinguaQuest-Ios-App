@@ -12,23 +12,39 @@ struct AchievementCard: View {
     let title: String
     let subtitle: String
     let icon: Image.SystemIcon
+    var isEarned: Bool = true
     
     // MARK: - Body
     var body: some View {
         HStack(spacing: 16) {
             
-            // Icon Badge
-            Image(systemIcon: icon)
-                .font(.system(size: 24))
-                .foregroundColor(Color.appBrandBrown)
-                .frame(width: 56, height: 56)
-                .background(Color.appBrandBrown.opacity(0.1))
-                .clipShape(Circle())
+            // Icon Badge with Lock Overlay
+            ZStack(alignment: .bottomTrailing) {
+                Image(systemIcon: icon)
+                    .font(.system(size: 24))
+                    .foregroundColor(isEarned ? Color.appBrandBrown : Color.appTextSecondary)
+                    .frame(width: 56, height: 56)
+                    .background(isEarned ? Color.appBrandBrown.opacity(0.1) : Color.appSurfaceCardMuted)
+                    .clipShape(Circle())
+                
+                if !isEarned {
+                    ZStack {
+                        Circle()
+                            .fill(Color.appSurfaceCard)
+                            .frame(width: 22, height: 22)
+                        
+                        Image(systemIcon: .lockFill)
+                            .font(.system(size: 11, weight: .bold))
+                            .foregroundColor(.appTextSecondary)
+                    }
+                    .offset(x: 2, y: 2)
+                }
+            }
             
             // Text Content
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
-                    .appTextStyle(.bodyBold, color: .appTextHeading)
+                    .appTextStyle(.bodyBold, color: isEarned ? .appTextHeading : .appTextSecondary)
                 
                 Text(subtitle)
                     .appTextStyle(.caption, color: .appTextSecondary)
@@ -37,17 +53,17 @@ struct AchievementCard: View {
             
             Spacer()
         }
-        .padding(.vertical, 16)
+        .padding(.vertical, 14)
         .padding(.leading, 16)
-        .padding(.trailing, 26)
-        .frame(width: 280)
-        .background(Color.appSurfaceCardWarm)
-        .cornerRadius(12)
+        .padding(.trailing, 20)
+        .frame(width: 270)
+        .background(isEarned ? Color.appSurfaceCardWarm : Color.appSurfaceCardMuted.opacity(0.7))
+        .cornerRadius(16)
         .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(Color.appBorderLight, lineWidth: 1)
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(isEarned ? Color.appBorderLight : Color.appBorderBrown.opacity(0.2), lineWidth: 1)
         )
-        .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
+        .shadow(color: Color.black.opacity(0.04), radius: 6, x: 0, y: 3)
     }
 }
 
