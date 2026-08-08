@@ -224,9 +224,11 @@ struct HomeView: View {
             
             Task {
                 // Fetch latest data silently in the background when view appears
-                await viewModel.loadHomeData(forceRefresh: false)
-                await viewModel.dailyRewardViewModel.loadDailyReward()
-                await viewModel.languageViewModel.loadMyLanguages(forceRefresh: false)
+                async let homeTask: Void = viewModel.loadHomeData(forceRefresh: false)
+                async let dailyRewardTask: Void = viewModel.dailyRewardViewModel.loadDailyReward()
+                
+                await homeTask
+                await dailyRewardTask
             }
         }
         .appDialog(isPresented: $showDailyRewardDialog) {

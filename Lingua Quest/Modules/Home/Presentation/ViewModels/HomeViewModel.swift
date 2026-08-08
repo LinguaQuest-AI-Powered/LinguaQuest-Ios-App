@@ -99,8 +99,14 @@ final class HomeViewModel {
             isLoading = true
         }
         
+        defer { isLoading = false }
+        
         hasLoadedInitialData = true
         errorMessage = nil
+        
+        async let homeDataTask = getHomeDataUseCase.execute()
+        async let statsTask = statsService.fetchStats()
+        async let continueLevelTask: ContinueLevelEntity? = try? getContinueLevelUseCase.execute()
         
         if languageViewModel.myLanguages.isEmpty || forceRefresh {
             await languageViewModel.loadMyLanguages(forceRefresh: forceRefresh)
@@ -108,10 +114,7 @@ final class HomeViewModel {
         
         let currentLangId = languageViewModel.activeLanguage?.id ?? 1
         
-        async let homeDataTask = getHomeDataUseCase.execute()
         async let worldsTask = getHomeWorldsUseCase.execute(languageId: currentLangId, difficulty: "EASY")
-        async let statsTask = statsService.fetchStats()
-        async let continueLevelTask: ContinueLevelEntity? = try? getContinueLevelUseCase.execute()
         
         do {
             let data = try await homeDataTask
@@ -135,8 +138,6 @@ final class HomeViewModel {
         }
         
         continueLevel = await continueLevelTask
-        
-        isLoading = false
     }
     
     func navigateToAllWorlds() {
