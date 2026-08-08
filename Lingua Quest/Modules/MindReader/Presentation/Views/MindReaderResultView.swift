@@ -52,72 +52,19 @@ struct MindReaderResultView: View {
                             
                             // MARK: - Rewards Grid
                             HStack(spacing: 16) {
-                                
                                 // XP Card
-                                VStack(spacing: 8) {
-                                    ZStack {
-                                        // Outer glow/background
-                                        Circle()
-                                            .fill(Color.appAccentGold.opacity(0.2))
-                                            .frame(width: 48, height: 48)
-                                        
-                                        // White backing for the star cutout
-                                        Circle()
-                                            .fill(Color.white)
-                                            .frame(width: 24, height: 24)
-                                        
-                                        // Icon (Circle with star cutout)
-                                        Image(systemIcon: .starCircleFill)
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 26, height: 26)
-                                            .foregroundColor(.appBrandBrownDark)
-                                    }
-                                    
-                                    Text(L10n.MindReader.experience)
-                                        .appTextStyle(.captionMedium, color: .appTextSecondary)
-                                    
-                                    Text(L10n.MindReader.earnedXP(viewModel.earnedXP))
-                                        .dialogTitleStyle()
-                                }
-                                .padding(.vertical, 20)
-                                .frame(maxWidth: .infinity)
-                                .background(Color.appSurfaceCard)
-                                .cornerRadius(16)
-                                .shadow(color: Color.appAccentOrange.opacity(0.1), radius: 15, x: 0, y: 4)
+                                RewardCardView(
+                                    type: .xp,
+                                    title: L10n.MindReader.experience,
+                                    amount: viewModel.earnedXP
+                                )
                                 
                                 // Coins Card
-                                VStack(spacing: 8) {
-                                    ZStack {
-                                        // Outer glow/background
-                                        Circle()
-                                            .fill(Color.appAccentOrange.opacity(0.2))
-                                            .frame(width: 48, height: 48)
-                                        
-                                        // White backing for the dollar cutout
-                                        Circle()
-                                            .fill(Color.white)
-                                            .frame(width: 24, height: 24)
-                                        
-                                        // Icon (Circle with dollar cutout)
-                                        Image(systemIcon: .dollarsignCircleFill)
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 26, height: 26)
-                                            .foregroundColor(.appAccentOrange)
-                                    }
-                                    
-                                    Text(L10n.MindReader.earnings)
-                                        .appTextStyle(.captionMedium, color: .appTextSecondary)
-                                    
-                                    Text(L10n.MindReader.earnedCoins(viewModel.earnedCoins))
-                                        .dialogTitleStyle()
-                                }
-                                .padding(.vertical, 20)
-                                .frame(maxWidth: .infinity)
-                                .background(Color.appSurfaceCard)
-                                .cornerRadius(16)
-                                .shadow(color: Color.appAccentOrange.opacity(0.1), radius: 15, x: 0, y: 4)
+                                RewardCardView(
+                                    type: .coin,
+                                    title: L10n.MindReader.earnings,
+                                    amount: viewModel.earnedCoins
+                                )
                             }
                             .padding(.horizontal, 16)
                             
