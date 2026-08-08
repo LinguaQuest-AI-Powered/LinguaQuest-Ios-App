@@ -37,11 +37,23 @@ struct VoiceSuccessView: View {
                     SentenceBreakdownView(words: viewModel.words)
                 }
                 
-                // Rewards Pills
+                // Rewards Grid
                 HStack(spacing: 16) {
-                    RewardBadge(type: .xp, value: L10n.Game.xpPoints(viewModel.xpPoints), size: .large)
-                    RewardBadge(type: .coin, value: L10n.Game.coinsValue(viewModel.coinsEarned), size: .large)
+                    // XP Card
+                    RewardCardView(
+                        type: .xp,
+                        title: L10n.MindReader.experience,
+                        amount: viewModel.xpPoints
+                    )
+                    
+                    // Coins Card
+                    RewardCardView(
+                        type: .coin,
+                        title: L10n.MindReader.earnings,
+                        amount: viewModel.coinsEarned
+                    )
                 }
+                .padding(.horizontal, 16)
                 
                 VStack(spacing: 16) {
                     CustomButton(

@@ -171,11 +171,21 @@ struct CameraResultView: View {
                     Text(L10n.Game.youFoundIt)
                         .appTextStyle(.body, color: .appTextSecondary)
                     
-                    // Rewards Pills
+                    // Rewards Grid
                     HStack(spacing: 16) {
-                        RewardBadge(type: .xp, value: L10n.Game.xpPoints(viewModel.xpPoints), size: .large)
-                        RewardBadge(type: .coin, value: L10n.Game.coinsValue(viewModel.coinsEarned), size: .large)
+                        RewardCardView(
+                            type: .xp,
+                            title: L10n.MindReader.experience,
+                            amount: viewModel.xpPoints
+                        )
+                        
+                        RewardCardView(
+                            type: .coin,
+                            title: L10n.MindReader.earnings,
+                            amount: viewModel.coinsEarned
+                        )
                     }
+                    .padding(.horizontal, 16)
                     
                     // Progress
                     VStack(spacing: 8) {

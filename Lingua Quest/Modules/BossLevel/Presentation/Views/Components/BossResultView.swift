@@ -71,9 +71,19 @@ struct BossResultView: View {
 
                         if result.task_completed, let reward = result.reward {
                             HStack(spacing: 16) {
-                                RewardBadge(type: .xp, value: L10n.Game.xpPoints(reward.xp), size: .large)
-                                RewardBadge(type: .coin, value: L10n.Game.coinsValue(reward.coins), size: .large)
+                                RewardCardView(
+                                    type: .xp,
+                                    title: L10n.MindReader.experience,
+                                    amount: reward.xp
+                                )
+                                
+                                RewardCardView(
+                                    type: .coin,
+                                    title: L10n.MindReader.earnings,
+                                    amount: reward.coins
+                                )
                             }
+                            .padding(.horizontal, 16)
                             .padding(.top, 8)
                         }
 
@@ -96,6 +106,13 @@ struct BossResultView: View {
                 .padding(.horizontal, 24)
 
                 Spacer()
+            }
+            
+            if result.task_completed {
+                ConfettiView()
+                    .ignoresSafeArea()
+                    .allowsHitTesting(false)
+                    .zIndex(100)
             }
         }
     }
