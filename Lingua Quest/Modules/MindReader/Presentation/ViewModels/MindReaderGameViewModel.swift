@@ -20,6 +20,7 @@ final class MindReaderGameViewModel {
     private let router: RouterProtocol
     let statsService: StatsService
     private let coordinator: MindReaderGameCoordinator
+    private let speechSynthesizer: SpeechSynthesizerProtocol
     
     // Translation lifeline cost
     let translateCost = 5
@@ -60,6 +61,32 @@ final class MindReaderGameViewModel {
         20 // Assuming 20 is the max or typical questions, as we don't have availableAttributes count anymore.
     }
     
+    // MARK: - Answer Button Texts
+    
+    private var targetLanguage: String {
+        UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.targetLanguageName) ?? "Spanish"
+    }
+    
+    var answerYesText: String {
+        MindReaderTargetTranslator.translate(answer: .yes, targetLanguage: targetLanguage)
+    }
+    
+    var answerNoText: String {
+        MindReaderTargetTranslator.translate(answer: .no, targetLanguage: targetLanguage)
+    }
+    
+    var answerSometimesText: String {
+        MindReaderTargetTranslator.translate(answer: .sometimes, targetLanguage: targetLanguage)
+    }
+    
+    var answerProbablyNotText: String {
+        MindReaderTargetTranslator.translate(answer: .probablyNot, targetLanguage: targetLanguage)
+    }
+    
+    var answerDontKnowText: String {
+        MindReaderTargetTranslator.translate(answer: .unknown, targetLanguage: targetLanguage)
+    }
+    
     var progressPercentage: Int {
         Int((Double(currentQuestionIndex) / Double(totalQuestions)) * 100)
     }
@@ -71,11 +98,13 @@ final class MindReaderGameViewModel {
     init(
         router: RouterProtocol,
         statsService: StatsService,
-        coordinator: MindReaderGameCoordinator
+        coordinator: MindReaderGameCoordinator,
+        speechSynthesizer: SpeechSynthesizerProtocol
     ) {
         self.router = router
         self.statsService = statsService
         self.coordinator = coordinator
+        self.speechSynthesizer = speechSynthesizer
     }
     
     func onAnswerTapped(_ answer: AnswerState) {
@@ -126,7 +155,8 @@ final class MindReaderGameViewModel {
     }
     
     func onListenTapped() {
-        // Text-to-speech logic - future enhancement
+        guard !questionText.isEmpty else { return }
+        speechSynthesizer.speak(text: questionText, languageCode: targetLanguage.toSpeechLanguageCode())
     }
     
     func goBack() {
