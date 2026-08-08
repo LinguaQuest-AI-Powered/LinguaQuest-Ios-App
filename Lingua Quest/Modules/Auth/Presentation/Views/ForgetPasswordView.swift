@@ -70,16 +70,13 @@ struct ForgetPasswordView: View {
                 Spacer()
             }
             
-            if viewModel.isLoading {
-                Color.black.opacity(0.4)
-                    .ignoresSafeArea()
-                
-                SharedImageLoadingView(
-                    imageAsset: .loadingBird,
-                    title: L10n.Common.loading,
-                    subtitle: ""
-                )
-            }
+        }
+        .appDialog(isPresented: $viewModel.isLoading) {
+            SharedImageLoadingView(
+                imageAsset: .loadng,
+                title: L10n.Common.loading,
+                subtitle: ""
+            )
         }
         .navigationBarBackButtonHidden(true)
         .alert(
