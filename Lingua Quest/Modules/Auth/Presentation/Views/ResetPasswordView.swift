@@ -111,6 +111,7 @@ struct ResetPasswordView: View {
                 }
                 .padding(.horizontal, 24)
                 Spacer()
+            }
         }
         .appDialog(isPresented: $viewModel.isLoading) {
             SharedImageLoadingView(
