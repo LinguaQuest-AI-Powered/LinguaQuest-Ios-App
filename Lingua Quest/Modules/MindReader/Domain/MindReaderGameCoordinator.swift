@@ -134,7 +134,7 @@ final class MindReaderGameCoordinator {
         errorMessage = nil
         
         do {
-            quizChoices = try await requestQuizChoicesUseCase.execute(category: category, correctWord: guess.word)
+            quizChoices = try await requestQuizChoicesUseCase.execute(category: category, correctWordTargetLanguage: guess.word, correctWordNativeLanguage: guess.translation)
             isLoading = false
         } catch {
             errorMessage = error.localizedDescription

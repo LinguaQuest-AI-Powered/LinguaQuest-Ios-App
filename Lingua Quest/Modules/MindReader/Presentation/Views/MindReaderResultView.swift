@@ -97,6 +97,11 @@ struct MindReaderResultView: View {
                 
                 Spacer()
             }
+            
+            ConfettiView()
+                .ignoresSafeArea()
+                .allowsHitTesting(false)
+                .zIndex(100)
         }
         .navigationBarHidden(true)
         .onAppear { viewModel.onAppear() }

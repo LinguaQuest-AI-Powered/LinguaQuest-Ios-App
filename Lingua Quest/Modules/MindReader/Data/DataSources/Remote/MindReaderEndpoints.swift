@@ -55,17 +55,17 @@ struct MindReaderNextStepEndpoint: AIEndpoint {
         Native language: \(nativeLanguage)
 
         CRITICAL RULE 1: If asking a question, "questionTargetText" MUST be written ONLY in \(targetLanguage), and "questionNativeText" MUST be its accurate translation in \(nativeLanguage).
-        CRITICAL RULE 2: Only set type to "guess" when you are actually naming a specific concrete word/object, never a category or vague guess.
+        CRITICAL RULE 2: Only set type to "guess" when you are actually naming a specific concrete word/object.
         CRITICAL RULE 3: The guessed word must plausibly belong to the given category context.
-        CRITICAL RULE 4: The "guessEmoji" must be a highly relevant, expressive system emoji that directly represents the guessed object visually, not a generic symbol (e.g. 🍎 for apple, 📻 for radio).
+        CRITICAL RULE 4: The "guessEmoji" must be a single highly relevant, standard system emoji that directly represents the guessed object. If an exact emoji does not exist for the specific word, use the closest common emoji that matches its visual appearance or primary function. Do NOT use abstract, confusing, or technical symbols if a simpler everyday object emoji is closer.
 
         Respond STRICTLY in the following JSON format (no markdown, no backticks, just raw JSON):
         {
           "type": "question" | "guess",
           "questionTargetText": "<string or null>",
           "questionNativeText": "<string or null>",
-          "guessWord": "<string or null, in target language>",
-          "guessTranslation": "<string or null, in native language>",
+          "guessWordTargetLanguage": "<string or null, MUST be in \(targetLanguage)>",
+          "guessWordNativeLanguage": "<string or null, MUST be in \(nativeLanguage)>",
           "guessEmoji": "<single system emoji accurately representing the word, or null>"
         }
         """
@@ -81,7 +81,8 @@ struct MindReaderNextStepEndpoint: AIEndpoint {
 
 struct MindReaderQuizEndpoint: AIEndpoint {
     let categoryContext: String
-    let correctWord: String
+    let correctWordTargetLanguage: String
+    let correctWordNativeLanguage: String
     let nativeLanguage: String
     let targetLanguage: String
     
@@ -95,18 +96,21 @@ struct MindReaderQuizEndpoint: AIEndpoint {
     
     var body: MindReaderPayload? {
         let promptText = """
-        The user just correctly identified the word "\(correctWord)" (in \(targetLanguage)) from this category: "\(categoryContext)".
+        The user just correctly identified the word "\(correctWordTargetLanguage)" (which means "\(correctWordNativeLanguage)") from this category: "\(categoryContext)".
 
-        Generate exactly 3 answer options for a translation quiz in \(nativeLanguage): one is the correct translation of "\(correctWord)", and two are plausible-but-wrong translations of OTHER words from the same category (similar difficulty, not obviously wrong). Shuffle the order.
+        Generate exactly 3 answer options for a multiple-choice translation quiz.
+        The user will be asked to translate "\(correctWordTargetLanguage)" into \(nativeLanguage).
+        Therefore, your options MUST be written in \(nativeLanguage).
 
-        CRITICAL RULE: Exactly one option must have "isCorrect": true.
+        Exactly one option must be the correct translation: "\(correctWordNativeLanguage)".
+        The other two options must be plausible-but-wrong translations of OTHER words from the same category. Shuffle the order.
 
         Respond STRICTLY in the following JSON format (no markdown, no backticks):
         {
           "choices": [
-            {"translationText": "<string>", "isCorrect": true|false},
-            {"translationText": "<string>", "isCorrect": true|false},
-            {"translationText": "<string>", "isCorrect": true|false}
+            {"translationText": "<string in \(nativeLanguage)>", "isCorrect": true|false},
+            {"translationText": "<string in \(nativeLanguage)>", "isCorrect": true|false},
+            {"translationText": "<string in \(nativeLanguage)>", "isCorrect": true|false}
           ]
         }
         """

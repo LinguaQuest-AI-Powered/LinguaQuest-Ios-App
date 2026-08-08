@@ -332,6 +332,7 @@
 "speaking_lab.retry" = "إعادة المحاولة";
 "speaking_lab.feedback_great_job" = "عمل رائع! حاول التركيز أكثر على نطق حرف 'r' في كلمة 'red'.";
 "speaking_lab.feedback_needs_work" = "لقد اقتربت يا بطل! لنجرب نطق الكلمة الأخيرة مرة أخرى معاً.";
+"speaking_lab.pronunciation_check" = "فحص النطق";
 "speaking_lab.score" = "النتيجة";
 "speaking_lab.evaluating_title" = "جاري تقييم الصوت...";
 "speaking_lab.evaluating_subtitle" = "نستمع بدقة لطريقة نطقك للكلمات.";

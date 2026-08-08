@@ -15,10 +15,7 @@ protocol MindReaderRepositoryProtocol {
         history: [GameTurn]
     ) async throws -> AIGameDecision
     
-    func requestQuizChoices(
-        category: GameCategory,
-        correctWord: String
-    ) async throws -> [QuizChoice]
+    func requestQuizChoices(category: GameCategory, correctWordTargetLanguage: String, correctWordNativeLanguage: String) async throws -> [QuizChoice]
     
     func verifyHonesty(
         category: GameCategory,

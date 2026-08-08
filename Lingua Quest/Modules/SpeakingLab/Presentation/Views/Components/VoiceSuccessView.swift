@@ -30,7 +30,7 @@ struct VoiceSuccessView: View {
                 ScoreCircleView(rating: viewModel.rating)
                 
                 VStack(spacing: 12) {
-                    Text("PRONUNCIATION CHECK")
+                    Text(L10n.SpeakingLab.pronunciationCheck)
                         .font(AppTextStyle.captionBold.font)
                         .foregroundColor(.appTextSecondary)
                     

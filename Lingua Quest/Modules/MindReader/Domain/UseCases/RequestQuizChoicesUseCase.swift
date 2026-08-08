@@ -10,7 +10,7 @@ import Foundation
 struct RequestQuizChoicesUseCase {
     let repository: MindReaderRepositoryProtocol
     
-    func execute(category: GameCategory, correctWord: String) async throws -> [QuizChoice] {
-        return try await repository.requestQuizChoices(category: category, correctWord: correctWord)
+    func execute(category: GameCategory, correctWordTargetLanguage: String, correctWordNativeLanguage: String) async throws -> [QuizChoice] {
+        return try await repository.requestQuizChoices(category: category, correctWordTargetLanguage: correctWordTargetLanguage, correctWordNativeLanguage: correctWordNativeLanguage)
     }
 }

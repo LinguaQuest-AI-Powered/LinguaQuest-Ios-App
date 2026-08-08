@@ -18,12 +18,14 @@ final class MindReaderGuessViewModel {
     // MARK: - Computed Properties (from Coordinator)
     
     var guessedWord: String {
-        coordinator.bestGuess?.word ?? ""
+        coordinator.bestGuess?.translation ?? ""
     }
     
     var guessedEmoji: String {
         coordinator.bestGuess?.emoji ?? "❓"
     }
+    
+    var isLoading: Bool = false
     
     init(
         router: RouterProtocol,
@@ -41,7 +43,9 @@ final class MindReaderGuessViewModel {
     
     func onYesGotItTapped() {
         Task {
+            isLoading = true
             await coordinator.requestQuiz()
+            isLoading = false
             router.push(.mindReaderTranslation)
         }
     }

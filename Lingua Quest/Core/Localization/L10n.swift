@@ -458,6 +458,7 @@ enum L10n {
         static var retry: String { localized("speaking_lab.retry") }
         static var feedbackGreatJob: String { localized("speaking_lab.feedback_great_job") }
         static var feedbackNeedsWork: String { localized("speaking_lab.feedback_needs_work") }
+        static var pronunciationCheck: String { localized("speaking_lab.pronunciation_check") }
         static var score: String { localized("speaking_lab.score") }
         static var evaluatingTitle: String { localized("speaking_lab.evaluating_title") }
         static var evaluatingSubtitle: String { localized("speaking_lab.evaluating_subtitle") }

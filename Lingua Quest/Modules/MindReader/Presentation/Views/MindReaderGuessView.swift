@@ -86,8 +86,29 @@ struct MindReaderGuessView: View {
                 .padding(.horizontal, 20)
                 .padding(.bottom, 32)
             }
+            
+            if viewModel.isLoading {
+                loadingOverlay
+            }
         }
         .navigationBarHidden(true)
+        .animation(.easeInOut, value: viewModel.isLoading)
+    }
+    
+    // MARK: - Loading Overlay
+    
+    private var loadingOverlay: some View {
+        ZStack {
+            Color.appBackgroundWarm.opacity(0.95).ignoresSafeArea()
+            
+            SharedImageLoadingView(
+                imageAsset: .thinkingHardBird,
+                title: L10n.MindReader.thinkingHard,
+                subtitle: L10n.MindReader.thinkingHardSubtitle
+            )
+        }
+        .transition(.opacity.combined(with: .scale(scale: 0.95)))
+        .zIndex(100)
     }
 }
 

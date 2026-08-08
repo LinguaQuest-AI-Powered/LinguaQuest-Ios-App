@@ -57,8 +57,8 @@ class MindReaderRemoteDataSource: MindReaderRemoteDataSourceProtocol {
         return try extractAndDecode(bedrockResponse.outputText, type: AkinatorStepResponseDTO.self)
     }
     
-    func requestQuizChoices(categoryContext: String, correctWord: String, nativeLanguage: String, targetLanguage: String) async throws -> [QuizChoiceDTO] {
-        let endpoint = MindReaderQuizEndpoint(categoryContext: categoryContext, correctWord: correctWord, nativeLanguage: nativeLanguage, targetLanguage: targetLanguage)
+    func requestQuizChoices(categoryContext: String, correctWordTargetLanguage: String, correctWordNativeLanguage: String, nativeLanguage: String, targetLanguage: String) async throws -> [QuizChoiceDTO] {
+        let endpoint = MindReaderQuizEndpoint(categoryContext: categoryContext, correctWordTargetLanguage: correctWordTargetLanguage, correctWordNativeLanguage: correctWordNativeLanguage, nativeLanguage: nativeLanguage, targetLanguage: targetLanguage)
         
         let bedrockResponse: BedrockResponse
         do {

@@ -28,7 +28,7 @@ extension AkinatorStepResponseDTO {
             }
             return .question(targetText: qTarget, nativeText: qNative)
         } else if type == "guess" {
-            guard let word = guessWord, let translation = guessTranslation, let emoji = guessEmoji else {
+            guard let word = guessWordTargetLanguage, let translation = guessWordNativeLanguage, let emoji = guessEmoji else {
                 throw NSError(domain: "MindReaderMapper", code: 0, userInfo: [NSLocalizedDescriptionKey: "Missing guess fields for guess type"])
             }
             return .guess(word: word, translation: translation, emoji: emoji)

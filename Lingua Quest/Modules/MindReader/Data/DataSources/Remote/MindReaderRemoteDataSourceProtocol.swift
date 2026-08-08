@@ -17,7 +17,8 @@ protocol MindReaderRemoteDataSourceProtocol {
 
     func requestQuizChoices(
         categoryContext: String,
-        correctWord: String,
+        correctWordTargetLanguage: String,
+        correctWordNativeLanguage: String,
         nativeLanguage: String,
         targetLanguage: String
     ) async throws -> [QuizChoiceDTO]

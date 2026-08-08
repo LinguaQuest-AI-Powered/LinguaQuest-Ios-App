@@ -11,7 +11,7 @@ struct AkinatorStepResponseDTO: Decodable {
     let type: String
     let questionTargetText: String?
     let questionNativeText: String?
-    let guessWord: String?
-    let guessTranslation: String?
+    let guessWordTargetLanguage: String?
+    let guessWordNativeLanguage: String?
     let guessEmoji: String?
 }

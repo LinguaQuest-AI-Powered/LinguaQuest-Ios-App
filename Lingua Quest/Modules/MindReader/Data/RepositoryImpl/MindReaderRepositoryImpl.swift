@@ -38,14 +38,15 @@ class MindReaderRepositoryImpl: MindReaderRepositoryProtocol {
         return try dto.toDomain()
     }
     
-    func requestQuizChoices(category: GameCategory, correctWord: String) async throws -> [QuizChoice] {
+    func requestQuizChoices(category: GameCategory, correctWordTargetLanguage: String, correctWordNativeLanguage: String) async throws -> [QuizChoice] {
         let appLangCode = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.appLanguage) ?? "en"
         let nativeLanguage = appLangCode == "ar" ? "Arabic" : "English"
         let targetLanguage = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.targetLanguageName) ?? "Spanish"
         
         let dtos = try await remoteDataSource.requestQuizChoices(
             categoryContext: category.promptContext,
-            correctWord: correctWord,
+            correctWordTargetLanguage: correctWordTargetLanguage,
+            correctWordNativeLanguage: correctWordNativeLanguage,
             nativeLanguage: nativeLanguage,
             targetLanguage: targetLanguage
         )
