@@ -106,11 +106,11 @@ struct MindReaderGameView: View {
                 customSpeechBubble: AnyView(questionBubble)
             ) {
                 VStack(spacing: 12) {
-                    CustomButton(type: .secendry, text: L10n.MindReader.answerYes, action: { viewModel.onAnswerTapped(.yes) })
-                    CustomButton(type: .secendry, text: L10n.MindReader.answerNo, action: { viewModel.onAnswerTapped(.no) })
-                    CustomButton(type: .secendry, text: L10n.MindReader.answerSometimes, action: { viewModel.onAnswerTapped(.sometimes) })
-                    CustomButton(type: .secendry, text: L10n.MindReader.answerProbablyNot, action: { viewModel.onAnswerTapped(.probablyNot) })
-                    CustomButton(type: .secendry, text: L10n.MindReader.answerDontKnow, action: { viewModel.onAnswerTapped(.unknown) })
+                    CustomButton(type: .secendry, text: viewModel.answerYesText, action: { viewModel.onAnswerTapped(.yes) })
+                    CustomButton(type: .secendry, text: viewModel.answerNoText, action: { viewModel.onAnswerTapped(.no) })
+                    CustomButton(type: .secendry, text: viewModel.answerSometimesText, action: { viewModel.onAnswerTapped(.sometimes) })
+                    CustomButton(type: .secendry, text: viewModel.answerProbablyNotText, action: { viewModel.onAnswerTapped(.probablyNot) })
+                    CustomButton(type: .secendry, text: viewModel.answerDontKnowText, action: { viewModel.onAnswerTapped(.unknown) })
                 }
             }
             .padding(.horizontal, 20)

@@ -77,7 +77,8 @@ final class MindReaderAssembly: Assembly {
             MindReaderGameViewModel(
                 router: r.resolve(RouterProtocol.self)!,
                 statsService: r.resolve(StatsService.self)!,
-                coordinator: r.resolve(MindReaderGameCoordinator.self)!
+                coordinator: r.resolve(MindReaderGameCoordinator.self)!,
+                speechSynthesizer: r.resolve(SpeechSynthesizerProtocol.self)!
             )
         }
         
