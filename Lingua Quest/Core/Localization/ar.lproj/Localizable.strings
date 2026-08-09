@@ -89,6 +89,7 @@
 "tabs.home" = "الرئيسية";
 "tabs.gallery" = "يومياتي";
 "tabs.profile" = "الملف";
+"tabs.lingos" = "لينجوز";
 
 "onboarding.level.beginner.title" = "مبتدئ";
 "onboarding.level.intermediate.title" = "متوسط";
@@ -505,6 +506,7 @@
 
 // Mind Reader
 "mind_reader.title" = "قارئ الأفكار لينجو";
+"mind_reader.home_title" = "دع لينجو يخمن كلمتك!";
 "mind_reader.lobby_prompt" = "فكر في كلمة من الفئة المختارة!";
 "mind_reader.start_game" = "ابدأ اللعبة";
 "mind_reader.confirmation_question" = "هل لديك كلمة في ذهنك؟";

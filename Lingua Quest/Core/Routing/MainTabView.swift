@@ -7,11 +7,13 @@ struct MainTabView: View {
     @State private var profileViewModel: ProfileViewModel
     @State private var homeViewModel: HomeViewModel
     @State private var galleryViewModel: GalleryViewModel
+    @State private var lingosViewModel: LingosViewModel
     
     init() {
         _profileViewModel = State(initialValue: Resolver.shared.resolve(ProfileViewModel.self))
         _homeViewModel = State(initialValue: Resolver.shared.resolve(HomeViewModel.self))
         _galleryViewModel = State(initialValue: Resolver.shared.resolve(GalleryViewModel.self))
+        _lingosViewModel = State(initialValue: Resolver.shared.resolve(LingosViewModel.self))
         UITabBar.appearance().isHidden = true
     }
     
@@ -23,6 +25,9 @@ struct MainTabView: View {
                 
                 GalleryView(viewModel: galleryViewModel)
                     .tag(MainTabItem.gallery)
+                
+                LingosView(viewModel: lingosViewModel)
+                    .tag(MainTabItem.lingos)
                 
                 ProfileView(viewModel: profileViewModel)
                     .tag(MainTabItem.profile)
@@ -44,6 +49,7 @@ struct MainTabView: View {
 private enum MainTabItem: Int, CaseIterable, Identifiable {
     case home
     case gallery
+    case lingos
     case profile
     
     var id: Self { self }
@@ -52,6 +58,7 @@ private enum MainTabItem: Int, CaseIterable, Identifiable {
         switch self {
         case .home: return L10n.Tabs.home
         case .gallery: return L10n.Tabs.gallery
+        case .lingos: return L10n.Tabs.lingos
         case .profile: return L10n.Tabs.profile
         }
     }
@@ -60,6 +67,7 @@ private enum MainTabItem: Int, CaseIterable, Identifiable {
         switch self {
         case .home: return .houseFill
         case .gallery: return .photoOnRectangle
+        case .lingos: return .starFill
         case .profile: return .personCropCircleFill
         }
     }
