@@ -192,6 +192,31 @@ enum L10n {
         static var skipWordAction: String { localized("game.skip_word.action") }
     }
     
+    enum DailyMission {
+        static var title: String { localized("daily_mission.title") }
+        static var subtitle: String { localized("daily_mission.subtitle") }
+        static var captureNow: String { localized("daily_mission.capture_now") }
+        static var completed: String { localized("daily_mission.completed") }
+        static var notAvailable: String { localized("daily_mission.not_available") }
+        static var notAvailableSubtitle: String { localized("daily_mission.not_available_subtitle") }
+        static var findWord: String { localized("daily_mission.find_word") }
+        static var analyzing: String { localized("daily_mission.analyzing") }
+        static var analyzingSubtitle: String { localized("daily_mission.analyzing_subtitle") }
+        static var successTitle: String { localized("daily_mission.success_title") }
+        static var successSubtitle: String { localized("daily_mission.success_subtitle") }
+        static var failTitle: String { localized("daily_mission.fail_title") }
+        static func failSubtitle(_ word: String) -> String { String(format: localized("daily_mission.fail_subtitle"), word) }
+        static var tryAgain: String { localized("daily_mission.try_again") }
+        static var later: String { localized("daily_mission.later") }
+        static var backToHome: String { localized("daily_mission.back_to_home") }
+        static var alreadySolvedTitle: String { localized("daily_mission.already_solved_title") }
+        static var alreadySolvedSubtitle: String { localized("daily_mission.already_solved_subtitle") }
+        static var rewardXP: String { localized("daily_mission.reward_xp") }
+        static var rewardCoins: String { localized("daily_mission.reward_coins") }
+        static var noImageData: String { localized("daily_mission.no_image_data") }
+        static var retryButton: String { localized("daily_mission.retry") }
+    }
+    
     enum Gallery {
         static var myJournal: String { localized("gallery.my_journal") }
         static var myCaptures: String { localized("gallery.my_captures") }

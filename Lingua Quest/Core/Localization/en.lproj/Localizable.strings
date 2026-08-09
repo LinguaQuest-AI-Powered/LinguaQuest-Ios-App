@@ -573,3 +573,27 @@
 
 "auth.otp_sent_title" = "Code Sent";
 "auth.otp_sent_desc" = "A new OTP code has been sent to your email successfully.";
+
+// MARK: - Daily Mission
+"daily_mission.title" = "Daily Mission";
+"daily_mission.subtitle" = "Find and capture today's word!";
+"daily_mission.capture_now" = "Capture Now";
+"daily_mission.completed" = "Completed ✓";
+"daily_mission.not_available" = "No Mission Today";
+"daily_mission.not_available_subtitle" = "Check back tomorrow for a new challenge!";
+"daily_mission.find_word" = "Find:";
+"daily_mission.analyzing" = "Analyzing Photo...";
+"daily_mission.analyzing_subtitle" = "Lingo is checking your capture, hold tight!";
+"daily_mission.success_title" = "Mission Complete!";
+"daily_mission.success_subtitle" = "You captured today's word perfectly!";
+"daily_mission.fail_title" = "Not Quite!";
+"daily_mission.fail_subtitle" = "Lingo didn't spot a %@ in the photo. Try again!";
+"daily_mission.try_again" = "Try Again";
+"daily_mission.later" = "Maybe Later";
+"daily_mission.back_to_home" = "Back to Home";
+"daily_mission.already_solved_title" = "Already Done!";
+"daily_mission.already_solved_subtitle" = "You've already completed today's mission. Come back tomorrow!";
+"daily_mission.reward_xp" = "XP Earned";
+"daily_mission.reward_coins" = "Coins Earned";
+"daily_mission.no_image_data" = "No image captured. Please try again.";
+"daily_mission.retry" = "Retry";
