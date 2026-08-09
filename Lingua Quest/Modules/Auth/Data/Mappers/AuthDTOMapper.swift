@@ -21,7 +21,7 @@ enum AuthDTOMapper {
             id: dto.user.id,
             username: dto.user.username,
             photo: dto.user.photo,
-            nativeLanguage: dto.user.nativeLanguage,
+            nativeLanguage: dto.user.nativeLanguage?.name,
             isVerified: dto.user.isVerified,
             targetLanguages: dto.user.targetLanguages.map { $0.name }
         )
@@ -92,7 +92,7 @@ extension AuthDTOMapper {
             id: dto.user.id,
             username: dto.user.username,
             photo: dto.user.photo,
-            nativeLanguage: dto.user.nativeLanguage,
+            nativeLanguage: dto.user.nativeLanguage?.name,
             isVerified: dto.user.isVerified,
             targetLanguages: dto.user.targetLanguages.map { $0.name }
         )

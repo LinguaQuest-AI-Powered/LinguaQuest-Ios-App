@@ -26,11 +26,18 @@ struct TargetLanguageDTO: Decodable {
     let code: String
 }
 
+struct NativeLanguageDTO: Decodable {
+    let id: Int?
+    let name: String
+    let code: String?
+    let imageUrl: String?
+}
+
 struct UserDTO: Decodable {
     let id: Int
     let username: String?
     let photo: String?
-    let nativeLanguage: String?
+    let nativeLanguage: NativeLanguageDTO?
     let isVerified: Bool
     let targetLanguages: [TargetLanguageDTO]
     
@@ -43,7 +50,15 @@ struct UserDTO: Decodable {
         id = try container.decode(Int.self, forKey: .id)
         username = try container.decodeIfPresent(String.self, forKey: .username)
         photo = try container.decodeIfPresent(String.self, forKey: .photo)
-        nativeLanguage = try container.decodeIfPresent(String.self, forKey: .nativeLanguage)
+        
+        if let lang = try? container.decodeIfPresent(NativeLanguageDTO.self, forKey: .nativeLanguage) {
+            nativeLanguage = lang
+        } else if let str = try? container.decodeIfPresent(String.self, forKey: .nativeLanguage) {
+            nativeLanguage = NativeLanguageDTO(id: nil, name: str, code: nil, imageUrl: nil)
+        } else {
+            nativeLanguage = nil
+        }
+        
         isVerified = try container.decode(Bool.self, forKey: .isVerified)
         
         // Flexible decoder to safely handle both arrays of objects (Swagger Schema) and flat strings (Swagger Login Example)

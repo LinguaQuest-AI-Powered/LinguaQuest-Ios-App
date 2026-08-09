@@ -62,7 +62,7 @@ final class ProfileRepositoryImpl: ProfileRepositoryProtocol {
         return UserProfileEntity(
             id: "\(data.id)",
             username: data.username ?? "User",
-            nativeLanguage: data.nativeLanguage,
+            nativeLanguage: data.nativeLanguage?.name,
             avatarUrl: data.photoUrl,
             level: data.level ?? 1,
             coins: data.stats?.coins ?? 0,
