@@ -43,6 +43,8 @@ enum AppRoute: Hashable {
     case about
     case helpAndSupport
     case notifications
+    case dailyMissionCapture(word: String)
+    case dailyMissionResult(word: String, imageData: Data?)
 }
 
 enum AppSheet: String, Identifiable {

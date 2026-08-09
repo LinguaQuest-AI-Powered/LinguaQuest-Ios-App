@@ -154,6 +154,12 @@ final class Router: RouterProtocol {
         case .notifications:
             let viewModel = Resolver.shared.resolve(NotificationsViewModel.self)
             NotificationsView(viewModel: viewModel)
+        case .dailyMissionCapture(let word):
+            let viewModel = Resolver.shared.resolve(DailyMissionCaptureViewModel.self, argument: word)
+            DailyMissionCaptureView(viewModel: viewModel)
+        case .dailyMissionResult(let word, let imageData):
+            let viewModel = Resolver.shared.resolve(DailyMissionResultViewModel.self, arguments: word, imageData)
+            DailyMissionResultView(viewModel: viewModel)
         }
     }
 }

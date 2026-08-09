@@ -31,7 +31,8 @@ final class Resolver {
                 StatsAssembly(),
                 SoundAssembly(),
                 NotificationsAssembly(),
-                LockScreenVocabularyAssembly()
+                LockScreenVocabularyAssembly(),
+                DailyMissionAssembly()
             ],
             container: container
         )

@@ -104,6 +104,7 @@ final class HomeAssembly: Assembly {
             let startLevelUseCase = resolver.resolve(StartLevelUseCase.self)!
             let dailyRewardViewModel = resolver.resolve(DailyRewardViewModel.self)!
             let languageViewModel = resolver.resolve(LanguageViewModel.self)!
+            let dailyMissionCardViewModel = resolver.resolve(DailyMissionCardViewModel.self)!
             let statsService = resolver.resolve(StatsService.self)!
             let router = resolver.resolve(RouterProtocol.self)!
             return HomeViewModel(
@@ -113,6 +114,7 @@ final class HomeAssembly: Assembly {
                 startLevelUseCase: startLevelUseCase,
                 dailyRewardViewModel: dailyRewardViewModel,
                 languageViewModel: languageViewModel,
+                dailyMissionCardViewModel: dailyMissionCardViewModel,
                 statsService: statsService,
                 router: router
             )
