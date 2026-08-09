@@ -31,6 +31,15 @@ struct HomeView: View {
         animateItems || viewModel.homeData != nil
     }
     
+    private var showDailyMission: Bool {
+        switch viewModel.dailyMissionCardViewModel.state {
+        case .completed, .notAvailable:
+            return false
+        default:
+            return true
+        }
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             AppHeaderView(
@@ -62,28 +71,41 @@ struct HomeView: View {
                             .offset(y: isAnimated ? 0 : 30)
                             .opacity(isAnimated ? 1 : 0)
                             .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.05), value: isAnimated)
-                            
-                            if let continueLevel = viewModel.continueLevel {
-                                ObjectDetectionCardView(
-                                    worldName: continueLevel.worldName,
-                                    targetWord: continueLevel.word,
-                                    levelOrder: continueLevel.levelOrder ?? 1,
-                                    totalLevels: viewModel.homeData?.activeLanguage.exploreWorlds
-                                        .first(where: { $0.id == continueLevel.worldId })?.totalLevels ?? 10,
-                                    isLoading: viewModel.isContinueLevelLoading,
-                                    action: {
-                                        Task {
-                                            await viewModel.onObjectDetectionTapped()
+                            if viewModel.continueLevel != nil || showDailyMission {
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 16) {
+                                        if let continueLevel = viewModel.continueLevel {
+                                            ObjectDetectionCardView(
+                                                worldName: continueLevel.worldName,
+                                                targetWord: continueLevel.word,
+                                                levelOrder: continueLevel.levelOrder ?? 1,
+                                                totalLevels: viewModel.homeData?.activeLanguage.exploreWorlds
+                                                    .first(where: { $0.id == continueLevel.worldId })?.totalLevels ?? 10,
+                                                isLoading: viewModel.isContinueLevelLoading,
+                                                action: {
+                                                    Task {
+                                                        await viewModel.onObjectDetectionTapped()
+                                                    }
+                                                }
+                                            )
+                                            .frame(width: (viewModel.continueLevel != nil && showDailyMission) ? UIScreen.main.bounds.width - 60 : UIScreen.main.bounds.width - 40)
+                                        }
+
+                                        if showDailyMission {
+                                            DailyMissionCard(
+                                                viewModel: viewModel.dailyMissionCardViewModel
+                                            )
+                                            .frame(width: (viewModel.continueLevel != nil && showDailyMission) ? UIScreen.main.bounds.width - 60 : UIScreen.main.bounds.width - 40)
                                         }
                                     }
-                                )
-                                .padding(.horizontal, 20)
+                                    .padding(.horizontal, 20)
+                                    .padding(.bottom, 8)
+                                }
                                 .offset(y: isAnimated ? 0 : 30)
                                 .opacity(isAnimated ? 1 : 0)
                                 .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.08), value: isAnimated)
                             }
-                            
-                            
+
                             Group {
                                 SectionHeaderView(
                                     title: L10n.Home.exploreWorlds,
@@ -277,66 +299,99 @@ struct HomeScaleButtonStyle: ButtonStyle {
             }
         }
     }
-    
-    struct HomeSkeletonView: View {
-        var body: some View {
-            VStack(alignment: .leading, spacing: 20) {
-                
-                LearningCardView(
-                    flagEmoji: "🇪🇸",
-                    title: L10n.Home.currentlyLearning,
-                    languageName: "Spanish",
-                    level: 1,
-                    streakDays: 0,
-                    progressPercent: 60
-                )
-                .padding(.horizontal, 20)
-                
-                ObjectDetectionCardView(
-                    worldName: nil,
-                    targetWord: nil,
-                    levelOrder: 1,
-                    totalLevels: 10,
-                    action: {}
-                )
-                .padding(.horizontal, 20)
-                
-                Group {
-                    SectionHeaderView(
-                        title: L10n.Home.exploreWorlds,
-                        actionTitle: L10n.Home.seeMore,
-                        onActionTapped: {}
+struct HomeSkeletonView: View {
+    @Environment(\.colorScheme) private var colorScheme
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            
+            LearningCardView(
+                flagEmoji: "🇪🇸",
+                title: L10n.Home.currentlyLearning,
+                languageName: "Spanish",
+                level: 1,
+                streakDays: 0,
+                progressPercent: 60
+            )
+            .padding(.horizontal, 20)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 16) {
+                    ObjectDetectionCardView(
+                        worldName: nil,
+                        targetWord: nil,
+                        levelOrder: 1,
+                        totalLevels: 10,
+                        action: {}
                     )
-                    .padding(.horizontal, 20)
+                    .frame(width: UIScreen.main.bounds.width - 60)
                     
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 16) {
-                            ForEach(0..<3, id: \.self) { _ in
-                                RoundedRectangle(cornerRadius: 24)
-                                    .fill(Color.appSurfaceCard)
-                                    .frame(width: 204, height: 260)
+                    // Daily Mission Placeholder
+                    VStack(alignment: .leading, spacing: 0) {
+                        HStack {
+                            VStack(alignment: .leading, spacing: 4) {
+                                RoundedRectangle(cornerRadius: 6).fill(Color.gray.opacity(0.2)).frame(width: 100, height: 20)
+                                RoundedRectangle(cornerRadius: 6).fill(Color.gray.opacity(0.2)).frame(width: 180, height: 24)
                             }
+                            Spacer()
                         }
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 4)
+                        .padding(.horizontal, 18).padding(.top, 18)
+                        
+                        HStack {
+                            RoundedRectangle(cornerRadius: 16).fill(Color.gray.opacity(0.2)).frame(height: 72)
+                            Circle().fill(Color.gray.opacity(0.2)).frame(width: 80, height: 80).padding(.leading, 8)
+                        }
+                        .padding(.horizontal, 18).padding(.top, 10).padding(.bottom, 14)
+                        
+                        RoundedRectangle(cornerRadius: 25).fill(Color.gray.opacity(0.2)).frame(height: 50)
+                            .padding(.horizontal, 18).padding(.bottom, 18)
                     }
+                    .background(
+                        RoundedRectangle(cornerRadius: 28, style: .continuous)
+                            .fill(Color.appSurfaceCard.opacity(colorScheme == .dark ? 0.95 : 0.98))
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 28, style: .continuous)
+                            .stroke(
+                                Color.appAccentOrange.opacity(colorScheme == .dark ? 0.25 : 0.18),
+                                lineWidth: 1.5
+                            )
+                    )
+                    .shadow(
+                        color: Color.appAccentOrange.opacity(colorScheme == .dark ? 0.12 : 0.08),
+                        radius: 20, x: 0, y: 10
+                    )
+                    .frame(width: UIScreen.main.bounds.width - 60)
                 }
-                
-                ContinueLessonCardView(
-                    title: L10n.Home.continueLessonTitle,
-                    lessonName: L10n.Home.lessonApple,
-                    lessonDescription: L10n.Home.lessonAppleDesc,
-                    imageAsset: .appleLogo,
-                    buttonText: L10n.Home.continueButton,
-                    action: {}
+                .padding(.horizontal, 20)
+                .padding(.bottom, 8)
+            }
+            
+            Group {
+                SectionHeaderView(
+                    title: L10n.Home.exploreWorlds,
+                    actionTitle: L10n.Home.seeMore,
+                    onActionTapped: {}
                 )
                 .padding(.horizontal, 20)
                 
-                
-                
-                Color.clear.frame(height: 100)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 16) {
+                        ForEach(0..<3, id: \.self) { _ in
+                            RoundedRectangle(cornerRadius: 24)
+                                .fill(Color.appSurfaceCard)
+                                .frame(width: 204, height: 260)
+                        }
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 4)
+                }
             }
-            .redacted(reason: .placeholder)
-            .shimmer()
+            
+            Color.clear.frame(height: 100)
+        }
+        .redacted(reason: .placeholder)
+        .shimmer()
     }
 }

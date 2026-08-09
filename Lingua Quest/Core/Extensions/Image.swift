@@ -111,10 +111,12 @@ extension Image {
         case plus = "plus"
         case bell = "bell"
         case camera = "camera"
+        case exclamationmarkCircle = "exclamationmark.circle"
     }
     
     enum Asset: String {
         case heroCard = "heroCard"
+        case dailyMission = "dailyMission"
         case loadng = "loadng"
         case removeLanguage = "removeLanguage"
         case mindLoading = "mindLoading"

@@ -588,3 +588,27 @@
 "boss_level.areas_to_improve" = "مجالات للتحسين";
 "auth.otp_sent_title" = "تم إرسال الرمز";
 "auth.otp_sent_desc" = "تم إرسال رمز تحقق جديد إلى بريدك الإلكتروني بنجاح.";
+
+// MARK: - Daily Mission
+"daily_mission.title" = "المهمة اليومية";
+"daily_mission.subtitle" = "ابحث عن كلمة اليوم والتقطها!";
+"daily_mission.capture_now" = "التقط الآن";
+"daily_mission.completed" = "تم الإنجاز ✓";
+"daily_mission.not_available" = "لا توجد مهمة اليوم";
+"daily_mission.not_available_subtitle" = "عد غدًا لتحدٍّ جديد!";
+"daily_mission.find_word" = "ابحث عن:";
+"daily_mission.analyzing" = "جارٍ تحليل الصورة...";
+"daily_mission.analyzing_subtitle" = "لينجو يفحص صورتك، انتظر قليلًا!";
+"daily_mission.success_title" = "اكتملت المهمة!";
+"daily_mission.success_subtitle" = "لقد التقطت كلمة اليوم بشكل مثالي!";
+"daily_mission.fail_title" = "لم ينجح!";
+"daily_mission.fail_subtitle" = "لم يجد لينجو %@ في الصورة. حاول مرة أخرى!";
+"daily_mission.try_again" = "حاول مجددًا";
+"daily_mission.later" = "ربما لاحقًا";
+"daily_mission.back_to_home" = "العودة إلى الرئيسية";
+"daily_mission.already_solved_title" = "أنجزتها بالفعل!";
+"daily_mission.already_solved_subtitle" = "لقد أكملت مهمة اليوم. عد غدًا!";
+"daily_mission.reward_xp" = "نقاط الخبرة";
+"daily_mission.reward_coins" = "العملات المكتسبة";
+"daily_mission.no_image_data" = "لم يتم التقاط صورة. يرجى المحاولة مجددًا.";
+"daily_mission.retry" = "إعادة المحاولة";
