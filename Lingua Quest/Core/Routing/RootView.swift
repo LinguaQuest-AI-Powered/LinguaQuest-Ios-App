@@ -14,22 +14,37 @@ struct RootView: View {
     @AppStorage(AppConstants.UserDefaultsKeys.isLoggedIn) private var isLoggedIn = false
     @AppStorage(AppConstants.UserDefaultsKeys.needsProfileCompletion) private var needsProfileCompletion = false
     @State private var networkMonitor = NetworkMonitor.shared
+    @State private var isSplashFinished = false
     
     var body: some View {
-        NavigationStack(path: $router.path) {
-            Group {
-                if !isOnboardingCompleted {
-                    router.view(for: .onBoarding)
-                } else if isLoggedIn && needsProfileCompletion {
-                    router.view(for: .completeProfile)
-                } else if isLoggedIn {
-                    router.view(for: .home)
-                } else {
-                    router.view(for: .login)
+        Group {
+            if !isSplashFinished {
+                SplashView()
+                    .onAppear {
+                        // The SplashView animation runs for about 2 seconds
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                            withAnimation {
+                                isSplashFinished = true
+                            }
+                        }
+                    }
+            } else {
+                NavigationStack(path: $router.path) {
+                    Group {
+                        if !isOnboardingCompleted {
+                            router.view(for: .onBoarding)
+                        } else if isLoggedIn && needsProfileCompletion {
+                            router.view(for: .completeProfile)
+                        } else if isLoggedIn {
+                            router.view(for: .home)
+                        } else {
+                            router.view(for: .login)
+                        }
+                    }
+                    .navigationDestination(for: AppRoute.self) { route in
+                        router.view(for: route)
+                    }
                 }
-            }
-            .navigationDestination(for: AppRoute.self) { route in
-                router.view(for: route)
             }
         }
         .id(userPreferences.appLanguage)

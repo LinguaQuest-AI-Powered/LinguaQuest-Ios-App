@@ -15,38 +15,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" misplaced="YES" image="linguaQuest" translatesAutoresizingMaskIntoConstraints="NO" id="img-logo">
-                                <rect key="frame" x="31" y="23" width="338" height="338"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="stack-view">
+                                <rect key="frame" x="20" y="216" width="353" height="518"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="linguaquest_circle" translatesAutoresizingMaskIntoConstraints="NO" id="img-splashicon">
+                                        <rect key="frame" x="0.0" y="0.0" width="353" height="353"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="img-splashicon" secondAttribute="height" multiplier="1:1" id="aspect-circle"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="linguaQuest" translatesAutoresizingMaskIntoConstraints="NO" id="img-logo">
+                                        <rect key="frame" x="21" y="403" width="311" height="115"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="img-logo" secondAttribute="height" multiplier="338:125" id="aspect-logo"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="338" id="h-logo"/>
-                                    <constraint firstAttribute="width" constant="338" id="w-logo"/>
+                                    <constraint firstItem="img-logo" firstAttribute="width" secondItem="img-splashicon" secondAttribute="width" multiplier="0.88" id="c-logo-w"/>
                                 </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LinguaQuest" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-text">
-                                <rect key="frame" x="112.66666666666667" y="740.66666666666663" width="167.66666666666663" height="33.333333333333371"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" misplaced="YES" image="splahicon" translatesAutoresizingMaskIntoConstraints="NO" id="img-splashicon">
-                                <rect key="frame" x="37" y="232" width="340" height="340"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="340" id="h-splashicon"/>
-                                    <constraint firstAttribute="width" constant="340" id="w-splashicon"/>
-                                </constraints>
-                            </imageView>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.015686274510000001" green="0.45098039220000002" blue="0.49019607840000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="img-logo" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="c-logo-x"/>
-                            <constraint firstItem="img-logo" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="c-logo-top"/>
-                            
-                            <constraint firstItem="img-splashicon" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="c-splashicon-x"/>
-                            <constraint firstItem="img-splashicon" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="-10" id="c-splashicon-y"/>
-                            
-                            <constraint firstItem="lbl-text" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="c-txt-x"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="lbl-text" secondAttribute="bottom" constant="40" id="c-txt-bottom"/>
+                            <constraint firstItem="stack-view" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="c-sv-l"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="stack-view" secondAttribute="trailing" constant="20" id="c-sv-r"/>
+                            <constraint firstItem="stack-view" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="-40" id="c-sv-y"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -57,6 +52,6 @@
     </scenes>
     <resources>
         <image name="linguaQuest" width="338" height="276"/>
-        <image name="splahicon" width="350" height="391"/>
+        <image name="linguaquest_circle" width="350" height="391"/>
     </resources>
 </document>
