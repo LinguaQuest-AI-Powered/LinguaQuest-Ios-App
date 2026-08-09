@@ -118,6 +118,7 @@ enum L10n {
         static var home: String { localized("tabs.home") }
         static var gallery: String { localized("tabs.gallery") }
         static var profile: String { localized("tabs.profile") }
+        static var lingos: String { localized("tabs.lingos") }
     }
     
     enum Onboarding {
@@ -598,6 +599,7 @@ enum L10n {
 
     enum MindReader {
         static var title: String { localized("mind_reader.title") }
+        static var homeTitle: String { localized("mind_reader.home_title") }
         static var subtitle: String { localized("mind_reader.subtitle") }
         static var lobbyPrompt: String { localized("mind_reader.lobby_prompt") }
         static var translationPrompt: String { localized("mind_reader.translation_prompt") }

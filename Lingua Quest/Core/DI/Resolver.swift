@@ -25,7 +25,7 @@ final class Resolver {
             [
                 NetworkAssembly(), RouterAssembly(), StorageAssembly(),
                 AuthAssembly(), OnboardingAssembly(), GameAssembly(), GalleryAssembly(),
-                ProfileAssembly(), HomeAssembly(),
+                ProfileAssembly(), HomeAssembly(), LingosAssembly(),
                 SpeakingLabAssembly(), BossLevelAssembly(), MindReaderAssembly(),
                 SessionAssembly(),
                 StatsAssembly(),

@@ -88,6 +88,7 @@
 "tabs.home" = "Home";
 "tabs.gallery" = "My Journal";
 "tabs.profile" = "Profile";
+"tabs.lingos" = "Lingos";
 
 "onboarding.level.beginner.title" = "Beginner";
 "onboarding.level.intermediate.title" = "Intermediate";
@@ -470,6 +471,7 @@
 
 // Mind Reader
 "mind_reader.title" = "Lingo's Mind Reader";
+"mind_reader.home_title" = "Let Lingo guess your word!";
 "mind_reader.lobby_prompt" = "Think of a word in your chosen category!";
 "mind_reader.start_game" = "Start Game";
 "mind_reader.confirmation_question" = "Do you have a word in mind?";

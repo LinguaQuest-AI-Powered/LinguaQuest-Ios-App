@@ -13,10 +13,8 @@ struct HomeView: View {
     @Environment(Router.self) private var router
     @Environment(\.soundPlayer) private var soundPlayer
     @State private var hasClaimedDailyReward: Bool = false
-    @State private var voiceCompleted: Int = 0
-    @State private var voiceTotal: Int = 5
     
-
+    
     @State private var showDailyRewardDialog = false
     @State private var pulseWorldButton = false
     
@@ -51,7 +49,7 @@ struct HomeView: View {
             .offset(y: isAnimated ? 0 : -20)
             .opacity(isAnimated ? 1 : 0)
             .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.0), value: isAnimated)
-
+            
             ZStack(alignment: .bottomTrailing) {
                 
                 ScrollView(showsIndicators: false) {
@@ -73,7 +71,6 @@ struct HomeView: View {
                             .offset(y: isAnimated ? 0 : 30)
                             .opacity(isAnimated ? 1 : 0)
                             .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.05), value: isAnimated)
-                                
                             if viewModel.continueLevel != nil || showDailyMission {
                                 ScrollView(.horizontal, showsIndicators: false) {
                                     HStack(spacing: 16) {
@@ -116,7 +113,7 @@ struct HomeView: View {
                                     onActionTapped: { viewModel.navigateToAllWorlds() }
                                 )
                                 .padding(.horizontal, 20)
-
+                                
                                 ScrollView(.horizontal, showsIndicators: false) {
                                     HStack(spacing: 16) {
                                         ForEach(displayWorlds) { item in
@@ -141,39 +138,13 @@ struct HomeView: View {
                             .offset(y: animateItems ? 0 : 30)
                             .opacity(animateItems ? 1 : 0)
                             .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.1), value: animateItems)
-
-                            Group {
-                                Text(L10n.Home.practiceAndLearn)
-                                    .font(AppTextStyle.displaySmall.font)
-                                    .foregroundColor(Color.appTextHeading)
-                                    .padding(.horizontal, 20)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                
-                                ScrollView(.horizontal, showsIndicators: false) {
-                                    HStack(spacing: 16) {
-                                        VoicePracticeCardView(completed: voiceCompleted, total: voiceTotal, action: { router.push(.voiceGame) })
-                                            .frame(width: 204)
-                                        
-                                        RoleplayCardView(action: { router.push(.roleplayScenarios) })
-                                            .frame(width: 204)
-                                            
-                                        MindReaderHomeCardView(action: { router.push(.mindReaderIntro) })
-                                            .frame(width: 204)
-                                    }
-                                    .padding(.horizontal, 20)
-                                    .padding(.vertical, 4)
-                                }
-                            }
-                            .offset(y: isAnimated ? 0 : 30)
-                            .opacity(isAnimated ? 1 : 0)
-                            .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.2), value: isAnimated)
-
+                            
                             Color.clear.frame(height: 100)
                         }
                         .padding(.top, 12)
                     }
                 }
-
+                
                 VStack {
                     if isAnimated && !viewModel.dailyRewardViewModel.isClaimed && viewModel.dailyRewardViewModel.reward != nil {
                         DailyBonusCardView {
@@ -196,7 +167,7 @@ struct HomeView: View {
                 .animation(.spring(response: 0.6, dampingFraction: 0.75), value: viewModel.dailyRewardViewModel.isClaimed)
                 .animation(.spring(response: 0.6, dampingFraction: 0.75), value: viewModel.dailyRewardViewModel.reward != nil)
                 .zIndex(1)
-
+                
                 Button(action: { showMyLanguagesSheet = true }) {
                     Image(asset: .world)
                         .font(AppTextStyle.headingMedium.font)
@@ -237,8 +208,6 @@ struct HomeView: View {
                     animateItems = true
                 }
             }
-            
-            loadVoiceProgress()
             
             guard !reduceMotion else { return }
             withAnimation(.easeInOut(duration: 1.4).repeatForever(autoreverses: true)) {
@@ -293,57 +262,40 @@ struct HomeView: View {
                 dismissButton: .default(Text(L10n.Common.ok))
             )
         }
-        .onReceive(NotificationCenter.default.publisher(for: .progressDidUpdate)) { _ in
-            loadVoiceProgress()
-        }
-    }
-    
-    private func loadVoiceProgress() {
-        let useCase = Resolver.shared.resolve(GetVoiceProgressUseCase.self)
-        Task {
-            do {
-                let progress = try await useCase.execute()
-                await MainActor.run {
-                    voiceCompleted = progress.completed
-                    voiceTotal = progress.total
-                }
-            } catch {
-                print("Failed to load voice progress: \(error)")
-            }
-        }
     }
 }
 
 struct HomeScaleButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
-            .animation(.spring(response: 0.3, dampingFraction: 0.6), value: configuration.isPressed)
+        func makeBody(configuration: Configuration) -> some View {
+            configuration.label
+                .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+                .animation(.spring(response: 0.3, dampingFraction: 0.6), value: configuration.isPressed)
+        }
     }
-}
-
-struct SectionHeaderView: View {
-    let title: String
-    let actionTitle: String
-    var onActionTapped: () -> Void = {}
     
-    var body: some View {
-        HStack {
-            Text(title)
-                .font(AppTextStyle.displaySmall.font)
-                .foregroundColor(Color.appTextHeading)
-            
-            Spacer()
-            
-            Button(action: onActionTapped) {
-                HStack(spacing: 4) {
-                    Text(actionTitle)
-                        .font(AppTextStyle.bodyBold.font)
-                    Image(systemIcon: .rightChevron)
-                        .font(AppTextStyle.captionMedium.font)
-                        .flipsForRightToLeftLayoutDirection(true)
+    struct SectionHeaderView: View {
+        let title: String
+        let actionTitle: String
+        var onActionTapped: () -> Void = {}
+        
+        var body: some View {
+            HStack {
+                Text(title)
+                    .font(AppTextStyle.displaySmall.font)
+                    .foregroundColor(Color.appTextHeading)
+                
+                Spacer()
+                
+                Button(action: onActionTapped) {
+                    HStack(spacing: 4) {
+                        Text(actionTitle)
+                            .font(AppTextStyle.bodyBold.font)
+                        Image(systemIcon: .rightChevron)
+                            .font(AppTextStyle.captionMedium.font)
+                            .flipsForRightToLeftLayoutDirection(true)
+                    }
+                    .foregroundColor(Color.appTextHeading)
                 }
-                .foregroundColor(Color.appTextHeading)
             }
         }
     }
@@ -365,52 +317,57 @@ struct HomeSkeletonView: View {
             )
             .padding(.horizontal, 20)
             
-            ObjectDetectionCardView(
-                worldName: nil,
-                targetWord: nil,
-                levelOrder: 1,
-                totalLevels: 10,
-                action: {}
-            )
-            .padding(.horizontal, 20)
-            
-            // Daily Mission Placeholder
-            VStack(alignment: .leading, spacing: 0) {
-                HStack {
-                    VStack(alignment: .leading, spacing: 4) {
-                        RoundedRectangle(cornerRadius: 6).fill(Color.gray.opacity(0.2)).frame(width: 100, height: 20)
-                        RoundedRectangle(cornerRadius: 6).fill(Color.gray.opacity(0.2)).frame(width: 180, height: 24)
-                    }
-                    Spacer()
-                }
-                .padding(.horizontal, 18).padding(.top, 18)
-                
-                HStack {
-                    RoundedRectangle(cornerRadius: 16).fill(Color.gray.opacity(0.2)).frame(height: 72)
-                    Circle().fill(Color.gray.opacity(0.2)).frame(width: 80, height: 80).padding(.leading, 8)
-                }
-                .padding(.horizontal, 18).padding(.top, 10).padding(.bottom, 14)
-                
-                RoundedRectangle(cornerRadius: 25).fill(Color.gray.opacity(0.2)).frame(height: 50)
-                    .padding(.horizontal, 18).padding(.bottom, 18)
-            }
-            .background(
-                RoundedRectangle(cornerRadius: 28, style: .continuous)
-                    .fill(Color.appSurfaceCard.opacity(colorScheme == .dark ? 0.95 : 0.98))
-            )
-            .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: 28, style: .continuous)
-                    .stroke(
-                        Color.appAccentOrange.opacity(colorScheme == .dark ? 0.25 : 0.18),
-                        lineWidth: 1.5
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 16) {
+                    ObjectDetectionCardView(
+                        worldName: nil,
+                        targetWord: nil,
+                        levelOrder: 1,
+                        totalLevels: 10,
+                        action: {}
                     )
-            )
-            .shadow(
-                color: Color.appAccentOrange.opacity(colorScheme == .dark ? 0.12 : 0.08),
-                radius: 20, x: 0, y: 10
-            )
-            .padding(.horizontal, 20)
+                    .frame(width: UIScreen.main.bounds.width - 60)
+                    
+                    // Daily Mission Placeholder
+                    VStack(alignment: .leading, spacing: 0) {
+                        HStack {
+                            VStack(alignment: .leading, spacing: 4) {
+                                RoundedRectangle(cornerRadius: 6).fill(Color.gray.opacity(0.2)).frame(width: 100, height: 20)
+                                RoundedRectangle(cornerRadius: 6).fill(Color.gray.opacity(0.2)).frame(width: 180, height: 24)
+                            }
+                            Spacer()
+                        }
+                        .padding(.horizontal, 18).padding(.top, 18)
+                        
+                        HStack {
+                            RoundedRectangle(cornerRadius: 16).fill(Color.gray.opacity(0.2)).frame(height: 72)
+                            Circle().fill(Color.gray.opacity(0.2)).frame(width: 80, height: 80).padding(.leading, 8)
+                        }
+                        .padding(.horizontal, 18).padding(.top, 10).padding(.bottom, 14)
+                        
+                        RoundedRectangle(cornerRadius: 25).fill(Color.gray.opacity(0.2)).frame(height: 50)
+                            .padding(.horizontal, 18).padding(.bottom, 18)
+                    }
+                    .background(
+                        RoundedRectangle(cornerRadius: 28, style: .continuous)
+                            .fill(Color.appSurfaceCard.opacity(colorScheme == .dark ? 0.95 : 0.98))
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 28, style: .continuous)
+                            .stroke(
+                                Color.appAccentOrange.opacity(colorScheme == .dark ? 0.25 : 0.18),
+                                lineWidth: 1.5
+                            )
+                    )
+                    .shadow(
+                        color: Color.appAccentOrange.opacity(colorScheme == .dark ? 0.12 : 0.08),
+                        radius: 20, x: 0, y: 10
+                    )
+                    .frame(width: UIScreen.main.bounds.width - 60)
+                }
+                .padding(.horizontal, 20)
+            }
             
             Group {
                 SectionHeaderView(
@@ -419,45 +376,52 @@ struct HomeSkeletonView: View {
                     onActionTapped: {}
                 )
                 .padding(.horizontal, 20)
-
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 16) {
-                        ForEach(0..<3, id: \.self) { _ in
-                            RoundedRectangle(cornerRadius: 24)
-                                .fill(Color.appSurfaceCard)
-                                .frame(width: 204, height: 260)
-                        }
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 4)
-                }
-            }
-
-            ContinueLessonCardView(
-                title: L10n.Home.continueLessonTitle,
-                lessonName: L10n.Home.lessonApple,
-                lessonDescription: L10n.Home.lessonAppleDesc,
-                imageAsset: .appleLogo,
-                buttonText: L10n.Home.continueButton,
-                action: {}
-            )
-            .padding(.horizontal, 20)
-            
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 16) {
-                    VoicePracticeCardView(completed: 0, total: 5, action: {})
-                        .frame(width: 204)
-                    RoleplayCardView(action: {})
-                        .frame(width: 204)
-                }
+                
+                ObjectDetectionCardView(
+                    worldName: nil,
+                    targetWord: nil,
+                    levelOrder: 1,
+                    totalLevels: 10,
+                    action: {}
+                )
                 .padding(.horizontal, 20)
-                .padding(.vertical, 4)
+                
+                Group {
+                    SectionHeaderView(
+                        title: L10n.Home.exploreWorlds,
+                        actionTitle: L10n.Home.seeMore,
+                        onActionTapped: {}
+                    )
+                    .padding(.horizontal, 20)
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 16) {
+                            ForEach(0..<3, id: \.self) { _ in
+                                RoundedRectangle(cornerRadius: 24)
+                                    .fill(Color.appSurfaceCard)
+                                    .frame(width: 204, height: 260)
+                            }
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 4)
+                    }
+                }
+                
+                ContinueLessonCardView(
+                    title: L10n.Home.continueLessonTitle,
+                    lessonName: L10n.Home.lessonApple,
+                    lessonDescription: L10n.Home.lessonAppleDesc,
+                    imageAsset: .appleLogo,
+                    buttonText: L10n.Home.continueButton,
+                    action: {}
+                )
+                .padding(.horizontal, 20)
+                
+                
+                
+                Color.clear.frame(height: 100)
             }
-
-            Color.clear.frame(height: 100)
-        }
-        .redacted(reason: .placeholder)
-        .shimmer()
+            .redacted(reason: .placeholder)
+            .shimmer()
     }
 }
-
