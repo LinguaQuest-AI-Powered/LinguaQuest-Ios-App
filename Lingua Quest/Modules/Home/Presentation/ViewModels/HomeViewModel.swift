@@ -36,6 +36,7 @@ final class HomeViewModel {
     
     let dailyRewardViewModel: DailyRewardViewModel
     let languageViewModel: LanguageViewModel
+    let dailyMissionCardViewModel: DailyMissionCardViewModel
     
     init(
         getHomeDataUseCase: GetHomeDataUseCaseProtocol,
@@ -44,6 +45,7 @@ final class HomeViewModel {
         startLevelUseCase: StartLevelUseCase,
         dailyRewardViewModel: DailyRewardViewModel,
         languageViewModel: LanguageViewModel,
+        dailyMissionCardViewModel: DailyMissionCardViewModel,
         statsService: StatsService,
         router: RouterProtocol
     ) {
@@ -53,6 +55,7 @@ final class HomeViewModel {
         self.startLevelUseCase = startLevelUseCase
         self.dailyRewardViewModel = dailyRewardViewModel
         self.languageViewModel = languageViewModel
+        self.dailyMissionCardViewModel = dailyMissionCardViewModel
         self.statsService = statsService
         self.router = router
         
@@ -108,6 +111,8 @@ final class HomeViewModel {
         async let statsTask = statsService.fetchStats()
         async let continueLevelTask: ContinueLevelEntity? = try? getContinueLevelUseCase.execute()
         
+        await dailyMissionCardViewModel.loadMission()
+
         if languageViewModel.myLanguages.isEmpty || forceRefresh {
             await languageViewModel.loadMyLanguages(forceRefresh: forceRefresh)
         }
