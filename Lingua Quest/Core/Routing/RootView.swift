@@ -21,8 +21,8 @@ struct RootView: View {
             if !isSplashFinished {
                 SplashView()
                     .onAppear {
-                        // The SplashView animation runs for about 2 seconds
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                        // The SplashView animation runs for exactly 1.28 seconds (200ms + 9*120ms)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
                             withAnimation {
                                 isSplashFinished = true
                             }

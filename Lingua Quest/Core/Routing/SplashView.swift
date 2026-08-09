@@ -9,8 +9,6 @@ import SwiftUI
 
 struct SplashView: View {
     @State private var currentFrameIndex = 0
-    @State private var circleVisible = false
-    @State private var logoVisible = false
     @State private var birdOffsetY: CGFloat = -80
     
     // The sequence of 10 images
@@ -34,8 +32,6 @@ struct SplashView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(width: usableWidth, height: usableWidth)
-                            .scaleEffect(circleVisible ? 1 : 0.2)
-                            .opacity(circleVisible ? 1 : 0)
                         
                         Image(frames[currentFrameIndex]) // The animated mascot
                             .resizable()
@@ -52,8 +48,6 @@ struct SplashView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: usableWidth * 0.88)
-                        .offset(y: logoVisible ? 0 : 50)
-                        .opacity(logoVisible ? 1 : 0)
                     
                     Spacer()
                 }
@@ -66,16 +60,7 @@ struct SplashView: View {
     }
     
     private func startAnimations() {
-        // Logo and circle fade & scale animations
-        withAnimation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 1.2)) {
-            circleVisible = true
-        }
-        
-        withAnimation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 1.0)) {
-            logoVisible = true
-        }
-        
-        // Frame-by-frame bird animation
+        // Frame-by-frame bird animation matching the Android coroutine logic
         Task {
             // Initial delay
             try? await Task.sleep(nanoseconds: 200_000_000)

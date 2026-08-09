@@ -25,9 +25,9 @@
                                         </constraints>
                                     </imageView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="linguaQuest" translatesAutoresizingMaskIntoConstraints="NO" id="img-logo">
-                                        <rect key="frame" x="21" y="403" width="311" height="115"/>
+                                        <rect key="frame" x="21" y="403" width="311" height="254"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="img-logo" secondAttribute="height" multiplier="338:125" id="aspect-logo"/>
+                                            <constraint firstAttribute="width" secondItem="img-logo" secondAttribute="height" multiplier="338:276" id="aspect-logo"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
