@@ -299,8 +299,6 @@ struct HomeScaleButtonStyle: ButtonStyle {
             }
         }
     }
-}
-
 struct HomeSkeletonView: View {
     @Environment(\.colorScheme) private var colorScheme
 
@@ -367,6 +365,7 @@ struct HomeSkeletonView: View {
                     .frame(width: UIScreen.main.bounds.width - 60)
                 }
                 .padding(.horizontal, 20)
+                .padding(.bottom, 8)
             }
             
             Group {
@@ -377,51 +376,22 @@ struct HomeSkeletonView: View {
                 )
                 .padding(.horizontal, 20)
                 
-                ObjectDetectionCardView(
-                    worldName: nil,
-                    targetWord: nil,
-                    levelOrder: 1,
-                    totalLevels: 10,
-                    action: {}
-                )
-                .padding(.horizontal, 20)
-                
-                Group {
-                    SectionHeaderView(
-                        title: L10n.Home.exploreWorlds,
-                        actionTitle: L10n.Home.seeMore,
-                        onActionTapped: {}
-                    )
-                    .padding(.horizontal, 20)
-                    
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 16) {
-                            ForEach(0..<3, id: \.self) { _ in
-                                RoundedRectangle(cornerRadius: 24)
-                                    .fill(Color.appSurfaceCard)
-                                    .frame(width: 204, height: 260)
-                            }
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 16) {
+                        ForEach(0..<3, id: \.self) { _ in
+                            RoundedRectangle(cornerRadius: 24)
+                                .fill(Color.appSurfaceCard)
+                                .frame(width: 204, height: 260)
                         }
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 4)
                     }
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 4)
                 }
-                
-                ContinueLessonCardView(
-                    title: L10n.Home.continueLessonTitle,
-                    lessonName: L10n.Home.lessonApple,
-                    lessonDescription: L10n.Home.lessonAppleDesc,
-                    imageAsset: .appleLogo,
-                    buttonText: L10n.Home.continueButton,
-                    action: {}
-                )
-                .padding(.horizontal, 20)
-                
-                
-                
-                Color.clear.frame(height: 100)
             }
-            .redacted(reason: .placeholder)
-            .shimmer()
+            
+            Color.clear.frame(height: 100)
+        }
+        .redacted(reason: .placeholder)
+        .shimmer()
     }
 }
