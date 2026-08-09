@@ -51,12 +51,45 @@ struct ChangePasswordDataDTO: Decodable {
     let status: String
 }
 
+struct ProfileNativeLanguageDTO: Decodable {
+    let id: Int?
+    let name: String
+    let code: String?
+    let imageUrl: String?
+}
+
+enum FlexibleNativeLanguageDTO: Decodable {
+    case string(String)
+    case object(ProfileNativeLanguageDTO)
+    
+    init(from decoder: Decoder) throws {
+        if let container = try? decoder.singleValueContainer() {
+            if let str = try? container.decode(String.self) {
+                self = .string(str)
+                return
+            }
+            if let obj = try? container.decode(ProfileNativeLanguageDTO.self) {
+                self = .object(obj)
+                return
+            }
+        }
+        throw DecodingError.typeMismatch(FlexibleNativeLanguageDTO.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Expected String or Dictionary for nativeLanguage"))
+    }
+    
+    var name: String {
+        switch self {
+        case .string(let s): return s
+        case .object(let o): return o.name
+        }
+    }
+}
+
 
 struct ProfileDataDTO: Decodable {
     let id: Int
     let email: String
     let username: String?
-    let nativeLanguage: String?
+    let nativeLanguage: FlexibleNativeLanguageDTO?
     let photoUrl: String?
     let level: Int?
     let stats: ProfileStatsDTO?
