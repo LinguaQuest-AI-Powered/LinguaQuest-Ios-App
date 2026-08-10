@@ -49,9 +49,12 @@ struct DailyMissionCard: View {
             }
             .padding(.horizontal, 18).padding(.top, 10).padding(.bottom, 14)
             
+            Spacer(minLength: 0)
+            
             RoundedRectangle(cornerRadius: 25).fill(Color.gray.opacity(0.2)).frame(height: 50)
                 .padding(.horizontal, 18).padding(.bottom, 18)
         }
+        .frame(maxHeight: .infinity, alignment: .top)
         .background(cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
         .overlay(cardBorder)
@@ -76,10 +79,13 @@ struct DailyMissionCard: View {
                 .padding(.top, 10)
                 .padding(.bottom, 14)
 
+            Spacer(minLength: 0)
+
             actionSection
                 .padding(.horizontal, 18)
                 .padding(.bottom, 18)
         }
+        .frame(maxHeight: .infinity, alignment: .top)
         .background(cardBackground)
         .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
         .overlay(cardBorder)

@@ -44,10 +44,13 @@ struct ObjectDetectionCardView: View {
                     .padding(.top, 12)
                     .padding(.bottom, 14)
                 
+                Spacer(minLength: 0)
+                
                 continueButton
                     .padding(.horizontal, 18)
                     .padding(.bottom, 18)
             }
+            .frame(maxHeight: .infinity, alignment: .top)
             .background(cardBackground)
             .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
             .overlay(cardBorder)
