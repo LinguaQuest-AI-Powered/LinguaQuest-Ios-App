@@ -14,6 +14,7 @@ final class MindReaderGuessViewModel {
     private let router: RouterProtocol
     let statsService: StatsService
     private let coordinator: MindReaderGameCoordinator
+    private let speechSynthesizer: SpeechSynthesizerProtocol
     
     // MARK: - Computed Properties (from Coordinator)
     
@@ -30,15 +31,19 @@ final class MindReaderGuessViewModel {
     init(
         router: RouterProtocol,
         statsService: StatsService,
-        coordinator: MindReaderGameCoordinator
+        coordinator: MindReaderGameCoordinator,
+        speechSynthesizer: SpeechSynthesizerProtocol
     ) {
         self.router = router
         self.statsService = statsService
         self.coordinator = coordinator
+        self.speechSynthesizer = speechSynthesizer
     }
     
     func onListenTapped() {
-        // Text-to-speech logic - future enhancement
+        guard !guessedWord.isEmpty else { return }
+        let targetLanguage = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.targetLanguageName) ?? "Spanish"
+        speechSynthesizer.speak(text: guessedWord, languageCode: targetLanguage.toSpeechLanguageCode())
     }
     
     func onYesGotItTapped() {
