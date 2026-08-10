@@ -49,10 +49,12 @@ struct SharedImageLoadingView: View {
                         .opacity(isAnalyzingPulsing ? 1.0 : 0.7)
                         .animation(.easeInOut(duration: 1.0).repeatForever(autoreverses: true), value: isAnalyzingPulsing)
                     
-                    Text(subtitle)
-                        .dialogSubtitleStyle()
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 16)
+                    if !subtitle.isEmpty {
+                        Text(subtitle)
+                            .dialogSubtitleStyle()
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 16)
+                    }
                 }
             }
             .padding(.bottom, 24)

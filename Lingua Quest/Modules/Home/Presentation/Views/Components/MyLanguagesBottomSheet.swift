@@ -126,6 +126,13 @@ struct MyLanguagesBottomSheet: View {
                 }
             }
         }
+        .appDialog(isPresented: Binding(get: { languageViewModel.isSwitchingLanguage }, set: { _ in })) {
+            SharedImageLoadingView(
+                imageAsset: .chooseLanguageBird,
+                title: L10n.Common.loading,
+                subtitle: ""
+            )
+        }
     }
 }
 

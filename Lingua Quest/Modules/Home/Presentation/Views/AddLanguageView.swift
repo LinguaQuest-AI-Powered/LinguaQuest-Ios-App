@@ -122,6 +122,13 @@ struct AddLanguageView: View {
                 await languageViewModel.loadAvailableLanguages()
             }
         }
+        .appDialog(isPresented: Binding(get: { languageViewModel.isAddingLanguages }, set: { _ in })) {
+            SharedImageLoadingView(
+                imageAsset: .chooseLanguageBird,
+                title: L10n.Common.loading,
+                subtitle: ""
+            )
+        }
     }
 }
 
