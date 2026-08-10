@@ -79,9 +79,22 @@ final class CameraManager: NSObject {
     
     func toggleFlash() {
         isFlashOn.toggle()
+        
+        guard let device = videoDeviceInput?.device, device.hasTorch else { return }
+        do {
+            try device.lockForConfiguration()
+            device.torchMode = isFlashOn ? .on : .off
+            device.unlockForConfiguration()
+        } catch {
+            print("Failed to toggle torch: \(error)")
+        }
     }
     
     func flipCamera() {
+        if isFlashOn {
+            toggleFlash() // Turn it off safely before flipping
+        }
+        
         session.beginConfiguration()
         guard let currentInput = videoDeviceInput else {
             session.commitConfiguration()

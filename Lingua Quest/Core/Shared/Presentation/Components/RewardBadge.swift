@@ -42,13 +42,41 @@ struct RewardBadge: View {
     
     @Environment(\.colorScheme) private var colorScheme
     
+    var formattedValue: String {
+        let pattern = "\\d{1,3}(?:,\\d{3})+|\\d+"
+        guard let regex = try? NSRegularExpression(pattern: pattern),
+              let match = regex.firstMatch(in: value, range: NSRange(value.startIndex..., in: value)),
+              let range = Range(match.range, in: value) else {
+            return value
+        }
+        
+        let numStr = String(value[range])
+        let pureNumStr = numStr.replacingOccurrences(of: ",", with: "")
+        if let val = Int(pureNumStr), val >= 1000 {
+            let num = Double(val)
+            let formattedStr: String
+            if num >= 1_000_000 {
+                let formatted = (num / 1_000_000 * 10).rounded() / 10
+                formattedStr = formatted.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0fM", formatted) : String(format: "%.1fM", formatted)
+            } else {
+                let formatted = (num / 1_000 * 10).rounded() / 10
+                formattedStr = formatted.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0fk", formatted) : String(format: "%.1fk", formatted)
+            }
+            var newValue = value
+            newValue.replaceSubrange(range, with: formattedStr)
+            return newValue
+        }
+        
+        return value
+    }
+    
     var body: some View {
         HStack(spacing: iconSpacing) {
             Image(systemIcon: type.icon)
                 .font(iconFont)
                 .foregroundColor(type.color)
             
-            Text(value)
+            Text(formattedValue)
                 .appTextStyle(textFont, color: .appBrandBrown)
                 .lineLimit(1)
                 .minimumScaleFactor(0.8)

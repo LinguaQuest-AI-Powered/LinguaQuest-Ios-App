@@ -83,7 +83,7 @@ struct CameraTaskQuestView: View {
                                 .shadow(color: Color.orange.opacity(0.2), radius: 8, x: 0, y: 4)
                             
                             Button(action: {
-                                // Play audio action
+                                viewModel.playAudio()
                             }) {
                                 Image(systemIcon: .speakerWave2Fill)
                                     .appTextStyle(.headingMediumBold, color: .appTextSecondary)
