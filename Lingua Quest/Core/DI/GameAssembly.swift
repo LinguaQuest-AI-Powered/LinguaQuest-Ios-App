@@ -64,11 +64,13 @@ final class GameAssembly: Assembly {
             let statsService = resolver.resolve(StatsServiceProtocol.self)!
             let hintUseCase = resolver.resolve(GetHintUseCase.self)!
             let changeWordUseCase = resolver.resolve(ChangeWordUseCase.self)!
+            let speechSynthesizer = resolver.resolve(SpeechSynthesizerProtocol.self)!
             return CameraTaskQuestViewModel(
                 router: router,
                 statsService: statsService,
                 getHintUseCase: hintUseCase,
                 changeWordUseCase: changeWordUseCase,
+                speechSynthesizer: speechSynthesizer,
                 worldId: worldId,
                 worldName: worldName,
                 levelId: levelId,

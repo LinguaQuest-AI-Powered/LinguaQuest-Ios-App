@@ -33,12 +33,14 @@ class CameraTaskQuestViewModel {
     
     private let getHintUseCase: GetHintUseCase
     private let changeWordUseCase: ChangeWordUseCase
+    private let speechSynthesizer: SpeechSynthesizerProtocol
     
-    init(router: RouterProtocol, statsService: StatsServiceProtocol, getHintUseCase: GetHintUseCase, changeWordUseCase: ChangeWordUseCase, worldId: Int = 1, worldName: String = "World", levelId: Int = 3, levelOrder: Int = 1, targetWord: String = "PAN") {
+    init(router: RouterProtocol, statsService: StatsServiceProtocol, getHintUseCase: GetHintUseCase, changeWordUseCase: ChangeWordUseCase, speechSynthesizer: SpeechSynthesizerProtocol, worldId: Int = 1, worldName: String = "World", levelId: Int = 3, levelOrder: Int = 1, targetWord: String = "PAN") {
         self.router = router
         self.statsService = statsService
         self.getHintUseCase = getHintUseCase
         self.changeWordUseCase = changeWordUseCase
+        self.speechSynthesizer = speechSynthesizer
         self.worldId = worldId
         self.worldName = worldName
         self.levelId = levelId
@@ -113,5 +115,11 @@ class CameraTaskQuestViewModel {
     // Add logic here later like request camera permissions, analyze frame, etc.
     func onCaptureSuccess(capturedWord: WordCardEntity) {
         router.push(.wordInsight(word: capturedWord))
+    }
+    
+    func playAudio() {
+        // Play the target word. In a real app we'd pass the active language code
+        // Defaulting to Spanish "es" if it's a Spanish learning app, or fallback to en
+        speechSynthesizer.speak(text: targetWord, languageCode: "es")
     }
 }
