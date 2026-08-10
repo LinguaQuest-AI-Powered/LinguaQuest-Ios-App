@@ -109,7 +109,21 @@ final class HomeViewModel {
         
         async let homeDataTask = getHomeDataUseCase.execute()
         async let statsTask = statsService.fetchStats()
-        async let continueLevelTask: ContinueLevelEntity? = try? getContinueLevelUseCase.execute()
+        async let continueLevelTask: ContinueLevelEntity? = {
+            guard let cl = try? await getContinueLevelUseCase.execute() else { return nil }
+            if cl.word == nil || cl.word?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == true {
+                if let startEntity = try? await startLevelUseCase.execute(worldId: cl.worldId, levelId: cl.levelId) {
+                    return ContinueLevelEntity(
+                        worldId: cl.worldId,
+                        worldName: cl.worldName,
+                        levelId: cl.levelId,
+                        levelOrder: cl.levelOrder,
+                        word: startEntity.targetWord
+                    )
+                }
+            }
+            return cl
+        }()
         
         await dailyMissionCardViewModel.loadMission()
 

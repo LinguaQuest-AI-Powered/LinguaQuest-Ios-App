@@ -60,6 +60,7 @@ struct ObjectDetectionCardView: View {
             )
         }
         .buttonStyle(HomeScaleButtonStyle())
+        .disabled(isLoading)
         .onAppear { startAnimations() }
     }
 }
@@ -77,6 +78,9 @@ private extension ObjectDetectionCardView {
                     .font(AppTextStyle.headingMediumBold.font)
                     .foregroundColor(.appTextHeading)
                     .lineLimit(1)
+                    .id(displayWorldName)
+                    .transition(.opacity.combined(with: .move(edge: .bottom)))
+                    .animation(.spring(response: 0.6, dampingFraction: 0.7), value: displayWorldName)
                 
                 Text(L10n.Home.findAndCapture)
                     .font(AppTextStyle.bodyMedium.font)
@@ -95,6 +99,9 @@ private extension ObjectDetectionCardView {
             .foregroundColor(.appTextSecondary)
             .padding(.horizontal, 12)
             .padding(.vertical, 6)
+            .id(levelOrder)
+            .transition(.opacity.combined(with: .scale(scale: 0.8)))
+            .animation(.spring(response: 0.6, dampingFraction: 0.7), value: levelOrder)
             .background(
                 Capsule()
                     .fill(Color.appSurfaceCardWarm)
@@ -174,6 +181,9 @@ private extension ObjectDetectionCardView {
                 .minimumScaleFactor(0.45)
                 .frame(maxWidth: 90)
                 .padding(.horizontal, 4)
+                .id(displayWord)
+                .transition(.opacity.combined(with: .scale(scale: 0.8)))
+                .animation(.spring(response: 0.6, dampingFraction: 0.7), value: displayWord)
         }
         .scaleEffect(plateScale)
         .rotationEffect(.degrees(plateRotation))
@@ -184,11 +194,16 @@ private extension ObjectDetectionCardView {
 private extension ObjectDetectionCardView {
     var continueButton: some View {
         HStack(spacing: 8) {
-            Image(systemIcon: .camera)
-                .font(.system(size: 16, weight: .bold))
-            
-            Text(L10n.Home.continueButton)
-                .font(AppTextStyle.bodyLargeBold.font)
+            if isLoading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
+            } else {
+                Image(systemIcon: .camera)
+                    .font(.system(size: 16, weight: .bold))
+                
+                Text(L10n.Home.continueButton)
+                    .font(AppTextStyle.bodyLargeBold.font)
+            }
         }
         .foregroundColor(.white)
         .frame(maxWidth: .infinity)
