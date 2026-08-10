@@ -73,11 +73,20 @@ final class NotificationsRepositoryImpl: NotificationsRepositoryProtocol {
     }
     
     private func mapNotificationDTO(_ dto: NotificationDTO) -> NotificationEntity {
-        // Date parsing could be added here if there's a specific format, e.g. ISO8601. 
-        // For simplicity using Date() fallback if parsing fails.
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        let date = formatter.date(from: dto.createdAt) ?? Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        
+        var parsedDate: Date? = formatter.date(from: dto.createdAt)
+        
+        if parsedDate == nil {
+            let isoFormatter = ISO8601DateFormatter()
+            isoFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            parsedDate = isoFormatter.date(from: dto.createdAt) ?? ISO8601DateFormatter().date(from: dto.createdAt)
+        }
+        
+        let date = parsedDate ?? Date()
         
         return NotificationEntity(
             id: dto.id,

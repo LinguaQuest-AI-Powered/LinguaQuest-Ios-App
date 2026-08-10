@@ -75,7 +75,10 @@ final class LoginViewModel {
                     if let error = error {
                         print("Error fetching FCM registration token: \(error)")
                     } else if let token = token {
-                        print("FCM Token after login success: \(token)")
+                        print("\n========================================")
+                        print("📱 🔔 NOTIFICATION DEVICE TOKEN (EMAIL LOGIN) 🔔📱")
+                        print("TOKEN: \(token)")
+                        print("========================================\n")
                         // Send FCM Token to backend
                         Task {
                             _ = await self.registerDeviceUseCase.execute(token: token)
@@ -160,7 +163,10 @@ final class LoginViewModel {
                 if let error = error {
                     print("Error fetching FCM registration token: \(error)")
                 } else if let token = token {
-                    print("FCM Token after OAuth login success: \(token)")
+                    print("\n========================================")
+                    print("📱 🔔 NOTIFICATION DEVICE TOKEN (OAUTH LOGIN) 🔔📱")
+                    print("TOKEN: \(token)")
+                    print("========================================\n")
                     // Send FCM Token to backend
                     Task {
                         _ = await self.registerDeviceUseCase.execute(token: token)
