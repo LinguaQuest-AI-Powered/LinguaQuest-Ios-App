@@ -13,7 +13,6 @@ struct AchievementsView: View {
     @State private var isAnimating = false
     @State private var selectedTab: Int = 0 // 0 = ALL, 1 = EARNED, 2 = LOCKED
     @State private var selectedAchievement: FullAchievementUIModel? = nil
-    
     var statusString: String {
         switch selectedTab {
         case 1: return "EARNED"
@@ -194,7 +193,8 @@ struct AchievementsView: View {
                 AchievementDetailSheet(
                     title: achievement.title,
                     subtitle: achievement.subtitle,
-                    iconUrl: achievement.iconUrl,
+                    uiIcon: achievement.uiIcon,
+                    uiIconColor: achievement.uiIconColor,
                     status: achievement.status,
                     progressPercent: achievement.progressPercent,
                     xpReward: achievement.xpReward,
@@ -249,35 +249,16 @@ struct AchievementGridItem: View {
     var body: some View {
         VStack(spacing: 12) {
             ZStack(alignment: .bottomTrailing) {
-                Circle()
-                    .fill(achievement.uiBgColor)
-                    .frame(width: 60, height: 60)
-                
-                if let urlString = achievement.iconUrl, let url = URL(string: urlString) {
-                    AsyncImage(url: url) { phase in
-                        switch phase {
-                        case .empty:
-                            ProgressView()
-                        case .success(let image):
-                            image.resizable()
-                                .scaledToFit()
-                                .frame(width: 32, height: 32)
-                        case .failure:
-                            Image(systemIcon: achievement.isEarned ? .starFill : .lockFill)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 24, height: 24)
-                                .foregroundColor(achievement.isEarned ? .appBrandBrown : .appTextSecondary)
-                        @unknown default:
-                            EmptyView()
-                        }
-                    }
-                } else {
-                    Image(systemIcon: achievement.isEarned ? .starFill : .lockFill)
+                ZStack {
+                    Circle()
+                        .fill(achievement.uiBgColor)
+                        .frame(width: 60, height: 60)
+                    
+                    Image(systemIcon: achievement.uiIcon)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(achievement.isEarned ? .appBrandBrown : .appTextSecondary)
+                        .frame(width: 32, height: 32)
+                        .foregroundColor(achievement.isEarned ? achievement.uiIconColor : .appTextSecondary)
                 }
                 
                 if !achievement.isEarned {
