@@ -349,9 +349,15 @@ final class SettingsViewModel {
         router.push(.helpAndSupport)
     }
     
+    var isLoggingOut: Bool = false
+    
     func logOut() {
+        isLoggingOut = true
         Task {
             await sessionManager.logout(allDevices: false)
+            await MainActor.run {
+                self.isLoggingOut = false
+            }
         }
     }
     

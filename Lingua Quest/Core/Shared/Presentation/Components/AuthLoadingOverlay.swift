@@ -10,6 +10,8 @@ import SwiftUI
 struct AuthLoadingOverlay: ViewModifier {
     @Environment(\.colorScheme) private var colorScheme
     let isLoading: Bool
+    var text: String? = nil
+    var mascotImage: Image.Asset? = nil
     @State private var isPulsing: Bool = false
 
     // MARK: - Layout Constants (matching DialogCardContainer)
@@ -50,7 +52,7 @@ struct AuthLoadingOverlay: ViewModifier {
                                 .animation(.easeOut(duration: 1.8).delay(0.2).repeatForever(autoreverses: false), value: isPulsing)
 
                             // Floating Mascot
-                            Image(asset: .bird)
+                            Image(asset: mascotImage ?? .bird)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 110, height: 110)
@@ -59,7 +61,7 @@ struct AuthLoadingOverlay: ViewModifier {
                         }
 
                         VStack(spacing: 16) {
-                            Text(L10n.Common.loading)
+                            Text(text ?? L10n.Common.loading)
                                 .dialogTitleStyle()
 
                             ProgressView()
@@ -127,7 +129,7 @@ struct AuthLoadingOverlay: ViewModifier {
 }
 
 extension View {
-    func authLoadingOverlay(isLoading: Bool) -> some View {
-        self.modifier(AuthLoadingOverlay(isLoading: isLoading))
+    func authLoadingOverlay(isLoading: Bool, text: String? = nil, mascotImage: Image.Asset? = nil) -> some View {
+        self.modifier(AuthLoadingOverlay(isLoading: isLoading, text: text, mascotImage: mascotImage))
     }
 }

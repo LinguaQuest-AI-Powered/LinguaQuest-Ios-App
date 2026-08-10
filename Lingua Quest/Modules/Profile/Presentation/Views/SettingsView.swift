@@ -58,7 +58,14 @@ struct SettingsView: View {
                 onSave: { showRepeatPicker = false }
             )
         }
-
+        .appDialog(isPresented: Binding(get: { viewModel.isLoggingOut }, set: { _ in })) {
+            SharedImageLoadingView(
+                imageAsset: .logoutBird,
+                title: L10n.Settings.logOut,
+                subtitle: L10n.Common.loading,
+                imageSize: 160
+            )
+        }
         .appDialog(isPresented: $showLogoutConfirm) {
             LogoutConfirmDialog(
                 onConfirm: {

@@ -8,8 +8,6 @@ struct LogoutConfirmDialog: View {
         DialogCardContainer(
             showMascot: true,
             mascotImage: .logoutBird,
-            customMascotSize: CGSize(width: 300, height: 300),
-            customTopSpacing: 70,
             speechBubbleText: nil
         ) {
             VStack(spacing: 20) {
