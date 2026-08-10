@@ -21,8 +21,7 @@ struct MindReaderGuessView: View {
                     xp: viewModel.statsService.xp,
                     coins: viewModel.statsService.coins
                 )
-                
-                Spacer()
+                Spacer().frame(maxHeight: 30)
                 
                 // Main Guess Card
                 DialogCardContainer(
@@ -85,6 +84,8 @@ struct MindReaderGuessView: View {
                 }
                 .padding(.horizontal, 20)
                 .padding(.bottom, 32)
+                
+                Spacer() // Pushes everything up
             }
             
             if viewModel.isLoading {
