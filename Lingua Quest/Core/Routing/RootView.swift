@@ -17,73 +17,79 @@ struct RootView: View {
     @State private var isSplashFinished = false
     
     var body: some View {
-        Group {
+        ZStack {
+            Color(red: 4/255, green: 115/255, blue: 125/255)
+                .ignoresSafeArea() // Persistent background to prevent white flashes during transition
+            
+            Group {
+                NavigationStack(path: $router.path) {
+                Group {
+                    if !isOnboardingCompleted {
+                        router.view(for: .onBoarding)
+                    } else if isLoggedIn && needsProfileCompletion {
+                        router.view(for: .completeProfile)
+                    } else if isLoggedIn {
+                        router.view(for: .home)
+                    } else {
+                        router.view(for: .login)
+                    }
+                }
+                .navigationDestination(for: AppRoute.self) { route in
+                    router.view(for: route)
+                }
+            }
+            
             if !isSplashFinished {
                 SplashView()
+                    .transition(.opacity)
+                    .zIndex(1)
                     .onAppear {
-                        // The SplashView animation runs for exactly 1.28 seconds (200ms + 9*120ms)
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.3) {
-                            withAnimation {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + SplashConfig.totalDuration) {
+                            withAnimation(.easeInOut(duration: 0.4)) {
                                 isSplashFinished = true
                             }
                         }
                     }
-            } else {
-                NavigationStack(path: $router.path) {
-                    Group {
-                        if !isOnboardingCompleted {
-                            router.view(for: .onBoarding)
-                        } else if isLoggedIn && needsProfileCompletion {
-                            router.view(for: .completeProfile)
-                        } else if isLoggedIn {
-                            router.view(for: .home)
-                        } else {
-                            router.view(for: .login)
-                        }
-                    }
-                    .navigationDestination(for: AppRoute.self) { route in
-                        router.view(for: route)
-                    }
+            }
+            }
+            .id(userPreferences.appLanguage)
+            .sheet(item: $router.presentedSheet) { sheet in
+                switch sheet {
+                case .dummy: EmptyView()
                 }
             }
-        }
-        .id(userPreferences.appLanguage)
-        .sheet(item: $router.presentedSheet) { sheet in
-            switch sheet {
-            case .dummy: EmptyView()
-            }
-        }
-        .environment(router)
-        .environment(\.soundPlayer, Resolver.shared.resolve(AppSoundPlayer.self))
-        .preferredColorScheme(userPreferences.isDarkMode ? .dark : .light)
-        .environment(\.locale, Locale(identifier: userPreferences.appLanguage))
-        .environment(\.layoutDirection, userPreferences.appLanguage == "ar" ? .rightToLeft : .leftToRight)
-        .globalVocabularyDeepLink()
-        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("PushNotificationTapped"))) { _ in
-            if isLoggedIn {
-                router.push(.notifications)
-            }
-        }
-        .appDialog(isPresented: .init(
-            get: { !networkMonitor.isConnected },
-            set: { _ in }
-        )) {
-            DialogCardContainer(
-                showMascot: true,
-                mascotImage: .noInternet,
-                speechBubbleText: L10n.Network.noConnection,
-                onMascotTap: nil
-            ) {
-                VStack(spacing: 8) {
-                    Text(L10n.Network.offlineTitle)
-                        .dialogTitleStyle()
-                        .multilineTextAlignment(.center)
-                    
-                    Text(L10n.Network.offlineSubtitle)
-                        .dialogSubtitleStyle()
-                        .multilineTextAlignment(.center)
+            .environment(router)
+            .environment(\.soundPlayer, Resolver.shared.resolve(AppSoundPlayer.self))
+            .preferredColorScheme(userPreferences.isDarkMode ? .dark : .light)
+            .environment(\.locale, Locale(identifier: userPreferences.appLanguage))
+            .environment(\.layoutDirection, userPreferences.appLanguage == "ar" ? .rightToLeft : .leftToRight)
+            .globalVocabularyDeepLink()
+            .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("PushNotificationTapped"))) { _ in
+                if isLoggedIn {
+                    router.push(.notifications)
                 }
-                .padding(.top, 10)
+            }
+            .appDialog(isPresented: .init(
+                get: { !networkMonitor.isConnected },
+                set: { _ in }
+            )) {
+                DialogCardContainer(
+                    showMascot: true,
+                    mascotImage: .noInternet,
+                    speechBubbleText: L10n.Network.noConnection,
+                    onMascotTap: nil
+                ) {
+                    VStack(spacing: 8) {
+                        Text(L10n.Network.offlineTitle)
+                            .dialogTitleStyle()
+                            .multilineTextAlignment(.center)
+                        
+                        Text(L10n.Network.offlineSubtitle)
+                            .dialogSubtitleStyle()
+                            .multilineTextAlignment(.center)
+                    }
+                    .padding(.top, 10)
+                }
             }
         }
     }

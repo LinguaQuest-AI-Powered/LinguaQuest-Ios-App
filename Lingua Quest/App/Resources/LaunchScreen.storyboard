@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24128" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24128" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="02J-lp-oVN">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
@@ -10,38 +10,69 @@
         <!--View Controller-->
         <scene sceneID="EHf-IW-A2E">
             <objects>
-                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                <viewController id="02J-lp-oVN" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6c-3t4">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="stack-view">
-                                <rect key="frame" x="20" y="216" width="353" height="518"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="linguaquest_circle" translatesAutoresizingMaskIntoConstraints="NO" id="img-splashicon">
-                                        <rect key="frame" x="0.0" y="0.0" width="353" height="353"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="img-splashicon" secondAttribute="height" multiplier="1:1" id="aspect-circle"/>
-                                        </constraints>
-                                    </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="linguaQuest" translatesAutoresizingMaskIntoConstraints="NO" id="img-logo">
-                                        <rect key="frame" x="21" y="403" width="311" height="254"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="img-logo" secondAttribute="height" multiplier="338:276" id="aspect-logo"/>
-                                        </constraints>
-                                    </imageView>
-                                </subviews>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="img-bird-new">
+                                <rect key="frame" x="70.666666666666671" y="326" width="251.66666666666663" height="251"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="img-logo" firstAttribute="width" secondItem="img-splashicon" secondAttribute="width" multiplier="0.88" id="c-logo-w"/>
+                                    <constraint firstAttribute="width" secondItem="img-bird-new" secondAttribute="height" multiplier="1:1" id="bird-ratio-new"/>
                                 </constraints>
-                            </stackView>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="splashLaunchImage" translatesAutoresizingMaskIntoConstraints="NO" id="view-circle-new">
+                                <rect key="frame" x="58" y="313.33333333333326" width="277" height="276.66666666666674"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="view-circle-new" secondAttribute="height" multiplier="1:1" id="circle-ratio-new"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="linguaQuest" translatesAutoresizingMaskIntoConstraints="NO" id="img-logo-new">
+                                <rect key="frame" x="47" y="74" width="299" height="244"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="img-logo-new" secondAttribute="height" multiplier="338:276" id="logo-ratio-new"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="img-star1-new">
+                                <rect key="frame" x="41.333333333333329" y="296.66666666666669" width="39.333333333333329" height="39.333333333333314"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="img-star1-new" secondAttribute="height" multiplier="1:1" id="star1-ratio-new"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="img-star2-new">
+                                <rect key="frame" x="312.33333333333331" y="547" width="29.666666666666686" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="img-star2-new" secondAttribute="height" multiplier="1:1" id="star2-ratio-new"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LinguaQuest" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbl-bottom-new">
+                                <rect key="frame" x="125" y="715" width="143" height="29"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.015686274510000001" green="0.45098039220000002" blue="0.49019607840000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="stack-view" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="c-sv-l"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="stack-view" secondAttribute="trailing" constant="20" id="c-sv-r"/>
-                            <constraint firstItem="stack-view" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="-40" id="c-sv-y"/>
+                            <constraint firstItem="img-bird-new" firstAttribute="centerX" secondItem="Ze5-6c-3t4" secondAttribute="centerX" id="bird-cx-new"/>
+                            <constraint firstItem="img-bird-new" firstAttribute="centerY" secondItem="Ze5-6c-3t4" secondAttribute="centerY" multiplier="1.06" id="bird-cy-new"/>
+                            <constraint firstItem="img-bird-new" firstAttribute="width" secondItem="Ze5-6c-3t4" secondAttribute="width" multiplier="0.64" id="bird-pw-new"/>
+                            <constraint firstItem="lbl-bottom-new" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="-40" id="bottom-bt-new"/>
+                            <constraint firstItem="lbl-bottom-new" firstAttribute="centerX" secondItem="Ze5-6c-3t4" secondAttribute="centerX" id="bottom-cx-new"/>
+                            <constraint firstItem="view-circle-new" firstAttribute="centerX" secondItem="Ze5-6c-3t4" secondAttribute="centerX" id="circle-cx-new"/>
+                            <constraint firstItem="view-circle-new" firstAttribute="centerY" secondItem="Ze5-6c-3t4" secondAttribute="centerY" multiplier="1.06" id="circle-cy-new"/>
+                            <constraint firstItem="view-circle-new" firstAttribute="width" secondItem="Ze5-6c-3t4" secondAttribute="width" multiplier="0.704" id="circle-pw-new"/>
+                            <constraint firstItem="img-logo-new" firstAttribute="centerX" secondItem="Ze5-6c-3t4" secondAttribute="centerX" id="logo-cx-new"/>
+                            <constraint firstItem="img-logo-new" firstAttribute="centerY" secondItem="Ze5-6c-3t4" secondAttribute="centerY" multiplier="0.46" id="logo-cy-new"/>
+                            <constraint firstItem="img-logo-new" firstAttribute="width" secondItem="Ze5-6c-3t4" secondAttribute="width" multiplier="0.76" id="logo-pw-new"/>
+                            <constraint firstItem="img-star1-new" firstAttribute="bottom" secondItem="img-bird-new" secondAttribute="top" constant="10" id="star1-bt-new"/>
+                            <constraint firstItem="img-star1-new" firstAttribute="width" secondItem="Ze5-6c-3t4" secondAttribute="width" multiplier="0.1" id="star1-pw-new"/>
+                            <constraint firstItem="img-star1-new" firstAttribute="right" secondItem="img-bird-new" secondAttribute="left" constant="10" id="star1-tr-new"/>
+                            <constraint firstItem="img-star2-new" firstAttribute="left" secondItem="img-bird-new" secondAttribute="right" constant="-10" id="star2-ld-new"/>
+                            <constraint firstItem="img-star2-new" firstAttribute="width" secondItem="Ze5-6c-3t4" secondAttribute="width" multiplier="0.076" id="star2-pw-new"/>
+                            <constraint firstItem="img-star2-new" firstAttribute="top" secondItem="img-bird-new" secondAttribute="bottom" constant="-30" id="star2-tp-new"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -52,6 +83,7 @@
     </scenes>
     <resources>
         <image name="linguaQuest" width="338" height="276"/>
-        <image name="linguaquest_circle" width="350" height="391"/>
+        <image name="splashLaunchImage" width="166.66667175292969" height="166.66667175292969"/>
+        <image name="star" width="20" height="19"/>
     </resources>
 </document>
