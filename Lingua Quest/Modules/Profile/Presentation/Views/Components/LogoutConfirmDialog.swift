@@ -8,7 +8,8 @@ struct LogoutConfirmDialog: View {
         DialogCardContainer(
             showMascot: true,
             mascotImage: .logoutBird,
-            customMascotSize: CGSize(width: 400, height: 400),
+            customMascotSize: CGSize(width: 300, height: 300),
+            customTopSpacing: 70,
             speechBubbleText: nil
         ) {
             VStack(spacing: 20) {
@@ -24,7 +25,7 @@ struct LogoutConfirmDialog: View {
                 
                 VStack(spacing: 12) {
                     CustomButton(
-                        type: .custom(textColor: .appTextOnPrimary, buttonColor: .appAccentOrange, shadowColor: .appBrandBrownDark),
+                        type: .custom(textColor: .white, buttonColor: .appSemanticError),
                         text: L10n.Settings.logOut,
                         action: onConfirm
                     )

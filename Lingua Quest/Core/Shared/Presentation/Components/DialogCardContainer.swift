@@ -18,7 +18,10 @@ struct DialogCardContainer<Content: View>: View {
     private var mascotOffset: CGFloat {
         mascotHeight * 0.5
     }
-    private var mascotTopSpacing: CGFloat { showMascot ? (mascotOffset - 10) : 32 }
+    private var mascotTopSpacing: CGFloat {
+        if let custom = customTopSpacing { return custom }
+        return showMascot ? (mascotOffset - 10) : 32
+    }
     private var horizontalPadding: CGFloat { 20 }
     private var bottomPadding: CGFloat { 30 }
     private var cornerRadius: CGFloat { 48 }
@@ -32,6 +35,7 @@ struct DialogCardContainer<Content: View>: View {
     private let showMascot: Bool
     private let mascotImage: Image.Asset
     private let customMascotSize: CGSize?
+    private let customTopSpacing: CGFloat?
     private let speechBubbleText: String?
     private let customSpeechBubble: AnyView?
     private let speechBubbleAnimated: Bool
@@ -43,6 +47,7 @@ struct DialogCardContainer<Content: View>: View {
         showMascot: Bool = true,
         mascotImage: Image.Asset = .bird,
         customMascotSize: CGSize? = nil,
+        customTopSpacing: CGFloat? = nil,
         speechBubbleText: String? = nil,
         customSpeechBubble: AnyView? = nil,
         speechBubbleAnimated: Bool = true,
@@ -53,6 +58,7 @@ struct DialogCardContainer<Content: View>: View {
         self.showMascot = showMascot
         self.mascotImage = mascotImage
         self.customMascotSize = customMascotSize
+        self.customTopSpacing = customTopSpacing
         self.speechBubbleText = speechBubbleText
         self.customSpeechBubble = customSpeechBubble
         self.speechBubbleAnimated = speechBubbleAnimated
