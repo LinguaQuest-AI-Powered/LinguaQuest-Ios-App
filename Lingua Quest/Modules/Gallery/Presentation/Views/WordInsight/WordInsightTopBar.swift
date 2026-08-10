@@ -13,17 +13,27 @@ struct WordInsightTopBar: View {
     
     // MARK: - Body
     var body: some View {
-        ZStack {
-            Text(L10n.WordInsight.title)
-                .appTextStyle(.headingMediumBold, color: .appTextHeading)
+        HStack {
+            CustomBackButton(action: onBackTapped)
             
-            HStack {
-                CustomBackButton(action: onBackTapped)
-                Spacer()
-            }
+            Spacer()
+            
+            // Invisible view for balancing
+            Color.clear.frame(width: 44, height: 44)
         }
+        .overlay(
+            Text(L10n.WordInsight.title)
+                .appTextStyle(.headingLarge, color: .appTextHeading)
+        )
         .padding(.horizontal, 20)
-        .frame(height: 56)
+        .frame(height: 64)
+        .background(Color.clear)
+        .overlay(
+            Rectangle()
+                .frame(height: 1)
+                .foregroundColor(Color.appBorderBrown),
+            alignment: .bottom
+        )
     }
 }
 
