@@ -151,9 +151,10 @@ final class LoginViewModel {
     // MARK: - OAuth Shared Flow
     private func handleOAuth(_ provider: OAuthProviderType) async {
         errorMessage = nil
-        isLoading = true
 
-        let result = await oauthSignInHandler.handleSignIn(provider: provider)
+        let result = await oauthSignInHandler.handleSignIn(provider: provider) {
+            self.isLoading = true
+        }
         isLoading = false
 
         switch result {
@@ -205,7 +206,8 @@ extension LoginViewModel {
             }
         }
         class MockOAuthSignInHandler: OAuthSignInHandlerProtocol {
-            func handleSignIn(provider: OAuthProviderType) async -> OAuthSignInResult {
+            func handleSignIn(provider: OAuthProviderType, onTokenReceived: @MainActor @Sendable () -> Void) async -> OAuthSignInResult {
+                await onTokenReceived()
                 return .failure(message: "Mock failure")
             }
         }
