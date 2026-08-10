@@ -54,11 +54,11 @@ struct LingosGameCardView: View {
             .padding(.top, 20)
             .padding(.bottom, 16)
             
-            CustomButton(
-                type: .custom(textColor: .white, buttonColor: .appAccentOrange, shadowColor: .appBrandBrownDark),
+            AppButton(
                 text: buttonText,
-                action: action,
-                leading: Image(systemIcon: .play)
+                icon: .play,
+                height: 48,
+                action: action
             )
             .padding(.horizontal, 20)
             .padding(.bottom, 20)
