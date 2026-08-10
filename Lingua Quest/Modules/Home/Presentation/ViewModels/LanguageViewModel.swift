@@ -44,6 +44,10 @@ final class LanguageViewModel {
         myLanguages.first(where: { $0.isActive })
     }
     
+    var isRTL: Bool {
+        userPreferences.appLanguage == "ar"
+    }
+    
     init(
         getMyLanguagesUseCase: GetMyLanguagesUseCase,
         getAvailableLanguagesUseCase: GetAvailableLanguagesUseCase,

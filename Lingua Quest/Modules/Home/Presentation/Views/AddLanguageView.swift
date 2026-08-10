@@ -122,6 +122,7 @@ struct AddLanguageView: View {
                 await languageViewModel.loadAvailableLanguages()
             }
         }
+        .environment(\.layoutDirection, languageViewModel.isRTL ? .rightToLeft : .leftToRight)
         .appDialog(isPresented: Binding(get: { languageViewModel.isAddingLanguages }, set: { _ in })) {
             SharedImageLoadingView(
                 imageAsset: .chooseLanguageBird,
