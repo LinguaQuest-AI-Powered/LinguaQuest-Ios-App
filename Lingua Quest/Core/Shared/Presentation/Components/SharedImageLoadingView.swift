@@ -11,6 +11,9 @@ struct SharedImageLoadingView: View {
     let imageAsset: Image.Asset
     let title: String
     let subtitle: String
+    var imageSize: CGFloat = 200
+    var circleSize: CGFloat = 250
+    var imageScale: CGFloat = 1.0
     
     @State private var isAnalyzingPulsing = false
     @State private var isImageFloating = false
@@ -26,13 +29,14 @@ struct SharedImageLoadingView: View {
                             Circle()
                                 .stroke(Color.appLoadingBorder, lineWidth: 8) // White border in light, dark in dark mode
                         )
-                        .frame(width: 250, height: 250)
+                        .frame(width: circleSize, height: circleSize)
                         .shadow(color: Color.black.opacity(0.08), radius: 10, x: 0, y: 4)
                     
                     Image(asset: imageAsset)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 200, height: 200)
+                        .frame(width: imageSize, height: imageSize)
+                        .scaleEffect(imageScale)
                         .offset(y: isImageFloating ? -5 : 5)
                         .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: isImageFloating)
                 }
