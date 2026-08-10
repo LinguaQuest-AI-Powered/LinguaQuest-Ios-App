@@ -57,25 +57,11 @@ struct ContinueLessonCardView: View {
                 }
             }
             
-            Button(action: action) {
-                HStack(spacing: 8) {
-                    Image(systemIcon: .play)
-                    Text(buttonText)
-                        .font(AppTextStyle.bodyLargeMedium.font)
-                }
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)
-                .frame(height: 56)
-                .background(
-                    LinearGradient(
-                        colors: [.appBrandPrimary, .appAccentOrange],
-                        startPoint: .leading,
-                        endPoint: .trailing
-                    )
-                )
-                .clipShape(Capsule())
-                .shadow(color: Color.appBrandPrimary.opacity(colorScheme == .dark ? 0.24 : 0.18), radius: 12, x: 0, y: 6)
-            }
+            AppButton(
+                text: buttonText,
+                icon: .play,
+                action: action
+            )
         }
         .padding(18)
         .background(

@@ -169,6 +169,74 @@ struct CustomLoadingIndicator: View {
     }
 }
 
+struct AppButton: View {
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.soundPlayer) private var soundPlayer
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var shimmerOffset: CGFloat = -200
+    
+    let text: String
+    let icon: Image.SystemIcon
+    var height: CGFloat = 56
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: {
+            soundPlayer.play(sound: .pop)
+            action()
+        }) {
+            HStack(spacing: 8) {
+                Image(systemIcon: icon)
+                Text(text)
+                    .font(AppTextStyle.bodyLargeMedium.font)
+             }
+            .foregroundColor(.white)
+            .frame(maxWidth: .infinity)
+            .frame(height: height)
+            .background(
+                ZStack {
+                    LinearGradient(
+                        colors: [.appBrandPrimary, .appAccentOrange],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                    
+                    if !reduceMotion {
+                        Capsule()
+                            .fill(
+                                LinearGradient(
+                                    colors: [
+                                        .clear,
+                                        .white.opacity(0.2),
+                                        .clear
+                                    ],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                            .offset(x: shimmerOffset)
+                            .mask(Capsule())
+                            .animation(
+                                .linear(duration: 2.0)
+                                .repeatForever(autoreverses: false)
+                                .delay(1.0),
+                                value: shimmerOffset
+                            )
+                    }
+                }
+            )
+            .clipShape(Capsule())
+            .shadow(color: Color.appBrandPrimary.opacity(colorScheme == .dark ? 0.24 : 0.18), radius: 12, x: 0, y: 6)
+        }
+        .onAppear {
+            guard !reduceMotion else { return }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                shimmerOffset = 400
+            }
+        }
+    }
+}
+
 #Preview {
     VStack(spacing: 24) {
         CustomButton(
