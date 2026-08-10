@@ -10,7 +10,8 @@ import SwiftUI
 struct AchievementDetailSheet: View {
     let title: String
     let subtitle: String
-    let iconUrl: String?
+    let uiIcon: Image.SystemIcon
+    let uiIconColor: Color
     let status: AchievementStatus
     let progressPercent: Int
     let xpReward: Int
@@ -75,32 +76,11 @@ struct AchievementDetailSheet: View {
                     .fill(isEarned ? Color.appBadgeTealBg.opacity(0.5) : Color.appSurfaceCardMuted)
                     .frame(width: 80, height: 80)
                 
-                if let urlString = iconUrl, let url = URL(string: urlString) {
-                    AsyncImage(url: url) { phase in
-                        switch phase {
-                        case .empty:
-                            ProgressView()
-                        case .success(let image):
-                            image.resizable()
-                                .scaledToFit()
-                                .frame(width: 44, height: 44)
-                        case .failure:
-                            Image(systemIcon: .starFill)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 36, height: 36)
-                                .foregroundColor(isEarned ? .appAccentTeal : .appTextSecondary)
-                        @unknown default:
-                            EmptyView()
-                        }
-                    }
-                } else {
-                    Image(systemIcon: isEarned ? .starFill : .lockFill)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 36, height: 36)
-                        .foregroundColor(isEarned ? .appAccentTeal : .appTextSecondary)
-                }
+                Image(systemIcon: uiIcon)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 44, height: 44)
+                    .foregroundColor(isEarned ? uiIconColor : .appTextSecondary)
             }
             
             // Status Pill Badge

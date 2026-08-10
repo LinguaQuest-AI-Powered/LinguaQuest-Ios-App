@@ -92,7 +92,8 @@ struct ProfileView: View {
                 AchievementDetailSheet(
                     title: achievement.title,
                     subtitle: achievement.subtitle,
-                    iconUrl: achievement.iconUrl,
+                    uiIcon: achievement.uiIcon,
+                    uiIconColor: achievement.uiIconColor,
                     status: achievement.status,
                     progressPercent: achievement.progressPercent,
                     xpReward: achievement.xpReward,
