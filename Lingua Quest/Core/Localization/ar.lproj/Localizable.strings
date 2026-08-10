@@ -305,6 +305,10 @@
 "add_language.search_placeholder" = "ابحث عن اللغات...";
 "add_language.add_selected_format" = "إضافة المحدد (%d)";
 "add_language.add_selected" = "إضافة المحدد";
+"add_language.empty_all_added_title" = "تمت إضافة جميع اللغات!";
+"add_language.empty_all_added_subtitle" = "لقد قمت بإضافة كل اللغات المتاحة لدينا. ابدأ التعلم وأتقنها جميعاً!";
+"add_language.empty_search_title" = "لا توجد نتائج";
+"add_language.empty_search_subtitle" = "لم نتمكن من العثور على أي لغات تطابق بحثك.";
 "auth_error_oauth_profile_setup_coming_soon" = "إعداد الملف الشخصي عبر تسجيل الدخول الاجتماعي سيكون متاحاً قريباً.";
 "auth_error_oauth_cancelled_or_failed" = "تم إلغاء تسجيل الدخول أو فشل.";
 

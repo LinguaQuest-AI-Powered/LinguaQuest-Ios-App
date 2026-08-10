@@ -458,10 +458,14 @@ enum L10n {
         static var title: String { localized("add_language.title") }
         static var subtitle: String { localized("add_language.subtitle") }
         static var searchPlaceholder: String { localized("add_language.search_placeholder") }
-        static func addSelectedFormat(_ count: Int) -> String {
+        static var addSelectedFormat: (Int) -> String = { count in
             String(format: localized("add_language.add_selected_format"), count)
         }
         static var addSelected: String { localized("add_language.add_selected") }
+        static var emptyAllAddedTitle: String { localized("add_language.empty_all_added_title") }
+        static var emptyAllAddedSubtitle: String { localized("add_language.empty_all_added_subtitle") }
+        static var emptySearchTitle: String { localized("add_language.empty_search_title") }
+        static var emptySearchSubtitle: String { localized("add_language.empty_search_subtitle") }
     }
 
     enum SpeakingLab {

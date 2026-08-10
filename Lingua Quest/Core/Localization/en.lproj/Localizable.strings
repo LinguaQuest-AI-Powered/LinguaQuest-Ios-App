@@ -302,6 +302,10 @@
 "add_language.search_placeholder" = "Search languages...";
 "add_language.add_selected_format" = "Add Selected (%d)";
 "add_language.add_selected" = "Add Selected";
+"add_language.empty_all_added_title" = "All Languages Added!";
+"add_language.empty_all_added_subtitle" = "You have already added all available languages. Start learning and master them all!";
+"add_language.empty_search_title" = "No Results Found";
+"add_language.empty_search_subtitle" = "We couldn't find any languages matching your search.";
 "auth_error_oauth_profile_setup_coming_soon" = "Profile setup for OAuth is coming soon.";
 "auth_error_oauth_cancelled_or_failed" = "Sign in with Google/Apple was cancelled or failed.";
 
