@@ -68,24 +68,28 @@ struct AddLanguageView: View {
             .padding(.bottom, 24)
             
             // Grid
-            ScrollView(showsIndicators: false) {
-                LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
-                    ForEach(filteredLanguages) { language in
-                        LanguageGridCell(
-                            language: language,
-                            isSelected: selectedLanguageIds.contains(language.id),
-                            action: {
-                                if selectedLanguageIds.contains(language.id) {
-                                    selectedLanguageIds.remove(language.id)
-                                } else {
-                                    selectedLanguageIds.insert(language.id)
+            if filteredLanguages.isEmpty {
+                emptyState
+            } else {
+                ScrollView(showsIndicators: false) {
+                    LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
+                        ForEach(filteredLanguages) { language in
+                            LanguageGridCell(
+                                language: language,
+                                isSelected: selectedLanguageIds.contains(language.id),
+                                action: {
+                                    if selectedLanguageIds.contains(language.id) {
+                                        selectedLanguageIds.remove(language.id)
+                                    } else {
+                                        selectedLanguageIds.insert(language.id)
+                                    }
                                 }
-                            }
-                        )
+                            )
+                        }
                     }
+                    .padding(.horizontal, 24)
+                    .padding(.bottom, 100)
                 }
-                .padding(.horizontal, 24)
-                .padding(.bottom, 100)
             }
             
             Spacer(minLength: 0)
@@ -197,6 +201,48 @@ struct LanguageGridCell: View {
     }
 }
 
+extension AddLanguageView {
+    private var emptyState: some View {
+        let isAllAdded = languageViewModel.availableLanguages.isEmpty
+        
+        return VStack(spacing: 24) {
+            Spacer()
+            
+            ZStack {
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [
+                                Color.appBrandPrimary.opacity(0.2),
+                                Color.appBrandPrimary.opacity(0.05)
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 140, height: 140)
+                
+                Image(systemIcon: isAllAdded ? .globe : .magnifyingglass)
+                    .font(.system(size: 64, weight: .light))
+                    .foregroundColor(.appBrandPrimary)
+            }
+            
+            VStack(spacing: 12) {
+                Text(isAllAdded ? L10n.AddLanguage.emptyAllAddedTitle : L10n.AddLanguage.emptySearchTitle)
+                    .appTextStyle(.headingMedium, color: .appTextHeading)
+                
+                Text(isAllAdded ? L10n.AddLanguage.emptyAllAddedSubtitle : L10n.AddLanguage.emptySearchSubtitle)
+                    .appTextStyle(.body, color: .appTextSecondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 40)
+            }
+            
+            Spacer()
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
 // #Preview {
 //     AddLanguageView(languageViewModel: LanguageViewModel(...))
 // }
