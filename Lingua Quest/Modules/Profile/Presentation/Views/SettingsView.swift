@@ -45,7 +45,13 @@ struct SettingsView: View {
             }
         )
         .navigationBarHidden(true)
-        .authLoadingOverlay(isLoading: viewModel.activationState == .checking)
+        .appDialog(isPresented: Binding(get: { viewModel.activationState == .checking || viewModel.activationState == .loading }, set: { _ in })) {
+            SharedImageLoadingView(
+                imageAsset: .loadingBird,
+                title: L10n.Common.loading,
+                subtitle: ""
+            )
+        }
         .appToast(
             isPresented: $viewModel.showToast,
             type: viewModel.toastType,
