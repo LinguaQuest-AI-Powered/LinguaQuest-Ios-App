@@ -16,14 +16,14 @@ struct OutlineButton: View {
         Button(action: action) {
             Text(text)
                 .appTextStyle(.bodyLargeBold, color: color)
-                .frame(maxWidth: .infinity, maxHeight: 32)
+                .frame(maxWidth: .infinity)
+                .frame(height: 56)
                 .contentShape(Rectangle())
         }
-        .padding()
         .background(Color.clear)
-        .cornerRadius(100)
+        .clipShape(Capsule())
         .overlay(
-            RoundedRectangle(cornerRadius: 100)
+            Capsule()
                 .stroke(color, lineWidth: 2)
         )
     }
