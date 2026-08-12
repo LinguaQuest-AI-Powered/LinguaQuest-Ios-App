@@ -208,7 +208,6 @@ final class UserPreferences: UserPreferencesProtocol {
     
     func resetSessionState() {
         userId = nil
-        isOnboardingCompleted = false
         isLoggedIn = false
         needsProfileCompletion = false
         spokenLanguageCode = nil
@@ -232,7 +231,6 @@ final class UserPreferences: UserPreferencesProtocol {
         reminderRepeatDays = [1,2,3,4,5,6,7]
         
         let keysToRemove = [
-            AppConstants.UserDefaultsKeys.isOnboardingCompleted,
             AppConstants.UserDefaultsKeys.isLoggedIn,
             AppConstants.UserDefaultsKeys.needsProfileCompletion,
             AppConstants.UserDefaultsKeys.spokenLanguageCode,
