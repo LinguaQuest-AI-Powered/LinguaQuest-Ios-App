@@ -95,7 +95,7 @@ final class HomeAssembly: Assembly {
                 activateLockScreenVocabularyUseCase: activateLockScreenVocabularyUseCase,
                 userPreferences: userPreferences
             )
-        }
+        }.inObjectScope(.container)
         
         container.register(HomeViewModel.self) { resolver in
             let getHomeDataUseCase = resolver.resolve(GetHomeDataUseCaseProtocol.self)!
