@@ -12,21 +12,43 @@ struct CameraResultView: View {
     @State private var showSkipDialog = false
     @State private var showNotEnoughCoinsDialog = false
     
+    @State private var coinBadgeCenter: CGPoint = .zero
+    @State private var coinCardCenter: CGPoint = .zero
+    
     var body: some View {
-        ZStack {
+        ZStack(alignment: .top) {
             Color.appBackgroundWarm.ignoresSafeArea()
             
-            Group {
-                switch viewModel.state {
-                case .loading:
-                    loadingView
-                case .match:
-                    successView
-                case .notMatch:
-                    failureView
-                case .error(let message):
-                    errorView(message)
+            VStack(spacing: 0) {
+                // Header (App Bar)
+                HStack {
+                    Spacer()
+                    RewardBadge(type: .coin, value: viewModel.coins.formattedStatsValue(), size: .small)
+                        .background(GeometryReader { geo in
+                            Color.clear.onAppear {
+                                let frame = geo.frame(in: .named("global"))
+                                DispatchQueue.main.async {
+                                    self.coinBadgeCenter = CGPoint(x: frame.midX, y: frame.midY)
+                                }
+                            }
+                        })
                 }
+                .padding(.horizontal, 20)
+                .frame(height: 64)
+                
+                Group {
+                    switch viewModel.state {
+                    case .loading:
+                        loadingView
+                    case .match:
+                        successView
+                    case .notMatch:
+                        failureView
+                    case .error(let message):
+                        errorView(message)
+                    }
+                }
+                .frame(maxHeight: .infinity)
             }
             .animation(.spring(response: 0.55, dampingFraction: 0.82), value: viewModel.state)
             
@@ -35,8 +57,14 @@ struct CameraResultView: View {
                     .ignoresSafeArea()
                     .allowsHitTesting(false)
                     .zIndex(100)
+                    
+                if coinCardCenter != .zero && coinBadgeCenter != .zero {
+                    CoinFlyAnimationView(startPoint: coinCardCenter, endPoint: coinBadgeCenter)
+                        .zIndex(101)
+                }
             }
         }
+        .coordinateSpace(name: "global")
         .navigationBarHidden(true)
         .appDialog(isPresented: $showNotEnoughCoinsDialog) {
             NotEnoughCoinsDialog(
@@ -184,6 +212,14 @@ struct CameraResultView: View {
                             title: L10n.MindReader.earnings,
                             amount: viewModel.coinsEarned
                         )
+                        .background(GeometryReader { geo in
+                            Color.clear.onAppear {
+                                let frame = geo.frame(in: .named("global"))
+                                DispatchQueue.main.async {
+                                    self.coinCardCenter = CGPoint(x: frame.midX, y: frame.midY)
+                                }
+                            }
+                        })
                     }
                     .padding(.horizontal, 16)
                     
