@@ -146,7 +146,15 @@ struct AchievementDetailSheet: View {
                     .appTextStyle(.caption, color: .appTextSecondary)
             }
             
-
+            
+            Spacer(minLength: 24)
+            
+            // Action Button
+            CustomButton(
+                type: .secendry,
+                text: L10n.Common.cancel,
+                action: onClose
+            )
         }
         .padding(.horizontal, 24)
         .padding(.top, 8)

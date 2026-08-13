@@ -20,6 +20,9 @@ struct ProfileContentView: View {
     let streakValue: String
     let worldsValue: String
     
+    // Loading State
+    var isLoading: Bool = false
+    
     // Progress Card Data
     let languageName: String
     let journeyTitle: String
@@ -78,17 +81,32 @@ struct ProfileContentView: View {
                     .id(TutorialStepType.profileStats)
                     .tutorialStep(.profileStats)
                     
-                    LinguaLearningProgressCard(
-                        languageName: languageName,
-                        journeyTitle: journeyTitle,
-                        levelName: levelName,
-                        currentXP: currentXP,
-                        targetXP: targetXP
-                    )
-                    .padding(.horizontal, 20)
-                    .offset(y: animateItems ? 0 : 30)
-                    .opacity(animateItems ? 1 : 0)
-                    .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.3), value: animateItems)
+                    if isLoading {
+                        LinguaLearningProgressCard(
+                            languageName: "Loading Language",
+                            journeyTitle: "Loading Journey",
+                            levelName: "Loading Level",
+                            currentXP: 0,
+                            targetXP: 100
+                        )
+                        .shimmer()
+                        .padding(.horizontal, 20)
+                        .offset(y: animateItems ? 0 : 30)
+                        .opacity(animateItems ? 1 : 0)
+                        .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.3), value: animateItems)
+                    } else {
+                        LinguaLearningProgressCard(
+                            languageName: languageName,
+                            journeyTitle: journeyTitle,
+                            levelName: levelName,
+                            currentXP: currentXP,
+                            targetXP: targetXP
+                        )
+                        .padding(.horizontal, 20)
+                        .offset(y: animateItems ? 0 : 30)
+                        .opacity(animateItems ? 1 : 0)
+                        .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.3), value: animateItems)
+                    }
                     
                     LinguaSettingsPromptCard(action: onSettingsTapped)
                         .padding(.horizontal, 20)
@@ -98,28 +116,59 @@ struct ProfileContentView: View {
                         .id(TutorialStepType.settings)
                         .tutorialStep(.settings)
                     
-                    AchievementsSection(
-                        achievements: achievements,
-                        onViewAllTapped: onViewAllAchievements,
-                        onAchievementTapped: onAchievementTapped
-                    )
-                    .offset(y: animateItems ? 0 : 30)
-                    .opacity(animateItems ? 1 : 0)
-                    .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.5), value: animateItems)
-                    .id(TutorialStepType.achievements)
-                    .tutorialStep(.achievements)
+                    if isLoading {
+                        AchievementsSection(
+                            achievements: [
+                                AchievementUIModel(id: "1", title: "Loading", subtitle: "Loading...", uiIcon: .trophyFill, uiIconColor: .gray, uiBgColor: .gray, iconUrl: nil, status: .earned, progressPercent: 100, xpReward: 0, coinsReward: 0, earnedAt: nil),
+                                AchievementUIModel(id: "2", title: "Loading", subtitle: "Loading...", uiIcon: .trophyFill, uiIconColor: .gray, uiBgColor: .gray, iconUrl: nil, status: .earned, progressPercent: 100, xpReward: 0, coinsReward: 0, earnedAt: nil)
+                            ],
+                            onViewAllTapped: {},
+                            onAchievementTapped: nil
+                        )
+                        .shimmer()
+                        .offset(y: animateItems ? 0 : 30)
+                        .opacity(animateItems ? 1 : 0)
+                        .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.5), value: animateItems)
+                    } else {
+                        AchievementsSection(
+                            achievements: achievements,
+                            onViewAllTapped: onViewAllAchievements,
+                            onAchievementTapped: onAchievementTapped
+                        )
+                        .offset(y: animateItems ? 0 : 30)
+                        .opacity(animateItems ? 1 : 0)
+                        .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.5), value: animateItems)
+                        .id(TutorialStepType.achievements)
+                        .tutorialStep(.achievements)
+                    }
                     
-                    TopExplorersSection(
-                        explorers: topExplorers,
-                        onViewAllExplorers: onViewAllExplorers
-                    )
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 12)
-                    .offset(y: animateItems ? 0 : 30)
-                    .opacity(animateItems ? 1 : 0)
-                    .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.6), value: animateItems)
-                    .id(TutorialStepType.leaderboard)
-                    .tutorialStep(.leaderboard)
+                    if isLoading {
+                        TopExplorersSection(
+                            explorers: [
+                                ExplorerUIModel(id: "1", name: "Loading...", uiRank: "1", uiXPAmount: "0", avatarImage: nil, isTop: true, isCurrentUser: false),
+                                ExplorerUIModel(id: "2", name: "Loading...", uiRank: "2", uiXPAmount: "0", avatarImage: nil, isTop: false, isCurrentUser: false)
+                            ],
+                            onViewAllExplorers: {}
+                        )
+                        .shimmer()
+                        .padding(.horizontal, 20)
+                        .padding(.bottom, 12)
+                        .offset(y: animateItems ? 0 : 30)
+                        .opacity(animateItems ? 1 : 0)
+                        .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.6), value: animateItems)
+                    } else {
+                        TopExplorersSection(
+                            explorers: topExplorers,
+                            onViewAllExplorers: onViewAllExplorers
+                        )
+                        .padding(.horizontal, 20)
+                        .padding(.bottom, 12)
+                        .offset(y: animateItems ? 0 : 30)
+                        .opacity(animateItems ? 1 : 0)
+                        .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.6), value: animateItems)
+                        .id(TutorialStepType.leaderboard)
+                        .tutorialStep(.leaderboard)
+                    }
                 }
                 .padding(.bottom, 40)
             }

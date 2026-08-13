@@ -40,6 +40,7 @@ struct ProfileView: View {
                         xpValue: viewModel.statsService.xp.formattedStatsValue(),
                         streakValue: "\(viewModel.statsService.streakDays.formattedStatsValue())",
                         worldsValue: viewModel.worlds,
+                        isLoading: viewModel.isLoading,
                         languageName: viewModel.currentLanguage,
                         journeyTitle: viewModel.journeyTitle,
                         levelName: viewModel.languageLevel,
