@@ -84,81 +84,17 @@ struct HomeView: View {
                             .offset(y: isAnimated ? 0 : 30)
                             .opacity(isAnimated ? 1 : 0)
                             .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.05), value: isAnimated)
-                            if true {
-                                ScrollView(.horizontal, showsIndicators: false) {
-                                    HStack(spacing: 16) {
-                                        ObjectDetectionCardView(
-                                            worldName: viewModel.continueLevel?.worldName,
-                                            targetWord: viewModel.continueLevel?.word,
-                                            levelOrder: viewModel.continueLevel?.levelOrder ?? 1,
-                                            totalLevels: viewModel.continueLevel != nil ? (viewModel.homeData?.activeLanguage.exploreWorlds
-                                                .first(where: { $0.id == viewModel.continueLevel?.worldId })?.totalLevels ?? 10) : 10,
-                                            isLoading: viewModel.isContinueLevelLoading,
-                                            action: {
-                                                if viewModel.continueLevel?.worldName != nil {
-                                                    Task {
-                                                        await viewModel.onObjectDetectionTapped()
-                                                    }
-                                                } else {
-                                                    viewModel.navigateToAllWorlds()
-                                                }
-                                            }
-                                        )
-                                        .frame(width: showDailyMission ? UIScreen.main.bounds.width - 60 : UIScreen.main.bounds.width - 40)
-                                        .id(TutorialStepType.currentLesson)
-                                        .tutorialStep(.currentLesson)
+                            HomeCurrentLessonSection(
+                                viewModel: viewModel,
+                                showDailyMission: showDailyMission,
+                                isAnimated: isAnimated
+                            )
 
-                                        if showDailyMission {
-                                            DailyMissionCard(
-                                                viewModel: viewModel.dailyMissionCardViewModel
-                                            )
-                                            .frame(width: showDailyMission ? UIScreen.main.bounds.width - 60 : UIScreen.main.bounds.width - 40)
-                                            .id(TutorialStepType.dailyMission)
-                                            .tutorialStep(.dailyMission)
-                                        }
-                                    }
-                                    .padding(.horizontal, 20)
-                                    .padding(.bottom, 8)
-                                }
-                                .offset(y: isAnimated ? 0 : 30)
-                                .opacity(isAnimated ? 1 : 0)
-                                .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.08), value: isAnimated)
-                            }
-
-                            Group {
-                                SectionHeaderView(
-                                    title: L10n.Home.exploreWorlds,
-                                    actionTitle: L10n.Home.seeMore,
-                                    onActionTapped: { viewModel.navigateToAllWorlds() }
-                                )
-                                .padding(.horizontal, 20)
-                                .id(TutorialStepType.exploreWorlds)
-                                .tutorialStep(.exploreWorlds)
-                                
-                                ScrollView(.horizontal, showsIndicators: false) {
-                                    HStack(spacing: 16) {
-                                        ForEach(displayWorlds) { item in
-                                            Button(action: {
-                                                viewModel.navigateToGameLevels(
-                                                    worldId: Int(item.id) ?? 0,
-                                                    worldName: item.title,
-                                                    languageId: viewModel.languageViewModel.activeLanguage?.id ?? 1
-                                                )
-                                            }) {
-                                                WorldCardView(item: item)
-                                                    .frame(width: 204)
-                                            }
-                                            .buttonStyle(HomeScaleButtonStyle())
-                                            .disabled(item.isLocked)
-                                        }
-                                    }
-                                    .padding(.horizontal, 20)
-                                    .padding(.vertical, 4)
-                                }
-                            }
-                            .offset(y: animateItems ? 0 : 30)
-                            .opacity(animateItems ? 1 : 0)
-                            .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.1), value: animateItems)
+                            HomeExploreWorldsSection(
+                                viewModel: viewModel,
+                                displayWorlds: displayWorlds,
+                                animateItems: animateItems
+                            )
                             
                         }
                         .padding(.top, 12)
@@ -173,59 +109,19 @@ struct HomeView: View {
                 }
             }
                 
-                VStack {
-                    if shouldShowDailyReward {
-                        DailyBonusCardView {
-                            soundPlayer.play(sound: .dailyReward)
-                            showDailyRewardDialog = true
-                        }
-                        .tutorialStep(.dailyReward)
-                        .padding(.horizontal, 20)
-                        .padding(.top, 16)
-                        .transition(
-                            .asymmetric(
-                                insertion: .move(edge: .top).combined(with: .opacity).combined(with: .scale(scale: 0.95)),
-                                removal: .move(edge: .top).combined(with: .opacity).combined(with: .scale(scale: 0.8))
-                            )
-                        )
-                    }
-                    Spacer()
-                }
-                .frame(maxWidth: .infinity)
-                .animation(.spring(response: 0.7, dampingFraction: 0.75).delay(0.8), value: isAnimated)
-                .animation(.spring(response: 0.6, dampingFraction: 0.75), value: viewModel.dailyRewardViewModel.isClaimed)
-                .animation(.spring(response: 0.6, dampingFraction: 0.75), value: viewModel.dailyRewardViewModel.reward != nil)
-                .zIndex(1)
+                HomeDailyRewardSection(
+                    viewModel: viewModel,
+                    shouldShowDailyReward: shouldShowDailyReward,
+                    isAnimated: isAnimated,
+                    showDailyRewardDialog: $showDailyRewardDialog,
+                    playSound: { soundPlayer.play(sound: .dailyReward) }
+                )
                 
-                Button(action: { showMyLanguagesSheet = true }) {
-                    Image(asset: .world)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 32, height: 32)
-                        .foregroundColor(.white)
-                        .frame(width: 60, height: 60)
-                        .background(
-                            Circle()
-                                .fill(
-                                    LinearGradient(
-                                        colors: [.appAccentTeal, .appSemanticSuccess],
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    )
-                                )
-                        )
-                        .overlay(Circle().stroke(Color.appGlowTeal.opacity(0.42), lineWidth: 2))
-                        .clipShape(Circle())
-                        .shadow(color: Color.appGlowTeal.opacity(0.24), radius: 14, x: 0, y: 6)
-                        .scaleEffect(pulseWorldButton ? 1.04 : 0.96)
-                }
-                .buttonStyle(HomeScaleButtonStyle())
-                .tutorialStep(.switchLanguage)
-                .padding(.trailing, 20)
-                .padding(.bottom, 100)
-                .offset(y: isAnimated ? 0 : 50)
-                .opacity(isAnimated ? 1 : 0)
-                .animation(.spring(response: 0.5, dampingFraction: 0.7).delay(0.6), value: isAnimated)
+                HomeFloatingButton(
+                    showMyLanguagesSheet: $showMyLanguagesSheet,
+                    isAnimated: isAnimated,
+                    pulseWorldButton: pulseWorldButton
+                )
                 
                 if isAnimated && !viewModel.dailyRewardViewModel.isClaimed && viewModel.dailyRewardViewModel.reward != nil {
                     CoinRainView()
@@ -302,136 +198,4 @@ struct HomeView: View {
     }
 }
 
-struct HomeScaleButtonStyle: ButtonStyle {
-        func makeBody(configuration: Configuration) -> some View {
-            configuration.label
-                .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
-                .animation(.spring(response: 0.3, dampingFraction: 0.6), value: configuration.isPressed)
-        }
-    }
-    
-    struct SectionHeaderView: View {
-        let title: String
-        let actionTitle: String
-        var onActionTapped: () -> Void = {}
-        
-        var body: some View {
-            HStack {
-                Text(title)
-                    .font(AppTextStyle.displaySmall.font)
-                    .foregroundColor(Color.appTextHeading)
-                
-                Spacer()
-                
-                Button(action: onActionTapped) {
-                    HStack(spacing: 4) {
-                        Text(actionTitle)
-                            .font(AppTextStyle.bodyBold.font)
-                        Image(systemIcon: .rightChevron)
-                            .font(AppTextStyle.captionMedium.font)
-                            .flipsForRightToLeftLayoutDirection(true)
-                    }
-                    .foregroundColor(Color.appTextHeading)
-                }
-            }
-        }
-    }
-struct HomeSkeletonView: View {
-    @Environment(\.colorScheme) private var colorScheme
 
-    var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            
-            LearningCardView(
-                flagEmoji: "🇪🇸",
-                title: L10n.Home.currentlyLearning,
-                languageName: "Spanish",
-                level: 1,
-                streakDays: 0,
-                progressPercent: 60
-            )
-            .padding(.horizontal, 20)
-            
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 16) {
-                    ObjectDetectionCardView(
-                        worldName: nil,
-                        targetWord: nil,
-                        levelOrder: 1,
-                        totalLevels: 10,
-                        action: {}
-                    )
-                    .frame(width: UIScreen.main.bounds.width - 60)
-                    
-                    // Daily Mission Placeholder
-                    VStack(alignment: .leading, spacing: 0) {
-                        HStack {
-                            VStack(alignment: .leading, spacing: 4) {
-                                RoundedRectangle(cornerRadius: 6).fill(Color.gray.opacity(0.2)).frame(width: 100, height: 20)
-                                RoundedRectangle(cornerRadius: 6).fill(Color.gray.opacity(0.2)).frame(width: 180, height: 24)
-                            }
-                            Spacer()
-                        }
-                        .padding(.horizontal, 18).padding(.top, 18)
-                        
-                        HStack {
-                            RoundedRectangle(cornerRadius: 16).fill(Color.gray.opacity(0.2)).frame(height: 72)
-                            Circle().fill(Color.gray.opacity(0.2)).frame(width: 80, height: 80).padding(.leading, 8)
-                        }
-                        .padding(.horizontal, 18).padding(.top, 10).padding(.bottom, 14)
-                        
-                        Spacer(minLength: 0)
-                        
-                        RoundedRectangle(cornerRadius: 25).fill(Color.gray.opacity(0.2)).frame(height: 50)
-                            .padding(.horizontal, 18).padding(.bottom, 18)
-                    }
-                    .frame(maxHeight: .infinity, alignment: .top)
-                    .background(
-                        RoundedRectangle(cornerRadius: 28, style: .continuous)
-                            .fill(Color.appSurfaceCard.opacity(colorScheme == .dark ? 0.95 : 0.98))
-                    )
-                    .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 28, style: .continuous)
-                            .stroke(
-                                Color.appAccentOrange.opacity(colorScheme == .dark ? 0.25 : 0.18),
-                                lineWidth: 1.5
-                            )
-                    )
-                    .shadow(
-                        color: Color.appAccentOrange.opacity(colorScheme == .dark ? 0.12 : 0.08),
-                        radius: 20, x: 0, y: 10
-                    )
-                    .frame(width: UIScreen.main.bounds.width - 60)
-                }
-                .padding(.horizontal, 20)
-                .padding(.bottom, 8)
-            }
-            
-            Group {
-                SectionHeaderView(
-                    title: L10n.Home.exploreWorlds,
-                    actionTitle: L10n.Home.seeMore,
-                    onActionTapped: {}
-                )
-                .padding(.horizontal, 20)
-                
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 16) {
-                        ForEach(0..<3, id: \.self) { _ in
-                            RoundedRectangle(cornerRadius: 24)
-                                .fill(Color.appSurfaceCard)
-                                .frame(width: 204, height: 260)
-                        }
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 4)
-                }
-            }
-            
-            Color.clear.frame(height: 100)
-        }
-        .redacted(reason: .placeholder)
-        .shimmer()
-    }
-}
