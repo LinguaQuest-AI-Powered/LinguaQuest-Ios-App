@@ -95,7 +95,7 @@ struct HomeView: View {
                                                 .first(where: { $0.id == viewModel.continueLevel?.worldId })?.totalLevels ?? 10) : 10,
                                             isLoading: viewModel.isContinueLevelLoading,
                                             action: {
-                                                if viewModel.continueLevel != nil {
+                                                if viewModel.continueLevel?.worldName != nil {
                                                     Task {
                                                         await viewModel.onObjectDetectionTapped()
                                                     }

@@ -625,7 +625,7 @@
 "tutorial.switch_language.desc" = "Tap here to change your active learning language or add new ones.";
 
 "tutorial.game_captures.title" = "Game Captures";
-"tutorial.game_captures.desc" = "View all the words you have successfully captured in the real world through games.";
+"tutorial.game_captures.desc" = "View all the words you have successfully captured in the real world through games. You can also enable 'Lock Screen Vocab' from Settings to unlock the 'My Words' tab and track your daily vocabulary here.";
 "tutorial.my_journal.title" = "My Journal";
 "tutorial.my_journal.desc" = "Browse words saved in your vocabulary vault and manage your learning review.";
 
