@@ -28,13 +28,13 @@ struct AchievementDetailSheet: View {
     var statusText: String {
         switch status {
         case .earned, .unlocked:
-            return "COMPLETED"
+            return L10n.Achievements.earnedLabel.uppercased()
         case .locked:
-            return "LOCKED"
+            return L10n.Achievements.filterLocked.uppercased()
         case .inProgress:
-            return "IN PROGRESS"
+            return L10n.Achievements.inProgressLabel.uppercased()
         case .unknown:
-            return isEarned ? "COMPLETED" : "LOCKED"
+            return isEarned ? L10n.Achievements.earnedLabel.uppercased() : L10n.Achievements.filterLocked.uppercased()
         }
     }
     
@@ -107,7 +107,7 @@ struct AchievementDetailSheet: View {
             // Progress Bar Section
             VStack(spacing: 8) {
                 HStack {
-                    Text("Progress")
+                    Text(L10n.Home.progress)
                         .appTextStyle(.bodyBold, color: .appTextHeading)
                     Spacer()
                     Text("\(progressPercent)%")
@@ -133,27 +133,23 @@ struct AchievementDetailSheet: View {
             
             // Rewards Section (Using RewardBadge per Rule 17)
             HStack(spacing: 16) {
-                RewardBadge(type: .xp, value: "+\(xpReward) XP", size: .normal)
+                RewardBadge(type: .xp, value: "+\(xpReward)", size: .normal)
                     .frame(maxWidth: .infinity)
                 
-                RewardBadge(type: .coin, value: "+\(coinsReward) Coins", size: .normal)
+                RewardBadge(type: .coin, value: "+\(coinsReward)", size: .normal)
                     .frame(maxWidth: .infinity)
             }
             
             // Earned Date (if applicable)
             if isEarned, let date = formattedEarnedDate {
-                Text("Earned on \(date)")
+                Text(L10n.Achievements.earnedOn(date))
                     .appTextStyle(.caption, color: .appTextSecondary)
             }
             
-            // Action Button
-            CustomButton(
-                type: .secendry,
-                text: L10n.Common.cancel,
-                action: onClose
-            )
+
         }
-        .padding(16)
-        .background(Color.appBackgroundWarm)
+        .padding(.horizontal, 24)
+        .padding(.top, 8)
+        .padding(.bottom, 32)
     }
 }

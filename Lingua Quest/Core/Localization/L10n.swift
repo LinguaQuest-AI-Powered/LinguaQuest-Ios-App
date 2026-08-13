@@ -413,6 +413,7 @@ enum L10n {
         static var inProgressLabel: String { localized("achievements.in_progress_label") }
         static var xpGainedLabel: String { localized("achievements.xp_gained_label") }
         static var claimRewards: String { localized("achievements.claim_rewards") }
+        static func earnedOn(_ date: String) -> String { String(format: localized("achievements.earned_on"), date) }
     }
     
     enum Worlds {

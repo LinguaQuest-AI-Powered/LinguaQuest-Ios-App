@@ -664,3 +664,4 @@
 "tutorial.daily_mission.title" = "المهمة اليومية";
 "tutorial.daily_mission.desc" = "أكمل مهمتك اليومية للحصول على مكافآت إضافية والحفاظ على حماسك!";
 
+"achievements.earned_on" = "تم الاكتساب في %@";

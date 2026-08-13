@@ -651,3 +651,4 @@
 "tutorial.daily_mission.title" = "Daily Mission";
 "tutorial.daily_mission.desc" = "Complete your daily mission to earn extra rewards and keep your streak strong!";
 
+"achievements.earned_on" = "Earned on %@";
