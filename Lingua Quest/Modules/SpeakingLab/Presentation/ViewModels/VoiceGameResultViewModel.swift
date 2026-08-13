@@ -24,6 +24,10 @@ final class VoiceGameResultViewModel {
     var coinsEarned: Int = 0
     var advice: String = ""
     
+    var coins: Int {
+        statsService.coins
+    }
+    
     private let router: RouterProtocol
     private let evaluateUseCase: EvaluateVoiceUseCase
     private let saveProgressUseCase: SaveVoiceProgressUseCase

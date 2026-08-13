@@ -194,6 +194,10 @@ struct HomeView: View {
                 .offset(y: isAnimated ? 0 : 50)
                 .opacity(isAnimated ? 1 : 0)
                 .animation(.spring(response: 0.5, dampingFraction: 0.7).delay(0.6), value: isAnimated)
+                
+                if isAnimated && !viewModel.dailyRewardViewModel.isClaimed && viewModel.dailyRewardViewModel.reward != nil {
+                    CoinRainView()
+                }
             }
         }
         .background(

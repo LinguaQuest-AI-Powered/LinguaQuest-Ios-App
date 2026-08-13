@@ -9,6 +9,7 @@ import SwiftUI
 
 struct VoiceSuccessView: View {
     @Bindable var viewModel: VoiceGameResultViewModel
+    @Binding var coinCardCenter: CGPoint
     
     var body: some View {
         DialogCardContainer(
@@ -52,6 +53,14 @@ struct VoiceSuccessView: View {
                         title: L10n.MindReader.earnings,
                         amount: viewModel.coinsEarned
                     )
+                    .background(GeometryReader { geo in
+                        Color.clear.onAppear {
+                            let frame = geo.frame(in: .named("global"))
+                            DispatchQueue.main.async {
+                                self.coinCardCenter = CGPoint(x: frame.midX, y: frame.midY)
+                            }
+                        }
+                    })
                 }
                 .padding(.horizontal, 16)
                 
