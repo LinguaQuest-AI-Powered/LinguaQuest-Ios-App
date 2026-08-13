@@ -158,10 +158,11 @@ struct GalleryView: View {
                     }
                 }
             }
-            .background(
-                HomeBackgroundView()
-                    .ignoresSafeArea()
-            )
+        } // Closes VStack(spacing: 0)
+        .background(
+            HomeBackgroundView()
+                .ignoresSafeArea()
+        )
             
             if showTutorial {
                 TutorialOverlayView(

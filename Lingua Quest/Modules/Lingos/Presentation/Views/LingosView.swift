@@ -78,11 +78,10 @@ struct LingosView: View {
                 .padding(.top, 12)
             }
         }
-            }
-            .background(
-                HomeBackgroundView()
-                    .ignoresSafeArea()
-            )
+        .background(
+            HomeBackgroundView()
+                .ignoresSafeArea()
+        )
             
             if showTutorial {
                 TutorialOverlayView(
