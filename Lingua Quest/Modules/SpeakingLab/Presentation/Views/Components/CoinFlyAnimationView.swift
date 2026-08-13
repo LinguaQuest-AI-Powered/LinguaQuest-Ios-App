@@ -43,6 +43,7 @@ struct CoinFlyAnimationView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()
         .allowsHitTesting(false)
+        .environment(\.layoutDirection, .leftToRight)
         .onAppear {
             createParticles()
             animateParticles()
@@ -59,7 +60,7 @@ struct CoinFlyAnimationView: View {
             let startX = startBaseX + CGFloat.random(in: -30...30)
             let startY = startBaseY + CGFloat.random(in: -30...30)
             let scale = CGFloat.random(in: 0.6...1.1)
-            let delay = Double.random(in: 0...0.5)
+            let delay = 2.0 + Double.random(in: 0...0.5)
             let duration = Double.random(in: 1.2...1.8)
             let rotation = Double.random(in: 0...360)
             
