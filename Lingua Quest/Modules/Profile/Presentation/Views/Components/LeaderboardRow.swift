@@ -49,8 +49,7 @@ struct LeaderboardRow: View {
             
             // XP
             HStack(spacing: 8) {
-                Text(xpAmount)
-                    .appTextStyle(.bodyBold, color: isCurrentUser ? .appAccentTeal : .appTextHeading)
+                RewardBadge(type: .xp, value: xpAmount, size: .small)
                 
                 // Top Explorer Badge
                 if isTop {

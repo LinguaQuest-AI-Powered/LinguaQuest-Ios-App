@@ -45,9 +45,9 @@ struct TopExplorersSection: View {
 // MARK: - Preview
 #Preview {
     let mockExplorers = [
-        ExplorerUIModel(id: "1", name: "Marco Polo", uiRank: "1", uiXPAmount: "12,450 XP", avatarImage: nil, isTop: true, isCurrentUser: false),
-        ExplorerUIModel(id: "2", name: "Amelia Earhart", uiRank: "2", uiXPAmount: "11,200 XP", avatarImage: nil, isTop: false, isCurrentUser: true),
-        ExplorerUIModel(id: "3", name: "Ibn Battuta", uiRank: "3", uiXPAmount: "9,850 XP", avatarImage: nil, isTop: false, isCurrentUser: false)
+        ExplorerUIModel(id: "1", name: "Marco Polo", uiRank: "1", uiXPAmount: "12450", avatarImage: nil, isTop: true, isCurrentUser: false),
+        ExplorerUIModel(id: "2", name: "Amelia Earhart", uiRank: "2", uiXPAmount: "11200", avatarImage: nil, isTop: false, isCurrentUser: true),
+        ExplorerUIModel(id: "3", name: "Ibn Battuta", uiRank: "3", uiXPAmount: "9850", avatarImage: nil, isTop: false, isCurrentUser: false)
     ]
     
     TopExplorersSection(explorers: mockExplorers) {

@@ -140,6 +140,7 @@ struct SplashView: View {
                 }
             }
             .ignoresSafeArea()
+            .environment(\.layoutDirection, .leftToRight)
         }
         .onAppear {
             if reduceMotion {

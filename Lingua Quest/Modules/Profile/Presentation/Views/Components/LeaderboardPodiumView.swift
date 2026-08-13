@@ -106,8 +106,7 @@ struct PodiumCard: View {
                     .appTextStyle(.captionBold, color: .appTextHeading)
                     .lineLimit(1)
                 
-                Text("\(user.xp) XP")
-                    .appTextStyle(.microBold, color: .appTextSecondary)
+                RewardBadge(type: .xp, value: "\(user.xp)", size: .small)
                 
                 Spacer(minLength: 0)
             }
