@@ -4,7 +4,7 @@ struct MainTabView: View {
     @State private var selectedTab: MainTabItem = .home
     @AppStorage(AppConstants.UserDefaultsKeys.appLanguage) private var appLanguage = "en"
     
-    @AppStorage("hasSeenFullAppTutorial") private var hasSeenFullAppTutorial: Bool = false
+    @AppStorage(AppConstants.UserDefaultsKeys.hasSeenFullAppTutorial) private var hasSeenFullAppTutorial: Bool = false
     @State private var showTutorial: Bool = false
     @State private var currentTutorialStepIndex: Int = 0
     @State private var tutorialBounds: [TutorialStepType: CGRect] = [:]
@@ -97,9 +97,15 @@ struct MainTabView: View {
             selectedTab = .gallery
         }
         .onAppear {
-            // Temporary for testing: always show tutorial
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                showTutorial = true
+            if !hasSeenFullAppTutorial {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    showTutorial = true
+                }
+            }
+        }
+        .onChange(of: showTutorial) { _, isShowing in
+            if !isShowing {
+                hasSeenFullAppTutorial = true
             }
         }
         .onChange(of: currentTutorialStepIndex) { _, newIndex in
