@@ -8,13 +8,13 @@
 import SwiftUI
 
 enum TutorialStepType: String, CaseIterable, Equatable {
+    case dailyReward
+    //  Home Extra
+    case xp
+    case coins
+    case notifications
     case learningProgress
     case currentLesson
-    case coins
-    case xp
-    case notifications
-    
-    // Home Extra
     case exploreWorlds
     case switchLanguage
     
@@ -50,9 +50,20 @@ extension View {
                 Color.clear
                     .preference(
                         key: TutorialBoundsPreferenceKey.self,
-                        value: [step: geo.frame(in: .named("TutorialSpace"))]
+                        value: [step: geo.frame(in: .global)]
                     )
             }
         )
+    }
+}
+
+struct CurrentTutorialStepKey: EnvironmentKey {
+    static let defaultValue: TutorialStepType? = nil
+}
+
+extension EnvironmentValues {
+    var currentTutorialStep: TutorialStepType? {
+        get { self[CurrentTutorialStepKey.self] }
+        set { self[CurrentTutorialStepKey.self] = newValue }
     }
 }

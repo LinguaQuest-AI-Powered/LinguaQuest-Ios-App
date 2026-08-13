@@ -11,9 +11,10 @@ struct TutorialOverlayView: View {
     let bounds: [TutorialStepType: CGRect]
     let steps: [TutorialStepType]
     @Binding var isPresented: Bool
+    @Binding var currentStepIndex: Int
     
-    @State private var currentStepIndex: Int = 0
     @State private var highlightedFrame: CGRect = .zero
+    @Environment(\.layoutDirection) private var layoutDirection
     
     var body: some View {
         GeometryReader { proxy in
@@ -53,11 +54,13 @@ struct TutorialOverlayView: View {
                         },
                         onSkip: dismiss
                     )
+                    .environment(\.layoutDirection, layoutDirection)
                     .position(tooltipPosition(for: highlightedFrame, in: proxy.size))
                     .animation(.spring(response: 0.5, dampingFraction: 0.8), value: highlightedFrame)
                     .animation(.easeInOut, value: currentStepIndex)
                 }
             }
+            .environment(\.layoutDirection, .leftToRight)
             .onAppear {
                 updateHighlightedFrame()
             }
@@ -68,6 +71,7 @@ struct TutorialOverlayView: View {
                 updateHighlightedFrame()
             }
         }
+        .ignoresSafeArea()
         .zIndex(999) // Ensure it stays on top
     }
     

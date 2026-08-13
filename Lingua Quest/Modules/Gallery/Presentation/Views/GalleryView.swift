@@ -13,14 +13,6 @@ struct GalleryView: View {
     @Namespace private var tabNamespace
     @Environment(\.scenePhase) private var scenePhase
     
-    @AppStorage("hasSeenGalleryTutorial") private var hasSeenGalleryTutorial: Bool = false
-    @State private var showTutorial: Bool = false
-    @State private var tutorialBounds: [TutorialStepType: CGRect] = [:]
-    
-    private var tutorialSteps: [TutorialStepType] {
-        viewModel.isLockScreenVocabularyEnabled ? [.gameCaptures, .myJournal] : [.gameCaptures]
-    }
-    
     // For Word Filters
     let wordCategories = ["All", "easy", "medium", "hard"]
     let wordLocalizedTitles = [
@@ -163,27 +155,11 @@ struct GalleryView: View {
             HomeBackgroundView()
                 .ignoresSafeArea()
         )
-            
-            if showTutorial {
-                TutorialOverlayView(
-                    bounds: tutorialBounds,
-                    steps: tutorialSteps,
-                    isPresented: $showTutorial
-                )
-            }
-        }
-        .coordinateSpace(name: "TutorialSpace")
-        .onPreferenceChange(TutorialBoundsPreferenceKey.self) { bounds in
-            self.tutorialBounds = bounds
-        }
-        .onAppear {
+    }
+    .onAppear {
             viewModel.loadItems()
             if !viewModel.isLockScreenVocabularyEnabled {
                 selectedTab = 0
-            }
-            // Temporary for testing: always show tutorial
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                showTutorial = true
             }
         }
         .appDialog(isPresented: $viewModel.showVocabularyDialog) {

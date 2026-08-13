@@ -18,6 +18,7 @@ struct TutorialTooltipCard: View {
     
     var title: String {
         switch step {
+        case .dailyReward: return L10n.Tutorial.dailyRewardTitle
         case .learningProgress: return L10n.Tutorial.learningProgressTitle
         case .currentLesson: return L10n.Tutorial.currentLessonTitle
         case .coins: return L10n.Tutorial.coinsTitle
@@ -40,6 +41,7 @@ struct TutorialTooltipCard: View {
     
     var description: String {
         switch step {
+        case .dailyReward: return L10n.Tutorial.dailyRewardDesc
         case .learningProgress: return L10n.Tutorial.learningProgressDesc
         case .currentLesson: return L10n.Tutorial.currentLessonDesc
         case .coins: return L10n.Tutorial.coinsDesc
@@ -140,6 +142,7 @@ struct TutorialTooltipCard: View {
     
     private func mascotForStep(_ step: TutorialStepType) -> Image.Asset {
         switch step {
+        case .dailyReward: return .mascotReward
         case .learningProgress: return .bird
         case .currentLesson: return .myCaptureBird
         case .coins: return .mascotReward

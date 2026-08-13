@@ -10,18 +10,9 @@ import SwiftUI
 struct LingosView: View {
     @Bindable var viewModel: LingosViewModel
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.currentTutorialStep) private var currentTutorialStep
     
     @State private var isAnimated: Bool = false
-    
-    @AppStorage("hasSeenLingosTutorial") private var hasSeenLingosTutorial: Bool = false
-    @State private var showTutorial: Bool = false
-    @State private var tutorialBounds: [TutorialStepType: CGRect] = [:]
-    
-    private let tutorialSteps: [TutorialStepType] = [
-        .voicePractice,
-        .roleplay,
-        .mindReader
-    ]
     
     var body: some View {
         ZStack {
@@ -31,8 +22,9 @@ struct LingosView: View {
                 coinCount: viewModel.statsService.coins
             )
             
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: 20) {
+            ScrollViewReader { proxy in
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 20) {
                     LingosGameCardView(
                         tagText: L10n.SpeakingLab.voicePractice,
                         title: L10n.Home.voicePracticeSubtitle,
@@ -44,6 +36,7 @@ struct LingosView: View {
                     .offset(y: isAnimated ? 0 : 30)
                     .opacity(isAnimated ? 1 : 0)
                     .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.1), value: isAnimated)
+                    .id(TutorialStepType.voicePractice)
                     .tutorialStep(.voicePractice)
                     
                     LingosGameCardView(
@@ -57,6 +50,7 @@ struct LingosView: View {
                     .offset(y: isAnimated ? 0 : 30)
                     .opacity(isAnimated ? 1 : 0)
                     .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.2), value: isAnimated)
+                    .id(TutorialStepType.roleplay)
                     .tutorialStep(.roleplay)
                     
                     LingosGameCardView(
@@ -70,6 +64,7 @@ struct LingosView: View {
                     .offset(y: isAnimated ? 0 : 30)
                     .opacity(isAnimated ? 1 : 0)
                     .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.3), value: isAnimated)
+                    .id(TutorialStepType.mindReader)
                     .tutorialStep(.mindReader)
                     
                     Color.clear.frame(height: 100)
@@ -77,25 +72,21 @@ struct LingosView: View {
                 .padding(.horizontal, 20)
                 .padding(.top, 12)
             }
-        }
+            .onChange(of: currentTutorialStep) { _, newStep in
+                if let step = newStep {
+                    withAnimation {
+                        proxy.scrollTo(step, anchor: .center)
+                    }
+                }
+            }
+        } // closes ScrollViewReader
+        } // closes VStack
         .background(
             HomeBackgroundView()
                 .ignoresSafeArea()
         )
-            
-            if showTutorial {
-                TutorialOverlayView(
-                    bounds: tutorialBounds,
-                    steps: tutorialSteps,
-                    isPresented: $showTutorial
-                )
-            }
-        }
-        .coordinateSpace(name: "TutorialSpace")
-        .onPreferenceChange(TutorialBoundsPreferenceKey.self) { bounds in
-            self.tutorialBounds = bounds
-        }
-        .onAppear {
+    } // closes ZStack
+    .onAppear {
             viewModel.loadVoiceProgress()
             if !reduceMotion {
                 withAnimation {
@@ -103,11 +94,6 @@ struct LingosView: View {
                 }
             } else {
                 isAnimated = true
-            }
-            
-            // Temporary for testing: always show tutorial
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                showTutorial = true
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: .progressDidUpdate)) { _ in

@@ -12,18 +12,6 @@ struct ProfileView: View {
     @State var viewModel: ProfileViewModel
     @State private var selectedAchievement: AchievementUIModel? = nil
     
-    @AppStorage("hasSeenProfileTutorial") private var hasSeenProfileTutorial: Bool = false
-    @State private var showTutorial: Bool = false
-    @State private var tutorialBounds: [TutorialStepType: CGRect] = [:]
-    
-    private let tutorialSteps: [TutorialStepType] = [
-        .yourProfile,
-        .profileStats,
-        .settings,
-        .achievements,
-        .leaderboard
-    ]
-    
     var body: some View {
         ZStack {
             Group {
@@ -95,18 +83,6 @@ struct ProfileView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 16))
                 .shadow(radius: 10)
             }
-            
-            if showTutorial {
-                TutorialOverlayView(
-                    bounds: tutorialBounds,
-                    steps: tutorialSteps,
-                    isPresented: $showTutorial
-                )
-            }
-        }
-        .coordinateSpace(name: "TutorialSpace")
-        .onPreferenceChange(TutorialBoundsPreferenceKey.self) { bounds in
-            self.tutorialBounds = bounds
         }
         .customBottomSheet(isPresented: Binding(
             get: { selectedAchievement != nil },
@@ -154,11 +130,6 @@ struct ProfileView: View {
         }
         .onAppear {
             viewModel.fetchProfileData()
-            
-            // Temporary for testing: always show tutorial
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                showTutorial = true
-            }
         }
     }
 }

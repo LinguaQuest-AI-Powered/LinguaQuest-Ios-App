@@ -658,3 +658,6 @@
 "tutorial.achievements.desc" = "اربح شارات ومكافآت كلما حققت أرقاماً قياسية وأكملت التحديات.";
 "tutorial.leaderboard.title" = "لوحة الصدارة";
 "tutorial.leaderboard.desc" = "شاهد ترتيبك بين أصدقائك والمتعلمين الآخرين في المجتمع العالمي.";
+
+"tutorial.daily_reward.title" = "المكافأة اليومية";
+"tutorial.daily_reward.desc" = "لا تنسَ المطالبة بمكافأتك المجانية كل يوم لتعزيز تقدمك!";

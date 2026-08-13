@@ -12,6 +12,7 @@ struct HomeView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(Router.self) private var router
     @Environment(\.soundPlayer) private var soundPlayer
+    @Environment(\.currentTutorialStep) private var currentTutorialStep
     @State private var hasClaimedDailyReward: Bool = false
     
     
@@ -21,20 +22,6 @@ struct HomeView: View {
     @State private var showMyLanguagesSheet = false
     @State private var showAddLanguageScreen = false
     
-    @AppStorage("hasSeenHomeTutorial") private var hasSeenHomeTutorial: Bool = false
-    @State private var showTutorial: Bool = false
-    @State private var tutorialBounds: [TutorialStepType: CGRect] = [:]
-    
-    private let tutorialSteps: [TutorialStepType] = [
-        .learningProgress,
-        .currentLesson,
-        .coins,
-        .xp,
-        .notifications,
-        .exploreWorlds,
-        .switchLanguage
-    ]
-    
     private var displayWorlds: [WorldUIModel] {
         viewModel.displayWorlds
     }
@@ -43,6 +30,15 @@ struct HomeView: View {
     
     private var isAnimated: Bool {
         animateItems || viewModel.homeData != nil
+    }
+    
+    private var shouldShowDailyReward: Bool {
+        guard isAnimated, !viewModel.dailyRewardViewModel.isClaimed, viewModel.dailyRewardViewModel.reward != nil else { return false }
+        
+        if let currentStep = currentTutorialStep {
+            return currentStep == .dailyReward
+        }
+        return true
     }
     
     private var showDailyMission: Bool {
@@ -66,11 +62,11 @@ struct HomeView: View {
             .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.0), value: isAnimated)
             
             ZStack(alignment: .bottomTrailing) {
-                
-                ScrollView(showsIndicators: false) {
-                    if viewModel.isLoading && viewModel.homeData == nil {
-                        HomeSkeletonView()
-                            .padding(.top, 12)
+                ScrollViewReader { proxy in
+                    ScrollView(showsIndicators: false) {
+                        if viewModel.isLoading && viewModel.homeData == nil {
+                            HomeSkeletonView()
+                                .padding(.top, 12)
                     } else {
                         VStack(alignment: .leading, spacing: 20) {
                             
@@ -83,6 +79,7 @@ struct HomeView: View {
                                 progressPercent: CGFloat(viewModel.languageViewModel.activeLanguage?.progressPercent ?? 0)
                             )
                             .padding(.horizontal, 20)
+                            .id(TutorialStepType.learningProgress)
                             .tutorialStep(.learningProgress)
                             .offset(y: isAnimated ? 0 : 30)
                             .opacity(isAnimated ? 1 : 0)
@@ -104,8 +101,9 @@ struct HomeView: View {
                                                     }
                                                 }
                                             )
-                                            .tutorialStep(.currentLesson)
                                             .frame(width: (viewModel.continueLevel != nil && showDailyMission) ? UIScreen.main.bounds.width - 60 : UIScreen.main.bounds.width - 40)
+                                            .id(TutorialStepType.currentLesson)
+                                            .tutorialStep(.currentLesson)
                                         }
 
                                         if showDailyMission {
@@ -130,6 +128,7 @@ struct HomeView: View {
                                     onActionTapped: { viewModel.navigateToAllWorlds() }
                                 )
                                 .padding(.horizontal, 20)
+                                .id(TutorialStepType.exploreWorlds)
                                 .tutorialStep(.exploreWorlds)
                                 
                                 ScrollView(.horizontal, showsIndicators: false) {
@@ -157,18 +156,26 @@ struct HomeView: View {
                             .opacity(animateItems ? 1 : 0)
                             .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.1), value: animateItems)
                             
-                            Color.clear.frame(height: 100)
                         }
                         .padding(.top, 12)
                     }
                 }
+                .onChange(of: currentTutorialStep) { _, newStep in
+                    if let step = newStep {
+                        withAnimation {
+                            proxy.scrollTo(step, anchor: .center)
+                        }
+                    }
+                }
+            }
                 
                 VStack {
-                    if isAnimated && !viewModel.dailyRewardViewModel.isClaimed && viewModel.dailyRewardViewModel.reward != nil {
+                    if shouldShowDailyReward {
                         DailyBonusCardView {
                             soundPlayer.play(sound: .dailyReward)
                             showDailyRewardDialog = true
                         }
+                        .tutorialStep(.dailyReward)
                         .padding(.horizontal, 20)
                         .padding(.top, 16)
                         .transition(
@@ -219,18 +226,6 @@ struct HomeView: View {
             HomeBackgroundView()
                 .ignoresSafeArea()
         )
-        
-        if showTutorial {
-            TutorialOverlayView(
-                bounds: tutorialBounds,
-                steps: tutorialSteps,
-                isPresented: $showTutorial
-            )
-        }
-    }
-    .coordinateSpace(name: "TutorialSpace")
-    .onPreferenceChange(TutorialBoundsPreferenceKey.self) { bounds in
-        self.tutorialBounds = bounds
     }
     .onAppear {
             if viewModel.homeData != nil {
@@ -253,12 +248,6 @@ struct HomeView: View {
                 
                 await homeTask
                 await dailyRewardTask
-            }
-            
-            // Show tutorial slightly after appear if not seen
-            // Temporary for testing: always show tutorial
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                showTutorial = true
             }
         }
         .appDialog(isPresented: $showDailyRewardDialog) {

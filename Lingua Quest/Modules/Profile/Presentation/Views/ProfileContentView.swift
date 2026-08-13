@@ -38,6 +38,8 @@ struct ProfileContentView: View {
     var onSettingsTapped: () -> Void
     var onAchievementTapped: ((AchievementUIModel) -> Void)? = nil
     
+    @Environment(\.currentTutorialStep) private var currentTutorialStep
+    
     @State private var animateItems: Bool = false
     
     // MARK: - Body
@@ -46,8 +48,9 @@ struct ProfileContentView: View {
      
             AppHeaderView(starCount: rawXP, coinCount: rawCoins)
             
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: 16) {
+            ScrollViewReader { proxy in
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 16) {
                     ProfileHeader(
                         userName: userName,
                         userLevel: userLevel,
@@ -59,6 +62,7 @@ struct ProfileContentView: View {
                     .offset(y: animateItems ? 0 : 30)
                     .opacity(animateItems ? 1 : 0)
                     .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.0), value: animateItems)
+                    .id(TutorialStepType.yourProfile)
                     .tutorialStep(.yourProfile)
                     
                     StatsGrid(
@@ -71,6 +75,7 @@ struct ProfileContentView: View {
                     .offset(y: animateItems ? 0 : 30)
                     .opacity(animateItems ? 1 : 0)
                     .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.15), value: animateItems)
+                    .id(TutorialStepType.profileStats)
                     .tutorialStep(.profileStats)
                     
                     LinguaLearningProgressCard(
@@ -90,6 +95,7 @@ struct ProfileContentView: View {
                         .offset(y: animateItems ? 0 : 30)
                         .opacity(animateItems ? 1 : 0)
                         .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.4), value: animateItems)
+                        .id(TutorialStepType.settings)
                         .tutorialStep(.settings)
                     
                     AchievementsSection(
@@ -100,6 +106,7 @@ struct ProfileContentView: View {
                     .offset(y: animateItems ? 0 : 30)
                     .opacity(animateItems ? 1 : 0)
                     .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.5), value: animateItems)
+                    .id(TutorialStepType.achievements)
                     .tutorialStep(.achievements)
                     
                     TopExplorersSection(
@@ -111,10 +118,19 @@ struct ProfileContentView: View {
                     .offset(y: animateItems ? 0 : 30)
                     .opacity(animateItems ? 1 : 0)
                     .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.6), value: animateItems)
+                    .id(TutorialStepType.leaderboard)
                     .tutorialStep(.leaderboard)
                 }
                 .padding(.bottom, 40)
             }
+            .onChange(of: currentTutorialStep) { _, newStep in
+                if let step = newStep {
+                    withAnimation {
+                        proxy.scrollTo(step, anchor: .center)
+                    }
+                }
+            }
+        } // closes ScrollViewReader
         }
         .background(
             HomeBackgroundView()

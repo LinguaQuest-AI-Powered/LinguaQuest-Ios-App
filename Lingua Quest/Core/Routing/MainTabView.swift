@@ -4,6 +4,30 @@ struct MainTabView: View {
     @State private var selectedTab: MainTabItem = .home
     @AppStorage(AppConstants.UserDefaultsKeys.appLanguage) private var appLanguage = "en"
     
+    @AppStorage("hasSeenFullAppTutorial") private var hasSeenFullAppTutorial: Bool = false
+    @State private var showTutorial: Bool = false
+    @State private var currentTutorialStepIndex: Int = 0
+    @State private var tutorialBounds: [TutorialStepType: CGRect] = [:]
+    
+    private var allTutorialSteps: [TutorialStepType] {
+        var steps: [TutorialStepType] = []
+        if !homeViewModel.dailyRewardViewModel.isClaimed && homeViewModel.dailyRewardViewModel.reward != nil {
+            steps.append(.dailyReward)
+        }
+        steps.append(contentsOf: [
+            .learningProgress, .currentLesson, .coins, .xp, .notifications, .exploreWorlds, .switchLanguage,
+            .gameCaptures
+        ])
+        if galleryViewModel.isLockScreenVocabularyEnabled {
+            steps.append(.myJournal)
+        }
+        steps.append(contentsOf: [
+            .voicePractice, .roleplay, .mindReader,
+            .yourProfile, .profileStats, .settings, .achievements, .leaderboard
+        ])
+        return steps
+    }
+    
     @State private var profileViewModel: ProfileViewModel
     @State private var homeViewModel: HomeViewModel
     @State private var galleryViewModel: GalleryViewModel
@@ -32,16 +56,49 @@ struct MainTabView: View {
                 ProfileView(viewModel: profileViewModel)
                     .tag(MainTabItem.profile)
             }
+            .environment(\.currentTutorialStep, showTutorial && currentTutorialStepIndex < allTutorialSteps.count ? allTutorialSteps[currentTutorialStepIndex] : nil)
             .toolbar(.hidden, for: .tabBar)
+            .onPreferenceChange(TutorialBoundsPreferenceKey.self) { bounds in
+                self.tutorialBounds = bounds
+            }
             
             LinguaQuestTabBar(selectedTab: $selectedTab)
                 .padding(.horizontal, 22)
                 .padding(.bottom, 8)
+                
+            if showTutorial {
+                TutorialOverlayView(
+                    bounds: tutorialBounds,
+                    steps: allTutorialSteps,
+                    isPresented: $showTutorial,
+                    currentStepIndex: $currentTutorialStepIndex
+                )
+            }
         }
         .id(appLanguage)
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("VocabularyNotificationTapped"))) { _ in
             selectedTab = .gallery
+        }
+        .onAppear {
+            // Temporary for testing: always show tutorial
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                showTutorial = true
+            }
+        }
+        .onChange(of: currentTutorialStepIndex) { _, newIndex in
+            guard newIndex < allTutorialSteps.count else { return }
+            let step = allTutorialSteps[newIndex]
+            switch step {
+            case .dailyReward, .learningProgress, .currentLesson, .coins, .xp, .notifications, .exploreWorlds, .switchLanguage:
+                if selectedTab != .home { selectedTab = .home }
+            case .gameCaptures, .myJournal:
+                if selectedTab != .gallery { selectedTab = .gallery }
+            case .voicePractice, .roleplay, .mindReader:
+                if selectedTab != .lingos { selectedTab = .lingos }
+            case .yourProfile, .profileStats, .settings, .achievements, .leaderboard:
+                if selectedTab != .profile { selectedTab = .profile }
+            }
         }
     }
 }
