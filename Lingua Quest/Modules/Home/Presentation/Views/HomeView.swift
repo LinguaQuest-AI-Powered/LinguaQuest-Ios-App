@@ -84,33 +84,37 @@ struct HomeView: View {
                             .offset(y: isAnimated ? 0 : 30)
                             .opacity(isAnimated ? 1 : 0)
                             .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.05), value: isAnimated)
-                            if viewModel.continueLevel != nil || showDailyMission {
+                            if true {
                                 ScrollView(.horizontal, showsIndicators: false) {
                                     HStack(spacing: 16) {
-                                        if let continueLevel = viewModel.continueLevel {
-                                            ObjectDetectionCardView(
-                                                worldName: continueLevel.worldName,
-                                                targetWord: continueLevel.word,
-                                                levelOrder: continueLevel.levelOrder ?? 1,
-                                                totalLevels: viewModel.homeData?.activeLanguage.exploreWorlds
-                                                    .first(where: { $0.id == continueLevel.worldId })?.totalLevels ?? 10,
-                                                isLoading: viewModel.isContinueLevelLoading,
-                                                action: {
+                                        ObjectDetectionCardView(
+                                            worldName: viewModel.continueLevel?.worldName,
+                                            targetWord: viewModel.continueLevel?.word,
+                                            levelOrder: viewModel.continueLevel?.levelOrder ?? 1,
+                                            totalLevels: viewModel.continueLevel != nil ? (viewModel.homeData?.activeLanguage.exploreWorlds
+                                                .first(where: { $0.id == viewModel.continueLevel?.worldId })?.totalLevels ?? 10) : 10,
+                                            isLoading: viewModel.isContinueLevelLoading,
+                                            action: {
+                                                if viewModel.continueLevel != nil {
                                                     Task {
                                                         await viewModel.onObjectDetectionTapped()
                                                     }
+                                                } else {
+                                                    viewModel.navigateToAllWorlds()
                                                 }
-                                            )
-                                            .frame(width: (viewModel.continueLevel != nil && showDailyMission) ? UIScreen.main.bounds.width - 60 : UIScreen.main.bounds.width - 40)
-                                            .id(TutorialStepType.currentLesson)
-                                            .tutorialStep(.currentLesson)
-                                        }
+                                            }
+                                        )
+                                        .frame(width: showDailyMission ? UIScreen.main.bounds.width - 60 : UIScreen.main.bounds.width - 40)
+                                        .id(TutorialStepType.currentLesson)
+                                        .tutorialStep(.currentLesson)
 
                                         if showDailyMission {
                                             DailyMissionCard(
                                                 viewModel: viewModel.dailyMissionCardViewModel
                                             )
-                                            .frame(width: (viewModel.continueLevel != nil && showDailyMission) ? UIScreen.main.bounds.width - 60 : UIScreen.main.bounds.width - 40)
+                                            .frame(width: showDailyMission ? UIScreen.main.bounds.width - 60 : UIScreen.main.bounds.width - 40)
+                                            .id(TutorialStepType.dailyMission)
+                                            .tutorialStep(.dailyMission)
                                         }
                                     }
                                     .padding(.horizontal, 20)
@@ -195,7 +199,9 @@ struct HomeView: View {
                 
                 Button(action: { showMyLanguagesSheet = true }) {
                     Image(asset: .world)
-                        .font(AppTextStyle.headingMedium.font)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 32, height: 32)
                         .foregroundColor(.white)
                         .frame(width: 60, height: 60)
                         .background(

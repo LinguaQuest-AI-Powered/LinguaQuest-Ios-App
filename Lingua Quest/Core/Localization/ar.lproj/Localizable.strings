@@ -661,3 +661,6 @@
 
 "tutorial.daily_reward.title" = "المكافأة اليومية";
 "tutorial.daily_reward.desc" = "لا تنسَ المطالبة بمكافأتك المجانية كل يوم لتعزيز تقدمك!";
+"tutorial.daily_mission.title" = "المهمة اليومية";
+"tutorial.daily_mission.desc" = "أكمل مهمتك اليومية للحصول على مكافآت إضافية والحفاظ على حماسك!";
+

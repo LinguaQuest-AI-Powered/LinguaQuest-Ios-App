@@ -15,6 +15,7 @@ enum TutorialStepType: String, CaseIterable, Equatable {
     case notifications
     case learningProgress
     case currentLesson
+    case dailyMission
     case exploreWorlds
     case switchLanguage
     

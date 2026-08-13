@@ -11,11 +11,27 @@ struct MainTabView: View {
     
     private var allTutorialSteps: [TutorialStepType] {
         var steps: [TutorialStepType] = []
+        steps.append(contentsOf: [.xp, .coins, .notifications])
+        
         if !homeViewModel.dailyRewardViewModel.isClaimed && homeViewModel.dailyRewardViewModel.reward != nil {
             steps.append(.dailyReward)
         }
+        
+        steps.append(contentsOf: [.learningProgress, .currentLesson])
+        
+        let showDailyMission: Bool
+        switch homeViewModel.dailyMissionCardViewModel.state {
+        case .completed, .notAvailable:
+            showDailyMission = false
+        default:
+            showDailyMission = true
+        }
+        if showDailyMission {
+            steps.append(.dailyMission)
+        }
+        
         steps.append(contentsOf: [
-            .learningProgress, .currentLesson, .coins, .xp, .notifications, .exploreWorlds, .switchLanguage,
+            .exploreWorlds, .switchLanguage,
             .gameCaptures
         ])
         if galleryViewModel.isLockScreenVocabularyEnabled {
@@ -90,7 +106,7 @@ struct MainTabView: View {
             guard newIndex < allTutorialSteps.count else { return }
             let step = allTutorialSteps[newIndex]
             switch step {
-            case .dailyReward, .learningProgress, .currentLesson, .coins, .xp, .notifications, .exploreWorlds, .switchLanguage:
+            case .xp, .coins, .notifications, .dailyReward, .learningProgress, .currentLesson, .dailyMission, .exploreWorlds, .switchLanguage:
                 if selectedTab != .home { selectedTab = .home }
             case .gameCaptures, .myJournal:
                 if selectedTab != .gallery { selectedTab = .gallery }

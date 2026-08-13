@@ -21,6 +21,7 @@ struct TutorialTooltipCard: View {
         case .dailyReward: return L10n.Tutorial.dailyRewardTitle
         case .learningProgress: return L10n.Tutorial.learningProgressTitle
         case .currentLesson: return L10n.Tutorial.currentLessonTitle
+        case .dailyMission: return L10n.Tutorial.dailyMissionTitle
         case .coins: return L10n.Tutorial.coinsTitle
         case .xp: return L10n.Tutorial.xpTitle
         case .notifications: return L10n.Tutorial.notificationsTitle
@@ -44,6 +45,7 @@ struct TutorialTooltipCard: View {
         case .dailyReward: return L10n.Tutorial.dailyRewardDesc
         case .learningProgress: return L10n.Tutorial.learningProgressDesc
         case .currentLesson: return L10n.Tutorial.currentLessonDesc
+        case .dailyMission: return L10n.Tutorial.dailyMissionDesc
         case .coins: return L10n.Tutorial.coinsDesc
         case .xp: return L10n.Tutorial.xpDesc
         case .notifications: return L10n.Tutorial.notificationsDesc
@@ -145,6 +147,7 @@ struct TutorialTooltipCard: View {
         case .dailyReward: return .mascotReward
         case .learningProgress: return .bird
         case .currentLesson: return .myCaptureBird
+        case .dailyMission: return .dailyMission
         case .coins: return .mascotReward
         case .xp: return .leaderBoardBird
         case .notifications: return .bird2

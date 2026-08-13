@@ -648,3 +648,6 @@
 "tutorial.leaderboard.desc" = "See how you rank against friends and other learners in the global community.";
 "tutorial.daily_reward.title" = "Daily Reward";
 "tutorial.daily_reward.desc" = "Don't forget to claim your free reward every day to boost your progress!";
+"tutorial.daily_mission.title" = "Daily Mission";
+"tutorial.daily_mission.desc" = "Complete your daily mission to earn extra rewards and keep your streak strong!";
+

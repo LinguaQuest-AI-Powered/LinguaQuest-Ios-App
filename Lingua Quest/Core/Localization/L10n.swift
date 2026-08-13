@@ -646,6 +646,9 @@ enum L10n {
         
         static var dailyRewardTitle: String { localized("tutorial.daily_reward.title") }
         static var dailyRewardDesc: String { localized("tutorial.daily_reward.desc") }
+        
+        static var dailyMissionTitle: String { localized("tutorial.daily_mission.title") }
+        static var dailyMissionDesc: String { localized("tutorial.daily_mission.desc") }
     }
 
     enum MindReader {

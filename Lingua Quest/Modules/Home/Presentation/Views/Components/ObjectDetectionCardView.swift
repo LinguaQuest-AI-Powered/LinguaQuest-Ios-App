@@ -25,8 +25,12 @@ struct ObjectDetectionCardView: View {
     @State private var pulseRing = false
     @State private var buttonGlow = false
     
+    private var isEmptyState: Bool {
+        worldName == nil
+    }
+    
     private var displayWorldName: String {
-        worldName ?? L10n.Home.objectDetectionTitle
+        isEmptyState ? L10n.Home.exploreWorlds : (worldName ?? L10n.Home.objectDetectionTitle)
     }
     
     private var displayWord: String {
@@ -82,14 +86,19 @@ private extension ObjectDetectionCardView {
                     .transition(.opacity.combined(with: .move(edge: .bottom)))
                     .animation(.spring(response: 0.6, dampingFraction: 0.7), value: displayWorldName)
                 
-                Text(L10n.Home.findAndCapture)
+                Text(isEmptyState ? L10n.Worlds.allWorldsSubtitle : L10n.Home.findAndCapture)
                     .font(AppTextStyle.bodyMedium.font)
                     .foregroundColor(.appTextSecondary)
+                    .lineLimit(1)
             }
             
             Spacer()
             
-            progressBadge
+            if !isEmptyState {
+                progressBadge
+            } else {
+                startBadge
+            }
         }
     }
     
@@ -110,6 +119,27 @@ private extension ObjectDetectionCardView {
                 Capsule()
                     .stroke(Color.appBorderBrown, lineWidth: 1)
             )
+    }
+
+    var startBadge: some View {
+        HStack(spacing: 4) {
+            Image(systemIcon: .sparkles)
+                .font(.system(size: 10, weight: .bold))
+                .foregroundColor(.appAccentOrange)
+            Text(L10n.Home.start)
+                .font(AppTextStyle.microBold.font)
+                .foregroundColor(.appAccentOrange)
+        }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 5)
+        .background(
+            Capsule()
+                .fill(Color.appAccentOrange.opacity(0.15))
+        )
+        .overlay(
+            Capsule()
+                .stroke(Color.appAccentOrange.opacity(0.4), lineWidth: 1)
+        )
     }
 }
 
@@ -145,45 +175,100 @@ private extension ObjectDetectionCardView {
     
     var wordPlateView: some View {
         ZStack {
-            // Outer glow ring
-            Circle()
-                .stroke(
-                    Color.appProgressBar.opacity(pulseRing ? 0.25 : 0.08),
-                    lineWidth: 3
-                )
-                .frame(width: 154, height: 154)
-                .scaleEffect(pulseRing ? 1.08 : 1.0)
-            
-            // Plate outer ring
-            Circle()
-                .strokeBorder(
-                    Color.appProgressBar,
-                    lineWidth: 18
-                )
-                .background(Circle().fill(Color.appSurfaceCardWarm))
-                .frame(width: 140, height: 140)
-                .shadow(
-                    color: Color.black.opacity(0.1),
-                    radius: 6, x: 0, y: 3
-                )
-            
-            // Plate inner styling
-            Circle()
-                .stroke(Color.appBorderBrown.opacity(0.2), lineWidth: 1)
-                .frame(width: 104, height: 104)
-            
-            // Word text
-            Text(displayWord)
-                .font(AppTextStyle.bodyBold.font)
-                .foregroundColor(.appProgressBar)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.45)
-                .frame(maxWidth: 90)
-                .padding(.horizontal, 4)
-                .id(displayWord)
-                .transition(.opacity.combined(with: .scale(scale: 0.8)))
-                .animation(.spring(response: 0.6, dampingFraction: 0.7), value: displayWord)
+            if isEmptyState {
+                // Outer pulsing aura
+                Circle()
+                    .fill(
+                        RadialGradient(
+                            colors: [Color.appGlowTeal.opacity(0.35), Color.clear],
+                            center: .center,
+                            startRadius: 15,
+                            endRadius: 70
+                        )
+                    )
+                    .scaleEffect(pulseRing ? 1.12 : 0.95)
+                
+                // Plate outer ring with rich gradient border
+                Circle()
+                    .strokeBorder(
+                        LinearGradient(
+                            colors: [.appAccentTeal, .appSemanticSuccess, .appGlowTeal],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ),
+                        lineWidth: 4
+                    )
+                    .background(
+                        Circle()
+                            .fill(
+                                LinearGradient(
+                                    colors: [Color.appSurfaceCardWarm, Color.appSurfaceCard],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                            )
+                    )
+                    .frame(width: 125, height: 125)
+                    .shadow(color: Color.appGlowTeal.opacity(0.25), radius: 10, x: 0, y: 5)
+                
+                // Rich 3D World Asset Graphic
+                Image(asset: .world)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 80, height: 80)
+                    .shadow(color: Color.black.opacity(0.15), radius: 6, x: 0, y: 4)
+                    .scaleEffect(pulseRing ? 1.05 : 0.96)
+                
+                // Floating Sparkle Badge at top right
+                Image(systemIcon: .sparkles)
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundColor(.appAccentOrange)
+                    .padding(6)
+                    .background(Circle().fill(Color.appSurfaceCardWarm))
+                    .overlay(Circle().stroke(Color.appAccentOrange.opacity(0.5), lineWidth: 1.5))
+                    .shadow(color: Color.appAccentOrange.opacity(0.3), radius: 5, x: 0, y: 2)
+                    .offset(x: 42, y: -40)
+            } else {
+                // Outer glow ring
+                Circle()
+                    .stroke(
+                        Color.appProgressBar.opacity(pulseRing ? 0.25 : 0.08),
+                        lineWidth: 3
+                    )
+                    .frame(width: 154, height: 154)
+                    .scaleEffect(pulseRing ? 1.08 : 1.0)
+                
+                // Plate outer ring
+                Circle()
+                    .strokeBorder(
+                        Color.appProgressBar,
+                        lineWidth: 18
+                    )
+                    .background(Circle().fill(Color.appSurfaceCardWarm))
+                    .frame(width: 140, height: 140)
+                    .shadow(
+                        color: Color.black.opacity(0.1),
+                        radius: 6, x: 0, y: 3
+                    )
+                
+                // Plate inner styling
+                Circle()
+                    .stroke(Color.appBorderBrown.opacity(0.2), lineWidth: 1)
+                    .frame(width: 104, height: 104)
+                
+                // Word text
+                Text(displayWord)
+                    .font(AppTextStyle.bodyBold.font)
+                    .foregroundColor(.appProgressBar)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.45)
+                    .frame(maxWidth: 90)
+                    .padding(.horizontal, 4)
+                    .id(displayWord)
+                    .transition(.opacity.combined(with: .scale(scale: 0.8)))
+                    .animation(.spring(response: 0.6, dampingFraction: 0.7), value: displayWord)
+            }
         }
         .scaleEffect(plateScale)
         .rotationEffect(.degrees(plateRotation))
@@ -198,10 +283,10 @@ private extension ObjectDetectionCardView {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle(tint: .white))
             } else {
-                Image(systemIcon: .camera)
+                Image(systemIcon: isEmptyState ? .play : .camera)
                     .font(.system(size: 16, weight: .bold))
                 
-                Text(L10n.Home.continueButton)
+                Text(isEmptyState ? L10n.Home.start : L10n.Home.continueButton)
                     .font(AppTextStyle.bodyLargeBold.font)
             }
         }
