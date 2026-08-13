@@ -26,8 +26,10 @@ struct AppHeaderView: View {
             
             RewardBadge(type: .xp, value: starCount.formattedStatsValue(), size: .normal)
                 .fixedSize(horizontal: true, vertical: false)
+                .tutorialStep(.xp)
             RewardBadge(type: .coin, value: coinCount.formattedStatsValue(), size: .normal)
                 .fixedSize(horizontal: true, vertical: false)
+                .tutorialStep(.coins)
             
             Button(action: {
                 router.push(.notifications)
@@ -47,6 +49,7 @@ struct AppHeaderView: View {
                 }
             }
             .padding(.leading, 4)
+            .tutorialStep(.notifications)
         }
         .padding(.horizontal, 18)
         .padding(.top, 8)

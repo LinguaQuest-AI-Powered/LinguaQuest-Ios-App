@@ -21,6 +21,20 @@ struct HomeView: View {
     @State private var showMyLanguagesSheet = false
     @State private var showAddLanguageScreen = false
     
+    @AppStorage("hasSeenHomeTutorial") private var hasSeenHomeTutorial: Bool = false
+    @State private var showTutorial: Bool = false
+    @State private var tutorialBounds: [TutorialStepType: CGRect] = [:]
+    
+    private let tutorialSteps: [TutorialStepType] = [
+        .learningProgress,
+        .currentLesson,
+        .coins,
+        .xp,
+        .notifications,
+        .exploreWorlds,
+        .switchLanguage
+    ]
+    
     private var displayWorlds: [WorldUIModel] {
         viewModel.displayWorlds
     }
@@ -41,7 +55,8 @@ struct HomeView: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
+        ZStack {
+            VStack(spacing: 0) {
             AppHeaderView(
                 starCount: viewModel.statsService.xp,
                 coinCount: viewModel.statsService.coins
@@ -68,6 +83,7 @@ struct HomeView: View {
                                 progressPercent: CGFloat(viewModel.languageViewModel.activeLanguage?.progressPercent ?? 0)
                             )
                             .padding(.horizontal, 20)
+                            .tutorialStep(.learningProgress)
                             .offset(y: isAnimated ? 0 : 30)
                             .opacity(isAnimated ? 1 : 0)
                             .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.05), value: isAnimated)
@@ -88,6 +104,7 @@ struct HomeView: View {
                                                     }
                                                 }
                                             )
+                                            .tutorialStep(.currentLesson)
                                             .frame(width: (viewModel.continueLevel != nil && showDailyMission) ? UIScreen.main.bounds.width - 60 : UIScreen.main.bounds.width - 40)
                                         }
 
@@ -113,6 +130,7 @@ struct HomeView: View {
                                     onActionTapped: { viewModel.navigateToAllWorlds() }
                                 )
                                 .padding(.horizontal, 20)
+                                .tutorialStep(.exploreWorlds)
                                 
                                 ScrollView(.horizontal, showsIndicators: false) {
                                     HStack(spacing: 16) {
@@ -189,6 +207,7 @@ struct HomeView: View {
                         .scaleEffect(pulseWorldButton ? 1.04 : 0.96)
                 }
                 .buttonStyle(HomeScaleButtonStyle())
+                .tutorialStep(.switchLanguage)
                 .padding(.trailing, 20)
                 .padding(.bottom, 100)
                 .offset(y: isAnimated ? 0 : 50)
@@ -200,7 +219,20 @@ struct HomeView: View {
             HomeBackgroundView()
                 .ignoresSafeArea()
         )
-        .onAppear {
+        
+        if showTutorial {
+            TutorialOverlayView(
+                bounds: tutorialBounds,
+                steps: tutorialSteps,
+                isPresented: $showTutorial
+            )
+        }
+    }
+    .coordinateSpace(name: "TutorialSpace")
+    .onPreferenceChange(TutorialBoundsPreferenceKey.self) { bounds in
+        self.tutorialBounds = bounds
+    }
+    .onAppear {
             if viewModel.homeData != nil {
                 animateItems = true
             } else {
@@ -221,6 +253,14 @@ struct HomeView: View {
                 
                 await homeTask
                 await dailyRewardTask
+            }
+            
+            // Show tutorial slightly after appear if not seen
+            if !hasSeenHomeTutorial {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    showTutorial = true
+                    hasSeenHomeTutorial = true
+                }
             }
         }
         .appDialog(isPresented: $showDailyRewardDialog) {

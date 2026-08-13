@@ -603,3 +603,46 @@
 "daily_mission.reward_coins" = "Coins Earned";
 "daily_mission.no_image_data" = "No image captured. Please try again.";
 "daily_mission.retry" = "Retry";
+
+// MARK: - Tutorial
+"tutorial.learning_progress.title" = "Learning Progress";
+"tutorial.learning_progress.desc" = "Check your current language, level, learning progress, and streak here.";
+"tutorial.current_lesson.title" = "Current Lesson";
+"tutorial.current_lesson.desc" = "Tap here to continue your current lesson and capture new words.";
+"tutorial.coins.title" = "Your Coins";
+"tutorial.coins.desc" = "Earn coins by completing lessons and missions. Use them to unlock features.";
+"tutorial.xp.title" = "Your XP";
+"tutorial.xp.desc" = "Earn Experience Points (XP) to climb the leaderboards and track your progress.";
+"tutorial.notifications.title" = "Notifications";
+"tutorial.notifications.desc" = "Stay updated with vocabulary reminders, achievements, and quest details.";
+"tutorial.skip" = "Skip";
+"tutorial.next" = "Next";
+"tutorial.done" = "Done";
+
+"tutorial.explore_worlds.title" = "Explore Worlds";
+"tutorial.explore_worlds.desc" = "Browse and select different learning worlds to explore.";
+"tutorial.switch_language.title" = "Switch Language";
+"tutorial.switch_language.desc" = "Tap here to change your active learning language or add new ones.";
+
+"tutorial.game_captures.title" = "Game Captures";
+"tutorial.game_captures.desc" = "View all the words you have successfully captured in the real world through games.";
+"tutorial.my_journal.title" = "My Journal";
+"tutorial.my_journal.desc" = "Browse words saved in your vocabulary vault and manage your learning review.";
+
+"tutorial.voice_practice.title" = "Voice Practice";
+"tutorial.voice_practice.desc" = "Speak into the microphone to practice your pronunciation and get real-time feedback.";
+"tutorial.roleplay.title" = "Roleplay";
+"tutorial.roleplay.desc" = "Engage in interactive conversations to improve your contextual speech skills.";
+"tutorial.mind_reader.title" = "Mind Reader";
+"tutorial.mind_reader.desc" = "Challenge the AI to guess the word you are thinking of in this interactive game.";
+
+"tutorial.your_profile.title" = "Your Profile";
+"tutorial.your_profile.desc" = "Manage your avatar, view your nickname, and check your current learning level.";
+"tutorial.profile_stats.title" = "Profile Stats";
+"tutorial.profile_stats.desc" = "Check your daily streak, total experience points, and words captured in real time.";
+"tutorial.settings.title" = "Account Settings";
+"tutorial.settings.desc" = "Tap here to open settings, configure notifications, change app theme, or adjust learning goals.";
+"tutorial.achievements.title" = "Achievements";
+"tutorial.achievements.desc" = "Earn badges and rewards as you hit milestones and complete challenges.";
+"tutorial.leaderboard.title" = "Leaderboard";
+"tutorial.leaderboard.desc" = "See how you rank against friends and other learners in the global community.";

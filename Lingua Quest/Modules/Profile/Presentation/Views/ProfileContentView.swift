@@ -59,6 +59,7 @@ struct ProfileContentView: View {
                     .offset(y: animateItems ? 0 : 30)
                     .opacity(animateItems ? 1 : 0)
                     .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.0), value: animateItems)
+                    .tutorialStep(.yourProfile)
                     
                     StatsGrid(
                         coinsValue: coinsValue,
@@ -70,6 +71,7 @@ struct ProfileContentView: View {
                     .offset(y: animateItems ? 0 : 30)
                     .opacity(animateItems ? 1 : 0)
                     .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.15), value: animateItems)
+                    .tutorialStep(.profileStats)
                     
                     LinguaLearningProgressCard(
                         languageName: languageName,
@@ -88,6 +90,7 @@ struct ProfileContentView: View {
                         .offset(y: animateItems ? 0 : 30)
                         .opacity(animateItems ? 1 : 0)
                         .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.4), value: animateItems)
+                        .tutorialStep(.settings)
                     
                     AchievementsSection(
                         achievements: achievements,
@@ -97,6 +100,7 @@ struct ProfileContentView: View {
                     .offset(y: animateItems ? 0 : 30)
                     .opacity(animateItems ? 1 : 0)
                     .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.5), value: animateItems)
+                    .tutorialStep(.achievements)
                     
                     TopExplorersSection(
                         explorers: topExplorers,
@@ -107,6 +111,7 @@ struct ProfileContentView: View {
                     .offset(y: animateItems ? 0 : 30)
                     .opacity(animateItems ? 1 : 0)
                     .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.6), value: animateItems)
+                    .tutorialStep(.leaderboard)
                 }
                 .padding(.bottom, 40)
             }

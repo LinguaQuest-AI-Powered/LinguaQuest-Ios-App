@@ -13,6 +13,14 @@ struct GalleryView: View {
     @Namespace private var tabNamespace
     @Environment(\.scenePhase) private var scenePhase
     
+    @AppStorage("hasSeenGalleryTutorial") private var hasSeenGalleryTutorial: Bool = false
+    @State private var showTutorial: Bool = false
+    @State private var tutorialBounds: [TutorialStepType: CGRect] = [:]
+    
+    private var tutorialSteps: [TutorialStepType] {
+        viewModel.isLockScreenVocabularyEnabled ? [.gameCaptures, .myJournal] : [.gameCaptures]
+    }
+    
     // For Word Filters
     let wordCategories = ["All", "easy", "medium", "hard"]
     let wordLocalizedTitles = [
@@ -23,11 +31,12 @@ struct GalleryView: View {
     ]
     
     var body: some View {
-        VStack(spacing: 0) {
-            AppHeaderView(
-                starCount: viewModel.statsService.xp,
-                coinCount: viewModel.statsService.coins
-            )
+        ZStack {
+            VStack(spacing: 0) {
+                AppHeaderView(
+                    starCount: viewModel.statsService.xp,
+                    coinCount: viewModel.statsService.coins
+                )
             
 
             if viewModel.isLockScreenVocabularyEnabled {
@@ -48,6 +57,7 @@ struct GalleryView: View {
                         }
                         .frame(maxWidth: .infinity)
                     }
+                    .tutorialStep(.gameCaptures)
                     
                     Button(action: { withAnimation { selectedTab = 1 } }) {
                         VStack(spacing: 6) {
@@ -65,6 +75,7 @@ struct GalleryView: View {
                         }
                         .frame(maxWidth: .infinity)
                     }
+                    .tutorialStep(.myJournal)
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 16)
@@ -79,6 +90,7 @@ struct GalleryView: View {
                 .padding(.horizontal, 20)
                 .padding(.top, 20)
                 .padding(.bottom, 4)
+                .tutorialStep(.gameCaptures)
             }
             
             let currentSubtitle = selectedTab == 0
@@ -146,15 +158,33 @@ struct GalleryView: View {
                     }
                 }
             }
+            .background(
+                HomeBackgroundView()
+                    .ignoresSafeArea()
+            )
+            
+            if showTutorial {
+                TutorialOverlayView(
+                    bounds: tutorialBounds,
+                    steps: tutorialSteps,
+                    isPresented: $showTutorial
+                )
+            }
         }
-        .background(
-            HomeBackgroundView()
-                .ignoresSafeArea()
-        )
+        .coordinateSpace(name: "TutorialSpace")
+        .onPreferenceChange(TutorialBoundsPreferenceKey.self) { bounds in
+            self.tutorialBounds = bounds
+        }
         .onAppear {
             viewModel.loadItems()
             if !viewModel.isLockScreenVocabularyEnabled {
                 selectedTab = 0
+            }
+            if !hasSeenGalleryTutorial {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    showTutorial = true
+                    hasSeenGalleryTutorial = true
+                }
             }
         }
         .appDialog(isPresented: $viewModel.showVocabularyDialog) {
