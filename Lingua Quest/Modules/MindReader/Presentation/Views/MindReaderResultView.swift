@@ -10,6 +10,9 @@ import SwiftUI
 struct MindReaderResultView: View {
     @State var viewModel: MindReaderResultViewModel
     
+    @State private var coinBadgeCenter: CGPoint = .zero
+    @State private var coinCardCenter: CGPoint = .zero
+    
     var body: some View {
         ZStack {
             Color.appBackgroundWarm.ignoresSafeArea()
@@ -19,7 +22,8 @@ struct MindReaderResultView: View {
                 MindReaderHeaderView(
                     action: { viewModel.goBack() },
                     xp: viewModel.statsService.xp,
-                    coins: viewModel.statsService.coins
+                    coins: viewModel.statsService.coins,
+                    coinBadgeCenter: Binding(get: { self.coinBadgeCenter }, set: { self.coinBadgeCenter = $0 })
                 )
                 
                 Spacer()
@@ -65,6 +69,14 @@ struct MindReaderResultView: View {
                                     title: L10n.MindReader.earnings,
                                     amount: viewModel.earnedCoins
                                 )
+                                .background(GeometryReader { geo in
+                                    Color.clear.onAppear {
+                                        let frame = geo.frame(in: .named("global"))
+                                        DispatchQueue.main.async {
+                                            self.coinCardCenter = CGPoint(x: frame.midX, y: frame.midY)
+                                        }
+                                    }
+                                })
                             }
                             .padding(.horizontal, 16)
                             
@@ -102,7 +114,13 @@ struct MindReaderResultView: View {
                 .ignoresSafeArea()
                 .allowsHitTesting(false)
                 .zIndex(100)
+                
+            if coinCardCenter != .zero && coinBadgeCenter != .zero {
+                CoinFlyAnimationView(startPoint: coinCardCenter, endPoint: coinBadgeCenter)
+                    .zIndex(101)
+            }
         }
+        .coordinateSpace(name: "global")
         .navigationBarHidden(true)
         .onAppear { viewModel.onAppear() }
     }
