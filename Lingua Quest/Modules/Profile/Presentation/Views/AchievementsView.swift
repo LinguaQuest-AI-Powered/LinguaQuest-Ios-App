@@ -33,11 +33,8 @@ struct AchievementsView: View {
     }
     
     var body: some View {
-        ZStack {
-            Color.appBackgroundWarm.ignoresSafeArea()
-            
-            VStack(spacing: 0) {
-                // Top Bar
+        VStack(spacing: 0) {
+            // Top Bar
                 HStack {
                    CustomBackButton(action: {
                         viewModel.onBackTapped()
@@ -51,9 +48,7 @@ struct AchievementsView: View {
                 .padding(.horizontal, 20)
                 .frame(height: 64)
                 
-                Divider()
-                    .background(Color.appBorderBrown)
-                
+
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 24) {
                         // Trophies Card
@@ -176,7 +171,7 @@ struct AchievementsView: View {
                 .opacity(isAnimating ? 1 : 0)
                 .animation(.easeIn(duration: 0.5).delay(0.8), value: isAnimating)
             }
-        }
+        .background(HomeBackgroundView().ignoresSafeArea())
         .navigationBarHidden(true)
         .alert(isPresented: $viewModel.showClaimAlert) {
             Alert(

@@ -29,12 +29,7 @@ struct LeaderboardHeaderView: View {
         .padding(.horizontal, 20)
         .frame(height: 64)
         .background(Color.clear)
-        .overlay(
-            Rectangle()
-                .frame(height: 1)
-                .foregroundColor(Color.appBorderBrown),
-            alignment: .bottom
-        )
+
     }
 }
 
