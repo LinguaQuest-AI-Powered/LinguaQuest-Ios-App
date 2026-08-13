@@ -105,11 +105,9 @@ struct LingosView: View {
                 isAnimated = true
             }
             
-            if !hasSeenLingosTutorial {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    showTutorial = true
-                    hasSeenLingosTutorial = true
-                }
+            // Temporary for testing: always show tutorial
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                showTutorial = true
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: .progressDidUpdate)) { _ in

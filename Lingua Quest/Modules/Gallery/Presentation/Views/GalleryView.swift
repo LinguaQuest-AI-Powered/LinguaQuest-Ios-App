@@ -181,11 +181,9 @@ struct GalleryView: View {
             if !viewModel.isLockScreenVocabularyEnabled {
                 selectedTab = 0
             }
-            if !hasSeenGalleryTutorial {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    showTutorial = true
-                    hasSeenGalleryTutorial = true
-                }
+            // Temporary for testing: always show tutorial
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                showTutorial = true
             }
         }
         .appDialog(isPresented: $viewModel.showVocabularyDialog) {

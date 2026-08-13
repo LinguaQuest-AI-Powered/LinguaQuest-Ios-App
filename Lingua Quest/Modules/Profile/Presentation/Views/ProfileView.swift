@@ -155,11 +155,9 @@ struct ProfileView: View {
         .onAppear {
             viewModel.fetchProfileData()
             
-            if !hasSeenProfileTutorial {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    showTutorial = true
-                    hasSeenProfileTutorial = true
-                }
+            // Temporary for testing: always show tutorial
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                showTutorial = true
             }
         }
     }
