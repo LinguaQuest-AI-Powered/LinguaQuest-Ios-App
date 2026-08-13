@@ -52,16 +52,8 @@ struct RewardBadge: View {
         
         let numStr = String(value[range])
         let pureNumStr = numStr.replacingOccurrences(of: ",", with: "")
-        if let val = Int(pureNumStr), val >= 1000 {
-            let num = Double(val)
-            let formattedStr: String
-            if num >= 1_000_000 {
-                let formatted = (num / 1_000_000 * 10).rounded() / 10
-                formattedStr = formatted.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0fM", formatted) : String(format: "%.1fM", formatted)
-            } else {
-                let formatted = (num / 1_000 * 10).rounded() / 10
-                formattedStr = formatted.truncatingRemainder(dividingBy: 1) == 0 ? String(format: "%.0fk", formatted) : String(format: "%.1fk", formatted)
-            }
+        if let val = Int(pureNumStr) {
+            let formattedStr = val.formattedStatsValue()
             var newValue = value
             newValue.replaceSubrange(range, with: formattedStr)
             return newValue
