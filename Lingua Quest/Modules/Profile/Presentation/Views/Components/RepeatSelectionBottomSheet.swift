@@ -43,6 +43,7 @@ struct RepeatSelectionBottomSheet: View {
         VStack(alignment: .leading, spacing: 20) {
             Text(L10n.Settings.repeatFrequency)
                 .appTextStyle(.headingMedium, color: .appTextHeading)
+                .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.top, 16)
             
             repeatOptionRow(title: L10n.Settings.repeatEveryDay, mode: .everyday, targetDays: [1,2,3,4,5,6,7])

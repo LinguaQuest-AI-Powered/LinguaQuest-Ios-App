@@ -13,6 +13,7 @@ struct DailyReminderSection: View {
     let repeatText: String
     
     var onRepeatTapped: () -> Void
+    var onReminderTimeTapped: () -> Void
     
     private let timeFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -40,10 +41,13 @@ struct DailyReminderSection: View {
                     title: L10n.Settings.reminderTime,
                     showDivider: true
                 ) {
-                    DatePicker("", selection: $reminderTime, displayedComponents: .hourAndMinute)
-                        .labelsHidden()
-                        .environment(\.locale, Locale(identifier: "en_US_POSIX"))
+                    HStack(spacing: 8) {
+                        Text(timeFormatter.string(from: reminderTime))
+                            .appTextStyle(.bodyMedium, color: .appTextHeading)
+                        SettingsRowChevron()
+                    }
                 }
+                .onTapGesture(perform: onReminderTimeTapped)
                 
                 LinguaSettingsRow(
                     icon: .bellFill,

@@ -19,6 +19,7 @@ struct SettingsContentView: View {
     var onAboutTapped: () -> Void
     var onLogOutTapped: () -> Void
     var onRepeatTapped: () -> Void
+    var onReminderTimeTapped: () -> Void
     
     // MARK: - Body
     var body: some View {
@@ -53,8 +54,11 @@ struct SettingsContentView: View {
                             dailyReminderEnabled: $viewModel.dailyReminderEnabled,
                             reminderTime: $viewModel.reminderTime,
                             repeatText: viewModel.getRepeatDaysText(),
-                            onRepeatTapped: onRepeatTapped
+                            onRepeatTapped: onRepeatTapped,
+                            onReminderTimeTapped: onReminderTimeTapped
                         )
+                        .disabled(!viewModel.notificationsEnabled)
+                        .opacity(viewModel.notificationsEnabled ? 1.0 : 0.5)
                         
                         SettingsFooterSection(
                             onLogOutTapped: onLogOutTapped
