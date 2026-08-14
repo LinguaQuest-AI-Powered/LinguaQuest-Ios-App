@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "lingo_splash_10.png",
+      "filename" : "splash-removebg-preview.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "splash-removebg-preview.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "splash-removebg-preview.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

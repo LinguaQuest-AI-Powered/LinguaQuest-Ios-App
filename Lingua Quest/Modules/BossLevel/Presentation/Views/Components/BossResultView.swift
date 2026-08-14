@@ -2,13 +2,34 @@ import SwiftUI
 
 struct BossResultView: View {
     let result: BossEvaluationResult
+    let coins: Int
     let onCloseTapped: () -> Void
+    
+    @State private var coinBadgeCenter: CGPoint = .zero
+    @State private var coinCardCenter: CGPoint = .zero
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .top) {
             Color.appBackgroundWarm.ignoresSafeArea()
 
             VStack(spacing: 0) {
+                // Header
+                HStack {
+                    CustomBackButton(action: onCloseTapped)
+                    Spacer()
+                    RewardBadge(type: .coin, value: coins.formattedStatsValue(), size: .small)
+                        .background(GeometryReader { geo in
+                            Color.clear.onAppear {
+                                let frame = geo.frame(in: .named("global"))
+                                DispatchQueue.main.async {
+                                    self.coinBadgeCenter = CGPoint(x: frame.midX, y: frame.midY)
+                                }
+                            }
+                        })
+                }
+                .padding(.horizontal, 20)
+                .frame(height: 64)
+
                 Spacer()
 
                 DialogCardContainer(
@@ -76,12 +97,19 @@ struct BossResultView: View {
                                     title: L10n.MindReader.experience,
                                     amount: reward.xp
                                 )
-                                
                                 RewardCardView(
                                     type: .coin,
                                     title: L10n.MindReader.earnings,
                                     amount: reward.coins
                                 )
+                                .background(GeometryReader { geo in
+                                    Color.clear.onAppear {
+                                        let frame = geo.frame(in: .named("global"))
+                                        DispatchQueue.main.async {
+                                            self.coinCardCenter = CGPoint(x: frame.midX, y: frame.midY)
+                                        }
+                                    }
+                                })
                             }
                             .padding(.horizontal, 16)
                             .padding(.top, 8)
@@ -113,8 +141,14 @@ struct BossResultView: View {
                     .ignoresSafeArea()
                     .allowsHitTesting(false)
                     .zIndex(100)
+                
+                if coinCardCenter != .zero && coinBadgeCenter != .zero {
+                    CoinFlyAnimationView(startPoint: coinCardCenter, endPoint: coinBadgeCenter)
+                        .zIndex(101)
+                }
             }
         }
+        .coordinateSpace(name: "global")
     }
     
     

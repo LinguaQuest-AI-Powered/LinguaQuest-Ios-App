@@ -20,7 +20,7 @@ struct BossLevelView: View {
                 LoadingView()
 
             case .result(let result):
-                BossResultView(result: result, onCloseTapped: { viewModel.onCloseTapped() })
+                BossResultView(result: result, coins: viewModel.coins, onCloseTapped: { viewModel.onCloseTapped() })
 
             case .evaluating:
                 BossLevelEvaluatingView()

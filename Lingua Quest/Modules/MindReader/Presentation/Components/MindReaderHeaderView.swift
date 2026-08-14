@@ -11,6 +11,7 @@ struct MindReaderHeaderView: View {
     let action: () -> Void
     let xp: Int
     let coins: Int
+    var coinBadgeCenter: Binding<CGPoint>? = nil
     
     var body: some View {
         HStack {
@@ -19,6 +20,16 @@ struct MindReaderHeaderView: View {
             HStack(spacing: 8) {
                 RewardBadge(type: .xp, value: xp.formattedStatsValue(), size: .small)
                 RewardBadge(type: .coin, value: coins.formattedStatsValue(), size: .small)
+                    .background(GeometryReader { geo in
+                        Color.clear.onAppear {
+                            if let coinBadgeCenter = coinBadgeCenter {
+                                let frame = geo.frame(in: .named("global"))
+                                DispatchQueue.main.async {
+                                    coinBadgeCenter.wrappedValue = CGPoint(x: frame.midX, y: frame.midY)
+                                }
+                            }
+                        }
+                    })
             }
         }
         .padding(.horizontal, 20)

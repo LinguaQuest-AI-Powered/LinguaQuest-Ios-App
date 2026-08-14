@@ -14,6 +14,7 @@ struct SettingsView: View {
     @State private var showRepeatPicker = false
     @State private var showMyLanguagesSheet = false
     @State private var showAddLanguageScreen = false
+    @State private var showTimePickerSheet = false
     
     // MARK: - Body
     var body: some View {
@@ -42,6 +43,9 @@ struct SettingsView: View {
             },
             onRepeatTapped: {
                 showRepeatPicker = true
+            },
+            onReminderTimeTapped: {
+                showTimePickerSheet = true
             }
         )
         .navigationBarHidden(true)
@@ -62,6 +66,12 @@ struct SettingsView: View {
             RepeatSelectionBottomSheet(
                 repeatDays: $viewModel.reminderRepeatDays,
                 onSave: { showRepeatPicker = false }
+            )
+        }
+        .customBottomSheet(isPresented: $showTimePickerSheet, initialDetent: .custom(ratio: 0.5)) {
+            ReminderTimeBottomSheet(
+                reminderTime: $viewModel.reminderTime,
+                onSave: { showTimePickerSheet = false }
             )
         }
         .appDialog(isPresented: Binding(get: { viewModel.isLoggingOut }, set: { _ in })) {

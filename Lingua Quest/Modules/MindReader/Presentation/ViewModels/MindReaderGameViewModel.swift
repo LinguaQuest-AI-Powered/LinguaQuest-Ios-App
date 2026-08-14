@@ -127,6 +127,11 @@ final class MindReaderGameViewModel {
                 try? await Task.sleep(nanoseconds: 600_000_000)
                 isProcessing = false
                 router.push(.mindReaderGuess)
+            } else if coordinator.questionCount >= totalQuestions {
+                // Force AI to give up if the max question limit is reached
+                birdState = .normal
+                isProcessing = false
+                router.push(.mindReaderGiveUp)
             } else {
                 birdState = .normal
                 isProcessing = false

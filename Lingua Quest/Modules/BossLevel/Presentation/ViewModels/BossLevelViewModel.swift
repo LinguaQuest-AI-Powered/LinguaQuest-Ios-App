@@ -31,6 +31,10 @@ final class BossLevelViewModel {
         return String(format: "%02d:%02d", minutes, seconds)
     }
     
+    var coins: Int {
+        statsService.coins
+    }
+    
     /// True while the user is physically holding the mic button.
     private(set) var isHoldingMic: Bool = false
     
