@@ -65,7 +65,7 @@
 "auth_error_email_not_verified" = "Please verify your email before logging in.";
 "auth_error_email_already_exists" = "An account with this email already exists.";
 "auth_error_username_already_taken" = "This username is already taken.";
-"auth_error_email_not_found" = "We couldn't find an account with this email.";
+"auth_error_email_not_found" = "Incorrect email or password. Please try again.";
 "auth_error_invalid_otp" = "The code you entered is incorrect.";
 "auth_error_otp_not_found" = "This code has expired. Please request a new one.";
 "auth_error_otp_cooldown" = "Please wait a moment before requesting another code.";
@@ -656,3 +656,4 @@
 "tutorial.daily_mission.desc" = "Complete your daily mission to earn extra rewards and keep your streak strong!";
 
 "achievements.earned_on" = "Earned on %@";
+"auth_error_same_password" = "New password must be different from your current password.";
