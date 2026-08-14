@@ -39,38 +39,50 @@ struct LingosGameCardView: View {
                 Spacer()
                 
                 ZStack {
-                    RoundedRectangle(cornerRadius: 16)
-                        .fill(tagColor.opacity(0.1))
-                        .frame(width: 76, height: 76)
+                    RoundedRectangle(cornerRadius: 22, style: .continuous)
+                        .fill(tagColor.opacity(0.12))
+                        .frame(width: 84, height: 84)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                                .stroke(Color.white, lineWidth: 3)
+                        )
+                        .shadow(color: tagColor.opacity(0.15), radius: 8, x: 0, y: 4)
                     
                     Image(asset: mascotAsset)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 64, height: 64)
+                        .frame(width: 72, height: 72)
                         .offset(y: 4)
                 }
             }
             .padding(.horizontal, 20)
-            .padding(.top, 20)
-            .padding(.bottom, 16)
+            .padding(.top, 24)
+            .padding(.bottom, 20)
             
             AppButton(
                 text: buttonText,
                 icon: .play,
-                height: 48,
+                height: 52,
                 action: action
             )
             .padding(.horizontal, 20)
             .padding(.bottom, 20)
         }
         .background(
-            RoundedRectangle(cornerRadius: 24, style: .continuous)
+            RoundedRectangle(cornerRadius: 28, style: .continuous)
                 .fill(Color.appSurfaceCard)
         )
         .overlay(
-            RoundedRectangle(cornerRadius: 24, style: .continuous)
-                .stroke(Color.appBorderLight.opacity(0.8), lineWidth: 1)
+            RoundedRectangle(cornerRadius: 28, style: .continuous)
+                .stroke(
+                    LinearGradient(
+                        colors: [.white.opacity(0.8), Color.appBorderLight.opacity(0.4)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: 1.5
+                )
         )
-        .shadow(color: Color.black.opacity(0.05), radius: 10, x: 0, y: 4)
+        .shadow(color: Color.black.opacity(0.06), radius: 16, x: 0, y: 8)
     }
 }
