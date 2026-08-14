@@ -119,7 +119,7 @@ struct SignUpView: View {
             }
             VStack {
                 HStack {
-                    CustomBackButton(action: { viewModel.navigateToLogin() })
+                    CustomBackButton(action: { viewModel.navigateBack() })
                     Spacer()
                 }
                 .padding(.horizontal, 24)

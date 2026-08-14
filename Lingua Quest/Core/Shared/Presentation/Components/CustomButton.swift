@@ -108,6 +108,7 @@ struct CustomButton: View {
                     if let leading {
                         leading
                             .font(AppTextStyle.captionMedium.font)
+                            .flipsForRightToLeftLayoutDirection(true)
                     }
                     
                     Text(text)
@@ -116,6 +117,7 @@ struct CustomButton: View {
                     if let trailing {
                         trailing
                             .font(AppTextStyle.captionMedium.font)
+                            .flipsForRightToLeftLayoutDirection(true)
                     }
                 }
             }

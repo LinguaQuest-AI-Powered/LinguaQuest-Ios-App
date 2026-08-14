@@ -135,8 +135,8 @@ final class ProfileCompletionViewModel {
             }
         } else {
             // Pre-Registration (skipped onboarding)
-            // Replace current view with SignUp
-            router.pushAndReplace(.signUp)
+            // Push SignUp so user can go back to language/level if needed
+            router.push(.signUp)
         }
     }
 }

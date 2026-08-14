@@ -15,6 +15,7 @@ final class VerifyEmailViewModel {
     private let router: RouterProtocol
     private let sendOtpUseCase: SendOtpUseCaseProtocol
     private let verifySignupOtpUseCase: VerifySignupOtpUseCaseProtocol
+    private let userPreferences: UserPreferences
 
     // MARK: - State
     let email: String
@@ -41,11 +42,12 @@ final class VerifyEmailViewModel {
     private let otpLength = 4
 
     // MARK: - Init
-    init(email: String, router: RouterProtocol, sendOtpUseCase: SendOtpUseCaseProtocol, verifySignupOtpUseCase: VerifySignupOtpUseCaseProtocol) {
+    init(email: String, router: RouterProtocol, sendOtpUseCase: SendOtpUseCaseProtocol, verifySignupOtpUseCase: VerifySignupOtpUseCaseProtocol, userPreferences: UserPreferences) {
         self.email = email
         self.router = router
         self.sendOtpUseCase = sendOtpUseCase
         self.verifySignupOtpUseCase = verifySignupOtpUseCase
+        self.userPreferences = userPreferences
         startCountdown()
     }
 
@@ -70,7 +72,8 @@ final class VerifyEmailViewModel {
 
             switch result {
             case .success:
-                router.push(.login)
+                userPreferences.isOnboardingCompleted = true
+                router.popToRoot()
             case .failure(let error):
                 errorMessage = error.errorDescription
             }
@@ -155,7 +158,8 @@ extension VerifyEmailViewModel {
             email: "test@linguaquest.com",
             router: MockRouter(),
             sendOtpUseCase: MockSendOtpUseCase(),
-            verifySignupOtpUseCase: MockVerifySignupOtpUseCase()
+            verifySignupOtpUseCase: MockVerifySignupOtpUseCase(),
+            userPreferences: UserPreferences()
         )
     }
 }

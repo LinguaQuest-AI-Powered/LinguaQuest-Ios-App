@@ -55,6 +55,7 @@ final class OAuthSignInHandler: OAuthSignInHandlerProtocol {
             switch result {
             case .success(let (session, user, profileComplete)):
                 print("✅ Access Token (OAuth Login): \(session.accessToken)")
+                userPreferences.isOnboardingCompleted = true
                 userPreferences.isLoggedIn = true
                 userPreferences.userId = user.id
                 userPreferences.loadUserScopedPreferences(for: user.id)
