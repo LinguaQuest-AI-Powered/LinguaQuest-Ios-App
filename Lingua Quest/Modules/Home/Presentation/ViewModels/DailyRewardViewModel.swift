@@ -17,6 +17,7 @@ final class DailyRewardViewModel {
     var reward: DailyRewardEntity?
     var isClaimed: Bool = false
     var isLoading: Bool = false
+    var isClaiming: Bool = false
     var errorMessage: String?
     
     private var logoutToken: NotificationToken?
@@ -94,7 +95,7 @@ final class DailyRewardViewModel {
     
     @MainActor
     func claimReward() async {
-        isLoading = true
+        isClaiming = true
         errorMessage = nil
         do {
             let claimResult = try await claimDailyRewardUseCase.execute()
@@ -121,6 +122,6 @@ final class DailyRewardViewModel {
             print("Failed to claim daily reward: \(error)")
             errorMessage = error.localizedDescription
         }
-        isLoading = false
+        isClaiming = false
     }
 }

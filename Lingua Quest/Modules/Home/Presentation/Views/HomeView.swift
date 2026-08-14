@@ -243,6 +243,13 @@ struct HomeView: View {
                     .padding()
             }
         }
+        .appDialog(isPresented: Binding(get: { viewModel.dailyRewardViewModel.isClaiming }, set: { _ in })) {
+            SharedImageLoadingView(
+                imageAsset: .loadingBird,
+                title: L10n.Common.loading,
+                subtitle: ""
+            )
+        }
         .customBottomSheet(isPresented: $showMyLanguagesSheet, initialDetent: .custom(ratio: 0.7)) {
             MyLanguagesBottomSheet(
                 languageViewModel: viewModel.languageViewModel,
