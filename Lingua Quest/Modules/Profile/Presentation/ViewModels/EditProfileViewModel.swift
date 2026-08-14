@@ -144,7 +144,7 @@ final class EditProfileViewModel {
     // MARK: - Change Password
 
     var canChangePassword: Bool {
-        !oldPassword.isEmpty && newPassword.count >= 6
+        !oldPassword.isEmpty && newPassword.count >= 8 && newPassword.count <= 64
     }
 
     var canSaveProfile: Bool {
@@ -153,6 +153,11 @@ final class EditProfileViewModel {
 
     func changePassword() {
         guard canChangePassword else { return }
+
+        if oldPassword == newPassword {
+            passwordErrorMessage = L10n.Auth.Error.samePasswordAsOld
+            return
+        }
 
         isChangingPassword = true
         passwordErrorMessage = nil

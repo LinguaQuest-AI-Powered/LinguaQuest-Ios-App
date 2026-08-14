@@ -38,12 +38,13 @@ struct ProfileInputField: View {
 
             HStack(alignment: isMultiline ? .bottom : .center, spacing: 12) {
                 Group {
-                    if isSecure && !isRevealed {
-                        SecureField(
-                            "",
+                    if isSecure {
+                        NoPasteTextField(
+                            placeholder: placeholder,
                             text: $text,
-                            prompt: Text(placeholder)
-                                .foregroundColor(Color.appTextSecondary.opacity(0.5))
+                            isSecureTextEntry: !isRevealed,
+                            fontStyle: .body,
+                            textColor: .appTextHeading
                         )
                     } else if isMultiline {
                         TextField(
@@ -63,6 +64,7 @@ struct ProfileInputField: View {
                         )
                     }
                 }
+                // Apply standard styles only for SwiftUI native textfields, as NoPasteTextField handles it internally
                 .appTextStyle(.body, color: .appTextHeading)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)

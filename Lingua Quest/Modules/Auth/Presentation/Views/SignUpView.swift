@@ -150,6 +150,12 @@ struct SignUpView: View {
                 Text(errorMessage)
             }
         }
+        .appToast(
+            isPresented: $viewModel.showSuccessToast,
+            type: .success,
+            title: L10n.Auth.accountCreatedTitle,
+            subtitle: L10n.Auth.accountCreatedSubtitle
+        )
     }
 }
 

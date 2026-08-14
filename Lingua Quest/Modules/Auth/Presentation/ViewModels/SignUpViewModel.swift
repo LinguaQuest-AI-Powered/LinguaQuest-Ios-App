@@ -27,6 +27,7 @@ final class SignUpViewModel {
     var isConfirmPasswordVisible: Bool = false
     var isLoading: Bool = false
     var errorMessage: String? = nil
+    var showSuccessToast: Bool = false
 
     // MARK: - Init
     init(
@@ -65,7 +66,7 @@ final class SignUpViewModel {
             return
         }
 
-        guard password.count >= 8,
+        guard password.count >= 8, password.count <= 64,
               password.rangeOfCharacter(from: .decimalDigits) != nil,
               password.rangeOfCharacter(from: .letters) != nil else {
             errorMessage = L10n.Auth.Error.weakPassword
@@ -94,7 +95,16 @@ final class SignUpViewModel {
 
             switch result {
             case .success(let account):
-                router.push(.verifyEmail(email: account.email))
+                showSuccessToast = true
+                
+                // Fire OTP sending asynchronously so we don't block the UI transition
+                Task {
+                    _ = await self.sendOtpUseCase.execute(email: account.email, purpose: .signup)
+                }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    self.router.push(.verifyEmail(email: account.email))
+                }
             case .failure(let error):
                 errorMessage = error.errorDescription
             }

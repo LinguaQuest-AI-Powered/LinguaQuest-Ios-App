@@ -56,6 +56,9 @@ enum L10n {
         static var createAccount: String { localized("auth.create_account") }
         static var alreadyHaveAccount: String { localized("auth.already_have_account") }
         
+        static var accountCreatedTitle: String { localized("auth.account_created_title") }
+        static var accountCreatedSubtitle: String { localized("auth.account_created_subtitle") }
+        
         static var forgetPassword: String { localized("auth.forget_password") }
         static var forgetPasswordDesc: String { localized("auth.forget_password_desc") }
         static var enterEmail: String { localized("auth.enter_email") }
@@ -108,6 +111,7 @@ enum L10n {
             static var invalidUsernameFormat: String { localized("auth_error_invalid_username_format") }
             static var oauthProfileSetupComingSoon: String { localized("auth_error_oauth_profile_setup_coming_soon") }
             static var oauthCancelledOrFailed: String { localized("auth_error_oauth_cancelled_or_failed") }
+            static var samePasswordAsOld: String { localized("auth_error_same_password") }
         }
     }
     
