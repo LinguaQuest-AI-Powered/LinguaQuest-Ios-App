@@ -88,22 +88,9 @@ struct HomeRepositoryImpl: HomeRepositoryProtocol {
         let response = try await remoteDataSource.switchActiveLanguage(languageId: languageId)
         let activeLang = response.data.activeLanguage.toDomain()
         
-        // Invalidate HomeData since the language switched, we need fresh progress/worlds
-        localDataSource.homeData = nil
-        // Or we could update the active flag in the cached languages list
-        if var cached = localDataSource.myLanguages {
-            for i in cached.indices {
-                cached[i] = MyTargetLanguage(
-                    id: cached[i].id,
-                    name: cached[i].name,
-                    code: cached[i].code,
-                    level: cached[i].level,
-                    isActive: cached[i].id == languageId,
-                    progressPercent: cached[i].progressPercent
-                )
-            }
-            localDataSource.myLanguages = cached
-        }
+        // Clear all cached data so the app fetches fresh data for the new language
+        localDataSource.clearCache()
+        
         return activeLang
     }
     
@@ -128,5 +115,6 @@ struct HomeRepositoryImpl: HomeRepositoryProtocol {
     
     func changeNativeLanguage(languageId: Int) async throws {
         try await remoteDataSource.changeNativeLanguage(languageId: languageId)
+        localDataSource.clearCache()
     }
 }

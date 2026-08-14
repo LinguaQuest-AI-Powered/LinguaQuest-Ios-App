@@ -38,6 +38,10 @@ class GalleryViewModel {
         }
     }
     
+    var hasJournalWords: Bool {
+        vocabularyWords.contains(where: { $0.isAddedToJournal })
+    }
+    
     var selectedVocabularyWord: VocabularyWordEntity? = nil
     var showVocabularyDialog: Bool = false
     

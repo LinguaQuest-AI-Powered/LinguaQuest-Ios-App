@@ -4,6 +4,46 @@ struct MainTabView: View {
     @State private var selectedTab: MainTabItem = .home
     @AppStorage(AppConstants.UserDefaultsKeys.appLanguage) private var appLanguage = "en"
     
+    @AppStorage(AppConstants.UserDefaultsKeys.hasSeenFullAppTutorial) private var hasSeenFullAppTutorial: Bool = false
+    @State private var showTutorial: Bool = false
+    @State private var currentTutorialStepIndex: Int = 0
+    @State private var tutorialBounds: [TutorialStepType: CGRect] = [:]
+    
+    private var allTutorialSteps: [TutorialStepType] {
+        var steps: [TutorialStepType] = []
+        steps.append(contentsOf: [.xp, .coins, .notifications])
+        
+        if !homeViewModel.dailyRewardViewModel.isClaimed && homeViewModel.dailyRewardViewModel.reward != nil {
+            steps.append(.dailyReward)
+        }
+        
+        steps.append(contentsOf: [.learningProgress, .currentLesson])
+        
+        let showDailyMission: Bool
+        switch homeViewModel.dailyMissionCardViewModel.state {
+        case .completed, .notAvailable:
+            showDailyMission = false
+        default:
+            showDailyMission = true
+        }
+        if showDailyMission {
+            steps.append(.dailyMission)
+        }
+        
+        steps.append(contentsOf: [
+            .exploreWorlds, .switchLanguage,
+            .gameCaptures
+        ])
+        if galleryViewModel.isLockScreenVocabularyEnabled {
+            steps.append(.myJournal)
+        }
+        steps.append(contentsOf: [
+            .voicePractice, .roleplay, .mindReader,
+            .yourProfile, .profileStats, .settings, .achievements, .leaderboard
+        ])
+        return steps
+    }
+    
     @State private var profileViewModel: ProfileViewModel
     @State private var homeViewModel: HomeViewModel
     @State private var galleryViewModel: GalleryViewModel
@@ -32,16 +72,58 @@ struct MainTabView: View {
                 ProfileView(viewModel: profileViewModel)
                     .tag(MainTabItem.profile)
             }
+            .environment(\.currentTutorialStep, showTutorial && currentTutorialStepIndex < allTutorialSteps.count ? allTutorialSteps[currentTutorialStepIndex] : nil)
             .toolbar(.hidden, for: .tabBar)
+            .onPreferenceChange(TutorialBoundsPreferenceKey.self) { bounds in
+                self.tutorialBounds = bounds
+            }
             
             LinguaQuestTabBar(selectedTab: $selectedTab)
                 .padding(.horizontal, 22)
                 .padding(.bottom, 8)
+                
+            if showTutorial {
+                TutorialOverlayView(
+                    bounds: tutorialBounds,
+                    steps: allTutorialSteps,
+                    isPresented: $showTutorial,
+                    currentStepIndex: $currentTutorialStepIndex
+                )
+            }
         }
         .id(appLanguage)
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("VocabularyNotificationTapped"))) { _ in
             selectedTab = .gallery
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("SwitchToHomeTab"))) { _ in
+            selectedTab = .home
+        }
+        .onAppear {
+            if !hasSeenFullAppTutorial {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    showTutorial = true
+                }
+            }
+        }
+        .onChange(of: showTutorial) { _, isShowing in
+            if !isShowing {
+                hasSeenFullAppTutorial = true
+            }
+        }
+        .onChange(of: currentTutorialStepIndex) { _, newIndex in
+            guard newIndex < allTutorialSteps.count else { return }
+            let step = allTutorialSteps[newIndex]
+            switch step {
+            case .xp, .coins, .notifications, .dailyReward, .learningProgress, .currentLesson, .dailyMission, .exploreWorlds, .switchLanguage:
+                if selectedTab != .home { selectedTab = .home }
+            case .gameCaptures, .myJournal:
+                if selectedTab != .gallery { selectedTab = .gallery }
+            case .voicePractice, .roleplay, .mindReader:
+                if selectedTab != .lingos { selectedTab = .lingos }
+            case .yourProfile, .profileStats, .settings, .achievements, .leaderboard:
+                if selectedTab != .profile { selectedTab = .profile }
+            }
         }
     }
 }

@@ -23,10 +23,23 @@ final class DailyMissionCardViewModel {
 
     private let getMissionUseCase: GetDailyMissionUseCase
     private let router: RouterProtocol
+    
+    private var languageSwitchToken: NotificationToken?
 
     init(getMissionUseCase: GetDailyMissionUseCase, router: RouterProtocol) {
         self.getMissionUseCase = getMissionUseCase
         self.router = router
+        
+        let token = NotificationCenter.default.addObserver(
+            forName: .languageDidSwitch,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task {
+                await self?.loadMission()
+            }
+        }
+        languageSwitchToken = NotificationToken(token: token)
     }
 
     func loadMission() async {

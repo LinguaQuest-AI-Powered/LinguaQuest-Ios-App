@@ -13,7 +13,6 @@ struct LeaderboardView: View {
 
     var body: some View {
         ZStack {
-            Color.appBackgroundWarm.ignoresSafeArea()
 
             VStack(spacing: 0) {
                 LeaderboardHeaderView(viewModel: viewModel)
@@ -58,7 +57,7 @@ struct LeaderboardView: View {
             if viewModel.isLoading {
                 LeaderboardSkeletonView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color.appBackgroundWarm.ignoresSafeArea())
+                    .background(HomeBackgroundView().ignoresSafeArea())
                     .shimmer()
                     .transition(.opacity.combined(with: .move(edge: .bottom)))
             }
@@ -73,9 +72,10 @@ struct LeaderboardView: View {
                     .buttonStyle(.borderedProminent)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color.appBackgroundWarm.ignoresSafeArea())
+                .background(HomeBackgroundView().ignoresSafeArea())
             }
         }
+        .background(HomeBackgroundView().ignoresSafeArea())
         .navigationBarHidden(true)
         .edgesIgnoringSafeArea(.bottom)
         .onAppear {

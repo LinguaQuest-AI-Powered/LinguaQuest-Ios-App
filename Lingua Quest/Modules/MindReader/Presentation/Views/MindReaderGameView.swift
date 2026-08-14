@@ -183,6 +183,7 @@ struct MindReaderGameView: View {
         )
         .padding(.horizontal, 20)
         .zIndex(1)
+        .aiUnavailableDialog(isPresented: Bindable(viewModel).showAiUnavailableDialog)
     }
     
     // MARK: - Loading Overlay

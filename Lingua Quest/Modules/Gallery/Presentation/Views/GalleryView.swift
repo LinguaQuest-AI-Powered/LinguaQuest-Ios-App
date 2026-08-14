@@ -23,11 +23,12 @@ struct GalleryView: View {
     ]
     
     var body: some View {
-        VStack(spacing: 0) {
-            AppHeaderView(
-                starCount: viewModel.statsService.xp,
-                coinCount: viewModel.statsService.coins
-            )
+        ZStack {
+            VStack(spacing: 0) {
+                AppHeaderView(
+                    starCount: viewModel.statsService.xp,
+                    coinCount: viewModel.statsService.coins
+                )
             
 
             if viewModel.isLockScreenVocabularyEnabled {
@@ -48,6 +49,7 @@ struct GalleryView: View {
                         }
                         .frame(maxWidth: .infinity)
                     }
+                    .tutorialStep(.gameCaptures)
                     
                     Button(action: { withAnimation { selectedTab = 1 } }) {
                         VStack(spacing: 6) {
@@ -65,6 +67,7 @@ struct GalleryView: View {
                         }
                         .frame(maxWidth: .infinity)
                     }
+                    .tutorialStep(.myJournal)
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 16)
@@ -79,24 +82,29 @@ struct GalleryView: View {
                 .padding(.horizontal, 20)
                 .padding(.top, 20)
                 .padding(.bottom, 4)
+                .tutorialStep(.gameCaptures)
             }
             
-            let currentSubtitle = selectedTab == 0
-                ? (viewModel.items.isEmpty ? L10n.Gallery.noCapturesYet : L10n.Gallery.objectsCollected(viewModel.items.count))
-                : (viewModel.filteredVocabularyWords.isEmpty ? L10n.Gallery.noCapturesYet : L10n.Gallery.objectsCollected(viewModel.filteredVocabularyWords.count))
-                
-            HStack {
-                Text(currentSubtitle)
-                    .font(.system(size: 15, weight: .medium, design: .rounded))
-                    .foregroundColor(.appTextSecondary.opacity(0.8))
-                Spacer()
+            let currentItemCount = selectedTab == 0 ? viewModel.items.count : viewModel.filteredVocabularyWords.count
+            
+            if currentItemCount > 0 {
+                HStack {
+                    Text(L10n.Gallery.objectsCollected(currentItemCount))
+                        .font(.system(size: 15, weight: .medium, design: .rounded))
+                        .foregroundColor(.appTextSecondary.opacity(0.8))
+                    Spacer()
+                }
+                .padding(.horizontal, 20)
+                .padding(.bottom, 16)
+            } else {
+                Spacer().frame(height: 16)
             }
-            .padding(.horizontal, 20)
-            .padding(.bottom, 16)
             
             if selectedTab == 0 {
                 if viewModel.items.isEmpty {
-                    EmptyGalleryView()
+                    EmptyGalleryView(action: {
+                        NotificationCenter.default.post(name: NSNotification.Name("SwitchToHomeTab"), object: nil)
+                    })
                         .frame(maxHeight: .infinity, alignment: .center)
                 } else {
                     GalleryGridView(
@@ -108,22 +116,36 @@ struct GalleryView: View {
                 }
             } else {
                 VStack(spacing: 0) {
-                    CategoryFilterView(
-                        categories: wordCategories,
-                        localizedTitles: wordLocalizedTitles,
-                        selectedCategory: Binding(
-                            get: { viewModel.selectedDifficultyFilter ?? "All" },
-                            set: { newValue in
-                                viewModel.selectedDifficultyFilter = newValue == "All" ? nil : newValue
+                    if viewModel.hasJournalWords {
+                        CategoryFilterView(
+                            categories: wordCategories,
+                            localizedTitles: wordLocalizedTitles,
+                            selectedCategory: Binding(
+                                get: { viewModel.selectedDifficultyFilter ?? "All" },
+                                set: { newValue in
+                                    viewModel.selectedDifficultyFilter = newValue == "All" ? nil : newValue
+                                }
+                            )
+                        )
+                        .padding(.bottom, 10)
+                    }
+                    
+                    if !viewModel.hasJournalWords {
+                        EmptyGalleryView(
+                            title: L10n.Gallery.noWordsYet,
+                            subtitle: L10n.Gallery.noWordsSubtitle,
+                            action: {
+                                NotificationCenter.default.post(name: NSNotification.Name("SwitchToHomeTab"), object: nil)
                             }
                         )
-                    )
-                    .padding(.bottom, 10)
-                    
-                    if viewModel.filteredVocabularyWords.isEmpty {
+                            .frame(maxHeight: .infinity, alignment: .center)
+                    } else if viewModel.filteredVocabularyWords.isEmpty {
                         EmptyGalleryView(
                             title: L10n.Gallery.emptyFilterWordsTitle,
-                            subtitle: L10n.Gallery.emptyFilterWordsSubtitle
+                            subtitle: L10n.Gallery.emptyFilterWordsSubtitle,
+                            action: {
+                                NotificationCenter.default.post(name: NSNotification.Name("SwitchToHomeTab"), object: nil)
+                            }
                         )
                             .frame(maxHeight: .infinity, alignment: .center)
                     } else {
@@ -146,12 +168,13 @@ struct GalleryView: View {
                     }
                 }
             }
-        }
+        } // Closes VStack(spacing: 0)
         .background(
             HomeBackgroundView()
                 .ignoresSafeArea()
         )
-        .onAppear {
+    }
+    .onAppear {
             viewModel.loadItems()
             if !viewModel.isLockScreenVocabularyEnabled {
                 selectedTab = 0

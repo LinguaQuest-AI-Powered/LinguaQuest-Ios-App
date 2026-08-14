@@ -40,8 +40,9 @@ class VoiceGameViewModel {
     private var timer: Timer?
     private var advanceToken: NotificationToken?
     
-    var showSkipDialog: Bool = false
-    var showNotEnoughCoinsDialog: Bool = false
+    var showSkipDialog = false
+    var showNotEnoughCoinsDialog = false
+    var showAiUnavailableDialog = false
     
     var dailySentences: [VoiceSentence] = []
     var currentSentenceIndex: Int = 0
@@ -105,6 +106,7 @@ class VoiceGameViewModel {
         } catch {
             print("Failed to load daily sentences: \(error)")
             loadError = error.localizedDescription
+            showAiUnavailableDialog = true
         }
         isLoadingSentences = false
     }

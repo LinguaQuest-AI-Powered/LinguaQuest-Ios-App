@@ -22,6 +22,7 @@
 "common.go_back" = "رجوع";
 "common.open_settings" = "فتح الإعدادات";
 "common.remove" = "إزالة";
+"common.ai_service_unavailable_subtitle" = "خدمة الذكاء الاصطناعي متوقفة حالياً وستعود قريباً.";
 
 "auth.email_placeholder" = "البريد الإلكتروني";
 "auth.password_placeholder" = "كلمة المرور";
@@ -155,7 +156,10 @@
 "gallery.captures_so_far" = "0 التقاطات حتى الآن";
 "gallery.add_new" = "إضافة جديد";
 "gallery.no_captures_yet" = "لا توجد التقاطات بعد";
-"gallery.no_captures_subtitle" = "لم تلتقط أي كلمات بعد.\nاضغط على الزر أعلاه لإضافة أول التقاط لك.";
+"gallery.no_captures_subtitle" = "لم تلتقط أي كلمات بعد.\nانتقل إلى الشاشة الرئيسية لتبدأ\nاللعب وتلتقط كلمات جديدة.";
+"gallery.no_words_yet" = "لا توجد كلمات بعد";
+"gallery.no_words_subtitle" = "لم تقم بحفظ أي كلمات بعد.\nانتقل إلى الشاشة الرئيسية لتبدأ\nاللعب وتحفظ كلمات جديدة.";
+"gallery.go_to_home" = "الذهاب للرئيسية";
 "gallery.categories.all_items" = "كل العناصر";
 "gallery.categories.kitchen" = "المطبخ";
 "gallery.categories.park" = "الحديقة";
@@ -616,3 +620,52 @@
 "daily_mission.reward_coins" = "العملات المكتسبة";
 "daily_mission.no_image_data" = "لم يتم التقاط صورة. يرجى المحاولة مجددًا.";
 "daily_mission.retry" = "إعادة المحاولة";
+
+"tutorial.learning_progress.title" = "تقدم التعلم";
+"tutorial.learning_progress.desc" = "تحقق من لغتك الحالية، ومستواك، وتقدمك في التعلم، وسلسلة أيامك هنا.";
+"tutorial.current_lesson.title" = "الدرس الحالي";
+"tutorial.current_lesson.desc" = "انقر هنا لمتابعة درسك الحالي والتقاط كلمات جديدة.";
+"tutorial.coins.title" = "عملاتك";
+"tutorial.coins.desc" = "اربح العملات من خلال إكمال الدروس والمهمات. استخدمها لفتح ميزات جديدة.";
+"tutorial.xp.title" = "نقاط الخبرة (XP)";
+"tutorial.xp.desc" = "اربح نقاط الخبرة لتتسلق لوحة الصدارة وتتتبع تقدمك.";
+"tutorial.notifications.title" = "الإشعارات";
+"tutorial.notifications.desc" = "ابق على اطلاع بتذكيرات المفردات، والإنجازات، وتفاصيل المهام.";
+"tutorial.skip" = "تخطي";
+"tutorial.next" = "التالي";
+"tutorial.done" = "تم";
+
+"tutorial.explore_worlds.title" = "استكشف العوالم";
+"tutorial.explore_worlds.desc" = "تصفح وحدد عوالم التعلم المختلفة لاستكشافها.";
+"tutorial.switch_language.title" = "تغيير اللغة";
+"tutorial.switch_language.desc" = "انقر هنا لتغيير لغة التعلم النشطة أو إضافة لغات جديدة.";
+
+"tutorial.game_captures.title" = "لقطات الألعاب";
+"tutorial.game_captures.desc" = "عرض جميع الكلمات التي قمت بالتقاطها بنجاح في العالم الحقيقي من خلال الألعاب. يمكنك أيضاً تفعيل ميزة 'مفردات شاشة القفل' من الإعدادات لإظهار تبويبة 'كلماتي' ومتابعة كلماتك هنا.";
+"tutorial.my_journal.title" = "يومياتي";
+"tutorial.my_journal.desc" = "تصفح الكلمات المحفوظة في خزينة المفردات الخاصة بك وقم بإدارة مراجعة التعلم الخاصة بك.";
+
+"tutorial.voice_practice.title" = "التدريب الصوتي";
+"tutorial.voice_practice.desc" = "تحدث في الميكروفون للتدريب على النطق واحصل على تقييم فوري.";
+"tutorial.roleplay.title" = "تبادل الأدوار";
+"tutorial.roleplay.desc" = "شارك في محادثات تفاعلية لتحسين مهارات التحدث في المواقف المختلفة.";
+"tutorial.mind_reader.title" = "قارئ الأفكار";
+"tutorial.mind_reader.desc" = "تحدى الذكاء الاصطناعي لتخمين الكلمة التي تفكر فيها في هذه اللعبة التفاعلية.";
+
+"tutorial.your_profile.title" = "ملفك الشخصي";
+"tutorial.your_profile.desc" = "قم بإدارة صورتك الرمزية، وعرض اسمك، والتحقق من مستوى التعلم الحالي الخاص بك.";
+"tutorial.profile_stats.title" = "إحصائيات الملف الشخصي";
+"tutorial.profile_stats.desc" = "تحقق من سلسلة تقدمك، وإجمالي نقاط الخبرة، والكلمات الملتقطة مباشرة.";
+"tutorial.settings.title" = "إعدادات الحساب";
+"tutorial.settings.desc" = "انقر هنا لفتح الإعدادات، وتكوين الإشعارات، وتغيير مظهر التطبيق، أو ضبط أهداف التعلم.";
+"tutorial.achievements.title" = "الإنجازات";
+"tutorial.achievements.desc" = "اربح شارات ومكافآت كلما حققت أرقاماً قياسية وأكملت التحديات.";
+"tutorial.leaderboard.title" = "لوحة الصدارة";
+"tutorial.leaderboard.desc" = "شاهد ترتيبك بين أصدقائك والمتعلمين الآخرين في المجتمع العالمي.";
+
+"tutorial.daily_reward.title" = "المكافأة اليومية";
+"tutorial.daily_reward.desc" = "لا تنسَ المطالبة بمكافأتك المجانية كل يوم لتعزيز تقدمك!";
+"tutorial.daily_mission.title" = "المهمة اليومية";
+"tutorial.daily_mission.desc" = "أكمل مهمتك اليومية للحصول على مكافآت إضافية والحفاظ على حماسك!";
+
+"achievements.earned_on" = "تم الاكتساب في %@";

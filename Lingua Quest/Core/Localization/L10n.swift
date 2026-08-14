@@ -33,6 +33,7 @@ enum L10n {
         static var goBack: String { localized("common.go_back") }
         static var openSettings: String { localized("common.open_settings") }
         static var remove: String { localized("common.remove") }
+        static var aiServiceUnavailableSubtitle: String { localized("common.ai_service_unavailable_subtitle") }
     }
 
     enum Auth {
@@ -231,6 +232,9 @@ enum L10n {
         static var addNew: String { localized("gallery.add_new") }
         static var noCapturesYet: String { localized("gallery.no_captures_yet") }
         static var noCapturesSubtitle: String { localized("gallery.no_captures_subtitle") }
+        static var noWordsYet: String { localized("gallery.no_words_yet") }
+        static var noWordsSubtitle: String { localized("gallery.no_words_subtitle") }
+        static var goToHome: String { localized("gallery.go_to_home") }
         static var emptyFilterWordsTitle: String { localized("gallery.empty.filter.words.title") }
         static var emptyFilterWordsSubtitle: String { localized("gallery.empty.filter.words.subtitle") }
         static var emptyFilterItemsTitle: String { localized("gallery.empty.filter.items.title") }
@@ -413,6 +417,7 @@ enum L10n {
         static var inProgressLabel: String { localized("achievements.in_progress_label") }
         static var xpGainedLabel: String { localized("achievements.xp_gained_label") }
         static var claimRewards: String { localized("achievements.claim_rewards") }
+        static func earnedOn(_ date: String) -> String { String(format: localized("achievements.earned_on"), date) }
     }
     
     enum Worlds {
@@ -599,6 +604,56 @@ enum L10n {
             static var q4: String { localized("help_support.faq.q4") }
             static var a4: String { localized("help_support.faq.a4") }
         }
+    }
+
+    enum Tutorial {
+        static var learningProgressTitle: String { localized("tutorial.learning_progress.title") }
+        static var learningProgressDesc: String { localized("tutorial.learning_progress.desc") }
+        static var currentLessonTitle: String { localized("tutorial.current_lesson.title") }
+        static var currentLessonDesc: String { localized("tutorial.current_lesson.desc") }
+        static var coinsTitle: String { localized("tutorial.coins.title") }
+        static var coinsDesc: String { localized("tutorial.coins.desc") }
+        static var xpTitle: String { localized("tutorial.xp.title") }
+        static var xpDesc: String { localized("tutorial.xp.desc") }
+        static var notificationsTitle: String { localized("tutorial.notifications.title") }
+        static var notificationsDesc: String { localized("tutorial.notifications.desc") }
+        static var skip: String { localized("tutorial.skip") }
+        static var next: String { localized("tutorial.next") }
+        static var done: String { localized("tutorial.done") }
+        
+        static var exploreWorldsTitle: String { localized("tutorial.explore_worlds.title") }
+        static var exploreWorldsDesc: String { localized("tutorial.explore_worlds.desc") }
+        static var switchLanguageTitle: String { localized("tutorial.switch_language.title") }
+        static var switchLanguageDesc: String { localized("tutorial.switch_language.desc") }
+        
+        static var gameCapturesTitle: String { localized("tutorial.game_captures.title") }
+        static var gameCapturesDesc: String { localized("tutorial.game_captures.desc") }
+        static var myJournalTitle: String { localized("tutorial.my_journal.title") }
+        static var myJournalDesc: String { localized("tutorial.my_journal.desc") }
+        
+        static var voicePracticeTitle: String { localized("tutorial.voice_practice.title") }
+        static var voicePracticeDesc: String { localized("tutorial.voice_practice.desc") }
+        static var roleplayTitle: String { localized("tutorial.roleplay.title") }
+        static var roleplayDesc: String { localized("tutorial.roleplay.desc") }
+        static var mindReaderTitle: String { localized("tutorial.mind_reader.title") }
+        static var mindReaderDesc: String { localized("tutorial.mind_reader.desc") }
+        
+        static var yourProfileTitle: String { localized("tutorial.your_profile.title") }
+        static var yourProfileDesc: String { localized("tutorial.your_profile.desc") }
+        static var profileStatsTitle: String { localized("tutorial.profile_stats.title") }
+        static var profileStatsDesc: String { localized("tutorial.profile_stats.desc") }
+        static var settingsTitle: String { localized("tutorial.settings.title") }
+        static var settingsDesc: String { localized("tutorial.settings.desc") }
+        static var achievementsTitle: String { localized("tutorial.achievements.title") }
+        static var achievementsDesc: String { localized("tutorial.achievements.desc") }
+        static var leaderboardTitle: String { localized("tutorial.leaderboard.title") }
+        static var leaderboardDesc: String { localized("tutorial.leaderboard.desc") }
+        
+        static var dailyRewardTitle: String { localized("tutorial.daily_reward.title") }
+        static var dailyRewardDesc: String { localized("tutorial.daily_reward.desc") }
+        
+        static var dailyMissionTitle: String { localized("tutorial.daily_mission.title") }
+        static var dailyMissionDesc: String { localized("tutorial.daily_mission.desc") }
     }
 
     enum MindReader {

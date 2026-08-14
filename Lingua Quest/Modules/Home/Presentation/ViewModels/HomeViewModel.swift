@@ -28,6 +28,7 @@ final class HomeViewModel {
     
     private var logoutToken: NotificationToken?
     private var progressToken: NotificationToken?
+    private var languageSwitchToken: NotificationToken?
     
     var displayWorlds: [WorldUIModel] {
         let worldsToDisplay = fetchedWorlds.isEmpty ? (homeData?.activeLanguage.exploreWorlds ?? []) : fetchedWorlds
@@ -60,11 +61,16 @@ final class HomeViewModel {
         self.router = router
         
         // Listen for language switches to refresh home data
-        self.languageViewModel.onLanguageSwitched = { [weak self] in
+        let langToken = NotificationCenter.default.addObserver(
+            forName: .languageDidSwitch,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
             Task {
                 await self?.loadHomeData(forceRefresh: true)
             }
         }
+        languageSwitchToken = NotificationToken(token: langToken)
         
         let token = NotificationCenter.default.addObserver(
             forName: .userDidLogout,

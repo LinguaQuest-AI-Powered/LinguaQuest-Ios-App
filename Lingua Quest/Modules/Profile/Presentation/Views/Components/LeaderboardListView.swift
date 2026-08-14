@@ -32,7 +32,7 @@ struct LeaderboardListView: View {
                 LeaderboardRow(
                     rank: "\(user.rank)",
                     name: user.name,
-                    xpAmount: "\(user.xp) XP",
+                    xpAmount: "\(user.xp)",
                     avatarImage: user.image.isEmpty ? nil : user.image,
                     isTop: user.rank <= 3,
                     isCurrentUser: user.isCurrentUser

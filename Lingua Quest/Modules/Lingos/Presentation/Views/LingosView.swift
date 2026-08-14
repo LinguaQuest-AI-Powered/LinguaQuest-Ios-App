@@ -10,18 +10,21 @@ import SwiftUI
 struct LingosView: View {
     @Bindable var viewModel: LingosViewModel
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.currentTutorialStep) private var currentTutorialStep
     
     @State private var isAnimated: Bool = false
     
     var body: some View {
-        VStack(spacing: 0) {
+        ZStack {
+            VStack(spacing: 0) {
             AppHeaderView(
                 starCount: viewModel.statsService.xp,
                 coinCount: viewModel.statsService.coins
             )
             
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: 20) {
+            ScrollViewReader { proxy in
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 20) {
                     LingosGameCardView(
                         tagText: L10n.SpeakingLab.voicePractice,
                         title: L10n.Home.voicePracticeSubtitle,
@@ -33,6 +36,8 @@ struct LingosView: View {
                     .offset(y: isAnimated ? 0 : 30)
                     .opacity(isAnimated ? 1 : 0)
                     .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.1), value: isAnimated)
+                    .id(TutorialStepType.voicePractice)
+                    .tutorialStep(.voicePractice)
                     
                     LingosGameCardView(
                         tagText: L10n.BossLevel.roleplayTag,
@@ -45,6 +50,8 @@ struct LingosView: View {
                     .offset(y: isAnimated ? 0 : 30)
                     .opacity(isAnimated ? 1 : 0)
                     .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.2), value: isAnimated)
+                    .id(TutorialStepType.roleplay)
+                    .tutorialStep(.roleplay)
                     
                     LingosGameCardView(
                         tagText: L10n.MindReader.mindReaderTag,
@@ -57,18 +64,29 @@ struct LingosView: View {
                     .offset(y: isAnimated ? 0 : 30)
                     .opacity(isAnimated ? 1 : 0)
                     .animation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.3), value: isAnimated)
+                    .id(TutorialStepType.mindReader)
+                    .tutorialStep(.mindReader)
                     
                     Color.clear.frame(height: 100)
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 12)
             }
-        }
+            .onChange(of: currentTutorialStep) { _, newStep in
+                if let step = newStep {
+                    withAnimation {
+                        proxy.scrollTo(step, anchor: .center)
+                    }
+                }
+            }
+        } // closes ScrollViewReader
+        } // closes VStack
         .background(
             HomeBackgroundView()
                 .ignoresSafeArea()
         )
-        .onAppear {
+    } // closes ZStack
+    .onAppear {
             viewModel.loadVoiceProgress()
             if !reduceMotion {
                 withAnimation {

@@ -117,6 +117,7 @@ struct SettingsView: View {
                 }
             )
         }
+        .aiUnavailableDialog(isPresented: Bindable(viewModel).showAiUnavailableDialog)
         .customBottomSheet(isPresented: $showMyLanguagesSheet, initialDetent: .custom(ratio: 0.7)) {
             MyLanguagesBottomSheet(
                 languageViewModel: viewModel.languageViewModel,

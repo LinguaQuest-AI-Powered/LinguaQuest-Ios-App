@@ -41,7 +41,7 @@ enum AppConstants {
         static let targetLanguageName = "targetLanguageName"
         static let isLockScreenVocabularyEnabled = "isLockScreenVocabularyEnabled"
         static let isSoundEnabled = "isSoundEnabled"
-
+        static let hasSeenFullAppTutorial = "hasSeenFullAppTutorial"
     }
     enum Common {
         static let defaultUserName = "Alex"

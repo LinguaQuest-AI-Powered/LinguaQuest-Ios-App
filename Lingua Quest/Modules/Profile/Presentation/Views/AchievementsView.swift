@@ -33,11 +33,8 @@ struct AchievementsView: View {
     }
     
     var body: some View {
-        ZStack {
-            Color.appBackgroundWarm.ignoresSafeArea()
-            
-            VStack(spacing: 0) {
-                // Top Bar
+        VStack(spacing: 0) {
+            // Top Bar
                 HStack {
                    CustomBackButton(action: {
                         viewModel.onBackTapped()
@@ -51,9 +48,7 @@ struct AchievementsView: View {
                 .padding(.horizontal, 20)
                 .frame(height: 64)
                 
-                Divider()
-                    .background(Color.appBorderBrown)
-                
+
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 24) {
                         // Trophies Card
@@ -158,7 +153,7 @@ struct AchievementsView: View {
                                 } else {
                                     Image(systemIcon: .starCircleFill)
                                         .foregroundColor(reward.claimedThisWeek ? .appTextSecondary : .white)
-                                    Text(reward.claimedThisWeek ? "Reward Claimed" : L10n.Achievements.claimRewards)
+                                    Text(reward.claimedThisWeek ? L10n.Achievements.earnedLabel.uppercased() : L10n.Achievements.claimRewards)
                                         .appTextStyle(.bodyBold, color: reward.claimedThisWeek ? .appTextSecondary : .white)
                                 }
                             }
@@ -176,13 +171,13 @@ struct AchievementsView: View {
                 .opacity(isAnimating ? 1 : 0)
                 .animation(.easeIn(duration: 0.5).delay(0.8), value: isAnimating)
             }
-        }
+        .background(HomeBackgroundView().ignoresSafeArea())
         .navigationBarHidden(true)
         .alert(isPresented: $viewModel.showClaimAlert) {
             Alert(
-                title: Text("Rewards Claimed!"),
+                title: Text(L10n.Achievements.earnedLabel),
                 message: Text(viewModel.claimAlertMessage),
-                dismissButton: .default(Text("Awesome"))
+                dismissButton: .default(Text(L10n.Common.ok))
             )
         }
         .customBottomSheet(isPresented: Binding(
@@ -281,7 +276,7 @@ struct AchievementGridItem: View {
                     .multilineTextAlignment(.center)
                     .lineLimit(1)
                 
-                Text(achievement.isEarned ? "COMPLETED" : "\(achievement.progressPercent)%")
+                Text(achievement.isEarned ? L10n.Achievements.earnedLabel.uppercased() : "\(achievement.progressPercent)%")
                     .font(.system(size: 10, weight: .bold))
                     .foregroundColor(achievement.isEarned ? Color.appBadgeTealText : .appTextSecondary)
                     .padding(.horizontal, 10)

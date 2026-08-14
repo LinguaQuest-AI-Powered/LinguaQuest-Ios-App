@@ -9,41 +9,42 @@ struct EmptyGalleryView: View {
     @State private var isFloating = false
     var title: String? = nil
     var subtitle: String? = nil
+    var action: (() -> Void)? = nil
     
     var body: some View {
-        VStack(spacing: 0) {
-            Spacer(minLength: 40)
+        VStack {
+            Spacer()
             
-            ZStack {
-                Circle()
-                    .fill(Color.appEmptyCircleBg)
-                    .frame(width: 200, height: 200)
-                Image(asset: .emptyGallary)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(height: 280)
-                    .offset(y: isFloating ? -8 : 8)
-            }
-            .onAppear {
-                withAnimation(.easeInOut(duration: 2.0).repeatForever(autoreverses: true)) {
-                    isFloating = true
+            DialogCardContainer(
+                showMascot: true,
+                mascotImage: .emptyGallary,
+                customMascotSize: CGSize(width: 140, height: 140),
+                customTopSpacing: 70,
+                speechBubbleText: nil
+            ) {
+                VStack(spacing: 12) {
+                    Text(title ?? L10n.Gallery.noCapturesYet)
+                        .dialogTitleStyle()
+                        .multilineTextAlignment(.center)
+                    
+                    Text(subtitle ?? L10n.Gallery.noCapturesSubtitle)
+                        .dialogSubtitleStyle()
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 16)
+                    
+                    CustomButton(
+                        type: .primary,
+                        text: L10n.Gallery.goToHome
+                    ) {
+                        action?()
+                    }
+                    .padding(.top, 16)
                 }
             }
-            .padding(.bottom, 16)
+            .padding(.horizontal, 24)
+            .offset(y: -40)
             
-            VStack(spacing: 8) {
-                Text(title ?? L10n.Gallery.noCapturesYet)
-                    .font(.system(size: 24, weight: .bold, design: .rounded))
-                    .foregroundColor(.appEmptyStateTitle)
-                Text(subtitle ?? L10n.Gallery.noCapturesSubtitle)
-                    .font(.system(size: 14, weight: .regular, design: .rounded))
-                    .foregroundColor(.appEmptyStateSubtitle)
-                    .multilineTextAlignment(.center)
-                    .lineSpacing(4)
-            }
-            .padding(.horizontal, 40)
-            
-            Spacer(minLength: 120)
+            Spacer()
         }
     }
 }

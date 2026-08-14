@@ -16,8 +16,6 @@ class AppDelegate: NSObject, UIApplicationDelegate, MessagingDelegate, UNUserNot
         
      
         FirebaseApp.configure()
-        
-   
         Messaging.messaging().delegate = self
         UNUserNotificationCenter.current().delegate = self
         

@@ -226,7 +226,6 @@ final class UserPreferences: UserPreferencesProtocol {
         
         // Reset user-scoped properties in memory (doesn't wipe them from disk)
         isLockScreenVocabularyEnabled = false
-        isDarkMode = false
         isSoundEnabled = true
         let systemLanguage = Bundle.main.preferredLocalizations.first ?? "en"
         let defaultAppLanguage = systemLanguage.starts(with: "ar") ? "ar" : "en"
