@@ -150,6 +150,12 @@ struct SignUpView: View {
                 Text(errorMessage)
             }
         }
+        .appToast(
+            isPresented: $viewModel.showSuccessToast,
+            type: .success,
+            title: "Account Created!",
+            subtitle: "Redirecting to verification..."
+        )
     }
 }
 
