@@ -96,6 +96,12 @@ final class SignUpViewModel {
             switch result {
             case .success(let account):
                 showSuccessToast = true
+                
+                // Fire OTP sending asynchronously so we don't block the UI transition
+                Task {
+                    _ = await self.sendOtpUseCase.execute(email: account.email, purpose: .signup)
+                }
+                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                     self.router.push(.verifyEmail(email: account.email))
                 }
