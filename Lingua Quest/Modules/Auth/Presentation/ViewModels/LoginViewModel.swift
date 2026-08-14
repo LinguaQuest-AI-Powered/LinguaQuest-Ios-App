@@ -135,11 +135,7 @@ final class LoginViewModel {
     }
 
     func navigateToSignUp() {
-        if userPreferences.spokenLanguageCode == nil || userPreferences.learningLanguageCode == nil {
-            router.push(.completeProfile)
-        } else {
-            router.push(.signUp)
-        }
+        router.push(.completeProfile)
     }
 
     func continueWithGoogle() {

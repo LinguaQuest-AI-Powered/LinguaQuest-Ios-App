@@ -122,7 +122,8 @@ final class AuthAssembly: Assembly {
                 email: email,
                 router: resolver.resolve(RouterProtocol.self)!,
                 sendOtpUseCase: resolver.resolve(SendOtpUseCaseProtocol.self)!,
-                verifySignupOtpUseCase: resolver.resolve(VerifySignupOtpUseCaseProtocol.self)!
+                verifySignupOtpUseCase: resolver.resolve(VerifySignupOtpUseCaseProtocol.self)!,
+                userPreferences: resolver.resolve(UserPreferences.self)!
             )
         }
 
