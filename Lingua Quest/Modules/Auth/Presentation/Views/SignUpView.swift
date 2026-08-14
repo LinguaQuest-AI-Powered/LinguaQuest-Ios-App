@@ -153,8 +153,8 @@ struct SignUpView: View {
         .appToast(
             isPresented: $viewModel.showSuccessToast,
             type: .success,
-            title: "Account Created!",
-            subtitle: "Redirecting to verification..."
+            title: L10n.Auth.accountCreatedTitle,
+            subtitle: L10n.Auth.accountCreatedSubtitle
         )
     }
 }

@@ -41,6 +41,8 @@
 "auth.confirm_password_placeholder" = "تأكيد كلمة المرور";
 "auth.create_account" = "إنشاء حساب";
 "auth.already_have_account" = "لديك حساب بالفعل؟ ";
+"auth.account_created_title" = "تم إنشاء الحساب!";
+"auth.account_created_subtitle" = "جاري التوجيه للتوثيق...";
 "auth.forget_password" = "هل نسيت كلمة المرور؟";
 "auth.forget_password_desc" = "لا تقلق، لينجو سيساعدك في استعادتها! أدخل بريدك الإلكتروني لتتلقى رابط إعادة التعيين.";
 "auth.enter_email" = "أدخل بريدك الإلكتروني";
