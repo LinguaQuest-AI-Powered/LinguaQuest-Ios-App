@@ -156,7 +156,10 @@
 "gallery.captures_so_far" = "0 captures so far";
 "gallery.add_new" = "Add New";
 "gallery.no_captures_yet" = "No Captures Yet";
-"gallery.no_captures_subtitle" = "You haven't captured any words yet.\nTap the button above to add your first capture.";
+"gallery.no_captures_subtitle" = "You haven't captured any words yet.\nGo to the home screen to start\nplaying and capture words.";
+"gallery.no_words_yet" = "No Words Yet";
+"gallery.no_words_subtitle" = "You haven't saved any words yet.\nGo to the home screen to start\nplaying and save words.";
+"gallery.go_to_home" = "Go to Home";
 "gallery.categories.all_items" = "All Items";
 "gallery.categories.kitchen" = "Kitchen";
 "gallery.categories.park" = "Park";

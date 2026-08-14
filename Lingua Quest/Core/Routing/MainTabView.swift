@@ -96,6 +96,9 @@ struct MainTabView: View {
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("VocabularyNotificationTapped"))) { _ in
             selectedTab = .gallery
         }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("SwitchToHomeTab"))) { _ in
+            selectedTab = .home
+        }
         .onAppear {
             if !hasSeenFullAppTutorial {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {

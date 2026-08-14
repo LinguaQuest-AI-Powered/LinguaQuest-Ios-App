@@ -155,7 +155,10 @@
 "gallery.captures_so_far" = "0 التقاطات حتى الآن";
 "gallery.add_new" = "إضافة جديد";
 "gallery.no_captures_yet" = "لا توجد التقاطات بعد";
-"gallery.no_captures_subtitle" = "لم تلتقط أي كلمات بعد.\nاضغط على الزر أعلاه لإضافة أول التقاط لك.";
+"gallery.no_captures_subtitle" = "لم تلتقط أي كلمات بعد.\nانتقل إلى الشاشة الرئيسية لتبدأ\nاللعب وتلتقط كلمات جديدة.";
+"gallery.no_words_yet" = "لا توجد كلمات بعد";
+"gallery.no_words_subtitle" = "لم تقم بحفظ أي كلمات بعد.\nانتقل إلى الشاشة الرئيسية لتبدأ\nاللعب وتحفظ كلمات جديدة.";
+"gallery.go_to_home" = "الذهاب للرئيسية";
 "gallery.categories.all_items" = "كل العناصر";
 "gallery.categories.kitchen" = "المطبخ";
 "gallery.categories.park" = "الحديقة";

@@ -26,6 +26,8 @@ struct CoinRainView: View {
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
     
+    static var hasAnimatedThisSession: Bool = false
+    
     var body: some View {
         ZStack {
             ForEach(particles) { particle in
@@ -45,8 +47,11 @@ struct CoinRainView: View {
         .ignoresSafeArea()
         .allowsHitTesting(false)
         .onAppear {
-            createParticles()
-            animateParticles()
+            if !Self.hasAnimatedThisSession {
+                createParticles()
+                animateParticles()
+                Self.hasAnimatedThisSession = true
+            }
         }
     }
     

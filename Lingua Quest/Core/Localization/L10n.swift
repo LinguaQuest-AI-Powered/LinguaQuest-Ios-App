@@ -231,6 +231,9 @@ enum L10n {
         static var addNew: String { localized("gallery.add_new") }
         static var noCapturesYet: String { localized("gallery.no_captures_yet") }
         static var noCapturesSubtitle: String { localized("gallery.no_captures_subtitle") }
+        static var noWordsYet: String { localized("gallery.no_words_yet") }
+        static var noWordsSubtitle: String { localized("gallery.no_words_subtitle") }
+        static var goToHome: String { localized("gallery.go_to_home") }
         static var emptyFilterWordsTitle: String { localized("gallery.empty.filter.words.title") }
         static var emptyFilterWordsSubtitle: String { localized("gallery.empty.filter.words.subtitle") }
         static var emptyFilterItemsTitle: String { localized("gallery.empty.filter.items.title") }
