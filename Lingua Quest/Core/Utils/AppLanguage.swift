@@ -58,18 +58,18 @@ enum AppLanguage: String, CaseIterable, Identifiable {
         let normalizedCode = code.lowercased()
         
         let commonMappings: [String: String] = [
-            "ar": "ar-SA", "arabic": "ar-SA",
-            "de": "de-DE", "german": "de-DE",
-            "en": "en-US", "english": "en-US",
-            "es": "es-ES", "spanish": "es-ES",
-            "fr": "fr-FR", "french": "fr-FR",
-            "it": "it-IT", "italian": "it-IT",
-            "ja": "ja-JP", "japanese": "ja-JP",
-            "ko": "ko-KR", "korean": "ko-KR",
-            "pt": "pt-BR", "portuguese": "pt-BR",
-            "ru": "ru-RU", "russian": "ru-RU",
-            "tr": "tr-TR", "turkish": "tr-TR",
-            "zh": "zh-CN", "chinese": "zh-CN"
+            "ar": "ar-SA", "arabic": "ar-SA", "ar-sa": "ar-SA", "ar-ae": "ar-AE", "ar-eg": "ar-EG",
+            "de": "de-DE", "german": "de-DE", "de-de": "de-DE",
+            "en": "en-US", "english": "en-US", "en-us": "en-US", "en-gb": "en-GB",
+            "es": "es-ES", "spanish": "es-ES", "es-es": "es-ES", "es-mx": "es-MX",
+            "fr": "fr-FR", "french": "fr-FR", "fr-fr": "fr-FR",
+            "it": "it-IT", "italian": "it-IT", "it-it": "it-IT",
+            "ja": "ja-JP", "japanese": "ja-JP", "ja-jp": "ja-JP",
+            "ko": "ko-KR", "korean": "ko-KR", "ko-kr": "ko-KR",
+            "pt": "pt-BR", "portuguese": "pt-BR", "pt-br": "pt-BR", "pt-pt": "pt-PT",
+            "ru": "ru-RU", "russian": "ru-RU", "ru-ru": "ru-RU",
+            "tr": "tr-TR", "turkish": "tr-TR", "tr-tr": "tr-TR",
+            "zh": "zh-CN", "chinese": "zh-CN", "zh-cn": "zh-CN"
         ]
         
         if let mapped = commonMappings[normalizedCode] {
