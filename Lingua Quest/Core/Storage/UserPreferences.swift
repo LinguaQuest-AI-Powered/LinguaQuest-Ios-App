@@ -176,7 +176,9 @@ final class UserPreferences: UserPreferencesProtocol {
         self.isDarkMode = defaults.bool(forKey: isDarkModeKey)
         
         let appLanguageKey = "\(userIdPrefix)\(AppConstants.UserDefaultsKeys.appLanguage)"
-        self.appLanguage = defaults.string(forKey: appLanguageKey) ?? "en"
+        let systemLanguage = Bundle.main.preferredLocalizations.first ?? "en"
+        let defaultAppLanguage = systemLanguage.starts(with: "ar") ? "ar" : "en"
+        self.appLanguage = defaults.string(forKey: appLanguageKey) ?? defaultAppLanguage
         
         let isSoundEnabledKey = "\(userIdPrefix)\(AppConstants.UserDefaultsKeys.isSoundEnabled)"
         self.isSoundEnabled = defaults.object(forKey: isSoundEnabledKey) as? Bool ?? true
@@ -199,7 +201,9 @@ final class UserPreferences: UserPreferencesProtocol {
         self.isDarkMode = defaults.bool(forKey: scopedKey(AppConstants.UserDefaultsKeys.isDarkMode))
         self.isSoundEnabled = defaults.object(forKey: scopedKey(AppConstants.UserDefaultsKeys.isSoundEnabled)) as? Bool ?? true
         self.isLockScreenVocabularyEnabled = defaults.bool(forKey: scopedKey(AppConstants.UserDefaultsKeys.isLockScreenVocabularyEnabled))
-        self.appLanguage = defaults.string(forKey: scopedKey(AppConstants.UserDefaultsKeys.appLanguage)) ?? "en"
+        let systemLanguage = Bundle.main.preferredLocalizations.first ?? "en"
+        let defaultAppLanguage = systemLanguage.starts(with: "ar") ? "ar" : "en"
+        self.appLanguage = defaults.string(forKey: scopedKey(AppConstants.UserDefaultsKeys.appLanguage)) ?? defaultAppLanguage
         self.notificationsEnabled = defaults.bool(forKey: scopedKey(AppConstants.UserDefaultsKeys.notificationsEnabled))
         self.dailyReminderEnabled = defaults.bool(forKey: scopedKey(AppConstants.UserDefaultsKeys.dailyReminderEnabled))
         self.reminderTime = defaults.double(forKey: scopedKey(AppConstants.UserDefaultsKeys.reminderTime))
@@ -224,7 +228,9 @@ final class UserPreferences: UserPreferencesProtocol {
         isLockScreenVocabularyEnabled = false
         isDarkMode = false
         isSoundEnabled = true
-        appLanguage = "en"
+        let systemLanguage = Bundle.main.preferredLocalizations.first ?? "en"
+        let defaultAppLanguage = systemLanguage.starts(with: "ar") ? "ar" : "en"
+        appLanguage = defaultAppLanguage
         notificationsEnabled = false
         dailyReminderEnabled = false
         reminderTime = 0
