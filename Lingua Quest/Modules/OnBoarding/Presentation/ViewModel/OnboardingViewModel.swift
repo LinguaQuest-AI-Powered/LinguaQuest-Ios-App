@@ -58,7 +58,7 @@ final class OnboardingViewModel {
         userPreferences.spokenLanguageCode = state.selectedSpokenLanguage?.code
         userPreferences.learningLanguageCode = state.selectedLearningLanguage?.code
         userPreferences.userLevel = state.selectedLevel?.rawValue
-        userPreferences.isOnboardingCompleted = true
+        router.push(.signUp)
     }
 
     func onLoginTapped() {

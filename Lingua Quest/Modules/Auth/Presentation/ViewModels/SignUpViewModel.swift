@@ -117,6 +117,15 @@ final class SignUpViewModel {
     }
 
     func navigateToLogin() {
+        if !userPreferences.isOnboardingCompleted {
+            userPreferences.isOnboardingCompleted = true
+            router.popToRoot()
+        } else {
+            router.pop()
+        }
+    }
+    
+    func navigateBack() {
         router.pop()
     }
 
