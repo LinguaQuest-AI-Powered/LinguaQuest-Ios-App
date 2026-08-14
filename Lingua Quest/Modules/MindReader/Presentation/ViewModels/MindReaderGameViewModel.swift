@@ -61,6 +61,11 @@ final class MindReaderGameViewModel {
         20 // Assuming 20 is the max or typical questions, as we don't have availableAttributes count anymore.
     }
     
+    var showAiUnavailableDialog: Bool {
+        get { coordinator.showAiUnavailableDialog }
+        set { coordinator.showAiUnavailableDialog = newValue }
+    }
+    
     // MARK: - Answer Button Texts
     
     private var targetLanguage: String {

@@ -152,6 +152,7 @@ final class LanguageViewModel {
             }
             
             onLanguageSwitched?()
+            NotificationCenter.default.post(name: .languageDidSwitch, object: nil)
         } catch {
             errorMessage = error.localizedDescription
             print("Failed to switch active language: \(error)")

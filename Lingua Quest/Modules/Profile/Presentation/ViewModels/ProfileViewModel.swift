@@ -25,6 +25,8 @@ final class ProfileViewModel {
     var showGalleryPicker: Bool = false
     
     private var logoutToken: NotificationToken?
+    private var languageToken: NotificationToken?
+    private var hasLoaded: Bool = false
     
     // MARK: - Top App Bar Data
     var gems: String = "0"
@@ -68,6 +70,15 @@ final class ProfileViewModel {
             self?.handleLogout()
         }
         logoutToken = NotificationToken(token: token)
+        
+        let langToken = NotificationCenter.default.addObserver(
+            forName: .languageDidSwitch,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.hasLoaded = false
+        }
+        languageToken = NotificationToken(token: langToken)
     }
     
     private func handleLogout() {
@@ -83,6 +94,7 @@ final class ProfileViewModel {
         targetLanguageXP = 0
         achievements = []
         topExplorers = []
+        hasLoaded = false
     }
     
     // MARK: - Intentions (Methods)
@@ -135,6 +147,7 @@ final class ProfileViewModel {
 
     
     func fetchProfileData() {
+        if hasLoaded { return }
 
         guard let getProfileUseCase = getProfileUseCase else { return }
         
@@ -146,6 +159,7 @@ final class ProfileViewModel {
                 let profile = try await getProfileUseCase.execute()
                 await MainActor.run {
                     self.populateData(from: profile)
+                    self.hasLoaded = true
                     self.isLoading = false
                 }
             } catch {

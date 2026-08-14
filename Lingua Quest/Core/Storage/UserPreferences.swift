@@ -222,9 +222,7 @@ final class UserPreferences: UserPreferencesProtocol {
         
         // Reset user-scoped properties in memory (doesn't wipe them from disk)
         isLockScreenVocabularyEnabled = false
-        isDarkMode = false
         isSoundEnabled = true
-        appLanguage = "en"
         notificationsEnabled = false
         dailyReminderEnabled = false
         reminderTime = 0

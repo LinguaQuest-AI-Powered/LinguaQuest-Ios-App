@@ -21,6 +21,7 @@
 "common.go_back" = "Go Back";
 "common.open_settings" = "Open Settings";
 "common.remove" = "Remove";
+"common.ai_service_unavailable_subtitle" = "The AI service is currently down and will be back soon.";
 
 "auth.email_placeholder" = "Email address";
 "auth.password_placeholder" = "Password";

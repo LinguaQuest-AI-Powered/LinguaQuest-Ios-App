@@ -213,8 +213,10 @@ private extension ObjectDetectionCardView {
                 
                 // Rich 3D World Asset Graphic
                 Image(asset: .world)
+                    .renderingMode(.template)
                     .resizable()
                     .scaledToFit()
+                    .foregroundColor(colorScheme == .dark ? .white : .appProgressBar)
                     .frame(width: 80, height: 80)
                     .shadow(color: Color.black.opacity(0.15), radius: 6, x: 0, y: 4)
                     .scaleEffect(pulseRing ? 1.05 : 0.96)

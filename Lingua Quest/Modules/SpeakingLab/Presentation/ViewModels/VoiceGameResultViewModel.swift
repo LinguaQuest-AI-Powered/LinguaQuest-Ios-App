@@ -23,6 +23,7 @@ final class VoiceGameResultViewModel {
     var xpPoints: Int = 0
     var coinsEarned: Int = 0
     var advice: String = ""
+    var showAiUnavailableDialog = false
     
     var coins: Int {
         statsService.coins
@@ -61,6 +62,7 @@ final class VoiceGameResultViewModel {
                 print("Evaluation failed: \(error)")
                 await MainActor.run {
                     state = .failure
+                    showAiUnavailableDialog = true
                     soundPlayer.play(sound: .fail)
                 }
             }

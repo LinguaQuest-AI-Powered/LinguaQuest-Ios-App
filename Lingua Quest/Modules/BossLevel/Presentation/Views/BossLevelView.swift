@@ -65,6 +65,7 @@ struct BossLevelView: View {
         .appDialog(isPresented: $showFinishDialog) {
             finishConfirmationDialogContent
         }
+        .aiUnavailableDialog(isPresented: Bindable(viewModel).showAiUnavailableDialog)
         .alert(
             isMicError ? L10n.BossLevel.statusError : L10n.Common.error,
             isPresented: Binding(

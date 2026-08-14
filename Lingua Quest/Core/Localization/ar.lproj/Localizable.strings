@@ -22,6 +22,7 @@
 "common.go_back" = "رجوع";
 "common.open_settings" = "فتح الإعدادات";
 "common.remove" = "إزالة";
+"common.ai_service_unavailable_subtitle" = "خدمة الذكاء الاصطناعي متوقفة حالياً وستعود قريباً.";
 
 "auth.email_placeholder" = "البريد الإلكتروني";
 "auth.password_placeholder" = "كلمة المرور";

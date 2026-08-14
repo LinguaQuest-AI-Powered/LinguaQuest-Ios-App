@@ -110,6 +110,7 @@ final class SettingsViewModel {
     // MARK: - Lock Screen Vocabulary State
     var showActivationDialog: Bool = false
     var activationState: ActivationState = .idle
+    var showAiUnavailableDialog = false
     var showNotEnoughCoins: Bool = false
     var missingCoins: Int = 0
     var currentCoins: Int = 0
@@ -230,7 +231,7 @@ final class SettingsViewModel {
                     self.showToast(title: L10n.LockScreenVocabulary.toggleLabel, subtitle: L10n.LockScreenVocabulary.activatedToast, type: .success)
                 case .failure:
                     self.isLockScreenVocabularyEnabled = false
-                    self.showToast(title: L10n.Common.error, type: .error)
+                    self.showAiUnavailableDialog = true
                 }
             }
         }
@@ -272,7 +273,7 @@ final class SettingsViewModel {
                         case .failure:
                             self.showActivationDialog = false
                             self.activationState = .idle
-                            self.showToast(title: L10n.Common.error, type: .error)
+                            self.showAiUnavailableDialog = true
                         }
                     }
                 } else {
@@ -290,7 +291,7 @@ final class SettingsViewModel {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                         self.showActivationDialog = false
                         self.activationState = .idle
-                        self.showToast(title: L10n.Common.error, subtitle: error.localizedDescription, type: .error)
+                        self.showAiUnavailableDialog = true
                     }
                 }
             }

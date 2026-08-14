@@ -9,6 +9,7 @@ final class RoleplayScenariosViewModel {
     private(set) var scenarios: [BossScenario] = []
     private(set) var isLoading: Bool = false
     private(set) var errorMessage: String? = nil
+    var showAiUnavailableDialog: Bool = false
 
     private let scenarioRepository: ScenarioRepositoryProtocol
     private let router: RouterProtocol
@@ -33,6 +34,7 @@ final class RoleplayScenariosViewModel {
                 scenarios = try await scenarioRepository.getAllScenarios()
             } catch {
                 errorMessage = error.localizedDescription
+                showAiUnavailableDialog = true
             }
             isLoading = false
         }

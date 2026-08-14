@@ -23,4 +23,8 @@ extension Notification.Name {
     /// Posted when the user taps "Continue" after successfully completing a Voice Game level.
     /// Instructs the Voice Game to advance to the next sentence.
     static let voiceGameDidAdvanceLevel = Notification.Name("com.linguaquest.voiceGameDidAdvanceLevel")
+    
+    /// Posted when the active learning language is switched successfully.
+    /// Observers should reload their data.
+    static let languageDidSwitch = Notification.Name("com.linguaquest.languageDidSwitch")
 }

@@ -73,5 +73,6 @@ struct VoiceGameResultView: View {
         }
         .coordinateSpace(name: "global")
         .navigationBarHidden(true)
+        .aiUnavailableDialog(isPresented: Bindable(viewModel).showAiUnavailableDialog)
     }
 }

@@ -36,6 +36,7 @@ final class MindReaderGameCoordinator {
     
     var isLoading: Bool = false
     var errorMessage: String?
+    var showAiUnavailableDialog: Bool = false
     var translationRevealed: Bool = false
     
     init(
@@ -87,6 +88,7 @@ final class MindReaderGameCoordinator {
             
             isLoading = false
         } catch {
+            showAiUnavailableDialog = true
             errorMessage = error.localizedDescription
             isLoading = false
         }
@@ -122,6 +124,7 @@ final class MindReaderGameCoordinator {
                 return true
             }
         } catch {
+            showAiUnavailableDialog = true
             errorMessage = error.localizedDescription
             isLoading = false
             return false
@@ -137,6 +140,7 @@ final class MindReaderGameCoordinator {
             quizChoices = try await requestQuizChoicesUseCase.execute(category: category, correctWordTargetLanguage: guess.word, correctWordNativeLanguage: guess.translation)
             isLoading = false
         } catch {
+            showAiUnavailableDialog = true
             errorMessage = error.localizedDescription
             isLoading = false
         }
@@ -171,6 +175,7 @@ final class MindReaderGameCoordinator {
                 return false
             }
         } catch {
+            showAiUnavailableDialog = true
             errorMessage = error.localizedDescription
             isLoading = false
             return false

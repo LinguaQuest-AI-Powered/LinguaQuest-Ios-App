@@ -40,6 +40,7 @@ final class BossLevelViewModel {
     
     private var isAITurnActive: Bool = false
     private var canAppendToUserBubble: Bool = false
+    var showAiUnavailableDialog: Bool = false
 
     private let scenarioId: String
     private(set) var scenario: BossScenario?
@@ -103,6 +104,7 @@ final class BossLevelViewModel {
                 }
             } catch {
                 viewState = .error("Failed to load scenario: \(error.localizedDescription)")
+                showAiUnavailableDialog = true
             }
         }
     }
@@ -125,6 +127,7 @@ final class BossLevelViewModel {
                 try await startSessionUseCase.execute(systemInstruction: prompt)
             } catch {
                 viewState = .error(error.localizedDescription)
+                showAiUnavailableDialog = true
             }
         }
     }
@@ -149,6 +152,7 @@ final class BossLevelViewModel {
             } catch {
                 soundPlayer.play(sound: .fail)
                 viewState = .error("Evaluation failed: \(error.localizedDescription)")
+                showAiUnavailableDialog = true
             }
         }
     }

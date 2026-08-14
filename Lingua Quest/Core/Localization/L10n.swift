@@ -33,6 +33,7 @@ enum L10n {
         static var goBack: String { localized("common.go_back") }
         static var openSettings: String { localized("common.open_settings") }
         static var remove: String { localized("common.remove") }
+        static var aiServiceUnavailableSubtitle: String { localized("common.ai_service_unavailable_subtitle") }
     }
 
     enum Auth {
