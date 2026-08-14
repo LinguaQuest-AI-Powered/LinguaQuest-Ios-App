@@ -18,7 +18,7 @@ enum OAuthSignInResult {
 }
 
 protocol OAuthSignInHandlerProtocol {
-    func handleSignIn(provider: OAuthProviderType) async -> OAuthSignInResult
+    func handleSignIn(provider: OAuthProviderType, onTokenReceived: @MainActor @Sendable () -> Void) async -> OAuthSignInResult
 }
 
 final class OAuthSignInHandler: OAuthSignInHandlerProtocol {
@@ -39,7 +39,7 @@ final class OAuthSignInHandler: OAuthSignInHandlerProtocol {
         self.userPreferences = userPreferences
     }
 
-    func handleSignIn(provider: OAuthProviderType) async -> OAuthSignInResult {
+    func handleSignIn(provider: OAuthProviderType, onTokenReceived: @MainActor @Sendable () -> Void) async -> OAuthSignInResult {
         do {
             let idToken: String
             switch provider {
@@ -49,6 +49,7 @@ final class OAuthSignInHandler: OAuthSignInHandlerProtocol {
                 idToken = try await appleSignInService.signIn()
             }
 
+            await onTokenReceived()
             let result = await firebaseLoginUseCase.execute(idToken: idToken)
 
             switch result {

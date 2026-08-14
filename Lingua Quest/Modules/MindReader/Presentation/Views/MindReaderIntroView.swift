@@ -58,6 +58,9 @@ struct MindReaderIntroView: View {
                         .padding()
                         .background(Color.appAccentOrange.opacity(0.1))
                         .cornerRadius(16)
+                        .onTapGesture {
+                            viewModel.onChangeCategoryTapped()
+                        }
                         
                         VStack(spacing: 16) {
                             CustomButton(
