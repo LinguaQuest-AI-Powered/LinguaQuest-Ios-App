@@ -98,6 +98,7 @@ struct HomeView: View {
                             
                         }
                         .padding(.top, 12)
+                        .padding(.bottom, 110)
                     }
                 }
                 .onChange(of: currentTutorialStep) { _, newStep in

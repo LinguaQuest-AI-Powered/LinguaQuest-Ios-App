@@ -190,6 +190,7 @@ struct AchievementsView: View {
                     subtitle: achievement.subtitle,
                     uiIcon: achievement.uiIcon,
                     uiIconColor: achievement.uiIconColor,
+                    iconUrl: achievement.iconUrl,
                     status: achievement.status,
                     progressPercent: achievement.progressPercent,
                     xpReward: achievement.xpReward,
@@ -249,11 +250,8 @@ struct AchievementGridItem: View {
                         .fill(achievement.uiBgColor)
                         .frame(width: 60, height: 60)
                     
-                    Image(systemIcon: achievement.uiIcon)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 32, height: 32)
-                        .foregroundColor(achievement.isEarned ? achievement.uiIconColor : .appTextSecondary)
+                    gridItemIcon
+                        .frame(width: 34, height: 34)
                 }
                 
                 if !achievement.isEarned {
@@ -299,6 +297,38 @@ struct AchievementGridItem: View {
                 .fill(Color.appBorderBrown.opacity(0.4))
                 .offset(y: 4)
         )
+    }
+    
+    @ViewBuilder
+    private var gridItemIcon: some View {
+        if let iconUrlString = achievement.iconUrl,
+           !iconUrlString.isEmpty,
+           (iconUrlString.hasPrefix("http://") || iconUrlString.hasPrefix("https://")),
+           let url = URL(string: iconUrlString) {
+            AsyncImage(url: url) { phase in
+                switch phase {
+                case .empty:
+                    ProgressView()
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFit()
+                case .failure:
+                    fallbackIcon
+                @unknown default:
+                    fallbackIcon
+                }
+            }
+        } else {
+            fallbackIcon
+        }
+    }
+    
+    private var fallbackIcon: some View {
+        Image(systemIcon: achievement.uiIcon)
+            .resizable()
+            .scaledToFit()
+            .foregroundColor(achievement.isEarned ? achievement.uiIconColor : .appTextSecondary)
     }
 }
 

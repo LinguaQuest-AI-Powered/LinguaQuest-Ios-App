@@ -12,6 +12,7 @@ struct AchievementDetailSheet: View {
     let subtitle: String
     let uiIcon: Image.SystemIcon
     let uiIconColor: Color
+    var iconUrl: String? = nil
     let status: AchievementStatus
     let progressPercent: Int
     let xpReward: Int
@@ -76,11 +77,8 @@ struct AchievementDetailSheet: View {
                     .fill(isEarned ? Color.appBadgeTealBg.opacity(0.5) : Color.appSurfaceCardMuted)
                     .frame(width: 80, height: 80)
                 
-                Image(systemIcon: uiIcon)
-                    .resizable()
-                    .scaledToFit()
+                detailSheetIcon
                     .frame(width: 44, height: 44)
-                    .foregroundColor(isEarned ? uiIconColor : .appTextSecondary)
             }
             
             // Status Pill Badge
@@ -159,5 +157,37 @@ struct AchievementDetailSheet: View {
         .padding(.horizontal, 24)
         .padding(.top, 8)
         .padding(.bottom, 32)
+    }
+    
+    @ViewBuilder
+    private var detailSheetIcon: some View {
+        if let iconUrlString = iconUrl,
+           !iconUrlString.isEmpty,
+           (iconUrlString.hasPrefix("http://") || iconUrlString.hasPrefix("https://")),
+           let url = URL(string: iconUrlString) {
+            AsyncImage(url: url) { phase in
+                switch phase {
+                case .empty:
+                    ProgressView()
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFit()
+                case .failure:
+                    fallbackIcon
+                @unknown default:
+                    fallbackIcon
+                }
+            }
+        } else {
+            fallbackIcon
+        }
+    }
+    
+    private var fallbackIcon: some View {
+        Image(systemIcon: uiIcon)
+            .resizable()
+            .scaledToFit()
+            .foregroundColor(isEarned ? uiIconColor : .appTextSecondary)
     }
 }
