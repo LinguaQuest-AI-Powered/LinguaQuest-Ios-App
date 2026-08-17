@@ -121,6 +121,8 @@ struct TutorialTooltipCard: View {
                 Button(action: onNext) {
                     Text(isLastStep ? L10n.Tutorial.done : L10n.Tutorial.next)
                         .font(AppTextStyle.bodyBold.font)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
                         .foregroundColor(.white)
                         .padding(.vertical, 12)
                         .padding(.horizontal, 24)
