@@ -10,20 +10,48 @@ import Foundation
 struct HomeResponseDTO: Decodable {
     let success: Bool
     let data: HomeDataContentDTO
-    let activeLanguage: ActiveLanguageDTO
+    let activeLanguage: ActiveLanguageDTO?
 }
 
 struct HomeDataContentDTO: Decodable {
     let xp: Int?
     let coins: Int?
     let streakDays: Int?
+    let activeLanguage: ActiveLanguageDTO?
+    let exploreWorlds: ExploreWorldsContainerDTO?
+}
+
+struct ExploreWorldsContainerDTO: Decodable {
+    let totalCount: Int?
+    let worlds: [ExploreWorldDTO]?
+    
+    init(from decoder: Decoder) throws {
+        if let container = try? decoder.container(keyedBy: CodingKeys.self) {
+            totalCount = try? container.decodeIfPresent(Int.self, forKey: .totalCount)
+            worlds = try? container.decodeIfPresent([ExploreWorldDTO].self, forKey: .worlds)
+        } else if let array = try? decoder.singleValueContainer().decode([ExploreWorldDTO].self) {
+            totalCount = array.count
+            worlds = array
+        } else {
+            totalCount = nil
+            worlds = nil
+        }
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case totalCount
+        case worlds
+    }
 }
 
 struct ActiveLanguageDTO: Decodable {
     let id: Int?
     let name: String?
     let code: String?
+    let imageUrl: String?
     let level: Int?
+    let isActive: Bool?
+    let progressPercent: Int?
     let levelProgressPercent: Int?
     let exploreWorlds: [ExploreWorldDTO]?
 }
@@ -45,7 +73,7 @@ struct WorldsResponseDTO: Decodable {
 }
 
 struct WorldsDataDTO: Decodable {
-    let totalCount: Int
+    let totalCount: Int?
     let worlds: [ExploreWorldDTO]
 }
 
@@ -80,17 +108,20 @@ struct DailyRewardClaimDataDTO: Decodable {
 // MARK: - Mappers
 extension HomeResponseDTO {
     func toDomain() -> HomeData {
+        let activeLangDTO = data.activeLanguage ?? activeLanguage
+        let worldsDTOs = data.exploreWorlds?.worlds ?? activeLangDTO?.exploreWorlds ?? []
+        
         return HomeData(
             xp: data.xp,
             coins: data.coins,
             streakDays: data.streakDays ?? 0,
             activeLanguage: ActiveLanguage(
-                id: activeLanguage.id ?? 1,
-                name: activeLanguage.name ?? "Unknown",
-                code: activeLanguage.code ?? "EN",
-                level: activeLanguage.level ?? 1,
-                levelProgressPercent: activeLanguage.levelProgressPercent ?? 0,
-                exploreWorlds: activeLanguage.exploreWorlds?.map { $0.toDomain() } ?? []
+                id: activeLangDTO?.id ?? 1,
+                name: activeLangDTO?.name ?? "Unknown",
+                code: activeLangDTO?.code ?? "EN",
+                level: activeLangDTO?.level ?? 1,
+                levelProgressPercent: activeLangDTO?.levelProgressPercent ?? activeLangDTO?.progressPercent ?? 0,
+                exploreWorlds: worldsDTOs.map { $0.toDomain() }
             )
         )
     }
