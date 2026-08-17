@@ -118,7 +118,7 @@ class CameraTaskQuestViewModel {
     }
     
     func playAudio() {
-        let targetLanguage = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.targetLanguageName) ?? "en"
+        let targetLanguage = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.learningLanguageCode) ?? "es"
         speechSynthesizer.speak(text: targetWord, languageCode: targetLanguage.toSpeechLanguageCode())
     }
 }
