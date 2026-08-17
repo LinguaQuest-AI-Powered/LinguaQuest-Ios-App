@@ -20,6 +20,13 @@ final class AVSpeechSynthesizerService: NSObject, SpeechSynthesizerProtocol {
     
     // MARK: - API
     func speak(text: String, languageCode: String) {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .spokenAudio, options: [.mixWithOthers])
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("Failed to setup audio session for speech: \(error)")
+        }
+        
         synthesizer.stopSpeaking(at: .immediate)
         
         let utterance = AVSpeechUtterance(string: text)
