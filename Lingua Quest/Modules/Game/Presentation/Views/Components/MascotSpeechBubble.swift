@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MascotSpeechBubble: View {
     @Environment(\.colorScheme) var colorScheme
+    var isFlipped: Bool = false
     @State private var bubbleScale: CGFloat = 0
     @State private var birdOffset: CGFloat = 20
     @State private var birdOpacity: Double = 0
@@ -18,7 +19,7 @@ struct MascotSpeechBubble: View {
     var body: some View {
         VStack(spacing: -10) {
             // Speech Bubble above the bird's head/beak
-            SpeechBubbleView(text: L10n.Game.letsLearn, isAnimated: true, animationDelay: 1.0)
+            SpeechBubbleView(text: L10n.Game.letsLearn, isAnimated: true, animationDelay: 1.0, isFlipped: isFlipped)
                 .scaleEffect(bubbleScale)
                 .offset(y: bubbleFloat)
             
@@ -27,6 +28,7 @@ struct MascotSpeechBubble: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 150, height: 150)
+                .scaleEffect(x: isFlipped ? -1 : 1, y: 1)
                 .offset(y: birdOffset + birdBounce)
                 .opacity(birdOpacity)
         }

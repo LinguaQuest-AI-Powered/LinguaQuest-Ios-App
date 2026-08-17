@@ -9,10 +9,28 @@ import SwiftUI
 
 struct LevelNodeView: View {
     let level: GameLevel
+    var xPos: CGFloat = 0
+    var screenWidth: CGFloat = 0
+    
     @Environment(\.colorScheme) var colorScheme
     @State private var pulseScale: CGFloat = 1.0
     @State private var glowOpacity: Double = 0.5
     @State private var bounceOffset: CGFloat = 0
+    
+    private var isOnLeftHalf: Bool {
+        if screenWidth > 0 {
+            return xPos < (screenWidth / 2)
+        }
+        return true
+    }
+    
+    private var mascotVisualOffset: CGFloat {
+        // In SwiftUI, offset(x:) is absolute (positive = right, negative = left).
+        // If node is on left half, push mascot to the right (+90)
+        // If node is on right half, push mascot to the left (-90)
+        let baseOffset: CGFloat = 90
+        return isOnLeftHalf ? baseOffset : -baseOffset
+    }
     
     var body: some View {
         ZStack {
@@ -168,9 +186,9 @@ struct LevelNodeView: View {
                 .shadow(color: Color.appBrandPrimary.opacity(0.5), radius: 12, x: 0, y: 5)
                 .offset(y: bounceOffset)
             
-            // Mascot positioned to the right, lower down so it doesn't cover the locked node above it
-            MascotSpeechBubble()
-                .offset(x: 75, y: -35)
+            // Mascot dynamically positioned so it doesn't get cut off on screen edges
+            MascotSpeechBubble(isFlipped: isOnLeftHalf)
+                .offset(x: mascotVisualOffset, y: -35)
         }
         .onAppear {
             // Pulse ring animation

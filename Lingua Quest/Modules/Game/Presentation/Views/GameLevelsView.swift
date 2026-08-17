@@ -88,7 +88,7 @@ struct GameLevelsView: View {
                                     Button {
                                         viewModel.onLevelTapped(worldId: worldId, worldName: worldName, level: level)
                                     } label: {
-                                        LevelNodeView(level: level)
+                                        LevelNodeView(level: level, xPos: xPos, screenWidth: w)
                                     }
                                     .buttonStyle(.plain)
                                     .position(x: xPos, y: yPos)

@@ -10,6 +10,7 @@ import SwiftUI
 struct SpeechBubbleShape: Shape {
     let cornerRadius: CGFloat
     let tailSize: CGFloat
+    var isFlipped: Bool = false
     
     func path(in rect: CGRect) -> Path {
         var path = Path()
@@ -19,7 +20,7 @@ struct SpeechBubbleShape: Shape {
         path.addRoundedRect(in: bubbleRect, cornerSize: CGSize(width: cornerRadius, height: cornerRadius))
         
         // Add the tail
-        let tailX = rect.width * 0.3 // Tail position
+        let tailX = rect.width * (isFlipped ? 0.7 : 0.3) // Tail position flips when image is flipped
         path.move(to: CGPoint(x: tailX, y: bubbleRect.maxY))
         path.addLine(to: CGPoint(x: tailX - tailSize, y: rect.maxY))
         path.addLine(to: CGPoint(x: tailX + tailSize, y: bubbleRect.maxY))
@@ -32,6 +33,7 @@ struct SpeechBubbleView: View {
     let text: String
     var isAnimated: Bool = false
     var animationDelay: Double = 0.0
+    var isFlipped: Bool = false
     
     @State private var displayedText: String = ""
     
@@ -49,12 +51,12 @@ struct SpeechBubbleView: View {
             .padding(.top, 12)
             .padding(.bottom, 20) // 12 + 8 (tailSize)
             .background(
-                SpeechBubbleShape(cornerRadius: 16, tailSize: 8)
+                SpeechBubbleShape(cornerRadius: 16, tailSize: 8, isFlipped: isFlipped)
                     .fill(Color.appSurfaceCard)
                     .shadow(color: Color.appBorderBrown.opacity(0.2), radius: 6, x: 0, y: 3)
             )
             .overlay(
-                SpeechBubbleShape(cornerRadius: 16, tailSize: 8)
+                SpeechBubbleShape(cornerRadius: 16, tailSize: 8, isFlipped: isFlipped)
                     .stroke(Color.appBorderBrown, lineWidth: 1.5)
             )
             .task(id: text) {
