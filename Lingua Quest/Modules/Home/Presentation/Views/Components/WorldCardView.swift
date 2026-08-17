@@ -42,9 +42,11 @@ struct WorldCardView: View {
     private var imageSection: some View {
         ZStack(alignment: .bottomTrailing) {
             ZStack(alignment: .topLeading) {
-                cardImage
-                    .frame(maxWidth: .infinity)
+                Color.clear
                     .frame(height: 90)
+                    .overlay(
+                        cardImage
+                    )
                     .clipShape(RoundedRectangle(cornerRadius: 25))
                     .overlay(
                         RoundedRectangle(cornerRadius: 20)
