@@ -118,8 +118,7 @@ class CameraTaskQuestViewModel {
     }
     
     func playAudio() {
-        // Play the target word. In a real app we'd pass the active language code
-        // Defaulting to Spanish "es" if it's a Spanish learning app, or fallback to en
-        speechSynthesizer.speak(text: targetWord, languageCode: "es")
+        let targetLanguage = UserDefaults.standard.string(forKey: AppConstants.UserDefaultsKeys.targetLanguageName) ?? "en"
+        speechSynthesizer.speak(text: targetWord, languageCode: targetLanguage.toSpeechLanguageCode())
     }
 }
