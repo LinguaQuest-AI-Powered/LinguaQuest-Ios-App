@@ -42,9 +42,7 @@ struct WorldCardView: View {
     private var imageSection: some View {
         ZStack(alignment: .bottomTrailing) {
             ZStack(alignment: .topLeading) {
-                Image(asset: item.uiImage)
-                    .resizable()
-                    .scaledToFill()
+                cardImage
                     .frame(maxWidth: .infinity)
                     .frame(height: 90)
                     .clipShape(RoundedRectangle(cornerRadius: 25))
@@ -73,6 +71,40 @@ struct WorldCardView: View {
             if item.isLocked {
                 lockedBadge.padding(.bottom, 8)
             }
+        }
+    }
+    
+    @ViewBuilder
+    private var cardImage: some View {
+        if let imageUrlString = item.imageUrl,
+           !imageUrlString.isEmpty,
+           (imageUrlString.hasPrefix("http://") || imageUrlString.hasPrefix("https://")),
+           let url = URL(string: imageUrlString) {
+            AsyncImage(url: url) { phase in
+                switch phase {
+                case .empty:
+                    ZStack {
+                        Color.appSurfaceCard
+                        ProgressView()
+                    }
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFill()
+                case .failure:
+                    Image(asset: item.uiImage)
+                        .resizable()
+                        .scaledToFill()
+                @unknown default:
+                    Image(asset: item.uiImage)
+                        .resizable()
+                        .scaledToFill()
+                }
+            }
+        } else {
+            Image(asset: item.uiImage)
+                .resizable()
+                .scaledToFill()
         }
     }
     

@@ -12,7 +12,7 @@ import SwiftUI
 enum WorldUIMapper {
     static func map(_ entity: ExploreWorld) -> WorldUIModel {
         let difficulty: WorldDifficulty = {
-            switch entity.difficulty {
+            switch entity.difficulty.uppercased() {
             case "EASY": return .easy
             case "MEDIUM": return .medium
             default: return .hard
@@ -20,11 +20,13 @@ enum WorldUIMapper {
         }()
         
         let assetName = URL(fileURLWithPath: entity.imageUrl).deletingPathExtension().lastPathComponent
+        let fallbackAsset = Image.Asset(rawValue: assetName) ?? .kitchen
         
         return WorldUIModel(
             id: "\(entity.id)",
             title: entity.name,
-            uiImage: Image.Asset(rawValue: assetName) ?? .kitchen,
+            imageUrl: entity.imageUrl.isEmpty ? nil : entity.imageUrl,
+            uiImage: fallbackAsset,
             difficulty: difficulty,
             uiDifficultyLabel: label(for: difficulty),
             uiBadgeColor: badgeColor(for: difficulty),

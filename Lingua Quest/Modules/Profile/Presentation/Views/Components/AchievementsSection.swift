@@ -32,6 +32,7 @@ struct AchievementsSection: View {
                                 title: achievement.title,
                                 subtitle: achievement.subtitle,
                                 icon: achievement.uiIcon,
+                                iconUrl: achievement.iconUrl,
                                 isEarned: achievement.isEarned
                             )
                         }

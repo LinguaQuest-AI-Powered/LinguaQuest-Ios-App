@@ -12,6 +12,7 @@ struct AchievementCard: View {
     let title: String
     let subtitle: String
     let icon: Image.SystemIcon
+    var iconUrl: String? = nil
     var isEarned: Bool = true
     
     // MARK: - Body
@@ -20,9 +21,7 @@ struct AchievementCard: View {
             
             // Icon Badge with Lock Overlay
             ZStack(alignment: .bottomTrailing) {
-                Image(systemIcon: icon)
-                    .font(.system(size: 24))
-                    .foregroundColor(isEarned ? Color.appBrandBrown : Color.appTextSecondary)
+                iconView
                     .frame(width: 56, height: 56)
                     .background(isEarned ? Color.appBrandBrown.opacity(0.1) : Color.appSurfaceCardMuted)
                     .clipShape(Circle())
@@ -64,6 +63,38 @@ struct AchievementCard: View {
                 .stroke(isEarned ? Color.appBorderLight : Color.appBorderBrown.opacity(0.2), lineWidth: 1)
         )
         .shadow(color: Color.black.opacity(0.04), radius: 6, x: 0, y: 3)
+    }
+    
+    @ViewBuilder
+    private var iconView: some View {
+        if let iconUrlString = iconUrl,
+           !iconUrlString.isEmpty,
+           (iconUrlString.hasPrefix("http://") || iconUrlString.hasPrefix("https://")),
+           let url = URL(string: iconUrlString) {
+            AsyncImage(url: url) { phase in
+                switch phase {
+                case .empty:
+                    ProgressView()
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 32, height: 32)
+                case .failure:
+                    fallbackIcon
+                @unknown default:
+                    fallbackIcon
+                }
+            }
+        } else {
+            fallbackIcon
+        }
+    }
+    
+    private var fallbackIcon: some View {
+        Image(systemIcon: icon)
+            .font(.system(size: 24))
+            .foregroundColor(isEarned ? Color.appBrandBrown : Color.appTextSecondary)
     }
 }
 

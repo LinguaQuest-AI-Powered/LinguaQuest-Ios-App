@@ -30,8 +30,12 @@ final class ProfileRepositoryImpl: ProfileRepositoryProtocol {
                 type = .generic
             }
             var fullIconUrl: String? = nil
-            if let path = dto.iconUrl {
-                fullIconUrl = AppConfig.baseURL.appendingPathComponent(path.hasPrefix("/") ? String(path.dropFirst()) : path).absoluteString
+            if let path = dto.iconUrl, !path.isEmpty {
+                if path.hasPrefix("http://") || path.hasPrefix("https://") {
+                    fullIconUrl = path
+                } else {
+                    fullIconUrl = AppConfig.baseURL.appendingPathComponent(path.hasPrefix("/") ? String(path.dropFirst()) : path).absoluteString
+                }
             }
             let status = AchievementStatus(rawValue: dto.status) ?? .unknown
             return AchievementEntity(
@@ -122,8 +126,12 @@ final class ProfileRepositoryImpl: ProfileRepositoryProtocol {
         
         let mappedAchievements = data.achievements.map { dto in
                 var fullIconUrl: String? = nil
-                if let path = dto.iconUrl {
-                    fullIconUrl = AppConfig.baseURL.appendingPathComponent(path.hasPrefix("/") ? String(path.dropFirst()) : path).absoluteString
+                if let path = dto.iconUrl, !path.isEmpty {
+                    if path.hasPrefix("http://") || path.hasPrefix("https://") {
+                        fullIconUrl = path
+                    } else {
+                        fullIconUrl = AppConfig.baseURL.appendingPathComponent(path.hasPrefix("/") ? String(path.dropFirst()) : path).absoluteString
+                    }
                 }
                 
                 return FullAchievementEntity(

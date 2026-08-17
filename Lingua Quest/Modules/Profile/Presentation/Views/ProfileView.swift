@@ -95,6 +95,7 @@ struct ProfileView: View {
                     subtitle: achievement.subtitle,
                     uiIcon: achievement.uiIcon,
                     uiIconColor: achievement.uiIconColor,
+                    iconUrl: achievement.iconUrl,
                     status: achievement.status,
                     progressPercent: achievement.progressPercent,
                     xpReward: achievement.xpReward,
