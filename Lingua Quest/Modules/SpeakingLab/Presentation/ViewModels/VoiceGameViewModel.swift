@@ -105,8 +105,12 @@ class VoiceGameViewModel {
             }
         } catch {
             print("Failed to load daily sentences: \(error)")
-            loadError = error.localizedDescription
-            showAiUnavailableDialog = true
+            if error.isAIUnavailableError {
+                showAiUnavailableDialog = true
+                loadError = nil
+            } else {
+                loadError = error.userFriendlyMessage
+            }
         }
         isLoadingSentences = false
     }

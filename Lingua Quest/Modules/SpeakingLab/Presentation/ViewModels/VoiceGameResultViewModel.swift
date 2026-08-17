@@ -62,7 +62,9 @@ final class VoiceGameResultViewModel {
                 print("Evaluation failed: \(error)")
                 await MainActor.run {
                     state = .failure
-                    showAiUnavailableDialog = true
+                    if error.isAIUnavailableError {
+                        showAiUnavailableDialog = true
+                    }
                     soundPlayer.play(sound: .fail)
                 }
             }

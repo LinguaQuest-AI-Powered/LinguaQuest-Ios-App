@@ -33,8 +33,12 @@ final class RoleplayScenariosViewModel {
             do {
                 scenarios = try await scenarioRepository.getAllScenarios()
             } catch {
-                errorMessage = error.localizedDescription
-                showAiUnavailableDialog = true
+                if error.isAIUnavailableError {
+                    showAiUnavailableDialog = true
+                    errorMessage = nil
+                } else {
+                    errorMessage = error.userFriendlyMessage
+                }
             }
             isLoading = false
         }

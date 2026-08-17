@@ -103,8 +103,12 @@ final class BossLevelViewModel {
                     viewState = .lobby(scenario)
                 }
             } catch {
-                viewState = .error("Failed to load scenario: \(error.localizedDescription)")
-                showAiUnavailableDialog = true
+                if error.isAIUnavailableError {
+                    showAiUnavailableDialog = true
+                    viewState = .loading
+                } else {
+                    viewState = .error(error.userFriendlyMessage)
+                }
             }
         }
     }
@@ -126,8 +130,12 @@ final class BossLevelViewModel {
                 print("🎯 [ViewModel] startChallenge() — calling startSession…")
                 try await startSessionUseCase.execute(systemInstruction: prompt)
             } catch {
-                viewState = .error(error.localizedDescription)
-                showAiUnavailableDialog = true
+                if error.isAIUnavailableError {
+                    showAiUnavailableDialog = true
+                    viewState = .lobby(scenario)
+                } else {
+                    viewState = .error(error.userFriendlyMessage)
+                }
             }
         }
     }
@@ -151,8 +159,12 @@ final class BossLevelViewModel {
                 viewState = .result(result)
             } catch {
                 soundPlayer.play(sound: .fail)
-                viewState = .error("Evaluation failed: \(error.localizedDescription)")
-                showAiUnavailableDialog = true
+                if error.isAIUnavailableError {
+                    showAiUnavailableDialog = true
+                    viewState = .active
+                } else {
+                    viewState = .error(error.userFriendlyMessage)
+                }
             }
         }
     }

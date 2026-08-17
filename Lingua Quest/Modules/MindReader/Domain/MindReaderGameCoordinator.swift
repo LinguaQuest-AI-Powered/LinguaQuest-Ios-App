@@ -88,8 +88,12 @@ final class MindReaderGameCoordinator {
             
             isLoading = false
         } catch {
-            showAiUnavailableDialog = true
-            errorMessage = error.localizedDescription
+            if error.isAIUnavailableError {
+                showAiUnavailableDialog = true
+                errorMessage = nil
+            } else {
+                errorMessage = error.userFriendlyMessage
+            }
             isLoading = false
         }
     }
@@ -124,8 +128,12 @@ final class MindReaderGameCoordinator {
                 return true
             }
         } catch {
-            showAiUnavailableDialog = true
-            errorMessage = error.localizedDescription
+            if error.isAIUnavailableError {
+                showAiUnavailableDialog = true
+                errorMessage = nil
+            } else {
+                errorMessage = error.userFriendlyMessage
+            }
             isLoading = false
             return false
         }
@@ -140,8 +148,12 @@ final class MindReaderGameCoordinator {
             quizChoices = try await requestQuizChoicesUseCase.execute(category: category, correctWordTargetLanguage: guess.word, correctWordNativeLanguage: guess.translation)
             isLoading = false
         } catch {
-            showAiUnavailableDialog = true
-            errorMessage = error.localizedDescription
+            if error.isAIUnavailableError {
+                showAiUnavailableDialog = true
+                errorMessage = nil
+            } else {
+                errorMessage = error.userFriendlyMessage
+            }
             isLoading = false
         }
     }
@@ -175,8 +187,12 @@ final class MindReaderGameCoordinator {
                 return false
             }
         } catch {
-            showAiUnavailableDialog = true
-            errorMessage = error.localizedDescription
+            if error.isAIUnavailableError {
+                showAiUnavailableDialog = true
+                errorMessage = nil
+            } else {
+                errorMessage = error.userFriendlyMessage
+            }
             isLoading = false
             return false
         }

@@ -27,7 +27,7 @@ struct LeaderboardPodiumView: View {
                     Image(asset: .leaderBoardBird)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 130, height: 130)
+                        .frame(width: 180, height: 180)
                         .zIndex(1)
                         .scaleEffect(appear ? 1 : 0.01)
                         .rotationEffect(.degrees(appear ? 0 : -15))
