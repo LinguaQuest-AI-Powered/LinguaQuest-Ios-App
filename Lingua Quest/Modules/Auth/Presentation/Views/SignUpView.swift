@@ -13,6 +13,9 @@ struct SignUpView: View {
     var body: some View {
         ZStack {
             Color.appBackgroundWarm.ignoresSafeArea()
+                .onTapGesture {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                }
             
             ScrollView(showsIndicators: false) {
                 DialogCardContainer(mascotImage: .registerationBird) {
@@ -117,6 +120,7 @@ struct SignUpView: View {
                 .padding(.bottom, 32)
                 .padding(.top, 64)
             }
+            .scrollDismissesKeyboard(.interactively)
             VStack {
                 HStack {
                     CustomBackButton(action: { viewModel.navigateBack() })

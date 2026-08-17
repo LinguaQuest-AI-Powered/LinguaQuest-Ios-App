@@ -99,6 +99,7 @@ struct NoPasteTextField: UIViewRepresentable {
         textField.borderStyle = .none
         textField.backgroundColor = .clear
         textField.textAlignment = layoutDirection == .rightToLeft ? .right : .left
+        textField.semanticContentAttribute = layoutDirection == .rightToLeft ? .forceRightToLeft : .forceLeftToRight
         
         textField.setContentHuggingPriority(.defaultLow, for: .horizontal)
         textField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
@@ -123,6 +124,7 @@ struct NoPasteTextField: UIViewRepresentable {
         uiView.isSecureTextEntry = isSecureTextEntry
         uiView.textColor = UIColor(textColor)
         uiView.textAlignment = layoutDirection == .rightToLeft ? .right : .left
+        uiView.semanticContentAttribute = layoutDirection == .rightToLeft ? .forceRightToLeft : .forceLeftToRight
     }
 
     func makeCoordinator() -> Coordinator {

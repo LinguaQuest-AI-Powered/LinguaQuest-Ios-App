@@ -14,6 +14,9 @@ struct LoginView: View {
         ZStack {
             
             Color.appBackgroundWarm.ignoresSafeArea()
+                .onTapGesture {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                }
             
             ScrollView(showsIndicators: false) {
                 DialogCardContainer(mascotImage: .loginBird) {
@@ -111,6 +114,7 @@ struct LoginView: View {
                 .padding(.horizontal, 24)
                 .padding(.vertical, 32)
             }
+            .scrollDismissesKeyboard(.interactively)
             
         }
         .appDialog(isPresented: $viewModel.isLoading) {

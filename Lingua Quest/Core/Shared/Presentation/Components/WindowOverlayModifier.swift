@@ -6,6 +6,9 @@ struct WindowOverlayModifier<OverlayContent: View>: ViewModifier {
 
     @State private var overlayWindow: UIWindow?
 
+    @Environment(\.layoutDirection) var layoutDirection
+    @Environment(\.locale) var locale
+
     func body(content: Content) -> some View {
         content
             .onChange(of: isPresented) { _, newValue in
@@ -31,7 +34,8 @@ struct WindowOverlayModifier<OverlayContent: View>: ViewModifier {
         
         let hostingController = UIHostingController(
             rootView: overlayContent()
-                // Inject the current environment if needed, but for simplicity we assume the overlay is self-contained
+                .environment(\.layoutDirection, layoutDirection)
+                .environment(\.locale, locale)
                 .ignoresSafeArea()
         )
         hostingController.view.backgroundColor = .clear

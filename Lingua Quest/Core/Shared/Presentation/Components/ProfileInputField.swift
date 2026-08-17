@@ -66,6 +66,7 @@ struct ProfileInputField: View {
                 }
                 // Apply standard styles only for SwiftUI native textfields, as NoPasteTextField handles it internally
                 .appTextStyle(.body, color: .appTextHeading)
+                .multilineTextAlignment(.leading)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
 

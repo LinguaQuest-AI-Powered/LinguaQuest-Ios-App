@@ -14,6 +14,9 @@ struct VerifyPasswordResetOtpView: View {
     var body: some View {
         ZStack {
             Color.appBackgroundWarm.ignoresSafeArea()
+                .onTapGesture {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                }
 
             GeometryReader { geometry in
                 ScrollView(showsIndicators: false) {
@@ -95,6 +98,7 @@ struct VerifyPasswordResetOtpView: View {
                     }
                     .frame(minHeight: geometry.size.height)
                 }
+                .scrollDismissesKeyboard(.interactively)
             }
 
             VStack {

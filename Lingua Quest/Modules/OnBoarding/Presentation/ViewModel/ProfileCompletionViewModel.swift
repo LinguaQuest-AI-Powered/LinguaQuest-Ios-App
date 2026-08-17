@@ -68,6 +68,7 @@ final class ProfileCompletionViewModel {
 
     func onSpokenLanguageSelected(_ language: AppLanguage) {
         state.selectedSpokenLanguage = language
+        userPreferences.appLanguage = language.code
     }
 
     func onLearningLanguageSelected(_ language: AvailableLanguage) {

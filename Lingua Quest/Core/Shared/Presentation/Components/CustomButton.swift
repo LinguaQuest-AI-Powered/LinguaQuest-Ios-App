@@ -7,6 +7,15 @@
 
 import SwiftUI
 
+struct ScaledButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.92 : 1.0)
+            .opacity(configuration.isPressed ? 0.85 : 1.0)
+            .animation(.easeInOut(duration: 0.1), value: configuration.isPressed)
+    }
+}
+
 enum ButtonType {
     case primary
     case secendry
@@ -124,23 +133,24 @@ struct CustomButton: View {
             .frame(maxWidth: .infinity)
             .frame(height: 56)
             .contentShape(Rectangle())
-        }
-        .foregroundColor(foregroundColor)
-        // MARK: - The 3D Magic
-        .background(
-            Group {
-                if case .outline(_, let borderColor) = type {
-                    Capsule()
-                        .stroke(borderColor, lineWidth: 2)
-                        .shadow(color: borderColor, radius: 0, x: 0, y: 2)
-                } else {
-                    Capsule()
-                        .fill(backgroundColor)
-                        .shadow(color: shadowColor, radius: 0, x: 0, y: 4)
+            .foregroundColor(foregroundColor)
+            // MARK: - The 3D Magic
+            .background(
+                Group {
+                    if case .outline(_, let borderColor) = type {
+                        Capsule()
+                            .stroke(borderColor, lineWidth: 2)
+                            .shadow(color: borderColor, radius: 0, x: 0, y: 2)
+                    } else {
+                        Capsule()
+                            .fill(backgroundColor)
+                            .shadow(color: shadowColor, radius: 0, x: 0, y: 4)
+                    }
                 }
-            }
-        )
-        .padding(.bottom, 4)
+            )
+            .padding(.bottom, 4)
+        }
+        .buttonStyle(ScaledButtonStyle())
         .disabled((status == .disable || isLoading) && disabledAction == nil)
     }
 }
@@ -230,6 +240,7 @@ struct AppButton: View {
             .clipShape(Capsule())
             .shadow(color: Color.appBrandPrimary.opacity(colorScheme == .dark ? 0.24 : 0.18), radius: 12, x: 0, y: 6)
         }
+        .buttonStyle(ScaledButtonStyle())
         .onAppear {
             guard !reduceMotion else { return }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
