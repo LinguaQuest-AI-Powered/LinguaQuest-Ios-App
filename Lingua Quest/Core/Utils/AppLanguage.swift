@@ -11,10 +11,9 @@ import AVFoundation
 enum AppLanguage: String, CaseIterable, Identifiable {
     case english = "en"
     case arabic = "ar"
-    case german = "de"
-    case italian = "it"
     case spanish = "es"
-    case russian = "ru"
+    case french = "fr"
+    case german = "de"
     
     var id: String { rawValue }
     var code: String { rawValue }
@@ -23,10 +22,9 @@ enum AppLanguage: String, CaseIterable, Identifiable {
         switch self {
         case .english: return "English"
         case .arabic: return "العربية"
-        case .german: return "Deutsch"
-        case .italian: return "Italiano"
         case .spanish: return "Español"
-        case .russian: return "Русский"
+        case .french: return "Français"
+        case .german: return "Deutsch"
         }
     }
     
@@ -94,14 +92,9 @@ extension String {
 extension AppLanguage {
     static let targetLanguages: [AvailableLanguage] = [
         AvailableLanguage(id: 10, name: "Arabic", code: "ar", isAdded: true),
-        AvailableLanguage(id: 8, name: "Chinese", code: "zh", isAdded: true),
         AvailableLanguage(id: 1, name: "English", code: "en", isAdded: true),
-        AvailableLanguage(id: 3, name: "French", code: "fr", isAdded: false),
-        AvailableLanguage(id: 4, name: "German", code: "de", isAdded: true),
-        AvailableLanguage(id: 5, name: "Italian", code: "it", isAdded: true),
-        AvailableLanguage(id: 7, name: "Japanese", code: "ja", isAdded: true),
-        AvailableLanguage(id: 9, name: "Korean", code: "ko", isAdded: false),
-        AvailableLanguage(id: 6, name: "Portuguese", code: "pt", isAdded: false),
-        AvailableLanguage(id: 2, name: "Spanish", code: "es", isAdded: false)
+        AvailableLanguage(id: 2, name: "Spanish", code: "es", isAdded: true),
+        AvailableLanguage(id: 3, name: "French", code: "fr", isAdded: true),
+        AvailableLanguage(id: 4, name: "German", code: "de", isAdded: true)
     ]
 }
