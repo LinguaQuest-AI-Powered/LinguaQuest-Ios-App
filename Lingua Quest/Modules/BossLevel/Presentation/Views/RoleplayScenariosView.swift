@@ -50,7 +50,9 @@ struct RoleplayScenariosView: View {
         .background(Color.appBackgroundWarm.ignoresSafeArea())
         .navigationBarHidden(true)
         .onAppear { viewModel.onAppear() }
-        .aiUnavailableDialog(isPresented: Bindable(viewModel).showAiUnavailableDialog)
+        .aiUnavailableDialog(isPresented: Bindable(viewModel).showAiUnavailableDialog, onOkTapped: {
+            viewModel.onBackTapped()
+        })
     }
 
     private var headerBar: some View {

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct AiServiceUnavailableDialog: View {
     @Binding var isPresented: Bool
+    var onOkTapped: (() -> Void)? = nil
+    
     @Environment(\.colorScheme) private var colorScheme
     
     var subtitle: String {
@@ -50,6 +52,7 @@ struct AiServiceUnavailableDialog: View {
                     icon: .checkmark,
                     action: {
                         isPresented = false
+                        onOkTapped?()
                     }
                 )
                 .padding(.top, 10)
@@ -62,17 +65,18 @@ struct AiServiceUnavailableDialog: View {
 
 struct AiUnavailableDialogModifier: ViewModifier {
     @Binding var isPresented: Bool
+    var onOkTapped: (() -> Void)? = nil
     
     func body(content: Content) -> some View {
         content
             .appDialog(isPresented: $isPresented) {
-                AiServiceUnavailableDialog(isPresented: $isPresented)
+                AiServiceUnavailableDialog(isPresented: $isPresented, onOkTapped: onOkTapped)
             }
     }
 }
 
 extension View {
-    func aiUnavailableDialog(isPresented: Binding<Bool>) -> some View {
-        self.modifier(AiUnavailableDialogModifier(isPresented: isPresented))
+    func aiUnavailableDialog(isPresented: Binding<Bool>, onOkTapped: (() -> Void)? = nil) -> some View {
+        self.modifier(AiUnavailableDialogModifier(isPresented: isPresented, onOkTapped: onOkTapped))
     }
 }

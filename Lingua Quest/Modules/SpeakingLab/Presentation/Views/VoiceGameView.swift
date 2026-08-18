@@ -251,7 +251,9 @@ struct VoiceGameView: View {
                     // Go to store or ads
                 }
             }
-            .aiUnavailableDialog(isPresented: Bindable(viewModel).showAiUnavailableDialog)
+            .aiUnavailableDialog(isPresented: Bindable(viewModel).showAiUnavailableDialog, onOkTapped: {
+                dismiss()
+            })
             .onAppear {
                 viewModel.resetForRetry()
             }
