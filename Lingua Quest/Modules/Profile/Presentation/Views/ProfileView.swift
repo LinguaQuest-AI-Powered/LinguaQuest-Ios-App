@@ -17,9 +17,9 @@ struct ProfileView: View {
             Group {
                 if let error = viewModel.errorMessage {
                     VStack(spacing: 16) {
-                        Text("Error: \(error)")
+                        Text("\(L10n.Common.error): \(error)")
                             .appTextStyle(.bodyBold, color: .red)
-                        Button("Retry") {
+                        Button(L10n.Common.retry) {
                             viewModel.fetchProfileData()
                         }
                         .buttonStyle(.borderedProminent)

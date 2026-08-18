@@ -40,7 +40,7 @@ struct LeaderboardRow: View {
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
                 
-                Text("Explorer")
+                Text(L10n.Common.explorer)
                     .appTextStyle(.micro, color: isCurrentUser ? .appAccentTeal.opacity(0.8) : .appTextSecondary)
                     .lineLimit(1)
             }

@@ -62,7 +62,7 @@ struct LeaderboardRowView: View {
                     .font(.system(size: 16, weight: .bold))
                     .foregroundColor(user.isCurrentUser ? Color.teal : Color.appTextHeading)
 
-                Text("XP")
+                Text(L10n.Common.xp)
                     .font(.system(size: 10, weight: .bold))
                     .foregroundColor(user.isCurrentUser ? Color.teal.opacity(0.8) : .gray)
             }

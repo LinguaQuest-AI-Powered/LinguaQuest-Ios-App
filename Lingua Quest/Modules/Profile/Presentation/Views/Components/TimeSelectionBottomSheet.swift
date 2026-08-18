@@ -31,7 +31,7 @@ struct TimeSelectionBottomSheet: View {
                 }
                 
                 Button(action: onSave) {
-                    Text("Save") // Add L10n for Save if missing, using hardcoded for now or common
+                    Text(L10n.Common.save)
                         .appTextStyle(.bodyLarge, color: .appAccentTeal)
                 }
             }

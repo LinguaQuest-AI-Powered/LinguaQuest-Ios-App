@@ -53,11 +53,11 @@ struct ProfileCompletionContainerView: View {
                 }
             }
         }
-        .alert("Error", isPresented: Binding(
+        .alert(L10n.Common.error, isPresented: Binding(
             get: { viewModel.errorMessage != nil },
             set: { if !$0 { viewModel.errorMessage = nil } }
         )) {
-            Button("OK", role: .cancel) { }
+            Button(L10n.Common.ok, role: .cancel) { }
         } message: {
             if let error = viewModel.errorMessage {
                 Text(error)

@@ -659,3 +659,11 @@
 
 "achievements.earned_on" = "Earned on %@";
 "auth_error_same_password" = "New password must be different from your current password.";
+
+"common.minigame" = "Minigame";
+"common.under_construction" = "This page is under construction.";
+"common.save" = "Save";
+"common.xp" = "XP";
+"common.explorer" = "Explorer";
+"profile.email_copied" = "Email address copied to clipboard.";
+"speaking_lab.sentence_review" = "SENTENCE REVIEW";

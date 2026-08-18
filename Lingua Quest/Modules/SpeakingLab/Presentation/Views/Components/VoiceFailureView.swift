@@ -30,7 +30,7 @@ struct VoiceFailureView: View {
                 ScoreCircleView(rating: viewModel.rating)
                 
                 VStack(spacing: 12) {
-                    Text("SENTENCE REVIEW")
+                    Text(L10n.SpeakingLab.sentenceReview)
                         .font(AppTextStyle.captionBold.font)
                         .foregroundColor(.appTextSecondary)
                     

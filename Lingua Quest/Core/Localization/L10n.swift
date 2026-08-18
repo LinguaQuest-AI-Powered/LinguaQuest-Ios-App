@@ -34,6 +34,12 @@ enum L10n {
         static var openSettings: String { localized("common.open_settings") }
         static var remove: String { localized("common.remove") }
         static var aiServiceUnavailableSubtitle: String { localized("common.ai_service_unavailable_subtitle") }
+        
+        static var minigame: String { localized("common.minigame") }
+        static var underConstruction: String { localized("common.under_construction") }
+        static var save: String { localized("common.save") }
+        static var xp: String { localized("common.xp") }
+        static var explorer: String { localized("common.explorer") }
     }
 
     enum Auth {
@@ -324,6 +330,7 @@ enum L10n {
         static var viewAll: String { localized("profile.view_all") }
         static var achievementsTitle: String { localized("profile.achievements.title") }
         static var topExplorersTitle: String { localized("profile.top_explorers.title") }
+        static var emailCopied: String { localized("profile.email_copied") }
         static var settingsCardTitle: String {
             localized("profile.settingsCardTitle")
         }
@@ -503,6 +510,7 @@ enum L10n {
         static var evaluatingSubtitle: String { localized("speaking_lab.evaluating_subtitle") }
         static var loadingSentences: String { localized("speaking_lab.loading_sentences") }
         static var failedToLoad: String { localized("speaking_lab.failed_to_load") }
+        static var sentenceReview: String { localized("speaking_lab.sentence_review") }
     }
 
     enum BossLevel {

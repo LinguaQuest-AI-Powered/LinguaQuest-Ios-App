@@ -42,7 +42,7 @@ struct MindReaderHomeCardView: View {
             
             HStack(spacing: 6) {
                 Label {
-                    Text("Minigame")
+                    Text(L10n.Common.minigame)
                 } icon: {
                     Image(systemIcon: .trophyFill)
                 }

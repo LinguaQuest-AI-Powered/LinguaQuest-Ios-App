@@ -634,3 +634,11 @@
 "tutorial.daily_mission.desc" = "Terminez votre mission quotidienne pour gagner des récompenses supplémentaires et maintenir votre série !";
 "achievements.earned_on" = "Gagné le %@";
 "auth_error_same_password" = "Le nouveau mot de passe doit être différent de votre mot de passe actuel.";
+
+"common.minigame" = "Mini-jeu";
+"common.under_construction" = "Cette page est en construction.";
+"common.save" = "Enregistrer";
+"common.xp" = "XP";
+"common.explorer" = "Explorateur";
+"profile.email_copied" = "Adresse e-mail copiée dans le presse-papiers.";
+"speaking_lab.sentence_review" = "RÉVISION DE PHRASE";

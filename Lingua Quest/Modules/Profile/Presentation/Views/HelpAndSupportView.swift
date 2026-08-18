@@ -137,7 +137,7 @@ struct HelpAndSupportView: View {
                 speechBubbleText: "Copied!"
             ) {
                 VStack(spacing: 16) {
-                    Text("Email address copied to clipboard.")
+                    Text(L10n.Profile.emailCopied)
                         .dialogSubtitleStyle()
                         .multilineTextAlignment(.center)
                     

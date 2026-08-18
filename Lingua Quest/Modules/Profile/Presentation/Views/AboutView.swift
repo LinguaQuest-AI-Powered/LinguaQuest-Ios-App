@@ -85,7 +85,7 @@ struct AboutView: View {
                 speechBubbleText: "Coming Soon!"
             ) {
                 VStack(spacing: 16) {
-                    Text("This page is under construction.")
+                    Text(L10n.Common.underConstruction)
                         .appTextStyle(.bodyMedium, color: .appTextSecondary)
                         .multilineTextAlignment(.center)
                     

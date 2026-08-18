@@ -672,3 +672,11 @@
 
 "achievements.earned_on" = "تم الاكتساب في %@";
 "auth_error_same_password" = "يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمة المرور الحالية.";
+
+"common.minigame" = "لعبة مصغرة";
+"common.under_construction" = "هذه الصفحة قيد الإنشاء.";
+"common.save" = "حفظ";
+"common.xp" = "XP";
+"common.explorer" = "مستكشف";
+"profile.email_copied" = "تم نسخ عنوان البريد الإلكتروني.";
+"speaking_lab.sentence_review" = "مراجعة الجملة";
