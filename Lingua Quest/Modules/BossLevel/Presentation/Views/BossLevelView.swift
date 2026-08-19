@@ -21,6 +21,9 @@ struct BossLevelView: View {
 
             case .result(let result):
                 BossResultView(result: result, coins: viewModel.coins, onCloseTapped: { viewModel.onCloseTapped() })
+                    .onAppear {
+                        viewModel.claimReward()
+                    }
 
             case .evaluating:
                 BossLevelEvaluatingView()

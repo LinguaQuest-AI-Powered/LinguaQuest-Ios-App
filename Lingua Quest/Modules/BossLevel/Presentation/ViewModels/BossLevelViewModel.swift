@@ -152,9 +152,6 @@ final class BossLevelViewModel {
             do {
                 let transcript = messages.map { "\($0.sender): \($0.text)" }.joined(separator: "\n")
                 let result = try await evaluateStageUseCase.execute(scenario: scenario, transcript: transcript)
-                if result.task_completed, let reward = result.reward {
-                    try? await statsService.adjustWallet(coinsDelta: reward.coins, xpDelta: reward.xp)
-                }
                 soundPlayer.play(sound: result.task_completed ? .success : .fail)
                 viewState = .result(result)
             } catch {
@@ -175,6 +172,21 @@ final class BossLevelViewModel {
         Task {
             await stopSessionUseCase.execute()
             router.pop()
+        }
+    }
+
+    // MARK: - Rewards
+    
+    private var hasAwarded = false
+    
+    func claimReward() {
+        guard !hasAwarded else { return }
+        guard case .result(let result) = viewState else { return }
+        guard result.task_completed, let reward = result.reward else { return }
+        
+        hasAwarded = true
+        Task {
+            try? await statsService.adjustWallet(coinsDelta: reward.coins, xpDelta: reward.xp)
         }
     }
 
