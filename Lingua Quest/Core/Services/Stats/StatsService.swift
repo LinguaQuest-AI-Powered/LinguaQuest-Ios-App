@@ -109,6 +109,8 @@ final class StatsService: StatsServiceProtocol {
         }
     }
     
+    static var hasPlayedSyncSoundThisSession = false
+    
     func syncBalances(coins: Int?, xp: Int?, streakDays: Int? = nil) {
         var increased = false
         if let coins = coins { 
@@ -123,7 +125,10 @@ final class StatsService: StatsServiceProtocol {
             self.streakDays = streakDays
         }
         if increased {
-            self.soundPlayer.play(sound: .addedMoney)
+            if !Self.hasPlayedSyncSoundThisSession {
+                self.soundPlayer.play(sound: .addedMoney)
+                Self.hasPlayedSyncSoundThisSession = true
+            }
         }
     }
     

@@ -117,6 +117,11 @@ struct LoginView: View {
             .scrollDismissesKeyboard(.interactively)
             
         }
+        .onChange(of: viewModel.isLoading) { _, isLoading in
+            if isLoading {
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            }
+        }
         .appDialog(isPresented: $viewModel.isLoading) {
             SharedImageLoadingView(
                 imageAsset: .loadng,
