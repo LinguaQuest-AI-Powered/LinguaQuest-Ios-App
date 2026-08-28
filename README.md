@@ -32,25 +32,31 @@ The app features a hybrid architecture: structured curricula and user progressio
 ### 📸 App Gallery
 
 <p align="center">
-  <img src="./Screenshots/1.png" width="22%"/>
-  <img src="./Screenshots/2.png" width="22%"/>
-  <img src="./Screenshots/3.png" width="22%"/>
-  <img src="./Screenshots/4.png" width="22%"/>
+  <img src="./Screenshots/1.png" width="49%"/>
+  <img src="./Screenshots/2.png" width="49%"/>
 </p>
 <p align="center">
-  <img src="./Screenshots/5.png" width="22%"/>
-  <img src="./Screenshots/6.png" width="22%"/>
-  <img src="./Screenshots/7.png" width="22%"/>
-  <img src="./Screenshots/8.png" width="22%"/>
+  <img src="./Screenshots/3.png" width="49%"/>
+  <img src="./Screenshots/4.png" width="49%"/>
 </p>
 <p align="center">
-  <img src="./Screenshots/9.png" width="22%"/>
-  <img src="./Screenshots/10.png" width="22%"/>
-  <img src="./Screenshots/11.png" width="22%"/>
-  <img src="./Screenshots/12.png" width="22%"/>
+  <img src="./Screenshots/5.png" width="49%"/>
+  <img src="./Screenshots/6.png" width="49%"/>
 </p>
 <p align="center">
-  <img src="./Screenshots/13.png" width="22%"/>
+  <img src="./Screenshots/7.png" width="49%"/>
+  <img src="./Screenshots/8.png" width="49%"/>
+</p>
+<p align="center">
+  <img src="./Screenshots/9.png" width="49%"/>
+  <img src="./Screenshots/10.png" width="49%"/>
+</p>
+<p align="center">
+  <img src="./Screenshots/11.png" width="49%"/>
+  <img src="./Screenshots/12.png" width="49%"/>
+</p>
+<p align="center">
+  <img src="./Screenshots/13.png" width="49%"/>
 </p>
 
 ## 🌟 Comprehensive Feature Breakdown
