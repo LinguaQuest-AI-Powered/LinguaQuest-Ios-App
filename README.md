@@ -23,7 +23,9 @@ The app features a hybrid architecture: structured curricula and user progressio
 ## 🎬 Demo & Screenshots
 
 <div align="center">
-  <video src="./Screenshots/demo.mp4" width="250" controls></video>
+  <a href="https://youtu.be/JBvfQ-ryxOk">
+    <img src="https://img.youtube.com/vi/JBvfQ-ryxOk/0.jpg" alt="Lingua Quest Demo Video" width="400"/>
+  </a>
 </div>
 
 ### 📸 App Gallery
