@@ -57,8 +57,11 @@ The app features a hybrid architecture: structured curricula and user progressio
 </p>
 <p align="center">
   <img src="./Screenshots/13.png" width="49%"/>
+  <img src="./Screenshots/14.png" width="49%"/>
 </p>
-
+<p align="center">
+  <img src="./Screenshots/15.png" width="49%"/>
+</p>
 ## 🌟 Comprehensive Feature Breakdown
 
 ```
